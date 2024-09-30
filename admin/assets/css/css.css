@@ -1,0 +1,205 @@
+.logo, .sidebar-wrapper {
+    background-color: #2e0f13;
+    color: #fff;
+}
+
+.map {
+    max-width: max-content;
+    height: 800px;
+    padding: 2%;
+    background-color: #2e0f13;
+}
+
+.table-container {
+    width: 100%;
+    height: 700px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    position: relative;
+    background-color: #f9f9f9;
+}
+
+.table-container::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 6px;
+    border: 3px solid #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 6px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+
+.table-container {
+    scrollbar-width: thin;
+    scrollbar-color: #6c6c6c #e0e0e0;
+}
+
+.table-container {
+    -ms-overflow-style: scrollbar;
+}
+
+.fixed-table {
+    border-collapse: collapse;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: #fff;
+    width: 100%;
+}
+
+.fixed-table th, .fixed-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.fixed-table th {
+    background-color: #007bff;
+    color: #fff;
+    position: sticky;
+    top: 0;
+}
+
+.fixed-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.fixed-table td:hover {
+    background-color: #e0e0e0;
+}
+
+.faculty-info a {
+    display: block;
+    color: #1e1e1e;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+table.floor-table {
+    border-collapse: collapse;
+}
+
+.floor-table {
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
+    height: 100%;
+}
+
+.floor-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: auto;
+    text-align: center;
+    vertical-align: middle;
+}
+.floor-table td:hover {
+    background-color: #e0e0e0;
+    
+}
+
+.fixed-table tr:hover {
+    background-color: #f1f1f1;
+    
+}
+
+.fixed-table td:hover {
+    background-color: #e0e0e0;
+    color: #000; /* Font color on hover */
+   
+}
+.floor-table td:hover {
+    background-color: #e0e0e0;
+    color: #000; /* Font color on hover */
+}
+
+.floor-maroon {
+    background-color: #ff546b;
+    border: 1px solid #ddd;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.floor-gray {
+    background-color: #474747;
+    border: 1px solid #ddd;
+    color: #fffefe;
+    font-size: 10px;
+}
+
+.dropdown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#search-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-grow: 1;
+}
+
+.dropdown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#search-input {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+    box-sizing: border-box;
+}
+
+.search-button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.search-button i {
+    margin: 0;
+}
+
+#dropdownMenu {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .faculty-card {
+        max-width: 150px;
+        height: 150px;
+    }
+}

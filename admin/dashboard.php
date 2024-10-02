@@ -1,5 +1,6 @@
 <?php
 include_once('assets/header.php');
+include_once('ajax/remove.php');
 include_once('../class/connection.php');
 
 

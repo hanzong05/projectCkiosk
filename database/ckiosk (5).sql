@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 27, 2024 at 03:47 AM
+-- Generation Time: Oct 02, 2024 at 12:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `announcement_tbl` (
   `announcement_id` int(25) NOT NULL,
-  `announcement_details` varchar(500) NOT NULL,
+  `announcement_details` longtext NOT NULL,
   `announcement_creator` int(25) NOT NULL,
   `announcement_image` varchar(250) NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
@@ -41,13 +41,14 @@ CREATE TABLE `announcement_tbl` (
 --
 
 INSERT INTO `announcement_tbl` (`announcement_id`, `announcement_details`, `announcement_creator`, `announcement_image`, `created_at`, `updated_at`) VALUES
-(3, '<p><b>HI TSU</b></p>', 18, '1724683336_blog_1.jpg', '2024-08-26 08:42:16.000000', '2024-08-26 08:42:16.000000'),
-(4, '<p>&nbsp;Important Announcement: TSU Student Activity Week</p><p>Dear TSU Students,</p><p>We are excited to announce the upcoming TSU Student Activity Week, a series of engaging events and activities designed to enhance your university experience and foster community spirit.</p><p>Event Details:</p><ul><li>Event Name: TSU Student Activity Week 2024</li><li>Date: Monday, September 30, 2024 - Friday, October 4, 2024</li><li>Time: Various times throughout the week</li><li>Location: TSU Main Campus<', 18, '1724683502_slide_1.jpg', '2024-08-26 08:45:02.000000', '2024-08-26 08:45:02.000000'),
-(5, '<p><strong>&nbsp;Upcoming TSU Sports Festival</strong></p><p>Dear TSU Students,</p><p>We are excited to announce the <strong>TSU Sports Festival</strong> coming up next month! Join us for a day filled with sports, fun, and community spirit.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Sports Festival 2024</li><li><strong>Date:</strong> Saturday, October 12, 2024</li><li><strong>Time:</strong> 8:00 AM - 5:00 PM</li><li><strong>Location:</strong> TSU Sports Com', 23, '1724683965_portfolio_big_2.jpg', '2024-08-26 08:52:45.000000', '2024-08-26 08:52:45.000000'),
-(6, '<p><strong>TSU Career Development Workshop</strong></p><p>Dear TSU Students,</p><p>We are pleased to invite you to the <strong>TSU Career Development Workshop</strong> designed to help you enhance your career skills and prepare for future opportunities.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Career Development Workshop 2024</li><li><strong>Date:</strong> Friday, October 18, 2024</li><li><strong>Time:</strong> 9:00 AM - 3:00 PM</li><li><strong>Location:<', 23, '1724684006_portfolio_big_5.jpg', '2024-08-26 08:53:26.000000', '2024-08-26 08:53:26.000000'),
-(7, '<p><strong>TSU Library Book Sale</strong></p><p>Dear TSU Students,</p><p>We are excited to announce the <strong>TSU Library Book Sale</strong> happening next week! This is a great opportunity to stock up on books and support our library.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Library Book Sale 2024</li><li><strong>Date:</strong> Tuesday, October 8, 2024</li><li><strong>Time:</strong> 10:00 AM - 4:00 PM</li><li><strong>Location:</strong> TSU Library, Mai', 22, '1724684101_blog_3.jpg', '2024-08-26 08:55:01.000000', '2024-08-26 08:55:01.000000'),
-(8, '<p><strong>&nbsp;TSU Art Exhibition Opening</strong></p><p>Dear TSU Students,</p><p>We are thrilled to invite you to the grand opening of the <strong>TSU Art Exhibition</strong>, showcasing the incredible talents of our student artists.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Art Exhibition 2024</li><li><strong>Date:</strong> Thursday, October 10, 2024</li><li><strong>Time:</strong> 5:00 PM - 8:00 PM</li><li><strong>Location:</strong> TSU Art Gallery, Bu', 22, '1724684147_slide_2.jpg', '2024-08-26 08:55:47.000000', '2024-08-26 08:55:47.000000'),
-(9, '<p><b>HI TSU HAHAHASDHAWDWAWDHAWDHWW</b></p>', 22, '1724687429_portfolio_3.jpg', '2024-08-26 09:50:29.000000', '2024-08-26 09:50:29.000000');
+(4, '<p>&nbsp;Important Announcement: TSU Student Activity Week</p><p>Dear TSU Students,</p><p>We are excited to announce the upcoming TSU Student Activity Week, a series of engaging events and activities designed to enhance your university experience and foster community spirit.</p><p>Event Details:</p><ul><li>Event Name: TSU Student Activity Week 2024</li><li>Date: Monday, September 30, 2024 - Friday, October 4, 2024</li><li>Time: Various times throughout the week</li><li>Location: TSU Main Campus<', 18, '1724683502_slide_1.jpg', '2024-08-26 00:45:02.000000', '2024-08-26 00:45:02.000000'),
+(5, '<p><strong>&nbsp;Upcoming TSU Sports Festival</strong></p><p>Dear TSU Students,</p><p>We are excited to announce the <strong>TSU Sports Festival</strong> coming up next month! Join us for a day filled with sports, fun, and community spirit.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Sports Festival 2024</li><li><strong>Date:</strong> Saturday, October 12, 2024</li><li><strong>Time:</strong> 8:00 AM - 5:00 PM</li><li><strong>Location:</strong> TSU Sports Com', 23, '1724683965_portfolio_big_2.jpg', '2024-08-26 00:52:45.000000', '2024-08-26 00:52:45.000000'),
+(6, '<p><strong>TSU Career Development Workshop</strong></p><p>Dear TSU Students,</p><p>We are pleased to invite you to the <strong>TSU Career Development Workshop</strong> designed to help you enhance your career skills and prepare for future opportunities.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Career Development Workshop 2024</li><li><strong>Date:</strong> Friday, October 18, 2024</li><li><strong>Time:</strong> 9:00 AM - 3:00 PM</li><li><strong>Location:<', 23, '1724684006_portfolio_big_5.jpg', '2024-08-26 00:53:26.000000', '2024-08-26 00:53:26.000000'),
+(7, '<p><strong>TSU Library Book Sale</strong></p><p>Dear TSU Students,</p><p>We are excited to announce the <strong>TSU Library Book Sale</strong> happening next week! This is a great opportunity to stock up on books and support our library.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Library Book Sale 2024</li><li><strong>Date:</strong> Tuesday, October 8, 2024</li><li><strong>Time:</strong> 10:00 AM - 4:00 PM</li><li><strong>Location:</strong> TSU Library, Mai', 22, '1724684101_blog_3.jpg', '2024-08-26 00:55:01.000000', '2024-08-26 00:55:01.000000'),
+(8, '<p><strong>&nbsp;TSU Art Exhibition Opening</strong></p><p>Dear TSU Students,</p><p>We are thrilled to invite you to the grand opening of the <strong>TSU Art Exhibition</strong>, showcasing the incredible talents of our student artists.</p><p><strong>Event Details:</strong></p><ul><li><strong>Event Name:</strong> TSU Art Exhibition 2024</li><li><strong>Date:</strong> Thursday, October 10, 2024</li><li><strong>Time:</strong> 5:00 PM - 8:00 PM</li><li><strong>Location:</strong> TSU Art Gallery, Bu', 22, '1724684147_slide_2.jpg', '2024-08-26 00:55:47.000000', '2024-08-26 00:55:47.000000'),
+(13, '<p>dwdwadwa</p>', 23, '1727432305_e3a95ea66a9ba30614d76dbf4d835a62.jpg', '2024-09-27 04:18:25.000000', '2024-09-27 04:18:25.000000'),
+(14, '<p>dwadawdwa</p>', 22, '', '2024-09-27 04:19:31.000000', '2024-09-27 04:19:31.000000'),
+(15, '<p>dwadwadwaad</p>', 22, '1727701068_FlavoredBread.jpg', '2024-09-30 06:57:48.000000', '2024-09-30 06:57:48.000000');
 
 -- --------------------------------------------------------
 
@@ -66,7 +67,10 @@ CREATE TABLE `calendar_tbl` (
 --
 
 INSERT INTO `calendar_tbl` (`calendar_id`, `calendar_date`, `calendar_details`) VALUES
-(38, '2024-08-24', '<p><b>EXAM DAY SO PREPARE</b></p>');
+(42, '2024-10-02', '<p>dwadwadwadw</p>'),
+(43, '2024-10-03', '<p>HI TSU</p>'),
+(44, '2024-10-04', '<p>hi tsu</p><p><br></p>'),
+(45, '2024-10-02', '<p>HI TSU</p>');
 
 -- --------------------------------------------------------
 
@@ -108,7 +112,6 @@ CREATE TABLE `faculty_tbl` (
 --
 
 INSERT INTO `faculty_tbl` (`faculty_id`, `faculty_name`, `faculty_dept`, `faculty_image`) VALUES
-(1, 'Miya Layla', 1, 'Miya Layla_p2.jpg'),
 (2, 'John Wick', 2, 'John Wick_p1.jpg'),
 (6, 'Juan Dela Cruz', 3, 'John Wick_p3.jpg'),
 (8, 'Shrek Org', 1, 'Shrek Org_og.jpg'),
@@ -175,17 +178,42 @@ INSERT INTO `heads_tbl` (`id`, `name`, `img`, `faculty_dept`) VALUES
 CREATE TABLE `organization_tbl` (
   `org_id` int(25) NOT NULL,
   `org_name` text NOT NULL,
-  `org_image` varchar(250) NOT NULL
+  `org_image` varchar(250) NOT NULL,
+  `users_type` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `organization_tbl`
 --
 
-INSERT INTO `organization_tbl` (`org_id`, `org_name`, `org_image`) VALUES
-(1, 'STUDENT CLUB &amp; ORGS', 'PROGRAMMERS DEN_1st.png'),
-(2, 'INNOVATORS', 'INNoVATORS_2nd.png'),
-(3, 'CAMPUS STUDENT ORGANIZATION', 'CAMPUS STUDENT ORGANIZATION_3rd.jpg');
+INSERT INTO `organization_tbl` (`org_id`, `org_name`, `org_image`, `users_type`) VALUES
+(1, 'STUDENT CLUB &amp; ORGS', 'PROGRAMMERS DEN_1st.png', 0),
+(2, 'INNOVATORS', 'INNoVATORS_2nd.png', 0),
+(3, 'CAMPUS STUDENT ORGANIZATION', 'CAMPUS STUDENT ORGANIZATION_3rd.jpg', 0),
+(5, 'ADMIN', 'ADMIN_5th.png', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orgmembers_tbl`
+--
+
+CREATE TABLE `orgmembers_tbl` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `org_type` int(11) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `users_type` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orgmembers_tbl`
+--
+
+INSERT INTO `orgmembers_tbl` (`id`, `name`, `username`, `position`, `org_type`, `password`, `users_type`) VALUES
+(28, 'hanzsadsadsadsa', 'HANZ PILLERVA', 'Member', 2, 'b5f89e316ac9d1c60462b2f7bfb0dabedbcf21b4783dc3cf4a7b14434d0ee168', 3);
 
 -- --------------------------------------------------------
 
@@ -274,7 +302,7 @@ INSERT INTO `room_tbl` (`room_id`, `room_name`, `floor_id`) VALUES
 (68, 'L401', 4),
 (69, 'R422', 4),
 (70, 'BLANK', 4),
-(71, 'BLANK', 4),
+(71, 'MIS', 4),
 (72, 'STAIRS', 4),
 (73, 'STAIRS', 4),
 (74, 'blank', 5),
@@ -310,9 +338,9 @@ CREATE TABLE `users_tbl` (
 --
 
 INSERT INTO `users_tbl` (`users_id`, `users_username`, `users_password`, `users_org`, `users_type`) VALUES
-(18, 'admin1', '$2y$10$njb/dVzH7zvFc3wsl5GmtOMZxYWGB9vQ3AtQicdDwfJTIwMHnEISC', 1, 1),
-(22, 'org1', '$2y$10$WzfNt.8a8LUdSnfIpEBXk.FGqtja8VSuVQ4MuXaIjOvQSelpagaQm', 2, 2),
-(23, 'org2', '$2y$10$1e7XidLRHsHHB2RIt0Hzd.ezGevZJqjZHMAZpMKiYhESurx1uBZjC', 3, 2);
+(18, 'admin', 'd07e7c4cce2afb5fdab874b1f6c1f95a06564921bad3486805e5bd27fad62457', 5, 1),
+(22, 'org1', 'b5f89e316ac9d1c60462b2f7bfb0dabedbcf21b4783dc3cf4a7b14434d0ee168', 2, 2),
+(23, 'org2', '29d07a242e8f608b02ddf19f7673b973b40414360a983c56ea24f982d104a3e1', 3, 2);
 
 -- --------------------------------------------------------
 
@@ -331,6 +359,7 @@ CREATE TABLE `user_type_tbl` (
 
 INSERT INTO `user_type_tbl` (`user_id`, `user_type`) VALUES
 (1, 'admin'),
+(3, 'member'),
 (2, 'organization');
 
 --
@@ -380,6 +409,12 @@ ALTER TABLE `organization_tbl`
   ADD PRIMARY KEY (`org_id`);
 
 --
+-- Indexes for table `orgmembers_tbl`
+--
+ALTER TABLE `orgmembers_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `room_tbl`
 --
 ALTER TABLE `room_tbl`
@@ -406,13 +441,13 @@ ALTER TABLE `user_type_tbl`
 -- AUTO_INCREMENT for table `announcement_tbl`
 --
 ALTER TABLE `announcement_tbl`
-  MODIFY `announcement_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `announcement_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `calendar_tbl`
 --
 ALTER TABLE `calendar_tbl`
-  MODIFY `calendar_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `calendar_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `department_tbl`
@@ -442,7 +477,13 @@ ALTER TABLE `heads_tbl`
 -- AUTO_INCREMENT for table `organization_tbl`
 --
 ALTER TABLE `organization_tbl`
-  MODIFY `org_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `org_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `orgmembers_tbl`
+--
+ALTER TABLE `orgmembers_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `room_tbl`
@@ -454,13 +495,13 @@ ALTER TABLE `room_tbl`
 -- AUTO_INCREMENT for table `users_tbl`
 --
 ALTER TABLE `users_tbl`
-  MODIFY `users_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `users_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_type_tbl`
 --
 ALTER TABLE `user_type_tbl`
-  MODIFY `user_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -935,6 +935,7 @@ $showfaqs = $obj->show_allFAQS();
 </div>
 
 
+
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
@@ -1152,6 +1153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showTab(tabButtons[0].getAttribute('data-tab'));
     }
 });$(document).ready(function () {
+});$(document).ready(function () {
     $('#newsModal').on('show.bs.modal', function (e) {
         var title = $(e.relatedTarget).data('title');
         var imageSrc = $(e.relatedTarget).data('image');
@@ -1188,6 +1190,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Sort announcements by created_at in descending order
                     response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
+
+                    // Sort announcements by created_at in descending order
+                    response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
                     response.announcements.forEach(function (announcement) {
                         var createdAt = new Date(announcement.created_at);
                         var timeAgo = formatRelativeTime(createdAt);
@@ -1196,6 +1202,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         var sanitizedDetails = removeColorTags(announcement.announcement_details);
 
                         content += `
+                            <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
                             <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
                             <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
                                 <p class="announcement-details mb-1">${sanitizedDetails}</p>
@@ -1235,7 +1242,26 @@ document.addEventListener('DOMContentLoaded', function () {
     var minutes = Math.floor(seconds / 60);
     var hours = Math.floor(minutes / 60);
     var days = Math.floor(hours / 24);
+    var now = new Date();
+    var diff = Math.floor((now - date) / 1000); // Get difference in seconds
 
+    var seconds = diff;
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+
+    if (days > 1) {
+        return date.toLocaleDateString(); // Return the full date
+    } else if (days === 1) {
+        return '1 day ago';
+    } else if (hours > 0) {
+        return hours + ' hours ago';
+    } else if (minutes > 0) {
+        return minutes + ' minutes ago';
+    } else {
+        return 'just now';
+    }
+}
     if (days > 1) {
         return date.toLocaleDateString(); // Return the full date
     } else if (days === 1) {

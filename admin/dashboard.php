@@ -1,5 +1,6 @@
 <?php
 include_once('assets/header.php');
+include_once('ajax/remove.php');
 include_once('../class/connection.php');
 
 
@@ -81,13 +82,14 @@ try {
           <p>Announcement</p>
         </a>
       </li>
-      <?php if ($account_type == '1') { ?>
-        <li>
+      <li>
           <a href="./schoolcalendar.php">
             <i class="nc-icon nc-pin-3"></i>
             <p>School Calendar</p>
           </a>
         </li>
+      <?php if ($account_type == '1') { ?>
+       
         <li >
           <a href="./facultymembers.php">
             <i class="nc-icon nc-bell-55"></i>

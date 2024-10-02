@@ -11,7 +11,6 @@ if ($account_type != '1' && $account_type != '2' && $account_type != '3') {
     
 }
 
-
 class mainClass
 {
     private $connection;

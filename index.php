@@ -156,6 +156,11 @@ $showfaqs = $obj->show_allFAQS();
                 <section class="tabgroup">
                     <ul>
                         <?php
+                        // Sort the announcements by 'created_at' in descending order
+                        usort($allAnnouncement, function($a, $b) {
+                            return strtotime($b['created_at']) - strtotime($a['created_at']);
+                        });
+
                         foreach ($allAnnouncement as $row) {
                             // Create DateTime objects for the created_at timestamp and the current time
                             $createdAt = new DateTime($row['created_at']);
@@ -204,8 +209,6 @@ $showfaqs = $obj->show_allFAQS();
                                     $details = preg_replace('/style="[^"]*color:[^;"]*;?"/i', '', $details);
                                     $details = preg_replace('/<li([^>]*)>/i', '<li$1 style="color: yellow;">', $details);
 
-
-                                   
                                     echo $details;
                                     ?>
                                     </div>
@@ -221,44 +224,99 @@ $showfaqs = $obj->show_allFAQS();
     </div>
 </section>
 
+</section>
+<section id="schoolcalendar" class="content-section">
+    <div class="section-heading text-center borderYellow">
+        <h1><em>SCHOOL CALENDAR</em></h1>
+    </div>
+    <div class="section-content">
+        <div class="tabs-content">
+            <div class="wrapper">
+                <section class="tabgroup">
+                    <ul>
+                        <?php 
+                        $today = date('Y-m-d'); // Get today's date
+                        $todayEvents = []; // Initialize array for today's events
+                        $upcomingEvents = []; // Initialize array for upcoming events
 
-        <section id="schoolcalendar" class="content-section">
-            <div class="section-heading text-center borderYellow">
-                <h1><br><em>SCHOOL CALENDAR</em></h1>
+                        // Loop through the outer array (months)
+                        foreach ($allEvent as $month => $events) {
+                            foreach ($events as $event) {
+                                // Check if the necessary keys exist
+                                if (isset($event['calendar_date'], $event['calendar_id'], $event['calendar_details'])) {
+                                    // Check if the event is happening today
+                                    if ($event['calendar_date'] === $today) {
+                                        $todayEvents[] = $event; // Store today's events
+                                    } elseif ($event['calendar_date'] > $today) {
+                                        $upcomingEvents[] = $event; // Store upcoming events
+                                    }
+                                }
+                            }
+                        }
+
+                        // Display today's events if any
+                        if (!empty($todayEvents)) {
+                            echo '<li style="width: 100%;">';
+                            echo '<div class="item">';
+                            echo '<div class="text-content">';
+                            echo '<h4>Happening Today</h4>';
+                            echo '<table cellspacing="10">'; // Start the table outside of the loop
+                            
+                            foreach ($todayEvents as $event) {
+                                echo '<tr>';
+                                echo '<td style="color: white;">' . htmlspecialchars($event['calendar_date']) . ' </td>';
+                                echo '<td style="color: white;"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
+                                echo '</tr>';
+                            }
+                            
+                            echo '</table>'; // End the table here
+                            echo '</div>'; // Close text-content
+                            echo '</div>'; // Close item
+                            echo '</li>';
+                        }
+
+                        // Display upcoming events if any
+                        if (!empty($upcomingEvents)) {
+                            echo '<li style="width: 100%;">';
+                            echo '<div class="item">';
+                            echo '<div class="text-content">';
+                            echo '<h4>Upcoming Events</h4>';
+                            echo '<table cellspacing="10">'; // Start the table outside of the loop
+                            
+                            foreach ($upcomingEvents as $event) {
+                                echo '<tr>';
+                                echo '<td style="color: white;">' . htmlspecialchars($event['calendar_date']) . ' </td>';
+                                echo '<td style="color: white;"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
+                                echo '</tr>';
+                            }
+                            
+                            echo '</table>'; // End the table here
+                            echo '</div>'; // Close text-content
+                            echo '</div>'; // Close item
+                            echo '</li>';
+                        }
+
+                        // If no events today and no upcoming events
+                        if (empty($todayEvents) && empty($upcomingEvents)) {
+                            echo '<li style="width: 100%;">';
+                            echo '<div class="item">';
+                            echo '<div class="text-content">';
+                            echo '<h4>No Events Happening Today or Upcoming</h4>';
+                            echo '</div>'; // Close text-content
+                            echo '</div>'; // Close item
+                            echo '</li>';
+                        }
+                        ?>
+                    </ul>
+                </section>
             </div>
-            <div class="section-content">
-                <div class="tabs-content">
-                    <div class="wrapper">
-                        <section class="tabgroup">
-                            <ul>
-                                <?php foreach ($allEvent as $month => $events): ?>
-                                    <li style="width: 100%;">
-                                        <div class="item">
-                                            <div class="text-content">
-                                                <h4><?= $month ?></h4>
-                                                <?php foreach ($events as $event): ?>
-                                                    <table cellspacing="10">
-                                                        <tr>
-                                                            <td>
-                                                                &emsp; <span><?= $event['monthDate'] ?> . . . . . . . . . . . .
-                                                                    . . . &nbsp;</span>
-                                                            </td>
-                                                            <td>
-                                                                <?= $event['calendar_details'] ?>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        </div>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
+    </div>
+</section>
+
+
+
+
         <section id="campusmap" class="content-section ">
             <div class="section-heading text-center borderYellow">
                 <h1><br><em>CAMPUS MAP</em></h1>
@@ -746,7 +804,12 @@ $showfaqs = $obj->show_allFAQS();
             </div>
             <div class="section-content section-content-orgs">
             <div class="row">
-                    <?php foreach ($allOrg as $row): ?>
+                    <?php
+                    
+                   
+                    foreach ($allOrg as $row):
+                     ?>
+                    
                         <div class="col-md-4">
                             <div class="faculty-card">
                                 <div class="faculty-image">
@@ -1081,8 +1144,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tabButtons.length > 0) {
         showTab(tabButtons[0].getAttribute('data-tab'));
     }
-});
-$(document).ready(function () {
+});$(document).ready(function () {
     $('#newsModal').on('show.bs.modal', function (e) {
         var title = $(e.relatedTarget).data('title');
         var imageSrc = $(e.relatedTarget).data('image');
@@ -1115,6 +1177,10 @@ $(document).ready(function () {
 
                 if (response.announcements && response.announcements.length > 0) {
                     content += '<div class="announcement-details">';
+
+                    // Sort announcements by created_at in descending order
+                    response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
                     response.announcements.forEach(function (announcement) {
                         var createdAt = new Date(announcement.created_at);
                         var timeAgo = formatRelativeTime(createdAt);
@@ -1123,9 +1189,8 @@ $(document).ready(function () {
                         var sanitizedDetails = removeColorTags(announcement.announcement_details);
 
                         content += `
-                        <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
+                            <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
                             <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
-                                
                                 <p class="announcement-details mb-1">${sanitizedDetails}</p>
                                 ${announcement.announcement_image ? `<img src="uploaded/annUploaded/${announcement.announcement_image}" class="img-fluid mb-2 announcement-image">` : ''}
                             </div>`;
@@ -1156,25 +1221,27 @@ $(document).ready(function () {
 
     // Utility function to format relative time
     function formatRelativeTime(date) {
-        var now = new Date();
-        var diff = now - date;
-        var seconds = Math.floor(diff / 1000);
-        var minutes = Math.floor(seconds / 60);
-        var hours = Math.floor(minutes / 60);
-        var days = Math.floor(hours / 24);
+    var now = new Date();
+    var diff = Math.floor((now - date) / 1000); // Get difference in seconds
 
-        if (days > 1) {
-            return date.toLocaleDateString(); // Return the full date
-        } else if (hours > 0) {
-            return hours + ' hours ago';
-        } else if (minutes > 0) {
-            return minutes + ' minutes ago';
-        } else {
-            return 'just now';
-        }
+    var seconds = diff;
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+
+    if (days > 1) {
+        return date.toLocaleDateString(); // Return the full date
+    } else if (days === 1) {
+        return '1 day ago';
+    } else if (hours > 0) {
+        return hours + ' hours ago';
+    } else if (minutes > 0) {
+        return minutes + ' minutes ago';
+    } else {
+        return 'just now';
     }
+}
 });
-
 
 
 

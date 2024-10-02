@@ -430,17 +430,47 @@ class mainClass
     }
     
     function show_announcement()
-    {
-        $query = "SELECT * FROM announcement_tbl a LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id LEFT JOIN organization_tbl o ON u.users_org = o.org_id ";
-        $statement = $this->connection->prepare($query);
+{
+    // Fetch the user's name based on session variable
+  // Fetch the user's name based on session variable
+$userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
 
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+// Query to get the user's name
+$userQuery = "SELECT name FROM orgmembers_tbl WHERE id = :userId";
+$userStatement = $this->connection->prepare($userQuery);
+$userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+$userStatement->execute();
+$userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
+$userName = $userRow ? htmlspecialchars($userRow['name'], ENT_QUOTES, 'UTF-8') : 'N/A'; // Safely escape the user's name
+
+// Main announcement query
+$query = "
+    SELECT a.*, 
+           u.users_username AS author_name, 
+           om.name AS updated_by_name, 
+           o.org_name 
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+    LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+    LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+";
+
+$statement = $this->connection->prepare($query);
+
+if ($statement->execute()) {
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    // You can now access the user's name if needed
+    foreach ($result as &$row) {
+        $row['user_name'] = $userName; // Add the user's name to each row if needed
     }
+    return $result;
+} else {
+    return "No Data";
+}
+
+}
+
+    
     function show_announcement_byId($id)
     {
         $query = "SELECT * FROM announcement_tbl where announcement_id = $id";

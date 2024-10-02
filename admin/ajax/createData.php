@@ -116,18 +116,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($type === 'event') {
             $details = $_POST['event_details'] ?? null;
             $date = $_POST['event_date'] ?? null;
-
-            $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details) VALUES (:date, :details)";
+            $creator = $_POST['uid'] ?? null; // Get the event creator from the input
+        
+            // Adjust the SQL to include event_creator
+            $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator) VALUES (:date, :details, :creator)";
             $stmt = $connect->prepare($sql);
             $stmt->execute([
                 ':date' => $date,
-                ':details' => $details
+                ':details' => $details,
+                ':creator' => $creator // Bind the creator value
             ]);
-
+        
             $response['success'] = true;
             $response['message'] = 'Event added successfully.';
-
-        } elseif ($type === 'faqs') {
+        }
+        elseif ($type === 'faqs') {
             $question = $_POST['faqs_question'] ?? null;
             $answer = $_POST['faqs_answer'] ?? null;
 

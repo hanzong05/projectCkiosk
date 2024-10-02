@@ -154,75 +154,82 @@ $showfaqs = $obj->show_allFAQS();
         <div class="tabs-content">
             <div class="wrapper">
                 <section class="tabgroup">
-                    <ul>
-                        <?php
-                        // Sort the announcements by 'created_at' in descending order
-                        usort($allAnnouncement, function($a, $b) {
-                            return strtotime($b['created_at']) - strtotime($a['created_at']);
-                        });
+    <ul>
+        <?php
+        // Ensure $allAnnouncement is an array and contains items
+        if (is_array($allAnnouncement) && count($allAnnouncement) > 0) {
+            // Sort the announcements by 'created_at' in descending order
+            usort($allAnnouncement, function ($a, $b) {
+                return strtotime($b['created_at']) - strtotime($a['created_at']);
+            });
 
-                        foreach ($allAnnouncement as $row) {
-                            // Create DateTime objects for the created_at timestamp and the current time
-                            $createdAt = new DateTime($row['created_at']);
-                            $now = new DateTime();
-                            $interval = $createdAt->diff($now);
+            foreach ($allAnnouncement as $row) {
+                // Check if created_at is set and valid
+                if (isset($row['created_at'])) {
+                    $createdAt = new DateTime($row['created_at']);
+                    $now = new DateTime();
+                    $interval = $createdAt->diff($now);
 
-                            // Check if the announcement is older than 24 hours
-                            if ($interval->days >= 1) {
-                                $timeAgo = $createdAt->format('Y-m-d'); // Display the full date
-                            } else {
-                                // Format the time difference for announcements less than 24 hours old
-                                if ($interval->h > 0) {
-                                    $timeAgo = $interval->h . ' hours ago';
-                                } elseif ($interval->i > 0) {
-                                    $timeAgo = $interval->i . ' minutes ago';
-                                } else {
-                                    $timeAgo = 'just now';
-                                }
-                            }
-                            ?>
-                            <br>
-                            <li style="width:100%;">
-                                <div class="item">
-                                    <div class="timestamp">
-                                        Created <?= $timeAgo ?>
-                                    </div>
-                                    <div class="text-content">
-                                        <img class="avaatar" src="uploaded/orgUploaded/<?= $row["org_image"] ?>" alt="">
-                                        <span><?= strtoupper($row['org_name']) ?></span>
-                                    </div>
-                                    <div class="square">
-                                    <?php
-                                    if ($row["announcement_image"] != "") {
-                                        echo '<div style="text-align: right; margin: 5px 0;">
-                                                <img src="uploaded/annUploaded/' . htmlspecialchars($row["announcement_image"], ENT_QUOTES, 'UTF-8') . '" alt=""
-                                                    style="max-width: 200px; width: 100%; height: auto; margin-left: 10px;">
-                                              </div>';
-                                    }
-
-                                    // Clean up the announcement details
-                                    $details = $row['announcement_details'];
-                                    $details = preg_replace('/<font[^>]*>/i', '', $details);  // Remove opening <font> tags
-                                    $details = preg_replace('/<\/font>/i', '', $details);     // Remove closing </font> tags
-                                    
-                                    // Remove inline color styles
-                                    $details = preg_replace('/style="[^"]*color:[^;"]*;?"/i', '', $details);
-                                    $details = preg_replace('/<li([^>]*)>/i', '<li$1 style="color: yellow;">', $details);
-
-                                    echo $details;
-                                    ?>
-                                    </div>
-                                </div>
-                            </li>
-                            <?php
+                    // Check if the announcement is older than 24 hours
+                    if ($interval->days >= 1) {
+                        $timeAgo = $createdAt->format('Y-m-d'); // Display the full date
+                    } else {
+                        // Format the time difference for announcements less than 24 hours old
+                        if ($interval->h > 0) {
+                            $timeAgo = $interval->h . ' hours ago';
+                        } elseif ($interval->i > 0) {
+                            $timeAgo = $interval->i . ' minutes ago';
+                        } else {
+                            $timeAgo = 'just now';
                         }
-                        ?>
-                    </ul>
-                </section>
-            </div>
-        </div>
-    </div>
+                    }
+                } else {
+                    $timeAgo = 'unknown date'; // Fallback if created_at is not set
+                }
+                ?>
+                <br>
+                <li style="width:100%;">
+                    <div class="item">
+                        <div class="timestamp">
+                            Created <?= $timeAgo ?>
+                        </div>
+                        <div class="text-content">
+                            <img class="avaatar" src="uploaded/orgUploaded/<?= htmlspecialchars($row["org_image"] ?? 'placeholder.jpg', ENT_QUOTES, 'UTF-8') ?>" alt="">
+                            <span><?= strtoupper(htmlspecialchars($row['org_name'] ?? 'Unknown Organization', ENT_QUOTES, 'UTF-8')) ?></span>
+                        </div>
+                        <div class="square">
+                            <?php
+                            // Check if announcement image exists
+                            if (!empty($row["announcement_image"])) {
+                                echo '<div style="text-align: right; margin: 5px 0;">
+                                        <img src="uploaded/annUploaded/' . htmlspecialchars($row["announcement_image"], ENT_QUOTES, 'UTF-8') . '" alt=""
+                                            style="max-width: 200px; width: 100%; height: auto; margin-left: 10px;">
+                                      </div>';
+                            }
+
+                            // Clean up the announcement details
+                            $details = $row['announcement_details'] ?? '';
+                            $details = preg_replace('/<font[^>]*>/i', '', $details);  // Remove opening <font> tags
+                            $details = preg_replace('/<\/font>/i', '', $details);     // Remove closing </font> tags
+                            
+                            // Remove inline color styles
+                            $details = preg_replace('/style="[^"]*color:[^;"]*;?"/i', '', $details);
+                            $details = preg_replace('/<li([^>]*)>/i', '<li$1 style="color: yellow;">', $details);
+
+                            echo $details;
+                            ?>
+                        </div>
+                    </div>
+                </li>
+                <?php
+            }
+        } else {
+            echo '<li>No announcements found.</li>'; // Handle case where there are no announcements
+        }
+        ?>
+    </ul>
 </section>
+
 
 </section>
 <section id="schoolcalendar" class="content-section">

@@ -191,53 +191,46 @@ $allAnnouncement = $obj->show_announcement();
                         Create Announcement
                       </button>
                     </div>
-                  </div>
-                  <table class="table table-light table-hover table-bordered" id="myTable">
-                    <thead>
-                      <th>
-                        <center>NO.</center>
-                      </th>
-                      <th>
-                        <center>DETAILS</center>
-                      </th>
-                      <th>
-                        <center>AUTHOR</center>
-                      </th>
-                      <th>
-                        <center>ACTION</center>
-                      </th>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $count = 1;
-                      foreach ($allAnnouncement as $row) {
-                        ?>
-                        <tr class="table-row">
-                          <td>
-                            <?php echo $count; ?>
-                          </td>
-                          <td class="ellipsis" style="width:30%;">
-                            <span><?php echo $row["announcement_details"]; ?></span>
-                          </td>
-                          <td>
-                            <?php echo $row["org_name"]; ?>
-                          </td>
-                          <td class="text-center">
-                            <button class="btn announcementModalEdit" data-toggle="modal"
-                              data-target="#announcementModalEdit" data-id="<?= $row['announcement_id'] ?>">
-                              Edit
-                            </button>
-                            <a class="btn btn-danger btn-delete" href='announcement.php?did=<?= $row['announcement_id'] ?>'>
+                  </div><table class="table table-light table-hover table-bordered" id="myTable">
+    <thead>
+        <th><center>NO.</center></th>
+        <th><center>DETAILS</center></th>
+        <th><center>AUTHOR</center></th> <!-- Represents the announcement creator -->
+        <th><center>ORG NAME</center></th> <!-- Shows the organization name -->
+        <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
+        <th><center>ACTION</center></th>
+    </thead>
+    <tbody>
+        <?php
+        $count = 1;
+        foreach ($allAnnouncement as $row) {
+            ?>
+            <tr class="table-row">
+                <td><?php echo $count; ?></td>
+                <td class="ellipsis" style="width:30%;">
+                    <span><?php echo htmlspecialchars($row["announcement_details"], ENT_QUOTES, 'UTF-8'); ?></span>
+                </td>
+                <td><?php echo htmlspecialchars($row["author_name"], ENT_QUOTES, 'UTF-8'); ?></td> <!-- Creator (username) -->
+                <td><?php echo htmlspecialchars($row["org_name"] ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></td> <!-- Organization Name -->
+                <td><?php echo htmlspecialchars($row["updated_by_name"] ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></td> <!-- Updated By -->
+                <td class="text-center">
+                    <button class="btn announcementModalEdit" data-toggle="modal"
+                            data-target="#announcementModalEdit" data-id="<?= htmlspecialchars($row['announcement_id'], ENT_QUOTES, 'UTF-8') ?>">
+                        Edit
+                    </button>
+                    <a class="btn btn-danger btn-delete" href='announcement.php?did=<?= htmlspecialchars($row['announcement_id'], ENT_QUOTES, 'UTF-8') ?>'>
                         Delete
-                      </a>
-                          </td>
-                        </tr>
-                        <?php
-                        $count++;
-                      }
-                      ?>
-                    </tbody>
-                  </table>
+                    </a>
+                </td>
+            </tr>
+            <?php
+            $count++;
+        }
+        ?>
+    </tbody>
+</table>
+
+
                 </div>
               </div>
             </div>

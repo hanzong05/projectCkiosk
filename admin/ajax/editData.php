@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($type === 'announcement') {
             $aid = $_POST['aid'] ?? '';
             $details = $_POST['announcement_details'] ?? '';
+            $update = $_POST['announcement_creator'] ?? '';
             $previousImage = $_POST['previous_image'] ?? '';
             $date = date('Y-m-d H:i:s');
             $image = $previousImage;
@@ -59,13 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
             // Update announcement in the database
             $sql = "UPDATE `announcement_tbl` 
-                    SET announcement_details = :details, announcement_image = :image, updated_at = :date
-                    WHERE announcement_id = :aid";
+            SET announcement_details = :details, 
+                announcement_image = :image, 
+                updated_at = :date, 
+                updated_by = :update
+            WHERE announcement_id = :aid";
+    
             $stmt = $connect->prepare($sql);
             $stmt->execute([
                 ':details' => $details,
                 ':image' => $image,
                 ':date' => $date,
+                ':update' => $update,
                 ':aid' => $aid
             ]);
     
@@ -75,20 +81,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($type === 'event') {
             $cid = $_POST['cid'] ?? '';
             $details = $_POST['event_details'] ?? '';
+             $update = $_POST['event_creator'] ?? '';
             $date = $_POST['event_date'] ?? '';
 
-            // Update event in the database without image
-            $sql = "UPDATE `calendar_tbl` SET calendar_details = :details, calendar_date = :date WHERE calendar_id = :cid";
+            // Update event in the database
+            $sql = "UPDATE `calendar_tbl` 
+                    SET calendar_details = :details, 
+                        calendar_date = :date,
+                        updated_by = :update 
+                    WHERE calendar_id = :cid";
+
             $stmt = $connect->prepare($sql);
             $stmt->execute([
                 ':details' => $details,
                 ':date' => $date,
+                ':update' => $update,
                 ':cid' => $cid
             ]);
 
             $response['success'] = true;
             $response['message'] = 'Event updated successfully.';
-        } elseif ($type === 'faculty') {
+        }
+
+    elseif ($type === 'faculty') {
             $fid = $_POST['fid'] ?? '';
             $name = $_POST['faculty_name'] ?? '';
             $dept = $_POST['department'] ?? '';

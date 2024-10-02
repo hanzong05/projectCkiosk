@@ -241,6 +241,7 @@ $allEvents = $obj->show_events();
           </div>
           <div class="modal-body">
             <div class="mb-3">
+            <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
               <label for="event_date" class="form-label fw-bold">Event Date</label>
               <input type="date" id="event_date" class="form-control" name="event_date" required>
             </div>

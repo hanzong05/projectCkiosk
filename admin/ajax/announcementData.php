@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 include "../../class/connection.php";
 
 $announcementID = isset($_REQUEST['announcementID']) ? intval($_REQUEST['announcementID']) : 0;
@@ -29,6 +31,7 @@ if ($array) {
             <input type="hidden" name="previous" value="' . htmlspecialchars($value['announcement_image'], ENT_QUOTES, 'UTF-8') . '" />
             <label for="ann_img" class="form-label fw-bold">Photo</label>
             <input type="file" class="form-control" name="ann_img" id="ann_img">
+            <input type="hidden" value="' . htmlspecialchars($_SESSION['id'], ENT_QUOTES, 'UTF-8') . '" name="announcement_creator">
         </div>';
     }
 }

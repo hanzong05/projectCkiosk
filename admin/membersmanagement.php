@@ -302,9 +302,8 @@ if ($stmt->rowCount() == 1) {
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- add account pop up --><!-- Add account pop-up --><form id="accountForm" class="row" action="" method="post">
+  </div><!-- Add account pop-up -->
+<form id="accountForm" class="row" action="your_upload_script.php" method="post" enctype="multipart/form-data">
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="accountModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -345,17 +344,23 @@ if ($stmt->rowCount() == 1) {
                             <option value="Treasurer">Treasurer</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="org_image" class="form-label fw-bold">Profile Image</label>
+                        <input type="file" id="org_image" class="form-control" name="org_image" accept="image/*" required>
+                    </div>
                     <!-- Hidden input field for org_type -->
-                    <input type="hidden" name="org" value="<?php echo $users_org; ?>">
+                    <input type="hidden" name="org" value="<?php echo htmlspecialchars($users_org); ?>">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn" value="Add" name="add_account">
+                    <input type="submit" class="btn btn-primary" value="Add" name="add_account">
                 </div>
             </div>
         </div>
     </div>
 </form>
+
+
 
 <!-- Edit Account Modal -->
 <form class="row" action="" method="post">

@@ -19,25 +19,52 @@ $array = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($array) {
     // Access the values directly without a foreach loop
     $response .= '<input type="hidden" value="' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" name="uid">
-                <div class="mb-3">
-                    <label for="name" class="form-label fw-bold">Name</label>
-                    <input type="text" id="name" class="form-control" name="name" value="' . htmlspecialchars($array['name'], ENT_QUOTES, 'UTF-8') . '" required>
-                </div>
-                <div class="mb-3">
-                    <label for="username" class="form-label fw-bold">Username</label>
-                    <input type="text" id="username" class="form-control" name="username" value="' . htmlspecialchars($array['username'], ENT_QUOTES, 'UTF-8') . '" required autocomplete="username">
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label fw-bold">Password</label>
-                    <div class="input-group">
-                        <input type="password" id="password-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" class="form-control password-field" name="password" autocomplete="new-password" aria-label="Password">
-                        <span class="input-group-text password-toggle" id="togglePassword-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '">
-                            <i class="fa fa-eye"></i>
-                        </span>
-                    </div>
-                    <small class="form-text text-muted">Leave blank to keep the current password.</small>
-                </div>
-               ';
+
+    <div class="mb-3">
+        <label for="profile_image" class="form-label fw-bold">Profile Image</label>
+        <div class="d-flex align-items-center">
+            <div class="me-3">'; // Add some spacing between image and button
+            if (!empty($array['member_img'])) {
+                $response .= '<img src="../uploaded/orgUploaded/' . htmlspecialchars($array['member_img'], ENT_QUOTES, 'UTF-8') . '" alt="Profile Image" class="img-fluid" style="width: 100px; height: 100px; border-radius: 50%;">';
+            } else {
+                $response .= '<img src="../../path/to/default/image.png" alt="Default Profile Image" class="img-fluid" style="width: 100px; height: 100px; border-radius: 50%;">';
+            }
+$response .= '        </div>
+            <input type="file" name="profile_image" class="form-control" accept="image/*">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="name" class="form-label fw-bold">Name</label>
+        <input type="text" id="name" class="form-control" name="name" value="' . htmlspecialchars($array['name'], ENT_QUOTES, 'UTF-8') . '" required>
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label fw-bold">Username</label>
+        <input type="text" id="username" class="form-control" name="username" value="' . htmlspecialchars($array['username'], ENT_QUOTES, 'UTF-8') . '" required autocomplete="username">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label fw-bold">Password</label>
+        <div class="input-group">
+            <input type="password" id="password-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" class="form-control password-field" name="password" autocomplete="new-password" aria-label="Password">
+            <span class="input-group-text password-toggle" id="togglePassword-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '">
+                <i class="fa fa-eye"></i>
+            </span>
+        </div>
+        <small class="form-text text-muted">Leave blank to keep the current password.</small>
+    </div>
+    <div class="mb-3">
+        <label for="position" class="form-label fw-bold">Position</label>
+        <select name="position" id="position" class="form-control" required>
+            <option value="" selected>Select a position</option>
+            <option value="Member"' . ($array['position'] === 'Member' ? ' selected' : '') . '>Member</option>
+            <option value="President"' . ($array['position'] === 'President' ? ' selected' : '') . '>President</option>
+            <option value="VicePresident"' . ($array['position'] === 'VicePresident' ? ' selected' : '') . '>Vice President</option>
+            <option value="Auditor"' . ($array['position'] === 'Auditor' ? ' selected' : '') . '>Auditor</option>
+            <option value="Secretary"' . ($array['position'] === 'Secretary' ? ' selected' : '') . '>Secretary</option>
+            <option value="Treasurer"' . ($array['position'] === 'Treasurer' ? ' selected' : '') . '>Treasurer</option>
+        </select>
+    </div>';
+
 } else {
     $response = '<p>No data found for the selected account.</p>';
 }

@@ -430,46 +430,62 @@ class mainClass
     }
     
     function show_announcement()
-{
-    // Fetch the user's name based on session variable
-  // Fetch the user's name based on session variable
-$userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
-
-// Query to get the user's name
-$userQuery = "SELECT name FROM orgmembers_tbl WHERE id = :userId";
-$userStatement = $this->connection->prepare($userQuery);
-$userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
-$userStatement->execute();
-$userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
-$userName = $userRow ? htmlspecialchars($userRow['name'], ENT_QUOTES, 'UTF-8') : 'N/A'; // Safely escape the user's name
-
-// Main announcement query
-$query = "
-    SELECT a.*, 
-           u.users_username AS author_name, 
-           om.name AS updated_by_name, 
-           o.org_name 
-    FROM announcement_tbl a 
-    LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
-    LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
-    LEFT JOIN organization_tbl o ON u.users_org = o.org_id
-";
-
-$statement = $this->connection->prepare($query);
-
-if ($statement->execute()) {
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    // You can now access the user's name if needed
-    foreach ($result as &$row) {
-        $row['user_name'] = $userName; // Add the user's name to each row if needed
+    {
+        // Fetch the user's name based on session variable
+        $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+    
+        // Query to get the user's name from orgmembers_tbl
+        $userQuery = "SELECT name FROM orgmembers_tbl WHERE id = :userId";
+        $userStatement = $this->connection->prepare($userQuery);
+        $userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $userStatement->execute();
+        $userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
+    
+        // If the name is not found in orgmembers_tbl, fallback to users_tbl
+        if (!$userRow) {
+            $userQuery = "SELECT users_username AS name FROM users_tbl WHERE users_id = :userId";
+            $userStatement = $this->connection->prepare($userQuery);
+            $userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $userStatement->execute();
+            $userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
+        }
+    
+        // Safely escape the user's name
+        $userName = $userRow ? htmlspecialchars($userRow['name'], ENT_QUOTES, 'UTF-8') : 'N/A';
+    
+        // Main announcement query, including org_image from organization_tbl
+        $query = "
+            SELECT a.*, 
+                   u.users_username AS author_name, 
+                   om.name AS updated_by_name, 
+                   o.org_name, 
+                   o.org_image  -- Added org_image from organization_tbl
+            FROM announcement_tbl a 
+            LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+            LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+            LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+        ";
+    
+        $statement = $this->connection->prepare($query);
+    
+        if ($statement->execute()) {
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Add the fetched user name and organization image to each row
+            foreach ($result as &$row) {
+                $row['user_name'] = $userName; // Attach the user's name
+    
+                // Handle org_image, fallback to a placeholder if not available
+                $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                    ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                    : 'placeholder.jpg'; // Default placeholder if no image is found
+            }
+            return $result;
+        } else {
+            return "No Data";
+        }
     }
-    return $result;
-} else {
-    return "No Data";
-}
-
-}
-
+    
     
     function show_announcement_byId($id)
     {

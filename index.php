@@ -146,6 +146,8 @@ $showfaqs = $obj->show_allFAQS();
         </ul>
     </div>
     <div class="page-content">
+
+    
     <section id="announcement" class="content-section">
     <div class="section-heading text-center borderYellow">
         <h1><br><em>ANNOUNCEMENT</em></h1>
@@ -194,7 +196,7 @@ $showfaqs = $obj->show_allFAQS();
                             Created <?= $timeAgo ?>
                         </div>
                         <div class="text-content">
-                            <img class="avaatar" src="uploaded/orgUploaded/<?= htmlspecialchars($row["org_image"] ?? 'placeholder.jpg', ENT_QUOTES, 'UTF-8') ?>" alt="">
+                            <img class="avaatar" src="uploaded/orgUploaded/<?= htmlspecialchars($row["org_image"], ENT_QUOTES, 'UTF-8') ?>" alt="">
                             <span><?= strtoupper(htmlspecialchars($row['org_name'] ?? 'Unknown Organization', ENT_QUOTES, 'UTF-8')) ?></span>
                         </div>
                         <div class="square">
@@ -805,62 +807,68 @@ $showfaqs = $obj->show_allFAQS();
         </section>
         </section>
 
-    <section id="campusorgs" class="content-section">
+          <section id="campusorgs" class="content-section">
             <div class="section-heading text-center borderYellow">
                 
             </div>
-            <div class="section-content section-content-orgs">
-            <div class="row">
-                    <?php
-                    
-                   
-                    foreach ($allOrg as $row):
-                     ?>
-                    
-                        <div class="col-md-4">
-                            <div class="faculty-card">
-                                <div class="faculty-image">
-                                    <a href="#"
-                                    data-toggle="modal"
-                                    data-target="#newsModal"
-                                    data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                                    data-title="<?= htmlspecialchars($row['org_name']) ?>"
-                                    data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                    data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                    data-author="<?= htmlspecialchars($row['org_name']) ?>">
-                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                            alt="<?= htmlspecialchars($row['org_name']) ?>"
-                                            class="orgimage">
-                                    </a>
+                <div class="section-content section-content-orgs">
+                    <div class="row">
+                            <?php
+                            
+                        
+                            foreach ($allOrg as $row):
+                            ?>
+                            
+                                <div class="col-md-4">
+                                    <div class="faculty-card">
+                                        <div class="faculty-image">
+                                            <a href="#"
+                                            data-toggle="modal"
+                                            data-target="#newsModal"
+                                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                                            data-title="<?= htmlspecialchars($row['org_name']) ?>"
+                                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                            data-author="<?= htmlspecialchars($row['org_name']) ?>">
+                                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                                    alt="<?= htmlspecialchars($row['org_name']) ?>"
+                                                    class="orgimage">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['org_name']) ?></h6>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header d-flex justify-content-between align-items-center">
+                                    
+                                    <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
+                                    <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="newsFeedContent" class="news-feed">
+                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    
                                 </div>
                             </div>
-                            <div class="faculty-info">
-                                <h6><?= htmlspecialchars($row['org_name']) ?></h6>
-                            </div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-                <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
-                <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- News Feed Content -->
-                <div id="newsFeedContent" class="news-feed">
-                </div>
-            </div>
-            <div class="modal-footer">
-              
-            </div>
-        </div>
-    </div>
-            </div>
-        </section>
+                    </div>
+
+
+
+         </section>
+         
+
         <section id="faqs" class="content-section">
     <div id="faqs-content">
         <div class="section-heading text-center borderYellow">
@@ -1153,7 +1161,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showTab(tabButtons[0].getAttribute('data-tab'));
     }
 });$(document).ready(function () {
-});$(document).ready(function () {
     $('#newsModal').on('show.bs.modal', function (e) {
         var title = $(e.relatedTarget).data('title');
         var imageSrc = $(e.relatedTarget).data('image');
@@ -1163,6 +1170,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('Organization ID:', orgId); // Debugging org_id to ensure it's fetched correctly
 
+        // Initial fetch for announcements
+        fetchAnnouncements(orgId, profilePhoto, authorName);
+    });
+
+    // Fetch announcements
+    function fetchAnnouncements(orgId, profilePhoto, authorName) {
         $.ajax({
             url: 'ajax/fetch_announcement.php',
             type: 'POST',
@@ -1181,28 +1194,22 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="news-feed-header d-flex align-items-center mb-3">
                             <img src="${profilePhoto}" alt="Profile Photo" class="img-fluid rounded-circle profile-photo" style="width: 50px; height: 50px; margin-right: 10px;">
                             <h5 class="font-weight-bold mb-0">${authorName}</h5>
+                            <button type="button" class="btn btn-secondary show-members-btn" data-orgid="${orgId}" id="modalShowMembersBtn">
+                                Show Members
+                            </button>
                         </div>
                 `;
 
                 if (response.announcements && response.announcements.length > 0) {
                     content += '<div class="announcement-details">';
-
-                    // Sort announcements by created_at in descending order
-                    response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-
-                    // Sort announcements by created_at in descending order
                     response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
                     response.announcements.forEach(function (announcement) {
                         var createdAt = new Date(announcement.created_at);
                         var timeAgo = formatRelativeTime(createdAt);
-
-                        // Remove font tags and inline styles related to color from the announcement details
                         var sanitizedDetails = removeColorTags(announcement.announcement_details);
 
                         content += `
-                            <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
                             <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
                             <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
                                 <p class="announcement-details mb-1">${sanitizedDetails}</p>
@@ -1219,62 +1226,96 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             error: function (xhr, status, error) {
                 console.error('AJAX Error:', status, error);
-                console.error('Response Text:', xhr.responseText);
                 $('#newsFeedContent').html('<p>An error occurred while fetching announcements. Please try again later.</p>');
             }
         });
+    }
+
+$(document).on('click', '.show-members-btn', function () {
+    var orgId = $(this).data('orgid');
+    fetchMembers(orgId);
+});
+
+// Fetch members based on org ID
+function fetchMembers(orgId) {
+    $.ajax({
+        url: 'ajax/fetch_members.php', // Replace with the correct URL for fetching members
+        type: 'POST',
+        dataType: 'json',
+        data: { org_id: orgId },
+        success: function (response) {
+            console.log('AJAX Success Response (Members):', response);
+
+            if (response.error) {
+                $('#newsFeedContent').html('<p>' + response.error + '</p>');
+                return;
+            }
+
+            var membersContent = `
+                <div class="members-list">
+                    <h5>Members</h5>
+                    <ul class="list-group">
+            `;
+
+            if (response.members && response.members.length > 0) {
+                response.members.forEach(function (member) {
+                    membersContent += `
+                        <li class="list-group-item">
+                            <img src="${member.member_img}" alt="${member.name}" class="img-fluid rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+                            ${member.name} (${member.username})
+                        </li>`;
+                });
+            } else {
+                membersContent += '<li class="list-group-item">No members found.</li>';
+            }
+
+            membersContent += `
+                    </ul>
+                </div>
+            `;
+
+            $('#newsFeedContent').html(membersContent);
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX Error (Members):', status, error);
+            $('#newsFeedContent').html('<p>An error occurred while fetching members. Please try again later.</p>');
+        }
     });
+}
 
     // Utility function to remove font tags and color styles
     function removeColorTags(content) {
         return content
-            .replace(/<font[^>]*>/g, '') 
-            .replace(/<\/font>/g, '')    
-            .replace(/style="[^"]*color:[^;"]*;?"/g, ''); 
+            .replace(/<font[^>]*>/g, '') // Remove <font> tags
+            .replace(/<\/font>/g, '')    // Remove </font> tags
+            .replace(/style="[^"]*color:[^;"]*;?"/g, ''); // Remove inline color styles
     }
 
     // Utility function to format relative time
     function formatRelativeTime(date) {
-    var now = new Date();
-    var diff = Math.floor((now - date) / 1000); // Get difference in seconds
+        var now = new Date();
+        var diff = Math.floor((now - date) / 1000); // Get difference in seconds
 
-    var seconds = diff;
-    var minutes = Math.floor(seconds / 60);
-    var hours = Math.floor(minutes / 60);
-    var days = Math.floor(hours / 24);
-    var now = new Date();
-    var diff = Math.floor((now - date) / 1000); // Get difference in seconds
+        var seconds = diff;
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
 
-    var seconds = diff;
-    var minutes = Math.floor(seconds / 60);
-    var hours = Math.floor(minutes / 60);
-    var days = Math.floor(hours / 24);
-
-    if (days > 1) {
-        return date.toLocaleDateString(); // Return the full date
-    } else if (days === 1) {
-        return '1 day ago';
-    } else if (hours > 0) {
-        return hours + ' hours ago';
-    } else if (minutes > 0) {
-        return minutes + ' minutes ago';
-    } else {
-        return 'just now';
+        if (days > 1) {
+            return date.toLocaleDateString(); // Return the full date
+        } else if (days === 1) {
+            return '1 day ago';
+        } else if (hours > 0) {
+            return hours + ' hours ago';
+        } else if (minutes > 0) {
+            return minutes + ' minutes ago';
+        } else {
+            return 'just now';
+        }
     }
-}
-    if (days > 1) {
-        return date.toLocaleDateString(); // Return the full date
-    } else if (days === 1) {
-        return '1 day ago';
-    } else if (hours > 0) {
-        return hours + ' hours ago';
-    } else if (minutes > 0) {
-        return minutes + ' minutes ago';
-    } else {
-        return 'just now';
-    }
-}
 });
+
+
 
 
 

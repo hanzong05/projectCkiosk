@@ -200,12 +200,25 @@ if (isset($_POST['save_profile'])) {
                   <div class="tab-content" id="myTabContent">
                     
                   <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                    <div class="d-flex justify-content-between">
-                      <div class="p-2">
-                      <button class="btn accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $memberInfo['id'] ?>">
-                                  Edit Account
-                      </button>
-                      </div>
+                  <div class="d-flex justify-content-center align-items-center">
+                  <div class="p-2 text-center">
+                      <?php if (!empty($memberInfo['member_img'])): ?>
+                          <img src="../uploaded/orgUploaded/<?=htmlspecialchars($memberInfo['member_img']); ?>" 
+                              alt="Profile Image" 
+                              class="img-fluid"
+                              style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;"> 
+                      <?php else: ?>
+                          <img src="../../path/to/default/image.png" 
+                              alt="Default Profile Image" 
+                              class="img-fluid"
+                              style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;"> 
+                      <?php endif; ?>
+                  </div>
+              </div>
+
+
+                </div>
+
                     </div>
                     <form id="editProfileForm" method="POST" action="update_profile.php">
                         <div class="form-group">
@@ -223,6 +236,9 @@ if (isset($_POST['save_profile'])) {
                         <input type="hidden" id="editId" name="id" value="<?php echo htmlspecialchars($memberInfo['id']); ?>">
                         
                       </form>
+                      <button class="btn accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $memberInfo['id'] ?>">
+            Edit Account
+        </button>
                   </div>
                   </div>
                 </div>

@@ -302,8 +302,7 @@ if ($stmt->rowCount() == 1) {
         </div>
       </div>
     </div>
-  </div><!-- Add account pop-up -->
-<form id="accountForm" class="row" action="your_upload_script.php" method="post" enctype="multipart/form-data">
+  </div><form id="accountForm" class="row" action="your_upload_script.php" method="post" enctype="multipart/form-data">
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="accountModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -330,6 +329,27 @@ if ($stmt->rowCount() == 1) {
                             <span class="input-group-text password-toggle" id="togglePassword">
                                 <i class="fa fa-eye"></i>
                             </span>
+                        </div>
+                        <div class="password-requirements">
+                            <p>Password must meet the following criteria:</p>
+                            <ul class="requirement-list">
+                                <li>
+                                    <input type="radio" id="length-check" name="length" disabled>
+                                    <label for="length-check">At least 8 characters</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="uppercase-check" name="uppercase" disabled>
+                                    <label for="uppercase-check">At least one uppercase letter</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="number-check" name="number" disabled>
+                                    <label for="number-check">At least one number</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="special-check" name="special" disabled>
+                                    <label for="special-check">At least one special character (!@#$%^&*(),.?":{}|<>_)</label>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -553,6 +573,40 @@ document.getElementById('accountForm').addEventListener('submit', function(event
         });
     });
   </script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const passwordField = document.getElementById("password");
+    const lengthCheck = document.getElementById("length-check");
+    const uppercaseCheck = document.getElementById("uppercase-check");
+    const numberCheck = document.getElementById("number-check");
+    const specialCheck = document.getElementById("special-check");
+
+    passwordField.addEventListener("input", function () {
+        const password = passwordField.value;
+
+        // Reset all radio buttons to unchecked
+        lengthCheck.checked = false;
+        uppercaseCheck.checked = false;
+        numberCheck.checked = false;
+        specialCheck.checked = false;
+
+        // Check password requirements and set radio buttons accordingly
+        if (password.length >= 8) {
+            lengthCheck.checked = true; // Check the length radio button
+        }
+        if (/[A-Z]/.test(password)) {
+            uppercaseCheck.checked = true; // Check the uppercase radio button
+        }
+        if (/\d/.test(password)) {
+            numberCheck.checked = true; // Check the number radio button
+        }
+        if(/[!@#$%^&*(),.?":{}|<>_]/.test(password)) { // Updated special character regex
+            specialCheck.checked = true; // Check the special character radio button
+        }
+    });
+});
+</script>
 </body>
 
 </html>

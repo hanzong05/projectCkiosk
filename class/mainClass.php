@@ -1658,7 +1658,6 @@ function save_account($data)
         </script>';
     }
 }
-
 function save_profile($data)
 {
     // Retrieve and sanitize data
@@ -1666,17 +1665,19 @@ function save_profile($data)
     $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
     $username = htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8');
     $password = $data['password'] ?? ''; 
-    $position = htmlspecialchars($data['position'], ENT_QUOTES, 'UTF-8');
+    $profileImagePath = ''; // Initialize profile image path variable
 
     try {
         // Check if the user exists
-        $sql = "SELECT password FROM orgmembers_tbl WHERE id = :uid";
+        $sql = "SELECT password, member_img FROM orgmembers_tbl WHERE id = :uid";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
         $stmt->execute();
 
         if ($stmt->rowCount() == 1) {
-            $existingPasswordHash = $stmt->fetchColumn();
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+            $existingPasswordHash = $userData['password'];
+            $existingProfileImage = $userData['member_img']; // Retrieve the current profile image path
             $errors = [];
 
             // Validate the password if a new one is provided
@@ -1694,6 +1695,7 @@ function save_profile($data)
                     $errors[] = "Password must contain at least one special character.";
                 }
 
+                // If there are validation errors, return an error message
                 if (!empty($errors)) {
                     $errorMessage = implode('<br>', $errors);
                     return '<script>
@@ -1715,23 +1717,61 @@ function save_profile($data)
                 $hashedPassword = $existingPasswordHash; // Keep the existing hashed password if no new password
             }
 
+            // File upload handling
+            if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
+                $targetDir = '../uploaded/orgUploaded/';
+                $targetFile = $targetDir . basename($_FILES['profile_image']['name']);
+                $uploadOk = 1;
+
+                // Check file size
+                if ($_FILES['profile_image']['size'] > 500000) { // Adjust size as needed
+                    $uploadOk = 0;
+                    return "Sorry, your file is too large.";
+                }
+
+                // Allow certain file formats
+                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+                if(!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
+                    $uploadOk = 0;
+                    return "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                }
+
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk === 0) {
+                    return "Sorry, your file was not uploaded.";
+                } else {
+                    if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $targetFile)) {
+                        // File upload successful, update the profile image path
+                        $profileImagePath = $_FILES['profile_image']['name'];
+                    } else {
+                        return "Sorry, there was an error uploading your file.";
+                    }
+                }
+            } else {
+                // If no new file was uploaded, keep the existing image path
+                $profileImagePath = $existingProfileImage;
+            }
+
             // Prepare and execute the database update
             $query = "UPDATE orgmembers_tbl 
-                      SET username = :username, password = :password, name = :name
+                      SET username = :username, password = :password, name = :name, member_img = :profile_image
                       WHERE id = :uid";
             $statement = $this->connection->prepare($query);
+
+            // Log parameters before executing the update
+            error_log("Preparing to update user with UID: $uid");
+            error_log("Username: $username, Name: $name, Password: $hashedPassword, Profile Image: $profileImagePath");
 
             // Bind parameters
             $statement->bindParam(":username", $username, PDO::PARAM_STR);
             $statement->bindParam(":password", $hashedPassword, PDO::PARAM_STR);
             $statement->bindParam(":name", $name, PDO::PARAM_STR);
+            $statement->bindParam(":profile_image", $profileImagePath, PDO::PARAM_STR);
             $statement->bindParam(":uid", $uid, PDO::PARAM_INT);
 
-            // Debug: Log query execution
-            error_log("Executing update query for UID = $uid");
-            error_log("Parameters: name= $name, Username = $username, Password = $hashedPassword");
-
             if ($statement->execute()) {
+                // Log the successful update
+                error_log("Successfully updated account for UID = $uid");
                 return '<script>
                     Swal.fire({
                         title: "Are you sure?",
@@ -1765,7 +1805,7 @@ function save_profile($data)
                 </script>';
             } else {
                 // Log error if update fails
-                error_log("Failed to update account for UID = $uid");
+                error_log("Failed to update account for UID = $uid: " . implode(", ", $statement->errorInfo()));
                 return '<script>
                     Swal.fire({
                         icon: "error",
@@ -1787,24 +1827,13 @@ function save_profile($data)
                 });
             </script>';
         }
-    } catch (PDOException $e) {
-        error_log("PDOException: " . $e->getMessage());
-        return '<script>
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "Database error occurred: ' . $e->getMessage() . '",
-                timer: 3000,
-                timerProgressBar: true
-            });
-        </script>';
     } catch (Exception $e) {
-        error_log("Exception: " . $e->getMessage());
+        error_log("Error in save_profile: " . $e->getMessage());
         return '<script>
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "An unexpected error occurred: ' . $e->getMessage() . '",
+                text: "An unexpected error occurred.",
                 timer: 3000,
                 timerProgressBar: true
             });

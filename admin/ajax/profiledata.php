@@ -24,12 +24,15 @@ if ($array) {
         <label for="profile_image" class="form-label fw-bold">Profile Image</label>
         <div class="d-flex align-items-center">
             <div class="me-3">'; // Add some spacing between image and button
+            
+            // Display current or default profile image
             if (!empty($array['member_img'])) {
                 $response .= '<img src="../uploaded/orgUploaded/' . htmlspecialchars($array['member_img'], ENT_QUOTES, 'UTF-8') . '" alt="Profile Image" class="img-fluid" style="width: 100px; height: 100px; border-radius: 50%;">';
             } else {
                 $response .= '<img src="../../path/to/default/image.png" alt="Default Profile Image" class="img-fluid" style="width: 100px; height: 100px; border-radius: 50%;">';
             }
-$response .= '        </div>
+            
+            $response .= '        </div>
             <input type="file" name="profile_image" class="form-control" accept="image/*">
         </div>
     </div>
@@ -52,19 +55,29 @@ $response .= '        </div>
         </div>
         <small class="form-text text-muted">Leave blank to keep the current password.</small>
     </div>
-    <div class="mb-3">
-        <label for="position" class="form-label fw-bold">Position</label>
-        <select name="position" id="position" class="form-control" required>
-            <option value="" selected>Select a position</option>
-            <option value="Member"' . ($array['position'] === 'Member' ? ' selected' : '') . '>Member</option>
-            <option value="President"' . ($array['position'] === 'President' ? ' selected' : '') . '>President</option>
-            <option value="VicePresident"' . ($array['position'] === 'VicePresident' ? ' selected' : '') . '>Vice President</option>
-            <option value="Auditor"' . ($array['position'] === 'Auditor' ? ' selected' : '') . '>Auditor</option>
-            <option value="Secretary"' . ($array['position'] === 'Secretary' ? ' selected' : '') . '>Secretary</option>
-            <option value="Treasurer"' . ($array['position'] === 'Treasurer' ? ' selected' : '') . '>Treasurer</option>
-        </select>
-    </div>';
+                        <div class="password-requirements">
+    <p>Password must meet the following criteria:</p>
+    <ul class="requirement-list">
+        <li>
+            <input type="radio" id="length-check" name="length" disabled>
+            <label for="length-check">At least 8 characters</label>
+        </li>
+        <li>
+            <input type="radio" id="uppercase-check" name="uppercase" disabled>
+            <label for="uppercase-check">At least one uppercase letter</label>
+        </li>
+        <li>
+            <input type="radio" id="number-check" name="number" disabled>
+            <label for="number-check">At least one number</label>
+        </li>
+        <li>
+            <input type="radio" id="special-check" name="special" disabled>
+            <label for="special-check">At least one special character (!@#$%^&*(),.?":{}|<>_)</label>
+        </li>
+    </ul>
+</div>
 
+                    </div>';
 } else {
     $response = '<p>No data found for the selected account.</p>';
 }
@@ -91,5 +104,44 @@ $(document).ready(function() {
             icon.removeClass('fa-eye-slash').addClass('fa-eye');
         }
     });
+});document.addEventListener("DOMContentLoaded", function () {
+    const passwordField = document.getElementById("password-<?php echo htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8'); ?>");
+    const lengthCheck = document.getElementById("length-check");
+    const uppercaseCheck = document.getElementById("uppercase-check");
+    const numberCheck = document.getElementById("number-check");
+    const specialCheck = document.getElementById("special-check");
+
+    // Enable the radio buttons when the user starts typing in the password field
+    passwordField.addEventListener("focus", function () {
+        lengthCheck.disabled = false;
+        uppercaseCheck.disabled = false;
+        numberCheck.disabled = false;
+        specialCheck.disabled = false;
+    });
+
+    passwordField.addEventListener("input", function () {
+        const password = passwordField.value;
+
+        // Reset all radio buttons to unchecked
+        lengthCheck.checked = false;
+        uppercaseCheck.checked = false;
+        numberCheck.checked = false;
+        specialCheck.checked = false;
+
+        // Check password requirements and set radio buttons accordingly
+        if (password.length >= 8) {
+            lengthCheck.checked = true; // Check the length radio button
+        }
+        if (/[A-Z]/.test(password)) {
+            uppercaseCheck.checked = true; // Check the uppercase radio button
+        }
+        if (/\d/.test(password)) {
+            numberCheck.checked = true; // Check the number radio button
+        }
+        if(/[!@#$%^&*(),.?":{}|<>_]/.test(password)) { // Updated special character regex
+            specialCheck.checked = true; // Check the special character radio button
+        }
+    });
 });
+
 </script>

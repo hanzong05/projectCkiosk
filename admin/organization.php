@@ -77,6 +77,7 @@ $allAccount = $obj->show_account();
               font-size: 1.2rem; /* Adjust icon size if needed */
           }
       </style>
+      
 
     </head>
 
@@ -383,80 +384,98 @@ $allAccount = $obj->show_account();
       </div>
     </div>
   </form>
-
-  <!-- add account pop up -->
   <form id="accountForm" class="row" action="" method="post">
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" id="accountModal" tabindex="-1" role="dialog" data-backdrop="static"
-          data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <!-- Modal for Account Creation -->
+    <div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="accountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Account Creation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label for="username" class="form-label fw-bold">Username</label>
-                  <input type="text" id="username" class="form-control" name="username" required>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accountModalLabel">Account Creation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label fw-bold">Password</label>
-                  <div class="input-group">
-                    <input type="password" id="password" class="form-control password-field" name="password" required>
-                    <span class="input-group-text password-toggle" id="togglePassword">
-                        <i class="fa fa-eye"></i>
-                    </span>
-                  </div>
+                <div class="modal-body">
+                    <!-- Input fields for creating a new account -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-bold">Username</label>
+                        <input type="text" id="username" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-bold">Password</label>
+                        <div class="input-group">
+                            <input type="password" id="password" class="form-control password-field" name="password" required>
+                            <span class="input-group-text password-toggle" id="togglePassword">
+                                <i class="fa fa-eye"></i>
+                            </span>
+                        </div>
+                        <div class="password-requirements">
+                            <p>Password must meet the following criteria:</p>
+                            <ul class="requirement-list">
+                                <li>
+                                    <input type="radio" id="length-check" name="length" disabled>
+                                    <label for="length-check">At least 8 characters</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="uppercase-check" name="uppercase" disabled>
+                                    <label for="uppercase-check">At least one uppercase letter</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="number-check" name="number" disabled>
+                                    <label for="number-check">At least one number</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="special-check" name="special" disabled>
+                                    <label for="special-check">At least one special character (!@#$%^&*(),.?":{}|<>_)</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="org" class="form-label fw-bold">Organization</label>
+                        <select name="org" id="org" class="form-control" required>
+                            <option value="" selected>Select an organization</option>
+                            <?php
+                            foreach ($allOrg as $row) {
+                                if ($row['org_id'] == 1) continue; // Skip org_id = 1
+                                echo '<option value="' . htmlspecialchars($row['org_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8') . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-                <div class="mb-3">
-                  <label for="org" class="form-label fw-bold">Organization</label>
-                  <select name="org" id="org" class="form-control" required>
-                    <option value="" selected>Select an organization</option>
-                    <?php
-                    foreach ($allOrg as $row) {
-                      if ($row['org_id'] == 1)
-                        continue;
-                      echo '<option value="' . $row['org_id'] . '">' . $row['org_name'] . '</option>';
-                    }
-                    ?>
-                  </select>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Add" name="add_account">
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn" value="Add" name="add_account">
-              </div>
             </div>
-          </div>
         </div>
-    </form>
-
-  <!-- edit account pop up -->
-  <form class="row" action="" method="post">
-    <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" id="accountModalEdit" tabindex="-1" role="dialog" data-backdrop="static"
-      data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Account Edit</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body" id="accountData">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <input type="submit" class="btn" value="Save" name="save_account">
-          </div>
-        </div>
-      </div>
     </div>
-  </form>
+</form>
+
+<!-- Edit Account Form -->
+<form id="accountEditForm" class="row" action="" method="post">
+    <!-- Modal for Account Edit -->
+    <div class="modal fade" id="accountModalEdit" tabindex="-1" role="dialog" aria-labelledby="accountModalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accountModalEditLabel">Account Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="accountData">
+                    <!-- Dynamic content will be loaded here via AJAX -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save" name="save_account">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
@@ -754,6 +773,40 @@ $(document).on('click', '.btn-delete-account', function (e) {
         });
     });
   </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const passwordField = document.getElementById("password");
+    const lengthCheck = document.getElementById("length-check");
+    const uppercaseCheck = document.getElementById("uppercase-check");
+    const numberCheck = document.getElementById("number-check");
+    const specialCheck = document.getElementById("special-check");
+
+    passwordField.addEventListener("input", function () {
+        const password = passwordField.value;
+
+        // Reset all radio buttons to unchecked
+        lengthCheck.checked = false;
+        uppercaseCheck.checked = false;
+        numberCheck.checked = false;
+        specialCheck.checked = false;
+
+        // Check password requirements and set radio buttons accordingly
+        if (password.length >= 8) {
+            lengthCheck.checked = true; // Check the length radio button
+        }
+        if (/[A-Z]/.test(password)) {
+            uppercaseCheck.checked = true; // Check the uppercase radio button
+        }
+        if (/\d/.test(password)) {
+            numberCheck.checked = true; // Check the number radio button
+        }
+        if(/[!@#$%^&*(),.?":{}|<>_]/.test(password)) { // Updated special character regex
+            specialCheck.checked = true; // Check the special character radio button
+        }
+    });
+});
+</script>
 </body>
 
 </html>

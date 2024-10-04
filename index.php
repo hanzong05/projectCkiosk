@@ -1261,7 +1261,7 @@ function fetchMembers(orgId) {
                 response.members.forEach(function (member) {
                     membersContent += `
                         <li class="list-group-item">
-                            <img src="${member.member_img}" alt="${member.name}" class="img-fluid rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+                            <img src="uploaded/orgUploaded/${member.member_img}" alt="${member.name}" class="img-fluid rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
                             ${member.name} (${member.username})
                         </li>`;
                 });

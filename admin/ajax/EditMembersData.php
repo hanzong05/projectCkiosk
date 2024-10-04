@@ -15,6 +15,7 @@ $stmt->execute();
 
 // Fetch the result
 $array = $stmt->fetch(PDO::FETCH_ASSOC);
+error_log("SQL query results: " . print_r($array, true));
 
 if ($array) {
     // Access the values directly without a foreach loop
@@ -37,6 +38,27 @@ if ($array) {
                     </div>
                     <small class="form-text text-muted">Leave blank to keep the current password.</small>
                 </div>
+                <div class="password-requirements">
+                    <p>Password must meet the following criteria:</p>
+                    <ul class="requirement-list">
+                        <li>
+                            <input type="radio" id="length-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" name="length-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" disabled>
+                            <label for="length-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '">At least 8 characters</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="uppercase-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" name="uppercase-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" disabled>
+                            <label for="uppercase-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '">At least one uppercase letter</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="number-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" name="number-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" disabled>
+                            <label for="number-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '">At least one number</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="special-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" name="special-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '" disabled>
+                            <label for="special-check-' . htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8') . '">At least one special character (!@#$%^&*(),.?":{}|<>_)</label>
+                        </li>
+                    </ul>
+                </div>
                 <div class="mb-3">
                     <label for="position" class="form-label fw-bold">Position</label>
                     <select name="position" id="position" class="form-control" required>
@@ -53,6 +75,7 @@ if ($array) {
     $response = '<p>No data found for the selected account.</p>';
 }
 
+// Output the response
 echo $response;
 ?>
 
@@ -61,6 +84,7 @@ echo $response;
 <!-- jQuery to handle password visibility toggle -->
 <script>
 $(document).ready(function() {
+    // Event delegation for password toggle visibility
     $(document).on('click', '.password-toggle', function() {
         var id = $(this).attr('id').split('-').pop(); // Extract the userID from the button ID
         var passwordField = $('#password-' + id);
@@ -73,6 +97,38 @@ $(document).ready(function() {
         } else {
             passwordField.attr('type', 'password');
             icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+
+    // Check password requirements
+    $(document).on('input', "[id^='password-']", function () {
+        const password = $(this).val();
+        const userID = $(this).attr('id').split('-').pop(); // Extract user ID from password field ID
+
+        // Find the corresponding radio buttons for this password field
+        const lengthCheck = $("#length-check-" + userID);
+        const uppercaseCheck = $("#uppercase-check-" + userID);
+        const numberCheck = $("#number-check-" + userID);
+        const specialCheck = $("#special-check-" + userID);
+
+        // Reset all radio buttons to unchecked
+        lengthCheck.prop('checked', false);
+        uppercaseCheck.prop('checked', false);
+        numberCheck.prop('checked', false);
+        specialCheck.prop('checked', false);
+
+        // Check password requirements and set radio buttons accordingly
+        if (password.length >= 8) {
+            lengthCheck.prop('checked', true); // Check the length radio button
+        }
+        if (/[A-Z]/.test(password)) {
+            uppercaseCheck.prop('checked', true); // Check the uppercase radio button
+        }
+        if (/\d/.test(password)) {
+            numberCheck.prop('checked', true); // Check the number radio button
+        }
+        if(/[!@#$%^&*(),.?":{}|<>_]/.test(password)) { // Updated special character regex
+            specialCheck.prop('checked', true); // Check the special character radio button
         }
     });
 });

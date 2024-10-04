@@ -65,6 +65,49 @@ if (isset($_POST['save_profile'])) {
           .password-toggle i {
               font-size: 1.2rem; /* Adjust icon size if needed */
           }
+
+          /* Custom styles for radio buttons */
+.requirement-list {
+    list-style-type: none; /* Remove default list dots */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.requirement-list input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+
+.requirement-list label {
+    position: relative;
+    padding-left: 30px; /* Space for custom radio */
+    cursor: pointer; /* Cursor changes to pointer on hover */
+}
+
+/* Custom radio button */
+.requirement-list label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; /* Adjust size */
+    height: 20px; /* Adjust size */
+    border: 2px solid #ddd; /* Border color when not checked */
+    border-radius: 50%; /* Round shape */
+    background-color: white; /* Background color */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+}
+
+/* Styles for checked radio button */
+.requirement-list input[type="radio"]:checked + label:before {
+    background-color: green; /* Background color when checked */
+    border-color: green; /* Border color when checked */
+}
+
+/* Styles for checked radio button's label text */
+.requirement-list input[type="radio"]:checked + label {
+    color: green; /* Change label color when checked */
+    font-weight: bold; /* Make label bold when checked */
+}
       </style>
 
     </head>
@@ -250,8 +293,7 @@ if (isset($_POST['save_profile'])) {
     </div>
   </div>
 
-  
-<form class="row" action="" method="post">
+  <form class="row" action="" method="post" enctype="multipart/form-data">
     <div class="modal fade bd-example-modal-lg" id="accountModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -272,6 +314,7 @@ if (isset($_POST['save_profile'])) {
         </div>
     </div>
 </form>
+
 
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>

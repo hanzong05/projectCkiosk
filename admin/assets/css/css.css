@@ -2,6 +2,48 @@
     background-color: #2e0f13;
     color: #fff;
 }
+/* Custom styles for radio buttons */
+.requirement-list {
+    list-style-type: none; /* Remove default list dots */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.requirement-list input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+
+.requirement-list label {
+    position: relative;
+    padding-left: 30px; /* Space for custom radio */
+    cursor: pointer; /* Cursor changes to pointer on hover */
+}
+
+/* Custom radio button */
+.requirement-list label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; /* Adjust size */
+    height: 20px; /* Adjust size */
+    border: 2px solid #ddd; /* Border color when not checked */
+    border-radius: 50%; /* Round shape */
+    background-color: white; /* Background color */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+}
+
+/* Styles for checked radio button */
+.requirement-list input[type="radio"]:checked + label:before {
+    background-color: green; /* Background color when checked */
+    border-color: green; /* Border color when checked */
+}
+
+/* Styles for checked radio button's label text */
+.requirement-list input[type="radio"]:checked + label {
+    color: green; /* Change label color when checked */
+    font-weight: bold; /* Make label bold when checked */
+}
 
 .map {
     max-width: max-content;

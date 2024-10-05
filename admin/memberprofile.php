@@ -173,7 +173,7 @@ if (isset($_POST['save_profile'])) {
       <?php } ?>
       <?php if ($account_type == '3') { ?>
         <li>
-          <a href="./accountmanagement.php">
+          <a href="./memberprofile.php">
             <i class="nc-icon nc-pin-3"></i>
             <p>Acoount Management</p>
           </a>

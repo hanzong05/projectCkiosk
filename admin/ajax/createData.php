@@ -1,5 +1,7 @@
 <?php
 include "../../class/connection.php"; // Ensure this path is correct
+require 'vendor/autoload.php'; // Adjust path as necessary
+
 
 // Enable error reporting and logging
 ini_set('display_errors', 1);
@@ -191,7 +193,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['success'] = true;
             $response['message'] = 'Faculty member added successfully.';
 
-        } elseif ($type === 'organization') {
+        }if ($type === 'excel_import') {
+            if (isset($_FILES['faculty_excel']) && $_FILES['faculty_excel']['error'] === UPLOAD_ERR_OK) {
+                // Define the paths
+                $tempPath = $_FILES['faculty_excel']['tmp_name'];
+                $originalPath = 'uploads/' . basename($_FILES['faculty_excel']['name']); // Adjust the path as needed
+        
+                // Move the uploaded file to the desired directory
+                if (!move_uploaded_file($tempPath, $originalPath)) {
+                    $response['success'] = false;
+                    $response['message'] = 'Failed to move uploaded Excel file.';
+                    echo json_encode($response);
+                    exit;
+                }
+        
+                // Load the spreadsheet
+                try {
+                    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($originalPath);
+                } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+                    $response['success'] = false;
+                    $response['message'] = 'Error loading the Excel file: ' . $e->getMessage();
+                    echo json_encode($response);
+                    exit;
+                }
+        
+                // Get the data from the active sheet
+                $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+                $insertedCount = 0;
+        
+                // Loop through the sheet data
+                foreach ($sheetData as $rowIndex => $row) {
+                    if ($rowIndex === 1) continue; // Skip header row
+        
+                    $name = trim($row['A'] ?? null);
+                    $dept = trim($row['B'] ?? null);
+                    $specialization = trim($row['C'] ?? null);
+                    $consultation_time = trim($row['D'] ?? null);
+                    $image = trim($row['E'] ?? null);
+        
+                    if ($name && $dept) {
+                        // Check for existing faculty member
+                        $checkStmt->execute([':name' => $name, ':dept' => $dept]);
+                        $count = $checkStmt->fetchColumn();
+        
+                        // If not exists, insert new faculty member
+                        if ($count == 0) {
+                            try {
+                                $stmt->execute([
+                                    ':name' => $name,
+                                    ':dept' => $dept,
+                                    ':specialization' => $specialization,
+                                    ':consultation_time' => $consultation_time,
+                                    ':image' => $image
+                                ]);
+                                $insertedCount++;
+                            } catch (PDOException $e) {
+                                error_log('Insert error: ' . $e->getMessage());
+                            }
+                        }
+                    }
+                }
+        
+                $response['success'] = true;
+                $response['message'] = "$insertedCount faculty members imported successfully.";
+            } else {
+                // Handle specific upload errors
+                $errorMessages = [
+                    UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+                    UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+                    UPLOAD_ERR_PARTIAL => 'The uploaded file was only partially uploaded.',
+                    UPLOAD_ERR_NO_FILE => 'No file was uploaded.',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder.',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write to disk.',
+                    UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload.'
+                ];
+        
+                $errorCode = $_FILES['faculty_excel']['error'];
+                $response['success'] = false;
+                $response['message'] = isset($errorMessages[$errorCode]) ? $errorMessages[$errorCode] : 'No Excel file uploaded or there was an upload error.';
+            }
+        
+            echo json_encode($response);
+            exit;
+        }
+        
+        elseif ($type === 'organization') {
             $name = $_POST['org_name'] ?? null;
             $imagePath = '';
 

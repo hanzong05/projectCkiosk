@@ -4,7 +4,9 @@ include_once ('assets/header.php');
 if (isset($_POST['add_faculty_member'])) {
   $log_msg = $obj->add_faculty_member($_POST);
 }
-
+if (isset($_POST['add_faculty_member_using_excel'])) {
+  $log_msg = $obj->add_faculty_member_using_excel($_POST);
+}
 if (isset($_POST['save_faculty'])) {
   $log_msg = $obj->save_faculty($_POST);
 }
@@ -171,6 +173,10 @@ $allDepartment = $obj->show_department();
                       <button class="btn text-end" data-toggle="modal" data-target="#facultyModal">
                         Add Faculty Member
                       </button>
+
+                      <button class="btn text-end" data-toggle="modal" data-target="#excelImportModal">
+                        Import Faculty Members via Excel
+                    </button>
                     </div>
                   </div>
                   <table class="table table-light table-hover table-bordered" id="myTable">
@@ -231,6 +237,35 @@ $allDepartment = $obj->show_department();
       </div>
     </div>
   </div>
+
+      <div class="modal fade" id="excelImportModal" tabindex="-1" role="dialog" aria-labelledby="importExcelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importExcelLabel">Import Faculty Members via Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="excelImportForm" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="faculty_excel" class="form-label fw-bold">Select Excel File</label>
+                            <input type="file" id="faculty_excel" class="form-control" name="faculty_excel" accept=".xls,.xlsx" required>
+                            <small class="form-text text-muted">Upload an Excel file containing faculty data.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" form="excelImportForm" value="Import" name="add_faculty_member_using_excel">
+                    <a href="ajax/excel.php" class="btn btn-secondary">Show Format</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
   <!-- add faculty pop up -->
   <form id="facultyModalForm" class="row" method="post" enctype="multipart/form-data">
@@ -319,6 +354,55 @@ $allDepartment = $obj->show_department();
     $(document).ready(function () {
 
      
+      document.addEventListener('DOMContentLoaded', function () {
+    // AJAX for Excel file import
+    const importExcelBtn = document.getElementById('importExcelBtn');
+    const excelImportForm = document.getElementById('excelImportForm');
+
+    importExcelBtn.addEventListener('click', function () {
+        const formData = new FormData(excelImportForm);
+        
+        // Add the type to the FormData
+        formData.append('type', 'excel_import'); // Make sure this line is included
+
+        // Disable the button to prevent multiple clicks
+        importExcelBtn.disabled = true;
+        importExcelBtn.textContent = 'Importing...'; // Change button text during upload
+
+        // AJAX request
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'ajax/createData.php', true); // Replace with your actual server-side script path
+
+        xhr.onload = function () {
+            importExcelBtn.disabled = false; // Enable the button again
+            importExcelBtn.textContent = 'Import Excel'; // Reset button text
+
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                alert(response.message); // Show success or error message
+                if (response.success) {
+                    // Optionally, you can close the modal or refresh the page
+                    $('#excelImportModal').modal('hide');
+                    // Refresh the data on the page (if needed)
+                    // location.reload(); // Uncomment to reload the page
+                }
+            } else {
+                alert('An error occurred during the file upload. Please try again.');
+            }
+        };
+
+        xhr.onerror = function() {
+            importExcelBtn.disabled = false; // Enable the button again
+            importExcelBtn.textContent = 'Import Excel'; // Reset button text
+            alert('An error occurred while making the request.');
+        };
+
+        xhr.send(formData); // Send the form data
+    });
+});
+
+
+
 
       $("#faculty_image").change(function () {
         var fileExtension = ['jpg', 'png', 'jpeg'];

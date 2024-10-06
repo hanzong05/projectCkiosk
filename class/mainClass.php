@@ -862,6 +862,58 @@ function show_announcement2()
                 });
             </script>';
     }
+    function add_faculty_member_using_Excel() {
+        return '
+            <script>
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you want to import faculty members from the Excel file?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, import it!",
+                    cancelButtonText: "No, cancel!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Create a FormData object for the Excel file
+                        var formData = new FormData();
+                        formData.append("type", "excel_import");
+                        
+                        var facultyImageInput = document.querySelector("input[name=faculty_excel]");
+                        if (facultyImageInput.files.length > 0) {
+                            formData.append("faculty_excel", facultyImageInput.files[0]);
+                        }
+    
+                        // Make the AJAX request to your server-side script
+                        fetch("../admin/ajax/createData.php", {
+                            method: "POST",
+                            body: formData
+                        }).then(response => response.json())
+                          .then(result => {
+                              Swal.fire("Response", result.message, "info");
+                              if (result.success) {
+                                  Swal.fire(
+                                      "Imported!",
+                                      "The faculty members have been imported successfully.",
+                                      "success"
+                                  ).then(() => {
+                                      document.location = "facultymembers.php"; // Redirect to the faculty members page
+                                  });
+                              } else {
+                                  Swal.fire("Error!", result.message, "error");
+                              }
+                          }).catch(error => {
+                              Swal.fire(
+                                  "Error!",
+                                  "There was an error importing the faculty members.",
+                                  "error"
+                              );
+                          });
+                    }
+                });
+            </script>';
+    }
     
     function save_faculty($data)
 {

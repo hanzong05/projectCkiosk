@@ -1,0 +1,15 @@
+[06-Oct-2024 12:13:58 Europe/Berlin] Type parameter: excel_import
+[06-Oct-2024 12:13:58 Europe/Berlin] Spreadsheet loaded successfully.
+[06-Oct-2024 12:13:58 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Specialization
+            [D] => Consultation Time
+            [E] => Image
+        )
+
+)
+

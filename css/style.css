@@ -1,0 +1,610 @@
+       /* General styling for announcement items */
+.item {
+    border: 1px solid #ddd; /* Light border for items */
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px; /* Rounded corners */
+    position: relative; /* For positioning timestamp */
+}
+.event-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.event-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.event-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.event-table th,
+.event-table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.event-table th {
+    background-color: #f2f2f2;
+}
+.right-align {
+    text-align: right; /* Align text to the right */
+}
+.btn {
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.btn-copy {
+    background-color: #2196F3; /* Blue */
+    color: white;
+}
+
+.btn-delete {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+/* Styling for timestamp */
+.timestamp {
+    font-size: 14px;
+    color: #888; /* Gray color for timestamp */
+    margin-bottom: 10px; /* Space between timestamp and content */
+    font-style: italic;
+}
+
+/* Styling for image and text content */
+.text-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.text-content .avaatar {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.text-content span {
+    font-weight: bold;
+}
+.square {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden; /* Ensures content fits inside the container */
+    min-height: 100px; /* Optional: Set a minimum height for consistency */
+}
+
+.square img {
+    display: block;
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    float: right;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* Ensure the text doesn't wrap around the floating image */
+.square:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+    
+.button-faculty-btn {
+    background-color: #2e0f13;
+    color: #fff;
+    border: none;
+    width: 23%;
+    height: 90px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    text-align: center;
+    margin: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.button-faculty-btn:hover,
+.button-faculty-btn.active {
+    background-color: #ae2d3e;
+    transform: scale(1.05);
+}
+
+.button-faculty-btn.active {
+    background-color: #ba0019;
+}
+
+.button-faculty-btn:focus {
+    outline: none;
+}
+
+/* Layout Styles */
+.fclty-div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.section-content {
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.col-md-4 {
+    flex: 0 0 30%;
+    max-width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.faculty-card {
+    width: 100%;
+    max-width: 130px;
+    height: 130px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.faculty-image {
+    width: 100%;
+    height: 130px;
+    overflow: hidden;
+    position: relative;
+}
+
+.faculty-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: border-radius 0.3s ease;
+}
+
+.faculty-card:hover .faculty-image img {
+    border-radius: 0;
+}
+
+.faculty-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.faculty-info h6 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #000;
+}
+
+.faculty-info a {
+    display: block;
+    color: #1e1e1e;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.map {
+    padding: 2%;
+    background-color: #2e0f13;
+}
+
+/* Table Styles */
+.table-container {
+    width: 100%;
+    height: 520px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    position: relative;
+    background-color: #f9f9f9;
+    scrollbar-width: thin;
+    scrollbar-color: #6c6c6c #e0e0e0;
+    -ms-overflow-style: scrollbar;
+}
+
+.table-container::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 6px;
+    border: 3px solid #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 6px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.fixed-table {
+    border-collapse: collapse;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 100%;
+}
+
+.fixed-table th, .fixed-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.fixed-table th {
+    background-color: #007bff;
+    color: #fff;
+    position: sticky;
+    top: 0;
+}
+
+.fixed-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.floor-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    height:518px;
+}
+
+.floor-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: auto;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.floor-maroon {
+    background-color: #ff546b;
+    border: 1px solid #ddd;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.floor-gray {
+    background-color: #474747;
+    border: 1px solid #ddd;
+    color: #fffefe;
+    font-size: 10px;
+}
+
+/* Dropdown and Search Styles */
+.dropdown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#search-input {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+    box-sizing: border-box;
+}
+
+.search-button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.search-button i {
+    margin: 0;
+}
+
+#dropdownMenu {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Modal Styles */
+.modal-dialog {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    max-width: 80%;
+    margin: 0;
+}
+
+.section-content-orgs {
+    height: 800px;
+}
+
+.section-content-map {
+    height: 600px;
+}
+
+.modal-content {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background-color: #2e0f13;
+}
+
+.modal-header {
+    display: flex; /* Enable flexbox for alignment */
+    justify-content: space-between; /* Space out the items */
+    align-items: center; /* Vertically center the items */
+    flex-shrink: 0;
+    background-color: #962626;
+    color: #ffffff;
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.close {
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+.modal-footer {
+    flex-shrink: 0;
+    background-color: #962626;
+}
+
+/* News Feed Styles */
+.news-feed-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 15px;
+}
+
+.news-feed-header {
+    display: flex; /* Enable flexbox for alignment */
+    align-items: center; /* Vertically center the items */
+}
+
+.news-feed-header img {
+    margin-right: 10px; /* Add some space between the image and text */
+}
+.news-feed-item img {
+    border: 2px solid #000;
+    border-radius: 50%;
+    max-width: 100%;
+    height: auto;
+}
+
+.news-feed-header .show-members-btn
+{
+    margin-left: auto;
+}
+
+
+.news-feed-header h6 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #333;
+}
+
+.news-feed-header small {
+    font-family: 'Arial', sans-serif;
+    color: #666;
+}
+
+.news-feed-item h5 {
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: #2e2c2c;
+    margin-top: 10px;
+}
+
+.news-feed-item p {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+.announcement-date {
+    margin-right: 5%;
+    float: right;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #808080; /* Light background to distinguish the date */
+    padding: 5px;
+}
+.announcement-details {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.announcement-item {
+    border-bottom: 5px solid #2e0f13;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.announcement-item:last-of-type {
+    border-bottom: none;
+}
+
+.announcement-item p {
+    font-family: 'Arial', sans-serif;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.announcement-item img {
+    border: 2px solid #000;
+    border-radius: 5px;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Section Heading */
+.section-heading h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Section Content */
+.section-content-faqs {
+    background-color: #2e0f13;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Bar Styling */
+.search-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#faq-search {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* FAQ Items Container */
+.faq-items-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* FAQ Item Styling */
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    margin-bottom: 15px;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+/* FAQ Question Styling */
+.faq-question {
+    font-size: 1.5em;
+    color: #f9f9f9;
+    cursor: pointer;
+    margin: 0;
+    transition: color 0.3s;
+}
+
+.faq-question:hover {
+    color: #0056b3;
+}
+
+/* FAQ Answer Styling */
+.faq-answer {
+    font-size: 1.1em;
+    color: #f9f9f9;
+    margin-top: 10px;
+    display: none;
+    padding-left: 20px;
+    border-left: 4px solid #007BFF;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .faculty-card {
+        max-width: 150px;
+        height: 150px;
+    }
+}
+
+/* Summernote Styles */
+.note-editor {
+    border: none; /* Prevent border issues */
+}
+
+.note-editable {
+    padding: 10px; /* Adjust padding if necessary */
+}
+
+/* Ensure Summernote doesn't affect other styles */
+.note-toolbar {
+    background-color: #f5f5f5; /* Custom toolbar background color */
+    border-bottom: 1px solid #ddd; /* Custom toolbar border */
+}

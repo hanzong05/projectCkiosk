@@ -2,7 +2,7 @@
 session_start();
 include_once ("class/mainclass.php");
 $obj = new mainClass();
-$allAnnouncement = $obj->show_announcement();
+$allAnnouncement = $obj->show_announcement2();
 $allEvent = $obj->show_eventsByMonth();
 $allIt = $obj->show_allIt();
 $allCs = $obj->show_allCs();

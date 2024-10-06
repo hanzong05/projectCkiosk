@@ -356,6 +356,64 @@ class mainClass
     }
     
     
+    public function handleRequest() {
+        // Check for the archive request
+        if (isset($_GET['archive_id'])) {
+            $appID = $_GET['archive_id'];
+            // Call the archive function and capture the result
+            $result = $this->archive_announcement($appID);
+            echo $result; // Output the result
+            exit(); // Stop further execution
+        }
+    }
+
+
+    function archive_announcement($appID) {
+        $query = "UPDATE announcement_tbl SET is_archived = 1 WHERE announcement_id = :appID";
+        $statement = $this->connection->prepare($query);
+        
+        // Debugging: Check if the appID is received
+        if (!$appID) {
+            return '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "No announcement ID provided."
+                    });
+                    </script>';
+        }
+        
+        // Execute the query and check if it was successful
+        if ($statement->execute(array("appID" => $appID))) {
+            return '<script>
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Announcement archived successfully"
+                    }).then((result) => {
+                        document.location = "announcement.php"; // Redirect to the announcement page
+                    });
+                    </script>';
+        } else {
+            return '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "Failed to archive the announcement."
+                    });
+                    </script>';
+        }
+    }
     
     function delete_announcement($appID)
     {
@@ -399,28 +457,30 @@ class mainClass
             $stmt->bindParam(':orgId', $orgId, PDO::PARAM_INT);
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+        
             if (!$users) {
                 return []; // No users found for this org_id
             }
-    
+        
             $userIds = array_column($users, 'users_id'); // Get an array of user IDs
+        
+            // Create placeholders for the user IDs
+            $placeholders = implode(',', array_fill(0, count($userIds), '?'));
     
-            // Fetch announcements from announcement_tbl where announcement_creator is in the list of user IDs
-            $placeholders = implode(',', array_fill(0, count($userIds), '?')); // Create placeholders for the query
+            // Fetch announcements from announcement_tbl where announcement_creator is in the list of user IDs and is_archived is 0
             $query = "SELECT announcement_id, announcement_details, announcement_creator, announcement_image, created_at
                       FROM announcement_tbl
-                      WHERE announcement_creator IN ($placeholders)";
+                      WHERE announcement_creator IN ($placeholders) AND is_archived = 0";
             $stmt = $this->connection->prepare($query);
             
             // Bind the user IDs to the query
             foreach ($userIds as $index => $userId) {
                 $stmt->bindValue($index + 1, $userId, PDO::PARAM_INT);
             }
-    
+        
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+        
             return $results;
     
         } catch (Exception $e) {
@@ -430,75 +490,115 @@ class mainClass
     }
     
     function show_announcement()
-    {
-        // Fetch the user's name based on session variable
-        $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
-    
-        // Query to get the user's name from orgmembers_tbl
-        $userQuery = "SELECT name FROM orgmembers_tbl WHERE id = :userId";
+{
+    // Fetch the user's organization ID based on session variable
+    $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+
+    // Query to get the user's organization from users_tbl
+    $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
+    $orgStatement = $this->connection->prepare($orgQuery);
+    $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+    $orgStatement->execute();
+    $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
+
+    // Safely escape the organization ID
+    $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
+
+    // If the user has no organization, return an empty result or error message
+    if ($userOrgId == 0) {
+        return "No organization found for the user.";
+    }
+
+    // Main announcement query, filtered by the user's organization and only fetching archived announcements
+    $query = "
+        SELECT a.*, 
+               u.users_username AS author_name, 
+               om.name AS updated_by_name, 
+               o.org_name, 
+               o.org_image
+        FROM announcement_tbl a 
+        LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+        LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+        LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+        WHERE u.users_org = :userOrgId AND a.is_archived = 0  -- Filter for archived announcements
+    ";
+
+    $statement = $this->connection->prepare($query);
+    $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // Add the user's organization image to each row
+        foreach ($result as &$row) {
+            // Handle org_image, fallback to a placeholder if not available
+            $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                : 'placeholder.jpg'; // Default placeholder if no image is found
+        }
+        return $result;
+    } else {
+        return "No Data";
+    }
+}
+function show_announcement2()
+{
+    // Fetch the user's name based on session variable
+    $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+
+    // Query to get the user's name from orgmembers_tbl
+    $userQuery = "SELECT name FROM orgmembers_tbl WHERE id = :userId";
+    $userStatement = $this->connection->prepare($userQuery);
+    $userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+    $userStatement->execute();
+    $userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
+
+    // If the name is not found in orgmembers_tbl, fallback to users_tbl
+    if (!$userRow) {
+        $userQuery = "SELECT users_username AS name FROM users_tbl WHERE users_id = :userId";
         $userStatement = $this->connection->prepare($userQuery);
         $userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
         $userStatement->execute();
         $userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
-    
-        // If the name is not found in orgmembers_tbl, fallback to users_tbl
-        if (!$userRow) {
-            $userQuery = "SELECT users_username AS name FROM users_tbl WHERE users_id = :userId";
-            $userStatement = $this->connection->prepare($userQuery);
-            $userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
-            $userStatement->execute();
-            $userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
-        }
-    
-        // Safely escape the user's name
-        $userName = $userRow ? htmlspecialchars($userRow['name'], ENT_QUOTES, 'UTF-8') : 'N/A';
-    
-        // Main announcement query, including org_image from organization_tbl
-        $query = "
-            SELECT a.*, 
-                   u.users_username AS author_name, 
-                   om.name AS updated_by_name, 
-                   o.org_name, 
-                   o.org_image  -- Added org_image from organization_tbl
-            FROM announcement_tbl a 
-            LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
-            LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
-            LEFT JOIN organization_tbl o ON u.users_org = o.org_id
-        ";
-    
-        $statement = $this->connection->prepare($query);
-    
-        if ($statement->execute()) {
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
-            // Add the fetched user name and organization image to each row
-            foreach ($result as &$row) {
-                $row['user_name'] = $userName; // Attach the user's name
-    
-                // Handle org_image, fallback to a placeholder if not available
-                $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
-                                    ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                                    : 'placeholder.jpg'; // Default placeholder if no image is found
-            }
-            return $result;
-        } else {
-            return "No Data";
-        }
     }
-    
-    
-    function show_announcement_byId($id)
-    {
-        $query = "SELECT * FROM announcement_tbl where announcement_id = $id";
-        $statement = $this->connection->prepare($query);
 
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
+    // Safely escape the user's name
+    $userName = $userRow ? htmlspecialchars($userRow['name'], ENT_QUOTES, 'UTF-8') : 'N/A';
+
+    // Main announcement query, including org_image from organization_tbl, filtering where is_archived = 0
+    $query = "
+        SELECT a.*, 
+               u.users_username AS author_name, 
+               om.name AS updated_by_name, 
+               o.org_name, 
+               o.org_image  -- Added org_image from organization_tbl
+        FROM announcement_tbl a 
+        LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+        LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+        LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+        WHERE a.is_archived = 0  -- Only fetch non-archived announcements
+    ";
+
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // Add the fetched user name and organization image to each row
+        foreach ($result as &$row) {
+            $row['user_name'] = $userName; // Attach the user's name
+
+            // Handle org_image, fallback to a placeholder if not available
+            $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                : 'placeholder.jpg'; // Default placeholder if no image is found
         }
+        return $result;
+    } else {
+        return "No Data";
     }
+}
+
 
     function add_calendar_event($data)
     {

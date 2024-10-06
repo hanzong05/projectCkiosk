@@ -8,8 +8,8 @@ if (isset($_POST['add_announcement'])) {
 if (isset($_POST['save_announcement'])) {
   $log_msg = $obj->save_announcement($_POST);
 }
-if (isset($_REQUEST['did'])) {
-  $log_msg = $obj->delete_announcement($_REQUEST['did']);
+if (isset($_REQUEST['archive_id'])) {
+  $log_msg = $obj->archive_announcement($_REQUEST['archive_id']);
 }
 
 $allAnnouncement = $obj->show_announcement();
@@ -191,46 +191,43 @@ $allAnnouncement = $obj->show_announcement();
                         Create Announcement
                       </button>
                     </div>
-                  </div><table class="table table-light table-hover table-bordered" id="myTable">
-    <thead>
-        <th><center>NO.</center></th>
-        <th><center>DETAILS</center></th>
-        <th><center>AUTHOR</center></th> <!-- Represents the announcement creator -->
-        <th><center>ORG NAME</center></th> <!-- Shows the organization name -->
-        <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
-        <th><center>ACTION</center></th>
-    </thead>
-    <tbody>
-        <?php
-        $count = 1;
-        foreach ($allAnnouncement as $row) {
-            ?>
-            <tr class="table-row">
-                <td><?php echo $count; ?></td>
-                <td class="ellipsis" style="width:30%;">
-                    <span><?php echo htmlspecialchars($row["announcement_details"], ENT_QUOTES, 'UTF-8'); ?></span>
-                </td>
-                <td><?php echo htmlspecialchars($row["author_name"], ENT_QUOTES, 'UTF-8'); ?></td> <!-- Creator (username) -->
-                <td><?php echo htmlspecialchars($row["org_name"] ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></td> <!-- Organization Name -->
-                <td><?php echo htmlspecialchars($row["updated_by_name"] ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></td> <!-- Updated By -->
-                <td class="text-center">
-                    <button class="btn announcementModalEdit" data-toggle="modal"
-                            data-target="#announcementModalEdit" data-id="<?= htmlspecialchars($row['announcement_id'], ENT_QUOTES, 'UTF-8') ?>">
-                        Edit
-                    </button>
-                    <a class="btn btn-danger btn-delete" href='announcement.php?did=<?= htmlspecialchars($row['announcement_id'], ENT_QUOTES, 'UTF-8') ?>'>
-                        Delete
-                    </a>
-                </td>
-            </tr>
-            <?php
-            $count++;
-        }
-        ?>
-    </tbody>
-</table>
-
-
+                  </div>
+                  <table class="table table-light table-hover table-bordered" id="myTable">
+                        <thead>
+                            <th><center>NO.</center></th>
+                            <th><center>DETAILS</center></th>
+                            <th><center>ORG NAME</center></th> <!-- Shows the organization name -->
+                            <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
+                            <th><center>ACTION</center></th>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $count = 1;
+                        foreach ($allAnnouncement as $row) {
+                            ?>
+                            <tr class="table-row">
+                                <td><?php echo $count; ?></td>
+                                <td class="ellipsis" style="width:30%;">
+                                    <span><?php echo $row["announcement_details"]; ?></span>
+                                </td>
+                                <td><?php echo $row["org_name"] ?? 'N/A'; ?></td> <!-- Organization Name -->
+                                <td><?php echo $row["updated_by_name"] ?? 'N/A'; ?></td> <!-- Updated By -->
+                                <td class="text-center">
+                                    <button class="btn announcementModalEdit" data-toggle="modal"
+                                            data-target="#announcementModalEdit" data-id="<?= $row['announcement_id'] ?>">
+                                        Edit
+                                    </button>
+                                    <a class="btn btn-warning btn-archive" href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
+                                        Archive
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                            $count++;
+                        }
+                        ?>
+                        </tbody>
+                    </table>
                 </div>
               </div>
             </div>
@@ -334,26 +331,27 @@ $allAnnouncement = $obj->show_announcement();
         ]
       });
 
-      $('.btn-delete').on('click', function (e) {
-      e.preventDefault();
-      var deleteUrl = $(this).attr('href');
-      Swal.fire({
+      $('.btn-archive').on('click', function (e) {
+    e.preventDefault(); // Prevent default link behavior
+    var archiveUrl = $(this).attr('href'); // Get the href attribute of the clicked link
+
+    Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: "This announcement will be archived!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: 'Yes, archive it!',
         cancelButtonText: 'Cancel'
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = deleteUrl;
+            window.location.href = archiveUrl; // Redirect to the archive URL
         }
-      });
     });
-    
-      $('.announcementModalEdit').on('click', function () {
+});   
+
+$('.announcementModalEdit').on('click', function () {
         var announcementID = $(this).data('id');
         $.ajax({
           url: 'ajax/announcementData.php',

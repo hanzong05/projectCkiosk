@@ -1,259 +1,243 @@
-<?php
-session_start();
-include_once ("class/mainclass.php");
-include_once ("class/connection.php");
-$obj = new mainClass();
-$allAnnouncement = $obj->show_announcement();
-$allEvent = $obj->show_eventsByMonth();
-$allIt = $obj->show_allIt();
-$allCs = $obj->show_allCs();
-$allIs = $obj->show_allIs();
-$allOrg = $obj->show_org();
-$allMit = $obj->show_allMit();
-
-$allItHeads = $obj->show_allItHeads();
-$allCsHeads = $obj->show_allCsHeads();
-$allIsHeads = $obj->show_allIsHeads();
-$allMitHeads = $obj->show_allMitHeads();
-$allDean = $obj->show_allDeanHeads();
-$showfaqs = $obj->show_allFAQS();
-
-
-?>
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Campus Kiosk</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/fontAwesome.css">
-    <link rel="stylesheet" href="css/light-box.css">
-    <link rel="stylesheet" href="css/owl-carousel.css">
-    <link rel="stylesheet" href="css/templatemo-style.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Modal Example</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-
-</style>
+        .feedback-list {
+            max-height: 300px; /* Limit height of feedback list */
+            overflow-y: auto; /* Enable scrolling if content exceeds height */
+        }
+        .emoji-select {
+            cursor: pointer;
+            font-size: 2rem;
+            transition: transform 0.2s;
+        }
+        .emoji-select:hover {
+            transform: scale(1.2);
+        }
+    </style>
 </head>
-
 <body>
 
+<div class="container mt-5">
+    <!-- Heading -->
+    <h2 class="section-heading">Feedback Modal Example</h2>
 
+    <!-- Button to trigger modal -->
+    <button type="button" class="btn btn-modern" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+        Add your feedback
+    </button>
 
-    <header class="nav-down responsive-nav hidden-lg hidden-md">
-        <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <!--/.navbar-header-->
-        <div id="main-nav" class="collapse navbar-collapse">
-            <nav>
-                <ul class="nav navbar-nav">
-                    <li><a href="#announcement">ANNOUNCEMENT</a></li>
-                    <li><a href="#schoolcalendar">SCHOOL CALENDAR</a></li>
-                    <li><a href="#campusmap">CAMPUS MAP</a></li>
-                    <li><a href="#facultymembers">FACULTY MEMBERS</a></li>
-                    <li><a href="#campusorgs">CAMPUS ORGS</a></li>
-                    <li><a href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
-                    <li><a href="#feed">FEEDBACK</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- Feedback Display Section -->
+    <div class="row d-flex justify-content-center mt-4">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                <div class="card-body p-4">
+                    <div id="feedbackList" class="feedback-list">
+                        <!-- Dynamically filled feedback items will go here -->
+                    </div>
 
-    <div class="sidebar-navigation hidde-sm hidden-xs">
-        <div class="logo">
-            <a href="#"><img src="img/C.png" alt="" width="240"></a>
-        </div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="#announcement">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        ANNOUNCEMENT
-                    </a>
-                </li>
-                <li>
-                    <a href="#schoolcalendar">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        SCHOOL CALENDAR
-                    </a>
-                </li>
-                <li>
-                    <a href="#campusmap">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        CAMPUS MAP
-                    </a>
-                </li>
-                <li>
-                    <a href="#facultymembers">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        FACULTY MEMBERS
-                    </a>
-                </li>
-                <li>
-                    <a href="#campusorgs">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        CAMPUS ORGS
-                    </a>
-                </li>
-                <li>
-                    <a href="#faqs">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        FREQUENTLY ASKED QUESTIONS
-                    </a>
-                </li>
-                <li>
-                    <a href="#feed">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        FEEDBACK
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <ul class="social-icons">
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="#"><i class="fa fa-rss"></i></a></li>
-            <li><a href="#"><i class="fa fa-behance"></i></a></li>
-        </ul>
-    </div>
-
-    <div class="page-content">
-    <section id="faqs" class="content-section">
-    <div id="faqs-content">
-        <div class="section-heading text-center borderYellow">
-            <h1>FREQUENTLY ASKED QUESTIONS</h1>
-        </div>
-        <div class="section-content">
-            <!-- Search Bar -->
-            <div class="search-container">
-                <input type="text" id="faq-search" placeholder="Search FAQs..." onkeyup="filterFAQs()">
+                    <!-- Average Ratings -->
+                    <div class="total-ratings mt-4">
+                        Average Rating: <span id="averageRatingText">No Ratings Yet</span>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <div class="faq-items-container">
-                <?php if (is_array($showfaqs)): ?>
-                    <?php foreach ($showfaqs as $faq): ?>
-                        <div class="faq-item" data-question="<?php echo strtolower(strip_tags($faq['faqs_question'])); ?>">
-                            <h3 class="faq-question" onclick="toggleAnswer(<?php echo $faq['faqs_id']; ?>)">
-                                <?php echo strip_tags($faq['faqs_question']); ?>
-                            </h3>
-                            <div id="answer-<?php echo $faq['faqs_id']; ?>" class="faq-answer">
-                                <?php echo strip_tags($faq['faqs_answer']); ?>
-                            </div>
+<!-- Modal for feedback -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm" enctype="multipart/form-data">
+                    <!-- Step 1: Emoji Rating -->
+                    <div class="step" id="step1">
+                        <h4>Rate Your Experience</h4>
+                        <div class="d-flex justify-content-around my-4">
+                            <span class="emoji-select" data-value="1">😠</span>
+                            <span class="emoji-select" data-value="2">😞</span>
+                            <span class="emoji-select" data-value="3">😐</span>
+                            <span class="emoji-select" data-value="4">😊</span>
+                            <span class="emoji-select" data-value="5">😍</span>
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No FAQs available</p>
-                <?php endif; ?>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                    </div>
+
+                    <!-- Step 2: Personal Information -->
+                    <div class="step" id="step2" style="display:none;">
+                        <h4>Provide Your Information</h4>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address (required)</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name (optional)</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address (optional)</label>
+                            <input type="text" class="form-control" id="address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="college" class="form-label">College (optional)</label>
+                            <input type="text" class="form-control" id="college">
+                        </div>
+                        <div class="mb-3">
+                            <label for="year" class="form-label">Year (optional)</label>
+                            <input type="number" class="form-control" id="year" min="1" max="4">
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                    </div>
+
+                    <!-- Step 3: Feedback and Image Upload -->
+                    <div class="step" id="step3" style="display:none;">
+                        <h4>Leave Your Feedback</h4>
+                        <div class="mb-3">
+                            <label for="feedback" class="form-label">Your feedback</label>
+                            <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Upload an image (optional)</label>
+                            <input class="form-control" type="file" id="image">
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</section>
+</div>
 
+<script>
+    let selectedRating; // To hold the selected rating
+    let feedbackCount = 0; // To track the number of feedback submissions
 
-
-            </div>
-
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-    <script src="js/vendor/bootstrap.min.js"></script>
-
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
-
-    <script>
-        // Hide Header on on scroll down
-        var didScroll;
-        var lastScrollTop = 0;
-        var delta = 5;
-        var navbarHeight = $('header').outerHeight();
-
-        $(window).scroll(function (event) {
-            didScroll = true;
+    // Handle emoji selection
+    document.querySelectorAll('.emoji-select').forEach(item => {
+        item.addEventListener('click', function() {
+            document.querySelectorAll('.emoji-select').forEach(emoji => emoji.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedRating = this; // Set selected rating
         });
+    });
 
-        setInterval(function () {
-            if (didScroll) {
-                hasScrolled();
-                didScroll = false;
+    // Function to go to the next step
+    function nextStep() {
+        const currentStep = document.querySelector('.step:not([style*="display: none"])');
+        if (currentStep.nextElementSibling) {
+            currentStep.style.display = 'none';
+            currentStep.nextElementSibling.style.display = 'block';
+        }
+    }
+
+    // Function to go to the previous step
+    function prevStep() {
+        const currentStep = document.querySelector('.step:not([style*="display: none"])');
+        if (currentStep.previousElementSibling) {
+            currentStep.style.display = 'none';
+            currentStep.previousElementSibling.style.display = 'block';
+        }
+    }
+
+    let totalScore = 0; // To accumulate the total score
+    let averageRatingText = document.getElementById('averageRatingText'); // Reference to average rating display
+
+    // Event listener for feedback submission
+   // Event listener for feedback submission
+document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    const feedbackInput = document.getElementById('feedback').value.trim();
+    const emailInput = document.getElementById('email').value.trim();
+    const nameInput = document.getElementById('name').value.trim();
+    const addressInput = document.getElementById('address').value.trim();
+    const collegeInput = document.getElementById('college').value.trim();
+    const yearInput = document.getElementById('year').value.trim();
+    const imageInput = document.getElementById('image').files[0];
+
+    if (feedbackInput && selectedRating) {
+        const formData = new FormData();
+        formData.append('rating', selectedRating.getAttribute('data-value'));
+        formData.append('feedback', feedbackInput);
+        formData.append('email', emailInput);
+        formData.append('name', nameInput);
+        formData.append('address', addressInput);
+        formData.append('college', collegeInput);
+        formData.append('year', yearInput);
+        if (imageInput) {
+            formData.append('image', imageInput);
+        }
+
+        // Send data to PHP script via fetch
+        fetch('ajax/submit_feedback.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            console.log('Response:', response); // Log the response
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
             }
-        }, 250);
+            return response.json(); // Parse response as JSON
+        })
+        .then(data => {
+            console.log('Data received:', data); // Log the data received
+            if (data.success) {
+                // Create feedback card
+                const feedbackCard = document.createElement('div');
+                feedbackCard.className = 'card mb-4';
+                feedbackCard.innerHTML = `
+                    <div class="card-body">
+                        <p><strong>Rating: ${selectedRating.textContent}</strong></p>
+                        <p>${feedbackInput}</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).jpg" class="rounded-circle" height="30" alt="Avatar" />
+                                <p class="small mb-0 ms-2">${nameInput || 'Anonymous'}</p>
+                            </div>
+                            <p class="small mb-0">${new Date().toLocaleString()}</p>
+                        </div>
+                    </div>
+                `;
 
-        function hasScrolled() {
-            var st = $(this).scrollTop();
+                // Append the new feedback card to the feedback list
+                document.getElementById('feedbackList').prepend(feedbackCard);
+                feedbackInput.value = ''; // Clear input
+                document.querySelector('.btn-close').click(); // Close the modal
 
-            // Make sure they scroll more than delta
-            if (Math.abs(lastScrollTop - st) <= delta)
-                return;
-
-            // If they scrolled down and are past the navbar, add class .nav-up.
-            // This is necessary so you never see what is "behind" the navbar.
-            if (st > lastScrollTop && st > navbarHeight) {
-                // Scroll Down
-                $('header').removeClass('nav-down').addClass('nav-up');
+                // Update average rating
+                totalScore += parseInt(selectedRating.getAttribute('data-value'));
+                feedbackCount++;
+                const averageRating = (totalScore / feedbackCount).toFixed(1);
+                averageRatingText.textContent = averageRating;
             } else {
-                // Scroll Up
-                if (st + $(window).height() < $(document).height()) {
-                    $('header').removeClass('nav-up').addClass('nav-down');
-                }
+                alert('Error submitting feedback');
             }
-
-            lastScrollTop = st;
-        }
-
-       
-    </script>
-   <script>function toggleAnswer(faqId) {
-    var answerDiv = document.getElementById('answer-' + faqId);
-    if (answerDiv.style.display === 'none') {
-        answerDiv.style.display = 'block';
-    } else {
-        answerDiv.style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Error:', error); // Log the error
+            alert('An error occurred: ' + error.message); // Optionally alert the user
+        });
     }
-}
-function filterFAQs() {
-    var input, filter, faqItems, questionText, i;
-    input = document.getElementById('faq-search');
-    filter = input.value.toLowerCase();
-    faqItems = document.getElementsByClassName('faq-item');
+});
 
-    for (i = 0; i < faqItems.length; i++) {
-        questionText = faqItems[i].getAttribute('data-question');
-        if (questionText.includes(filter)) {
-            faqItems[i].style.display = '';
-        } else {
-            faqItems[i].style.display = 'none';
-        }
-    }
-}
 </script>
 
-
-
-
-
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script> -->
-
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

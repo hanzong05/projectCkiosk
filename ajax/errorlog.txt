@@ -1,0 +1,10 @@
+[07-Oct-2024 21:25:17 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method PDOStatement::bind_param() in C:\xampp\htdocs\ckiosk\ajax\submit_feedback.php:64
+Stack trace:
+#0 {main}
+
+Next Error: Call to undefined method PDO::close() in C:\xampp\htdocs\ckiosk\ajax\submit_feedback.php:82
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\ckiosk\ajax\submit_feedback.php on line 82
+[07-Oct-2024 21:26:06 Europe/Berlin] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.feedback_tbl' doesn't exist
+[07-Oct-2024 22:48:05 Europe/Berlin] Invalid file type. Only JPG, PNG, and GIF are allowed.

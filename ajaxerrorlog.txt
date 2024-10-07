@@ -1,0 +1,5 @@
+[07-Oct-2024 21:14:47 Europe/Berlin] PHP Warning:  Undefined variable $connect in C:\xampp\htdocs\ckiosk\ajax\submit_feedback.php on line 50
+[07-Oct-2024 21:14:47 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\ckiosk\ajax\submit_feedback.php:50
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\ckiosk\ajax\submit_feedback.php on line 50

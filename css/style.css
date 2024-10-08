@@ -357,12 +357,15 @@
 
 /* Modal Styles */
 .modal-dialog {
-    position: absolute;
     top: 10%;
     left: 10%;
     max-width: 80%;
     margin: 0;
 }
+.modal-backdrop {
+    opacity: 0.5; /* Adjust the opacity if needed */
+}
+
 
 .section-content-orgs {
     height: 800px;
@@ -384,6 +387,7 @@
     padding: 15px;
     background-color: #2e0f13;
 }
+
 
 .modal-header {
     display: flex; /* Enable flexbox for alignment */

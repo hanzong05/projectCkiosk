@@ -29,16 +29,26 @@ $showfaqs = $obj->show_allFAQS();
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/fontAwesome.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/light-box.css">
     <link rel="stylesheet" href="css/owl-carousel.css">
     <link rel="stylesheet" href="css/templatemo-style.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <style>
     .highlight {
@@ -834,66 +844,40 @@ $showfaqs = $obj->show_allFAQS();
         </section>
         </section>
 
-          <section id="campusorgs" class="content-section">
+        <section id="campusorgs" class="content-section">
             <div class="section-heading text-center borderYellow">
-                
+                <!-- Optional Section Heading -->
             </div>
-                <div class="section-content section-content-orgs">
-                    <div class="row">
-                            <?php
-                            
-                        
-                            foreach ($allOrg as $row):
-                            ?>
-                            
-                                <div class="col-md-4">
-                                    <div class="faculty-card">
-                                        <div class="faculty-image">
-                                            <a href="#"
-                                            data-toggle="modal"
-                                            data-target="#newsModal"
-                                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                                            data-title="<?= htmlspecialchars($row['org_name']) ?>"
-                                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                            data-author="<?= htmlspecialchars($row['org_name']) ?>">
-                                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                                    alt="<?= htmlspecialchars($row['org_name']) ?>"
-                                                    class="orgimage">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="faculty-info">
-                                        <h6><?= htmlspecialchars($row['org_name']) ?></h6>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header d-flex justify-content-between align-items-center">
-                                    
-                                    <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
-                                    <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="newsFeedContent" class="news-feed">
-                                        
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    
+            <div class="section-content section-content-orgs">
+                <div class="row">
+                    <?php foreach ($allOrg as $row): ?>
+                        <div class="col-md-4">
+                            <div class="faculty-card">
+                                <div class="faculty-image">
+                                    <a href="#" 
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#newsModal"
+                                    data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                                    data-title="<?= htmlspecialchars($row['org_name']) ?>"
+                                    data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                    data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                    data-author="<?= htmlspecialchars($row['org_name']) ?>">
+                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                            alt="<?= htmlspecialchars($row['org_name']) ?>"
+                                            class="orgimage">
+                                    </a>
                                 </div>
                             </div>
+                            <div class="faculty-info">
+                                <h6><?= htmlspecialchars($row['org_name']) ?></h6>
+                            </div>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+           
+        </section>
 
-
-
-         </section>
          
 
         <section id="faqs" class="content-section">
@@ -963,123 +947,148 @@ $showfaqs = $obj->show_allFAQS();
     </div>
 </div>
 
-
-<!-- Modal for feedback -->
-<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="feedbackForm" enctype="multipart/form-data">
-                    <!-- Step 1: Emoji Rating -->
-                    <div class="step" id="step1">
-                        <h4>Rate Your Experience</h4>
-                        <div class="d-flex justify-content-around my-4">
-                            <span class="emoji-select" data-value="1">😠</span>
-                            <span class="emoji-select" data-value="2">😞</span>
-                            <span class="emoji-select" data-value="3">😐</span>
-                            <span class="emoji-select" data-value="4">😊</span>
-                            <span class="emoji-select" data-value="5">😍</span>
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                    </div>
-
-                    <!-- Step 2: Personal Information -->
-                    <div class="step" id="step2" style="display:none;">
-                        <h4>Provide Your Information</h4>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email address (required)</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name (optional)</label>
-                            <input type="text" class="form-control" id="name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Address (optional)</label>
-                            <input type="text" class="form-control" id="address">
-                        </div>
-                        <div class="mb-3">
-                        <label class="form-label">Course</label><br>
-                        <div>
-                            <input type="radio" id="college1" name="college" value="Information Systems " required>
-                            <label for="college1">Information Systems </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="college2" name="college" value="Information Technology">
-                            <label for="college2">Information Technology</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="college3" name="college" value="Computer Science">
-                            <label for="college3">Computer Science</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="college4" name="college" value="other">
-                            <label for="college3">Other / From Other College</label>
-                        </div>
-                        <!-- Add more colleges as needed -->
-                    </div>
-                    <div class="mb-3">
-        <label class="form-label">Year (required)</label><br>
-        <div>
-            <input type="radio" id="year1" name="year" value="1" required>
-            <label for="year1">1st Year</label>
-        </div>
-        <div>
-            <input type="radio" id="year2" name="year" value="2">
-            <label for="year2">2nd Year</label>
-        </div>
-        <div>
-            <input type="radio" id="year3" name="year" value="3">
-            <label for="year3">3rd Year</label>
-        </div>
-        <div>
-            <input type="radio" id="year4" name="year" value="4">
-            <label for="year4">4th Year</label>
-        </div>
-    </div>
-
-                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                    </div>
-
-                    <!-- Step 3: Feedback and Image Upload -->
-                    <div class="step" id="step3" style="display:none;">
-                        <h4>Leave Your Feedback</h4>
-                        <div class="mb-3">
-                            <label for="feedback" class="form-label">Your feedback</label>
-                            <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Upload an Profile Image (optional)</label>
-                            <input class="form-control" type="file" id="image">
-                        </div>
-                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+</section>
 </div>
-        </section>
+
         <!-- <section class="footer">
                 <p>Copyright &copy; 2024.</p>
             </section> -->
     </div>
     
 </div>
+                <div class="modal fade custom-modal" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="newsFeedContent" class="news-feed"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Optional footer buttons -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg"> <!-- Changed to modal-lg for consistency -->
+                        <div class="modal-content" style="color: white">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="feedbackModalLabel">Feedback Form</h3> <!-- Changed to h3 for consistency -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="feedbackForm" enctype="multipart/form-data">
+                                    <!-- Step 1: Emoji Rating -->
+                                    <div class="step" id="step1">
+                                        <h4>Rate Your Experience</h4>
+                                        <div class="d-flex justify-content-around my-4">
+                                            <span class="emoji-select" data-value="1">😠</span>
+                                            <span class="emoji-select" data-value="2">😞</span>
+                                            <span class="emoji-select" data-value="3">😐</span>
+                                            <span class="emoji-select" data-value="4">😊</span>
+                                            <span class="emoji-select" data-value="5">😍</span>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                                    </div>
 
+                                    <!-- Step 2: Personal Information -->
+                                    <div class="step" id="step2" style="display:none;">
+                                        <h4>Provide Your Information</h4>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email address (required)</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Name (optional)</label>
+                                            <input type="text" class="form-control" id="name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label">Address (optional)</label>
+                                            <input type="text" class="form-control" id="address">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Course</label><br>
+                                            <div>
+                                                <input type="radio" id="college1" name="college" value="Information Systems" required>
+                                                <label for="college1">Information Systems</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="college2" name="college" value="Information Technology">
+                                                <label for="college2">Information Technology</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="college3" name="college" value="Computer Science">
+                                                <label for="college3">Computer Science</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="college4" name="college" value="other">
+                                                <label for="college4">Other / From Other College</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Year (required)</label><br>
+                                            <div>
+                                                <input type="radio" id="year1" name="year" value="1" required>
+                                                <label for="year1">1st Year</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="year2" name="year" value="2">
+                                                <label for="year2">2nd Year</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="year3" name="year" value="3">
+                                                <label for="year3">3rd Year</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="year4" name="year" value="4">
+                                                <label for="year4">4th Year</label>
+                                            </div>
+                                        </div>
 
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                                    </div>
 
+                                    <!-- Step 3: Feedback and Image Upload -->
+                                    <div class="step" id="step3" style="display:none;">
+                                        <h4>Leave Your Feedback</h4>
+                                        <div class="mb-3">
+                                            <label for="feedback" class="form-label">Your feedback</label>
+                                            <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="image" class="form-label">Upload a Profile Image (optional)</label>
+                                            <input class="form-control" type="file" id="image">
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Optional footer buttons, if needed -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+    </script>
+
+    <!-- Popper.js and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom JS and Plugins -->
     <script src="js/vendor/bootstrap.min.js"></script>
-
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 
@@ -1291,7 +1300,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tabButtons.length > 0) {
         showTab(tabButtons[0].getAttribute('data-tab'));
     }
-});$(document).ready(function () {
+});
+
+$(document).ready(function () {
     $('#newsModal').on('show.bs.modal', function (e) {
         var title = $(e.relatedTarget).data('title');
         var imageSrc = $(e.relatedTarget).data('image');
@@ -1445,11 +1456,6 @@ function fetchMembers(orgId) {
         }
     }
 });
-
-
-
-
-
 function toggleAnswer(faqId) {
     var answerDiv = document.getElementById('answer-' + faqId);
     if (answerDiv.style.display === 'none') {
@@ -1492,7 +1498,9 @@ function adjustModalPosition() {
             modal.style.left = left + 'px';
         }
     }
-
+    $('#myModal').modal({
+    backdrop: false // Disable the backdrop
+});
     // Adjust modal position when the page loads
     window.addEventListener('load', adjustModalPosition);
 
@@ -1700,7 +1708,7 @@ function loadFeedback() {
                             <img src="${imageUrl}" class="avatar" alt="Avatar" />
                             <h5 class="card-title">${feedback.name || 'Anonymous'} (${feedback.email})</h5>
                             <p class="card-text">Rating: ${getEmojiForRating(feedback.rating)}</p>
-                            <p class="card-text" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto;">
+                            <p class="card-text" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; color: black;">
                                 FeedBack: ${feedback.feedback_text}
                             </p>
                             <p class="card-text"><small class="text-muted">

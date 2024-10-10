@@ -268,6 +268,48 @@ try {
             </div>
           </div>
         </div>
+        
+  <div class="row">
+  
+  <div class="col-lg-6 col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Pie Chart</h4>
+        </div>
+        <div class="card-body" style="position: relative;">
+            <canvas id="pieChart" ></canvas>
+            <ul id="pieChartLegend" style="list-style-type: none; padding: 0; margin: 0; position: absolute;  top: 50%; transform: translateY(-50%);">
+                <!-- Custom legend items will be injected here -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+  <div class="col-lg-6 col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Number Of Ratings</h4>
+      </div>
+      <div class="card-body">
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<div class="row">
+<div class="col-lg-12 col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Total Number Of ratings per Month</h4>
+        </div>
+        <div class="card-body">
+            <canvas id="lineChart" width="400" height="100"></canvas>
+        </div>
+    </div>
+</div>
+  
+</div>
       </div>
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
@@ -290,6 +332,8 @@ try {
       </footer>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
@@ -299,10 +343,13 @@ try {
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
   <script src="assets/js/plugins/chartjs.min.js"></script>
+  
   <!--  Notifications Plugin    -->
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+
+
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
@@ -312,6 +359,205 @@ try {
       // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
       demo.initChartsPages();
     });
+    $(document).ready(function () {
+    function fetchChartData() {
+        fetch('ajax/line-chart.php')  // AJAX request to get the data
+            .then(response => response.json())
+            .then(result => {
+                // Ensure we have data
+                if (result.labels && result.data) {
+                    // Parse the JSON strings into arrays
+                    const labels = JSON.parse(result.labels);
+                    const data = JSON.parse(result.data);
+                    
+                    // Call function to update chart
+                    updateChart(labels, data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching chart data:', error);
+            });
+    }
+
+    // Function to update the chart with fetched data
+    function updateChart(labels, data) {
+        var ctx = document.getElementById('lineChart').getContext('2d');
+
+        // Clear existing chart if it exists
+        if (window.lineChart instanceof Chart) {
+            window.lineChart.destroy();
+        }
+
+        // Create a new chart
+        window.lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,  // Dynamic labels ['2024-10']
+                datasets: [{
+                    label: 'Total Ratings per Month',
+                    data: data,    // Dynamic data [2]
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Total Ratings'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Fetch chart data on page load
+    fetchChartData();
+});
+
+    $(document).ready(function () {
+     
+ // Fetch data from the backend
+function fetchRatingData() {
+    fetch('ajax/bar-graph.php')
+        .then(response => response.json())
+        .then(ratingsCount => {
+            // Create the bar chart using the fetched data
+            createBarChart(ratingsCount);
+        })
+        .catch(error => {
+            console.error('Error fetching ratings data:', error);
+        });
+}
+
+// Create Bar Chart
+function createBarChart(ratingsCount) {
+    var ctxBar = document.getElementById("barChart").getContext("2d");
+    var barChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: ['😠', '😞', '😐', '😊', '😍'],
+            datasets: [{
+                label: 'Member Ratings',
+                data: [
+                    ratingsCount[1] || 0, 
+                    ratingsCount[2] || 0, 
+                    ratingsCount[3] || 0, 
+                    ratingsCount[4] || 0, 
+                    ratingsCount[5] || 0
+                ],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const starRating = tooltipItem.label; // e.g., '1 Star'
+                            const emoji = getEmoji(parseInt(starRating)); // Get the emoji for that rating
+                            return emoji + ' ' + tooltipItem.raw; // Show emoji with count
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Get the emoji for a rating
+function getEmoji(rating) {
+    switch (rating) {
+        case 1: return '😠';
+        case 2: return '😞';
+        case 3: return '😐';
+        case 4: return '😊';
+        case 5: return '😍';
+        default: return '';
+    }
+}
+
+// Call the function to fetch data and create the chart
+fetchRatingData();
+
+// Fetch average ratings and create Pie Chart
+function fetchAverageRatings() {
+    fetch('ajax/pie-chart.php') // Adjust the path to your PHP file
+        .then(response => response.json())
+        .then(data => {
+            const counts = data.counts;
+            const averages = data.averages;
+
+            // Labels for the pie chart
+            const labels = ['😠 1 Star', '😞 2 Stars', '😐 3 Stars', '😊 4 Stars', '😍 5 Stars'];
+
+            // Create the pie chart with average ratings
+            createPieChart(labels, averages);
+        })
+        .catch(error => {
+            console.error('Error fetching average ratings:', error);
+        });
+}
+// Function to create the Pie Chart
+function createPieChart(labels, averages) {
+    var ctxPie = document.getElementById("pieChart").getContext("2d");
+    var pieChart = new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: labels, // Emoji labels for ratings
+            datasets: [{
+                data: Object.values(averages), // Average of each rating
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
+                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40']
+            }]
+        },
+        options: {
+            responsive: true,
+           
+            plugins: {
+                legend: {
+                    display: false // Completely disable the default legend
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const index = tooltipItem.dataIndex;
+                            return labels[index]; // Use custom labels for tooltips
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Custom Legend Creation
+    
+}
+
+// Call the function to fetch data and create the chart
+fetchAverageRatings();
+
+});
+
   </script>
 </body>
 

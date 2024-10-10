@@ -29,16 +29,26 @@ $showfaqs = $obj->show_allFAQS();
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/fontAwesome.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/light-box.css">
     <link rel="stylesheet" href="css/owl-carousel.css">
     <link rel="stylesheet" href="css/templatemo-style.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <style>
     .highlight {
@@ -66,6 +76,101 @@ $showfaqs = $obj->show_allFAQS();
         object-fit: cover; /* Cover ensures the image fills the circle without distorting */
         border-radius: 50%; /* Make it circular */
     }
+
+    
+.org-chart {
+    text-align: center;
+}
+
+.level1, .level2, .level3 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.level2 {
+    margin-top: 50px;
+}
+
+.level3 {
+    margin-top: 50px;
+    justify-content: space-around;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.member {
+    text-align: center;
+    margin: 0 20px;
+    background-color: #2e0f13; /* Maroon color */
+    padding: 10px; /* Optional: Add some padding for better spacing */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}
+
+
+.member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #333;
+    margin-bottom: 10px;
+}
+
+.member p {
+    font-size: 14px;
+    color: #fff; /* White color */
+    line-height: 1.5;
+}
+
+
+.fclty-div {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.button-faculty-btn:hover,
+.button-faculty-btn.active {
+    background-color: #ae2d3e;
+    transform: scale(1.05);
+}
+
+.button-faculty-btn.active {
+    background-color: #ba0019;
+}
+
+.button-faculty-btn:focus {
+    outline: none;
+}
+
+.faculty-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #333;
+    margin-bottom: 10px;
+}
+
+.faculty-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.faculty-info h6 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.faculty-info a {
+    font-size: 14px;
+    color: #fff;
+    display: block;
+    margin-top: 5px;
+}
         
 </style>
 </head>
@@ -547,296 +652,334 @@ $showfaqs = $obj->show_allFAQS();
                 
             </div>
         </section>
-    <section id="facultymembers" class="content-section">
+    
+<section id="campusorgs" class="content-section">
+    <div class="section-heading text-center borderYellow">
+        <!-- Optional Section Heading -->
+    </div>
+    <div class="section-content">
+    <div class="org-chart">
+        <div class="level1">
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Dean">
+                <p><strong>Alvinson L. Guzman</strong><br>Dean</p>
+            </div>
+        </div>
+
+        <div class="level2">
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Assistant Dean">
+                <p><strong>Henry L. Cuello</strong><br>Assistant Dean</p>
+            </div>
+        </div>
+
+        <div class="level3">
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
+                <p><strong>Caroline Carmen</strong><br>College Clerk</p>
+            </div>
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
+                <p><strong>Jane Mae De Vene</strong><br>College Clerk</p>
+            </div>
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Technical Assistant">
+                <p><strong>Carlota Tupasuriano</strong><br>Technical Assistant</p>
+            </div>
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Secretary">
+                <p><strong>Raymundo Punzalan</strong><br>College Secretary</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+    <!-- Department Buttons -->
+    <div class="fclty-div">
+        <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
+        <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
+        <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
+        <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
+    </div>
+
+    <!-- Tab Content -->
+    <section id="first-tab-group" class="tabgroup">
+        <!-- IT Department Tab -->
+        <div id="tab1" class="org-chart">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allItHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>IT CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allIt as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: IT</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IS Department Tab -->
+        <div id="tab2" class="tab-content">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allIsHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>IS CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allIs as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: IS</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CS Department Tab -->
+        <div id="tab3" class="tab-content">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allCsHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>CS CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allCs as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: CS</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIT Department Tab -->
+        <div id="tab4" class="tab-content">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allMitHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>MIT CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allMit as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: MIT</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+    </div>
+</section>
+
+        <section id="campusorgs" class="content-section">
             <div class="section-heading text-center borderYellow">
-                <h1><br><em>FACULTY MEMBERS</em></h1>
-            </div>
-        <div class="section-content">
-            <div class="wrapper">
-                    <!-- Department Buttons -->
-             <div class="fclty-div">
-            <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
-        </div>
-
-
-<!-- Tab Content -->
-        <section id="first-tab-group" class="tabgroup">
-           
-                <div id="tab1" class="tab-content">
-                    <div class="section-content">
-                        <!-- Campus Heads -->
-                        <div class="campus-heads">
-                            <h3>Campus Heads</h3>
-                            <div class="row">
-                            <?php foreach ($allDean as $head): ?>
-    <div class="col-md-4">
-        <div class="faculty-card">
-            <div class="faculty-image">
-                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                </a>
-            </div>
-        </div>
-        <div class="faculty-info">
-            <h6><?= htmlspecialchars($head['name']) ?></h6>
-            <a>Dean</a>
-        </div>
-    </div>
-<?php endforeach; ?>
-<?php foreach ($allItHeads as $head): ?>
-    <div class="col-md-4">
-        <div class="faculty-card">
-            <div class="faculty-image">
-                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                </a>
-            </div>
-        </div>
-        <div class="faculty-info">
-            <h6><?= htmlspecialchars($head['name']) ?></h6>
-            <a>IT CHAIR PERSON</a>
-        </div>
-    </div>
-<?php endforeach; ?>
-</div>
-</div>
-
-<!-- Faculty Members -->
-<div class="faculty-members">
-    <h3>Faculty Members</h3>
-    <div class="row">
-        <?php foreach ($allIt as $row): ?>
-            <div class="col-md-4">
-                <div class="faculty-card">
-                    <div class="faculty-image">
-                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
-                        </a>
-                    </div>
-                </div>
-                <div class="faculty-info">
-                    <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
-                    <a>Department: IT</a>
-                    <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a> <!-- Add specialization -->
-                    <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a> <!-- Add consultation time -->
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-</div>
-</div>
-
-                    </div>
-                </div>
-
-                <!-- IS Department Tab -->
-                <div id="tab2" class="tab-content">
-                    <div class="section-content">
-                        <!-- Campus Heads -->
-                        <div class="campus-heads">
-                            <h3>Campus Heads</h3>
-                            <div class="row">
-                            <?php foreach ($allDean as $head): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($head['name']) ?></h6>
-                                            <a>Dean</a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php foreach ($allIsHeads as $head): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($head['name']) ?></h6>
-                                            <a>IS CHAIR PERSON</a>
-                                            
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- Faculty Members -->
-                        <div class="faculty-members">
-                            <h3>Faculty Members</h3>
-                            <div class="row">
-                                <?php foreach ($allIs as $row): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
-                                            <a>Department: IS</a>
-                                            <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a> <!-- Add specialization -->
-                    <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CS Department Tab -->
-                <div id="tab3" class="tab-content">
-                    <div class="section-content">
-                        <!-- Campus Heads -->
-                        <div class="campus-heads">
-                            <h3>Campus Heads</h3>
-                            <div class="row">
-                            <?php foreach ($allDean as $head): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($head['name']) ?></h6>
-                                            <a>Dean</a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php foreach ($allCsHeads as $head): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($head['name']) ?></h6>
-                                            <a>CS CHAIR PERSON</a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- Faculty Members -->
-                        <div class="faculty-members">
-                            <h3>Faculty Members</h3>
-                            <div class="row">
-                                <?php foreach ($allCs as $row): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
-                                            <a>Department: CS</a>
-                                            <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a> <!-- Add specialization -->
-                    <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MIT Department Tab -->
-                <div id="tab4" class="tab-content">
-                    <div class="section-content">
-                        <!-- Campus Heads -->
-                        <div class="campus-heads">
-                            <h3>Campus Heads</h3>
-                            <div class="row">
-                            <?php foreach ($allDean as $head): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($head['name']) ?></h6>
-                                            <a>Dean</a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php foreach ($allMitHeads as $head): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($head['name']) ?></h6>
-                                            <a>MIT CHAIR PERSON</a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- Faculty Members -->
-                        <div class="faculty-members">
-                            <h3>Faculty Members</h3>
-                            <div class="row">
-                                <?php foreach ($allMit as $row): ?>
-                                    <div class="col-md-4">
-                                        <div class="faculty-card">
-                                            <div class="faculty-image">
-                                                <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
-                                                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="faculty-info">
-                                            <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
-                                            <a>Department: MIT</a>
-                                            <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a> <!-- Add specialization -->
-                    <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-        </section>
-        </section>
-
-        <section id="campusorgs" class="content-section"> 
-            <div class="section-heading text-center borderYellow">
-                <!-- You can add your heading content here -->
+                <!-- Optional Section Heading -->
             </div>
             <div class="section-content section-content-orgs">
                 <div class="row">
@@ -844,9 +987,9 @@ $showfaqs = $obj->show_allFAQS();
                         <div class="col-md-4">
                             <div class="faculty-card">
                                 <div class="faculty-image">
-                                    <a href="#"
-                                    data-toggle="modal"
-                                    data-target="#newsModal"
+                                    <a href="#" 
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#newsModal"
                                     data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
                                     data-title="<?= htmlspecialchars($row['org_name']) ?>"
                                     data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
@@ -864,30 +1007,11 @@ $showfaqs = $obj->show_allFAQS();
                         </div>
                     <?php endforeach; ?>
                 </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header d-flex justify-content-between align-items-center">
-                                <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
-                                <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div id="newsFeedContent" class="news-feed">
-                                    <!-- News feed content goes here -->
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <!-- Footer content goes here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+           
         </section>
+
+         
 
         <section id="faqs" class="content-section">
             <div id="faqs-content">
@@ -943,23 +1067,48 @@ $showfaqs = $obj->show_allFAQS();
                                         <!-- Dynamically filled feedback items will go here -->
                                     </div>
 
-                                    <!-- Average Ratings -->
-                                    <div class="total-ratings">
-                                        <h6>Average Rating:</h6>
-                                        <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
-                                    </div>
-                                </div>
+                        <!-- Average Ratings -->
+                        <div class="total-ratings">
+                            <h6>Average Rating:</h6>
+                            <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</section>
+</div>
+
+        <!-- <section class="footer">
+                <p>Copyright &copy; 2024.</p>
+            </section> -->
+    </div>
+    
+</div>
+                <div class="modal fade custom-modal" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="newsFeedContent" class="news-feed"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Optional footer buttons -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modal for feedback -->
                 <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                    <div class="modal-dialog modal-lg"> <!-- Changed to modal-lg for consistency -->
+                        <div class="modal-content" style="color: white">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
+                                <h3 class="modal-title" id="feedbackModalLabel">Feedback Form</h3> <!-- Changed to h3 for consistency -->
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -1030,6 +1179,7 @@ $showfaqs = $obj->show_allFAQS();
                                                 <label for="year4">4th Year</label>
                                             </div>
                                         </div>
+
                                         <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
                                         <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
                                     </div>
@@ -1050,25 +1200,26 @@ $showfaqs = $obj->show_allFAQS();
                                     </div>
                                 </form>
                             </div>
+                            <div class="modal-footer">
+                                <!-- Optional footer buttons, if needed -->
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
 
-        <!-- <section class="footer">
-                <p>Copyright &copy; 2024.</p>
-            </section> -->
-    </div>
-    
-</div>
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+    </script>
 
+    <!-- Popper.js and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
+    <!-- Custom JS and Plugins -->
     <script src="js/vendor/bootstrap.min.js"></script>
-
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 
@@ -1282,8 +1433,160 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+$(document).ready(function () {
+    $('#newsModal').on('show.bs.modal', function (e) {
+        var title = $(e.relatedTarget).data('title');
+        var imageSrc = $(e.relatedTarget).data('image');
+        var profilePhoto = $(e.relatedTarget).data('profilephoto');
+        var authorName = $(e.relatedTarget).data('author');
+        var orgId = $(e.relatedTarget).data('orgid'); // Get org_id from the data attribute
 
+        console.log('Organization ID:', orgId); // Debugging org_id to ensure it's fetched correctly
 
+        // Initial fetch for announcements
+        fetchAnnouncements(orgId, profilePhoto, authorName);
+    });
+
+    // Fetch announcements
+    function fetchAnnouncements(orgId, profilePhoto, authorName) {
+        $.ajax({
+            url: 'ajax/fetch_announcement.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { org_id: orgId },
+            success: function (response) {
+                console.log('AJAX Success Response:', response);
+
+                if (response.error) {
+                    $('#newsFeedContent').html('<p>' + response.error + '</p>');
+                    return;
+                }
+
+                var content = `
+                    <div class="news-feed-item">
+                        <div class="news-feed-header d-flex align-items-center mb-3">
+                            <img src="${profilePhoto}" alt="Profile Photo" class="img-fluid rounded-circle profile-photo" style="width: 50px; height: 50px; margin-right: 10px;">
+                            <h5 class="font-weight-bold mb-0">${authorName}</h5>
+                            <button type="button" class="btn btn-secondary show-members-btn" data-orgid="${orgId}" id="modalShowMembersBtn">
+                                Show Members
+                            </button>
+                        </div>
+                `;
+
+                if (response.announcements && response.announcements.length > 0) {
+                    content += '<div class="announcement-details">';
+                    response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                    response.announcements.forEach(function (announcement) {
+                        var createdAt = new Date(announcement.created_at);
+                        var timeAgo = formatRelativeTime(createdAt);
+                        var sanitizedDetails = removeColorTags(announcement.announcement_details);
+
+                        content += `
+                            <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
+                            <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
+                                <p class="announcement-details mb-1">${sanitizedDetails}</p>
+                                ${announcement.announcement_image ? `<img src="uploaded/annUploaded/${announcement.announcement_image}" class="img-fluid mb-2 announcement-image">` : ''}
+                            </div>`;
+                    });
+                    content += '</div>';
+                } else {
+                    content += '<p>No announcements found.</p>';
+                }
+
+                content += '</div>';
+                $('#newsFeedContent').html(content);
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                $('#newsFeedContent').html('<p>An error occurred while fetching announcements. Please try again later.</p>');
+            }
+        });
+    }
+
+$(document).on('click', '.show-members-btn', function () {
+    var orgId = $(this).data('orgid');
+    fetchMembers(orgId);
+});
+
+// Fetch members based on org ID
+function fetchMembers(orgId) {
+    $.ajax({
+        url: 'ajax/fetch_members.php', // Replace with the correct URL for fetching members
+        type: 'POST',
+        dataType: 'json',
+        data: { org_id: orgId },
+        success: function (response) {
+            console.log('AJAX Success Response (Members):', response);
+
+            if (response.error) {
+                $('#newsFeedContent').html('<p>' + response.error + '</p>');
+                return;
+            }
+
+            var membersContent = `
+                <div class="members-list">
+                    <h5>Members</h5>
+                    <ul class="list-group">
+            `;
+
+            if (response.members && response.members.length > 0) {
+                response.members.forEach(function (member) {
+                    membersContent += `
+                        <li class="list-group-item">
+                            <img src="uploaded/orgUploaded/${member.member_img}" alt="${member.name}" class="img-fluid rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+                            ${member.name} (${member.username})
+                        </li>`;
+                });
+            } else {
+                membersContent += '<li class="list-group-item">No members found.</li>';
+            }
+
+            membersContent += `
+                    </ul>
+                </div>
+            `;
+
+            $('#newsFeedContent').html(membersContent);
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX Error (Members):', status, error);
+            $('#newsFeedContent').html('<p>An error occurred while fetching members. Please try again later.</p>');
+        }
+    });
+}
+
+    // Utility function to remove font tags and color styles
+    function removeColorTags(content) {
+        return content
+            .replace(/<font[^>]*>/g, '') // Remove <font> tags
+            .replace(/<\/font>/g, '')    // Remove </font> tags
+            .replace(/style="[^"]*color:[^;"]*;?"/g, ''); // Remove inline color styles
+    }
+
+    // Utility function to format relative time
+    function formatRelativeTime(date) {
+        var now = new Date();
+        var diff = Math.floor((now - date) / 1000); // Get difference in seconds
+
+        var seconds = diff;
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+
+        if (days > 1) {
+            return date.toLocaleDateString(); // Return the full date
+        } else if (days === 1) {
+            return '1 day ago';
+        } else if (hours > 0) {
+            return hours + ' hours ago';
+        } else if (minutes > 0) {
+            return minutes + ' minutes ago';
+        } else {
+            return 'just now';
+        }
+    }
+});
 function toggleAnswer(faqId) {
     var answerDiv = document.getElementById('answer-' + faqId);
     if (answerDiv.style.display === 'none') {
@@ -1326,7 +1629,9 @@ function adjustModalPosition() {
             modal.style.left = left + 'px';
         }
     }
-
+    $('#myModal').modal({
+    backdrop: false // Disable the backdrop
+});
     // Adjust modal position when the page loads
     window.addEventListener('load', adjustModalPosition);
 
@@ -1522,26 +1827,26 @@ function nextStep() {
                     let totalScore = 0; // Initialize total score
                     let feedbackCount = data.length; // Get feedback count
 
-                    if (feedbackCount > 0) {
-                        data.forEach(feedback => {
-                            const newFeedback = document.createElement('div');
-                            newFeedback.className = 'card mb-4'; // Add card styling
-                            // Use a default image if no image is uploaded
-                            const imageUrl = feedback.image; // Set your default image path here
-                            newFeedback.innerHTML = `
-                            
-                                <div class="card-body">
-                                    <img src="${imageUrl}" class="avatar" alt="Avatar" />
-                                    <h5 class="card-title">${feedback.name || 'Anonymous'} (${feedback.email})</h5>
-                                    <p class="card-text">Rating: ${getEmojiForRating(feedback.rating)}</p>
-                                    <p class="card-text" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto;">
-                                        FeedBack: ${feedback.feedback_text}
-                                    </p>
-                                    <p class="card-text"><small class="text-muted">
-                                        Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
-                                    </small>
-                                </div>`;
-                            feedbackList.appendChild(newFeedback);
+            if (feedbackCount > 0) {
+                data.forEach(feedback => {
+                    const newFeedback = document.createElement('div');
+                    newFeedback.className = 'card mb-4'; // Add card styling
+                       // Use a default image if no image is uploaded
+                       const imageUrl = feedback.image; // Set your default image path here
+                    newFeedback.innerHTML = `
+                     
+                        <div class="card-body">
+                            <img src="${imageUrl}" class="avatar" alt="Avatar" />
+                            <h5 class="card-title">${feedback.name || 'Anonymous'} (${feedback.email})</h5>
+                            <p class="card-text">Rating: ${getEmojiForRating(feedback.rating)}</p>
+                            <p class="card-text" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; color: black;">
+                                FeedBack: ${feedback.feedback_text}
+                            </p>
+                            <p class="card-text"><small class="text-muted">
+                                Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
+                            </small>
+                        </div>`;
+                    feedbackList.appendChild(newFeedback);
 
                             // Sum the ratings for average calculation
                             totalScore += parseInt(feedback.rating);

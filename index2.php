@@ -45,28 +45,101 @@ $showfaqs = $obj->show_allFAQS();
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <style>
-        .feedback-list {
-            max-height: 300px; /* Limit height of feedback list */
-            overflow-y: auto; /* Enable scrolling if content exceeds height */
-        }
-        .emoji-select {
-            cursor: pointer;
-            font-size: 2rem;
-            transition: transform 0.2s;
-        }
-        .emoji-select:hover {
-            transform: scale(1.2);
-        }
-        .selected {
-        color: gold; /* Change color to indicate selection */
-        transform: scale(1.5); /* Scale up the selected emoji for emphasis */
-        }
-        .avatar {
-                width: 30px; /* Set the width */
-                height: 30px; /* Set the height */
-                object-fit: cover; /* Cover ensures the image fills the circle without distorting */
-                border-radius: 50%; /* Make it circular */
-            }
+       
+.org-chart {
+    text-align: center;
+}
+
+.level1, .level2, .level3 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.level2 {
+    margin-top: 50px;
+}
+
+.level3 {
+    margin-top: 50px;
+    justify-content: space-around;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.member {
+    text-align: center;
+    margin: 0 20px;
+    background-color: #2e0f13; /* Maroon color */
+    padding: 10px; /* Optional: Add some padding for better spacing */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}
+
+
+.member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #333;
+    margin-bottom: 10px;
+}
+
+.member p {
+    font-size: 14px;
+    color: #fff; /* White color */
+    line-height: 1.5;
+}
+
+
+.fclty-div {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.button-faculty-btn:hover,
+.button-faculty-btn.active {
+    background-color: #ae2d3e;
+    transform: scale(1.05);
+}
+
+.button-faculty-btn.active {
+    background-color: #ba0019;
+}
+
+.button-faculty-btn:focus {
+    outline: none;
+}
+
+.faculty-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #333;
+    margin-bottom: 10px;
+}
+
+.faculty-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.faculty-info h6 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.faculty-info a {
+    font-size: 14px;
+    color: #fff;
+    display: block;
+    margin-top: 5px;
+}
+
     </style>
 </head>
 <body>
@@ -77,50 +150,323 @@ $showfaqs = $obj->show_allFAQS();
     <div class="section-heading text-center borderYellow">
         <!-- Optional Section Heading -->
     </div>
-    <div class="section-content section-content-orgs">
-        <div class="row">
-            <?php foreach ($allOrg as $row): ?>
-                <div class="col-md-4">
-                    <div class="faculty-card">
-                        <div class="faculty-image">
-                            <a href="#" 
-                               data-bs-toggle="modal"
-                               data-bs-target="#newsModal"
-                               data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                               data-title="<?= htmlspecialchars($row['org_name']) ?>"
-                               data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                               data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                               data-author="<?= htmlspecialchars($row['org_name']) ?>">
-                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                     alt="<?= htmlspecialchars($row['org_name']) ?>"
-                                     class="orgimage">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="faculty-info">
-                        <h6><?= htmlspecialchars($row['org_name']) ?></h6>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+    <div class="section-content">
+    <div class="org-chart">
+        <div class="level1">
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Dean">
+                <p><strong>Alvinson L. Guzman</strong><br>Dean</p>
+            </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="level2">
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Assistant Dean">
+                <p><strong>Henry L. Cuello</strong><br>Assistant Dean</p>
+            </div>
+        </div>
+
+        <div class="level3">
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
+                <p><strong>Caroline Carmen</strong><br>College Clerk</p>
+            </div>
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
+                <p><strong>Jane Mae De Vene</strong><br>College Clerk</p>
+            </div>
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Technical Assistant">
+                <p><strong>Carlota Tupasuriano</strong><br>Technical Assistant</p>
+            </div>
+            <div class="member">
+                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Secretary">
+                <p><strong>Raymundo Punzalan</strong><br>College Secretary</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+    <!-- Department Buttons -->
+    <div class="fclty-div">
+        <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
+        <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
+        <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
+        <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
+    </div>
+
+    <!-- Tab Content -->
+    <section id="first-tab-group" class="tabgroup">
+        <!-- IT Department Tab -->
+        <div id="tab1" class="org-chart">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allItHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>IT CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="modal-body">
-                        <div id="newsFeedContent" class="news-feed"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- Optional footer buttons -->
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allIt as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: IT</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- IS Department Tab -->
+        <div id="tab2" class="tab-content">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allIsHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>IS CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allIs as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: IS</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CS Department Tab -->
+        <div id="tab3" class="tab-content">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allCsHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>CS CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allCs as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: CS</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIT Department Tab -->
+        <div id="tab4" class="tab-content">
+            <div class="section-content">
+                <!-- Campus Heads -->
+                <div class="campus-heads">
+                    <h3>Campus Heads</h3>
+                    <div class="row">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>Dean</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($allMitHeads as $head): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" data-lightbox="image">
+                                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($head['name']) ?></h6>
+                                        <a>MIT CHAIR PERSON</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Faculty Members -->
+                <div class="faculty-members">
+                    <h3>Faculty Members</h3>
+                    <div class="row">
+                        <?php foreach ($allMit as $row): ?>
+                            <div class="col-md-4">
+                                <div class="member">
+                                    <div class="faculty-image">
+                                        <a href="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" data-lightbox="image">
+                                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="faculty-info">
+                                        <h6><?= htmlspecialchars($row['faculty_name']) ?></h6>
+                                        <a>Department: MIT</a>
+                                        <a>Specialization: <?= htmlspecialchars($row['specialization']) ?></a>
+                                        <a>Consultation Time: <?= htmlspecialchars($row['consultation_time']) ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
     </div>
 </section>
 
@@ -205,135 +551,6 @@ function filterFAQs() {
         }
     }
 }
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        // Handle modal show event
-        $('#newsModal').on('show.bs.modal', function (e) {
-            const orgId = $(e.relatedTarget).data('orgid');
-            const profilePhoto = $(e.relatedTarget).data('profilephoto');
-            const authorName = $(e.relatedTarget).data('author');
-
-            // Fetch announcements
-            fetchAnnouncements(orgId, profilePhoto, authorName);
-        });
-
-        // Fetch announcements
-        function fetchAnnouncements(orgId, profilePhoto, authorName) {
-            $.ajax({
-                url: 'ajax/fetch_announcement.php',
-                type: 'POST',
-                dataType: 'json',
-                data: { org_id: orgId },
-                success: function (response) {
-                    let content = `
-                        <div class="news-feed-item">
-                            <div class="news-feed-header d-flex align-items-center mb-3">
-                                <img src="${profilePhoto}" alt="Profile Photo" class="img-fluid rounded-circle profile-photo" style="width: 50px; height: 50px; margin-right: 10px;">
-                                <h5 class="font-weight-bold mb-0">${authorName}</h5>
-                                <button type="button" class="btn btn-secondary show-members-btn" data-orgid="${orgId}">
-                                    Show Members
-                                </button>
-                            </div>
-                    `;
-
-                    if (response.announcements && response.announcements.length > 0) {
-                        content += '<div class="announcement-details">';
-                        response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-                        response.announcements.forEach(function (announcement) {
-                            const createdAt = new Date(announcement.created_at);
-                            const timeAgo = formatRelativeTime(createdAt);
-                            const sanitizedDetails = removeColorTags(announcement.announcement_details);
-
-                            content += `
-                                <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
-                                <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
-                                    <p class="announcement-details mb-1">${sanitizedDetails}</p>
-                                    ${announcement.announcement_image ? `<img src="uploaded/annUploaded/${announcement.announcement_image}" class="img-fluid mb-2 announcement-image">` : ''}
-                                </div>`;
-                        });
-                        content += '</div>';
-                    } else {
-                        content += '<p>No announcements found.</p>';
-                    }
-
-                    content += '</div>';
-                    $('#newsFeedContent').html(content);
-                },
-                error: function (xhr, status, error) {
-                    $('#newsFeedContent').html('<p>An error occurred while fetching announcements. Please try again later.</p>');
-                }
-            });
-        }
-
-        // Fetch members based on org ID
-        $(document).on('click', '.show-members-btn', function () {
-            const orgId = $(this).data('orgid');
-            fetchMembers(orgId);
-        });
-
-        function fetchMembers(orgId) {
-            $.ajax({
-                url: 'ajax/fetch_members.php', // Update with the correct URL for fetching members
-                type: 'POST',
-                dataType: 'json',
-                data: { org_id: orgId },
-                success: function (response) {
-                    let membersContent = `
-                        <div class="members-list">
-                            <h5>Members:</h5>
-                            <div class="feedback-list">`;
-
-                    if (response.members && response.members.length > 0) {
-                        response.members.forEach(member => {
-                            membersContent += `
-                                <div class="member-item d-flex align-items-center mb-2">
-                                    <img src="uploaded/members/${member.photo}" class="avatar" alt="${member.name}">
-                                    <span class="ms-2">${member.name}</span>
-                                </div>`;
-                        });
-                    } else {
-                        membersContent += '<p>No members found.</p>';
-                    }
-                    membersContent += `
-                            </div>
-                        </div>`;
-
-                    Swal.fire({
-                        title: 'Members',
-                        html: membersContent,
-                        showCloseButton: true,
-                        showCancelButton: false,
-                        focusConfirm: false,
-                        confirmButtonText: 'Close'
-                    });
-                },
-                error: function (xhr, status, error) {
-                    Swal.fire('Error', 'Unable to fetch members. Please try again later.', 'error');
-                }
-            });
-        }
-
-        function formatRelativeTime(date) {
-            const now = new Date();
-            const seconds = Math.floor((now - date) / 1000);
-            const minutes = Math.floor(seconds / 60);
-            const hours = Math.floor(minutes / 60);
-            const days = Math.floor(hours / 24);
-
-            if (seconds < 60) return `${seconds} seconds ago`;
-            if (minutes < 60) return `${minutes} minutes ago`;
-            if (hours < 24) return `${hours} hours ago`;
-            return `${days} days ago`;
-        }
-
-        function removeColorTags(str) {
-            return str.replace(/<\/?span[^>]*>/g, ''); // Remove <span> tags
-        }
-    });
 </script>
 
 </body>

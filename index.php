@@ -834,238 +834,227 @@ $showfaqs = $obj->show_allFAQS();
         </section>
         </section>
 
-          <section id="campusorgs" class="content-section">
+        <section id="campusorgs" class="content-section"> 
             <div class="section-heading text-center borderYellow">
-                
+                <!-- You can add your heading content here -->
             </div>
-                <div class="section-content section-content-orgs">
-                    <div class="row">
-                            <?php
-                            
-                        
-                            foreach ($allOrg as $row):
-                            ?>
-                            
-                                <div class="col-md-4">
-                                    <div class="faculty-card">
-                                        <div class="faculty-image">
-                                            <a href="#"
-                                            data-toggle="modal"
-                                            data-target="#newsModal"
-                                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                                            data-title="<?= htmlspecialchars($row['org_name']) ?>"
-                                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                            data-author="<?= htmlspecialchars($row['org_name']) ?>">
-                                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                                    alt="<?= htmlspecialchars($row['org_name']) ?>"
-                                                    class="orgimage">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="faculty-info">
-                                        <h6><?= htmlspecialchars($row['org_name']) ?></h6>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header d-flex justify-content-between align-items-center">
-                                    
-                                    <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
-                                    <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="newsFeedContent" class="news-feed">
-                                        
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    
+            <div class="section-content section-content-orgs">
+                <div class="row">
+                    <?php foreach ($allOrg as $row): ?>
+                        <div class="col-md-4">
+                            <div class="faculty-card">
+                                <div class="faculty-image">
+                                    <a href="#"
+                                    data-toggle="modal"
+                                    data-target="#newsModal"
+                                    data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                                    data-title="<?= htmlspecialchars($row['org_name']) ?>"
+                                    data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                    data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                    data-author="<?= htmlspecialchars($row['org_name']) ?>">
+                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                            alt="<?= htmlspecialchars($row['org_name']) ?>"
+                                            class="orgimage">
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-
-
-         </section>
-         
-
-        <section id="faqs" class="content-section">
-    <div id="faqs-content">
-        <div class="section-heading text-center borderYellow">
-            <h1>FREQUENTLY ASKED QUESTIONS</h1>
-        </div>
-        <div class="section-content section-content-faqs">
-            <!-- Search Bar -->
-            <div class="search-container">
-                <input type="text" id="faq-search" placeholder="Search FAQs..." onkeyup="filterFAQs()">
-            </div>
-
-            <div class="faq-items-container">
-                <?php if (is_array($showfaqs)): ?>
-                    <?php foreach ($showfaqs as $faq): ?>
-                        <div class="faq-item" data-question="<?php echo strtolower(strip_tags($faq['faqs_question'])); ?>">
-                            <h3 class="faq-question" onclick="toggleAnswer(<?php echo $faq['faqs_id']; ?>)">
-                                <?php echo strip_tags($faq['faqs_question']); ?>
-                            </h3>
-                            <div id="answer-<?php echo $faq['faqs_id']; ?>" class="faq-answer">
-                            <strong>Answer: </strong>  <?php echo strip_tags($faq['faqs_answer']); ?>
+                            <div class="faculty-info">
+                                <h6><?= htmlspecialchars($row['org_name']) ?></h6>
                             </div>
                         </div>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No FAQs available</p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-</section>  
-        <section id="feed" class="content-section">    
-        <h3>Faculty Members</h3>    
-    <div class="container mt-5">
-    <!-- Heading -->
-    <h2 class="section-heading text-center mb-4">Give Us Your Feedback</h2>
+                </div>
 
-    <!-- Feedback Display Section -->
-    <div class="row d-flex justify-content-center mt-4">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-                <div class="card-body p-4">
-                     <!-- Button to trigger modal aligned to the right -->
-         
-
-                        <!-- Button Wrapper with Border -->
-                        <div class="text-end mb-4 border-bottom pb-3">
-                        <button type="button" class="btn btn-modern border" data-bs-toggle="modal" data-bs-target="#feedbackModal" style="border: 1px solid #ccc; border-radius: 5px;">
-                            <i class="fas fa-comments me-2"></i>Add Your Feedback
-                        </button>
-
+                <!-- Modal -->
+                <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-between align-items-center">
+                                <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
+                                <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="newsFeedContent" class="news-feed">
+                                    <!-- News feed content goes here -->
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Footer content goes here -->
+                            </div>
                         </div>
-                        <h5 class="card-title text-center mb-3">Recent Feedback</h5>
-                        <div id="feedbackList" class="feedback-list mb-4">
-                            <!-- Dynamically filled feedback items will go here -->
-                        </div>
-
-                        <!-- Average Ratings -->
-                        <div class="total-ratings">
-                            <h6>Average Rating:</h6>
-                            <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
-                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal for feedback -->
-<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="feedbackForm" enctype="multipart/form-data">
-                    <!-- Step 1: Emoji Rating -->
-                    <div class="step" id="step1">
-                        <h4>Rate Your Experience</h4>
-                        <div class="d-flex justify-content-around my-4">
-                            <span class="emoji-select" data-value="1">😠</span>
-                            <span class="emoji-select" data-value="2">😞</span>
-                            <span class="emoji-select" data-value="3">😐</span>
-                            <span class="emoji-select" data-value="4">😊</span>
-                            <span class="emoji-select" data-value="5">😍</span>
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                    </div>
-
-                    <!-- Step 2: Personal Information -->
-                    <div class="step" id="step2" style="display:none;">
-                        <h4>Provide Your Information</h4>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email address (required)</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name (optional)</label>
-                            <input type="text" class="form-control" id="name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Address (optional)</label>
-                            <input type="text" class="form-control" id="address">
-                        </div>
-                        <div class="mb-3">
-                        <label class="form-label">Course</label><br>
-                        <div>
-                            <input type="radio" id="college1" name="college" value="Information Systems " required>
-                            <label for="college1">Information Systems </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="college2" name="college" value="Information Technology">
-                            <label for="college2">Information Technology</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="college3" name="college" value="Computer Science">
-                            <label for="college3">Computer Science</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="college4" name="college" value="other">
-                            <label for="college3">Other / From Other College</label>
-                        </div>
-                        <!-- Add more colleges as needed -->
-                    </div>
-                    <div class="mb-3">
-        <label class="form-label">Year (required)</label><br>
-        <div>
-            <input type="radio" id="year1" name="year" value="1" required>
-            <label for="year1">1st Year</label>
-        </div>
-        <div>
-            <input type="radio" id="year2" name="year" value="2">
-            <label for="year2">2nd Year</label>
-        </div>
-        <div>
-            <input type="radio" id="year3" name="year" value="3">
-            <label for="year3">3rd Year</label>
-        </div>
-        <div>
-            <input type="radio" id="year4" name="year" value="4">
-            <label for="year4">4th Year</label>
-        </div>
-    </div>
-
-                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                    </div>
-
-                    <!-- Step 3: Feedback and Image Upload -->
-                    <div class="step" id="step3" style="display:none;">
-                        <h4>Leave Your Feedback</h4>
-                        <div class="mb-3">
-                            <label for="feedback" class="form-label">Your feedback</label>
-                            <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Upload an Profile Image (optional)</label>
-                            <input class="form-control" type="file" id="image">
-                        </div>
-                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
         </section>
+
+        <section id="faqs" class="content-section">
+            <div id="faqs-content">
+                <div class="section-heading text-center borderYellow">
+                    <h1>FREQUENTLY ASKED QUESTIONS</h1>
+                </div>
+                <div class="section-content section-content-faqs">
+                    <!-- Search Bar -->
+                    <div class="search-container">
+                        <input type="text" id="faq-search" placeholder="Search FAQs..." onkeyup="filterFAQs()">
+                    </div>
+
+                    <div class="faq-items-container">
+                        <?php if (is_array($showfaqs) && !empty($showfaqs)): ?>
+                            <?php foreach ($showfaqs as $faq): ?>
+                                <div class="faq-item" data-question="<?= strtolower(strip_tags($faq['faqs_question'])); ?>">
+                                    <h3 class="faq-question" onclick="toggleAnswer(<?= $faq['faqs_id']; ?>)">
+                                        <?= htmlspecialchars($faq['faqs_question']); ?>
+                                    </h3>
+                                    <div id="answer-<?= $faq['faqs_id']; ?>" class="faq-answer">
+                                        <strong>Answer: </strong> <?= htmlspecialchars($faq['faqs_answer']); ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No FAQs available</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="feed" class="content-section">
+                <h3>Feed Back</h3>
+                <div class="container mt-5">
+                    <!-- Heading -->
+                    <h2 class="section-heading text-center mb-4">Give Us Your Feedback</h2>
+
+                    <!-- Feedback Display Section -->
+                    <div class="row d-flex justify-content-center mt-4">
+                        <div class="col-md-8 col-lg-6">
+                            <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                                <div class="card-body p-4">
+                                    <!-- Button to trigger modal aligned to the right -->
+                                    <!-- Button Wrapper with Border -->
+                                    <div class="text-end mb-4 border-bottom pb-3">
+                                        <button type="button" class="btn btn-modern border" data-bs-toggle="modal" data-bs-target="#feedbackModal" style="border: 1px solid #ccc; border-radius: 5px;">
+                                            <i class="fas fa-comments me-2"></i>Add Your Feedback
+                                        </button>
+                                    </div>
+                                    <h5 class="card-title text-center mb-3">Recent Feedback</h5>
+                                    <div id="feedbackList" class="feedback-list mb-4">
+                                        <!-- Dynamically filled feedback items will go here -->
+                                    </div>
+
+                                    <!-- Average Ratings -->
+                                    <div class="total-ratings">
+                                        <h6>Average Rating:</h6>
+                                        <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for feedback -->
+                <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="feedbackForm" enctype="multipart/form-data">
+                                    <!-- Step 1: Emoji Rating -->
+                                    <div class="step" id="step1">
+                                        <h4>Rate Your Experience</h4>
+                                        <div class="d-flex justify-content-around my-4">
+                                            <span class="emoji-select" data-value="1">😠</span>
+                                            <span class="emoji-select" data-value="2">😞</span>
+                                            <span class="emoji-select" data-value="3">😐</span>
+                                            <span class="emoji-select" data-value="4">😊</span>
+                                            <span class="emoji-select" data-value="5">😍</span>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                                    </div>
+
+                                    <!-- Step 2: Personal Information -->
+                                    <div class="step" id="step2" style="display:none;">
+                                        <h4>Provide Your Information</h4>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email address (required)</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Name (optional)</label>
+                                            <input type="text" class="form-control" id="name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label">Address (optional)</label>
+                                            <input type="text" class="form-control" id="address">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Course</label><br>
+                                            <div>
+                                                <input type="radio" id="college1" name="college" value="Information Systems" required>
+                                                <label for="college1">Information Systems</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="college2" name="college" value="Information Technology">
+                                                <label for="college2">Information Technology</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="college3" name="college" value="Computer Science">
+                                                <label for="college3">Computer Science</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="college4" name="college" value="other">
+                                                <label for="college4">Other / From Other College</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Year (required)</label><br>
+                                            <div>
+                                                <input type="radio" id="year1" name="year" value="1" required>
+                                                <label for="year1">1st Year</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="year2" name="year" value="2">
+                                                <label for="year2">2nd Year</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="year3" name="year" value="3">
+                                                <label for="year3">3rd Year</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="year4" name="year" value="4">
+                                                <label for="year4">4th Year</label>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                                    </div>
+
+                                    <!-- Step 3: Feedback and Image Upload -->
+                                    <div class="step" id="step3" style="display:none;">
+                                        <h4>Leave Your Feedback</h4>
+                                        <div class="mb-3">
+                                            <label for="feedback" class="form-label">Your feedback</label>
+                                            <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="image" class="form-label">Upload a Profile Image (optional)</label>
+                                            <input class="form-control" type="file" id="image">
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         <!-- <section class="footer">
                 <p>Copyright &copy; 2024.</p>
             </section> -->
@@ -1291,162 +1280,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tabButtons.length > 0) {
         showTab(tabButtons[0].getAttribute('data-tab'));
     }
-});$(document).ready(function () {
-    $('#newsModal').on('show.bs.modal', function (e) {
-        var title = $(e.relatedTarget).data('title');
-        var imageSrc = $(e.relatedTarget).data('image');
-        var profilePhoto = $(e.relatedTarget).data('profilephoto');
-        var authorName = $(e.relatedTarget).data('author');
-        var orgId = $(e.relatedTarget).data('orgid'); // Get org_id from the data attribute
-
-        console.log('Organization ID:', orgId); // Debugging org_id to ensure it's fetched correctly
-
-        // Initial fetch for announcements
-        fetchAnnouncements(orgId, profilePhoto, authorName);
-    });
-
-    // Fetch announcements
-    function fetchAnnouncements(orgId, profilePhoto, authorName) {
-        $.ajax({
-            url: 'ajax/fetch_announcement.php',
-            type: 'POST',
-            dataType: 'json',
-            data: { org_id: orgId },
-            success: function (response) {
-                console.log('AJAX Success Response:', response);
-
-                if (response.error) {
-                    $('#newsFeedContent').html('<p>' + response.error + '</p>');
-                    return;
-                }
-
-                var content = `
-                    <div class="news-feed-item">
-                        <div class="news-feed-header d-flex align-items-center mb-3">
-                            <img src="${profilePhoto}" alt="Profile Photo" class="img-fluid rounded-circle profile-photo" style="width: 50px; height: 50px; margin-right: 10px;">
-                            <h5 class="font-weight-bold mb-0">${authorName}</h5>
-                            <button type="button" class="btn btn-secondary show-members-btn" data-orgid="${orgId}" id="modalShowMembersBtn">
-                                Show Members
-                            </button>
-                        </div>
-                `;
-
-                if (response.announcements && response.announcements.length > 0) {
-                    content += '<div class="announcement-details">';
-                    response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-                    response.announcements.forEach(function (announcement) {
-                        var createdAt = new Date(announcement.created_at);
-                        var timeAgo = formatRelativeTime(createdAt);
-                        var sanitizedDetails = removeColorTags(announcement.announcement_details);
-
-                        content += `
-                            <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
-                            <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
-                                <p class="announcement-details mb-1">${sanitizedDetails}</p>
-                                ${announcement.announcement_image ? `<img src="uploaded/annUploaded/${announcement.announcement_image}" class="img-fluid mb-2 announcement-image">` : ''}
-                            </div>`;
-                    });
-                    content += '</div>';
-                } else {
-                    content += '<p>No announcements found.</p>';
-                }
-
-                content += '</div>';
-                $('#newsFeedContent').html(content);
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-                $('#newsFeedContent').html('<p>An error occurred while fetching announcements. Please try again later.</p>');
-            }
-        });
-    }
-
-$(document).on('click', '.show-members-btn', function () {
-    var orgId = $(this).data('orgid');
-    fetchMembers(orgId);
 });
-
-// Fetch members based on org ID
-function fetchMembers(orgId) {
-    $.ajax({
-        url: 'ajax/fetch_members.php', // Replace with the correct URL for fetching members
-        type: 'POST',
-        dataType: 'json',
-        data: { org_id: orgId },
-        success: function (response) {
-            console.log('AJAX Success Response (Members):', response);
-
-            if (response.error) {
-                $('#newsFeedContent').html('<p>' + response.error + '</p>');
-                return;
-            }
-
-            var membersContent = `
-                <div class="members-list">
-                    <h5>Members</h5>
-                    <ul class="list-group">
-            `;
-
-            if (response.members && response.members.length > 0) {
-                response.members.forEach(function (member) {
-                    membersContent += `
-                        <li class="list-group-item">
-                            <img src="uploaded/orgUploaded/${member.member_img}" alt="${member.name}" class="img-fluid rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
-                            ${member.name} (${member.username})
-                        </li>`;
-                });
-            } else {
-                membersContent += '<li class="list-group-item">No members found.</li>';
-            }
-
-            membersContent += `
-                    </ul>
-                </div>
-            `;
-
-            $('#newsFeedContent').html(membersContent);
-        },
-        error: function (xhr, status, error) {
-            console.error('AJAX Error (Members):', status, error);
-            $('#newsFeedContent').html('<p>An error occurred while fetching members. Please try again later.</p>');
-        }
-    });
-}
-
-    // Utility function to remove font tags and color styles
-    function removeColorTags(content) {
-        return content
-            .replace(/<font[^>]*>/g, '') // Remove <font> tags
-            .replace(/<\/font>/g, '')    // Remove </font> tags
-            .replace(/style="[^"]*color:[^;"]*;?"/g, ''); // Remove inline color styles
-    }
-
-    // Utility function to format relative time
-    function formatRelativeTime(date) {
-        var now = new Date();
-        var diff = Math.floor((now - date) / 1000); // Get difference in seconds
-
-        var seconds = diff;
-        var minutes = Math.floor(seconds / 60);
-        var hours = Math.floor(minutes / 60);
-        var days = Math.floor(hours / 24);
-
-        if (days > 1) {
-            return date.toLocaleDateString(); // Return the full date
-        } else if (days === 1) {
-            return '1 day ago';
-        } else if (hours > 0) {
-            return hours + ' hours ago';
-        } else if (minutes > 0) {
-            return minutes + ' minutes ago';
-        } else {
-            return 'just now';
-        }
-    }
-});
-
-
 
 
 
@@ -1569,187 +1403,187 @@ function nextStep() {
     let totalScore = 0; // To accumulate the total score
     let averageRatingText = document.getElementById('averageRatingText'); // Reference to average rating display
 // Event listener for feedback submission
-document.getElementById('feedbackForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
-    const feedbackInput = document.getElementById('feedback').value.trim();
-    const emailInput = document.getElementById('email').value.trim();
-    const nameInput = document.getElementById('name').value.trim();
-    const addressInput = document.getElementById('address').value.trim();
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const feedbackInput = document.getElementById('feedback').value.trim();
+            const emailInput = document.getElementById('email').value.trim();
+            const nameInput = document.getElementById('name').value.trim();
+            const addressInput = document.getElementById('address').value.trim();
 
-    // Retrieve selected college
-    const collegeInput = document.querySelector('input[name="college"]:checked');
-    const collegeValue = collegeInput ? collegeInput.value : '';
+            // Retrieve selected college
+            const collegeInput = document.querySelector('input[name="college"]:checked');
+            const collegeValue = collegeInput ? collegeInput.value : '';
 
-    // Retrieve selected year
-    const yearInput = document.querySelector('input[name="year"]:checked');
-    const yearValue = yearInput ? yearInput.value : '';
+            // Retrieve selected year
+            const yearInput = document.querySelector('input[name="year"]:checked');
+            const yearValue = yearInput ? yearInput.value : '';
 
-    const imageInput = document.getElementById('image').files[0];
+            const imageInput = document.getElementById('image').files[0];
 
-    if (feedbackInput && selectedRating && collegeValue && yearValue) {
-        const formData = new FormData();
-        formData.append('rating', selectedRating.getAttribute('data-value'));
-        formData.append('feedback', feedbackInput);
-        formData.append('email', emailInput);
-        formData.append('name', nameInput);
-        formData.append('address', addressInput);
-        formData.append('college', collegeValue);
-        formData.append('year', yearValue);
-        if (imageInput) {
-            formData.append('image', imageInput);
+            if (feedbackInput && selectedRating && collegeValue && yearValue) {
+                const formData = new FormData();
+                formData.append('rating', selectedRating.getAttribute('data-value'));
+                formData.append('feedback', feedbackInput);
+                formData.append('email', emailInput);
+                formData.append('name', nameInput);
+                formData.append('address', addressInput);
+                formData.append('college', collegeValue);
+                formData.append('year', yearValue);
+                if (imageInput) {
+                    formData.append('image', imageInput);
+                }
+
+                // Show loading alert
+                Swal.fire({
+                    title: 'Submitting your feedback',
+                    text: 'Please wait...',
+                    allowOutsideClick: false,
+                    onOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Send data to PHP script via fetch
+                fetch('ajax/submit_feedback.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    console.log('Response:', response); // Log the response
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.json(); // Parse response as JSON
+                })
+                .then(data => {
+                    // Close the loading alert
+                    Swal.close();
+
+                    if (data.success) {
+                        // Show Toast notification for success
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Feedback submitted successfully!'
+                        }).then(() => {
+                            // Reload the page after showing the toast
+                            location.reload();
+                        });
+                    } else {
+                        console.error('Submission failed:', data.message);
+                        // Show Toast notification for error
+                        Toast.fire({
+                            icon: 'error',
+                            title: data.message || 'An error occurred while submitting your feedback.'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Close the loading alert
+                    Swal.close();
+                    // Show Toast notification for unexpected error
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'An unexpected error occurred. Please try again later.'
+                    });
+                });
+
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
+                modal.hide();
+            } else {
+                alert('Please select a rating and provide feedback.');
+            }
+        });
+
+        // Toast configuration
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        // Load feedback when the page loads
+        function loadFeedback() {
+            fetch('ajax/fetch_feedback.php') // Point to your PHP script
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    const feedbackList = document.getElementById('feedbackList');
+                    feedbackList.innerHTML = ''; // Clear existing feedback
+                    let totalScore = 0; // Initialize total score
+                    let feedbackCount = data.length; // Get feedback count
+
+                    if (feedbackCount > 0) {
+                        data.forEach(feedback => {
+                            const newFeedback = document.createElement('div');
+                            newFeedback.className = 'card mb-4'; // Add card styling
+                            // Use a default image if no image is uploaded
+                            const imageUrl = feedback.image; // Set your default image path here
+                            newFeedback.innerHTML = `
+                            
+                                <div class="card-body">
+                                    <img src="${imageUrl}" class="avatar" alt="Avatar" />
+                                    <h5 class="card-title">${feedback.name || 'Anonymous'} (${feedback.email})</h5>
+                                    <p class="card-text">Rating: ${getEmojiForRating(feedback.rating)}</p>
+                                    <p class="card-text" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto;">
+                                        FeedBack: ${feedback.feedback_text}
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">
+                                        Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
+                                    </small>
+                                </div>`;
+                            feedbackList.appendChild(newFeedback);
+
+                            // Sum the ratings for average calculation
+                            totalScore += parseInt(feedback.rating);
+                        });
+
+                        // Calculate average rating
+                        const averageRating = (totalScore / feedbackCount).toFixed(2);
+                        document.getElementById('averageRatingText').textContent = `${averageRating} ${getEmojiForRating(averageRating)}`;
+                    } else {
+                        feedbackList.innerText = 'No feedback available.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during fetch:', error);
+                });
+        }
+        function getYearWithSuffix(year) {
+        if (!year) return ''; // Handle case where year is undefined or null
+
+        const ordinalSuffix = (n) => {
+            const suffixes = ["th", "st", "nd", "rd", "th"];
+            return n % 100 >= 11 && n % 100 <= 13 ? suffixes[0] : suffixes[(n % 10) > 4 ? 0 : n % 10];
+        };
+
+        return `${year}${ordinalSuffix(year)} year`;
+        }
+        // Function to get emoji for a given rating
+        function getEmojiForRating(rating) {
+            switch (parseInt(rating)) {
+                case 1: return '😠';
+                case 2: return '😞';
+                case 3: return '😐';
+                case 4: return '😊';
+                case 5: return '😍';
+                default: return '';
+            }
         }
 
-        // Show loading alert
-        Swal.fire({
-            title: 'Submitting your feedback',
-            text: 'Please wait...',
-            allowOutsideClick: false,
-            onOpen: () => {
-                Swal.showLoading();
-            }
-        });
+        // Load feedback when the page loads
+        window.onload = loadFeedback;
 
-        // Send data to PHP script via fetch
-        fetch('ajax/submit_feedback.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            console.log('Response:', response); // Log the response
-            if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.statusText);
-            }
-            return response.json(); // Parse response as JSON
-        })
-        .then(data => {
-            // Close the loading alert
-            Swal.close();
-
-            if (data.success) {
-                // Show Toast notification for success
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Feedback submitted successfully!'
-                }).then(() => {
-                    // Reload the page after showing the toast
-                    location.reload();
-                });
-            } else {
-                console.error('Submission failed:', data.message);
-                // Show Toast notification for error
-                Toast.fire({
-                    icon: 'error',
-                    title: data.message || 'An error occurred while submitting your feedback.'
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Close the loading alert
-            Swal.close();
-            // Show Toast notification for unexpected error
-            Toast.fire({
-                icon: 'error',
-                title: 'An unexpected error occurred. Please try again later.'
-            });
-        });
-
-        // Close modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
-        modal.hide();
-    } else {
-        alert('Please select a rating and provide feedback.');
-    }
-});
-
-// Toast configuration
-const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-    }
-});
-
-   // Load feedback when the page loads
-function loadFeedback() {
-    fetch('ajax/fetch_feedback.php') // Point to your PHP script
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(data => {
-            const feedbackList = document.getElementById('feedbackList');
-            feedbackList.innerHTML = ''; // Clear existing feedback
-            let totalScore = 0; // Initialize total score
-            let feedbackCount = data.length; // Get feedback count
-
-            if (feedbackCount > 0) {
-                data.forEach(feedback => {
-                    const newFeedback = document.createElement('div');
-                    newFeedback.className = 'card mb-4'; // Add card styling
-                       // Use a default image if no image is uploaded
-                       const imageUrl = feedback.image; // Set your default image path here
-                    newFeedback.innerHTML = `
-                     
-                        <div class="card-body">
-                            <img src="${imageUrl}" class="avatar" alt="Avatar" />
-                            <h5 class="card-title">${feedback.name || 'Anonymous'} (${feedback.email})</h5>
-                            <p class="card-text">Rating: ${getEmojiForRating(feedback.rating)}</p>
-                            <p class="card-text" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto;">
-                                FeedBack: ${feedback.feedback_text}
-                            </p>
-                            <p class="card-text"><small class="text-muted">
-                                Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
-                            </small>
-                        </div>`;
-                    feedbackList.appendChild(newFeedback);
-
-                    // Sum the ratings for average calculation
-                    totalScore += parseInt(feedback.rating);
-                });
-
-                // Calculate average rating
-                const averageRating = (totalScore / feedbackCount).toFixed(2);
-                document.getElementById('averageRatingText').textContent = `${averageRating} ${getEmojiForRating(averageRating)}`;
-            } else {
-                feedbackList.innerText = 'No feedback available.';
-            }
-        })
-        .catch(error => {
-            console.error('Error during fetch:', error);
-        });
-}
-function getYearWithSuffix(year) {
-  if (!year) return ''; // Handle case where year is undefined or null
-
-  const ordinalSuffix = (n) => {
-    const suffixes = ["th", "st", "nd", "rd", "th"];
-    return n % 100 >= 11 && n % 100 <= 13 ? suffixes[0] : suffixes[(n % 10) > 4 ? 0 : n % 10];
-  };
-
-  return `${year}${ordinalSuffix(year)} year`;
-}
-// Function to get emoji for a given rating
-function getEmojiForRating(rating) {
-    switch (parseInt(rating)) {
-        case 1: return '😠';
-        case 2: return '😞';
-        case 3: return '😐';
-        case 4: return '😊';
-        case 5: return '😍';
-        default: return '';
-    }
-}
-
-// Load feedback when the page loads
-window.onload = loadFeedback;
-
-</script>
+        </script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

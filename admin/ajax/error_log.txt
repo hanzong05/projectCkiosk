@@ -119,3 +119,4 @@
 [10-Oct-2024 13:43:22 Europe/Berlin] PHP Warning:  Undefined variable $type in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 428
 [10-Oct-2024 20:25:40 Europe/Berlin] PHP Warning:  Undefined variable $type in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 428
 [10-Oct-2024 22:19:59 Europe/Berlin] PHP Warning:  Undefined variable $type in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 428
+[13-Oct-2024 14:29:47 Europe/Berlin] PHP Warning:  Undefined variable $type in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 428

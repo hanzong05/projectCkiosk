@@ -653,7 +653,8 @@ $showfaqs = $obj->show_allFAQS();
             </div>
         </section>
     
-<section id="campusorgs" class="content-section">
+
+        <section id="campusorgs" class="content-section">
     <div class="section-heading text-center borderYellow">
         <!-- Optional Section Heading -->
     </div>
@@ -1392,45 +1393,27 @@ function showFloorTable(floorId) {
     </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Get all tab buttons and tab contents
-    const tabButtons = document.querySelectorAll('.button-faculty-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
+document.addEventListener("DOMContentLoaded", function() {
+    const tabButtons = document.querySelectorAll(".button-faculty-btn");
+    const tabs = document.querySelectorAll(".tabgroup > div");
 
-    // Function to show a specific tab
-    function showTab(tabId) {
-        // Hide all tab contents
-        tabContents.forEach(content => {
-            content.style.display = 'none';
-        });
-
-        // Remove 'active' class from all buttons
-        tabButtons.forEach(button => {
-            button.classList.remove('active');
-        });
-
-        // Show the selected tab content
-        document.getElementById(tabId).style.display = 'block';
-
-        // Set the clicked button as active
-        const activeButton = document.querySelector(`button[data-tab="${tabId}"]`);
-        if (activeButton) {
-            activeButton.classList.add('active');
-        }
-    }
-
-    // Attach click event listeners to each tab button
     tabButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const tabId = this.getAttribute('data-tab');
-            showTab(tabId);
+        button.addEventListener("click", function() {
+            const tabId = this.getAttribute("data-tab");
+
+            // Remove active class from all buttons and tabs
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+            tabs.forEach(tab => tab.style.display = "none");
+
+            // Add active class to the clicked button and display the associated tab
+            this.classList.add("active");
+            document.getElementById(tabId).style.display = "block";
         });
     });
 
-    // Show the first tab by default
-    if (tabButtons.length > 0) {
-        showTab(tabButtons[0].getAttribute('data-tab'));
-    }
+    // By default, show the first tab and mark the first button as active
+    tabButtons[0].classList.add("active");
+    tabs[0].style.display = "block";
 });
 
 $(document).ready(function () {

@@ -1000,15 +1000,15 @@ $showfaqs = $obj->show_allFAQS();
                                         <h4>Provide Your Information</h4>
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email address (required)</label>
-                                            <input type="email" class="form-control" id="email" required>
+                                            <input type="email" class="form-control" name="email"id="email" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="name" class="form-label">Name (optional)</label>
-                                            <input type="text" class="form-control" id="name">
+                                            <input type="text" class="form-control"  name="name" id="name">
                                         </div>
                                         <div class="mb-3">
                                             <label for="address" class="form-label">Address (optional)</label>
-                                            <input type="text" class="form-control" id="address">
+                                            <input type="text" class="form-control" name="address" id="address">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Course</label><br>

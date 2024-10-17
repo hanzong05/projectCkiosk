@@ -1416,18 +1416,26 @@ function save_faqs($data)
             return "Error Deleting";
         }
     }
-    function show_faqs()
+    public function show_faqs()
     {
         $query = "SELECT * FROM faqs_tbl";
         $statement = $this->connection->prepare($query);
-
+    
         if ($statement->execute()) {
-            $result = $statement->fetchAll();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
+    
+            // Loop through each FAQ and strip HTML tags
+            foreach ($result as &$faq) {
+                $faq['faqs_question'] = strip_tags($faq['faqs_question']); // Sanitize question
+                $faq['faqs_answer'] = strip_tags($faq['faqs_answer']);     // Sanitize answer
+            }
+    
             return $result;
         } else {
             return "No Data";
         }
     }
+    
     function add_account($data) {
         $username = htmlspecialchars($data['username'] ?? '', ENT_QUOTES, 'UTF-8');
         $password = password_hash($data['password'] ?? '', PASSWORD_DEFAULT); // Hashing the password

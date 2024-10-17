@@ -260,95 +260,93 @@ $showfaqs = $obj->show_allFAQS();
 <body>
 
 
-
-    <header class="nav-down responsive-nav hidden-lg hidden-md">
-        <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+<!-- Mobile Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="img/C.png" alt="Logo" width="120"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <!--/.navbar-header-->
-        <div id="main-nav" class="collapse navbar-collapse">
-            <nav>
-                <ul class="nav navbar-nav">
-                    <li><a href="#announcement">ANNOUNCEMENT</a></li>
-                    <li><a href="#schoolcalendar">SCHOOL CALENDAR</a></li>
-                    <li><a href="#campusmap">CAMPUS MAP</a></li>
-                    <li><a href="#facultymembers">FACULTY MEMBERS</a></li>
-                    <li><a href="#campusorgs">CAMPUS ORGS</a></li>
-                    <li><a href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
-                    <li><a href="#feed">FEEDBACK</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div class="sidebar-navigation hidde-sm hidden-xs">
-        <div class="logo">
-            <a href="#"><img src="img/C.png" alt="" width="240"></a>
-        </div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="#announcement">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        ANNOUNCEMENT
-                    </a>
-                </li>
-                <li>
-                    <a href="#schoolcalendar">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        SCHOOL CALENDAR
-                    </a>
-                </li>
-                <li>
-                    <a href="#campusmap">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        CAMPUS MAP
-                    </a>
-                </li>
-                <li>
-                    <a href="#facultymembers">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        FACULTY MEMBERS
-                    </a>
-                </li>
-                <li>
-                    <a href="#campusorgs">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        CAMPUS ORGS
-                    </a>
-                </li>
-                <li>
-                    <a href="#faqs">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        FREQUENTLY ASKED QUESTIONS
-                    </a>
-                </li>
-                <li>
-                    <a href="#feed">
-                        <span class="rect"></span>
-                        <span class="circle"></span>
-                        FEEDBACK
-                    </a>
-                </li>
+        <div class="collapse navbar-collapse" id="mobileNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#announcement">ANNOUNCEMENT</a></li>
+                <li class="nav-item"><a class="nav-link" href="#schoolcalendar">SCHOOL CALENDAR</a></li>
+                <li class="nav-item"><a class="nav-link" href="#campusmap">CAMPUS MAP</a></li>
+                <li class="nav-item"><a class="nav-link" href="#facultymembers">FACULTY MEMBERS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#campusorgs">CAMPUS ORGS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#feed">FEEDBACK</a></li>
             </ul>
-        </nav>
-        <ul class="social-icons">
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="#"><i class="fa fa-rss"></i></a></li>
-            <li><a href="#"><i class="fa fa-behance"></i></a></li>
-        </ul>
+        </div>
     </div>
+</nav>
+
+<!-- Desktop Sidebar Navigation -->
+<div class="sidebar-navigation d-none d-lg-block">
+    <div class="logo">
+        <a href="#"><img src="img/C.png" alt="Logo" width="240"></a>
+    </div>
+    <nav>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#announcement">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    ANNOUNCEMENT
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#schoolcalendar">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    SCHOOL CALENDAR
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#campusmap">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    CAMPUS MAP
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#facultymembers">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    FACULTY MEMBERS
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#campusorgs">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    CAMPUS ORGS
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#faqs">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    FREQUENTLY ASKED QUESTIONS
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#feed">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    FEEDBACK
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="social-icons list-inline mt-4">
+        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
+        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+        <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin"></i></a></li>
+        <li class="list-inline-item"><a href="#"><i class="fas fa-rss"></i></a></li>
+        <li class="list-inline-item"><a href="#"><i class="fab fa-behance"></i></a></li>
+    </ul>
+</div>
     <div class="page-content">
 
     
@@ -1017,35 +1015,53 @@ $showfaqs = $obj->show_allFAQS();
          
 
         <section id="faqs" class="content-section">
-            <div id="faqs-content">
-                <div class="section-heading text-center borderYellow">
+    <div class="section-heading text-center borderYellow">
                     <h1>FREQUENTLY ASKED QUESTIONS</h1>
                 </div>
-                <div class="section-content section-content-faqs">
-                    <!-- Search Bar -->
-                    <div class="search-container">
-                        <input type="text" id="faq-search" placeholder="Search FAQs..." onkeyup="filterFAQs()">
+        <div class="container py-5">
+            <div class="row">
+                <!-- Left Column: Illustration -->
+                <div class="col-lg-6">
+                    <div class="faq-image">
+                        <img src="img/faq-img-1.png" alt="Illustration" class="img-fluid">
+                    </div>
+                </div>
+
+                <!-- Right Column: FAQ Section -->
+                <div class="col-lg-5">
+                    <div class="faq-header text-center">
+                        <h1>How can we help you?</h1>
+                        <p class="lead">
+                            We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.
+                        </p>
                     </div>
 
-                    <div class="faq-items-container">
-                        <?php if (is_array($showfaqs) && !empty($showfaqs)): ?>
-                            <?php foreach ($showfaqs as $faq): ?>
-                                <div class="faq-item" data-question="<?= strtolower(strip_tags($faq['faqs_question'])); ?>">
-                                    <h3 class="faq-question" onclick="toggleAnswer(<?= $faq['faqs_id']; ?>)">
-                                        <?= htmlspecialchars($faq['faqs_question']); ?>
-                                    </h3>
-                                    <div id="answer-<?= $faq['faqs_id']; ?>" class="faq-answer">
-                                        <strong>Answer: </strong> <?= htmlspecialchars($faq['faqs_answer']); ?>
+                    <div class="accordion accordion-flush" id="faqsAccordion">
+                        <?php if(!empty($showfaqs)): ?>
+                            <?php foreach ($showfaqs as $index => $faq): ?>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading<?php echo $index; ?>">
+                                        <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $index; ?>" aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" aria-controls="collapse<?php echo $index; ?>" style="background-color: #e7f1ff; color: #004085; position: relative;">
+                                            <?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?>
+                                            <!-- Drop-down/up icon -->
+                                            <i class="fas fa-chevron-down ms-auto faq-toggle-icon" style="position: absolute; right: 10px;"></i>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" aria-labelledby="heading<?php echo $index; ?>" data-bs-parent="#faqsAccordion">
+                                        <div class="accordion-body">
+                                            <?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No FAQs available</p>
+                            <p>No FAQs available at the moment.</p>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
         <section id="feed" class="content-section">
                 <h3>Feed Back</h3>

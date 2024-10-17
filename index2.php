@@ -44,430 +44,119 @@ $showfaqs = $obj->show_allFAQS();
 
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <style> 
-    /* Styles for the backdrop */
-#backdrop {
-    position: fixed; /* Make backdrop cover the entire viewport */
-    top: 0;
-    left: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
-    display: none; /* Hidden by default */
-    z-index: 999; /* On top of other elements */
+    <style>
+        .faq-header h1 {
+            font-weight: bold;
+        }
+
+        .faq-header p.lead {
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .accordion-button {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .accordion-body {
+            font-size: 1rem;
+        }
+
+        .faq-image {
+            text-align: center;
+            display: flex;
+            justify-content: center; /* Center the image */
+            align-items: center; /* Vertically center the image */
+            height: 90%; /* Make the column full height */
+        }
+
+        .faq-image img {
+            max-width: 80%;
+            height: auto; /* Keep aspect ratio */
+        }
+
+        .faq-toggle-icon {
+    right: 10px; /* Adjust the spacing from the right as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease; /* Smooth transition */
 }
 
-#profileCard {
-      display: none; /* Initially hidden */
-      position: fixed; /* Fixed position */
-      top: 50%; /* Center vertically */
-      left: 50%; /* Center horizontally */
-      transform: translate(-50%, -50%); /* Adjust position */
-      z-index: 1000; /* Ensure it appears on top */
-      background-color: white; /* Background color */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-      border-radius: 10px; /* Rounded corners */
-      overflow: hidden; /* Prevent overflow */
-      width: 300px; /* Adjust width to fit the content */
-      height: auto; /* Automatic height based on content */
-      padding: 20px; /* Padding around content */
-  }
-
-  .card {
-      width: 100%; /* Full width of the profile card */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center; /* Center items */
-      text-align: center; /* Center text */
-  }
-
-    .modal-body img {
-    max-width: 150px; /* Set a max width for the image */
-    height: 150px; /* Set a fixed height for a perfect circle */
-    border-radius: 50%; /* Make the image circular */
-    border: 2px solid #f0f0f0; /* Optional: Add a border around the image */
-    object-fit: cover; /* Ensure the image covers the entire area */
-    }
-.org-chart {
-    text-align: center;
-    background-color: #f9f9f9; /* Light gray background */
-    padding: 20px;
-}
-
-.level1, .level2, .level3 {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-/* Level 1 specific styling */
-.level1 .member {
-    background-color: #2e0f13; /* Deep pink for main level */
-}
-
-/* Level 2 specific styling */
-.level2 {
-    justify-content: space-around;
-    margin-top: 50px;
-}
-
-.level2 .member {
-    background-color: #2e0f13; /* Deep indigo for secondary levels */
-}
-
-/* Level 3 specific styling */
-.level3 {
-    justify-content: center; /* Center items for responsiveness */
-    flex-wrap: wrap; /* Allow wrapping of items */
-    margin-top: 50px;
-    width: 90%;
-    margin: 0 auto;
-}
-
-/* Member ovals */
-.member {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: #2e0f13; /* Deep indigo for default */
-    padding: 10px 20px;
-    border-radius: 50px; /* Oval shape */
-    max-width: 250px; /* Set a max width */
-    height: 80px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    transition: background-color 0.3s, transform 0.2s;
-    margin: 10px; /* Add margin for spacing between items */
-    flex: 0 1 auto; /* Allow the flex item to be auto-sized */
-}
-
-/* Adjust member width for different item counts */
-.level3 .member {
-    flex: 0 1 calc(33.33% - 20px); /* 3 items per row with margin */
-}
-
-/* For 4 or fewer items, center them */
-.level3 .member:nth-last-child(-n+4) {
-    flex: 0 1 calc(50% - 20px); /* 2 items per row if 4 or fewer */
-}
-
-.level3 .member:nth-last-child(1) {
-    flex: 0 1 100%; /* 1 item should take full width */
-}
-
-/* Hover effect for ovals */
-.member:hover {
-    background-color: #1E88E5; /* Lighter blue on hover */
-    transform: scale(1.05); /* Slight scale on hover */
-}
-
-/* Image in the oval */
-.member img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Circle image */
-    object-fit: cover;
-    border: 2px solid #ffffff; /* White border for contrast */
-    margin-right: 10px;
-}
-
-/* Text inside the oval */
-.member p {
-    color: #FFD700; /* Gold text for contrast */
-    font-size: 12px; /* Smaller font size for readability */
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-}
-
-/* Active state for member */
-.button-faculty-btn.active {
-    background-color: #F06292; /* Light pink for active state */
-}
-
-/* Hover and focus effect for buttons */
-.button-faculty-btn:hover,
-.button-faculty-btn.active {
-    background-color: #F06292;
-    transform: scale(1.05);
-}
-
-.button-faculty-btn:focus {
-    outline: none;
-}
-
-.faculty-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #333;
-    margin-bottom: 10px;
-}
-
-.faculty-info {
-    padding: 15px;
-    text-align: center;
-}
-
-.faculty-info h6 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.faculty-info a {
-    font-size: 14px;
-    color: #fff;
-    display: block;
-    margin-top: 5px;
-}
-
+       
     </style>
 </head>
 <body>
 
+
 <div class="page-content">
-    
-<section id="campusorgs" class="content-section">
+<nav id="sidebar" class="bg-dark">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-bell"></i> Announcements</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-calendar-alt"></i> Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-info-circle"></i> FAQs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-cog"></i> Settings</a>
+            </li>
+        </ul>
+    </nav>
+    <section id="faqs" class="content-section">
     <div class="section-heading text-center borderYellow">
-        <!-- Optional Section Heading -->
-    </div>
-    <div class="section-content">
-    <div class="org-chart">
-        <div class="level1">
-            <div class="member">
-                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Dean">
-                <p><strong>Alvinson L. Guzman</strong><br>Dean</p>
-            </div>
-        </div>
-
-        <div class="level2">
-            <div class="member">
-                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Assistant Dean">
-                <p><strong>Henry L. Cuello</strong><br>Assistant Dean</p>
-            </div>
-        </div>
-
-        <div class="level3">
-            <div class="member">
-                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
-                <p><strong>Caroline Carmen</strong><br>College Clerk</p>
-            </div>
-            <div class="member">
-                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
-                <p><strong>Jane Mae De Vene</strong><br>College Clerk</p>
-            </div>
-            <div class="member">
-                <img src="uploaded/facultyUploaded/dawd_2.png" alt="Technical Assistant">
-                <p><strong>Carlota Tupasuriano</strong><br>Technical Assistant</p>
-            </div>
-            <div class="member">
-                <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Secretary">
-                <p><strong>Raymundo Punzalan</strong><br>College Secretary</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="wrapper">
-    <!-- Department Buttons -->
-    <div class="fclty-div">
-        <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
-        <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
-        <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
-        <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
-    </div>
-
-    <!-- Tab Content -->
-   <section id="first-tab-group" class="tabgroup">
-    <!-- IT Department Tab -->
-    <div id="tab1" class="org-chart">
-        <div class="section-content">
-            <!-- Campus Heads -->
-            <h3>Campus Heads</h3>
-            <div class="level1">
-                <?php foreach ($allDean as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="Dean">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>Dean</p>
+                    <h1>FREQUENTLY ASKED QUESTIONS</h1>
+                </div>
+        <div class="container py-5">
+            <div class="row">
+                <!-- Left Column: Illustration -->
+                <div class="col-lg-6">
+                    <div class="faq-image">
+                        <img src="img/faq-img-1.png" alt="Illustration" class="img-fluid">
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
 
-            <div class="level2">
-                <?php foreach ($allItHeads as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="IT Chair">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>IT Chair Person</p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Faculty Members -->
-            <h3>Faculty Members</h3>
-            <div class="level3">
-                <?php foreach ($allIt as $row): ?>
-                    <div class="member" 
-                         data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                         data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                         data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                         data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                        <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="Faculty">
-                        <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                            Department: IT<br>
+                <!-- Right Column: FAQ Section -->
+                <div class="col-lg-5">
+                    <div class="faq-header text-center">
+                        <h1>How can we help you?</h1>
+                        <p class="lead">
+                            We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.
                         </p>
                     </div>
-                <?php endforeach; ?>
+
+                    <div class="accordion accordion-flush" id="faqsAccordion">
+                        <?php if(!empty($showfaqs)): ?>
+                            <?php foreach ($showfaqs as $index => $faq): ?>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading<?php echo $index; ?>">
+                                        <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $index; ?>" aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" aria-controls="collapse<?php echo $index; ?>" style="background-color: #e7f1ff; color: #004085; position: relative;">
+                                            <?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?>
+                                            <!-- Drop-down/up icon -->
+                                            <i class="fas fa-chevron-down ms-auto faq-toggle-icon" style="position: absolute; right: 10px;"></i>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" aria-labelledby="heading<?php echo $index; ?>" data-bs-parent="#faqsAccordion">
+                                        <div class="accordion-body">
+                                            <?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No FAQs available at the moment.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- IS Department Tab -->
-    <div id="tab2" class="org-chart">
-        <div class="section-content">
-            <!-- Campus Heads for IS Department -->
-            <h3>Campus Heads</h3>
-            <div class="level1">
-                <?php foreach ($allDean as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="IS Dean">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>Dean</p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="level2">
-                <?php foreach ($allIsHeads as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="IS Chair">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>IS Chair Person</p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Faculty Members for IS Department -->
-            <h3>Faculty Members</h3>
-            <div class="level3">
-                <?php foreach ($allIs as $row): ?>
-                    <div class="member" 
-                         data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                         data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                         data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                         data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                        <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="IS Faculty">
-                        <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                            Department: IS<br>
-                        </p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- CS Department Tab -->
-    <div id="tab3" class="org-chart">
-        <div class="section-content">
-            <!-- Campus Heads for CS Department -->
-            <h3>Campus Heads</h3>
-            <div class="level1">
-                <?php foreach ($allDean as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="CS Dean">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>Dean</p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="level2">
-                <?php foreach ($allCsHeads as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="CS Chair">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>CS Chair Person</p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Faculty Members for CS Department -->
-            <h3>Faculty Members</h3>
-            <div class="level3">
-                <?php foreach ($allCs as $row): ?>
-                    <div class="member" 
-                         data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                         data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                         data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                         data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                        <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="CS Faculty">
-                        <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                            Department: CS
-                        </p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- MIT Department Tab -->
-    <div id="tab4" class="org-chart">
-        <div class="section-content">
-            <!-- Campus Heads for MIT Department -->
-            <h3>Campus Heads</h3>
-            <div class="level1">
-                <?php foreach ($allDean as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="MIT Dean">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>Dean</p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="level2">
-                <?php foreach ($allMitHeads as $head): ?>
-                    <div class="member">
-                        <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="MIT Chair">
-                        <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>MIT Chair Person</p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Faculty Members for MIT Department -->
-            <h3>Faculty Members</h3>
-            <div class="level3">
-                <?php foreach ($allMit as $row): ?>
-                    <div class="member" 
-                         data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                         data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                         data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                         data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                        <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="MIT Faculty">
-                        <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                            Department: MIT<br>
-                        </p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-</div>
-
-    </div>
-</section>
-<!-- Profile Modal -->
-<div id="backdrop" class="backdrop" style="display: none;"></div>
-<div id="profileCard" class="card mb-4">
-    <div class="card-body text-center">
-        <img id="profileImage" src="" alt="Profile Picture" class="rounded-circle img-fluid" style="width: 150px;">
-        <h5 class="my-3" id="profileName">Name</h5>
-        <p class="text-muted mb-1" id="profileSpecialization">Specialization: <span class="specialization-value"></span></p>
-        <p class="text-muted mb-4" id="profileConsultationTime">Consultation Time: <span class="consultation-value"></span></p>
-        <div class="d-flex justify-content-center mb-2">
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Follow</button>
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Message</button>
-        </div>
-    </div>
+    </section>
 </div>
 
 
@@ -608,6 +297,27 @@ function updateProfileDisplay(name, specialization, consultationTime, imageUrl) 
             const imageUrl = this.getAttribute('data-image');
 
             updateProfileDisplay(name, specialization, consultationTime, imageUrl);
+        });
+    });
+});
+
+</script>
+
+<script> 
+    // Add event listener to toggle the icon on click
+document.addEventListener('DOMContentLoaded', function () {
+    var accordionItems = document.querySelectorAll('.accordion-button');
+    
+    accordionItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            var icon = this.querySelector('.faq-toggle-icon');
+            if (this.classList.contains('collapsed')) {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
         });
     });
 });

@@ -15,8 +15,13 @@ if (isset($_REQUEST['did'])) {
   $log_msg = $obj->delete_faculty($_REQUEST['did']);
 }
 
-$allFaculty = $obj->show_faculty();
+$allFacultyheads = $obj->show_facultyheads([5, 6, 7, 8, 9]);
+
 $allDepartment = $obj->show_department();
+$allFaculty = $obj->show_facultymembers([1,2,3,4]);
+
+$allDepartment = $obj->show_department();
+
 
 
 
@@ -165,86 +170,109 @@ $allDepartment = $obj->show_department();
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="container-fluid p-0">
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-2">
-                                <button class="btn text-end" data-toggle="modal" data-target="#facultyModal">
-                                    Add Faculty Member
-                                </button>
+                <div class="container-fluid p-0">
+    <hr>
+    <div class="d-flex justify-content-between">
+        <div class="p-2" id="buttonContainer">
+            <button class="btn text-end" data-toggle="modal" data-target="#facultyModal">
+                Add Faculty Member
+            </button>
+            <button class="btn text-end" data-toggle="modal" data-target="#excelImportModal">
+                Import Faculty Members via Excel
+            </button>
+        </div>
+    </div>
 
-                                <button class="btn text-end" data-toggle="modal" data-target="#excelImportModal">
-                                    Import Faculty Members via Excel
-                                </button>
-                            </div>
-                        </div>
-                        <table class="table table-light table-hover table-bordered" id="myTable">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <center>NO.</center>
-                                    </th>
-                                    <th>
-                                        <center>Faculty Department</center>
-                                    </th>
-                                    <th>
-                                        <center>Photo</center>
-                                    </th>
-                                    <th>
-                                        <center>Name</center>
-                                    </th>
-                                    <th>
-                                        <center>Specialization</center>  <!-- Added Specialization -->
-                                    </th>
-                                    <th>
-                                        <center>Consultation Time</center> <!-- Added Consultation Time -->
-                                    </th>
-                                    <th>
-                                        <center>ACTION</center>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $count = 1;
-                                foreach ($allFaculty as $row) {
-                                    ?>
-                                    <tr class="table-row">
-                                        <td>
-                                            <?php echo $count; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row["department_name"]; ?>
-                                        </td>
-                                        <td>
-                                            <img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" />
-                                        </td>
-                                        <td>
-                                            <?php echo $row["faculty_name"]; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row["specialization"]; ?> <!-- Added Specialization -->
-                                        </td>
-                                        <td>
-                                            <?php echo $row["consultation_time"]; ?> <!-- Added Consultation Time -->
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">
-                                                Edit
-                                            </button>
-                                            <a class="btn btn-danger btn-delete" href='facultymembers.php?did=<?= $row['faculty_id'] ?>'>
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                    $count++;
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="faculty-tab" data-toggle="tab" href="#faculty" role="tab" aria-controls="faculty" aria-selected="true">Faculty Members</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="facultyheads-tab" data-toggle="tab" href="#facultyheads" role="tab" aria-controls="facultyheads" aria-selected="false">Faculty Heads</a>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content" id="myTabContent">
+        <!-- Faculty Members Tab -->
+        <div class="tab-pane fade show active" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
+            <table class="table table-light table-hover table-bordered" id="myTable">
+                <thead>
+                    <tr>
+                        <th><center>NO.</center></th>
+                        <th><center>Faculty Department</center></th>
+                        <th><center>Photo</center></th>
+                        <th><center>Name</center></th>
+                        <th><center>Specialization</center></th>
+                        <th><center>Consultation Time</center></th>
+                        <th><center>ACTION</center></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $count = 1;
+                    foreach ($allFaculty as $row) {
+                        ?>
+                        <tr class="table-row">
+                            <td><?php echo $count; ?></td>
+                            <td><?php echo $row["department_name"]; ?></td>
+                            <td><img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" /></td>
+                            <td><?php echo $row["faculty_name"]; ?></td>
+                            <td><?php echo $row["specialization"]; ?></td>
+                            <td><?php echo $row["consultation_time"]; ?></td>
+                            <td class="text-center">
+                                <button class="btn facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">Edit</button>
+                                <a class="btn btn-danger btn-delete" href='facultymembers.php?did=<?= $row['faculty_id'] ?>'>Delete</a>
+                            </td>
+                        </tr>
+                        <?php
+                        $count++;
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Faculty Heads Tab -->
+        <div class="tab-pane fade" id="facultyheads" role="tabpanel" aria-labelledby="facultyheads-tab">
+            <table class="table table-light table-hover table-bordered" id="myTable">
+                <thead>
+                    <tr>
+                        <th><center>NO.</center></th>
+                        <th><center>Faculty Department</center></th>
+                        <th><center>Photo</center></th>
+                        <th><center>Name</center></th>
+                        <th><center>Specialization</center></th>
+                        <th><center>Consultation Time</center></th>
+                        <th><center>ACTION</center></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $count = 1;
+                    foreach ($allFacultyheads as $row) {
+                        ?>
+                        <tr class="table-row">
+                            <td><?php echo $count; ?></td>
+                            <td><?php echo $row["department_name"]; ?></td>
+                            <td><img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" /></td>
+                            <td><?php echo $row["faculty_name"]; ?></td>
+                            <td><?php echo $row["specialization"]; ?></td>
+                            <td><?php echo $row["consultation_time"]; ?></td>
+                            <td class="text-center">
+                                <button class="btn facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">Edit</button>
+                            </td>
+                        </tr>
+                        <?php
+                        $count++;
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
             </div>
         </div>
     </div>
@@ -513,7 +541,24 @@ $allDepartment = $obj->show_department();
         }
     });
 });
+$(document).ready(function() {
+        // Initially hide the button container when the second tab is active
+        toggleButtonVisibility();
 
+        // Listen for tab changes
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            toggleButtonVisibility();
+        });
+
+        function toggleButtonVisibility() {
+            // Check which tab is active
+            if ($('#facultyheads').hasClass('active')) {
+                $('#buttonContainer').hide(); // Hide buttons if Faculty Heads tab is active
+            } else {
+                $('#buttonContainer').show(); // Show buttons if Faculty Members tab is active
+            }
+        }
+    });
 
 $('#editFacultyForm').on('submit', function (e) {
     e.preventDefault(); // Prevent the default form submission

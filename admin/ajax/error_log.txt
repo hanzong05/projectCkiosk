@@ -120,3 +120,10 @@
 [10-Oct-2024 20:25:40 Europe/Berlin] PHP Warning:  Undefined variable $type in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 428
 [10-Oct-2024 22:19:59 Europe/Berlin] PHP Warning:  Undefined variable $type in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 428
 [13-Oct-2024 14:29:47 Europe/Berlin] PHP Warning:  Undefined variable $type in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 428
+[20-Oct-2024 00:42:39 Europe/Berlin] Type parameter: announcement
+[20-Oct-2024 00:42:39 Europe/Berlin] Announcement Temp Path: C:\xampp\tmp\php642.tmp
+[20-Oct-2024 00:42:39 Europe/Berlin] Announcement Original Path: C:\xampp\htdocs\ckiosk\admin\ajax/../../uploaded/annUploaded/1729377759_FlavoredBread.jpg
+[20-Oct-2024 00:42:39 Europe/Berlin] Error: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'announcement_creator' cannot be null
+[20-Oct-2024 00:43:10 Europe/Berlin] Type parameter: announcement
+[20-Oct-2024 00:43:10 Europe/Berlin] Announcement Temp Path: C:\xampp\tmp\php7D96.tmp
+[20-Oct-2024 00:43:10 Europe/Berlin] Announcement Original Path: C:\xampp\htdocs\ckiosk\admin\ajax/../../uploaded/annUploaded/1729377790_e3a95ea66a9ba30614d76dbf4d835a62.jpg

@@ -123,3 +123,13 @@ jQuery(document).ready(function($) {
         $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top }, 500, 'linear');
     });
 });
+// Toggle Navigation Menu
+$('#nav-toggle').on('click', function (event) {
+    event.preventDefault();
+    $('#main-nav').toggleClass("open");
+    
+    // Close the menu when clicking on a nav link
+    $('#mobileNavbar a').on('click', function () {
+        $('#main-nav').removeClass("open");
+    });
+});

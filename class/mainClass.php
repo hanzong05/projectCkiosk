@@ -1031,7 +1031,7 @@ function show_announcement2()
         }
     }
 
-    function show_faculty($department_id = null)
+    function show_facultyheads($department_ids = null)
     {
         // Assuming the Dean's ID is 5, adjust as necessary
         $dean_id = 5;
@@ -1041,17 +1041,58 @@ function show_announcement2()
                   FROM faculty_tbl f 
                   LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
         
-        // Add condition to filter by department if provided and exclude the Dean
-        if ($department_id) {
-            $query .= " WHERE f.faculty_dept = :department_id AND f.faculty_dept != :dean_id";
+        // Add condition to filter by departments if provided and exclude the Dean
+        if ($department_ids) {
+            // Create a placeholder string for the IN clause
+            $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
+            $query .= " WHERE f.faculty_dept IN ($placeholders) AND f.faculty_dept != ?";
         }
         
         $statement = $this->connection->prepare($query);
+        
+        // Bind parameters if filtering by departments
+        if ($department_ids) {
+            // Bind each department ID and the dean's ID
+            foreach ($department_ids as $key => $id) {
+                $statement->bindValue($key + 1, $id, PDO::PARAM_INT);
+            }
+            $statement->bindValue(count($department_ids) + 1, $dean_id, PDO::PARAM_INT);
+        }
     
-        // Bind parameters if filtering by department
-        if ($department_id) {
-            $statement->bindParam(':department_id', $department_id, PDO::PARAM_INT);
-            $statement->bindParam(':dean_id', $dean_id, PDO::PARAM_INT);
+        // Execute query
+        if ($statement->execute()) {
+            $result = $statement->fetchAll();
+            return $result;
+        } else {
+            return "No Data";
+        }
+    }
+    function show_facultymembers($department_ids = null)
+    {
+        // Assuming the Dean's ID is 5, adjust as necessary
+        $dean_id = 5;
+    
+        // Base query to get faculty members
+        $query = "SELECT f.*, d.department_name 
+                  FROM faculty_tbl f 
+                  LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
+        
+        // Add condition to filter by departments if provided and exclude the Dean
+        if ($department_ids) {
+            // Create a placeholder string for the IN clause
+            $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
+            $query .= " WHERE f.faculty_dept IN ($placeholders) AND f.faculty_dept != ?";
+        }
+        
+        $statement = $this->connection->prepare($query);
+        
+        // Bind parameters if filtering by departments
+        if ($department_ids) {
+            // Bind each department ID and the dean's ID
+            foreach ($department_ids as $key => $id) {
+                $statement->bindValue($key + 1, $id, PDO::PARAM_INT);
+            }
+            $statement->bindValue(count($department_ids) + 1, $dean_id, PDO::PARAM_INT);
         }
     
         // Execute query
@@ -2237,7 +2278,7 @@ function delete_account($appID)
     }
     function show_allDeanHeads()
 {
-    $query = "SELECT * FROM heads_tbl WHERE faculty_dept = 5";
+    $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 5";
     $statement = $this->connection->prepare($query);
 
     if ($statement->execute()) {
@@ -2247,6 +2288,33 @@ function delete_account($appID)
         return "No Data";
     }
 }
+
+function show_alllvl2()
+{
+    $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 6";
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
+}
+function show_alllvl3()
+{
+    $query = "SELECT * FROM faculty_tbl WHERE faculty_dept IN (7, 8, 9)";
+
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
+}
+
 
 public function show_allFAQs() {
     $query = "SELECT * FROM faqs_tbl";

@@ -15,6 +15,8 @@ $allCsHeads = $obj->show_allCsHeads();
 $allIsHeads = $obj->show_allIsHeads();
 $allMitHeads = $obj->show_allMitHeads();
 $allDean = $obj->show_allDeanHeads();
+$all2 = $obj->show_alllvl2();
+$all3 = $obj->show_alllvl3();
 $showfaqs = $obj->show_allFAQS();
 
 
@@ -28,9 +30,6 @@ $showfaqs = $obj->show_allFAQS();
     <title>Campus Kiosk</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -48,9 +47,120 @@ $showfaqs = $obj->show_allFAQS();
     <link rel="stylesheet" href="css/owl-carousel.css">
     <link rel="stylesheet" href="css/templatemo-style.css">
 
+    <link rel="stylesheet" href="css/responsive.css">
+
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <style> /* Styles for the backdrop */
+    <style>
+           .faq-header h1 {
+            font-weight: bold;
+        }
+
+        .faq-header p.lead {
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .accordion-button {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .accordion-body {
+            font-size: 1rem;
+        }
+
+        .faq-image {
+            text-align: center;
+            display: flex;
+            justify-content: center; /* Center the image */
+            align-items: center; /* Vertically center the image */
+            height: 90%; /* Make the column full height */
+        }
+
+        .faq-image img {
+            max-width: 80%;
+            height: auto; /* Keep aspect ratio */
+        }
+
+        .faq-toggle-icon {
+    right: 10px; /* Adjust the spacing from the right as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+   .floating-card {
+    position: relative;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 10px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.floating-card:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 100px;
+    height: 15px;
+    background: rgba(0, 0, 0, 0.15);
+    filter: blur(10px);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    transition: all 0.3s ease-in-out;
+}
+
+.floating-card:hover {
+    transform: translateY(-10px);
+}
+
+.floating-card:hover:before {
+    width: 120px;
+    height: 20px;
+    filter: blur(12px);
+    opacity: 0.8;
+}
+
+
+.text1{
+	font-size: 13px;
+    font-weight: 500;
+    color: #56575b;
+}
+.text2{
+	font-size: 13px;
+    font-weight: 500;
+    margin-left: 6px;
+    color: #56575b;
+}
+.text3{
+	font-size: 13px;
+    font-weight: 500;
+    margin-right: 4px;
+    color: #828386;
+}
+.text3o{
+	color: #00a5f4;
+
+}
+.text4{
+	font-size: 13px;
+    font-weight: 500;
+    color: #828386;
+}
+.text4i{
+	color: #00a5f4;
+}
+.text4o{
+	color: white;
+} /* Styles for the backdrop */
        .highlight {
     background-color: yellow !important; /* Use !important to override inline styles if needed */
     }
@@ -114,9 +224,7 @@ $showfaqs = $obj->show_allFAQS();
   }
 
     .modal-body img {
-    max-width: 150px; /* Set a max width for the image */
-    height: 150px; /* Set a fixed height for a perfect circle */
-    border-radius: 50%; /* Make the image circular */
+    /* Make the image circular */
     border: 2px solid #f0f0f0; /* Optional: Add a border around the image */
     object-fit: cover; /* Ensure the image covers the entire area */
     }
@@ -260,8 +368,7 @@ $showfaqs = $obj->show_allFAQS();
 <body>
 
 
-<!-- Mobile Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
+<!-- Mobile Navigation --><nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img src="img/C.png" alt="Logo" width="120"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -339,13 +446,7 @@ $showfaqs = $obj->show_allFAQS();
             </li>
         </ul>
     </nav>
-    <ul class="social-icons list-inline mt-4">
-        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-        <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin"></i></a></li>
-        <li class="list-inline-item"><a href="#"><i class="fas fa-rss"></i></a></li>
-        <li class="list-inline-item"><a href="#"><i class="fab fa-behance"></i></a></li>
-    </ul>
+   
 </div>
     <div class="page-content">
 
@@ -736,42 +837,36 @@ $showfaqs = $obj->show_allFAQS();
 
     
     <section id="facultymembers" class="content-section">
-        <div class="section-heading text-center borderYellow">
-            <!-- Optional Section Heading -->
-        </div>
+    <div class="section-heading text-center borderYellow">
+        <h1><br><em>FACULTY MEMBERS</em></h1>
+    </div>
         <div class="section-content">
         <div class="org-chart">
-            <div class="level1">
-                <div class="member">
-                    <img src="uploaded/facultyUploaded/dawd_2.png" alt="Dean">
-                    <p><strong>Alvinson L. Guzman</strong><br>Dean</p>
-                </div>
+        <div class="level1">
+                 <?php foreach ($allDean as $head): ?>
+                        <div class="member">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                        </div>
+                    <?php endforeach; ?>
             </div>
     
             <div class="level2">
-                <div class="member">
-                    <img src="uploaded/facultyUploaded/dawd_2.png" alt="Assistant Dean">
-                    <p><strong>Henry L. Cuello</strong><br>Assistant Dean</p>
-                </div>
-            </div>
+                    <?php foreach ($all2 as $head): ?>
+                        <div class="member">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                        </div>
+                    <?php endforeach; ?>
+            </div>  
     
             <div class="level3">
-                <div class="member">
-                    <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
-                    <p><strong>Caroline Carmen</strong><br>College Clerk</p>
-                </div>
-                <div class="member">
-                    <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Clerk">
-                    <p><strong>Jane Mae De Vene</strong><br>College Clerk</p>
-                </div>
-                <div class="member">
-                    <img src="uploaded/facultyUploaded/dawd_2.png" alt="Technical Assistant">
-                    <p><strong>Carlota Tupasuriano</strong><br>Technical Assistant</p>
-                </div>
-                <div class="member">
-                    <img src="uploaded/facultyUploaded/dawd_2.png" alt="College Secretary">
-                    <p><strong>Raymundo Punzalan</strong><br>College Secretary</p>
-                </div>
+                     <?php foreach ($all3 as $head): ?>
+                        <div class="member">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                        </div>
+                    <?php endforeach; ?>
             </div>
         </div>
     
@@ -792,10 +887,10 @@ $showfaqs = $obj->show_allFAQS();
                 <!-- Campus Heads -->
                 <h3>Campus Heads</h3>
                 <div class="level1">
-                    <?php foreach ($allDean as $head): ?>
+                <?php foreach ($allDean as $head): ?>
                         <div class="member">
-                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>Dean</p>
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -979,9 +1074,9 @@ $showfaqs = $obj->show_allFAQS();
     
 
         <section id="campusorgs" class="content-section">
-            <div class="section-heading text-center borderYellow">
-                <!-- Optional Section Heading -->
-            </div>
+        <div class="section-heading text-center borderYellow">
+        <h1><br><em>CAMPUS ORGS</em></h1>
+    </div>
             <div class="section-content section-content-orgs">
                 <div class="row">
                     <?php foreach ($allOrg as $row): ?>
@@ -1015,9 +1110,9 @@ $showfaqs = $obj->show_allFAQS();
          
 
         <section id="faqs" class="content-section">
-    <div class="section-heading text-center borderYellow">
-                    <h1>FREQUENTLY ASKED QUESTIONS</h1>
-                </div>
+        <div class="section-heading text-center borderYellow">
+        <h1><br><em>FREQUENTLY ASKED QUESTIONS</em></h1>
+    </div>
         <div class="container py-5">
             <div class="row">
                 <!-- Left Column: Illustration -->
@@ -1064,7 +1159,9 @@ $showfaqs = $obj->show_allFAQS();
     </section>
 
         <section id="feed" class="content-section">
-                <h3>Feed Back</h3>
+        <div class="section-heading text-center borderYellow">
+        <h1><br><em>FEED BACKS</em></h1>
+    </div>
                 <div class="container mt-5">
                     <!-- Heading -->
                     <h2 class="section-heading text-center mb-4">Give Us Your Feedback</h2>
@@ -1074,8 +1171,6 @@ $showfaqs = $obj->show_allFAQS();
                         <div class="col-md-8 col-lg-6">
                             <div class="card shadow-0 border" style="background-color: #f0f2f5;">
                                 <div class="card-body p-4">
-                                    <!-- Button to trigger modal aligned to the right -->
-                                    <!-- Button Wrapper with Border -->
                                     <div class="text-end mb-4 border-bottom pb-3">
                                         <button type="button" class="btn btn-modern border" data-bs-toggle="modal" data-bs-target="#feedbackModal" style="border: 1px solid #ccc; border-radius: 5px;">
                                             <i class="fas fa-comments me-2"></i>Add Your Feedback
@@ -1083,11 +1178,8 @@ $showfaqs = $obj->show_allFAQS();
                                     </div>
                                     <h5 class="card-title text-center mb-3">Recent Feedback</h5>
                                     <div id="feedbackList" class="feedback-list mb-4">
-                                        <!-- Dynamically filled feedback items will go here -->
                                     </div>
-
-                        <!-- Average Ratings -->
-                        <div class="total-ratings">
+                                    <div class="total-ratings">
                             <h6>Average Rating:</h6>
                             <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
                         </div>
@@ -1236,13 +1328,33 @@ $showfaqs = $obj->show_allFAQS();
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 
     <!-- Custom JS and Plugins -->
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+    
+<script> 
+    // Add event listener to toggle the icon on click
+document.addEventListener('DOMContentLoaded', function () {
+    var accordionItems = document.querySelectorAll('.accordion-button');
+    
+    accordionItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            var icon = this.querySelector('.faq-toggle-icon');
+            if (this.classList.contains('collapsed')) {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        });
+    });
+});
 
-    <script>
         // Hide Header on on scroll down
         var didScroll;
         var lastScrollTop = 0;
@@ -1407,10 +1519,6 @@ function showFloorTable(floorId) {
         selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scroll to the table
     }
 }
-       
-    </script>
-
-<script>
 document.addEventListener("DOMContentLoaded", function() {
     const tabButtons = document.querySelectorAll(".button-faculty-btn");
     const tabs = document.querySelectorAll(".tabgroup > div");
@@ -1526,27 +1634,40 @@ function fetchMembers(orgId) {
             }
 
             var membersContent = `
-                <div class="members-list">
-                    <h5>Members</h5>
-                    <ul class="list-group">
-            `;
+    <div class="members-list">
+        <h5 style="color: yellow;">Members</h5>
+        <div class="row">
+`;
 
-            if (response.members && response.members.length > 0) {
-                response.members.forEach(function (member) {
-                    membersContent += `
-                        <li class="list-group-item">
-                            <img src="uploaded/orgUploaded/${member.member_img}" alt="${member.name}" class="img-fluid rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
-                            ${member.name} (${member.username})
-                        </li>`;
-                });
-            } else {
-                membersContent += '<li class="list-group-item">No members found.</li>';
-            }
+if (response.members && response.members.length > 0) {
+    response.members.forEach(function (member, index) {
+        // Open a new row after every 4 members
+        if (index % 4 === 0 && index > 0) {
+            membersContent += `</div><div class="row">`; // Close and open a new row
+        }
+        
+        membersContent += `
+    <div class="col-md-3 mb-4"> <!-- Use col-md-3 for four cards per row -->
+    <div class="card profile-card">
+        <img src="uploaded/orgUploaded/${member.member_img}" alt="${member.name}" class="card-img-top profile-img">
+        <div class="card-body">
+            <h5 class="card-title profile-name">${member.name}</h5>
+            <p class="card-text profile-username">@${member.username}</p>
+        </div>
+    </div>
+</div>
 
-            membersContent += `
-                    </ul>
-                </div>
-            `;
+
+        `;
+    });
+} else {
+    membersContent += `<p>No members found.</p>`; // Handle case with no members
+}
+
+membersContent += `
+        </div> <!-- Close the last row -->
+    </div>
+`;
 
             $('#newsFeedContent').html(membersContent);
         },
@@ -1588,29 +1709,6 @@ function fetchMembers(orgId) {
         }
     }
 });
-function toggleAnswer(faqId) {
-    var answerDiv = document.getElementById('answer-' + faqId);
-    if (answerDiv.style.display === 'none') {
-        answerDiv.style.display = 'block';
-    } else {
-        answerDiv.style.display = 'none';
-    }
-}
-function filterFAQs() {
-    var input, filter, faqItems, questionText, i;
-    input = document.getElementById('faq-search');
-    filter = input.value.toLowerCase();
-    faqItems = document.getElementsByClassName('faq-item');
-
-    for (i = 0; i < faqItems.length; i++) {
-        questionText = faqItems[i].getAttribute('data-question');
-        if (questionText.includes(filter)) {
-            faqItems[i].style.display = '';
-        } else {
-            faqItems[i].style.display = 'none';
-        }
-    }
-}
 
 function adjustModalPosition() {
         var modal = document.getElementById('myModal');
@@ -1638,13 +1736,8 @@ function adjustModalPosition() {
 
     // Adjust modal position when the window is resized
     window.addEventListener('resize', adjustModalPosition);
-</script>
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
     let selectedRating; // To hold the selected rating
     let feedbackCount = 0; // To track the number of feedback submissions
 
@@ -1831,22 +1924,25 @@ function nextStep() {
             if (feedbackCount > 0) {
                 data.forEach(feedback => {
                     const newFeedback = document.createElement('div');
-                    newFeedback.className = 'card mb-4'; // Add card styling
+                    newFeedback.className = 'card mb-4 card-body floating-card'; // Add card styling
                        // Use a default image if no image is uploaded
                        const imageUrl = feedback.image; // Set your default image path here
                     newFeedback.innerHTML = `
                      
-                        <div class="card-body">
-                            <img src="${imageUrl}" class="avatar" alt="Avatar" />
-                            <h5 class="card-title">${feedback.name || 'Anonymous'} (${feedback.email})</h5>
-                            <p class="card-text">Rating: ${getEmojiForRating(feedback.rating)}</p>
-                            <p class="card-text" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; color: black;">
-                                FeedBack: ${feedback.feedback_text}
+                       
+                            <div class="second py-2 px-2"><span class="text1">${feedback.feedback_text}</span></div>
+
+                            <div class="d-flex justify-content-between py-1 pt-2">
+                                <div><img src="${imageUrl}" width="18"><span class="text2">${feedback.name || 'Anonymous'} (${feedback.email}</span></div>
+                            </div>
+
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
+                                </small>
                             </p>
-                            <p class="card-text"><small class="text-muted">
-                                Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
-                            </small>
-                        </div>`;
+                        </div>
+                        `;
                     feedbackList.appendChild(newFeedback);
 
                             // Sum the ratings for average calculation
@@ -1889,15 +1985,7 @@ function nextStep() {
         // Load feedback when the page loads
         window.onload = loadFeedback;
 
-        </script>
-
-        
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-<script>
+ 
     
     document.addEventListener("DOMContentLoaded", function() {
     // Tab functionality

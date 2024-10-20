@@ -529,7 +529,8 @@ $showfaqs = $obj->show_allFAQS();
                 <?php
             }
         } else {
-            echo '<li>No announcements found.</li>'; // Handle case where there are no announcements
+            echo '<li style="color: white;">No announcements found.</li>
+'; // Handle case where there are no announcements
         }
         ?>
     </ul>

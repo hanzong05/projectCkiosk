@@ -27,12 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $details = $_POST['announcement_details'] ?? '';
             $update = $_POST['announcement_creator'] ?? '';
             $previousImage = $_POST['previous_image'] ?? '';
-            $date = date('Y-m-d H:i:s');
-            $image = $previousImage;
-    
+            $date = date('Y-m-d H:i:s'); // Current timestamp for updated_at
+            $image = $previousImage; // Default to the previous image
+        
             // File upload handling for announcement image
             if (isset($_FILES['ann_img']) && $_FILES['ann_img']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
+                
+                // Create upload directory if it doesn't exist
                 if (!file_exists($uploadTo)) {
                     if (!mkdir($uploadTo, 0777, true)) {
                         error_log('Failed to create announcement directory.');
@@ -41,56 +43,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         exit;
                     }
                 }
-    
+        
                 $image = basename($_FILES['ann_img']['name']);
                 $tempPath = $_FILES["ann_img"]["tmp_name"];
                 $originalPath = $uploadTo . $image;
-    
+        
+                // Move uploaded file to the specified location
                 if (!move_uploaded_file($tempPath, $originalPath)) {
                     $response['message'] = 'Failed to move uploaded file.';
                     echo json_encode($response);
                     exit;
                 }
-    
+        
                 // Remove old image if it exists
                 if ($previousImage && file_exists($uploadTo . $previousImage)) {
                     unlink($uploadTo . $previousImage);
                 }
             }
-    
+        
             // Update announcement in the database
             $sql = "UPDATE `announcement_tbl` 
-            SET announcement_details = :details, 
-                announcement_image = :image, 
-                updated_at = :date, 
-                updated_by = :update
-            WHERE announcement_id = :aid";
-    
+                    SET announcement_details = :details, 
+                        announcement_image = :image, 
+                        updated_at = :date, 
+                        updated_by = :update
+                    WHERE announcement_id = :aid";
+        
             $stmt = $connect->prepare($sql);
             $stmt->execute([
                 ':details' => $details,
                 ':image' => $image,
-                ':date' => $date,
+                ':date' => $date, // Set updated_at to the current date
                 ':update' => $update,
                 ':aid' => $aid
             ]);
-    
+        
             $response['success'] = true;
             $response['message'] = 'Announcement updated successfully.';
-    
-        } elseif ($type === 'event') {
+        }
+        elseif ($type === 'event') {
             $cid = $_POST['cid'] ?? '';
             $details = $_POST['event_details'] ?? '';
-             $update = $_POST['event_creator'] ?? '';
+            $update = $_POST['event_editor'] ?? '';
             $date = $_POST['event_date'] ?? '';
-
+        
             // Update event in the database
             $sql = "UPDATE `calendar_tbl` 
                     SET calendar_details = :details, 
                         calendar_date = :date,
-                        updated_by = :update 
+                        updated_by = :update,
+                        updated_at = NOW()  -- Set updated_at to the current timestamp
                     WHERE calendar_id = :cid";
-
+        
             $stmt = $connect->prepare($sql);
             $stmt->execute([
                 ':details' => $details,
@@ -98,10 +102,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':update' => $update,
                 ':cid' => $cid
             ]);
-
+        
             $response['success'] = true;
             $response['message'] = 'Event updated successfully.';
         }
+        
         elseif ($type === 'faculty') {
             $fid = $_POST['fid'] ?? '';
             $name = $_POST['faculty_name'] ?? '';

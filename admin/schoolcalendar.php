@@ -92,22 +92,7 @@ $allEvents = $obj->show_events();
           </a>
         </li>
       <?php } ?>
-      <?php if ($account_type == '2') { ?>
-        <li>
-          <a href="./membersmanagement.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Member Management</p>
-          </a>
-        </li>
-      <?php } ?>
-      <?php if ($account_type == '3') { ?>
-        <li>
-        <a href="./memberprofile.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Acount Management</p>
-          </a>
-        </li>
-      <?php } ?>
+   
       <li>
         <a href="./faqs.php">
           <i class="nc-icon nc-tile-56"></i>
@@ -149,6 +134,13 @@ $allEvents = $obj->show_events();
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="logout.php">Logout</a>
+                  <?php if ($account_type == '2') { ?>
+                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
+                <?php } ?>
+                <?php if ($account_type == '3') { ?>
+                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
+                <?php } ?>
+                 
                 </div>
               </li>
             </ul>
@@ -182,40 +174,66 @@ $allEvents = $obj->show_events();
                         <center>Event Details</center>
                       </th>
                       <th>
+                        <center>Created By</center>
+                      </th>
+                      <th>
+                        <center>Updated By</center>
+                      </th>
+                      <th>
+                        <center>Updated At</center>
+                      </th>
+                      <th>
                         <center>ACTION</center>
                       </th>
                     </thead>
                     <tbody>
-                      <?php
-                      $count = 1;
-                      foreach ($allEvents as $row) {
-                        ?>
-                        <tr class="table-row">
-                          <td>
-                            <?php echo $count; ?>
-                          </td>
-                          <td>
-                            <?php echo date('F d Y', strtotime($row["calendar_date"])); ?>
-                          </td>
-                          <td>
-                            <?php echo $row["calendar_details"]; ?>
-                          </td>
-                          <td class="text-center">
-                            <button class="btn eventModalEdit" data-toggle="modal" data-target="#eventModalEdit"
-                              data-id="<?= $row['calendar_id'] ?>">
-                              Edit
-                            </button>
-                            <a class="btn btn-danger btn-delete" href='schoolcalendar.php?did=<?= $row['calendar_id'] ?>'>
-                                Delete
-                            </a>
+  <?php
+  $count = 1;
+  function sanitize_html($html) {
+    // Allow only specific HTML tags
+    return strip_tags($html, '<b><i><u>'); // Adjust tags as needed
+}
+  foreach ($allEvents as $row) {
+    ?>
+    <tr class="table-row">
+      <td>
+        <?php echo $count; ?>
+      </td>
+      <td>
+        <?php echo date('F d Y', strtotime($row["calendar_date"])); ?>
+      </td>
+      <td>
+      <?php  echo isset($row["calendar_details"]) ? sanitize_html($row["calendar_details"]) : 'No details available'; 
+       ?>
+      </td>
+      <td>
+      <?php echo htmlspecialchars($row["creator_name"], ENT_QUOTES, 'UTF-8'); ?>
+       
+      </td>
+      <td>
+        <!-- Show updated_by name (if available) -->
+        <?php echo !empty($row['updated_by_name']) ? htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?>
+      </td>
+      <td>
+        <!-- Show updated_at date (if available), otherwise display "Not updated yet" -->
+        <?php echo !empty($row["updated_at"]) ? date('F d Y H:i A', strtotime($row["updated_at"])) : 'Not updated yet'; ?>
+      </td>
+      <td class="text-center">
+        <button class="btn eventModalEdit" data-toggle="modal" data-target="#eventModalEdit"
+          data-id="<?= $row['calendar_id'] ?>">
+          Edit
+        </button>
+        <a class="btn btn-danger btn-delete" href='schoolcalendar.php?did=<?= $row['calendar_id'] ?>'>
+            Delete
+        </a>
+      </td>
+    </tr>
+    <?php
+    $count++;
+  }
+  ?>
+</tbody>
 
-                          </td>
-                        </tr>
-                        <?php
-                        $count++;
-                      }
-                      ?>
-                    </tbody>
                   </table>
                 </div>
               </div>
@@ -242,6 +260,7 @@ $allEvents = $obj->show_events();
           <div class="modal-body">
             <div class="mb-3">
             <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+            <input type="hidden" value="<?= $_SESSION['id'] ?>" name="aid">
               <label for="event_date" class="form-label fw-bold">Event Date</label>
               <input type="date" id="event_date" class="form-control" name="event_date" required>
             </div>

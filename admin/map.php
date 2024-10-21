@@ -127,6 +127,12 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="logout.php">Logout</a>
+                  <?php if ($account_type == '2') { ?>
+                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
+                <?php } ?>
+                <?php if ($account_type == '3') { ?>
+                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
+                <?php } ?>
                 </div>
               </li>
             </ul>

@@ -103,22 +103,7 @@ $allDepartment = $obj->show_department();
           </a>
         </li>
       <?php } ?>
-      <?php if ($account_type == '2') { ?>
-        <li>
-          <a href="./membersmanagement.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Member Management</p>
-          </a>
-        </li>
-      <?php } ?>
-      <?php if ($account_type == '3') { ?>
-        <li>
-        <a href="./memberprofile.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Acount Management</p>
-          </a>
-        </li>
-      <?php } ?>
+      
       <li>
         <a href="./faqs.php">
           <i class="nc-icon nc-tile-56"></i>
@@ -160,6 +145,12 @@ $allDepartment = $obj->show_department();
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="logout.php">Logout</a>
+                  <?php if ($account_type == '2') { ?>
+                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
+                <?php } ?>
+                <?php if ($account_type == '3') { ?>
+                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
+                <?php } ?>
                 </div>
               </li>
             </ul>

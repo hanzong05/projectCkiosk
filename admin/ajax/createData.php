@@ -22,39 +22,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         if ($type === 'announcement') {
-            $id = $_POST['id'] ?? null;
-            $uid = $_POST['uid'] ?? null;
-            $details = $_POST['announcement_details'] ?? null;
-            $date = date('Y-m-d H:i:s');
-            $date2 = time();
+            $id = $_POST['id'] ?? null; // Existing announcement ID (if updating)
+            $uid = $_POST['uid'] ?? null; // User ID from session
+            $cid = $_POST['cid'] ?? null; // Creator ID from session
+            $details = $_POST['announcement_details'] ?? null; // Announcement details
+            $date = date('Y-m-d H:i:s'); // Current timestamp
             $imagePath = "";
-
+        
+            // Handle file upload if a file was uploaded
             if (isset($_FILES['ann_img']) && $_FILES['ann_img']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
-                if (!file_exists($uploadTo)) {
-                    if (mkdir($uploadTo, 0777, true)) {
-                        error_log('Announcement directory created successfully.');
-                    } else {
-                        error_log('Failed to create announcement directory.');
-                        $response['message'] = 'Failed to create upload directory.';
-                        echo json_encode($response);
-                        exit;
-                    }
+                if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
+                    error_log('Failed to create announcement directory.');
+                    $response['message'] = 'Failed to create upload directory.';
+                    echo json_encode($response);
+                    exit;
                 }
-
-                $imagePath = $date2 . "_" . basename($_FILES['ann_img']['name']);
+        
+                // Generate a unique image name
+                $imagePath = time() . "_" . basename($_FILES['ann_img']['name']);
                 $tempPath = $_FILES["ann_img"]["tmp_name"];
                 $originalPath = $uploadTo . $imagePath;
-
-                // Debugging: Log file paths
-                error_log('Announcement Temp Path: ' . $tempPath);
-                error_log('Announcement Original Path: ' . $originalPath);
-
+        
+                // Move the uploaded file
                 if (move_uploaded_file($tempPath, $originalPath)) {
+                    // Prepare SQL statements
                     if ($id) {
                         // Update existing announcement
                         $sql = "UPDATE `announcement_tbl` 
-                                SET announcement_details = :details, announcement_creator = :uid, announcement_image = :imagePath, updated_at = :date
+                                SET announcement_details = :details, announcement_creator = :uid, 
+                                    announcement_image = :imagePath, updated_at = :date, created_by = :cid
                                 WHERE announcement_id = :id";
                         $stmt = $connect->prepare($sql);
                         $stmt->execute([
@@ -62,66 +59,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ':uid' => $uid,
                             ':imagePath' => $imagePath,
                             ':date' => $date,
-                            ':id' => $id
+                            ':id' => $id,
+                            ':cid' => $cid
                         ]);
                     } else {
                         // Insert new announcement
-                        $sql = "INSERT INTO `announcement_tbl` (announcement_details, announcement_creator, announcement_image, created_at, updated_at) 
-                                VALUES (:details, :uid, :imagePath, :date, :date)";
+                        $sql = "INSERT INTO `announcement_tbl` (announcement_details, announcement_creator, 
+                                                                 announcement_image, created_at, updated_at, created_by) 
+                                VALUES (:details, :uid, :imagePath, :date, :date, :cid)";
                         $stmt = $connect->prepare($sql);
                         $stmt->execute([
                             ':details' => $details,
                             ':uid' => $uid,
                             ':imagePath' => $imagePath,
-                            ':date' => $date
+                            ':date' => $date,
+                            ':cid' => $cid
                         ]);
                     }
-
+        
                     $response['success'] = true;
                     $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
                 } else {
                     $response['message'] = 'Announcement file upload failed to move.';
                 }
             } else {
+                // Handle case where no image is uploaded
                 if ($id) {
                     // Update existing announcement without image
                     $sql = "UPDATE `announcement_tbl` 
-                            SET announcement_details = :details, announcement_creator = :uid, updated_at = :date
+                            SET announcement_details = :details, announcement_creator = :uid, updated_at = :date, created_by = :cid
                             WHERE announcement_id = :id";
                     $stmt = $connect->prepare($sql);
                     $stmt->execute([
                         ':details' => $details,
                         ':uid' => $uid,
                         ':date' => $date,
+                        ':cid' => $cid,
                         ':id' => $id
                     ]);
                 } else {
                     // Insert new announcement without image
-                    $sql = "INSERT INTO `announcement_tbl` (announcement_details, announcement_creator, created_at, updated_at) 
-                            VALUES (:details, :uid, :date, :date)";
+                    $sql = "INSERT INTO `announcement_tbl` (announcement_details, announcement_creator, created_at, updated_at, created_by) 
+                            VALUES (:details, :uid, :date, :date, :cid)";
                     $stmt = $connect->prepare($sql);
                     $stmt->execute([
                         ':details' => $details,
                         ':uid' => $uid,
-                        ':date' => $date
+                        ':date' => $date,
+                        ':cid' => $cid
                     ]);
                 }
-
+        
                 $response['success'] = true;
                 $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
             }
-
-        } elseif ($type === 'event') {
+        }
+         elseif ($type === 'event') {
             $details = $_POST['event_details'] ?? null;
             $date = $_POST['event_date'] ?? null;
-            $creator = $_POST['uid'] ?? null; // Get the event creator from the input
+            $creator = $_POST['uid'] ?? null;
+            $ecreator = $_POST['aid'] ?? null; // Get the event creator from the input
         
             // Adjust the SQL to include event_creator
-            $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator) VALUES (:date, :details, :creator)";
+            $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator,created_by) VALUES (:date, :details, :creator, :ecreator)";
             $stmt = $connect->prepare($sql);
             $stmt->execute([
                 ':date' => $date,
                 ':details' => $details,
+                ':ecreator' => $ecreator,
                 ':creator' => $creator // Bind the creator value
             ]);
         
@@ -543,7 +548,7 @@ if ($type === 'excel_import') {
     exit; // Terminate the script
 }
 else {
-    $response['message'] = 'Invalid request method.';
+    $response['message'] = 'Saved.';
 }
 
 echo json_encode($response);

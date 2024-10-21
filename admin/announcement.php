@@ -113,22 +113,7 @@ $allAnnouncement = $obj->show_announcement();
           </a>
         </li>
       <?php } ?>
-      <?php if ($account_type == '2') { ?>
-        <li>
-          <a href="./membersmanagement.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Member Management</p>
-          </a>
-        </li>
-      <?php } ?>
-      <?php if ($account_type == '3') { ?>
-        <li>
-        <a href="./memberprofile.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Acount Management</p>
-          </a>
-        </li>
-      <?php } ?>
+     
       <li>
         <a href="./faqs.php">
           <i class="nc-icon nc-tile-56"></i>
@@ -170,7 +155,14 @@ $allAnnouncement = $obj->show_announcement();
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="logout.php">Logout</a>
+                  <?php if ($account_type == '2') { ?>
+                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
+                <?php } ?>
+                <?php if ($account_type == '3') { ?>
+                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
+                <?php } ?>
                 </div>
+                
               </li>
             </ul>
           </div>
@@ -193,41 +185,48 @@ $allAnnouncement = $obj->show_announcement();
                     </div>
                   </div>
                   <table class="table table-light table-hover table-bordered" id="myTable">
-                        <thead>
-                            <th><center>NO.</center></th>
-                            <th><center>DETAILS</center></th>
-                            <th><center>ORG NAME</center></th> <!-- Shows the organization name -->
-                            <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
-                            <th><center>ACTION</center></th>
-                        </thead>
-                        <tbody>
-                        <?php
-                        $count = 1;
-                        foreach ($allAnnouncement as $row) {
-                            ?>
-                            <tr class="table-row">
-                                <td><?php echo $count; ?></td>
-                                <td class="ellipsis" style="width:30%;">
-                                    <span><?php echo $row["announcement_details"]; ?></span>
-                                </td>
-                                <td><?php echo $row["org_name"] ?? 'N/A'; ?></td> <!-- Organization Name -->
-                                <td><?php echo $row["updated_by_name"] ?? 'N/A'; ?></td> <!-- Updated By -->
-                                <td class="text-center">
-                                    <button class="btn announcementModalEdit" data-toggle="modal"
-                                            data-target="#announcementModalEdit" data-id="<?= $row['announcement_id'] ?>">
-                                        Edit
-                                    </button>
-                                    <a class="btn btn-warning btn-archive" href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
-                                        Archive
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                            $count++;
-                        }
-                        ?>
-                        </tbody>
-                    </table>
+    <thead>
+        <th><center>NO.</center></th>
+        <th><center>DETAILS</center></th>
+        <th><center>ORG NAME</center></th>
+        <th><center>CREATED AT</center></th>
+        <th><center>CREATED BY</center></th> <!-- Shows who created the announcement -->
+        <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
+        <th><center>UPDATED AT</center></th> <!-- Shows when the announcement was updated -->
+        <th><center>ACTION</center></th>
+    </thead>
+    <tbody>
+        <?php
+        $count = 1;
+        foreach ($allAnnouncement as $row) {
+            ?>
+            <tr class="table-row">
+                <td><center><?php echo $count; ?></center></td>
+                <td class="ellipsis" style="width:30%;">
+                    <span><?php echo $row["announcement_details"]; ?></span>
+                </td>
+                <td><center><?php echo $row["org_name"] ?? 'N/A'; ?></center></td>
+                <td><center><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></center></td> <!-- Created At -->
+                <td><center><?php echo $row["creator_name"] ?? 'N/A'; ?></center></td> <!-- Created By -->
+                <td><center><?php echo $row["updated_by_name"] ?? 'N/A'; ?></center></td> <!-- Updated By -->
+                <td><center><?php echo date('F d, Y H:i:s', strtotime($row["updated_at"] ?? 'N/A')); ?></center></td> <!-- Updated At -->
+                <td class="text-center">
+                    <button class="btn announcementModalEdit" data-toggle="modal"
+                            data-target="#announcementModalEdit" data-id="<?= $row['announcement_id'] ?>">
+                        Edit
+                    </button>
+                    <a class="btn btn-warning btn-archive" href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
+                        Archive
+                    </a>
+                </td>
+            </tr>
+            <?php
+            $count++;
+        }
+        ?>
+    </tbody>
+</table>
+
                 </div>
               </div>
             </div>
@@ -241,34 +240,36 @@ $allAnnouncement = $obj->show_announcement();
   <form id="addAnnouncementForm" class="row" action="" method="post" enctype="multipart/form-data">
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="announcementModal" tabindex="-1" role="dialog"
-      data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Announcement Creation</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-              <label for="announcement_details" class="form-label fw-bold">Announcement Details</label>
-              <textarea id="summernote" name="announcement_details" id="announcement_details" required></textarea>
+         data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Announcement Creation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> <!-- Creator ID -->
+                        <label for="announcement_details" class="form-label fw-bold">Announcement Details</label>
+                        <textarea id="summernote" name="announcement_details" id="announcement_details" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ann_img" class="form-label fw-bold">Photo</label>
+                        <input type="file" class="form-control" name="ann_img" id="ann_img">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn" value="Create" name="add_announcement">
+                </div>
             </div>
-            <div class="mb-3">
-              <label for="ann_img" class="form-label fw-bold">Photo</label>
-              <input type="file" class="form-control" name="ann_img" id="ann_img">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <input type="submit" class="btn" value="Create" name="add_announcement">
-          </div>
         </div>
-      </div>
     </div>
-  </form>
+</form>
+
 
   <!-- Edit Announcement Modal -->
 <form id="editannouncementForm" class="row" action="" method="post" enctype="multipart/form-data">

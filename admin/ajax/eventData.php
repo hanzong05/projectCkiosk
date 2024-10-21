@@ -31,7 +31,7 @@ if ($array) {
                         <input type="date" id="event_date" class="form-control" name="event_date" value="'. $value['calendar_date'] .'" required>
                     </div>
                     <div class="mb-3">
-                     <input type="hidden" value="' . htmlspecialchars($_SESSION['aid'], ENT_QUOTES, 'UTF-8') . '" name="event_creator">
+                     <input type="hidden" value="' . htmlspecialchars($_SESSION['id'], ENT_QUOTES, 'UTF-8') . '" name="event_editor">
                         <label for="summernote2" class="form-label fw-bold">Event Details</label>
                         <textarea id="summernote2" name="event_details" required>' . htmlspecialchars($value['calendar_details']) . '</textarea>
                     </div>';

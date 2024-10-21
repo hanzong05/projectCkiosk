@@ -509,18 +509,20 @@ class mainClass
         return "No organization found for the user.";
     }
 
-    // Main announcement query, filtered by the user's organization and only fetching archived announcements
+    // Main announcement query, filtered by the user's organization and only fetching non-archived announcements
     $query = "
         SELECT a.*, 
                u.users_username AS author_name, 
                om.name AS updated_by_name, 
+               c.users_username AS creator_name, 
                o.org_name, 
                o.org_image
         FROM announcement_tbl a 
         LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
         LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+        LEFT JOIN users_tbl c ON a.created_by = c.users_id  -- Join to get the creator's name
         LEFT JOIN organization_tbl o ON u.users_org = o.org_id
-        WHERE u.users_org = :userOrgId AND a.is_archived = 0  -- Filter for archived announcements
+        WHERE u.users_org = :userOrgId AND a.is_archived = 0
     ";
 
     $statement = $this->connection->prepare($query);
@@ -529,18 +531,40 @@ class mainClass
     if ($statement->execute()) {
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        // Add the user's organization image to each row
+        // Check for creator names and fallback to orgmembers_tbl if necessary
         foreach ($result as &$row) {
             // Handle org_image, fallback to a placeholder if not available
             $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
                                 ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
                                 : 'placeholder.jpg'; // Default placeholder if no image is found
+
+            // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
+            if (empty($row['creator_name'])) {
+                $creatorId = $row['created_by']; // Get the creator ID
+                // Fetch the creator's name from orgmembers_tbl
+                $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
+                $fallbackStatement = $this->connection->prepare($fallbackQuery);
+                $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
+                $fallbackStatement->execute();
+                $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
+                
+                // If a name is found in orgmembers_tbl, use it
+                if ($fallbackRow) {
+                    $row['creator_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
+                } else {
+                    $row['creator_name'] = 'Unknown'; // Fallback if no name is found
+                }
+            } else {
+                // Sanitize creator name from users_tbl
+                $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+            }
         }
         return $result;
     } else {
         return "No Data";
     }
 }
+
 function show_announcement2()
 {
     // Fetch the user's name based on session variable
@@ -764,17 +788,104 @@ function show_announcement2()
 
     function show_events()
     {
-        $query = "SELECT *, YEAR(calendar_date) AS year, MONTH(calendar_date) AS month, MONTHNAME(calendar_date) AS mName FROM calendar_tbl ORDER BY calendar_date";
+        // Fetch the user's organization ID based on session variable
+        $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+    
+        // Query to get the user's organization from users_tbl
+        $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
+        $orgStatement = $this->connection->prepare($orgQuery);
+        $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $orgStatement->execute();
+        $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
+    
+        // Safely escape the organization ID
+        $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
+    
+        // If the user has no organization, return an empty result or error message
+        if ($userOrgId == 0) {
+            return "No organization found for the user.";
+        }
+    
+        // Main event query, filtered by the user's organization
+        $query = "
+            SELECT e.*, 
+                   u.users_username AS creator_name, 
+                   om.name AS updated_by_name, 
+                   o.org_name, 
+                   o.org_image
+            FROM calendar_tbl e
+            LEFT JOIN users_tbl u ON e.event_creator = u.users_id
+            LEFT JOIN orgmembers_tbl om ON e.updated_by = om.id
+            LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+            WHERE u.users_org = :userOrgId
+        ";
+    
         $statement = $this->connection->prepare($query);
-
+        $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
+    
         if ($statement->execute()) {
-            $result = $statement->fetchAll();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Check for creator names and fallback to orgmembers_tbl if necessary
+            foreach ($result as &$row) {
+                // Handle org_image, fallback to a placeholder if not available
+                $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                    ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                    : 'placeholder.jpg'; // Default placeholder if no image is found
+    
+                // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
+                if (empty($row['creator_name'])) {
+                    $creatorId = $row['event_creator']; // Get the creator ID
+                    // Fetch the creator's name from orgmembers_tbl
+                    $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
+                    $fallbackStatement = $this->connection->prepare($fallbackQuery);
+                    $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
+                    $fallbackStatement->execute();
+                    $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
+                    
+                    // If a name is found in orgmembers_tbl, use it
+                    if ($fallbackRow) {
+                        $row['creator_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
+                    } else {
+                        $row['creator_name'] = 'Unknown'; // Fallback if no name is found
+                    }
+                } else {
+                    // Sanitize creator name from users_tbl
+                    $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+                }
+    
+                // Check if updated_by has a valid name; otherwise, fallback to orgmembers_tbl
+                if (empty($row['updated_by_name']) || !$row['updated_by']) { // Check if updated_by is 0 or null
+                    $updatedById = $row['updated_by']; // Get the updated_by ID
+                    if ($updatedById > 0) { // Only query if updated_by is a valid ID
+                        // Fetch the updater's name from orgmembers_tbl
+                        $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :updatedById";
+                        $fallbackStatement = $this->connection->prepare($fallbackQuery);
+                        $fallbackStatement->bindValue(':updatedById', $updatedById, PDO::PARAM_INT);
+                        $fallbackStatement->execute();
+                        $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
+                        
+                        // If a name is found in orgmembers_tbl, use it
+                        if ($fallbackRow) {
+                            $row['updated_by_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
+                        } else {
+                            $row['updated_by_name'] = 'Unknown'; // Fallback if no name is found
+                        }
+                    } else {
+                        $row['updated_by_name'] = 'Unknown'; // No valid ID, set to Unknown
+                    }
+                } else {
+                    // Sanitize updated_by_name from orgmembers_tbl
+                    $row['updated_by_name'] = htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8');
+                }
+            }
             return $result;
         } else {
             return "No Data";
         }
     }
-
+    
+    
     function show_eventsByMonth()
     {
         $query = "SELECT *, DATE_FORMAT(calendar_date, '%m-%d') as monthDate FROM calendar_tbl ORDER BY calendar_date";

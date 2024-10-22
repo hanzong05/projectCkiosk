@@ -383,6 +383,7 @@ $showfaqs = $obj->show_allFAQS();
                 <li class="nav-item"><a class="nav-link" href="#campusorgs">CAMPUS ORGS</a></li>
                 <li class="nav-item"><a class="nav-link" href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
                 <li class="nav-item"><a class="nav-link" href="#feed">FEEDBACK</a></li>
+                <li class="nav-item"><a class="nav-link" href="#aboutus ">ABOUT US</a></li>
             </ul>
         </div>
     </div>
@@ -444,6 +445,13 @@ $showfaqs = $obj->show_allFAQS();
                     FEEDBACK
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#aboutus">
+                    <span class="rect"></span>
+                    <span class="circle"></span>
+                    ABOUT US
+                </a>
+            </li>
         </ul>
     </nav>
    
@@ -451,7 +459,86 @@ $showfaqs = $obj->show_allFAQS();
     <div class="page-content">
 
     
-    <section id="announcement" class="content-section">
+    <?php
+// Database connection (assuming you have a PDO connection)
+$dsn = 'mysql:host=localhost;dbname=ckiosk';
+$username = 'root';
+$password = '';
+$connection = new PDO($dsn, $username, $password);
+
+// Set the default timezone to Asia/Manila
+date_default_timezone_set('Asia/Manila');
+
+function getAnnouncements($connection, $userId) {
+    // Query to get the user's organization from users_tbl
+    $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
+    $orgStatement = $connection->prepare($orgQuery);
+    $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+    $orgStatement->execute();
+    $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
+    
+    // Safely escape the organization ID
+    $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
+
+    // If the user has no organization, return an empty result or error message
+    if ($userOrgId == 0) {
+        return "No organization found for the user.";
+    }
+
+    // Main announcement query, filtered by the user's organization
+    $query = "
+        SELECT a.*, 
+               u.users_username AS author_name, 
+               COALESCE(c.users_username, o.username, 'Unknown Creator') AS creator_name, 
+               org.org_name, 
+               org.org_image 
+        FROM announcement_tbl a 
+        LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+        LEFT JOIN users_tbl c ON a.created_by = c.users_id  
+        LEFT JOIN orgmembers_tbl o ON a.created_by = o.id  
+        LEFT JOIN organization_tbl org ON u.users_org = org.org_id  
+        WHERE u.users_org = :userOrgId AND a.is_archived = 0
+    ";
+
+    // Prepare and execute the statement
+    $statement = $connection->prepare($query);
+    $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // Clean and prepare data for output
+        foreach ($result as &$row) {
+            $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                : 'default_org_image.jpg'; 
+
+            // Sanitize creator name
+            $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+
+            // Ensure the org_name has a default if not found
+            $row['org_name'] = isset($row['org_name']) && !empty($row['org_name'])
+                               ? htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8')
+                               : 'Unknown Organization'; 
+        }
+
+        return $result;
+    } else {
+        return "No Data";
+    }
+
+    
+}
+
+// Fetch the user's ID based on session variable
+$userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+
+// Get announcements
+$allAnnouncement = getAnnouncements($connection, $userId);
+?>
+
+<!-- HTML Section -->
+<section id="announcement" class="content-section">
     <div class="section-heading text-center borderYellow">
         <h1><br><em>ANNOUNCEMENT</em></h1>
     </div>
@@ -459,82 +546,82 @@ $showfaqs = $obj->show_allFAQS();
         <div class="tabs-content">
             <div class="wrapper">
                 <section class="tabgroup">
-    <ul>
-        <?php
-        // Ensure $allAnnouncement is an array and contains items
-        if (is_array($allAnnouncement) && count($allAnnouncement) > 0) {
-            // Sort the announcements by 'created_at' in descending order
-            usort($allAnnouncement, function ($a, $b) {
-                return strtotime($b['created_at']) - strtotime($a['created_at']);
-            });
+                <ul>
+    <?php
+    // Ensure $allAnnouncement is an array and contains items
+    if (is_array($allAnnouncement) && count($allAnnouncement) > 0) {
+        // Sort the announcements by 'created_at' in descending order
+        usort($allAnnouncement, function ($a, $b) {
+            return strtotime($b['created_at']) - strtotime($a['created_at']);
+        });
 
-            foreach ($allAnnouncement as $row) {
-                // Check if created_at is set and valid
-                if (isset($row['created_at'])) {
-                    $createdAt = new DateTime($row['created_at']);
-                    $now = new DateTime();
-                    $interval = $createdAt->diff($now);
+        foreach ($allAnnouncement as $row) {
+            // Check if created_at is set and valid
+            if (isset($row['created_at'])) {
+                $createdAt = new DateTime($row['created_at']);
+                $now = new DateTime();
+                $interval = $createdAt->diff($now);
 
-                    // Check if the announcement is older than 24 hours
-                    if ($interval->days >= 1) {
-                        $timeAgo = $createdAt->format('Y-m-d'); // Display the full date
-                    } else {
-                        // Format the time difference for announcements less than 24 hours old
-                        if ($interval->h > 0) {
-                            $timeAgo = $interval->h . ' hours ago';
-                        } elseif ($interval->i > 0) {
-                            $timeAgo = $interval->i . ' minutes ago';
-                        } else {
-                            $timeAgo = 'just now';
-                        }
-                    }
+                // Check if the announcement is older than 24 hours
+                if ($interval->days >= 1) {
+                    $timeAgo = $createdAt->format('Y-m-d'); // Display the full date
                 } else {
-                    $timeAgo = 'unknown date'; // Fallback if created_at is not set
+                    // Format the time difference for announcements less than 24 hours old
+                    if ($interval->h > 0) {
+                        $timeAgo = $interval->h . ' hours ago';
+                    } elseif ($interval->i > 0) {
+                        $timeAgo = $interval->i . ' minutes ago';
+                    } else {
+                        $timeAgo = 'just now';
+                    }
                 }
-                ?>
-                <br>
-                <li style="width:100%;">
-                    <div class="item">
-                        <div class="timestamp">
-                            Created <?= $timeAgo ?>
-                        </div>
-                        <div class="text-content">
-                            <img class="avaatar" src="uploaded/orgUploaded/<?= htmlspecialchars($row["org_image"], ENT_QUOTES, 'UTF-8') ?>" alt="">
-                            <span><?= strtoupper(htmlspecialchars($row['org_name'] ?? 'Unknown Organization', ENT_QUOTES, 'UTF-8')) ?></span>
-                        </div>
-                        <div class="square">
-                            <?php
-                            // Check if announcement image exists
-                            if (!empty($row["announcement_image"])) {
-                                echo '<div style="text-align: right; margin: 5px 0;">
-                                        <img src="uploaded/annUploaded/' . htmlspecialchars($row["announcement_image"], ENT_QUOTES, 'UTF-8') . '" alt=""
-                                            style="max-width: 200px; width: 100%; height: auto; margin-left: 10px;">
-                                      </div>';
-                            }
-
-                            // Clean up the announcement details
-                            $details = $row['announcement_details'] ?? '';
-                            $details = preg_replace('/<font[^>]*>/i', '', $details);  // Remove opening <font> tags
-                            $details = preg_replace('/<\/font>/i', '', $details);     // Remove closing </font> tags
-                            
-                            // Remove inline color styles
-                            $details = preg_replace('/style="[^"]*color:[^;"]*;?"/i', '', $details);
-                            $details = preg_replace('/<li([^>]*)>/i', '<li$1 style="color: yellow;">', $details);
-
-                            echo $details;
-                            ?>
-                        </div>
-                    </div>
-                </li>
-                <?php
+            } else {
+                $timeAgo = 'unknown date'; // Fallback if created_at is not set
             }
-        } else {
-            echo '<li style="color: white;">No announcements found.</li>
-'; // Handle case where there are no announcements
+            ?>
+            <br>
+            <li style="width:100%;">
+                <div class="item">
+                    <div class="timestamp">
+                        Created <?= $timeAgo ?> by <?= $row['creator_name'] ?>
+                    </div>
+                    <div class="text-content">
+                        <img class="avaatar" src="uploaded/orgUploaded/<?= htmlspecialchars($row["org_image"], ENT_QUOTES, 'UTF-8') ?>" alt="">
+                        <span><?= strtoupper(htmlspecialchars($row['org_name'] ?? 'Unknown Organization', ENT_QUOTES, 'UTF-8')) ?></span>
+                    </div>
+                    <div class="square">
+                        <?php
+                        // Check if announcement image exists
+                        if (!empty($row["announcement_image"])) {
+                            echo '<div style="text-align: right; margin: 5px 0;">
+                                    <img src="uploaded/annUploaded/' . htmlspecialchars($row["announcement_image"], ENT_QUOTES, 'UTF-8') . '" alt=""
+                                        style="max-width: 200px; width: 100%; height: auto; margin-left: 10px;">
+                                  </div>';
+                        }
+
+                        // Clean up the announcement details
+                        $details = $row['announcement_details'] ?? '';
+                        $details = preg_replace('/<font[^>]*>/i', '', $details);  // Remove opening <font> tags
+                        $details = preg_replace('/<\/font>/i', '', $details);     // Remove closing </font> tags
+                        
+                        // Remove inline color styles
+                        $details = preg_replace('/style="[^"]*color:[^;"]*;?"/i', '', $details);
+                        $details = preg_replace('/<li([^>]*)>/i', '<li$1 style="color: yellow;">', $details);
+
+                        echo $details;
+                        ?>
+                    </div>
+                </div>
+            </li>
+            <?php
         }
-        ?>
-    </ul>
+    } else {
+        echo '<li style="color: white;">No announcements found.</li>';
+    }
+    ?>
+</ul>
 </section>
+
 
 
 </section>
@@ -1191,6 +1278,55 @@ $showfaqs = $obj->show_allFAQS();
 </div>
 
 </section>
+<section id="aboutus" class="content-section">
+    <div class="section-heading text-center borderYellow">
+    <h1><br><em>ABOUT US</em></h1>
+    </div>
+    <div class="container py-5">
+        <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
+            <div class="col-12 col-lg-6 col-xl-5">
+                <img class="img-fluid rounded" loading="lazy" src="img/about.jpg" alt="About 1">
+            </div>
+            <div class="col-12 col-lg-6 col-xl-6">
+                <div class="row justify-content-xl-center">
+                    <div class="col-12 col-xl-11">
+                        <h2 class="mb-3">Who Are We?</h2>
+                        <p class="lead fs-4 text-secondary mb-3">We help people to build incredible brands and superior products. Our perspective is to furnish outstanding captivating services.</p>
+                        <p class="mb-5">We are a fast-growing company, but we have never lost sight of our core values. We believe in collaboration, innovation, and customer satisfaction. We are always looking for new ways to improve our products and services.</p>
+                        <div class="row gy-4 gy-md-0 gx-xxl-5X">
+                            <div class="col-11 col-md-5">
+                                <div class="d-flex">
+                                    <div class="me-4 text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h2 class="h3 mb-3">Versatile Brand</h2>
+                                        <p class="text-secondary mb-0">We are crafting a digital method that subsists life across all mediums.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-11 col-md-5">
+                                <div class="d-flex">
+                                    <div class="me-3 text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
+                                            <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h2 class="h4 mb-3">Digital Agency</h2>
+                                        <p class="text-secondary mb-0">We believe in innovation by merging primary with elaborate ideas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </div>
 
         <!-- <section class="footer">
@@ -1559,60 +1695,64 @@ $(document).ready(function () {
 
     // Fetch announcements
     function fetchAnnouncements(orgId, profilePhoto, authorName) {
-        $.ajax({
-            url: 'ajax/fetch_announcement.php',
-            type: 'POST',
-            dataType: 'json',
-            data: { org_id: orgId },
-            success: function (response) {
-                console.log('AJAX Success Response:', response);
+    $.ajax({
+        url: 'ajax/fetch_announcement.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { org_id: orgId },
+        success: function (response) {
+            console.log('AJAX Success Response:', response);
 
-                if (response.error) {
-                    $('#newsFeedContent').html('<p>' + response.error + '</p>');
-                    return;
-                }
-
-                var content = `
-                    <div class="news-feed-item">
-                        <div class="news-feed-header d-flex align-items-center mb-3">
-                            <img src="${profilePhoto}" alt="Profile Photo" class="img-fluid rounded-circle profile-photo" style="width: 50px; height: 50px; margin-right: 10px;">
-                            <h5 class="font-weight-bold mb-0">${authorName}</h5>
-                            <button type="button" class="btn btn-secondary show-members-btn" data-orgid="${orgId}" id="modalShowMembersBtn">
-                                Show Members
-                            </button>
-                        </div>
-                `;
-
-                if (response.announcements && response.announcements.length > 0) {
-                    content += '<div class="announcement-details">';
-                    response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-                    response.announcements.forEach(function (announcement) {
-                        var createdAt = new Date(announcement.created_at);
-                        var timeAgo = formatRelativeTime(createdAt);
-                        var sanitizedDetails = removeColorTags(announcement.announcement_details);
-
-                        content += `
-                            <p class="announcement-date mb-2"><strong>Created:</strong> ${timeAgo}</p>
-                            <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
-                                <p class="announcement-details mb-1">${sanitizedDetails}</p>
-                                ${announcement.announcement_image ? `<img src="uploaded/annUploaded/${announcement.announcement_image}" class="img-fluid mb-2 announcement-image">` : ''}
-                            </div>`;
-                    });
-                    content += '</div>';
-                } else {
-                    content += '<p>No announcements found.</p>';
-                }
-
-                content += '</div>';
-                $('#newsFeedContent').html(content);
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-                $('#newsFeedContent').html('<p>An error occurred while fetching announcements. Please try again later.</p>');
+            if (response.error) {
+                $('#newsFeedContent').html('<p>' + response.error + '</p>');
+                return;
             }
-        });
-    }
+
+            var content = `
+                <div class="news-feed-item">
+                    <div class="news-feed-header d-flex align-items-center mb-3">
+                        <img src="${profilePhoto}" alt="Profile Photo" class="img-fluid rounded-circle profile-photo" style="width: 50px; height: 50px; margin-right: 10px;">
+                        <h5 class="font-weight-bold mb-0">${authorName}</h5>
+                        <button type="button" class="btn btn-secondary show-members-btn" data-orgid="${orgId}" id="modalShowMembersBtn">
+                            Show Members
+                        </button>
+                    </div>
+            `;
+
+            if (response.announcements && response.announcements.length > 0) {
+                content += '<div class="announcement-details">';
+                response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                response.announcements.forEach(function (announcement) {
+                    var createdAt = new Date(announcement.created_at);
+                    var timeAgo = formatRelativeTime(createdAt); // Function to format time
+                    var sanitizedDetails = removeColorTags(announcement.announcement_details);
+                    
+                    // Include creator_name from the response
+                    var creatorName = announcement.creator_name || 'Unknown Creator'; // Fallback if creator_name is not found
+
+                    content += `
+                        <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
+                            <p class="announcement-date mb-1"><strong>Created:</strong> ${timeAgo} by ${creatorName}</p>
+                            <p class="announcement-details mb-1">${sanitizedDetails}</p>
+                            ${announcement.announcement_image ? `<img src="uploaded/annUploaded/${announcement.announcement_image}" class="img-fluid mb-2 announcement-image">` : ''}
+                        </div>`;
+                });
+                content += '</div>';
+            } else {
+                content += '<p>No announcements found.</p>';
+            }
+
+            content += '</div>';
+            $('#newsFeedContent').html(content);
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+            $('#newsFeedContent').html('<p>An error occurred while fetching announcements. Please try again later.</p>');
+        }
+    });
+}
+
 
 $(document).on('click', '.show-members-btn', function () {
     var orgId = $(this).data('orgid');
@@ -1687,28 +1827,38 @@ membersContent += `
             .replace(/style="[^"]*color:[^;"]*;?"/g, ''); // Remove inline color styles
     }
 
-    // Utility function to format relative time
     function formatRelativeTime(date) {
-        var now = new Date();
-        var diff = Math.floor((now - date) / 1000); // Get difference in seconds
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
 
-        var seconds = diff;
-        var minutes = Math.floor(seconds / 60);
-        var hours = Math.floor(minutes / 60);
-        var days = Math.floor(hours / 24);
-
-        if (days > 1) {
-            return date.toLocaleDateString(); // Return the full date
-        } else if (days === 1) {
-            return '1 day ago';
-        } else if (hours > 0) {
-            return hours + ' hours ago';
-        } else if (minutes > 0) {
-            return minutes + ' minutes ago';
-        } else {
-            return 'just now';
-        }
+    if (seconds < 60) {
+        return seconds < 30 ? "just now" : seconds + " seconds ago";
     }
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) {
+        return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+    }
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+        return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+    }
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) {
+        return days + " day" + (days > 1 ? "s" : "") + " ago";
+    }
+
+    const months = Math.floor(days / 30);
+    if (months < 12) {
+        return months + " month" + (months > 1 ? "s" : "") + " ago";
+    }
+
+    const years = Math.floor(months / 12);
+    return years + " year" + (years > 1 ? "s" : "") + " ago";
+}
+
 });
 
 function adjustModalPosition() {

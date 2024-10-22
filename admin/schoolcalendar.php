@@ -212,7 +212,7 @@ $allEvents = $obj->show_events();
       </td>
       <td>
         <!-- Show updated_by name (if available) -->
-        <?php echo !empty($row['updated_by_name']) ? htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?>
+        <?php echo !empty($row['updated_by_name']) ? htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8') : 'Not yet updated'; ?>
       </td>
       <td>
         <!-- Show updated_at date (if available), otherwise display "Not updated yet" -->

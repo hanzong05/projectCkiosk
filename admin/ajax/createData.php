@@ -26,12 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uid = $_POST['uid'] ?? null; // User ID from session
             $cid = $_POST['cid'] ?? null; // Creator ID from session
             $details = $_POST['announcement_details'] ?? null; // Announcement details
-            $date = date('Y-m-d H:i:s'); // Current timestamp
+        
+            // Set the timezone
+            date_default_timezone_set('Asia/Manila'); // No need for error check since it's common
+            // Get the current timestamp
+            $date = date('Y-m-d H:i:s');
+        
             $imagePath = "";
         
             // Handle file upload if a file was uploaded
             if (isset($_FILES['ann_img']) && $_FILES['ann_img']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
+        
+                // Create directory if it doesn't exist
                 if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
                     error_log('Failed to create announcement directory.');
                     $response['message'] = 'Failed to create upload directory.';
@@ -50,8 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($id) {
                         // Update existing announcement
                         $sql = "UPDATE `announcement_tbl` 
-                                SET announcement_details = :details, announcement_creator = :uid, 
-                                    announcement_image = :imagePath, updated_at = :date, created_by = :cid
+                                SET announcement_details = :details, 
+                                    announcement_creator = :uid, 
+                                    announcement_image = :imagePath, 
+                                    updated_at = :date, 
+                                    created_by = :cid
                                 WHERE announcement_id = :id";
                         $stmt = $connect->prepare($sql);
                         $stmt->execute([
@@ -64,8 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ]);
                     } else {
                         // Insert new announcement
-                        $sql = "INSERT INTO `announcement_tbl` (announcement_details, announcement_creator, 
-                                                                 announcement_image, created_at, updated_at, created_by) 
+                        $sql = "INSERT INTO `announcement_tbl` 
+                                (announcement_details, announcement_creator, 
+                                announcement_image, created_at, updated_at, created_by) 
                                 VALUES (:details, :uid, :imagePath, :date, :date, :cid)";
                         $stmt = $connect->prepare($sql);
                         $stmt->execute([
@@ -87,7 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($id) {
                     // Update existing announcement without image
                     $sql = "UPDATE `announcement_tbl` 
-                            SET announcement_details = :details, announcement_creator = :uid, updated_at = :date, created_by = :cid
+                            SET announcement_details = :details, 
+                                announcement_creator = :uid, 
+                                updated_at = :date, 
+                                created_by = :cid
                             WHERE announcement_id = :id";
                     $stmt = $connect->prepare($sql);
                     $stmt->execute([
@@ -99,7 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ]);
                 } else {
                     // Insert new announcement without image
-                    $sql = "INSERT INTO `announcement_tbl` (announcement_details, announcement_creator, created_at, updated_at, created_by) 
+                    $sql = "INSERT INTO `announcement_tbl` 
+                            (announcement_details, announcement_creator, 
+                            created_at, updated_at, created_by) 
                             VALUES (:details, :uid, :date, :date, :cid)";
                     $stmt = $connect->prepare($sql);
                     $stmt->execute([
@@ -114,6 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
             }
         }
+        
+        // Output the response
+        
          elseif ($type === 'event') {
             $details = $_POST['event_details'] ?? null;
             $date = $_POST['event_date'] ?? null;

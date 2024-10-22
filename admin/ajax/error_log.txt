@@ -11,3 +11,13 @@
 [22-Oct-2024 00:06:45 Europe/Berlin] Type parameter: event
 [22-Oct-2024 00:17:33 Europe/Berlin] Type parameter: event
 [22-Oct-2024 00:19:46 Europe/Berlin] Type parameter: event
+[22-Oct-2024 15:03:18 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 15:06:00 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 15:47:47 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 15:56:57 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 16:03:12 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 16:04:13 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 16:07:03 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 16:10:02 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 16:11:42 Europe/Berlin] Type parameter: announcement
+[22-Oct-2024 16:12:47 Europe/Berlin] Type parameter: announcement

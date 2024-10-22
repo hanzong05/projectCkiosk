@@ -208,7 +208,7 @@ $allAnnouncement = $obj->show_announcement();
                 <td><center><?php echo $row["org_name"] ?? 'N/A'; ?></center></td>
                 <td><center><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></center></td> <!-- Created At -->
                 <td><center><?php echo $row["creator_name"] ?? 'N/A'; ?></center></td> <!-- Created By -->
-                <td><center><?php echo $row["updated_by_name"] ?? 'N/A'; ?></center></td> <!-- Updated By -->
+                <td><center><?php echo $row["updated_by_name"] ?? 'Not yet updated'; ?></center></td> <!-- Updated By -->
                 <td><center><?php echo date('F d, Y H:i:s', strtotime($row["updated_at"] ?? 'N/A')); ?></center></td> <!-- Updated At -->
                 <td class="text-center">
                     <button class="btn announcementModalEdit" data-toggle="modal"

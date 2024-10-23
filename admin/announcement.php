@@ -74,13 +74,9 @@ $allAnnouncement = $obj->show_announcement();
     </a>
   </div>
   <div class="sidebar-wrapper ">
+  <?php if ($account_type != '0') { ?>
     <ul class="nav">
-      <li >
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
+    
       <li class="active">
         <a href="./announcement.php">
           <i class="nc-icon nc-diamond"></i>
@@ -121,6 +117,24 @@ $allAnnouncement = $obj->show_announcement();
         </a>
       </li>
     </ul>
+    <?php } ?>
+    <?php if ($account_type == '0') { ?>
+      <ul class="nav">
+      <li>
+        <a href="./dashboard.php">
+          <i class="nc-icon nc-bank"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+        
+      <li>
+        <a href="./ratings.php">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>Ratings</p>
+        </a>
+      </li>
+    </ul>
+    <?php } ?>
   </div>
 </div>
     <div class="main-panel">
@@ -158,6 +172,7 @@ $allAnnouncement = $obj->show_announcement();
                   <?php if ($account_type == '2') { ?>
                     <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
                 <?php } ?>
+                
                 <?php if ($account_type == '3') { ?>
                     <a class="dropdown-item" href="./memberprofile.php">Profile</a>
                 <?php } ?>

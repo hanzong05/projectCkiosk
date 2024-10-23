@@ -53,20 +53,16 @@ $allEvents = $obj->show_events();
     </a>
   </div>
   <div class="sidebar-wrapper ">
+  <?php if ($account_type != '0') { ?>
     <ul class="nav">
-      <li >
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
+    
       <li >
         <a href="./announcement.php">
           <i class="nc-icon nc-diamond"></i>
           <p>Announcement</p>
         </a>
       </li>
-      <li>
+      <li class="active">
           <a href="./schoolcalendar.php">
             <i class="nc-icon nc-pin-3"></i>
             <p>School Calendar</p>
@@ -92,7 +88,7 @@ $allEvents = $obj->show_events();
           </a>
         </li>
       <?php } ?>
-   
+     
       <li>
         <a href="./faqs.php">
           <i class="nc-icon nc-tile-56"></i>
@@ -100,6 +96,24 @@ $allEvents = $obj->show_events();
         </a>
       </li>
     </ul>
+    <?php } ?>
+    <?php if ($account_type == '0') { ?>
+      <ul class="nav">
+      <li>
+        <a href="./dashboard.php">
+          <i class="nc-icon nc-bank"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+        
+      <li>
+        <a href="./ratings.php">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>Ratings</p>
+        </a>
+      </li>
+    </ul>
+    <?php } ?>
   </div>
 </div>
     <div class="main-panel">

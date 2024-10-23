@@ -21,3 +21,32 @@
 [22-Oct-2024 16:10:02 Europe/Berlin] Type parameter: announcement
 [22-Oct-2024 16:11:42 Europe/Berlin] Type parameter: announcement
 [22-Oct-2024 16:12:47 Europe/Berlin] Type parameter: announcement
+[23-Oct-2024 20:49:06 Europe/Berlin] Type parameter: account
+[23-Oct-2024 20:49:06 Europe/Berlin] Account Creation - Username: qms
+[23-Oct-2024 20:49:06 Europe/Berlin] Account Creation - User Type: 2
+[24-Oct-2024 00:08:54 Europe/Berlin] Type parameter: excel_import
+[24-Oct-2024 00:08:54 Europe/Berlin] Spreadsheet loaded successfully.
+[24-Oct-2024 00:08:54 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => 
+            [D] => 
+            [E] => 
+        )
+
+    [2] => Array
+        (
+            [A] => HANA
+            [B] => IT DEPARTMENT
+            [C] => 
+            [D] => 
+            [E] => 
+        )
+
+)
+
+[24-Oct-2024 00:08:54 Europe/Berlin] Processing Row 2: Name: 'HANA', Dept: 'it department'
+[24-Oct-2024 00:08:54 Europe/Berlin] Inserting: Name: 'HANA', Dept ID: 1

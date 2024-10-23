@@ -45,44 +45,29 @@ $showfaqs = $obj->show_allFAQS();
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <style>
-        .faq-header h1 {
-            font-weight: bold;
+        .highlight {
+            fill: yellow; /* Highlight color */
+        }
+        svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        /* Hover effects */
+        rect {
+            transition: fill 0.3s;
         }
 
-        .faq-header p.lead {
-            margin-bottom: 30px;
-            color: #666;
+        rect:hover {
+            fill: #B0B0B0; /* Change color on hover */
         }
 
-        .accordion-button {
-            font-size: 1.1rem;
-            font-weight: bold;
+        text {
+            font-family: Arial, sans-serif;
+            
+            fill: black;
+            pointer-events: none; /* Prevent hover effects on text */
         }
-
-        .accordion-body {
-            font-size: 1rem;
-        }
-
-        .faq-image {
-            text-align: center;
-            display: flex;
-            justify-content: center; /* Center the image */
-            align-items: center; /* Vertically center the image */
-            height: 90%; /* Make the column full height */
-        }
-
-        .faq-image img {
-            max-width: 80%;
-            height: auto; /* Keep aspect ratio */
-        }
-
-        .faq-toggle-icon {
-    right: 10px; /* Adjust the spacing from the right as needed */
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease; /* Smooth transition */
-}
-
        
     </style>
 </head>
@@ -90,74 +75,157 @@ $showfaqs = $obj->show_allFAQS();
 
 
 <div class="page-content">
-<nav id="sidebar" class="bg-dark">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-home"></i> Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-bell"></i> Announcements</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-alt"></i> Events</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-info-circle"></i> FAQs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-cog"></i> Settings</a>
-            </li>
-        </ul>
-    </nav>
-    <section id="faqs" class="content-section">
-    <div class="section-heading text-center borderYellow">
-        <h1>FREQUENTLY ASKED QUESTIONS</h1>
+<section id="campusmap" class="content-section ">
+            <div class="section-heading text-center borderYellow">
+                <h1><br><em>CAMPUS MAP</em></h1>
+            </div>
+            <div id="map" >
+                <div class="map section-content-map">
+                <div class="dropdown">
+    <input type="text" id="search" placeholder="Enter room name" aria-label="Search for a room">
+    <button onclick="searchElement()" class="search-button" aria-label="Search">
+        <i class="fa fa-search"></i>
+    </button>
+    <select id="dropdown" aria-label="Select floor" onchange="showFloor(this.value)">
+        <option value="1" selected>1st Floor</option>
+        <option value="2">2nd Floor</option>
+        <option value="3">3rd Floor</option>
+    </select>
+</div>
+
+            <div class="table-container">
+         <!--floor 1-->
+         <svg id="room-svg-1" class="floor-svg" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="100" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+    
+    <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MEN CR</text>
+    
+
+    
+    <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
+    
+    <rect id="s-104-rect" x="698.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-104-text" x="736" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
+    
+    <rect id="s-106-rect" x="622.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-106-text" x="660" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
+    
+    <rect id="s-102-rect" x="850.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-102-text" x="888" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
+    
+    <rect id="s-103-rect" x="774.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-103-text" x="812" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
+    
+    <rect id="block-9-rect" x="999.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="block-9-text" x="1037" y="190" font-family="Arial" font-size="12" text-anchor="middle">Block 9</text>
+    
+    <rect id="male-cr-rect" x="923.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="male-cr-text" x="961" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
+    
+    <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
+
+    <rect id="pwd-cr-base-rect" x="408.5" y="140.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
+    
+    <rect id="stairs-2-rect" x="1075.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="stairs-2-text" x="1107" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+    
+    <mask id="path-18-inside-1_0_1" fill="white">
+        <path d="M267 140H332V206H267V140Z"/>
+    </mask>
+    
+    <path d="M267 140H332V206H267V140Z" fill="#D9D9D9"/>
+    <path d="M267 141H332V139H267V141Z" fill="#0D0D0D" mask="url(#path-18-inside-1_0_1)"/>
+    
+    <rect id="s-108-rect" x="202.5" y="206.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-108-text" x="230" y="240" font-family="Arial" font-size="12" text-anchor="middle">S-108</text>
+</svg>
+<!--floor 2-->
+<svg id="room-svg-2" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="stairs-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+
+    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
+
+    <rect id="s-205-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-205-text" x="600" y="182" font-family="Arial" font-size="12" fill="black">S-205</text>
+
+    <rect id="s-206-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-206-text" x="520" y="182" font-family="Arial" font-size="12" fill="black">S-206</text>
+
+    <rect id="s-201-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-201-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-201</text>
+
+    <rect id="s-204-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-204-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-204</text>
+
+    <rect id="female-cr-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="female-cr-text" x="950" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
+
+    <rect id="s-202-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-202-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-202</text>
+
+    <rect id="s-203-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-203-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-203</text>
+
+    <rect id="s-208-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-208-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">S-208</text>
+
+    <rect id="s-207-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-207-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-207</text>
+
+    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+</svg>
+<!--floor 3-->
+<svg id="room-svg-3" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect id="stairs-1" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="stairs-1-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+
+    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">S-307</text>
+
+    <rect id="male-cr-2-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="male-cr-2-text" x="580" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
+
+    <rect id="female-cr-1-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="female-cr-1-text" x="498" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
+
+    <rect id="s-301-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-301-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-301</text>
+
+    <rect id="s-305-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-305-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-305</text>
+
+    <rect id="female-cr-2-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="female-cr-2-text" x="950" y="182" font-family="Arial" font-size="8" fill="black">FACULTY ROOM</text>
+
+    <rect id="s-303-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-303-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-303</text>
+
+    <rect id="s-304-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-304-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-304</text>
+
+    <rect id="uapsa-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="uapsa-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">UAPSA</text>
+
+    <rect id="s-306-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-306-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-306</text>
+
+    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+</svg>
+
     </div>
-    <div class="container py-5">
-        <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
-            <div class="col-12 col-lg-6 col-xl-5">
-                <img class="img-fluid rounded" loading="lazy" src="img/about.jpg" alt="About 1">
-            </div>
-            <div class="col-12 col-lg-6 col-xl-6">
-                <div class="row justify-content-xl-center">
-                    <div class="col-12 col-xl-11">
-                        <h2 class="mb-3">Who Are We?</h2>
-                        <p class="lead fs-4 text-secondary mb-3">We help people to build incredible brands and superior products. Our perspective is to furnish outstanding captivating services.</p>
-                        <p class="mb-5">We are a fast-growing company, but we have never lost sight of our core values. We believe in collaboration, innovation, and customer satisfaction. We are always looking for new ways to improve our products and services.</p>
-                        <div class="row gy-4 gy-md-0 gx-xxl-5X">
-                            <div class="col-11 col-md-5">
-                                <div class="d-flex">
-                                    <div class="me-4 text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h2 class="h3 mb-3">Versatile Brand</h2>
-                                        <p class="text-secondary mb-0">We are crafting a digital method that subsists life across all mediums.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-11 col-md-5">
-                                <div class="d-flex">
-                                    <div class="me-3 text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
-                                            <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h2 class="h4 mb-3">Digital Agency</h2>
-                                        <p class="text-secondary mb-0">We believe in innovation by merging primary with elaborate ideas.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</section>
+        </section>
+    
 </div>
 
 
@@ -215,114 +283,237 @@ $showfaqs = $obj->show_allFAQS();
 
             lastScrollTop = st;
         }
+// Attach event listener to search button
+document.querySelector('button[onclick="searchAndHighlight()"]').addEventListener('click', searchAndHighlight);
 
-       
-    </script>
-  <script>
-function toggleAnswer(faqId) {
-    var answerDiv = document.getElementById('answer-' + faqId);
-    // Toggle display based on current state
-    answerDiv.style.display = answerDiv.style.display === 'none' ? 'block' : 'none';
+// Attach change event listener to dropdown
+const dropdownMenu = document.getElementById('dropdownMenu');
+dropdownMenu.addEventListener('change', function () {
+    const floorId = this.value;
+    if (floorId) {
+        fetchRoomsForFloor(floorId);
+        showFloorTable(floorId);
+    } else {
+        clearTableCells();
+    }
+});
+
+// Trigger the change event to load the default table
+dropdownMenu.dispatchEvent(new Event('change'));
+
+// Fetch and update rooms based on the selected floor
+function fetchRoomsForFloor(floorId) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'ajax/floor_data.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            try {
+                const rooms = JSON.parse(xhr.responseText);
+                console.log('Rooms Data:', rooms); // Log the rooms data
+                updateTableWithRooms(rooms);
+            } catch (e) {
+                console.error("Error parsing JSON:", e);
+            }
+        } else {
+            console.error('Fetch Error:', xhr.statusText);
+        }
+    };
+    xhr.send('floor_id=' + floorId);
 }
 
-function filterFAQs() {
-    var input = document.getElementById('faq-search');
-    var filter = input.value.toLowerCase();
-    var faqItems = document.getElementsByClassName('faq-item');
+// Function to update table with room data
+function updateTableWithRooms(rooms) {
+    clearTableCells();
+    rooms.forEach(room => {
+        const cell = document.getElementById(room.room_id); // Use id for cell selection
+        if (cell) {
+            cell.textContent = room.room_name; // Assuming room_name is what you want to display
+            cell.style.backgroundColor = ''; // Reset the color
+            console.log('Updated Cell:', cell.id, room.room_name); // Log each updated cell
+        } else {
+            console.error('Cell Not Found:', room.room_id);
+        }
+    });
+}
 
-    for (var i = 0; i < faqItems.length; i++) {
-        var questionText = faqItems[i].getAttribute('data-question');
-        // Show or hide FAQ item based on filter
-        faqItems[i].style.display = questionText.includes(filter) ? '' : 'none';
+// Function to clear all table cells
+function clearTableCells() {
+    document.querySelectorAll('.floor-table td').forEach(cell => {
+        cell.textContent = ''; // Clear the cell content
+        cell.style.backgroundColor = ''; // Reset the color
+    });
+}
+
+// Function to handle search and highlight
+function searchAndHighlight() {
+    var input = document.getElementById('search-input').value.trim();
+
+    if (input === '') {
+        alert('Please enter a room name');
+        return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'ajax/search.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('Search Response:', xhr.responseText);
+            var data = JSON.parse(xhr.responseText);
+
+            if (data.error) {
+                console.error('PHP Error:', data.error);
+                return;
+            }
+
+            var roomIds = data.highlight || [];
+            var floorIds = data.floor || [];
+            console.log('Highlighting IDs:', roomIds);
+            console.log('Floor IDs:', floorIds);
+
+            // Clear previous highlights
+            document.querySelectorAll('.highlight').forEach(cell => {
+                cell.classList.remove('highlight');
+            });
+
+            // Highlight cells based on room IDs
+            document.querySelectorAll('.floor-table td').forEach(cell => {
+                if (roomIds.includes(parseInt(cell.id))) { // Ensure IDs are compared as integers
+                    cell.classList.add('highlight');
+                }
+            });
+
+            // Trigger the dropdown change event to update table and highlight results
+            var dropdown = document.getElementById('dropdownMenu');
+            dropdown.value = floorIds[0] || dropdown.value; // Default to the first floor in the array or keep current value
+            dropdown.dispatchEvent(new Event('change')); // Trigger the change event
+
+        } else {
+            console.error('Search Error:', xhr.statusText);
+        }
+    };
+    xhr.send('query=' + encodeURIComponent(input));
+}
+
+
+// Function to show a specific floor table
+function showFloorTable(floorId) {
+    document.querySelectorAll('.floor-table').forEach(table => {
+        table.style.display = 'none'; // Hide all floor tables
+    });
+
+    const selectedTable = document.getElementById(`floor-${floorId}`);
+    if (selectedTable) {
+        selectedTable.style.display = 'table'; // Show the selected table
+        selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scroll to the table
     }
 }
 </script>
 
 <script>
-    
-    document.addEventListener("DOMContentLoaded", function() {
-    // Tab functionality
-    const tabButtons = document.querySelectorAll(".button-faculty-btn");
-    const tabs = document.querySelectorAll(".tabgroup > div");
+const roomFloors = {
+    // Floor 1
+    "stairs": 1,
+    "men cr": 1,
+    "block 3": 1,
+    "female cr": 1,
+    "s-104": 1,
+    "s-106": 1,
+    "s-102": 1,
+    "s-103": 1,
+    "block 9": 1,
+    "male cr": 1,
+    "s-109": 1,
+    "pwd cr": 1,
+    "s-108": 1,
 
-    tabButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            const tabId = this.getAttribute("data-tab");
+    // Floor 2
+    "stairs": 2,
+    "male cr": 2,
+    "s-205": 2,
+    "s-206": 2,
+    "s-201": 2,
+    "s-204": 2,
+    "female cr": 2,
+    "s-202": 2,
+    "s-203": 2,
+    "s-208": 2,
+    "s-207": 2,
 
-            // Remove active class from all buttons and hide all tabs
-            tabButtons.forEach(btn => btn.classList.remove("active"));
-            tabs.forEach(tab => tab.style.display = "none");
+    // Floor 3
+    "stairs": 3,
+    "s-307": 3,
+    "male cr": 3,
+    "female cr": 3,
+    "s-301": 3,
+    "s-305": 3,
+    "faculty room": 3,
+    "s-303": 3,
+    "s-304": 3,
+    "uapsa": 3,
+    "s-306": 3,
+};
 
-            // Add active class to the clicked button and show the associated tab
-            this.classList.add("active");
-            document.getElementById(tabId).style.display = "block";
-        });
+
+
+function showFloor(floor) {
+    document.querySelectorAll('.floor-svg').forEach(svg => {
+        svg.style.display = 'none'; // Hide all floors
     });
-
-    // Show the first tab and mark the first button as active by default
-    if (tabButtons.length > 0 && tabs.length > 0) {
-        tabButtons[0].classList.add("active");
-        tabs[0].style.display = "block";
-    }
-
-    // Profile display functionality
- // Profile display functionality
-function updateProfileDisplay(name, specialization, consultationTime, imageUrl) {
-    document.getElementById('profileName').textContent = name;
-    document.getElementById('profileSpecialization').innerHTML = 'Specialization: <span class="specialization-value">' + specialization + '</span>';
-    document.getElementById('profileConsultationTime').innerHTML = 'Consultation Time: <span class="consultation-value">' + consultationTime + '</span>';
-    document.getElementById('profileImage').src = imageUrl;
-
-    // Show the profile card and backdrop
-    document.getElementById('profileCard').style.display = 'flex'; // Show the profile card
-    document.getElementById('backdrop').style.display = 'block'; // Show the backdrop
+    document.getElementById('room-svg-' + floor).style.display = 'block'; // Show selected floor
 }
+function searchElement() {
+    const searchInput = document.getElementById("search").value.toLowerCase();
+    const allSvgs = document.querySelectorAll("svg.floor-svg");
+    const dropdown = document.getElementById("dropdown"); // Get the dropdown for floors
 
+    // Clear previous highlights
+    allSvgs.forEach(svg => {
+        svg.querySelectorAll("rect").forEach(rect => {
+            rect.classList.remove("highlight");
+        });
+    });
 
-    // Function to close the profile card
-    function closeProfileCard() {
-        document.getElementById('profileCard').style.display = 'none'; // Hide the profile card
-        document.getElementById('backdrop').style.display = 'none'; // Hide the backdrop
+    // Reset dropdown selection
+    dropdown.value = "1"; // Default to the 1st floor or clear selection
+
+    let found = false;
+    let foundRoom = null;
+    let floorNumber = null;
+
+    // Search through all rooms
+    Object.keys(roomFloors).forEach(room => {
+        if (room.toLowerCase().includes(searchInput)) { // Ensure case-insensitive search
+            foundRoom = room; // Found the room
+            floorNumber = roomFloors[room]; // Get the associated floor
+            found = true;
+        }
+    });
+
+    if (found && floorNumber) {
+        showFloor(floorNumber); // Show the relevant floor
+
+        // Highlight the associated rectangle for the found room
+        const rectId = foundRoom.toLowerCase()+ "-rect"; // Ensure rect ID matches the format
+        const rect = document.getElementById(rectId);
+        if (rect) {
+            rect.classList.add("highlight");
+        } else {
+            console.error('Rectangle not found for ID:', rectId);
+        }
+
+        // Change the selected dropdown option
+        dropdown.value = floorNumber ; // Set dropdown to the found floor number
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Room not found',
+            text: 'Please check the room name and try again.',
+        });
     }
-
-    // Add event listener to backdrop to close the profile card on click
-    document.getElementById('backdrop').addEventListener('click', closeProfileCard);
-
-    // Add click event listeners to all member cards
-    const memberCards = document.querySelectorAll('.member');
-    memberCards.forEach(member => {
-        member.addEventListener('click', function() {
-            const name = this.getAttribute('data-name');
-            const specialization = this.getAttribute('data-specialization');
-            const consultationTime = this.getAttribute('data-consultation');
-            const imageUrl = this.getAttribute('data-image');
-
-            updateProfileDisplay(name, specialization, consultationTime, imageUrl);
-        });
-    });
-});
-
+}
 </script>
 
-<script> 
-    // Add event listener to toggle the icon on click
-document.addEventListener('DOMContentLoaded', function () {
-    var accordionItems = document.querySelectorAll('.accordion-button');
-    
-    accordionItems.forEach(function (item) {
-        item.addEventListener('click', function () {
-            var icon = this.querySelector('.faq-toggle-icon');
-            if (this.classList.contains('collapsed')) {
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
-            } else {
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
-            }
-        });
-    });
-});
-
-</script>
 </body>
 </html>

@@ -7,7 +7,7 @@ include_once("../class/connection.php");
 header('Content-Type: application/json');
 
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=ckiosk', 'username', 'password');
+    $pdo = new PDO('mysql:host=localhost;dbname=ckiosk', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if (isset($_POST['query'])) {

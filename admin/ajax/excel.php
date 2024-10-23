@@ -11,16 +11,13 @@ $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
 // Set the headers
-$headers = ['Name', 'Department', 'Specialization', 'Consultation Time', 'Image'];
+$headers = ['Name', 'Department'];
 $sheet->fromArray($headers, NULL, 'A1'); // Set headers starting at cell A1
 
 // Add informative comments to the columns
 $comments = [
     'A2', // Name
-    'B2', // Department
-    'C2', // Specialization
-    'D2', // Consultation Time
-    'E2'  // Image
+    'B2'
 ];
 
 $commentsText = [

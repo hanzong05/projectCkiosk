@@ -1,14 +1,12 @@
 <?php
 
 $account_type = isset($_SESSION['atype']) ? $_SESSION['atype'] : '2';
-if ($account_type != '1' && $account_type != '2' && $account_type != '3') {
+if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
     // Destroy the session
     session_destroy();
     // Redirect to the login page
     header("Location: login.php");
     exit;
-
-    
 }
 
 class mainClass
@@ -65,8 +63,8 @@ class mainClass
                                 if ($row['users_type'] == 2) {
                                     // User type 2 - do not log in
                                     $log_msg['msg'] = "You are not an Admin.";
-                                } else {
-                                    // Successful login
+                                } elseif ($row['users_type'] == 0 || $row['users_type'] == 1) {
+                                    // User type 0 or 1 - allow login
                                     session_start();
                                     $_SESSION['aid'] = $row['users_id'];
                                     $_SESSION['auname'] = $row['users_username'];
@@ -74,6 +72,9 @@ class mainClass
                                     // Redirect to dashboard or appropriate page
                                     header('Location: dashboard.php');
                                     exit();
+                                } else {
+                                    // Handle other user types if necessary
+                                    $log_msg['msg'] = "You do not have permission to access the admin area.";
                                 }
                             } else {
                                 $log_msg['msg'] = "Invalid username or password.";
@@ -91,6 +92,7 @@ class mainClass
     
         return $log_msg;
     }
+    
     public function org_login($data)
 {
     $username = trim($data["username"]);
@@ -2201,6 +2203,20 @@ function delete_account($appID)
             return "No Data";
         }
     }
+
+    function show_ratings()
+{
+    $query = "SELECT * FROM feedback";  // Assuming the table name is 'ratings'
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
+}
+
 
     function delete_membersaccount($appID)
     {

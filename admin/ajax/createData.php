@@ -492,8 +492,8 @@ if ($type === 'excel_import') {
 
         $insertedCount = 0; // Count of inserted records
 
-        // Prepare statements for inserting new records
-        $stmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept, specialization, consultation_time, faculty_image) VALUES (:faculty_name, :faculty_dept, :specialization, :consultation_time, :faculty_image)");
+        // Prepare statement for inserting new records (without specialization, consultation_time, and faculty_image)
+        $stmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept) VALUES (:faculty_name, :faculty_dept)");
 
         // Loop through the sheet data
         foreach ($sheetData as $rowIndex => $row) {
@@ -502,12 +502,9 @@ if ($type === 'excel_import') {
             // Get and trim each column
             $faculty_name = trim($row['A'] ?? null);
             $faculty_dept = strtolower(trim($row['B'] ?? null)); // Convert department to lowercase for mapping
-            $specialization = trim($row['C'] ?? null);
-            $consultation_time = trim($row['D'] ?? null);
-            $faculty_image = trim($row['E'] ?? null);
 
             // Log the current row data for debugging
-            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept', Specialization: '$specialization', Consultation Time: '$consultation_time', Image: '$faculty_image'");
+            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept'");
 
             // Check for faculty department mapping
             $faculty_dept_id = null;
@@ -520,15 +517,12 @@ if ($type === 'excel_import') {
 
             // Proceed if faculty name is provided
             if ($faculty_name) {
-                error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id, Specialization: '$specialization', Consultation Time: '$consultation_time', Image: '$faculty_image'");
+                error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id");
 
                 try {
                     $stmt->execute([
                         ':faculty_name' => $faculty_name,
                         ':faculty_dept' => $faculty_dept_id, // Use the mapped department ID
-                        ':specialization' => $specialization,
-                        ':consultation_time' => $consultation_time,
-                        ':faculty_image' => $faculty_image
                     ]);
                     $insertedCount++; // Increment the count of inserted records
                 } catch (PDOException $e) {
@@ -566,6 +560,7 @@ if ($type === 'excel_import') {
 
     exit; // Terminate the script
 }
+
 else {
     $response['message'] = 'Saved.';
 }

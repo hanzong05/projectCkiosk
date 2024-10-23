@@ -69,14 +69,10 @@ try {
     </a>
   </div>
   <div class="sidebar-wrapper ">
+  <?php if ($account_type != '0') { ?>
     <ul class="nav">
-      <li class="active">
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      <li>
+    
+      <li >
         <a href="./announcement.php">
           <i class="nc-icon nc-diamond"></i>
           <p>Announcement</p>
@@ -87,9 +83,8 @@ try {
             <i class="nc-icon nc-pin-3"></i>
             <p>School Calendar</p>
           </a>
-        </li>
+      </li>
       <?php if ($account_type == '1') { ?>
-       
         <li >
           <a href="./facultymembers.php">
             <i class="nc-icon nc-bell-55"></i>
@@ -109,22 +104,7 @@ try {
           </a>
         </li>
       <?php } ?>
-      <?php if ($account_type == '2') { ?>
-        <li>
-          <a href="./membersmanagement.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Member Management</p>
-          </a>
-        </li>
-      <?php } ?>
-      <?php if ($account_type == '3') { ?>
-        <li>
-        <a href="./memberprofile.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>Acount Management</p>
-          </a>
-        </li>
-      <?php } ?>
+     
       <li>
         <a href="./faqs.php">
           <i class="nc-icon nc-tile-56"></i>
@@ -132,6 +112,24 @@ try {
         </a>
       </li>
     </ul>
+    <?php } ?>
+    <?php if ($account_type == '0') { ?>
+      <ul class="nav">
+      <li  class="active" >
+        <a href="./dashboard.php">
+          <i class="nc-icon nc-bank"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+        
+      <li>
+        <a href="./ratings.php">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>Ratings</p>
+        </a>
+      </li>
+    </ul>
+    <?php } ?>
   </div>
 </div>
 

@@ -124,53 +124,67 @@ if (isset($_POST['save_profile'])) {
         </a>
       </div>
       <div class="sidebar-wrapper ">
-        <ul class="nav">
-          <li >
-            <a href="./dashboard.php">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li >
-            <a href="./announcement.php">
-              <i class="nc-icon nc-diamond"></i>
-              <p>Announcement</p>
-            </a>
-          </li>
-          <li>
+      <?php if ($account_type != '0') { ?>
+    <ul class="nav">
+    
+      <li >
+        <a href="./announcement.php">
+          <i class="nc-icon nc-diamond"></i>
+          <p>Announcement</p>
+        </a>
+      </li>
+      <li>
           <a href="./schoolcalendar.php">
             <i class="nc-icon nc-pin-3"></i>
             <p>School Calendar</p>
           </a>
       </li>
       <?php if ($account_type == '1') { ?>
-            <li >
-              <a href="./facultymembers.php">
-                <i class="nc-icon nc-bell-55"></i>
-                <p>Faculty Members</p>
-              </a>
-            </li>
-            <li>
-              <a href="./map.php">
-                <i class="nc-icon nc-single-02"></i>
-                <p>Campus Map</p>
-              </a>
-            </li>
-            <li class="active">
-              <a href="./organization.php">
-                <i class="nc-icon nc-caps-small"></i>
-                <p>Campus Organization</p>
-              </a>
-            </li>
-          <?php } ?>
-          
-          <li>
-            <a href="./faqs.php">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>FAQS</p>
-            </a>
-          </li>
-        </ul>
+        <li >
+          <a href="./facultymembers.php">
+            <i class="nc-icon nc-bell-55"></i>
+            <p>Faculty Members</p>
+          </a>
+        </li>
+        <li>
+          <a href="./map.php">
+            <i class="nc-icon nc-single-02"></i>
+            <p>Campus Map</p>
+          </a>
+        </li>
+        <li>
+          <a href="./organization.php">
+            <i class="nc-icon nc-caps-small"></i>
+            <p>Campus Organization</p>
+          </a>
+        </li>
+      <?php } ?>
+     
+      <li>
+        <a href="./faqs.php">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>FAQS</p>
+        </a>
+      </li>
+    </ul>
+    <?php } ?>
+    <?php if ($account_type == '0') { ?>
+      <ul class="nav">
+      <li>
+        <a href="./dashboard.php">
+          <i class="nc-icon nc-bank"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+        
+      <li>
+        <a href="./ratings.php">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>Ratings</p>
+        </a>
+      </li>
+    </ul>
+    <?php } ?>
       </div>
     </div>
     <div class="main-panel">

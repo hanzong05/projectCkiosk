@@ -71,7 +71,12 @@ try {
   <div class="sidebar-wrapper ">
   <?php if ($account_type != '0') { ?>
     <ul class="nav">
-    
+    <li  class="active" >
+        <a href="./dashboard.php">
+          <i class="nc-icon nc-bank"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
       <li >
         <a href="./announcement.php">
           <i class="nc-icon nc-diamond"></i>
@@ -272,6 +277,9 @@ try {
             </div>
           </div>
         </div>
+
+          <?php if ($account_type == '0') { ?>
+           
         
   <div class="row">
   
@@ -336,6 +344,8 @@ try {
       </footer>
     </div>
   </div>
+    <?php } ?>
+         
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!--   Core JS Files   -->

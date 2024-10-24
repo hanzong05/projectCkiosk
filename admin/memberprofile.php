@@ -126,7 +126,12 @@ if (isset($_POST['save_profile'])) {
       <div class="sidebar-wrapper ">
       <?php if ($account_type != '0') { ?>
     <ul class="nav">
-    
+    <li>
+        <a href="./dashboard.php">
+          <i class="nc-icon nc-bank"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
       <li >
         <a href="./announcement.php">
           <i class="nc-icon nc-diamond"></i>

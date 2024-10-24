@@ -995,10 +995,10 @@ $allAnnouncement = getAnnouncements($connection, $userId);
             </div>
             <div class="table-container">
                 <svg id="room-svg" viewBox="0 0 985 588" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect id="stock-room" x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-3-b" x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black"/>
+                    <rect  x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
+                    <rect  x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black"/>
                     <rect id="cit-5-a-b" x="167.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="stock-text" x="195" y="250" text-anchor="middle" font-size="12">
+                    <text id="stock-room" x="195" y="250" text-anchor="middle" font-size="12">
                         STOCK
                         <tspan dy="1.2em" dx="-44">ROOM</tspan>
                     </text>
@@ -1073,30 +1073,30 @@ $allAnnouncement = getAnnouncements($connection, $userId);
     <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
     
     <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MEN CR</text>
+    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
     
 
     
     <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
     <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
     
-    <rect id="s-104-rect" x="698.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-104-text" x="736" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
+    <rect id="s-104-rect" x="620.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-104-text" x="650" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
     
-    <rect id="s-106-rect" x="622.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-106-text" x="660" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
+    <rect id="s-106-rect" x="550" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-106-text" x="585" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
     
-    <rect id="s-102-rect" x="850.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-102-text" x="888" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
+    <rect id="s-102-rect" x="755" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-102-text" x="780" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
     
-    <rect id="s-103-rect" x="774.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-103-text" x="812" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
+    <rect id="s-103-rect" x="680.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-103-text" x="720" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
     
-    <rect id="block-9-rect" x="999.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="block-9-text" x="1037" y="190" font-family="Arial" font-size="12" text-anchor="middle">Block 9</text>
+    <rect id="s-101-rect" x="890" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="s-101-text" x="930" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-101</text>
     
-    <rect id="male-cr-rect" x="923.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="961" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
+    <rect id="male-cr-rect" x="820.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="male-cr-text" x="860" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
     
     <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
     <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
@@ -1105,8 +1105,8 @@ $allAnnouncement = getAnnouncements($connection, $userId);
     <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
     <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
     
-    <rect id="stairs-2-rect" x="1075.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1107" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+    <rect id="stairs-2-rect" x="965" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
+    <text id="stairs-2-text" x="1000" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
     
     <mask id="path-18-inside-1_0_1" fill="white">
         <path d="M267 140H332V206H267V140Z"/>

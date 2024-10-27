@@ -267,35 +267,36 @@ $allEvents = $obj->show_events();
   <form id="addForm" class="row" action="" method="post">
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="eventModal" tabindex="-1" role="dialog" data-backdrop="static"
-      data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Calendar Event Creation</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-            <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-            <input type="hidden" value="<?= $_SESSION['id'] ?>" name="aid">
-              <label for="event_date" class="form-label fw-bold">Event Date</label>
-              <input type="date" id="event_date" class="form-control" name="event_date" required>
+         data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Calendar Event Creation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="aid">
+                        <label for="event_date" class="form-label fw-bold">Event Date</label>
+                        <input type="date" id="event_date" class="form-control" name="event_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="summernote" class="form-label fw-bold">Event Details</label>
+                        <textarea id="summernote" name="event_details" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn" value="Create" name="add_calendar_event">
+                </div>
             </div>
-            <div class="mb-3">
-              <label for="summernote" class="form-label fw-bold">Event Details</label>
-              <textarea id="summernote" name="event_details" required></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <input type="submit" class="btn" value="Create" name="add_calendar_event">
-          </div>
         </div>
-      </div>
     </div>
-  </form>
+</form>
+
 
   <!-- edit course pop up -->
   <form id="editForm"class="row" action="" method="post">
@@ -332,8 +333,31 @@ $allEvents = $obj->show_events();
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get today's date in the format YYYY-MM-DD
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const yyyy = today.getFullYear();
+
+        // Format today's date as YYYY-MM-DD
+        const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+        // Set the min attribute of the event date input to today's date
+        const dateInput = document.getElementById("event_date");
+        dateInput.setAttribute("min", formattedDate);
+    });
+</script>
   <script type="text/javascript">
    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get today's date in the format YYYY-MM-DD
+        const today = new Date().toISOString().split('T')[0];
+        // Set the min attribute of the event date input
+        document.getElementById("event_date").setAttribute("min", today);
+    });
   $('#myTable').DataTable();
   $('#summernote').summernote({
     height: 220,

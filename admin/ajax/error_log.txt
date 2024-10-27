@@ -50,3 +50,27 @@
 
 [24-Oct-2024 00:08:54 Europe/Berlin] Processing Row 2: Name: 'HANA', Dept: 'it department'
 [24-Oct-2024 00:08:54 Europe/Berlin] Inserting: Name: 'HANA', Dept ID: 1
+[27-Oct-2024 05:49:14 Europe/Berlin] Type parameter: membersaccount
+[27-Oct-2024 05:55:45 Europe/Berlin] Type parameter: membersaccount
+[27-Oct-2024 07:29:49 Europe/Berlin] Type parameter: account
+[27-Oct-2024 07:29:49 Europe/Berlin] Account Creation - Username: qms
+[27-Oct-2024 07:29:49 Europe/Berlin] Account Creation - User Type: 2
+[27-Oct-2024 07:32:05 Europe/Berlin] Type parameter: organization
+[27-Oct-2024 07:39:22 Europe/Berlin] Type parameter: event
+[27-Oct-2024 07:39:22 Europe/Berlin] Error: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'created_by' cannot be null
+[27-Oct-2024 07:47:41 Europe/Berlin] Type parameter: account
+[27-Oct-2024 07:47:41 Europe/Berlin] Account Creation - Username: Hanz
+[27-Oct-2024 07:47:41 Europe/Berlin] Account Creation - User Type: 2
+[27-Oct-2024 07:55:00 Europe/Berlin] Type parameter: announcement
+[27-Oct-2024 14:55:00 Asia/Manila] Error: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'created_by' cannot be null
+[27-Oct-2024 07:55:12 Europe/Berlin] Type parameter: announcement
+[27-Oct-2024 14:55:12 Asia/Manila] Error: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'created_by' cannot be null
+[27-Oct-2024 08:01:15 Europe/Berlin] Type parameter: announcement
+[27-Oct-2024 08:04:49 Europe/Berlin] Type parameter: announcement
+[27-Oct-2024 10:31:37 Europe/Berlin] Type parameter: announcement
+[27-Oct-2024 10:37:06 Europe/Berlin] Type parameter: event
+[27-Oct-2024 10:42:29 Europe/Berlin] Type parameter: event
+[27-Oct-2024 10:42:52 Europe/Berlin] Type parameter: event
+[27-Oct-2024 10:44:17 Europe/Berlin] Type parameter: event
+[27-Oct-2024 10:47:28 Europe/Berlin] Type parameter: faculty
+[27-Oct-2024 10:48:16 Europe/Berlin] Type parameter: faculty

@@ -225,63 +225,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         elseif ($type === 'organization') {
             $name = $_POST['org_name'] ?? null;
             $imagePath = '';
-
+        
+            // Initialize response
+            $response = ['success' => false, 'message' => ''];
+        
+            // Check for duplicate organization name
+            try {
+                $duplicateCheckSql = "SELECT COUNT(*) FROM `organization_tbl` WHERE org_name = :name";
+                $duplicateCheckStmt = $connect->prepare($duplicateCheckSql);
+                $duplicateCheckStmt->execute([':name' => $name]);
+                $duplicateCount = $duplicateCheckStmt->fetchColumn();
+        
+                if ($duplicateCount > 0) {
+                    $response['message'] = 'The organization name is already taken.';
+                    echo json_encode($response);
+                    exit;
+                }
+            } catch (Exception $e) {
+                error_log('Error: ' . $e->getMessage());
+                $response['message'] = 'An error occurred while checking for duplicate organization names.';
+                echo json_encode($response);
+                exit;
+            }
+        
+            // Process image upload if provided
             if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
-
+        
                 if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
                     $response['message'] = 'Failed to create upload directory.';
                     echo json_encode($response);
                     exit;
                 }
-
+        
                 $newImage = $name . "_" . $_FILES['org_image']['name'];
                 $tempPath = $_FILES["org_image"]["tmp_name"];
                 $basename = basename($newImage);
                 $originalPath = $uploadTo . $basename;
-
+        
                 // Debugging: Log file paths
                 error_log('Organization Temp Path: ' . $tempPath);
                 error_log('Organization Original Path: ' . $originalPath);
-
+        
                 if (move_uploaded_file($tempPath, $originalPath)) {
+                    // Insert organization with image
                     $sql = "INSERT INTO `organization_tbl` (org_name, org_image) VALUES (:name, :image)";
                     $stmt = $connect->prepare($sql);
                     $stmt->execute([
                         ':name' => $name,
                         ':image' => $basename
                     ]);
-
+        
                     $response['success'] = true;
                     $response['message'] = 'Organization added successfully.';
                 } else {
                     $response['message'] = 'Organization file upload failed to move.';
                 }
             } else {
+                // Insert organization without image
                 $sql = "INSERT INTO `organization_tbl` (org_name) VALUES (:name)";
                 $stmt = $connect->prepare($sql);
-                $stmt->execute([
-                    ':name' => $name
-                ]);
-
+                $stmt->execute([':name' => $name]);
+        
                 $response['success'] = true;
                 $response['message'] = 'Organization added successfully without an image.';
             }
-
-        } elseif ($type === 'account') {
+        
+            echo json_encode($response);
+        }
+        elseif ($type === 'account') {
             $user_type = $_POST['user_type'] ?? '2'; // Default to '2' (standard user) if not provided
             $username = $_POST['username'] ?? null;
             $password = $_POST['password'] ?? null;
             $org = $_POST['org'] ?? null;
-
+        
             // Initialize an array to collect validation errors
             $errors = [];
-
+        
             // Validate username and password
             if ($username === null || empty(trim($username))) {
                 $errors[] = 'Username is required.';
             }
-
+        
             if ($password === null || empty(trim($password))) {
                 $errors[] = 'Password is required.';
             } else {
@@ -289,20 +314,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (strlen($password) < 8 || strlen($password) > 16) {
                     $errors[] = 'Password must be between 8 and 16 characters long.';
                 }
-
+        
                 if (!preg_match('/[A-Z]/', $password)) {
                     $errors[] = 'Password must contain at least one uppercase letter.';
                 }
-
+        
                 if (!preg_match('/[0-9]/', $password)) {
                     $errors[] = 'Password must contain at least one number.';
                 }
-
+        
                 if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
                     $errors[] = 'Password must contain at least one special character.';
                 }
             }
-
+        
             // If there are validation errors, return them all at once
             if (!empty($errors)) {
                 $response['success'] = false;
@@ -310,15 +335,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($response);
                 exit;
             }
-
+        
             // Debugging: Log the account creation parameters
             error_log('Account Creation - Username: ' . $username);
             error_log('Account Creation - User Type: ' . $user_type);
-
+        
+            // Check for duplicates
+            try {
+                $checkSql = "SELECT COUNT(*) FROM `users_tbl` WHERE users_username = :username OR users_org = :org";
+                $checkStmt = $connect->prepare($checkSql);
+                $checkStmt->execute([
+                    ':username' => $username,
+                    ':org' => $org
+                ]);
+                $count = $checkStmt->fetchColumn();
+        
+                if ($count > 0) {
+                    $response['success'] = false;
+                    $response['message'] = 'Duplicate entry: The username or organization already exists.';
+                    echo json_encode($response);
+                    exit;
+                }
+            } catch (Exception $e) {
+                error_log('Error: ' . $e->getMessage());
+                $response['success'] = false;
+                $response['message'] = 'An error occurred while checking for duplicates.';
+                echo json_encode($response);
+                exit;
+            }
+        
             // Hash the password using SHA-256
             $hashedPassword = hash('sha256', $password);
-
+        
             try {
+                // Insert account into database
                 $sql = "INSERT INTO `users_tbl` (users_username, users_password, users_type, users_org) VALUES (:username, :password, :user_type, :org)";
                 $stmt = $connect->prepare($sql);
                 $stmt->execute([
@@ -327,7 +377,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':user_type' => $user_type,
                     ':org' => $org
                 ]);
-
+        
+                // Get the last inserted ID
+                $lastId = $connect->lastInsertId();
+        
+                // Ensure the ID is an odd number
+                if ($lastId % 2 === 0) {
+                    $newOddId = $lastId + 1; // Increment to make it odd
+                    // Update the ID in the database
+                    $updateSql = "UPDATE `users_tbl` SET id = :newOddId WHERE id = :lastId";
+                    $updateStmt = $connect->prepare($updateSql);
+                    $updateStmt->execute([
+                        ':newOddId' => $newOddId,
+                        ':lastId' => $lastId,
+                    ]);
+                }
+        
                 $response['success'] = true;
                 $response['message'] = 'Account created successfully.';
             } catch (Exception $e) {
@@ -335,112 +400,144 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $response['success'] = false;
                 $response['message'] = 'An error occurred while processing your request.';
             }
-
         }
         
         elseif ($type === 'membersaccount') {
-            // Gather form inputs
-            $username = $_POST['username'] ?? null;
-            $password = $_POST['password'] ?? null;
-            $position = $_POST['position'] ?? null; 
-            $org = $_POST['org'] ?? null;
-            $name = $_POST['name'] ?? null;
-        
-            // Initialize an array to collect validation errors
-            $errors = [];
-            
-            // Determine user type based on position
-            if ($position === "President" || $position === "Secretary") {
-                $user_type = '2'; // Set user type to '2' for President or Secretary
-            } else {
-                $user_type = '3'; // Default to '3' (standard user) for other positions
-            }
-        
-            // Validate required fields
-            if ($name === null || empty(trim($name))) {
-                $errors[] = 'Name is required.';
-            }
-            if ($username === null || empty(trim($username))) {
-                $errors[] = 'Username is required.';
-            }
-            if ($password === null || empty(trim($password))) {
-                $errors[] = 'Password is required.';
-            } else {
-                // Validate password strength
-                if (strlen($password) < 8 || strlen($password) > 16) {
-                    $errors[] = 'Password must be between 8 and 16 characters long.';
-                }
-                if (!preg_match('/[A-Z]/', $password)) {
-                    $errors[] = 'Password must contain at least one uppercase letter.';
-                }
-                if (!preg_match('/[0-9]/', $password)) {
-                    $errors[] = 'Password must contain at least one number.';
-                }
-                if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
-                    $errors[] = 'Password must contain at least one special character.';
-                }
-            }
-            if ($position === null || empty(trim($position))) {
-                $errors[] = 'Position is required.';
-            }
-        
-            // Check for errors
-            if (!empty($errors)) {
-                $response['success'] = false;
-                $response['message'] = implode('<br>', $errors);
+    // Gather form inputs
+    $username = $_POST['username'] ?? null;
+    $password = $_POST['password'] ?? null;
+    $position = $_POST['position'] ?? null; 
+    $org = $_POST['org'] ?? null;
+    $name = $_POST['name'] ?? null;
+
+    // Initialize an array to collect validation errors
+    $errors = [];
+    
+    // Determine user type based on position
+    if ($position === "President" || $position === "Secretary") {
+        $user_type = '2'; // Set user type to '2' for President or Secretary
+    } else {
+        $user_type = '3'; // Default to '3' (standard user) for other positions
+    }
+
+    // Validate required fields
+    if ($name === null || empty(trim($name))) {
+        $errors[] = 'Name is required.';
+    }
+    if ($username === null || empty(trim($username))) {
+        $errors[] = 'Username is required.';
+    }
+    if ($password === null || empty(trim($password))) {
+        $errors[] = 'Password is required.';
+    } else {
+        // Validate password strength
+        if (strlen($password) < 8 || strlen($password) > 16) {
+            $errors[] = 'Password must be between 8 and 16 characters long.';
+        }
+        if (!preg_match('/[A-Z]/', $password)) {
+            $errors[] = 'Password must contain at least one uppercase letter.';
+        }
+        if (!preg_match('/[0-9]/', $password)) {
+            $errors[] = 'Password must contain at least one number.';
+        }
+        if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
+            $errors[] = 'Password must contain at least one special character.';
+        }
+    }
+    if ($position === null || empty(trim($position))) {
+        $errors[] = 'Position is required.';
+    }
+
+    // Check for errors
+    if (!empty($errors)) {
+        $response['success'] = false;
+        $response['message'] = implode('<br>', $errors);
+        echo json_encode($response);
+        exit;
+    }
+
+    try {
+        // Check for duplicate username or name
+        $checkSql = "SELECT COUNT(*) FROM `orgmembers_tbl` WHERE `username` = :username OR `name` = :name";
+        $checkStmt = $connect->prepare($checkSql);
+        $checkStmt->execute([
+            ':username' => $username,
+            ':name' => $name
+        ]);
+        $count = $checkStmt->fetchColumn();
+
+        if ($count > 0) {
+            $response['success'] = false;
+            $response['message'] = 'Username or Name already exists. Please choose a different one.';
+            echo json_encode($response);
+            exit;
+        }
+
+        // Process image upload
+        $member_img = null; // Default to null
+        if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
+            $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
+            if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
+                $response['message'] = 'Failed to create upload directory.';
                 echo json_encode($response);
                 exit;
             }
-        
-            // Process image upload
-            $member_img = null; // Default to null
-            if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
-                $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
-                if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
-                    $response['message'] = 'Failed to create upload directory.';
-                    echo json_encode($response);
-                    exit;
-                }
-                $newImage = $username . "_" . $_FILES['org_image']['name']; // Use username for unique name
-                $tempPath = $_FILES["org_image"]["tmp_name"];
-                $basename = basename($newImage);
-                $originalPath = $uploadTo . $basename;
-        
-                if (move_uploaded_file($tempPath, $originalPath)) {
-                    $member_img = $basename; // Set the member_img to the uploaded file name
-                } else {
-                    $response['message'] = 'Failed to move uploaded file.';
-                    echo json_encode($response);
-                    exit;
-                }
-            }
-        
-            // Hash the password using SHA-256
-            $hashedPassword = hash('sha256', $password);
-        
-            try {
-                // Insert account into database
-                $sql = "INSERT INTO `orgmembers_tbl` (name, username, password, users_type, position, org_type, member_img) VALUES (:name, :username, :password, :user_type, :position, :org, :member_img)";
-                $stmt = $connect->prepare($sql);
-        
-                $stmt->execute([
-                    ':name' => $name,
-                    ':username' => $username,
-                    ':password' => $hashedPassword,
-                    ':user_type' => $user_type,
-                    ':position' => $position,
-                    ':org' => $org,
-                    ':member_img' => $member_img // Insert image filename, can be null
-                ]);
-        
-                $response['success'] = true;
-                $response['message'] = 'Account created successfully.';
-            } catch (Exception $e) {
-                error_log('Error: ' . $e->getMessage());
-                $response['success'] = false;
-                $response['message'] = 'An error occurred while processing your request.';
+            $newImage = $username . "_" . $_FILES['org_image']['name']; // Use username for unique name
+            $tempPath = $_FILES["org_image"]["tmp_name"];
+            $basename = basename($newImage);
+            $originalPath = $uploadTo . $basename;
+
+            if (move_uploaded_file($tempPath, $originalPath)) {
+                $member_img = $basename; // Set the member_img to the uploaded file name
+            } else {
+                $response['message'] = 'Failed to move uploaded file.';
+                echo json_encode($response);
+                exit;
             }
         }
+
+        // Hash the password using SHA-256
+        $hashedPassword = hash('sha256', $password);
+
+        // Insert account into database
+        $sql = "INSERT INTO `orgmembers_tbl` (name, username, password, users_type, position, org_type, member_img) VALUES (:name, :username, :password, :user_type, :position, :org, :member_img)";
+        $stmt = $connect->prepare($sql);
+
+        // Execute the statement
+        $stmt->execute([
+            ':name' => $name,
+            ':username' => $username,
+            ':password' => $hashedPassword,
+            ':user_type' => $user_type,
+            ':position' => $position,
+            ':org' => $org,
+            ':member_img' => $member_img // Insert image filename, can be null
+        ]);
+
+        // Get the last inserted ID
+        $lastId = $connect->lastInsertId();
+
+        // Ensure the ID is an even number
+        if ($lastId % 2 !== 0) {
+            $newEvenId = $lastId + 1; // Increment to make it even
+            // Update the ID in the database
+            $updateSql = "UPDATE `orgmembers_tbl` SET id = :newEvenId WHERE id = :lastId";
+            $updateStmt = $connect->prepare($updateSql);
+            $updateStmt->execute([
+                ':newEvenId' => $newEvenId,
+                ':lastId' => $lastId,
+            ]);
+        }
+
+        $response['success'] = true;
+        $response['message'] = 'Account created successfully.';
+    } catch (Exception $e) {
+        error_log('Error: ' . $e->getMessage());
+        $response['success'] = false;
+        $response['message'] = 'An error occurred while processing your request.';
+    }
+}
+
         
         
     } catch (Exception $e) {

@@ -23,10 +23,15 @@ class mainClass
         try {
             $this->connection = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // echo "Connected successfully";
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
+    }
+
+    // Method to get the connection
+    public function getConnection()
+    {
+        return $this->connection;
     }
 
     
@@ -67,8 +72,17 @@ class mainClass
                                     // User type 0 or 1 - allow login
                                     session_start();
                                     $_SESSION['aid'] = $row['users_id'];
+                                    $_SESSION['id'] = $row['users_id'];
                                     $_SESSION['auname'] = $row['users_username'];
                                     $_SESSION['atype'] = $row['users_type'];
+    
+                                    // Update is_active and last_active fields
+                                    $update_sql = "UPDATE users_tbl SET is_active = 1, last_active = NOW() WHERE users_id = :user_id";
+                                    if ($update_stmt = $this->connection->prepare($update_sql)) {
+                                        $update_stmt->bindParam(":user_id", $row['users_id'], PDO::PARAM_INT);
+                                        $update_stmt->execute();
+                                    }
+    
                                     // Redirect to dashboard or appropriate page
                                     header('Location: dashboard.php');
                                     exit();
@@ -94,118 +108,135 @@ class mainClass
     }
     
     public function org_login($data)
-{
-    $username = trim($data["username"]);
-    $password = trim($data['password']);
-    $log_msg = array();
-
-    // Check for empty username and password
-    if (empty($username)) {
-        $log_msg['uname'] = "Username is empty";
-    }
-
-    if (empty($password)) {
-        $log_msg['pwd'] = "Password is empty";
-    }
-
-    if (count($log_msg) <= 0) {
-        // Check in users_tbl first
-        $sql = "SELECT users_id, users_username, users_password, users_type FROM users_tbl WHERE users_username = :username";
-        if ($stmt = $this->connection->prepare($sql)) {
-            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-            $param_username = $username;
-
-            if ($stmt->execute()) {
-                if ($stmt->rowCount() == 1) {
-                    if ($row = $stmt->fetch()) {
-                        $stored_hash = $row["users_password"];
-
-                        // Hash the input password with SHA-256
-                        $input_hash = hash('sha256', $password);
-
-                        if ($input_hash === $stored_hash) {
-                            // Check user type
-                            if ($row['users_type'] == 1) {
-                                // User type 1 - do not log in as an organization
-                                $log_msg['msg'] = "You are not an Organization.";
-                            } else {
-                                // Successful login for users_tbl
-                                session_start();
-                                $_SESSION['aid'] = $row['users_id'];
-                                $_SESSION['auname'] = $row['users_username'];
-                                $_SESSION['atype'] = $row['users_type'];
-                                // Redirect to dashboard or appropriate page
-                                header('Location: dashboard.php');
-                                exit();
-                            }
-                        } else {
-                            $log_msg['msg'] = "Invalid username or password.";
-                        }
-                    }
-                }else {
-                    // If user not found in users_tbl, check in orgmembers_tbl
-                    $sql = "SELECT* FROM orgmembers_tbl WHERE username = :username";
-                    
-                    if ($stmt = $this->connection->prepare($sql)) {
-                        $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-                        $param_username = $username;
-                
-                        if ($stmt->execute()) {
-                            if ($stmt->rowCount() == 1) {
-                                if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $stored_hash = $row["password"];
-                                    
-                                    // Hash the input password with SHA-256
-                                    $input_hash = hash('sha256', $password);
-                
-                                    if ($input_hash === $stored_hash) {
-                                        // Successful login for orgmembers_tbl
-                                        session_start();
-                                        $_SESSION['aid'] = $row['id']; // Set session ID from orgmembers_tbl
-                                        $_SESSION['id'] = $row['id'];
-                                        $_SESSION['auname'] = $row['username'];
-                                        $_SESSION['atype'] = $row['users_type'];
-                
-                                        // Get the users_id from users_tbl based on org_type
-                                        $org_type = $row['org_type']; // Get the organization type from the logged-in user
-                                        $userSql = "SELECT users_id FROM users_tbl WHERE users_org = :org_type";
-                                        $userStmt = $this->connection->prepare($userSql);
-                                        $userStmt->bindParam(':org_type', $org_type, PDO::PARAM_INT);
-                
-                                        if ($userStmt->execute()) {
-                                            if ($userRow = $userStmt->fetch(PDO::FETCH_ASSOC)) {
-                                                $_SESSION['aid'] = $userRow['users_id']; // Update session ID to the corresponding users_id
-                                            } else {
-                                                // Handle case where no matching users_id is found
-                                                $log_msg['msg'] = "No matching user ID found for the organization.";
-                                            }
-                                        } else {
-                                            $log_msg['msg'] = "Error fetching users ID from users_tbl.";
-                                        }
-                
-                                        // Redirect to dashboard or appropriate page
-                                        header('Location: dashboard.php');
-                                        exit();
-                                    } else {
-                                        $log_msg['msg'] = "Invalid username or password.";
+    {
+        $username = trim($data["username"]);
+        $password = trim($data['password']);
+        $log_msg = array();
+    
+        // Check for empty username and password
+        if (empty($username)) {
+            $log_msg['uname'] = "Username is empty";
+        }
+    
+        if (empty($password)) {
+            $log_msg['pwd'] = "Password is empty";
+        }
+    
+        if (count($log_msg) <= 0) {
+            // Check in users_tbl first
+            $sql = "SELECT users_id, users_username, users_password, users_type FROM users_tbl WHERE users_username = :username";
+            if ($stmt = $this->connection->prepare($sql)) {
+                $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+                $param_username = $username;
+    
+                if ($stmt->execute()) {
+                    if ($stmt->rowCount() == 1) {
+                        if ($row = $stmt->fetch()) {
+                            $stored_hash = $row["users_password"];
+    
+                            // Hash the input password with SHA-256
+                            $input_hash = hash('sha256', $password);
+    
+                            if ($input_hash === $stored_hash) {
+                                // Check user type
+                                if ($row['users_type'] == 1) {
+                                    $log_msg['msg'] = "You are not an Organization.";
+                                } else {
+                                    // Successful login for users_tbl
+                                    session_start();
+                                    $_SESSION['aid'] = $row['users_id'];
+                                    $_SESSION['id'] = $row['users_id'];
+                                    $_SESSION['auname'] = $row['users_username'];
+                                    $_SESSION['atype'] = $row['users_type'];
+    
+                                    // Update is_active and last_active fields
+                                    $update_sql = "UPDATE users_tbl SET is_active = 1, last_active = NOW() WHERE users_id = :user_id";
+                                    if ($update_stmt = $this->connection->prepare($update_sql)) {
+                                        $update_stmt->bindParam(":user_id", $row['users_id'], PDO::PARAM_INT);
+                                        $update_stmt->execute();
                                     }
+    
+                                    // Redirect to dashboard or appropriate page
+                                    header('Location: dashboard.php');
+                                    exit();
                                 }
                             } else {
                                 $log_msg['msg'] = "Invalid username or password.";
                             }
-                        } else {
-                            $log_msg['msg'] = "Error executing the query.";
                         }
                     } else {
-                        $log_msg['msg'] = "Error preparing the SQL statement.";
+                        // If user not found in users_tbl, check in orgmembers_tbl
+                        $sql = "SELECT * FROM orgmembers_tbl WHERE username = :username";
+                        
+                        if ($stmt = $this->connection->prepare($sql)) {
+                            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+                            $param_username = $username;
+                    
+                            if ($stmt->execute()) {
+                                if ($stmt->rowCount() == 1) {
+                                    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        $stored_hash = $row["password"];
+                                        
+                                        // Hash the input password with SHA-256
+                                        $input_hash = hash('sha256', $password);
+                    
+                                        if ($input_hash === $stored_hash) {
+                                            // Successful login for orgmembers_tbl
+                                            session_start();
+                                            $_SESSION['aid'] = $row['id'];
+                                            $_SESSION['id'] = $row['id'];
+                                            $_SESSION['auname'] = $row['username'];
+                                            $_SESSION['atype'] = $row['users_type'];
+                    
+                                            // Get the users_id from users_tbl based on org_type
+                                            $org_type = $row['org_type'];
+                                            $userSql = "SELECT users_id FROM users_tbl WHERE users_org = :org_type";
+                                            $userStmt = $this->connection->prepare($userSql);
+                                            $userStmt->bindParam(':org_type', $org_type, PDO::PARAM_INT);
+                    
+                                            if ($userStmt->execute()) {
+                                                if ($userRow = $userStmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    $_SESSION['aid'] = $userRow['users_id'];
+                                                } else {
+                                                    $log_msg['msg'] = "No matching user ID found for the organization.";
+                                                }
+                                            } else {
+                                                $log_msg['msg'] = "Error fetching users ID from users_tbl.";
+                                            }
+    
+                                            // Update is_active and last_active fields for orgmembers_tbl
+                                            $update_org_sql = "UPDATE orgmembers_tbl SET is_active = 1, last_active = NOW() WHERE id = :user_id";
+                                            if ($update_org_stmt = $this->connection->prepare($update_org_sql)) {
+                                                $update_org_stmt->bindParam(":user_id", $row['id'], PDO::PARAM_INT);
+                                                $update_org_stmt->execute();
+                                            }
+    
+                                            // Redirect to dashboard or appropriate page
+                                            header('Location: dashboard.php');
+                                            exit();
+                                        } else {
+                                            $log_msg['msg'] = "Invalid username or password.";
+                                        }
+                                    }
+                                } else {
+                                    $log_msg['msg'] = "Invalid username or password.";
+                                }
+                            } else { 
+                                $log_msg['msg'] = "Error executing the query.";
+                            }
+                        } else {
+                            $log_msg['msg'] = "Error preparing the SQL statement.";
+                        }
+                    
+                        return $log_msg;
                     }
-                
-                    return $log_msg; // Return log messages for feedback or debugging
                 }
             }
         }
+    
+        return $log_msg;
     }
-}
+    
     function add_announcement($data) {
         $uid = htmlspecialchars($data['uid'] ?? '', ENT_QUOTES, 'UTF-8');
         $details = htmlspecialchars($data['announcement_details'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -492,81 +523,82 @@ class mainClass
     }
     
     function show_announcement()
-{
-    // Fetch the user's organization ID based on session variable
-    $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
-
-    // Query to get the user's organization from users_tbl
-    $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
-    $orgStatement = $this->connection->prepare($orgQuery);
-    $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
-    $orgStatement->execute();
-    $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
-
-    // Safely escape the organization ID
-    $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
-
-    // If the user has no organization, return an empty result or error message
-    if ($userOrgId == 0) {
-        return "No organization found for the user.";
-    }
-
-    // Main announcement query, filtered by the user's organization and only fetching non-archived announcements
-    $query = "
-        SELECT a.*, 
-               u.users_username AS author_name, 
-               om.name AS updated_by_name, 
-               c.users_username AS creator_name, 
-               o.org_name, 
-               o.org_image
-        FROM announcement_tbl a 
-        LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
-        LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
-        LEFT JOIN users_tbl c ON a.created_by = c.users_id  -- Join to get the creator's name
-        LEFT JOIN organization_tbl o ON u.users_org = o.org_id
-        WHERE u.users_org = :userOrgId AND a.is_archived = 0
-    ";
-
-    $statement = $this->connection->prepare($query);
-    $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        // Check for creator names and fallback to orgmembers_tbl if necessary
-        foreach ($result as &$row) {
-            // Handle org_image, fallback to a placeholder if not available
-            $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
-                                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                                : 'placeholder.jpg'; // Default placeholder if no image is found
-
-            // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
-            if (empty($row['creator_name'])) {
-                $creatorId = $row['created_by']; // Get the creator ID
-                // Fetch the creator's name from orgmembers_tbl
-                $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
-                $fallbackStatement = $this->connection->prepare($fallbackQuery);
-                $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
-                $fallbackStatement->execute();
-                $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
-                
-                // If a name is found in orgmembers_tbl, use it
-                if ($fallbackRow) {
-                    $row['creator_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
-                } else {
-                    $row['creator_name'] = 'Unknown'; // Fallback if no name is found
-                }
-            } else {
-                // Sanitize creator name from users_tbl
-                $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+    {
+        try {
+            // Fetch the user's organization ID based on session variable
+            $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+    
+            // Query to get the user's organization from users_tbl
+            $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
+            $orgStatement = $this->connection->prepare($orgQuery);
+            $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $orgStatement->execute();
+            $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
+    
+            // Safely escape the organization ID
+            $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
+    
+            // If the user has no organization, return an empty result or error message
+            if ($userOrgId == 0) {
+                return []; // Return empty array if no organization is found
             }
+    
+            // Main announcement query, filtered by the user's organization and non-archived announcements
+            $query = "
+                SELECT a.*, 
+                       u.users_username AS author_name, 
+                       om.name AS updated_by_name, 
+                       c.users_username AS creator_name, 
+                       o.org_name, 
+                       o.org_image
+                FROM announcement_tbl a 
+                LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+                LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+                LEFT JOIN users_tbl c ON a.created_by = c.users_id  -- Join to get the creator's name
+                LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+                WHERE u.users_org = :userOrgId AND a.is_archived = 0
+            ";
+    
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
+    
+            if ($statement->execute()) {
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+                // Check for creator names and fallback to orgmembers_tbl if necessary
+                foreach ($result as &$row) {
+                    // Handle org_image, fallback to a placeholder if not available
+                    $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                        ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                        : 'placeholder.jpg'; // Default placeholder if no image is found
+    
+                    // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
+                    if (empty($row['creator_name'])) {
+                        $creatorId = $row['created_by']; // Get the creator ID
+                        // Fetch the creator's name from orgmembers_tbl
+                        $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
+                        $fallbackStatement = $this->connection->prepare($fallbackQuery);
+                        $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
+                        $fallbackStatement->execute();
+                        $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
+    
+                        // If a name is found in orgmembers_tbl, use it
+                        $row['creator_name'] = $fallbackRow ? htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8') : 'Unknown';
+                    } else {
+                        // Sanitize creator name from users_tbl
+                        $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+                    }
+                }
+                return $result;
+            } else {
+                return [];
+            }
+        } catch (Exception $e) {
+            error_log('Error fetching announcements: ' . $e->getMessage());
+            return [];
         }
-        return $result;
-    } else {
-        return "No Data";
     }
-}
-
+    
 function show_announcement2()
 {
     // Fetch the user's name based on session variable

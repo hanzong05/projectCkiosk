@@ -69,6 +69,19 @@ if ($stmt->rowCount() == 1) {
       <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
       <link href="assets/css/css.css" rel="stylesheet" />
       <style>
+         .dot {
+    height: 10px;
+    width: 10px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px; /* Space between name and dot */
+  }
+  .last-active {
+    margin-left: 10px; /* Optional: Adds space between the dot and last active */
+    font-size: 0.9em; /* Smaller font size for last active */
+    color: #666; /* Gray color for last active */
+  }
           .input-group {
               position: relative;
           }
@@ -279,16 +292,28 @@ if ($stmt->rowCount() == 1) {
                               <center><?php echo $row["username"]; ?></center>
                             </td>
                             <td>
-                              <center><?php echo $row["name"]; ?></center>
+                              <center>
+                                <?php echo $row["name"]; ?>
+                                <?php if ($row['is_active']) { ?>
+                                  <span class="dot"></span>
+                                <?php } else { ?>
+                                  <span class="last-active">
+                                    <?php 
+                                    // Display last active if not active
+                                    echo $row["last_active"] ? " (Last Active: " . date("Y-m-d H:i:s", strtotime($row["last_active"])) . ")" : "(Never Active)";
+                                    ?>
+                                  </span>
+                                <?php } ?>
+                              </center>
                             </td>
                             <td>
                               <center><?php echo $row["position"]; ?></center>
                             </td>
                             <td class="text-center">
                               <center>
-                              <button class="btn accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $row['id'] ?>">
+                                <button class="btn accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $row['id'] ?>">
                                   Edit Account
-                              </button>
+                                </button>
 
                                 <a class="btn btn-danger btn-delete-account" href='membersmanagement.php?aid=<?= $row['id'] ?>'>
                                   Delete
@@ -312,7 +337,9 @@ if ($stmt->rowCount() == 1) {
         </div>
       </div>
     </div>
-  </div><form id="accountForm" class="row" action="your_upload_script.php" method="post" enctype="multipart/form-data">
+  </div>
+  
+  <form id="accountForm" class="row" action="your_upload_script.php" method="post" enctype="multipart/form-data">
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="accountModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

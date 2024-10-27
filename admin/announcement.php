@@ -201,17 +201,17 @@ $allAnnouncement = $obj->show_announcement();
                     </div>
                   </div>
                   <table class="table table-light table-hover table-bordered" id="myTable">
-    <thead>
-        <th><center>NO.</center></th>
-        <th><center>DETAILS</center></th>
-        <th><center>ORG NAME</center></th>
-        <th><center>CREATED AT</center></th>
-        <th><center>CREATED BY</center></th> <!-- Shows who created the announcement -->
-        <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
-        <th><center>UPDATED AT</center></th> <!-- Shows when the announcement was updated -->
-        <th><center>ACTION</center></th>
-    </thead>
-    <tbody>
+                    <thead>
+                        <th><center>NO.</center></th>
+                        <th><center>DETAILS</center></th>
+                        <th><center>ORG NAME</center></th>
+                        <th><center>CREATED AT</center></th>
+                        <th><center>CREATED BY</center></th> <!-- Shows who created the announcement -->
+                        <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
+                        <th><center>UPDATED AT</center></th> <!-- Shows when the announcement was updated -->
+                        <th><center>ACTION</center></th>
+                    </thead>
+                    <tbody>
         <?php
         $count = 1;
         foreach ($allAnnouncement as $row) {
@@ -268,7 +268,7 @@ $allAnnouncement = $obj->show_announcement();
                 <div class="modal-body">
                     <div class="mb-3">
                         <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> <!-- Creator ID -->
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
                         <label for="announcement_details" class="form-label fw-bold">Announcement Details</label>
                         <textarea id="summernote" name="announcement_details" id="announcement_details" required></textarea>
                     </div>

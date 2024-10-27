@@ -37,6 +37,7 @@ try {
     echo 'Query failed: ' . $e->getMessage();
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -368,6 +369,8 @@ try {
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
   <script src="assets/demo/demo.js"></script>
+  <script> var aid = <?php echo json_encode($aid); ?>; // Use json_encode to safely handle the value
+    console.log("The value of aid is:", aid);</script>
   <script>
     $(document).ready(function () {
       // Javascript method's body can be found in assets/assets-for-demo/js/demo.js

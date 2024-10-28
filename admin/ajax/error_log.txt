@@ -312,3 +312,680 @@
 [28-Oct-2024 07:08:28 Europe/Berlin] Updating: Name: 'Jansen', New Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
 [28-Oct-2024 07:08:29 Europe/Berlin] Processing Row 4: Name: 'Jansen', Dept: 'it department', Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'
 [28-Oct-2024 07:08:29 Europe/Berlin] Updating: Name: 'Jansen', New Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:53 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 23:06:53 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 23:06:53 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => John Wick
+            [B] => CS Department
+            [C] => MWF / 10 am - 1pm
+        )
+
+    [3] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => IS Department
+            [C] => MWF / 10 am - 2pm
+        )
+
+    [4] => Array
+        (
+            [A] => Shrek Org
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 3pm
+        )
+
+    [5] => Array
+        (
+            [A] => Luffy
+            [B] => MIT
+            [C] => MWF / 10 am - 4pm
+        )
+
+    [6] => Array
+        (
+            [A] => Zoro
+            [B] => MIT
+            [C] => MWF / 10 am - 5pm
+        )
+
+    [7] => Array
+        (
+            [A] => Nami
+            [B] => CS Department
+            [C] => MWF / 10 am - 6pm
+        )
+
+    [8] => Array
+        (
+            [A] => EDIT FACULTY TEST
+            [B] => CS Department
+            [C] => MWF / 10 am - 7pm
+        )
+
+    [9] => Array
+        (
+            [A] => Alvinson L. Guzman
+            [B] => Dean
+            [C] => MWF / 10 am - 8pm
+        )
+
+    [10] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => Asistant Dean
+            [C] => MWF / 10 am - 9pm
+        )
+
+    [11] => Array
+        (
+            [A] => Caroline Carmen
+            [B] => College Clerk
+            [C] => MWF / 10 am - 10pm
+        )
+
+    [12] => Array
+        (
+            [A] => Jane Mae De Vene
+            [B] => College Clerk
+            [C] => MWF / 10 am - 11pm
+        )
+
+    [13] => Array
+        (
+            [A] => Carlota Tupasuriano
+            [B] => Technical Assistant
+            [C] => MWF / 10 am - 12pm
+        )
+
+    [14] => Array
+        (
+            [A] => Raymundo Punzalan
+            [B] => College Secretary
+            [C] => MWF / 10 am - 13pm
+        )
+
+    [15] => Array
+        (
+            [A] => HANA
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 14pm
+        )
+
+)
+
+[28-Oct-2024 23:06:53 Europe/Berlin] Processing Row 2: Name: 'John Wick', Dept: 'cs department', Consultation Time: 'MWF / 10 am - 1pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Updating: Name: 'John Wick', New Consultation Time: 'MWF / 10 am - 1pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 3: Name: 'Juan Dela Cruz', Dept: 'is department', Consultation Time: 'MWF / 10 am - 2pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'is department' at Row 3. Skipping.
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 4: Name: 'Shrek Org', Dept: 'it deparment', Consultation Time: 'MWF / 10 am - 3pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'it deparment' at Row 4. Skipping.
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 5: Name: 'Luffy', Dept: 'mit', Consultation Time: 'MWF / 10 am - 4pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Updating: Name: 'Luffy', New Consultation Time: 'MWF / 10 am - 4pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 6: Name: 'Zoro', Dept: 'mit', Consultation Time: 'MWF / 10 am - 5pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Updating: Name: 'Zoro', New Consultation Time: 'MWF / 10 am - 5pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 7: Name: 'Nami', Dept: 'cs department', Consultation Time: 'MWF / 10 am - 6pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Updating: Name: 'Nami', New Consultation Time: 'MWF / 10 am - 6pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 8: Name: 'EDIT FACULTY TEST', Dept: 'cs department', Consultation Time: 'MWF / 10 am - 7pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Updating: Name: 'EDIT FACULTY TEST', New Consultation Time: 'MWF / 10 am - 7pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 9: Name: 'Alvinson L. Guzman', Dept: 'dean', Consultation Time: 'MWF / 10 am - 8pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Updating: Name: 'Alvinson L. Guzman', New Consultation Time: 'MWF / 10 am - 8pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 10: Name: 'Juan Dela Cruz', Dept: 'asistant dean', Consultation Time: 'MWF / 10 am - 9pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'asistant dean' at Row 10. Skipping.
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 11: Name: 'Caroline Carmen', Dept: 'college clerk', Consultation Time: 'MWF / 10 am - 10pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'college clerk' at Row 11. Skipping.
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 12: Name: 'Jane Mae De Vene', Dept: 'college clerk', Consultation Time: 'MWF / 10 am - 11pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'college clerk' at Row 12. Skipping.
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 13: Name: 'Carlota Tupasuriano', Dept: 'technical assistant', Consultation Time: 'MWF / 10 am - 12pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'technical assistant' at Row 13. Skipping.
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 14: Name: 'Raymundo Punzalan', Dept: 'college secretary', Consultation Time: 'MWF / 10 am - 13pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'college secretary' at Row 14. Skipping.
+[28-Oct-2024 23:06:54 Europe/Berlin] Processing Row 15: Name: 'HANA', Dept: 'it deparment', Consultation Time: 'MWF / 10 am - 14pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:06:54 Europe/Berlin] Invalid department 'it deparment' at Row 15. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 23:07:39 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 23:07:39 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => John Wick
+            [B] => CS Department
+            [C] => MWF / 10 am - 1pm
+        )
+
+    [3] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => IS Department
+            [C] => MWF / 10 am - 2pm
+        )
+
+    [4] => Array
+        (
+            [A] => Shrek Org
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 3pm
+        )
+
+    [5] => Array
+        (
+            [A] => Luffy
+            [B] => MIT
+            [C] => MWF / 10 am - 4pm
+        )
+
+    [6] => Array
+        (
+            [A] => Zoro
+            [B] => MIT
+            [C] => MWF / 10 am - 5pm
+        )
+
+    [7] => Array
+        (
+            [A] => Nami
+            [B] => CS Department
+            [C] => MWF / 10 am - 6pm
+        )
+
+    [8] => Array
+        (
+            [A] => EDIT FACULTY TEST
+            [B] => CS Department
+            [C] => MWF / 10 am - 7pm
+        )
+
+    [9] => Array
+        (
+            [A] => Alvinson L. Guzman
+            [B] => Dean
+            [C] => MWF / 10 am - 8pm
+        )
+
+    [10] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => Asistant Dean
+            [C] => MWF / 10 am - 9pm
+        )
+
+    [11] => Array
+        (
+            [A] => Caroline Carmen
+            [B] => College Clerk
+            [C] => MWF / 10 am - 10pm
+        )
+
+    [12] => Array
+        (
+            [A] => Jane Mae De Vene
+            [B] => College Clerk
+            [C] => MWF / 10 am - 11pm
+        )
+
+    [13] => Array
+        (
+            [A] => Carlota Tupasuriano
+            [B] => Technical Assistant
+            [C] => MWF / 10 am - 12pm
+        )
+
+    [14] => Array
+        (
+            [A] => Raymundo Punzalan
+            [B] => College Secretary
+            [C] => MWF / 10 am - 13pm
+        )
+
+    [15] => Array
+        (
+            [A] => HANA
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 14pm
+        )
+
+)
+
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 2: Name: 'John Wick', Dept: 'cs department', Consultation Time: 'MWF / 10 am - 1pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] No update necessary for 'John Wick'. Existing data matches the imported data.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 3: Name: 'Juan Dela Cruz', Dept: 'is department', Consultation Time: 'MWF / 10 am - 2pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'is department' at Row 3. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 4: Name: 'Shrek Org', Dept: 'it deparment', Consultation Time: 'MWF / 10 am - 3pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'it deparment' at Row 4. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 5: Name: 'Luffy', Dept: 'mit', Consultation Time: 'MWF / 10 am - 4pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] No update necessary for 'Luffy'. Existing data matches the imported data.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 6: Name: 'Zoro', Dept: 'mit', Consultation Time: 'MWF / 10 am - 5pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] No update necessary for 'Zoro'. Existing data matches the imported data.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 7: Name: 'Nami', Dept: 'cs department', Consultation Time: 'MWF / 10 am - 6pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] No update necessary for 'Nami'. Existing data matches the imported data.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 8: Name: 'EDIT FACULTY TEST', Dept: 'cs department', Consultation Time: 'MWF / 10 am - 7pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] No update necessary for 'EDIT FACULTY TEST'. Existing data matches the imported data.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 9: Name: 'Alvinson L. Guzman', Dept: 'dean', Consultation Time: 'MWF / 10 am - 8pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] No update necessary for 'Alvinson L. Guzman'. Existing data matches the imported data.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 10: Name: 'Juan Dela Cruz', Dept: 'asistant dean', Consultation Time: 'MWF / 10 am - 9pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'asistant dean' at Row 10. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 11: Name: 'Caroline Carmen', Dept: 'college clerk', Consultation Time: 'MWF / 10 am - 10pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'college clerk' at Row 11. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 12: Name: 'Jane Mae De Vene', Dept: 'college clerk', Consultation Time: 'MWF / 10 am - 11pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'college clerk' at Row 12. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 13: Name: 'Carlota Tupasuriano', Dept: 'technical assistant', Consultation Time: 'MWF / 10 am - 12pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'technical assistant' at Row 13. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 14: Name: 'Raymundo Punzalan', Dept: 'college secretary', Consultation Time: 'MWF / 10 am - 13pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'college secretary' at Row 14. Skipping.
+[28-Oct-2024 23:07:39 Europe/Berlin] Processing Row 15: Name: 'HANA', Dept: 'it deparment', Consultation Time: 'MWF / 10 am - 14pm', Image: 'dfi.jfif'
+[28-Oct-2024 23:07:39 Europe/Berlin] Invalid department 'it deparment' at Row 15. Skipping.
+[28-Oct-2024 23:12:15 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 23:12:15 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 23:12:15 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => John Wick
+            [B] => CS Department
+            [C] => MWF / 10 am - 1pm
+        )
+
+    [3] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => IS Department
+            [C] => MWF / 10 am - 2pm
+        )
+
+    [4] => Array
+        (
+            [A] => Shrek Org
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 3pm
+        )
+
+    [5] => Array
+        (
+            [A] => Luffy
+            [B] => MIT
+            [C] => MWF / 10 am - 4pm
+        )
+
+    [6] => Array
+        (
+            [A] => Zoro
+            [B] => MIT
+            [C] => MWF / 10 am - 5pm
+        )
+
+    [7] => Array
+        (
+            [A] => Nami
+            [B] => CS Department
+            [C] => MWF / 10 am - 6pm
+        )
+
+    [8] => Array
+        (
+            [A] => EDIT FACULTY TEST
+            [B] => CS Department
+            [C] => MWF / 10 am - 7pm
+        )
+
+    [9] => Array
+        (
+            [A] => Alvinson L. Guzman
+            [B] => Dean
+            [C] => MWF / 10 am - 8pm
+        )
+
+    [10] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => Asistant Dean
+            [C] => MWF / 10 am - 9pm
+        )
+
+    [11] => Array
+        (
+            [A] => Caroline Carmen
+            [B] => College Clerk
+            [C] => MWF / 10 am - 10pm
+        )
+
+    [12] => Array
+        (
+            [A] => Jane Mae De Vene
+            [B] => College Clerk
+            [C] => MWF / 10 am - 11pm
+        )
+
+    [13] => Array
+        (
+            [A] => Carlota Tupasuriano
+            [B] => Technical Assistant
+            [C] => MWF / 10 am - 12pm
+        )
+
+    [14] => Array
+        (
+            [A] => Raymundo Punzalan
+            [B] => College Secretary
+            [C] => MWF / 10 am - 13pm
+        )
+
+    [15] => Array
+        (
+            [A] => HANA
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 14pm
+        )
+
+)
+
+[28-Oct-2024 23:12:15 Europe/Berlin] No update necessary for 'John Wick'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:12:15 Europe/Berlin] Updating: Name: 'Juan Dela Cruz', New Consultation Time: 'MWF / 10 am - 2pm'
+[28-Oct-2024 23:12:15 Europe/Berlin] Faculty 'Shrek Org' not found. Skipping row.
+[28-Oct-2024 23:12:15 Europe/Berlin] No update necessary for 'Luffy'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:12:15 Europe/Berlin] No update necessary for 'Zoro'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:12:15 Europe/Berlin] No update necessary for 'Nami'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:12:15 Europe/Berlin] No update necessary for 'EDIT FACULTY TEST'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:12:15 Europe/Berlin] No update necessary for 'Alvinson L. Guzman'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:12:15 Europe/Berlin] Updating: Name: 'Juan Dela Cruz', New Consultation Time: 'MWF / 10 am - 9pm'
+[28-Oct-2024 23:12:15 Europe/Berlin] Updating: Name: 'Caroline Carmen', New Consultation Time: 'MWF / 10 am - 10pm'
+[28-Oct-2024 23:12:15 Europe/Berlin] Updating: Name: 'Jane Mae De Vene', New Consultation Time: 'MWF / 10 am - 11pm'
+[28-Oct-2024 23:12:15 Europe/Berlin] Updating: Name: 'Carlota Tupasuriano', New Consultation Time: 'MWF / 10 am - 12pm'
+[28-Oct-2024 23:12:15 Europe/Berlin] Updating: Name: 'Raymundo Punzalan', New Consultation Time: 'MWF / 10 am - 13pm'
+[28-Oct-2024 23:12:15 Europe/Berlin] Faculty 'HANA' not found. Skipping row.
+[28-Oct-2024 23:15:17 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 23:15:17 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 23:15:17 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => John Wick
+            [B] => CS Department
+            [C] => MWF / 10 am - 3pm
+        )
+
+    [3] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => IS Department
+            [C] => MWF / 10 am - 4pm
+        )
+
+    [4] => Array
+        (
+            [A] => Shrek Org
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 5pm
+        )
+
+    [5] => Array
+        (
+            [A] => Luffy
+            [B] => MIT
+            [C] => MWF / 10 am - 6pm
+        )
+
+    [6] => Array
+        (
+            [A] => Zoro
+            [B] => MIT
+            [C] => MWF / 10 am - 7pm
+        )
+
+    [7] => Array
+        (
+            [A] => Nami
+            [B] => CS Department
+            [C] => MWF / 10 am - 8pm
+        )
+
+    [8] => Array
+        (
+            [A] => EDIT FACULTY TEST
+            [B] => CS Department
+            [C] => MWF / 10 am - 9pm
+        )
+
+    [9] => Array
+        (
+            [A] => Alvinson L. Guzman
+            [B] => Dean
+            [C] => MWF / 10 am - 10pm
+        )
+
+    [10] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => Asistant Dean
+            [C] => MWF / 10 am - 11pm
+        )
+
+    [11] => Array
+        (
+            [A] => Caroline Carmen
+            [B] => College Clerk
+            [C] => MWF / 10 am - 12pm
+        )
+
+    [12] => Array
+        (
+            [A] => Jane Mae De Vene
+            [B] => College Clerk
+            [C] => MWF / 10 am - 13pm
+        )
+
+    [13] => Array
+        (
+            [A] => Carlota Tupasuriano
+            [B] => Technical Assistant
+            [C] => MWF / 10 am - 14pm
+        )
+
+    [14] => Array
+        (
+            [A] => Raymundo Punzalan
+            [B] => College Secretary
+            [C] => MWF / 10 am - 15pm
+        )
+
+    [15] => Array
+        (
+            [A] => HANA
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 16pm
+        )
+
+)
+
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'John Wick', New Consultation Time: 'MWF / 10 am - 3pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Juan Dela Cruz', New Consultation Time: 'MWF / 10 am - 4pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Faculty 'Shrek Org' not found. Skipping row.
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Luffy', New Consultation Time: 'MWF / 10 am - 6pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Zoro', New Consultation Time: 'MWF / 10 am - 7pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Nami', New Consultation Time: 'MWF / 10 am - 8pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'EDIT FACULTY TEST', New Consultation Time: 'MWF / 10 am - 9pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Alvinson L. Guzman', New Consultation Time: 'MWF / 10 am - 10pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Juan Dela Cruz', New Consultation Time: 'MWF / 10 am - 11pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Caroline Carmen', New Consultation Time: 'MWF / 10 am - 12pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Jane Mae De Vene', New Consultation Time: 'MWF / 10 am - 13pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Carlota Tupasuriano', New Consultation Time: 'MWF / 10 am - 14pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Updating: Name: 'Raymundo Punzalan', New Consultation Time: 'MWF / 10 am - 15pm'
+[28-Oct-2024 23:15:17 Europe/Berlin] Faculty 'HANA' not found. Skipping row.
+[28-Oct-2024 23:16:39 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 23:16:40 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 23:16:40 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => John Wick
+            [B] => CS Department
+            [C] => MWF / 10 am - 3pm
+        )
+
+    [3] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => IS Department
+            [C] => MWF / 10 am - 4pm
+        )
+
+    [4] => Array
+        (
+            [A] => Shrek Org
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 5pm
+        )
+
+    [5] => Array
+        (
+            [A] => Luffy
+            [B] => MIT
+            [C] => MWF / 10 am - 6pm
+        )
+
+    [6] => Array
+        (
+            [A] => Zoro
+            [B] => MIT
+            [C] => MWF / 10 am - 7pm
+        )
+
+    [7] => Array
+        (
+            [A] => Nami
+            [B] => CS Department
+            [C] => MWF / 10 am - 8pm
+        )
+
+    [8] => Array
+        (
+            [A] => EDIT FACULTY TEST
+            [B] => CS Department
+            [C] => MWF / 10 am - 9pm
+        )
+
+    [9] => Array
+        (
+            [A] => Alvinson L. Guzman
+            [B] => Dean
+            [C] => MWF / 10 am - 10pm
+        )
+
+    [10] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => Asistant Dean
+            [C] => MWF / 10 am - 11pm
+        )
+
+    [11] => Array
+        (
+            [A] => Caroline Carmen
+            [B] => College Clerk
+            [C] => MWF / 10 am - 12pm
+        )
+
+    [12] => Array
+        (
+            [A] => Jane Mae De Vene
+            [B] => College Clerk
+            [C] => MWF / 10 am - 13pm
+        )
+
+    [13] => Array
+        (
+            [A] => Carlota Tupasuriano
+            [B] => Technical Assistant
+            [C] => MWF / 10 am - 14pm
+        )
+
+    [14] => Array
+        (
+            [A] => Raymundo Punzalan
+            [B] => College Secretary
+            [C] => MWF / 10 am - 15pm
+        )
+
+    [15] => Array
+        (
+            [A] => HANA
+            [B] => IT Deparment
+            [C] => MWF / 10 am - 16pm
+        )
+
+)
+
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'John Wick'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] Updating: Name: 'Juan Dela Cruz', New Consultation Time: 'MWF / 10 am - 4pm'
+[28-Oct-2024 23:16:40 Europe/Berlin] Faculty 'Shrek Org' not found. Skipping row.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Luffy'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Zoro'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Nami'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'EDIT FACULTY TEST'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Alvinson L. Guzman'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] Updating: Name: 'Juan Dela Cruz', New Consultation Time: 'MWF / 10 am - 11pm'
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Caroline Carmen'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Jane Mae De Vene'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Carlota Tupasuriano'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] No update necessary for 'Raymundo Punzalan'. Existing consultation time matches the imported data.
+[28-Oct-2024 23:16:40 Europe/Berlin] Faculty 'HANA' not found. Skipping row.
+[28-Oct-2024 23:28:34 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 23:28:34 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 23:28:34 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Alvinson L. Guzman
+            [B] => Dean
+            [C] => 8 - 10 am
+        )
+
+)
+
+[28-Oct-2024 23:28:34 Europe/Berlin] Updating: Name: 'Alvinson L. Guzman', New Consultation Time: '8 - 10 am'
+[28-Oct-2024 23:29:53 Europe/Berlin] Type parameter: faculty
+[28-Oct-2024 23:30:42 Europe/Berlin] Type parameter: faculty
+[28-Oct-2024 23:36:02 Europe/Berlin] Type parameter: announcement

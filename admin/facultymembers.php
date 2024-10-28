@@ -188,7 +188,7 @@ $allDepartment = $obj->show_department();
                 Add Faculty Member
             </button>
             <button class="btn text-end" data-toggle="modal" data-target="#excelImportModal">
-                Import Faculty Members via Excel
+                Update Consultation time via Excel
             </button>
         </div>
     </div>
@@ -413,7 +413,7 @@ $allDepartment = $obj->show_department();
   <script type="text/javascript">
     $(document).ready(function () {
 
-      $('#excelImportForm').on('submit', function(e) {
+        $('#excelImportForm').on('submit', function(e) {
     e.preventDefault(); // Prevent default form submission
 
     // Show confirmation dialog before proceeding
@@ -428,12 +428,20 @@ $allDepartment = $obj->show_department();
         cancelButtonText: 'Cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Get the type value (assuming it's a hidden input or can be defined here)
-            var type = 'excel_import'; // Adjust if you have a dynamic type
+            // Show loading spinner
+            Swal.fire({
+                title: 'Uploading...',
+                text: 'Please wait while your file is being uploaded.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading(); // Show loading indicator
+                }
+            });
 
             // Create FormData and append the type
             var formData = new FormData(this);
-            formData.append('type', type); // Add the type to the FormData
+            formData.append('type', 'excel_import'); // Set type value
 
             // Get content from Summernote
             var specializationContent = $('#specialization').summernote('code');
@@ -446,21 +454,28 @@ $allDepartment = $obj->show_department();
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    // Handle the response from the server
-                    console.log(response);
-                    // Optionally close the modal or show a success message
-                    $('#excelImportModal').modal('hide'); // Hide modal on success (optional)
-                    Swal.fire("Success", response.message, "success"); // Show success message
+                    // Hide loading spinner and show success message
+                    Swal.fire({
+                        title: "Success",
+                        text: response.message,
+                        icon: "success",
+                        confirmButtonText: 'Okay'
+                    }).then(() => {
+                        // Close modal and refresh the page
+                        $('#excelImportModal').modal('hide');
+                        location.reload(); // Refresh the page
+                    });
                 },
                 error: function(xhr, status, error) {
-                    // Handle any errors
+                    // Hide loading spinner and show error message
+                    Swal.fire("Error", "An error occurred during the upload. Please try again.", "error");
                     console.error(error);
-                    // Show error message
                 }
             });
         }
     });
 });
+
 
 
 

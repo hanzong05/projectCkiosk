@@ -606,6 +606,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'mis department' => 3,
             'mit' => 4,
             'dean' => 5,
+            // Add any additional mappings as needed
         ];
 
         // Get the data from the active sheet
@@ -616,8 +617,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updatedCount = 0;  // Count of updated records
 
         // Prepare statements
-        $insertStmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept, consultation_time) VALUES (:faculty_name, :faculty_dept, :consultation_time)");
-        $updateStmt = $connect->prepare("UPDATE faculty_tbl SET faculty_dept = :faculty_dept, consultation_time = :consultation_time WHERE faculty_name = :faculty_name");
+        $insertStmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept, consultation_time, faculty_image) VALUES (:faculty_name, :faculty_dept, :consultation_time, :faculty_image)");
+        $updateStmt = $connect->prepare("UPDATE faculty_tbl SET consultation_time = :consultation_time, faculty_image = :faculty_image WHERE faculty_name = :faculty_name");
 
         // Loop through the sheet data
         foreach ($sheetData as $rowIndex => $row) {
@@ -627,9 +628,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $faculty_name = trim($row['A'] ?? null);
             $faculty_dept = strtolower(trim($row['B'] ?? null)); // Convert department to lowercase for mapping
             $consultation_time = trim($row['C'] ?? null); // Assuming Consultation Time is in column C
+            $faculty_image = $row['D'] ?? 'dfi.jfif'; // Use 'dfi.jfif' as default if no image is provided
 
             // Log the current row data for debugging
-            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept', Consultation Time: '$consultation_time'");
+            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept', Consultation Time: '$consultation_time', Image: '$faculty_image'");
 
             // Check for faculty department mapping
             $faculty_dept_id = null;
@@ -647,16 +649,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $existingQuery->execute([':faculty_name' => $faculty_name]);
                 $existingData = $existingQuery->fetch(PDO::FETCH_ASSOC);
 
-                if ($existingData) {
-                    // If the faculty member exists, check if an update is necessary
-                    if ($existingData['faculty_dept'] != $faculty_dept_id || $existingData['consultation_time'] != $consultation_time) {
-                        // Update the record if department or consultation time has changed
-                        error_log("Updating: Name: '$faculty_name', New Dept ID: $faculty_dept_id, New Consultation Time: '$consultation_time'");
+                // Check for duplicates in departments 5 to 13
+                $restrictedDepts = [5, 6, 7, 8, 9, 10, 11, 12, 13];
+                if (in_array($faculty_dept_id, $restrictedDepts)) {
+                    $duplicateQuery = $connect->prepare("SELECT faculty_name FROM faculty_tbl WHERE faculty_dept = :faculty_dept AND faculty_name != :faculty_name");
+                    $duplicateQuery->execute([':faculty_dept' => $faculty_dept_id, ':faculty_name' => $faculty_name]);
+                    if ($duplicateQuery->fetch(PDO::FETCH_ASSOC)) {
+                        error_log("Duplicate department found for '$faculty_name'. Updating existing record.");
+                        // Update the existing record
                         try {
                             $updateStmt->execute([
                                 ':faculty_name' => $faculty_name,
-                                ':faculty_dept' => $faculty_dept_id,
-                                ':consultation_time' => $consultation_time
+                                ':consultation_time' => $consultation_time,
+                                ':faculty_image' => $faculty_image // Update faculty image
+                            ]);
+                            $updatedCount++; // Increment the count of updated records
+                        } catch (PDOException $e) {
+                            error_log('Update error: ' . $e->getMessage());
+                            $response['success'] = false;
+                            $response['message'] = 'Error updating data: ' . $e->getMessage();
+                            echo json_encode($response);
+                            exit;
+                        }
+                        continue; // Skip to the next row
+                    }
+                }
+
+                if ($existingData) {
+                    // If the faculty member exists, check if an update is necessary
+                    if ($existingData['consultation_time'] != $consultation_time) {
+                        // Update the record if consultation time has changed
+                        error_log("Updating: Name: '$faculty_name', New Consultation Time: '$consultation_time', Image: '$faculty_image'");
+                        try {
+                            $updateStmt->execute([
+                                ':faculty_name' => $faculty_name,
+                                ':consultation_time' => $consultation_time,
+                                ':faculty_image' => $faculty_image // Update faculty image
                             ]);
                             $updatedCount++; // Increment the count of updated records
                         } catch (PDOException $e) {
@@ -672,12 +700,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 } else {
                     // If the faculty member does not exist, insert a new record
-                    error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id, Consultation Time: '$consultation_time'");
+                    error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id, Consultation Time: '$consultation_time', Image: '$faculty_image'");
                     try {
                         $insertStmt->execute([
                             ':faculty_name' => $faculty_name,
                             ':faculty_dept' => $faculty_dept_id, // Use the mapped department ID
-                            ':consultation_time' => $consultation_time // Insert the consultation time
+                            ':consultation_time' => $consultation_time, // Insert the consultation time
+                            ':faculty_image' => $faculty_image // Insert default or provided image
                         ]);
                         $insertedCount++; // Increment the count of inserted records
                     } catch (PDOException $e) {

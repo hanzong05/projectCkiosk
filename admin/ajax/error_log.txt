@@ -192,3 +192,123 @@
 [28-Oct-2024 05:48:29 Europe/Berlin] Type parameter: membersaccount
 [28-Oct-2024 05:49:09 Europe/Berlin] Type parameter: membersaccount
 [28-Oct-2024 05:49:23 Europe/Berlin] Type parameter: membersaccount
+[28-Oct-2024 07:04:59 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 07:04:59 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 07:04:59 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz
+            [B] => Dean
+            [C] => 10am-10pm Tuesday
+        )
+
+    [3] => Array
+        (
+            [A] => Jansen
+            [B] => IT Department
+            [C] => 10am-10pm Tuesday
+        )
+
+    [4] => Array
+        (
+            [A] => Jansen
+            [B] => IT Department
+            [C] => 10am-11pm Tuesday
+        )
+
+)
+
+[28-Oct-2024 07:04:59 Europe/Berlin] Processing Row 2: Name: 'Hanz', Dept: 'dean', Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:04:59 Europe/Berlin] Inserting: Name: 'Hanz', Dept ID: 5, Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:04:59 Europe/Berlin] Processing Row 3: Name: 'Jansen', Dept: 'it department', Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:04:59 Europe/Berlin] Inserting: Name: 'Jansen', Dept ID: 1, Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:04:59 Europe/Berlin] Processing Row 4: Name: 'Jansen', Dept: 'it department', Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:04:59 Europe/Berlin] Updating: Name: 'Jansen', New Dept ID: 1, New Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:17 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 07:08:17 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 07:08:17 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz
+            [B] => Dean
+            [C] => 10am-10pm Tuesday
+        )
+
+    [3] => Array
+        (
+            [A] => Jansen
+            [B] => IT Department
+            [C] => 10am-10pm Tuesday
+        )
+
+    [4] => Array
+        (
+            [A] => Jansen
+            [B] => IT Department
+            [C] => 10am-11pm Tuesday
+        )
+
+)
+
+[28-Oct-2024 07:08:17 Europe/Berlin] Processing Row 2: Name: 'Hanz', Dept: 'dean', Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:17 Europe/Berlin] Duplicate department found for 'Hanz'. Updating existing record.
+[28-Oct-2024 07:08:17 Europe/Berlin] Processing Row 3: Name: 'Jansen', Dept: 'it department', Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:17 Europe/Berlin] Inserting: Name: 'Jansen', Dept ID: 1, Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:17 Europe/Berlin] Processing Row 4: Name: 'Jansen', Dept: 'it department', Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:17 Europe/Berlin] Updating: Name: 'Jansen', New Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:28 Europe/Berlin] Type parameter: excel_import
+[28-Oct-2024 07:08:28 Europe/Berlin] Spreadsheet loaded successfully.
+[28-Oct-2024 07:08:28 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz
+            [B] => Dean
+            [C] => 10am-10pm Tuesday
+        )
+
+    [3] => Array
+        (
+            [A] => Jansen
+            [B] => IT Department
+            [C] => 10am-10pm Tuesday
+        )
+
+    [4] => Array
+        (
+            [A] => Jansen
+            [B] => IT Department
+            [C] => 10am-11pm Tuesday
+        )
+
+)
+
+[28-Oct-2024 07:08:28 Europe/Berlin] Processing Row 2: Name: 'Hanz', Dept: 'dean', Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:28 Europe/Berlin] Duplicate department found for 'Hanz'. Updating existing record.
+[28-Oct-2024 07:08:28 Europe/Berlin] Processing Row 3: Name: 'Jansen', Dept: 'it department', Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:28 Europe/Berlin] Updating: Name: 'Jansen', New Consultation Time: '10am-10pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:29 Europe/Berlin] Processing Row 4: Name: 'Jansen', Dept: 'it department', Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'
+[28-Oct-2024 07:08:29 Europe/Berlin] Updating: Name: 'Jansen', New Consultation Time: '10am-11pm Tuesday', Image: 'dfi.jfif'

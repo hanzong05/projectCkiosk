@@ -1180,14 +1180,14 @@ function show_announcement2()
     {
        // Base query to get faculty members
 $query = "SELECT f.*, d.department_name 
-FROM faculty_tbl f 
-LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
+          FROM faculty_tbl f 
+          LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
 
 // Add condition to filter by departments if provided
 if ($department_ids) {
-// Create a placeholder string for the IN clause
-$placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
-$query .= " WHERE f.faculty_dept IN ($placeholders)";
+    // Create a placeholder string for the IN clause
+    $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
+    $query .= " WHERE f.faculty_dept IN ($placeholders)";
 }
 
 // Prepare the statement
@@ -1195,17 +1195,17 @@ $statement = $this->connection->prepare($query);
 
 // Bind department IDs if filtering by departments
 if ($department_ids) {
-foreach ($department_ids as $key => $id) {
-$statement->bindValue($key + 1, $id, PDO::PARAM_INT); // Bind department IDs
-}
+    foreach ($department_ids as $key => $id) {
+        $statement->bindValue($key + 1, $id, PDO::PARAM_INT); // Bind department IDs
+    }
 }
 
 // Execute query
 if ($statement->execute()) {
-$result = $statement->fetchAll();
-return $result;
+    $result = $statement->fetchAll();
+    return $result;
 } else {
-return "No Data";
+    return "No Data";
 }
 
     }

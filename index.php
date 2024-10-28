@@ -1212,27 +1212,37 @@ $allAnnouncement = getAnnouncements($connection, $userId);
         <div class="org-chart">
         <div class="level1">
                  <?php foreach ($allDean as $head): ?>
-                        <div class="member">
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
                             <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
             </div>
     
             <div class="level2">
-                    <?php foreach ($all2 as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
-                        </div>
-                    <?php endforeach; ?>
-            </div>  
+                <?php foreach ($all2 as $head): ?>
+                    <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                        <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                        <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
     
             <div class="level3">
                      <?php foreach ($all3 as $head): ?>
-                        <div class="member">
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
                             <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
             </div>
@@ -1256,18 +1266,24 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Campus Heads</h3>
                 <div class="level1">
                 <?php foreach ($allDean as $head): ?>
-                        <div class="member">
+                    <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
                             <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?> </strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
     
                 <div class="level2">
                     <?php foreach ($allItHeads as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="IT Chair">
-                            <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>IT Chair Person</p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -1276,15 +1292,12 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Faculty Members</h3>
                 <div class="level3">
                     <?php foreach ($allIt as $row): ?>
-                        <div class="member" 
-                             data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="Faculty">
-                            <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                                Department: IT<br>
-                            </p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -1298,18 +1311,24 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Campus Heads</h3>
                 <div class="level1">
                     <?php foreach ($allDean as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="IS Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
     
                 <div class="level2">
                     <?php foreach ($allIsHeads as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="IS Chair">
-                            <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>IS Chair Person</p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -1318,15 +1337,12 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Faculty Members</h3>
                 <div class="level3">
                     <?php foreach ($allIs as $row): ?>
-                        <div class="member" 
-                             data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="IS Faculty">
-                            <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                                Department: IS<br>
-                            </p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -1340,18 +1356,24 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Campus Heads</h3>
                 <div class="level1">
                     <?php foreach ($allDean as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="CS Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
     
                 <div class="level2">
                     <?php foreach ($allCsHeads as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="CS Chair">
-                            <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>CS Chair Person</p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -1360,15 +1382,12 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Faculty Members</h3>
                 <div class="level3">
                     <?php foreach ($allCs as $row): ?>
-                        <div class="member" 
-                             data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="CS Faculty">
-                            <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                                Department: CS
-                            </p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -1382,18 +1401,24 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Campus Heads</h3>
                 <div class="level1">
                     <?php foreach ($allDean as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="MIT Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>Dean</p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
     
                 <div class="level2">
                     <?php foreach ($allMitHeads as $head): ?>
-                        <div class="member">
-                            <img src="uploaded/Heads/<?= htmlspecialchars($head['img']) ?>" alt="MIT Chair">
-                            <p><strong><?= htmlspecialchars($head['name']) ?></strong><br>MIT Chair Person</p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -1402,15 +1427,12 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <h3>Faculty Members</h3>
                 <div class="level3">
                     <?php foreach ($allMit as $row): ?>
-                        <div class="member" 
-                             data-name="<?= htmlspecialchars($row['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($row['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($row['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($row['faculty_image']) ?>" alt="MIT Faculty">
-                            <p><strong><?= htmlspecialchars($row['faculty_name']) ?></strong><br>
-                                Department: MIT<br>
-                            </p>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>

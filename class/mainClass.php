@@ -1178,39 +1178,36 @@ function show_announcement2()
 
     function show_facultyheads($department_ids = null)
     {
-        // Assuming the Dean's ID is 5, adjust as necessary
-        $dean_id = 5;
-    
-        // Base query to get faculty members
-        $query = "SELECT f.*, d.department_name 
-                  FROM faculty_tbl f 
-                  LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
-        
-        // Add condition to filter by departments if provided and exclude the Dean
-        if ($department_ids) {
-            // Create a placeholder string for the IN clause
-            $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
-            $query .= " WHERE f.faculty_dept IN ($placeholders) AND f.faculty_dept != ?";
-        }
-        
-        $statement = $this->connection->prepare($query);
-        
-        // Bind parameters if filtering by departments
-        if ($department_ids) {
-            // Bind each department ID and the dean's ID
-            foreach ($department_ids as $key => $id) {
-                $statement->bindValue($key + 1, $id, PDO::PARAM_INT);
-            }
-            $statement->bindValue(count($department_ids) + 1, $dean_id, PDO::PARAM_INT);
-        }
-    
-        // Execute query
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+       // Base query to get faculty members
+$query = "SELECT f.*, d.department_name 
+FROM faculty_tbl f 
+LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
+
+// Add condition to filter by departments if provided
+if ($department_ids) {
+// Create a placeholder string for the IN clause
+$placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
+$query .= " WHERE f.faculty_dept IN ($placeholders)";
+}
+
+// Prepare the statement
+$statement = $this->connection->prepare($query);
+
+// Bind department IDs if filtering by departments
+if ($department_ids) {
+foreach ($department_ids as $key => $id) {
+$statement->bindValue($key + 1, $id, PDO::PARAM_INT); // Bind department IDs
+}
+}
+
+// Execute query
+if ($statement->execute()) {
+$result = $statement->fetchAll();
+return $result;
+} else {
+return "No Data";
+}
+
     }
     function show_facultymembers($department_ids = null)
     {
@@ -2334,110 +2331,152 @@ function delete_account($appID)
 
     function show_allIt()
     {
-        $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 1";
-        $statement = $this->connection->prepare($query);
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 1
+    ";
+    
+    $statement = $this->connection->prepare($query);
 
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
     }
 
     function show_allCs()
     {
-        $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 2";
-        $statement = $this->connection->prepare($query);
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 2
+    ";
+    
+    $statement = $this->connection->prepare($query);
 
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
     }
 
     function show_allIs()
     {
-        $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 3";
-        $statement = $this->connection->prepare($query);
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 3
+    ";
+    
+    $statement = $this->connection->prepare($query);
 
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
     }
     function show_allMit()
     {
-        $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 4";
-        $statement = $this->connection->prepare($query);
-
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
-    }
-
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 4
+    ";
     
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
+    }
     function show_allItHeads()
     {
-        $query = "SELECT * FROM heads_tbl WHERE faculty_dept = 1";
-        $statement = $this->connection->prepare($query);
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 10
+    ";
     
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
     }
     
     function show_allCsHeads()
     {
-        $query = "SELECT * FROM heads_tbl WHERE faculty_dept = 2";
-        $statement = $this->connection->prepare($query);
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 12
+    ";
     
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
     }
     
     function show_allIsHeads()
     {
-        $query = "SELECT * FROM heads_tbl WHERE faculty_dept = 3";
-        $statement = $this->connection->prepare($query);
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 11
+    ";
     
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
     }
     
     function show_allMitHeads()
     {
-        $query = "SELECT * FROM heads_tbl WHERE faculty_dept = 4";
-        $statement = $this->connection->prepare($query);
+        $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 10
+    ";
     
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
-    }
-    function show_allDeanHeads()
-{
-    $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 5";
     $statement = $this->connection->prepare($query);
 
     if ($statement->execute()) {
@@ -2446,11 +2485,38 @@ function delete_account($appID)
     } else {
         return "No Data";
     }
+    }
+
+    function show_allDeanHeads()
+{
+    $query = "
+    SELECT faculty_tbl.*, department_tbl.department_name 
+    FROM faculty_tbl 
+    INNER JOIN department_tbl 
+    ON faculty_tbl.faculty_dept = department_tbl.department_id 
+    WHERE faculty_tbl.faculty_dept = 5
+";
+
+$statement = $this->connection->prepare($query);
+
+if ($statement->execute()) {
+    $result = $statement->fetchAll();
+    return $result;
+} else {
+    return "No Data";
+}
 }
 
 function show_alllvl2()
 {
-    $query = "SELECT * FROM faculty_tbl WHERE faculty_dept = 6";
+    $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id 
+        WHERE faculty_tbl.faculty_dept = 6
+    ";
+    
     $statement = $this->connection->prepare($query);
 
     if ($statement->execute()) {
@@ -2460,9 +2526,16 @@ function show_alllvl2()
         return "No Data";
     }
 }
+
 function show_alllvl3()
 {
-    $query = "SELECT * FROM faculty_tbl WHERE faculty_dept IN (7, 8, 9)";
+    $query = "
+        SELECT faculty_tbl.*, department_tbl.department_name 
+        FROM faculty_tbl 
+        INNER JOIN department_tbl 
+        ON faculty_tbl.faculty_dept = department_tbl.department_id
+        WHERE faculty_tbl.faculty_dept IN (7, 8, 9)
+    ";
 
     $statement = $this->connection->prepare($query);
 

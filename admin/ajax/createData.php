@@ -170,13 +170,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $response['message'] = 'Question and answer are required.';
             }
 
-        }elseif ($type === 'faculty') {
+        }if ($type === 'faculty') {
             $name = $_POST['faculty_name'] ?? null;
             $dept = $_POST['department'] ?? null;
-            $specialization = $_POST['specialization'] ?? null;  // Get specialization from POST data
-            $consultationTime = $_POST['consultation_time'] ?? null; // Get consultation time from POST data
+            $specialization = $_POST['specialization'] ?? null;
+            $consultationTime = $_POST['consultation_time'] ?? null;
             $imagePath = '';
         
+            // Restricted department IDs that should not allow duplicates but update existing records
+            $restrictedDeptIds = [5, 6, 7, 8, 9, 10, 11, 12, 13];
+        
+            if (in_array($dept, $restrictedDeptIds)) {
+                // Check if the department already exists
+                $existingDeptQuery = $connect->prepare("SELECT faculty_id FROM faculty_tbl WHERE faculty_dept = :dept");
+                $existingDeptQuery->execute([':dept' => $dept]);
+                $existingFaculty = $existingDeptQuery->fetch(PDO::FETCH_ASSOC);
+        
+                if ($existingFaculty) {
+                    // Update the existing faculty member's information if the department exists
+                    $updateStmt = $connect->prepare("UPDATE faculty_tbl SET faculty_name = :name, specialization = :specialization, consultation_time = :consultation_time WHERE faculty_dept = :dept");
+                    $updateStmt->execute([
+                        ':name' => $name,
+                        ':specialization' => $specialization,
+                        ':consultation_time' => $consultationTime,
+                        ':dept' => $dept
+                    ]);
+                    $response['success'] = true;
+                    $response['message'] = 'Faculty member information updated successfully.';
+                    echo json_encode($response);
+                    exit;
+                }
+            }
+        
+            // If no existing faculty member in the restricted department, insert a new one
             if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
         
@@ -196,30 +222,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
         
-                // Modify SQL to include specialization and consultation time
                 $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_dept, faculty_image, specialization, consultation_time) VALUES (:name, :dept, :image, :specialization, :consultation_time)";
                 $stmt = $connect->prepare($sql);
                 $stmt->execute([
                     ':name' => $name,
                     ':dept' => $dept,
                     ':image' => $imagePath,
-                    ':specialization' => $specialization, // Add specialization
-                    ':consultation_time' => $consultationTime // Add consultation time
+                    ':specialization' => $specialization,
+                    ':consultation_time' => $consultationTime
                 ]);
+        
             } else {
-                // Modify SQL to include specialization and consultation time even without an image
                 $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_dept, specialization, consultation_time) VALUES (:name, :dept, :specialization, :consultation_time)";
                 $stmt = $connect->prepare($sql);
                 $stmt->execute([
                     ':name' => $name,
                     ':dept' => $dept,
-                    ':specialization' => $specialization, // Add specialization
-                    ':consultation_time' => $consultationTime // Add consultation time
+                    ':specialization' => $specialization,
+                    ':consultation_time' => $consultationTime
                 ]);
             }
         
             $response['success'] = true;
             $response['message'] = 'Faculty member added successfully.';
+            echo json_encode($response);
+            exit;
         }
         
         elseif ($type === 'organization') {
@@ -544,9 +571,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log('Error: ' . $e->getMessage());
         $response['message'] = 'An error occurred while processing your request.';
     }
-} 
-
-if ($type === 'excel_import') {
+} if ($type === 'excel_import') {
     // Check if the file is uploaded without errors
     if (isset($_FILES['faculty_excel']) && $_FILES['faculty_excel']['error'] === UPLOAD_ERR_OK) {
         // Define the paths for the temporary and original files
@@ -588,9 +613,11 @@ if ($type === 'excel_import') {
         error_log("Sheet Data: " . print_r($sheetData, true)); // Log the entire sheet data for review
 
         $insertedCount = 0; // Count of inserted records
+        $updatedCount = 0;  // Count of updated records
 
-        // Prepare statement for inserting new records (without specialization, consultation_time, and faculty_image)
-        $stmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept) VALUES (:faculty_name, :faculty_dept)");
+        // Prepare statements
+        $insertStmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept, consultation_time) VALUES (:faculty_name, :faculty_dept, :consultation_time)");
+        $updateStmt = $connect->prepare("UPDATE faculty_tbl SET faculty_dept = :faculty_dept, consultation_time = :consultation_time WHERE faculty_name = :faculty_name");
 
         // Loop through the sheet data
         foreach ($sheetData as $rowIndex => $row) {
@@ -599,9 +626,10 @@ if ($type === 'excel_import') {
             // Get and trim each column
             $faculty_name = trim($row['A'] ?? null);
             $faculty_dept = strtolower(trim($row['B'] ?? null)); // Convert department to lowercase for mapping
+            $consultation_time = trim($row['C'] ?? null); // Assuming Consultation Time is in column C
 
             // Log the current row data for debugging
-            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept'");
+            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept', Consultation Time: '$consultation_time'");
 
             // Check for faculty department mapping
             $faculty_dept_id = null;
@@ -614,20 +642,51 @@ if ($type === 'excel_import') {
 
             // Proceed if faculty name is provided
             if ($faculty_name) {
-                error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id");
+                // Check if the faculty member already exists in the database
+                $existingQuery = $connect->prepare("SELECT faculty_dept, consultation_time FROM faculty_tbl WHERE faculty_name = :faculty_name");
+                $existingQuery->execute([':faculty_name' => $faculty_name]);
+                $existingData = $existingQuery->fetch(PDO::FETCH_ASSOC);
 
-                try {
-                    $stmt->execute([
-                        ':faculty_name' => $faculty_name,
-                        ':faculty_dept' => $faculty_dept_id, // Use the mapped department ID
-                    ]);
-                    $insertedCount++; // Increment the count of inserted records
-                } catch (PDOException $e) {
-                    error_log('Insert error: ' . $e->getMessage());
-                    $response['success'] = false;
-                    $response['message'] = 'Error inserting data: ' . $e->getMessage();
-                    echo json_encode($response);
-                    exit;
+                if ($existingData) {
+                    // If the faculty member exists, check if an update is necessary
+                    if ($existingData['faculty_dept'] != $faculty_dept_id || $existingData['consultation_time'] != $consultation_time) {
+                        // Update the record if department or consultation time has changed
+                        error_log("Updating: Name: '$faculty_name', New Dept ID: $faculty_dept_id, New Consultation Time: '$consultation_time'");
+                        try {
+                            $updateStmt->execute([
+                                ':faculty_name' => $faculty_name,
+                                ':faculty_dept' => $faculty_dept_id,
+                                ':consultation_time' => $consultation_time
+                            ]);
+                            $updatedCount++; // Increment the count of updated records
+                        } catch (PDOException $e) {
+                            error_log('Update error: ' . $e->getMessage());
+                            $response['success'] = false;
+                            $response['message'] = 'Error updating data: ' . $e->getMessage();
+                            echo json_encode($response);
+                            exit;
+                        }
+                    } else {
+                        // Log that no update is needed
+                        error_log("No update necessary for '$faculty_name'. Existing data matches the imported data.");
+                    }
+                } else {
+                    // If the faculty member does not exist, insert a new record
+                    error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id, Consultation Time: '$consultation_time'");
+                    try {
+                        $insertStmt->execute([
+                            ':faculty_name' => $faculty_name,
+                            ':faculty_dept' => $faculty_dept_id, // Use the mapped department ID
+                            ':consultation_time' => $consultation_time // Insert the consultation time
+                        ]);
+                        $insertedCount++; // Increment the count of inserted records
+                    } catch (PDOException $e) {
+                        error_log('Insert error: ' . $e->getMessage());
+                        $response['success'] = false;
+                        $response['message'] = 'Error inserting data: ' . $e->getMessage();
+                        echo json_encode($response);
+                        exit;
+                    }
                 }
             } else {
                 error_log("Row $rowIndex skipped: No Faculty Name provided.");
@@ -636,7 +695,7 @@ if ($type === 'excel_import') {
 
         // Set the response message after processing
         $response['success'] = true;
-        $response['message'] = "$insertedCount faculty members imported successfully.";
+        $response['message'] = "$insertedCount faculty members imported successfully. $updatedCount records updated.";
     } else {
         // Handle specific upload errors
         $errorMessages = [
@@ -657,6 +716,7 @@ if ($type === 'excel_import') {
 
     exit; // Terminate the script
 }
+
 
 else {
     $response['message'] = 'Saved.';

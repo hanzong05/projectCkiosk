@@ -15,7 +15,7 @@ if (isset($_REQUEST['did'])) {
   $log_msg = $obj->delete_faculty($_REQUEST['did']);
 }
 
-$allFacultyheads = $obj->show_facultyheads([5, 6, 7, 8, 9]);
+$allFacultyheads = $obj->show_facultyheads([5, 6, 7, 8, 9,10,11,12,13]);
 
 $allDepartment = $obj->show_department();
 $allFaculty = $obj->show_facultymembers([1,2,3,4]);

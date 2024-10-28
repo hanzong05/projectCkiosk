@@ -6,26 +6,26 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Comment;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 
+
 // Create an instance of PhpSpreadsheet
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
 // Set the headers
-$headers = ['Name', 'Department'];
+$headers = ['Name', 'Department', 'Consultation Time']; // Added Consultation Time
 $sheet->fromArray($headers, NULL, 'A1'); // Set headers starting at cell A1
 
 // Add informative comments to the columns
 $comments = [
     'A2', // Name
-    'B2'
+    'B2', // Department
+    'C2'  // Consultation Time
 ];
 
 $commentsText = [
     "Enter the full name of the faculty member.",
     "Enter the department (e.g., 'IT DEPARTMENT', 'MIS DEPARTMENT').",
-    "Specify the specialization (e.g., 'Software Engineering').",
-    "Provide the consultation time (e.g., 'Monday - Thursday 8:00 AM to 4:00 PM').",
-    "Enter the image filename (e.g., 'image.png')."
+    "Provide the consultation time (e.g., 'Monday - Thursday 8:00 AM to 4:00 PM')." // New comment for Consultation Time
 ];
 
 // Loop through each cell to add comments
@@ -45,7 +45,7 @@ $headerStyle = [
         'bold' => true,
     ],
 ];
-$sheet->getStyle('A1:E1')->applyFromArray($headerStyle);
+$sheet->getStyle('A1:C1')->applyFromArray($headerStyle); // Adjusted range to A1:C1
 
 // Set headers for the download
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

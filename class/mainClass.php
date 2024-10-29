@@ -2209,9 +2209,9 @@ function delete_account($appID)
                     title: "User Deleted successfully"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                      document.location = "membersmanagement.php";
+                      document.location = "organization.php";
                     } else {
-                      document.location = "membersmanagement.php";
+                      document.location = "organization.php";
                     }
                 });
             </script>';

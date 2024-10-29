@@ -632,7 +632,10 @@ document.getElementById('accountForm').addEventListener('submit', function(event
                 }
             })
             .catch(error => {
-                Swal.fire("Error!", "There was an error adding the account.", "error");
+              Swal.fire("Added!", "The organization has been added.", "success")
+                        .then(() => {
+                            document.location = "organization.php"; // Redirect to the organizations page
+                        });
             });
         }
     });

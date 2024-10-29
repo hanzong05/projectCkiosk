@@ -1291,7 +1291,7 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <!-- Faculty Members -->
                 <h3>Faculty Members</h3>
                 <div class="level3">
-                    <?php foreach ($allIt as $row): ?>
+                    <?php foreach ($allIt as $head): ?>
                         <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
                              data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
                              data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
@@ -1336,7 +1336,7 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <!-- Faculty Members for IS Department -->
                 <h3>Faculty Members</h3>
                 <div class="level3">
-                    <?php foreach ($allIs as $row): ?>
+                    <?php foreach ($allIs as $head): ?>
                         <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
                              data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
                              data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
@@ -1381,7 +1381,7 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <!-- Faculty Members for CS Department -->
                 <h3>Faculty Members</h3>
                 <div class="level3">
-                    <?php foreach ($allCs as $row): ?>
+                    <?php foreach ($allCs as $head): ?>
                         <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
                              data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
                              data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
@@ -1426,7 +1426,7 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <!-- Faculty Members for MIT Department -->
                 <h3>Faculty Members</h3>
                 <div class="level3">
-                    <?php foreach ($allMit as $row): ?>
+                    <?php foreach ($allMit as $head): ?>
                         <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
                              data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
                              data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 

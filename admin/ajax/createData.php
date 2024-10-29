@@ -337,12 +337,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         elseif ($type === 'account') {
-            $user_type = $_POST['user_type'] ?? '2'; // Default to '2' (standard user) if not provided
+            $user_type = $_POST['user_type'] ?? '2';
             $username = $_POST['username'] ?? null;
             $password = $_POST['password'] ?? null;
             $org = $_POST['org'] ?? null;
         
-            // Initialize an array to collect validation errors
             $errors = [];
         
             // Validate username and password
@@ -353,7 +352,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($password === null || empty(trim($password))) {
                 $errors[] = 'Password is required.';
             } else {
-                // Validate password strength
                 if (strlen($password) < 8 || strlen($password) > 16) {
                     $errors[] = 'Password must be between 8 and 16 characters long.';
                 }
@@ -371,7 +369,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         
-            // If there are validation errors, return them all at once
+            // Return validation errors, if any
             if (!empty($errors)) {
                 $response['success'] = false;
                 $response['message'] = implode('<br>', $errors);
@@ -379,38 +377,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         
-            // Debugging: Log the account creation parameters
-            error_log('Account Creation - Username: ' . $username);
-            error_log('Account Creation - User Type: ' . $user_type);
+            error_log("Duplicate Check Started for Username: $username\n", 3, __DIR__ . '/error_log.txt');
         
-            // Check for duplicates
             try {
-                $checkSql = "SELECT COUNT(*) FROM `users_tbl` WHERE users_username = :username OR users_org = :org";
+                // Check for duplicate username
+                $checkSql = "SELECT COUNT(*) FROM `users_tbl` WHERE users_username = :username";
                 $checkStmt = $connect->prepare($checkSql);
-                $checkStmt->execute([
-                    ':username' => $username,
-                    ':org' => $org
-                ]);
+                $checkStmt->execute([':username' => $username]);
                 $count = $checkStmt->fetchColumn();
         
                 if ($count > 0) {
                     $response['success'] = false;
-                    $response['message'] = 'Duplicate entry: The username or organization already exists.';
+                    $response['message'] = 'Duplicate entry: The username already exists.';
                     echo json_encode($response);
                     exit;
                 }
-            } catch (Exception $e) {
-                error_log('Error: ' . $e->getMessage());
-                $response['success'] = false;
-                $response['message'] = 'An error occurred while checking for duplicates.';
-                echo json_encode($response);
-                exit;
-            }
         
-            // Hash the password using SHA-256
-            $hashedPassword = hash('sha256', $password);
+                error_log("Hashing Password for User: $username\n", 3, __DIR__ . '/error_log.txt');
         
-            try {
+                // Hash the password using SHA-256
+                $hashedPassword = hash('sha256', $password);
+        
+                error_log("Inserting Account for User: $username\n", 3, __DIR__ . '/error_log.txt');
+        
                 // Insert account into database
                 $sql = "INSERT INTO `users_tbl` (users_username, users_password, users_type, users_org) VALUES (:username, :password, :user_type, :org)";
                 $stmt = $connect->prepare($sql);
@@ -421,29 +410,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':org' => $org
                 ]);
         
-                // Get the last inserted ID
-                $lastId = $connect->lastInsertId();
-        
-                // Ensure the ID is an odd number
-                if ($lastId % 2 === 0) {
-                    $newOddId = $lastId + 1; // Increment to make it odd
-                    // Update the ID in the database
-                    $updateSql = "UPDATE `users_tbl` SET id = :newOddId WHERE id = :lastId";
-                    $updateStmt = $connect->prepare($updateSql);
-                    $updateStmt->execute([
-                        ':newOddId' => $newOddId,
-                        ':lastId' => $lastId,
-                    ]);
-                }
-        
+                // Set the success response
                 $response['success'] = true;
                 $response['message'] = 'Account created successfully.';
+        
             } catch (Exception $e) {
-                error_log('Error: ' . $e->getMessage());
+                // Log the exception message
+                error_log('Error inserting account: ' . $e->getMessage() . "\n", 3, __DIR__ . '/error_log.txt');
+                // Send a generic error message to the response
                 $response['success'] = false;
-                $response['message'] = 'An error occurred while processing your request.';
+                $response['message'] = 'An error occurred while processing your request. Please try again later.';
             }
+        
+            // Always return the response
+            echo json_encode($response);
         }
+        
         
         elseif ($type === 'membersaccount') {
     // Gather form inputs

@@ -256,6 +256,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Initialize response
             $response = ['success' => false, 'message' => ''];
         
+            // Validate organization name
+            if (empty($name)) {
+                $response['message'] = 'Organization name is required.';
+                echo json_encode($response);
+                exit;
+            }
+        
             // Check for duplicate organization name
             try {
                 $duplicateCheckSql = "SELECT COUNT(*) FROM `organization_tbl` WHERE org_name = :name";
@@ -269,7 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
             } catch (Exception $e) {
-                error_log('Error: ' . $e->getMessage());
+                error_log('Error checking for duplicate name: ' . $e->getMessage());
                 $response['message'] = 'An error occurred while checking for duplicate organization names.';
                 echo json_encode($response);
                 exit;
@@ -279,47 +286,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
         
+                // Ensure upload directory exists
                 if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
                     $response['message'] = 'Failed to create upload directory.';
                     echo json_encode($response);
                     exit;
                 }
         
-                $newImage = $name . "_" . $_FILES['org_image']['name'];
+                // Define image name and path
+                $newImage = $name . "_" . basename($_FILES['org_image']['name']);
                 $tempPath = $_FILES["org_image"]["tmp_name"];
-                $basename = basename($newImage);
-                $originalPath = $uploadTo . $basename;
+                $originalPath = $uploadTo . $newImage;
         
-                // Debugging: Log file paths
-                error_log('Organization Temp Path: ' . $tempPath);
-                error_log('Organization Original Path: ' . $originalPath);
-        
+                // Move the uploaded file
                 if (move_uploaded_file($tempPath, $originalPath)) {
                     // Insert organization with image
-                    $sql = "INSERT INTO `organization_tbl` (org_name, org_image) VALUES (:name, :image)";
-                    $stmt = $connect->prepare($sql);
-                    $stmt->execute([
-                        ':name' => $name,
-                        ':image' => $basename
-                    ]);
+                    try {
+                        $sql = "INSERT INTO `organization_tbl` (org_name, org_image) VALUES (:name, :image)";
+                        $stmt = $connect->prepare($sql);
+                        $stmt->execute([
+                            ':name' => $name,
+                            ':image' => $newImage
+                        ]);
         
-                    $response['success'] = true;
-                    $response['message'] = 'Organization added successfully.';
+                        $response['success'] = true;
+                        $response['message'] = 'Organization added successfully.';
+                    } catch (Exception $e) {
+                        error_log('Error inserting organization with image: ' . $e->getMessage());
+                        $response['message'] = 'An error occurred while saving the organization with image.';
+                    }
                 } else {
-                    $response['message'] = 'Organization file upload failed to move.';
+                    $response['message'] = 'Failed to move uploaded image file.';
+                    error_log('Image upload failed: Could not move file to ' . $originalPath);
                 }
             } else {
                 // Insert organization without image
-                $sql = "INSERT INTO `organization_tbl` (org_name) VALUES (:name)";
-                $stmt = $connect->prepare($sql);
-                $stmt->execute([':name' => $name]);
+                try {
+                    $sql = "INSERT INTO `organization_tbl` (org_name) VALUES (:name)";
+                    $stmt = $connect->prepare($sql);
+                    $stmt->execute([':name' => $name]);
         
-                $response['success'] = true;
-                $response['message'] = 'Organization added successfully without an image.';
+                    $response['success'] = true;
+                    $response['message'] = 'Organization added successfully without an image.';
+                } catch (Exception $e) {
+                    error_log('Error inserting organization without image: ' . $e->getMessage());
+                    $response['message'] = 'An error occurred while saving the organization.';
+                }
             }
         
-            echo json_encode($response);
         }
+        
         elseif ($type === 'account') {
             $user_type = $_POST['user_type'] ?? '2'; // Default to '2' (standard user) if not provided
             $username = $_POST['username'] ?? null;
@@ -571,12 +587,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log('Error: ' . $e->getMessage());
         $response['message'] = 'An error occurred while processing your request.';
     }
-}
-if ($type === 'excel_import') {
+} if ($type === 'excel_import') {
+    // Check if the file is uploaded without errors
     if (isset($_FILES['faculty_excel']) && $_FILES['faculty_excel']['error'] === UPLOAD_ERR_OK) {
+        // Define the paths for the temporary and original files
         $tempPath = $_FILES['faculty_excel']['tmp_name'];
         $originalPath = __DIR__ . '/' . basename($_FILES['faculty_excel']['name']); // Adjust the path
 
+        // Attempt to move the uploaded file to the desired directory
         if (!move_uploaded_file($tempPath, $originalPath)) {
             error_log("Failed to move uploaded file to $originalPath");
             $response['success'] = false;
@@ -585,6 +603,7 @@ if ($type === 'excel_import') {
             exit;
         }
 
+        // Load the spreadsheet
         try {
             $spreadsheet = IOFactory::load($originalPath);
             error_log("Spreadsheet loaded successfully.");
@@ -596,36 +615,94 @@ if ($type === 'excel_import') {
             exit;
         }
 
+        // Define the department mapping
+        $deptMapping = [
+            'it department' => 1,
+            'cs department' => 2,
+            'mis department' => 3,
+            'mit' => 4,
+            'dean' => 5,
+            // Add any additional mappings as needed
+        ];
+
+        // Get the data from the active sheet
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-        error_log("Sheet Data: " . print_r($sheetData, true));
+        error_log("Sheet Data: " . print_r($sheetData, true)); // Log the entire sheet data for review
 
-        $updatedCount = 0;
+        $insertedCount = 0; // Count of inserted records
+        $updatedCount = 0;  // Count of updated records
 
-        // Prepare update statement
-        $updateStmt = $connect->prepare("UPDATE faculty_tbl SET consultation_time = :consultation_time WHERE faculty_name = :faculty_name");
+        // Prepare statements
+        $insertStmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept, consultation_time, faculty_image) VALUES (:faculty_name, :faculty_dept, :consultation_time, :faculty_image)");
+        $updateStmt = $connect->prepare("UPDATE faculty_tbl SET consultation_time = :consultation_time, faculty_image = :faculty_image WHERE faculty_name = :faculty_name");
 
+        // Loop through the sheet data
         foreach ($sheetData as $rowIndex => $row) {
             if ($rowIndex === 1) continue; // Skip header row
 
+            // Get and trim each column
             $faculty_name = trim($row['A'] ?? null);
-            $consultation_time = trim($row['C'] ?? null);
+            $faculty_dept = strtolower(trim($row['B'] ?? null)); // Convert department to lowercase for mapping
+            $consultation_time = trim($row['C'] ?? null); // Assuming Consultation Time is in column C
+            $faculty_image = $row['D'] ?? 'dfi.jfif'; // Use 'dfi.jfif' as default if no image is provided
 
-            if ($faculty_name && $consultation_time) {
-                // Check if the faculty member exists
-                $existingQuery = $connect->prepare("SELECT consultation_time FROM faculty_tbl WHERE faculty_name = :faculty_name");
+            // Log the current row data for debugging
+            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept', Consultation Time: '$consultation_time', Image: '$faculty_image'");
+
+            // Check for faculty department mapping
+            $faculty_dept_id = null;
+            if ($faculty_dept && isset($deptMapping[$faculty_dept])) {
+                $faculty_dept_id = $deptMapping[$faculty_dept];
+            } else {
+                error_log("Invalid department '$faculty_dept' at Row $rowIndex. Skipping.");
+                continue; // Skip this row if the department is not valid
+            }
+
+            // Proceed if faculty name is provided
+            if ($faculty_name) {
+                // Check if the faculty member already exists in the database
+                $existingQuery = $connect->prepare("SELECT faculty_dept, consultation_time FROM faculty_tbl WHERE faculty_name = :faculty_name");
                 $existingQuery->execute([':faculty_name' => $faculty_name]);
                 $existingData = $existingQuery->fetch(PDO::FETCH_ASSOC);
 
-                if ($existingData) {
-                    // Update consultation time if it differs from the existing one
-                    if ($existingData['consultation_time'] != $consultation_time) {
-                        error_log("Updating: Name: '$faculty_name', New Consultation Time: '$consultation_time'");
+                // Check for duplicates in departments 5 to 13
+                $restrictedDepts = [5, 6, 7, 8, 9, 10, 11, 12, 13];
+                if (in_array($faculty_dept_id, $restrictedDepts)) {
+                    $duplicateQuery = $connect->prepare("SELECT faculty_name FROM faculty_tbl WHERE faculty_dept = :faculty_dept AND faculty_name != :faculty_name");
+                    $duplicateQuery->execute([':faculty_dept' => $faculty_dept_id, ':faculty_name' => $faculty_name]);
+                    if ($duplicateQuery->fetch(PDO::FETCH_ASSOC)) {
+                        error_log("Duplicate department found for '$faculty_name'. Updating existing record.");
+                        // Update the existing record
                         try {
                             $updateStmt->execute([
                                 ':faculty_name' => $faculty_name,
-                                ':consultation_time' => $consultation_time
+                                ':consultation_time' => $consultation_time,
+                                ':faculty_image' => $faculty_image // Update faculty image
                             ]);
-                            $updatedCount++;
+                            $updatedCount++; // Increment the count of updated records
+                        } catch (PDOException $e) {
+                            error_log('Update error: ' . $e->getMessage());
+                            $response['success'] = false;
+                            $response['message'] = 'Error updating data: ' . $e->getMessage();
+                            echo json_encode($response);
+                            exit;
+                        }
+                        continue; // Skip to the next row
+                    }
+                }
+
+                if ($existingData) {
+                    // If the faculty member exists, check if an update is necessary
+                    if ($existingData['consultation_time'] != $consultation_time) {
+                        // Update the record if consultation time has changed
+                        error_log("Updating: Name: '$faculty_name', New Consultation Time: '$consultation_time', Image: '$faculty_image'");
+                        try {
+                            $updateStmt->execute([
+                                ':faculty_name' => $faculty_name,
+                                ':consultation_time' => $consultation_time,
+                                ':faculty_image' => $faculty_image // Update faculty image
+                            ]);
+                            $updatedCount++; // Increment the count of updated records
                         } catch (PDOException $e) {
                             error_log('Update error: ' . $e->getMessage());
                             $response['success'] = false;
@@ -634,19 +711,38 @@ if ($type === 'excel_import') {
                             exit;
                         }
                     } else {
-                        error_log("No update necessary for '$faculty_name'. Existing consultation time matches the imported data.");
+                        // Log that no update is needed
+                        error_log("No update necessary for '$faculty_name'. Existing data matches the imported data.");
                     }
                 } else {
-                    error_log("Faculty '$faculty_name' not found. Skipping row.");
+                    // If the faculty member does not exist, insert a new record
+                    error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id, Consultation Time: '$consultation_time', Image: '$faculty_image'");
+                    try {
+                        $insertStmt->execute([
+                            ':faculty_name' => $faculty_name,
+                            ':faculty_dept' => $faculty_dept_id, // Use the mapped department ID
+                            ':consultation_time' => $consultation_time, // Insert the consultation time
+                            ':faculty_image' => $faculty_image // Insert default or provided image
+                        ]);
+                        $insertedCount++; // Increment the count of inserted records
+                    } catch (PDOException $e) {
+                        error_log('Insert error: ' . $e->getMessage());
+                        $response['success'] = false;
+                        $response['message'] = 'Error inserting data: ' . $e->getMessage();
+                        echo json_encode($response);
+                        exit;
+                    }
                 }
             } else {
-                error_log("Row $rowIndex skipped: Missing faculty name or consultation time.");
+                error_log("Row $rowIndex skipped: No Faculty Name provided.");
             }
         }
 
+        // Set the response message after processing
         $response['success'] = true;
-        $response['message'] = "$updatedCount consultation times updated successfully.";
+        $response['message'] = "$insertedCount faculty members imported successfully. $updatedCount records updated.";
     } else {
+        // Handle specific upload errors
         $errorMessages = [
             UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
             UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
@@ -659,12 +755,11 @@ if ($type === 'excel_import') {
 
         $errorCode = $_FILES['faculty_excel']['error'];
         $response['success'] = false;
-        $response['message'] = $errorMessages[$errorCode] ?? 'No Excel file uploaded or there was an upload error.';
+        $response['message'] = isset($errorMessages[$errorCode]) ? $errorMessages[$errorCode] : 'No Excel file uploaded or there was an upload error.';
         error_log("Upload error code: $errorCode - " . $response['message']);
     }
 
-    echo json_encode($response);
-    exit;
+    exit; // Terminate the script
 }
 
 

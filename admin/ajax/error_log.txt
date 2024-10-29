@@ -989,3 +989,17 @@
 [28-Oct-2024 23:29:53 Europe/Berlin] Type parameter: faculty
 [28-Oct-2024 23:30:42 Europe/Berlin] Type parameter: faculty
 [28-Oct-2024 23:36:02 Europe/Berlin] Type parameter: announcement
+[29-Oct-2024 03:54:29 Europe/Berlin] Type parameter: organization
+[29-Oct-2024 03:54:29 Europe/Berlin] Organization Temp Path: C:\xampp\tmp\php99B6.tmp
+[29-Oct-2024 03:54:29 Europe/Berlin] Organization Original Path: C:\xampp\htdocs\ckiosk\admin\ajax/../../uploaded/orgUploaded/ADMIN_att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+[29-Oct-2024 03:56:22 Europe/Berlin] Type parameter: organization
+[29-Oct-2024 03:56:22 Europe/Berlin] Organization Temp Path: C:\xampp\tmp\php5496.tmp
+[29-Oct-2024 03:56:22 Europe/Berlin] Organization Original Path: C:\xampp\htdocs\ckiosk\admin\ajax/../../uploaded/orgUploaded/dwadwad_att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+[29-Oct-2024 03:58:47 Europe/Berlin] Type parameter: organization
+[29-Oct-2024 03:58:47 Europe/Berlin] Organization Temp Path: C:\xampp\tmp\php8A05.tmp
+[29-Oct-2024 03:58:47 Europe/Berlin] Organization Original Path: C:\xampp\htdocs\ckiosk\admin\ajax/../../uploaded/orgUploaded/ADMIN_cff5fdefa7662bedc4237111888f6df4.jpg
+[29-Oct-2024 03:59:07 Europe/Berlin] Type parameter: organization
+[29-Oct-2024 03:59:07 Europe/Berlin] Organization Temp Path: C:\xampp\tmp\phpD875.tmp
+[29-Oct-2024 03:59:07 Europe/Berlin] Organization Original Path: C:\xampp\htdocs\ckiosk\admin\ajax/../../uploaded/orgUploaded/ADMIN_cff5fdefa7662bedc4237111888f6df4.jpg
+[29-Oct-2024 04:00:38 Europe/Berlin] Type parameter: organization
+[29-Oct-2024 04:00:53 Europe/Berlin] Type parameter: organization

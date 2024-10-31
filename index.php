@@ -417,7 +417,101 @@ $showfaqs = $obj->show_allFAQS();
     display: block;
     margin-top: 5px;
 }
-        
+
+@media (max-width: 576px) {
+    .section-heading h1 {
+        font-size: 1.25em;
+    }
+
+    .content-section {
+        padding: 10px;
+    }
+
+    .item {
+        padding: 10px;
+    }
+
+    .timestamp {
+        font-size: 0.7em;
+        text-align: left;
+    }
+
+    .text-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .text-content img.avaatar {
+        width: 40px;
+        height: 40px;
+        margin: 0 0 5px 0;
+    }
+
+    .text-content span {
+        font-size: 0.9em;
+    }
+
+    .square img {
+        max-width: 90%;
+        margin: 5px 0;
+    }
+    .fclty-div {
+        flex-direction: row; /* Stack buttons vertically */
+        align-items: center;
+    }
+
+    .button-faculty-btn {
+        width: 20%; /* Adjust width to fit screen */
+        padding: 15px;
+        font-size: 10px; /* Smaller font for smaller screens */
+    }
+}
+/* Set a wider max-width for the item section */
+.item {
+    max-width: 600px; /* Adjusted max-width to make the card wider */
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #ffd700; /* Yellow text color */
+}
+
+/* Adjust the font size and alignment for better readability */
+.item h4 {
+    font-size: 1.5em;
+    text-align: center;
+    color: #ffd700; /* Yellow for headings */
+    margin-bottom: 10px;
+}
+
+.item .text-content {
+    padding: 15px;
+    color: #ffd700; /* Yellow text color */
+}
+
+.item table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Change the text color to yellow and improve spacing */
+.item table td {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    font-size: 1.1em;
+    color: #ffd700; /* Yellow for event details */
+}
+
+.item table td:first-child {
+    font-weight: bold;
+}
+
+.item table td:last-child {
+    font-style: italic;
+}
+    
 </style>
 </head>
 
@@ -691,75 +785,69 @@ $allAnnouncement = getAnnouncements($connection, $userId);
                 <section class="tabgroup">
                     <ul>
                         <?php 
-                        $today = date('Y-m-d'); // Get today's date
-                        $todayEvents = []; // Initialize array for today's events
-                        $upcomingEvents = []; // Initialize array for upcoming events
+                        $today = date('Y-m-d');
+                        $todayEvents = [];
+                        $upcomingEvents = [];
 
-                        // Loop through the outer array (months)
                         foreach ($allEvent as $month => $events) {
                             foreach ($events as $event) {
-                                // Check if the necessary keys exist
                                 if (isset($event['calendar_date'], $event['calendar_id'], $event['calendar_details'])) {
-                                    // Check if the event is happening today
                                     if ($event['calendar_date'] === $today) {
-                                        $todayEvents[] = $event; // Store today's events
+                                        $todayEvents[] = $event;
                                     } elseif ($event['calendar_date'] > $today) {
-                                        $upcomingEvents[] = $event; // Store upcoming events
+                                        $upcomingEvents[] = $event;
                                     }
                                 }
                             }
                         }
 
-                        // Display today's events if any
                         if (!empty($todayEvents)) {
-                            echo '<li style="width: 100%;">';
+                            echo '<li>';
                             echo '<div class="item">';
                             echo '<div class="text-content">';
                             echo '<h4>Happening Today</h4>';
-                            echo '<table cellspacing="10">'; // Start the table outside of the loop
+                            echo '<table>';
                             
                             foreach ($todayEvents as $event) {
                                 echo '<tr>';
-                                echo '<td style="color: white;">' . htmlspecialchars($event['calendar_date']) . ' </td>';
-                                echo '<td style="color: white;"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
+                                echo '<td>' . htmlspecialchars($event['calendar_date']) . '</td>';
+                                echo '<td>' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
                                 echo '</tr>';
                             }
                             
-                            echo '</table>'; // End the table here
-                            echo '</div>'; // Close text-content
-                            echo '</div>'; // Close item
+                            echo '</table>';
+                            echo '</div>';
+                            echo '</div>';
                             echo '</li>';
                         }
 
-                        // Display upcoming events if any
                         if (!empty($upcomingEvents)) {
-                            echo '<li style="width: 100%;">';
+                            echo '<li>';
                             echo '<div class="item">';
                             echo '<div class="text-content">';
                             echo '<h4>Upcoming Events</h4>';
-                            echo '<table cellspacing="10">'; // Start the table outside of the loop
+                            echo '<table>';
                             
                             foreach ($upcomingEvents as $event) {
                                 echo '<tr>';
-                                echo '<td style="color: white;">' . htmlspecialchars($event['calendar_date']) . ' </td>';
-                                echo '<td style="color: white;"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
+                                echo '<td>' . htmlspecialchars($event['calendar_date']) . '</td>';
+                                echo '<td>' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
                                 echo '</tr>';
                             }
                             
-                            echo '</table>'; // End the table here
-                            echo '</div>'; // Close text-content
-                            echo '</div>'; // Close item
+                            echo '</table>';
+                            echo '</div>';
+                            echo '</div>';
                             echo '</li>';
                         }
 
-                        // If no events today and no upcoming events
                         if (empty($todayEvents) && empty($upcomingEvents)) {
-                            echo '<li style="width: 100%;">';
+                            echo '<li>';
                             echo '<div class="item">';
                             echo '<div class="text-content">';
                             echo '<h4>No Events Happening Today or Upcoming</h4>';
-                            echo '</div>'; // Close text-content
-                            echo '</div>'; // Close item
+                            echo '</div>';
+                            echo '</div>';
                             echo '</li>';
                         }
                         ?>

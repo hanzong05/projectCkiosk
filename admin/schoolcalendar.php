@@ -14,6 +14,7 @@ if (isset($_REQUEST['did'])) {
 
 $allEvents = $obj->show_events();
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,53 @@ $allEvents = $obj->show_events();
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <link href="assets/css/css.css" rel="stylesheet" />
 </head>
+<style>
+  /* Responsive adjustments for smaller screens */
+@media (max-width: 576px) {
+  /* Make the container take up full width */
+  .container-fluid {
+    padding: 0 15px;
+  }
 
+  /* Reduce font sizes */
+  .navbar-brand, .card-body, .btn {
+    font-size: 0.9rem;
+  }
+
+  /* Adjust table */
+  #myTable {
+    width: 100%;
+    font-size: 0.8rem;
+    overflow-x: auto;
+  }
+
+  /* Hide extra columns on mobile */
+  #myTable th:nth-child(6),
+  #myTable th:nth-child(7),
+  #myTable th:nth-child(8),
+  #myTable td:nth-child(6),
+  #myTable td:nth-child(7),
+  #myTable td:nth-child(8) {
+    display: none;
+  }
+
+  /* Adjust button padding */
+  .btn {
+    padding: 5px 10px;
+  }
+
+  /* Adjust table cells for readability */
+  .table-row td {
+    padding: 8px 5px;
+    text-align: center;
+  }
+
+  /* Adjust modal width */
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
+</style>
 <body class="">
 <div class="wrapper ">
     <!-- sweetalert start-->
@@ -181,6 +228,7 @@ $allEvents = $obj->show_events();
                       </button>
                     </div>
                   </div>
+                  <div class="table-responsive">
                   <table class="table table-light table-hover table-bordered" id="myTable">
                     <thead>
                       <th>
@@ -254,6 +302,7 @@ $allEvents = $obj->show_events();
 </tbody>
 
                   </table>
+                  </div>  
                 </div>
               </div>
             </div>
@@ -503,7 +552,8 @@ $('#editForm').on('submit', function (e) {
     });
 });
 
-
+const table = document.querySelector('#myTable');
+table.parentElement.style.overflowX = 'auto';
 
 });
   </script>

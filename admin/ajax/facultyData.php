@@ -67,11 +67,11 @@ if ($array) {
                     </div>
                     <div class="mb-3">
                         <label for="specialization" class="form-label fw-bold">Specialization</label>
-                        <input type="text" id="specialization" class="form-control" value="'.$value['specialization'].'" name="specialization" required>
+                        <input type="text" id="specialization" class="form-control" value="'.$value['specialization'].'" name="specialization" >
                     </div>
                     <div class="mb-3">
                         <label for="consultation_time" class="form-label fw-bold">Consultation Time</label>
-                        <input type="text" id="consultation_time" class="form-control" value="'.$value['consultation_time'].'" name="consultation_time" required>
+                        <input type="text" id="consultation_time" class="form-control" value="'.$value['consultation_time'].'" name="consultation_time" >
                     </div>';
     }
 }

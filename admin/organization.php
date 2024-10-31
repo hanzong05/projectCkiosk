@@ -76,6 +76,53 @@ $allAccount = $obj->show_account();
           .password-toggle i {
               font-size: 1.2rem; /* Adjust icon size if needed */
           }
+
+          
+    /* Responsive adjustments for smaller screens */
+@media (max-width: 576px) {
+  /* Make the container take up full width */
+  .container-fluid {
+    padding: 0 15px;
+  }
+
+  /* Reduce font sizes */
+  .navbar-brand, .card-body, .btn {
+    font-size: 0.9rem;
+  }
+
+  /* Adjust table */
+  #myTable {
+    width: 100%;
+    font-size: 0.8rem;
+    overflow-x: auto;
+  }
+
+  /* Hide extra columns on mobile */
+  #myTable th:nth-child(6),
+  #myTable th:nth-child(7),
+  #myTable th:nth-child(8),
+  #myTable td:nth-child(6),
+  #myTable td:nth-child(7),
+  #myTable td:nth-child(8) {
+    display: none;
+  }
+
+  /* Adjust button padding */
+  .btn {
+    padding: 5px 10px;
+  }
+
+  /* Adjust table cells for readability */
+  .table-row td {
+    padding: 8px 5px;
+    text-align: center;
+  }
+
+  /* Adjust modal width */
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
       </style>
       
 
@@ -233,6 +280,7 @@ $allAccount = $obj->show_account();
                           </button>
                         </div>
                       </div>
+                      <div class="table-responsive">
                       <table class="table table-light table-hover table-bordered" id="myTable">
                         <thead>
                           <th>
@@ -279,6 +327,7 @@ $allAccount = $obj->show_account();
                           ?>
                         </tbody>
                       </table>
+                      </div>
                     </div>
                     <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
                       <div class="d-flex justify-content-between">
@@ -288,6 +337,7 @@ $allAccount = $obj->show_account();
                           </button>
                         </div>
                       </div>
+                      <div class="table-responsive">
                       <table class="table table-light table-hover table-bordered" id="myTable">
                         <thead>
                           <th>
@@ -328,6 +378,7 @@ $allAccount = $obj->show_account();
                           ?>
                         </tbody>
                       </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -818,6 +869,8 @@ document.addEventListener("DOMContentLoaded", function () {
             specialCheck.checked = true; // Check the special character radio button
         }
     });
+    const table = document.querySelector('#myTable');
+table.parentElement.style.overflowX = 'auto';
 });
 </script>
 </body>

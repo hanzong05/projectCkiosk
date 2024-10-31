@@ -426,7 +426,8 @@
 
 
 .modal-content {
-    height: 80vh;
+    height: auto;
+    max-height: 80vh;
     display: flex;
     flex-direction: column;
 }
@@ -661,8 +662,11 @@
 
     .floor-maroon {
         font-size: 20px;
+    }   .modal-dialog {
+        max-width: 70%; /* For medium-sized screens */
+        top: 15%;
+        left: 15%;
     }
-    
 }
 @media (max-width: 768px) {
     .section-content-orgs {
@@ -731,9 +735,15 @@
     td[style*="width: 70px"] {
         width: 60px !important;
     }
+    .modal-dialog {
+        max-width: 80%; /* For smaller screens */
+        top: 10%;
+        left: 10%;
+    }
 }
 
 @media screen and (max-width: 480px) {
+    
     .col-md-4 {
         flex: 0 0 calc(50% - 10px);
         max-width: calc(50% - 10px);
@@ -798,6 +808,11 @@
 
 .table-container::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+.modal-dialog {
+    max-width: 90%; /* For extra small screens */
+    top: 5%;
+    left: 5%;
 }
 }
 

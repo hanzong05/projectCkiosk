@@ -59,6 +59,53 @@ $allAnnouncement = $obj->show_announcement();
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    /* Responsive adjustments for smaller screens */
+@media (max-width: 576px) {
+  /* Make the container take up full width */
+  .container-fluid {
+    padding: 0 15px;
+  }
+
+  /* Reduce font sizes */
+  .navbar-brand, .card-body, .btn {
+    font-size: 0.9rem;
+  }
+
+  /* Adjust table */
+  #myTable {
+    width: 100%;
+    font-size: 0.8rem;
+    overflow-x: auto;
+  }
+
+  /* Hide extra columns on mobile */
+  #myTable th:nth-child(6),
+  #myTable th:nth-child(7),
+  #myTable th:nth-child(8),
+  #myTable td:nth-child(6),
+  #myTable td:nth-child(7),
+  #myTable td:nth-child(8) {
+    display: none;
+  }
+
+  /* Adjust button padding */
+  .btn {
+    padding: 5px 10px;
+  }
+
+  /* Adjust table cells for readability */
+  .table-row td {
+    padding: 8px 5px;
+    text-align: center;
+  }
+
+  /* Adjust modal width */
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
+
   </style>
 </head>
 
@@ -199,7 +246,8 @@ $allAnnouncement = $obj->show_announcement();
                         Create Announcement
                       </button>
                     </div>
-                  </div>
+                  </div> 
+                  <div class="table-responsive">
                   <table class="table table-light table-hover table-bordered" id="myTable">
                     <thead>
                         <th><center>NO.</center></th>
@@ -212,37 +260,37 @@ $allAnnouncement = $obj->show_announcement();
                         <th><center>ACTION</center></th>
                     </thead>
                     <tbody>
-        <?php
-        $count = 1;
-        foreach ($allAnnouncement as $row) {
-            ?>
-            <tr class="table-row">
-                <td><center><?php echo $count; ?></center></td>
-                <td class="ellipsis" style="width:30%;">
-                    <span><?php echo $row["announcement_details"]; ?></span>
-                </td>
-                <td><center><?php echo $row["org_name"] ?? 'N/A'; ?></center></td>
-                <td><center><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></center></td> <!-- Created At -->
-                <td><center><?php echo $row["creator_name"] ?? 'N/A'; ?></center></td> <!-- Created By -->
-                <td><center><?php echo $row["updated_by_name"] ?? 'Not yet updated'; ?></center></td> <!-- Updated By -->
-                <td><center><?php echo date('F d, Y H:i:s', strtotime($row["updated_at"] ?? 'N/A')); ?></center></td> <!-- Updated At -->
-                <td class="text-center">
-                    <button class="btn announcementModalEdit" data-toggle="modal"
-                            data-target="#announcementModalEdit" data-id="<?= $row['announcement_id'] ?>">
-                        Edit
-                    </button>
-                    <a class="btn btn-warning btn-archive" href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
-                        Archive
-                    </a>
-                </td>
-            </tr>
-            <?php
-            $count++;
-        }
-        ?>
-    </tbody>
-</table>
-
+                      <?php
+                      $count = 1;
+                      foreach ($allAnnouncement as $row) {
+                          ?>
+                          <tr class="table-row">
+                              <td><center><?php echo $count; ?></center></td>
+                              <td class="ellipsis" style="width:30%;">
+                                  <span><?php echo $row["announcement_details"]; ?></span>
+                              </td>
+                              <td><center><?php echo $row["org_name"] ?? 'N/A'; ?></center></td>
+                              <td><center><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></center></td> <!-- Created At -->
+                              <td><center><?php echo $row["creator_name"] ?? 'N/A'; ?></center></td> <!-- Created By -->
+                              <td><center><?php echo $row["updated_by_name"] ?? 'Not yet updated'; ?></center></td> <!-- Updated By -->
+                              <td><center><?php echo date('F d, Y H:i:s', strtotime($row["updated_at"] ?? 'N/A')); ?></center></td> <!-- Updated At -->
+                              <td class="text-center">
+                                  <button class="btn announcementModalEdit" data-toggle="modal"
+                                          data-target="#announcementModalEdit" data-id="<?= $row['announcement_id'] ?>">
+                                      Edit
+                                  </button>
+                                  <a class="btn btn-warning btn-archive" href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
+                                      Archive
+                                  </a>
+                              </td>
+                          </tr>
+                          <?php
+                          $count++;
+                      }
+                      ?>
+                      </tbody>
+                    </table>
+                    </div>
                 </div>
               </div>
             </div>
@@ -482,7 +530,8 @@ $('#editannouncementForm').on('submit', function (e) {
     });
 });
 
-
+const table = document.querySelector('#myTable');
+table.parentElement.style.overflowX = 'auto';
     });
   </script>
 </body>

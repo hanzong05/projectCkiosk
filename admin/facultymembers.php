@@ -51,7 +51,54 @@ $allDepartment = $obj->show_department();
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <link href="assets/css/css.css" rel="stylesheet" />
 </head>
+<style>
+    
+    /* Responsive adjustments for smaller screens */
+@media (max-width: 576px) {
+  /* Make the container take up full width */
+  .container-fluid {
+    padding: 0 15px;
+  }
 
+  /* Reduce font sizes */
+  .navbar-brand, .card-body, .btn {
+    font-size: 0.9rem;
+  }
+
+  /* Adjust table */
+  #myTable {
+    width: 100%;
+    font-size: 0.8rem;
+    overflow-x: auto;
+  }
+
+  /* Hide extra columns on mobile */
+  #myTable th:nth-child(6),
+  #myTable th:nth-child(7),
+  #myTable th:nth-child(8),
+  #myTable td:nth-child(6),
+  #myTable td:nth-child(7),
+  #myTable td:nth-child(8) {
+    display: none;
+  }
+
+  /* Adjust button padding */
+  .btn {
+    padding: 5px 10px;
+  }
+
+  /* Adjust table cells for readability */
+  .table-row td {
+    padding: 8px 5px;
+    text-align: center;
+  }
+
+  /* Adjust modal width */
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
+</style>
 <body class="">
 <div class="wrapper ">
     <!-- sweetalert start-->
@@ -207,6 +254,7 @@ $allDepartment = $obj->show_department();
     <div class="tab-content" id="myTabContent">
         <!-- Faculty Members Tab -->
         <div class="tab-pane fade show active" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
+        <div class="table-responsive">
             <table class="table table-light table-hover table-bordered" id="myTable">
                 <thead>
                     <tr>
@@ -229,8 +277,9 @@ $allDepartment = $obj->show_department();
                             <td><?php echo $row["department_name"]; ?></td>
                             <td><img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" /></td>
                             <td><?php echo $row["faculty_name"]; ?></td>
-                            <td><?php echo $row["specialization"]; ?></td>
-                            <td><?php echo $row["consultation_time"]; ?></td>
+                            <td><?php echo !empty($row["specialization"]) ? $row["specialization"] : 'NULL'; ?></td>
+                            <td><?php echo !empty($row["consultation_time"]) ? $row["consultation_time"] : 'NULL'; ?></td>
+
                             <td class="text-center">
                                 <button class="btn facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">Edit</button>
                                 <a class="btn btn-danger btn-delete" href='facultymembers.php?did=<?= $row['faculty_id'] ?>'>Delete</a>
@@ -242,10 +291,12 @@ $allDepartment = $obj->show_department();
                     ?>
                 </tbody>
             </table>
+            </div>
         </div>
 
         <!-- Faculty Heads Tab -->
         <div class="tab-pane fade" id="facultyheads" role="tabpanel" aria-labelledby="facultyheads-tab">
+        <div class="table-responsive">
             <table class="table table-light table-hover table-bordered" id="myTable">
                 <thead>
                     <tr>
@@ -268,8 +319,9 @@ $allDepartment = $obj->show_department();
                             <td><?php echo $row["department_name"]; ?></td>
                             <td><img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" /></td>
                             <td><?php echo $row["faculty_name"]; ?></td>
-                            <td><?php echo $row["specialization"]; ?></td>
-                            <td><?php echo $row["consultation_time"]; ?></td>
+                            <td><?php echo !empty($row["specialization"]) ? $row["specialization"] : 'NULL'; ?></td>
+                            <td><?php echo !empty($row["consultation_time"]) ? $row["consultation_time"] : 'NULL'; ?></td>
+
                             <td class="text-center">
                                 <button class="btn facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">Edit</button>
                             </td>
@@ -280,6 +332,7 @@ $allDepartment = $obj->show_department();
                     ?>
                 </tbody>
             </table>
+        </div>
         </div>
     </div>
 </div>
@@ -348,15 +401,15 @@ $allDepartment = $obj->show_department();
                     </div>
                     <div class="mb-3">
                         <label for="specialization" class="form-label fw-bold">Specialization</label>
-                        <input type="text" id="specialization" class="form-control" name="specialization" required>
+                        <input type="text" id="specialization" class="form-control" name="specialization" >
                     </div>
                     <div class="mb-3">
                         <label for="consultation_time" class="form-label fw-bold">Consultation Time</label>
-                        <input type="text" id="consultation_time" class="form-control" name="consultation_time" placeholder="e.g., 'Monday - Thursday 8:00 AM to 4:00 PM'" required>
+                        <input type="text" id="consultation_time" class="form-control" name="consultation_time" placeholder="e.g., 'Monday - Thursday 8:00 AM to 4:00 PM'" >
                     </div>
                     <div class="mb-3">
                         <label for="faculty_image" class="form-label fw-bold">Photo</label>
-                        <input type="file" id="faculty_image" class="form-control" name="faculty_image" required>
+                        <input type="file" id="faculty_image" class="form-control" name="faculty_image" >
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -625,6 +678,8 @@ $('#editFacultyForm').on('submit', function (e) {
         }
     });
 });
+const table = document.querySelector('#myTable');
+table.parentElement.style.overflowX = 'auto';
     });
   </script>
 </body>

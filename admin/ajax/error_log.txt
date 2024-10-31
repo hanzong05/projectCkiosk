@@ -30,3 +30,140 @@ Hashing Password for User: org1
 Inserting Account for User: org1
 [29-Oct-2024 04:34:19 Europe/Berlin] Type parameter: faculty
 [29-Oct-2024 04:36:03 Europe/Berlin] Type parameter: faculty
+[29-Oct-2024 04:45:21 Europe/Berlin] Type parameter: excel_import
+[29-Oct-2024 04:45:21 Europe/Berlin] Spreadsheet loaded successfully.
+[29-Oct-2024 04:45:21 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz Jansen
+            [B] => IT DEPARTMENT
+            [C] => 10 - * AM
+        )
+
+)
+
+[29-Oct-2024 04:45:21 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '10 - * AM', Image: 'dfi.jfif'
+[29-Oct-2024 04:45:21 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: '10 - * AM', Image: 'dfi.jfif'
+[29-Oct-2024 04:49:01 Europe/Berlin] Type parameter: excel_import
+[29-Oct-2024 04:49:02 Europe/Berlin] Spreadsheet loaded successfully.
+[29-Oct-2024 04:49:02 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz Jansen
+            [B] => IT DEPARTMENT
+            [C] => 10 - * AM
+        )
+
+)
+
+[29-Oct-2024 04:49:02 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '10 - * AM'
+[29-Oct-2024 04:49:02 Europe/Berlin] No update necessary for 'Hanz Jansen'. Existing data matches the imported data.
+[29-Oct-2024 05:47:42 Europe/Berlin] Type parameter: faculty
+[29-Oct-2024 06:17:29 Europe/Berlin] Type parameter: excel_import
+[29-Oct-2024 06:17:29 Europe/Berlin] Spreadsheet loaded successfully.
+[29-Oct-2024 06:17:29 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz Jansen awdewadwad
+            [B] => IT DEPARTMENT
+            [C] => 10 - * AM
+        )
+
+)
+
+[29-Oct-2024 06:17:29 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen awdewadwad', Dept: 'it department', Consultation Time: '10 - * AM'
+[29-Oct-2024 06:17:29 Europe/Berlin] Updating: Name: 'Hanz Jansen awdewadwad', New Consultation Time: '10 - * AM'
+[29-Oct-2024 06:28:13 Europe/Berlin] Type parameter: excel_import
+[29-Oct-2024 06:28:13 Europe/Berlin] Spreadsheet loaded successfully.
+[29-Oct-2024 06:28:13 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz Jansen
+            [B] => IT DEPARTMENT
+            [C] => 1236
+        )
+
+)
+
+[29-Oct-2024 06:28:13 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '1236'
+[29-Oct-2024 06:28:13 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: '1236'
+[29-Oct-2024 06:29:00 Europe/Berlin] Type parameter: excel_import
+[29-Oct-2024 06:29:00 Europe/Berlin] Spreadsheet loaded successfully.
+[29-Oct-2024 06:29:00 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz Jansen
+            [B] => IT DEPARTMENT
+            [C] => Hashndajksdaw
+        )
+
+)
+
+[29-Oct-2024 06:29:00 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: 'Hashndajksdaw'
+[29-Oct-2024 06:29:00 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: 'Hashndajksdaw'
+[29-Oct-2024 06:29:55 Europe/Berlin] Type parameter: excel_import
+[29-Oct-2024 06:29:55 Europe/Berlin] Spreadsheet loaded successfully.
+[29-Oct-2024 06:29:55 Europe/Berlin] Sheet Data: Array
+(
+    [1] => Array
+        (
+            [A] => Name
+            [B] => Department
+            [C] => Consultation Time
+        )
+
+    [2] => Array
+        (
+            [A] => Hanz Jansen
+            [B] => IT DEPARTMENT
+            [C] => SAMPLE
+        )
+
+)
+
+[29-Oct-2024 06:29:55 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: 'SAMPLE'
+[29-Oct-2024 06:29:55 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: 'SAMPLE'
+[31-Oct-2024 03:42:38 Europe/Berlin] Type parameter: announcement
+[31-Oct-2024 11:16:30 Europe/Berlin] Type parameter: announcement
+[31-Oct-2024 11:17:03 Europe/Berlin] Type parameter: announcement
+[31-Oct-2024 11:17:17 Europe/Berlin] Type parameter: event

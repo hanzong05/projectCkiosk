@@ -28,16 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             // Set the timezone
             date_default_timezone_set('Asia/Manila');
-            // Get the current timestamp
             $date = date('Y-m-d H:i:s');
         
             $imagePath = "";
+            $response = ['success' => false, 'message' => ''];
         
-            // Handle file upload if a file was uploaded
             if (isset($_FILES['ann_img']) && $_FILES['ann_img']['error'] === UPLOAD_ERR_OK) {
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                $maxFileSize = 5 * 1024 * 1024; // 5 MB
+                $fileMimeType = mime_content_type($_FILES['ann_img']['tmp_name']);
+                $fileSize = $_FILES['ann_img']['size'];
+        
+                if (!in_array($fileMimeType, $allowedMimeTypes) || $fileSize > $maxFileSize) {
+                    $response['message'] = 'Invalid file type or size.';
+                    echo json_encode($response);
+                    exit;
+                }
+        
                 $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
         
-                // Create directory if it doesn't exist
                 if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
                     error_log('Failed to create announcement directory.');
                     $response['message'] = 'Failed to create upload directory.';
@@ -45,20 +54,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
         
-                // Generate a unique image name
                 $imagePath = time() . "_" . basename($_FILES['ann_img']['name']);
                 $tempPath = $_FILES["ann_img"]["tmp_name"];
                 $originalPath = $uploadTo . $imagePath;
         
-                // Move the uploaded file
                 if (move_uploaded_file($tempPath, $originalPath)) {
-                    // Prepare SQL statements
+                    try {
+                        if ($id) {
+                            $sql = "UPDATE `announcement_tbl` 
+                                    SET announcement_details = :details, 
+                                        announcement_creator = :uid, 
+                                        announcement_image = :imagePath, 
+                                        updated_at = :date, 
+                                        created_by = :cid
+                                    WHERE announcement_id = :id";
+                            $stmt = $connect->prepare($sql);
+                            $stmt->execute([
+                                ':details' => $details,
+                                ':uid' => $uid,
+                                ':imagePath' => $imagePath,
+                                ':date' => $date,
+                                ':id' => $id,
+                                ':cid' => $cid
+                            ]);
+                        } else {
+                            $sql = "INSERT INTO `announcement_tbl` 
+                                    (announcement_details, announcement_creator, 
+                                    announcement_image, created_at, updated_at, created_by) 
+                                    VALUES (:details, :uid, :imagePath, :date, :date, :cid)";
+                            $stmt = $connect->prepare($sql);
+                            $stmt->execute([
+                                ':details' => $details,
+                                ':uid' => $uid,
+                                ':imagePath' => $imagePath,
+                                ':date' => $date,
+                                ':cid' => $cid
+                            ]);
+                        }
+        
+                        // Fetch creator's name
+                        $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :cid");
+                        $creator_stmt->execute([':cid' => $cid]);
+                        $creators_name = $creator_stmt->fetchColumn() ?: 'Unknown User';
+        
+                        // Audit trail
+                        $audit_message = "{$creators_name} created an announcement: {$details}";
+                        $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+                        $audit_stmt->execute([':message' => $audit_message]);
+        
+                        $response['success'] = true;
+                        $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
+                    } catch (PDOException $e) {
+                        error_log("Database Error: " . $e->getMessage());
+                        $response['message'] = 'Database operation failed.';
+                    }
+                } else {
+                    $response['message'] = 'Failed to move uploaded file.';
+                }
+            } else {
+                // Handle case where no image is uploaded
+                try {
                     if ($id) {
-                        // Update existing announcement
                         $sql = "UPDATE `announcement_tbl` 
                                 SET announcement_details = :details, 
                                     announcement_creator = :uid, 
-                                    announcement_image = :imagePath, 
                                     updated_at = :date, 
                                     created_by = :cid
                                 WHERE announcement_id = :id";
@@ -66,25 +125,118 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt->execute([
                             ':details' => $details,
                             ':uid' => $uid,
-                            ':imagePath' => $imagePath,
                             ':date' => $date,
-                            ':id' => $id,
-                            ':cid' => $cid
+                            ':cid' => $cid,
+                            ':id' => $id
                         ]);
                     } else {
-                        // Insert new announcement
                         $sql = "INSERT INTO `announcement_tbl` 
                                 (announcement_details, announcement_creator, 
-                                announcement_image, created_at, updated_at, created_by) 
-                                VALUES (:details, :uid, :imagePath, :date, :date, :cid)";
+                                created_at, updated_at, created_by) 
+                                VALUES (:details, :uid, :date, :date, :cid)";
                         $stmt = $connect->prepare($sql);
                         $stmt->execute([
                             ':details' => $details,
                             ':uid' => $uid,
-                            ':imagePath' => $imagePath,
                             ':date' => $date,
                             ':cid' => $cid
                         ]);
+                    }
+        
+                    $response['success'] = true;
+                    $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
+                } catch (PDOException $e) {
+                    error_log("Database Error: " . $e->getMessage());
+                    $response['message'] = 'Database operation failed.';
+                }
+            }
+        
+            echo json_encode($response);
+        }
+        
+        elseif ($type === 'event') {
+            $details = $_POST['event_details'] ?? null;
+            $date = $_POST['event_date'] ?? null;
+            $creator = $_POST['uid'] ?? null;
+            $ecreator = $_POST['aid'] ?? null; // Get the event creator ID
+        
+            $response = ['success' => false, 'message' => ''];
+        
+            try {
+                // Insert event into calendar_tbl
+                $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator, created_by) 
+                        VALUES (:date, :details, :creator, :ecreator)";
+                $stmt = $connect->prepare($sql);
+                $stmt->execute([
+                    ':date' => $date,
+                    ':details' => $details,
+                    ':creator' => $creator,
+                    ':ecreator' => $ecreator
+                ]);
+        
+                // Fetch the creator's name from users_tbl
+                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :ecreator";
+                $creator_stmt = $connect->prepare($creator_name_sql);
+                $creator_stmt->execute([':ecreator' => $ecreator]);
+                $creators_name = $creator_stmt->fetchColumn();
+        
+                // If not found, check orgmembers_tbl
+                if (!$creators_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :ecreator";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':ecreator' => $ecreator]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+        
+                // If no name found, default to 'Unknown User'
+                $creators_name = $creators_name ?: 'Unknown User';
+        
+                // Add entry to audit trail
+                $audit_message = "{$creators_name} created an event: {$details} on {$date}";
+                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_stmt->execute([':message' => $audit_message]);
+        
+                $response['success'] = true;
+                $response['message'] = 'Event added successfully.';
+            } catch (PDOException $e) {
+                error_log("Database Error: " . $e->getMessage());
+                $response['message'] = 'Failed to add event due to a database error.';
+            }
+        
+            echo json_encode($response);
+        }
+        
+        elseif ($type === 'faqs') {
+            $question = $_POST['faqs_question'] ?? null;
+            $answer = $_POST['faqs_answer'] ?? null;
+            $id = $_POST['id'] ?? null; // Existing FAQ ID (if updating)
+            $uid = $_POST['uid'] ?? null; // User ID from session
+            $cid = $_POST['cid'] ?? null; // Creator ID from session
+        
+            $response = ['success' => false, 'message' => ''];
+        
+            if ($question && $answer) {
+                try {
+                    if ($id) {
+                        // Update existing FAQ
+                        $sql = "UPDATE `faqs_tbl` SET faqs_question = :question, faqs_answer = :answer WHERE id = :id";
+                        $stmt = $connect->prepare($sql);
+                        $stmt->execute([
+                            ':question' => $question,
+                            ':answer' => $answer,
+                            ':id' => $id
+                        ]);
+                        $action = 'updated';
+                    } else {
+                        // Insert new FAQ
+                        $sql = "INSERT INTO `faqs_tbl` (faqs_question, faqs_answer) VALUES (:question, :answer)";
+                        $stmt = $connect->prepare($sql);
+                        $stmt->execute([
+                            ':question' => $question,
+                            ':answer' => $answer
+                        ]);
+                        $action = 'added';
                     }
         
                     // Fetch the creator's name from users_tbl
@@ -95,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                     // If not found, check orgmembers_tbl
                     if (!$creators_name) {
-                        $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE orgmember_id = :cid";
+                        $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
                         $org_member_stmt = $connect->prepare($org_member_sql);
                         $org_member_stmt->execute([':cid' => $cid]);
                         $creators_name = $org_member_stmt->fetchColumn();
@@ -104,165 +256,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // If no name found, default to 'Unknown User'
                     $creators_name = $creators_name ?: 'Unknown User';
         
-                    // Add to audit trail
-                    $audit_message = "{$creators_name} created an announcement: {$details}";
+                    // Add to audit trail with creator ID
+                    $audit_message = "{$creators_name} {$action} a FAQ: Question - {$question}";
                     $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
                     $audit_stmt = $connect->prepare($audit_sql);
                     $audit_stmt->execute([':message' => $audit_message]);
         
                     $response['success'] = true;
-                    $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
-                } else {
-                    $response['message'] = 'Announcement file upload failed to move.';
+                    $response['message'] = $id ? 'FAQ updated successfully.' : 'FAQ added successfully.';
+                } catch (PDOException $e) {
+                    error_log("Database Error: " . $e->getMessage());
+                    $response['message'] = 'Failed to save FAQ due to a database error.';
                 }
-            } else {
-                // Handle case where no image is uploaded
-                if ($id) {
-                    // Update existing announcement without image
-                    $sql = "UPDATE `announcement_tbl` 
-                            SET announcement_details = :details, 
-                                announcement_creator = :uid, 
-                                updated_at = :date, 
-                                created_by = :cid
-                            WHERE announcement_id = :id";
-                    $stmt = $connect->prepare($sql);
-                    $stmt->execute([
-                        ':details' => $details,
-                        ':uid' => $uid,
-                        ':date' => $date,
-                        ':cid' => $cid,
-                        ':id' => $id
-                    ]);
-                } else {
-                    // Insert new announcement without image
-                    $sql = "INSERT INTO `announcement_tbl` 
-                            (announcement_details, announcement_creator, 
-                            created_at, updated_at, created_by) 
-                            VALUES (:details, :uid, :date, :date, :cid)";
-                    $stmt = $connect->prepare($sql);
-                    $stmt->execute([
-                        ':details' => $details,
-                        ':uid' => $uid,
-                        ':date' => $date,
-                        ':cid' => $cid
-                    ]);
-                }
-        
-                // Fetch the creator's name from users_tbl
-                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
-                $creator_stmt = $connect->prepare($creator_name_sql);
-                $creator_stmt->execute([':cid' => $cid]);
-                $creators_name = $creator_stmt->fetchColumn();
-        
-                // If not found, check orgmembers_tbl
-                if (!$creators_name) {
-                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
-                    $org_member_stmt = $connect->prepare($org_member_sql);
-                    $org_member_stmt->execute([':cid' => $cid]);
-                    $creators_name = $org_member_stmt->fetchColumn();
-                }
-        
-                // If no name found, default to 'Unknown User'
-                $creators_name = $creators_name ?: 'Unknown User';
-        
-                // Add to audit trail
-                $audit_message = "{$creators_name} created an announcement: {$details}";
-                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
-                $audit_stmt = $connect->prepare($audit_sql);
-                $audit_stmt->execute([':message' => $audit_message]);
-        
-                $response['success'] = true;
-                $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
-            }
-        }
-        
-        elseif ($type === 'event') {
-            $details = $_POST['event_details'] ?? null;
-            $date = $_POST['event_date'] ?? null;
-            $creator = $_POST['uid'] ?? null;
-            $ecreator = $_POST['aid'] ?? null; // Get the event creator from the input
-        
-            // Adjust the SQL to include event_creator
-            $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator, created_by) VALUES (:date, :details, :creator, :ecreator)";
-            $stmt = $connect->prepare($sql);
-            $stmt->execute([
-                ':date' => $date,
-                ':details' => $details,
-                ':ecreator' => $ecreator,
-                ':creator' => $creator // Bind the creator value
-            ]);
-        
-            // Fetch the creator's name from users_tbl
-            $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :ecreator";
-            $creator_stmt = $connect->prepare($creator_name_sql);
-            $creator_stmt->execute([':ecreator' => $ecreator]);
-            $creators_name = $creator_stmt->fetchColumn();
-        
-            // If not found, check orgmembers_tbl
-            if (!$creators_name) {
-                $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :ecreator";
-                $org_member_stmt = $connect->prepare($org_member_sql);
-                $org_member_stmt->execute([':ecreator' => $ecreator]);
-                $creators_name = $org_member_stmt->fetchColumn();
-            }
-        
-            // If no name found, default to 'Unknown User'
-            $creators_name = $creators_name ?: 'Unknown User';
-        
-            // Add to audit trail
-            $audit_message = "{$creators_name} created an event: {$details} on {$date}";
-            $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
-            $audit_stmt = $connect->prepare($audit_sql);
-            $audit_stmt->execute([':message' => $audit_message]);
-        
-            $response['success'] = true;
-            $response['message'] = 'Event added successfully.';
-        }
-        elseif ($type === 'faqs') {
-            $question = $_POST['faqs_question'] ?? null;
-            $answer = $_POST['faqs_answer'] ?? null;
-            $id = $_POST['id'] ?? null; // Existing FAQ ID (if updating)
-            $uid = $_POST['uid'] ?? null; // User ID from session
-            $cid = $_POST['cid'] ?? null; // Creator ID from session
-        
-            if ($question && $answer) {
-                // Insert new FAQ
-                $sql = "INSERT INTO `faqs_tbl` (faqs_question, faqs_answer) VALUES (:question, :answer)";
-                $stmt = $connect->prepare($sql);
-                $stmt->execute([
-                    ':question' => $question,
-                    ':answer' => $answer
-                ]);
-        
-                // Fetch the creator's name from users_tbl
-                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
-                $creator_stmt = $connect->prepare($creator_name_sql);
-                $creator_stmt->execute([':cid' => $cid]);
-                $creators_name = $creator_stmt->fetchColumn();
-        
-                // If not found, check orgmembers_tbl
-                if (!$creators_name) {
-                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
-                    $org_member_stmt = $connect->prepare($org_member_sql);
-                    $org_member_stmt->execute([':cid' => $cid]);
-                    $creators_name = $org_member_stmt->fetchColumn();
-                }
-        
-                // If no name found, default to 'Unknown User'
-                $creators_name = $creators_name ?: 'Unknown User';
-        
-                // Add to audit trail with creator ID
-                $audit_message = "{$creators_name} added a FAQ: Question - {$question}";
-                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
-                $audit_stmt = $connect->prepare($audit_sql);
-                $audit_stmt->execute([':message' => $audit_message]);
-        
-                $response['success'] = true;
-                $response['message'] = 'FAQ added successfully.';
             } else {
                 $response['message'] = 'Question and answer are required.';
             }
-        }if ($type === 'faculty') {
+        
+            echo json_encode($response);
+        }
+        if ($type === 'faculty') {
             $name = $_POST['faculty_name'] ?? null;
             $dept = $_POST['department'] ?? null;
             $specialization = $_POST['specialization'] ?? null;
@@ -910,20 +922,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $existingDataQuery->execute([':faculty_name' => $faculty_name]);
                 $existingData = $existingDataQuery->fetch(PDO::FETCH_ASSOC);
                 
-                // Proceed with updates
                 if ($existingData) {
                     // If the faculty member exists, check if an update is necessary
                     if ($existingData['consultation_time'] != $consultation_time) {
                         // Update the record if consultation time has changed
                         try {
-                            $updateStmt = $connect->prepare("UPDATE faculty_tbl SET consultation_time = :consultation_time WHERE faculty_name = :faculty_name");
                             $updateStmt->execute([
                                 ':faculty_name' => $faculty_name,
                                 ':consultation_time' => $consultation_time
                             ]);
                             $updatedCount++; // Increment the count of updated records
                 
-                            // Add to audit trail
+                            // Add to audit trail only if there's an actual update
                             $audit_message = "{$updater_name} updated '$faculty_name': New Consultation Time - '$consultation_time'";
                             $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
                             $audit_stmt = $connect->prepare($audit_sql);
@@ -950,8 +960,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ':consultation_time' => $consultation_time
                         ]);
                         $insertedCount++; // Increment the count of inserted records
-
-                        // Add to audit trail
+                
+                        // Add to audit trail for new insertions
                         $auditStmt->execute([
                             ':action' => 'insert',
                             ':faculty_name' => $faculty_name,

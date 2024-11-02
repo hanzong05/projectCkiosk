@@ -78,9 +78,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':aid' => $aid
             ]);
         
+            // Fetch updater's name
+            $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :update");
+            $creator_stmt->execute([':update' => $update]);
+            $updater_name = $creator_stmt->fetchColumn() ?: 'Unknown User';
+        
+            // Audit trail
+            $audit_message = "{$updater_name} updated an announcement : {$details}";
+            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
+        
             $response['success'] = true;
             $response['message'] = 'Announcement updated successfully.';
         }
+        
         elseif ($type === 'event') {
             $cid = $_POST['cid'] ?? '';
             $details = $_POST['event_details'] ?? '';
@@ -103,22 +114,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':cid' => $cid
             ]);
         
+            // Fetch editor's name
+            $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :update");
+            $editor_stmt->execute([':update' => $update]);
+            $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+        
+            // Audit trail
+            $audit_message = "{$editor_name} updated an event {$details}";
+            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
+        
             $response['success'] = true;
             $response['message'] = 'Event updated successfully.';
         }
-        
         elseif ($type === 'faculty') {
             $fid = $_POST['fid'] ?? '';
             $name = $_POST['faculty_name'] ?? '';
             $dept = $_POST['department'] ?? '';
             $previousImage = $_POST['previous'] ?? '';
-            $specialization = $_POST['specialization'] ?? ''; // Get specialization from POST data
-            $consultationTime = $_POST['consultation_time'] ?? ''; // Get consultation time from POST data
+            $specialization = $_POST['specialization'] ?? '';
+            $consultationTime = $_POST['consultation_time'] ?? '';
             $newImage = $previousImage;
+            $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
         
             // File upload handling for faculty image
             if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
+        
                 if (!file_exists($uploadTo)) {
                     if (!mkdir($uploadTo, 0777, true)) {
                         error_log('Failed to create faculty directory.');
@@ -154,20 +176,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':name' => $name,
                 ':dept' => $dept,
                 ':image' => $newImage,
-                ':specialization' => $specialization, // Include specialization
-                ':consultation_time' => $consultationTime, // Include consultation time
+                ':specialization' => $specialization,
+                ':consultation_time' => $consultationTime,
                 ':fid' => $fid
             ]);
+        
+            // Fetch editor's name
+            $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+            $editor_stmt->execute([':editor_id' => $editor_id]);
+            $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+        
+            // Audit trail
+            $audit_message = "{$editor_name} updated faculty member : Name - {$name}, Department - {$dept}, Specialization - {$specialization}, Consultation Time - {$consultationTime}";
+            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
         
             $response['success'] = true;
             $response['message'] = 'Faculty member updated successfully.';
         }
-         elseif ($type === 'organization') {
+        
+        elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';
             $orgName = $_POST['org_name'] ?? '';
             $previousImage = $_POST['previous_image'] ?? '';
             $newImage = $previousImage; // Default to previous image
-
+            $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
+        
             // File upload handling for organization image
             if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
@@ -179,11 +213,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         exit;
                     }
                 }
-
+        
                 $newImage = basename($_FILES['org_image']['name']);
                 $tempPath = $_FILES["org_image"]["tmp_name"];
                 $originalPath = $uploadTo . $newImage;
-
+        
                 if (move_uploaded_file($tempPath, $originalPath)) {
                     // Remove old image if it exists
                     if ($previousImage && file_exists($uploadTo . $previousImage)) {
@@ -196,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
             }
-
+        
             // Update organization in the database
             $sql = "UPDATE organization_tbl 
                     SET org_name = :name, org_image = :image
@@ -207,14 +241,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':image' => $newImage,
                 ':id' => $orgId
             ]);
-
+        
+            // Fetch editor's name
+            $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+            $editor_stmt->execute([':editor_id' => $editor_id]);
+            $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+        
+            // Audit trail
+            $audit_message = "{$editor_name} updated organization '{$orgName}' (ID: {$orgId})";
+            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
+        
             $response['success'] = true;
             $response['message'] = 'Organization updated successfully.';
-        } elseif ($type === 'faq') {
+        }
+        elseif ($type === 'faq') {
             $fid = $_POST['fid'] ?? '';
             $question = htmlspecialchars_decode($_POST['faqs_question'] ?? '');
             $answer = htmlspecialchars_decode($_POST['faqs_answer'] ?? '');
-
+            $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
+        
             // Update FAQ in the database
             $sql = "UPDATE faqs_tbl 
                     SET faqs_question = :question, faqs_answer = :answer
@@ -225,61 +271,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':answer' => $answer,
                 ':fid' => $fid
             ]);
-
+        
+            // Fetch editor's name
+            $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+            $editor_stmt->execute([':editor_id' => $editor_id]);
+            $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+        
+            // Audit trail
+            $audit_message = "{$editor_name} updated FAQ with ID {$fid}: Question - '{$question}'";
+            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
+        
             $response['success'] = true;
             $response['message'] = 'FAQ updated successfully.';
-        } elseif ($type === 'account') {
-            // Fetch existing user data
-            $sql = 'SELECT users_password FROM users_tbl WHERE users_id = :uid';
-            $stmt = $connect->prepare($sql);
-            $stmt->bindParam(':uid', $uid, PDO::PARAM_STR);
-            $stmt->execute();
-
-            if ($stmt->rowCount() == 1) {
-                $existingPasswordHash = $stmt->fetchColumn();
-
-                // Validate password if a new one is provided
-                if (!empty($password)) {
-                    if (!preg_match('/[A-Z]/', $password) || !preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
-                        $response['success'] = false;
-                        $response['message'] = 'Password must contain at least one uppercase letter and one special character.';
-                        echo json_encode($response);
-                        exit;
-                    }
-                
-                    $hashedPassword = hash('sha256', $password);
-                } else {
-                    $hashedPassword = $existingPasswordHash;
-                }
-
-                // Update the account details in the database
-                $updateSql = "UPDATE users_tbl 
-                SET users_username = :username, users_password = :password, users_org = :org
-                WHERE users_id = :uid";
-                $stmt = $connect->prepare($updateSql);
-                
-                // Debug: Log query and parameters
-                error_log("Executing query: " . $updateSql);
-                error_log("Parameters: Username = $username, Password = $hashedPassword, Org = $org, UID = $uid");
-                
-                $success = $stmt->execute([
-                    ':username' => $username,
-                    ':password' => $hashedPassword,
-                    ':org' => $org,
-                    ':uid' => $uid
-                ]);
-                
-                if ($success) {
-                    $response['success'] = true;
-                    $response['message'] = 'Account updated successfully.';
-                } else {
-                    $response['message'] = 'Failed to update account.';
-                    error_log("Failed to update account for UID = $uid");
-                }
-            } else {
-                $response['message'] = 'User not found.';
+        }
+        elseif ($type === 'faq') {
+            $fid = $_POST['fid'] ?? ''; // Make sure this is set correctly
+            $question = htmlspecialchars_decode($_POST['faqs_question'] ?? '');
+            $answer = htmlspecialchars_decode($_POST['faqs_answer'] ?? '');
+            $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
+        
+            if (empty($fid)) {
+                error_log("Error: FAQ ID is missing. Updater ID: " . $editor_id . "\n", 3, "error_log.txt");
+                $response['success'] = false;
+                $response['message'] = 'FAQ ID is missing.';
+                echo json_encode($response);
+                exit; // Stop further execution if fid is missing
             }
-        } elseif ($type === 'membersaccount') {
+        
+            // Update FAQ in the database
+            $sql = "UPDATE faqs_tbl 
+                    SET faqs_question = :question, faqs_answer = :answer
+                    WHERE faqs_id = :fid";
+            $stmt = $connect->prepare($sql);
+            $stmt->execute([
+                ':question' => $question,
+                ':answer' => $answer,
+                ':fid' => $fid
+            ]);
+        
+            // Fetch editor's name
+            $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+            $editor_stmt->execute([':editor_id' => $editor_id]);
+            $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+        
+            // Audit trail
+            $audit_message = "{$editor_name} updated FAQ with ID {$fid}: Question - '{$question}'";
+            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
+        
+            $response['success'] = true;
+            $response['message'] = 'FAQ updated successfully.';
+            echo json_encode($response); // Don't forget to output the response
+        }
+        elseif ($type === 'membersaccount') {
             // Get input values
             $name = $_POST['name'] ?? null;
             $username = $_POST['username'] ?? null;

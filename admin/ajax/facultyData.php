@@ -72,6 +72,7 @@ if ($array) {
                     <div class="mb-3">
                         <label for="consultation_time" class="form-label fw-bold">Consultation Time</label>
                         <input type="text" id="consultation_time" class="form-control" value="'.$value['consultation_time'].'" name="consultation_time" >
+                        
                     </div>';
     }
 }

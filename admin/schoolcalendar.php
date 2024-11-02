@@ -459,55 +459,55 @@ $allEvents = $obj->show_events();
 $('#addForm').on('submit', function (e) {
     e.preventDefault(); // Prevent the default form submission
 
-    var form = $(this);
-    var isAdding = form.find('input[name="add_calendar_event"]').length > 0;
-    var requestType = isAdding ? 'add' : 'save';
+    const form = $(this);
+    const isAdding = form.find('input[name="add_calendar_event"]').length > 0;
+    const requestType = isAdding ? 'add' : 'save';
 
     Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to save this event?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, save it!",
-      cancelButtonText: "No, cancel!"
+        title: "Are you sure?",
+        text: "Do you want to save this event?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, save it!",
+        cancelButtonText: "No, cancel!"
     }).then((result) => {
-      if (result.isConfirmed) {
-        var formData = new FormData(this); // Create FormData from the form element
-        formData.append('type', 'event'); // Add request type parameter
+        if (result.isConfirmed) {
+            const formData = new FormData(this);
+            formData.append('type', 'event'); // Add request type parameter
 
-        // Adjust the URL if necessary to point to the correct PHP handler
-        fetch("../admin/ajax/createData.php", {
-          method: "POST",
-          body: formData
-        })
-        .then(response => response.json())
-        .then(result => {
-          console.log(result); // Log the JSON response
-          if (result.success) {
-            Swal.fire(
-              "Saved!",
-              result.message,
-              "success"
-            ).then(() => {
-              location.reload(); // Optionally reload the page
+            fetch("../admin/ajax/createData.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result); // Log the JSON response
+                if (result.success) {
+                    Swal.fire(
+                        "Saved!",
+                        result.message,
+                        "success"
+                    ).then(() => {
+                        location.reload(); // Optionally reload the page
+                    });
+                } else {
+                    Swal.fire("Error!", result.message, "error");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire(
+                    "Error!",
+                    "There was an error saving the event.",
+                    "error"
+                );
             });
-          } else {
-            Swal.fire("Error!", result.message, "error");
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          Swal.fire(
-            "Error!",
-            "There was an error saving the event.",
-            "error"
-          );
-        });
-      }
+        }
     });
 });
+
 
 // For the 'edit' form
 $('#editForm').on('submit', function (e) {

@@ -274,7 +274,11 @@ $allFaqs = $obj->show_faqs();
 
   <!-- edit course pop up -->
   <form class="row" action="" method="post">
-    <!-- Modal -->
+   <!-- Add a hidden input field for editor_id -->
+   <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="editor_id">
+
+
+
     <div class="modal fade bd-example-modal-lg" id="faqsModalEdit" tabindex="-1" role="dialog" data-backdrop="static"
       data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -360,13 +364,10 @@ $allFaqs = $obj->show_faqs();
         }
       });
     });
-
-
 // Handle form submission for FAQs
 document.getElementById('faqForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent the default form submission
 
-    // Show confirmation dialog before proceeding
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to add this FAQ?",
@@ -378,7 +379,7 @@ document.getElementById('faqForm').addEventListener('submit', function(event) {
         cancelButtonText: "No, cancel!"
     }).then((result) => {
         if (result.isConfirmed) {
-            var formData = new FormData(this);
+            const formData = new FormData(this);
             formData.append('type', 'faqs'); // Ensure type parameter is included
 
             fetch('../admin/ajax/createData.php', {
@@ -387,30 +388,24 @@ document.getElementById('faqForm').addEventListener('submit', function(event) {
             })
             .then(response => response.json())
             .then(result => {
-                Swal.fire("Response", result.message, "info");
                 if (result.success) {
-                    Swal.fire("Added!", "The FAQ has been added.", "success")
-                        .then(() => {
-                            document.location = "faqs.php"; // Redirect to the FAQs page
-                        });
+                    Swal.fire("Added!", result.message, "success").then(() => {
+                        window.location.href = "faqs.php"; // Redirect to the FAQs page
+                    });
                 } else {
                     Swal.fire("Error!", result.message, "error");
                 }
             })
             .catch(error => {
+                console.error('Error:', error);
                 Swal.fire("Error!", "There was an error adding the FAQ.", "error");
             });
         }
     });
-});
-
-// For the 'edit' form
-$('#faqsModalEdit form').on('submit', function (e) {
+});$('#faqsModalEdit form').on('submit', function (e) {
     e.preventDefault(); // Prevent the default form submission
 
     var form = $(this);
-    var isAdding = form.find('input[name="save_faqs"]').length > 0;
-
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to save this FAQ?",
@@ -424,6 +419,15 @@ $('#faqsModalEdit form').on('submit', function (e) {
         if (result.isConfirmed) {
             var formData = new FormData(form[0]); // Create FormData from the form element
             formData.append('type', 'faq'); // Append a type for identifying the request
+
+            // Log to see if fid is being retrieved
+            var fid = form.find('input[name="fid"]').val(); // Ensure this is 'fid'
+            console.log('FID:', fid); // Log to see if fid is being retrieved
+            if (fid) {
+                formData.append('fid', fid); // Append 'fid' to FormData explicitly
+            } else {
+                console.error("FID is missing from form data!");
+            }
 
             // Adjust the URL if necessary to point to the correct PHP handler
             fetch("../admin/ajax/editData.php", {
@@ -442,6 +446,7 @@ $('#faqsModalEdit form').on('submit', function (e) {
             })
             .catch(error => {
                 Swal.fire("Error!", "There was an error saving the FAQ.", "error");
+                console.error("Error saving FAQ:", error); // Log any errors to console for debugging
             });
         }
     });

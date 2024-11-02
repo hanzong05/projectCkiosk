@@ -438,8 +438,8 @@ $('.announcementModalEdit').on('click', function () {
       });
       
       document.getElementById('addAnnouncementForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent the default form submission
-    
+    e.preventDefault();
+
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to save this announcement?",
@@ -451,8 +451,8 @@ $('.announcementModalEdit').on('click', function () {
         cancelButtonText: "No, cancel!"
     }).then((result) => {
         if (result.isConfirmed) {
-            var formData = new FormData(this); // Create FormData from the form element
-            formData.append('type', 'announcement'); // Add type parameter to FormData
+            const formData = new FormData(this);
+            formData.append('type', 'announcement');
 
             fetch("../admin/ajax/createData.php", {
                 method: "POST",
@@ -460,26 +460,15 @@ $('.announcementModalEdit').on('click', function () {
             })
             .then(response => response.json())
             .then(result => {
-                console.log(result); // Log the JSON response
                 if (result.success) {
-                    Swal.fire(
-                        "Saved!",
-                        result.message,
-                        "success"
-                    ).then(() => {
-                        location.reload(); // Optionally reload the page
-                    });
+                    Swal.fire("Saved!", result.message, "success").then(() => location.reload());
                 } else {
                     Swal.fire("Error!", result.message, "error");
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                Swal.fire(
-                    "Error!",
-                    "There was an error saving the announcement.",
-                    "error"
-                );
+                Swal.fire("Error!", "There was an error saving the announcement.", "error");
             });
         }
     });

@@ -344,10 +344,8 @@ $allDepartment = $obj->show_department();
 </div>
 
 
-  <div class="modal fade" id="excelImportModal" tabindex="-1" role="dialog" aria-labelledby="importExcelLabel" aria-hidden="true">
-  <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-  <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">   
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="excelImportModal" tabindex="-1" role="dialog" aria-labelledby="importExcelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="importExcelLabel">Import Faculty Members via Excel</h5>
@@ -357,6 +355,10 @@ $allDepartment = $obj->show_department();
             </div>
             <div class="modal-body">
                 <form action="ajax/createData.php" id="excelImportForm" method="post" enctype="multipart/form-data">
+                    <!-- Hidden inputs for user ID and creator ID -->
+                    <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
+                    
                     <div class="mb-3">
                         <label for="faculty_excel" class="form-label fw-bold">Select Excel File</label>
                         <input type="file" id="faculty_excel" class="form-control" name="faculty_excel" accept=".xls,.xlsx,.csv" required>
@@ -432,6 +434,8 @@ $allDepartment = $obj->show_department();
 
 <!-- Modal -->
 <form id="editFacultyForm" class="row" action="" method="post" enctype="multipart/form-data">
+<input type="hidden" value="<?= $_SESSION['id'] ?>" name="editor_id"> <!-- Make sure this field exists and has the correct session value -->
+
     <div class="modal fade bd-example-modal-lg" id="facultyModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -647,6 +651,7 @@ $(document).ready(function() {
 
 $('#editFacultyForm').on('submit', function (e) {
     e.preventDefault(); // Prevent the default form submission
+    
 
     var form = $(this);
 

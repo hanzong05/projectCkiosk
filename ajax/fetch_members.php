@@ -20,7 +20,7 @@ try {
         $org_id = $_POST['org_id'];
 
         // Prepare the SQL query to fetch members based on the org_id
-        $query = "SELECT member_img, name, username FROM orgmembers_tbl WHERE org_type = :org_id";
+        $query = "SELECT * FROM orgmembers_tbl WHERE org_type = :org_id";
         $stmt = $connect->prepare($query);
         $stmt->bindParam(':org_id', $org_id, PDO::PARAM_INT); // Binding parameter
         $stmt->execute();

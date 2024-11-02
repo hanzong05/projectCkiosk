@@ -1,5 +1,7 @@
 <?php
 include_once ('assets/header.php');
+$uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
+$cid = $_SESSION['id'] ?? null; 
 if (isset($_POST['add_org'])) {
   $log_msg = $obj->add_org($_POST);
 }
@@ -392,6 +394,8 @@ $allAccount = $obj->show_account();
 
   <!-- add org pop up -->
   <form id="orgForm" class="row" action="" method="post" enctype="multipart/form-data">
+  <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+  <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="orgModal" tabindex="-1" role="dialog" data-backdrop="static"
       data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -446,6 +450,8 @@ $allAccount = $obj->show_account();
     </div>
   </form>
   <form id="accountForm" class="row" action="" method="post">
+  <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+  <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
     <!-- Modal for Account Creation -->
     <div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="accountModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -498,7 +504,7 @@ $allAccount = $obj->show_account();
                             <option value="" selected>Select an organization</option>
                             <?php
                             foreach ($allOrg as $row) {
-                                if ($row['org_id'] == 1) continue; // Skip org_id = 1
+                                if ($row['org_id'] == 0) continue; // Skip org_id = 1
                                 echo '<option value="' . htmlspecialchars($row['org_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8') . '</option>';
                             }
                             ?>

@@ -1,6 +1,8 @@
 <?php
-include_once ('assets/header.php');
 
+include_once ('assets/header.php');
+$uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
+$cid = $_SESSION['id'] ?? null; 
 if (isset($_POST['add_faculty_member'])) {
   $log_msg = $obj->add_faculty_member($_POST);
 }
@@ -343,7 +345,9 @@ $allDepartment = $obj->show_department();
 
 
   <div class="modal fade" id="excelImportModal" tabindex="-1" role="dialog" aria-labelledby="importExcelLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+  <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+  <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">   
+  <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="importExcelLabel">Import Faculty Members via Excel</h5>
@@ -373,6 +377,8 @@ $allDepartment = $obj->show_department();
 
   <!-- add faculty pop up --><form id="facultyModalForm" class="row" method="post" enctype="multipart/form-data">
     <!-- Modal -->
+    <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
     <div class="modal fade bd-example-modal-lg" id="facultyModal" tabindex="-1" role="dialog" data-backdrop="static"
          data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -383,6 +389,7 @@ $allDepartment = $obj->show_department();
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+            
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="faculty_name" class="form-label fw-bold">Faculty Name</label>

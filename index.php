@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once ("class/mainclass.php");
 $obj = new mainClass();
 $allAnnouncement = $obj->show_announcement2();
@@ -52,6 +51,225 @@ $showfaqs = $obj->show_allFAQS();
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <style>
+          .member-card {
+        transition: all 0.3s ease;
+    }
+    .member-card:hover {
+        transform: translateY(-5px);
+    }
+    .member-card .card-img-top {
+        transition: all 0.5s ease;
+    }
+    .member-card:hover .card-img-top {
+        transform: scale(1.1);
+    }
+    .overlay-gradient {
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    .member-card:hover .overlay-gradient {
+        opacity: 1;
+    }
+    .btn-primary {
+        transition: all 0.3s ease;
+    }
+    .btn-primary:active {
+        transform: scale(0.95);
+    }
+          .news-feed-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-photo {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .announcement-item-bg {
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+            border-left: 4px solid #0d6efd;
+        }
+
+        .announcement-item-bg:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .announcement-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .announcement-image {
+    width: 100%; /* Make the container full width */
+    height: auto; /* Maintain the aspect ratio */
+}
+
+.announcement-image img {
+    width: 100%; /* Make the image full width */
+    height: auto; /* Maintain the aspect ratio */
+    display: block; /* Prevent extra space below the image */
+}
+
+
+        .profile-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .profile-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            margin-bottom: 4px;
+            color: #2c3e50;
+        }
+
+        .profile-username {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .nav-tabs {
+            border-bottom: 2px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 500;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #0d6efd;
+            border-bottom: 3px solid #0d6efd;
+            background: transparent;
+        }
+
+        .show-members-btn {
+            margin-left: auto;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .show-members-btn:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-1px);
+        }
+
+        #newsFeedContent {
+            min-height: 400px;
+        }
+.card {
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Aspect Ratio Box */
+.aspect-ratio-box {
+    position: relative; /* Ensure this is set for absolute positioning of the img */
+    height: 200px; /* Set a fixed height */
+    overflow: hidden; /* Hide any overflow to maintain the aspect ratio */
+}
+
+.aspect-ratio-box img {
+    /* Center horizontally */
+    width: 100%; /* Let width auto to maintain aspect ratio */
+    height: 100%; /* Fixed height */
+    object-fit: cover; /* Cover the container */
+    transition: transform 0.5s ease;
+}
+/* Hover Effects */
+.transform-hover {
+    transition: transform 0.5s ease;
+}
+
+.card:hover .transform-hover {
+    transform: scale(1.1);
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+}
+
+/* Gradient Overlay */
+.bg-gradient-dark {
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+    transition: opacity 0.3s ease;
+}
+
+/* Rounded Corners */
+.rounded-top-xl {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+.rounded-xl {
+    border-radius: 0.75rem;
+}
+
+/* Text Sizes */
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+/* Backdrop Blur */
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+}
+
+/* Row Spacing */
+.row {
+    margin-bottom: 2rem;
+}
+
+/* Equal Height Cards */
+.row-cols-1 > * {
+    height: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .row-cols-lg-4 > * {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .row-cols-lg-4 > * {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
         .tab-navigation {
         text-align: center;
         margin-bottom: 20px;
@@ -466,51 +684,268 @@ $showfaqs = $obj->show_allFAQS();
         font-size: 10px; /* Smaller font for smaller screens */
     }
 }
-/* Set a wider max-width for the item section */
-.item {
-    max-width: 600px; /* Adjusted max-width to make the card wider */
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #1a1a1a;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    color: #ffd700; /* Yellow text color */
+.calendar-wrapper {
+        padding: 1.5rem;
+    }
+    
+    .event-section {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .event-section h4 {
+        color: #ffd700;
+        font-size: 1.2rem;
+        margin: 0 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .event-grid {
+        display: grid;
+        gap: 1rem;
+    }
+    
+    .event-card {
+        display: flex;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        padding: 1rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .event-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .event-date {
+        min-width: 100px;
+        text-align: center;
+        padding: 0.5rem;
+        background: rgba(255, 215, 0, 0.1);
+        border-radius: 6px;
+        color: #ffd700;
+    }
+    
+    .event-details {
+        flex: 1;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .no-events {
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+
+        @media (max-width: 768px) {
+            .section-header h1 {
+                font-size: 2rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .meta-info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    @media (max-width: 640px) {
+        .event-card {
+            flex-direction: column;
+        }
+        
+        .event-date {
+            width: 100%;
+        }
+    }
+    .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .yellow-line {
+            height: 0.25rem;
+            width: 5rem;
+            background: #ffd700;
+            margin: 0 auto;
+            border-radius: 9999px;
+        }
+
+        .announcements {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+       
+        .announcement-card {
+            background: #2e0f13;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-header {
+            
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .org-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .org-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .org-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: yellow;
+            margin-bottom: 4px;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 16px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .announcement-text {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .announcement-text.truncated {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .see-more-link {
+            color: white; /* Optional: Set a color */
+            text-decoration: none; /* Removes underline */
+            cursor: pointer;
+            font-weight: 500;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .announcement-image {
+    width: 100%; /* Make the container full width */
+    height: auto; /* Maintain the aspect ratio */
+    overflow: hidden; /* Hide overflow */
 }
 
-/* Adjust the font size and alignment for better readability */
-.item h4 {
-    font-size: 1.5em;
-    text-align: center;
-    color: #ffd700; /* Yellow for headings */
-    margin-bottom: 10px;
+.announcement-image img {
+    width: 100%; /* Make the image full width */
+    height: auto; /* Maintain the aspect ratio */
+    display: block; /* Prevent extra space below the image */
 }
 
-.item .text-content {
-    padding: 15px;
-    color: #ffd700; /* Yellow text color */
-}
 
-.item table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        @media (max-width: 600px) {
+            .announcements-container {
+                padding: 12px;
+            }
 
-/* Change the text color to yellow and improve spacing */
-.item table td {
-    padding: 10px;
-    border-bottom: 1px solid #444;
-    font-size: 1.1em;
-    color: #ffd700; /* Yellow for event details */
-}
+            .meta-info {
+                flex-direction: column;
+                gap: 8px;
+            }
 
-.item table td:first-child {
-    font-weight: bold;
-}
+            .see-more-link {
+            order: 2;
+            display: block;
+            font-size: 0.85em; /* Adjust this value as needed for smaller text */
+            color: white; /* Optional: Set a color */
+            text-decoration: none; /* Removes underline */
+        }
 
-.item table td:last-child {
-    font-style: italic;
-}
+            .content-wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .announcement-text {
+                order: 1; /* Moves text to top */
+                
+            }
+
+            .announcement-image {
+                order: 3; /* Keeps image at bottom */
+                margin-top: 16px;
+            }
+        }
+    
     
 </style>
 </head>
@@ -518,7 +953,7 @@ $showfaqs = $obj->show_allFAQS();
 <body>
 
 
-<!-- Mobile Navigation --><nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
+<nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img src="img/C.png" alt="Logo" width="120"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -619,23 +1054,8 @@ $connection = new PDO($dsn, $username, $password);
 // Set the default timezone to Asia/Manila
 date_default_timezone_set('Asia/Manila');
 
-function getAnnouncements($connection, $userId) {
-    // Query to get the user's organization from users_tbl
-    $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
-    $orgStatement = $connection->prepare($orgQuery);
-    $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
-    $orgStatement->execute();
-    $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
-    
-    // Safely escape the organization ID
-    $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
-
-    // If the user has no organization, return an empty result or error message
-    if ($userOrgId == 0) {
-        return "No organization found for the user.";
-    }
-
-    // Main announcement query, filtered by the user's organization
+function getAllAnnouncements($connection) {
+    // Main announcement query to retrieve all announcements
     $query = "
         SELECT a.*, 
                u.users_username AS author_name, 
@@ -647,12 +1067,11 @@ function getAnnouncements($connection, $userId) {
         LEFT JOIN users_tbl c ON a.created_by = c.users_id  
         LEFT JOIN orgmembers_tbl o ON a.created_by = o.id  
         LEFT JOIN organization_tbl org ON u.users_org = org.org_id  
-        WHERE u.users_org = :userOrgId AND a.is_archived = 0
+        WHERE a.is_archived = 0
     ";
 
     // Prepare and execute the statement
     $statement = $connection->prepare($query);
-    $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
 
     if ($statement->execute()) {
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -676,100 +1095,25 @@ function getAnnouncements($connection, $userId) {
     } else {
         return "No Data";
     }
-
-    
 }
 
-// Fetch the user's ID based on session variable
-$userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
-
-// Get announcements
-$allAnnouncement = getAnnouncements($connection, $userId);
+// Get all announcements
+$allAnnouncement = getAllAnnouncements($connection);
 ?>
+
 
 <!-- HTML Section -->
 <section id="announcement" class="content-section">
     <div class="section-heading text-center borderYellow">
         <h1><br><em>ANNOUNCEMENT</em></h1>
     </div>
-    <div class="section-content">
-        <div class="tabs-content">
-            <div class="wrapper">
-                <section class="tabgroup">
-                <ul>
-    <?php
-    // Ensure $allAnnouncement is an array and contains items
-    if (is_array($allAnnouncement) && count($allAnnouncement) > 0) {
-        // Sort the announcements by 'created_at' in descending order
-        usort($allAnnouncement, function ($a, $b) {
-            return strtotime($b['created_at']) - strtotime($a['created_at']);
-        });
+    <div class="container">
+        
 
-        foreach ($allAnnouncement as $row) {
-            // Check if created_at is set and valid
-            if (isset($row['created_at'])) {
-                $createdAt = new DateTime($row['created_at']);
-                $now = new DateTime();
-                $interval = $createdAt->diff($now);
-
-                // Check if the announcement is older than 24 hours
-                if ($interval->days >= 1) {
-                    $timeAgo = $createdAt->format('Y-m-d'); // Display the full date
-                } else {
-                    // Format the time difference for announcements less than 24 hours old
-                    if ($interval->h > 0) {
-                        $timeAgo = $interval->h . ' hours ago';
-                    } elseif ($interval->i > 0) {
-                        $timeAgo = $interval->i . ' minutes ago';
-                    } else {
-                        $timeAgo = 'just now';
-                    }
-                }
-            } else {
-                $timeAgo = 'unknown date'; // Fallback if created_at is not set
-            }
-            ?>
-            <br>
-            <li style="width:100%;">
-                <div class="item">
-                    <div class="timestamp">
-                        Created <?= $timeAgo ?> by <?= $row['creator_name'] ?>
-                    </div>
-                    <div class="text-content">
-                        <img class="avaatar" src="uploaded/orgUploaded/<?= htmlspecialchars($row["org_image"], ENT_QUOTES, 'UTF-8') ?>" alt="">
-                        <span><?= strtoupper(htmlspecialchars($row['org_name'] ?? 'Unknown Organization', ENT_QUOTES, 'UTF-8')) ?></span>
-                    </div>
-                    <div class="square">
-                        <?php
-                        // Check if announcement image exists
-                        if (!empty($row["announcement_image"])) {
-                            echo '<div style="text-align: right; margin: 5px 0;">
-                                    <img src="uploaded/annUploaded/' . htmlspecialchars($row["announcement_image"], ENT_QUOTES, 'UTF-8') . '" alt=""
-                                        style="max-width: 200px; width: 100%; height: auto; margin-left: 10px;">
-                                  </div>';
-                        }
-
-                        // Clean up the announcement details
-                        $details = $row['announcement_details'] ?? '';
-                        $details = preg_replace('/<font[^>]*>/i', '', $details);  // Remove opening <font> tags
-                        $details = preg_replace('/<\/font>/i', '', $details);     // Remove closing </font> tags
-                        
-                        // Remove inline color styles
-                        $details = preg_replace('/style="[^"]*color:[^;"]*;?"/i', '', $details);
-                        $details = preg_replace('/<li([^>]*)>/i', '<li$1 style="color: yellow;">', $details);
-
-                        echo $details;
-                        ?>
-                    </div>
-                </div>
-            </li>
-            <?php
-        }
-    } else {
-        echo '<li style="color: white;">No announcements found.</li>';
-    }
-    ?>
-</ul>
+        <div class="announcements" id="announcements-container">
+            <!-- Announcements will be inserted here by JavaScript -->
+        </div>
+    </div>
 </section>
 
 
@@ -780,82 +1124,82 @@ $allAnnouncement = getAnnouncements($connection, $userId);
         <h1><em>SCHOOL CALENDAR</em></h1>
     </div>
     <div class="section-content">
-        <div class="tabs-content">
-            <div class="wrapper">
-                <section class="tabgroup">
-                    <ul>
-                        <?php 
-                        $today = date('Y-m-d');
-                        $todayEvents = [];
-                        $upcomingEvents = [];
+    <div class="tabs-content">
+        <div class="wrapper calendar-wrapper">
+            <section class="tabgroup">
+                <ul>
+                    <?php 
+                    $today = date('Y-m-d');
+                    $todayEvents = [];
+                    $upcomingEvents = [];
 
-                        foreach ($allEvent as $month => $events) {
-                            foreach ($events as $event) {
-                                if (isset($event['calendar_date'], $event['calendar_id'], $event['calendar_details'])) {
-                                    if ($event['calendar_date'] === $today) {
-                                        $todayEvents[] = $event;
-                                    } elseif ($event['calendar_date'] > $today) {
-                                        $upcomingEvents[] = $event;
-                                    }
+                    foreach ($allEvent as $month => $events) {
+                        foreach ($events as $event) {
+                            if (isset($event['calendar_date'], $event['calendar_id'], $event['calendar_details'])) {
+                                if ($event['calendar_date'] === $today) {
+                                    $todayEvents[] = $event;
+                                } elseif ($event['calendar_date'] > $today) {
+                                    $upcomingEvents[] = $event;
                                 }
                             }
                         }
+                    }
 
-                        if (!empty($todayEvents)) {
-                            echo '<li>';
-                            echo '<div class="item">';
-                            echo '<div class="text-content">';
-                            echo '<h4>Happening Today</h4>';
-                            echo '<table>';
-                            
-                            foreach ($todayEvents as $event) {
-                                echo '<tr>';
-                                echo '<td>' . htmlspecialchars($event['calendar_date']) . '</td>';
-                                echo '<td>' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
-                                echo '</tr>';
-                            }
-                            
-                            echo '</table>';
+                    if (!empty($todayEvents)) {
+                        echo '<li class="event-section">';
+                        echo '<h4>Happening Today</h4>';
+                        echo '<div class="event-grid">';
+                        
+                        foreach ($todayEvents as $event) {
+                            $date = new DateTime($event['calendar_date']);
+                            echo '<div class="event-card">';
+                            echo '<div class="event-date">';
+                            echo $date->format('M d, Y');
+                            echo '</div>';
+                            echo '<div class="event-details">';
+                            echo htmlspecialchars(strip_tags($event['calendar_details']));
                             echo '</div>';
                             echo '</div>';
-                            echo '</li>';
                         }
+                        
+                        echo '</div>';
+                        echo '</li>';
+                    }
 
-                        if (!empty($upcomingEvents)) {
-                            echo '<li>';
-                            echo '<div class="item">';
-                            echo '<div class="text-content">';
-                            echo '<h4>Upcoming Events</h4>';
-                            echo '<table>';
-                            
-                            foreach ($upcomingEvents as $event) {
-                                echo '<tr>';
-                                echo '<td>' . htmlspecialchars($event['calendar_date']) . '</td>';
-                                echo '<td>' . htmlspecialchars(strip_tags($event['calendar_details'])) . '</td>';
-                                echo '</tr>';
-                            }
-                            
-                            echo '</table>';
+                    if (!empty($upcomingEvents)) {
+                        echo '<li class="event-section">';
+                        echo '<h4>Upcoming Events</h4>';
+                        echo '<div class="event-grid">';
+                        
+                        foreach ($upcomingEvents as $event) {
+                            $date = new DateTime($event['calendar_date']);
+                            echo '<div class="event-card">';
+                            echo '<div class="event-date">';
+                            echo $date->format('M d, Y');
+                            echo '</div>';
+                            echo '<div class="event-details">';
+                            echo htmlspecialchars(strip_tags($event['calendar_details']));
                             echo '</div>';
                             echo '</div>';
-                            echo '</li>';
                         }
+                        
+                        echo '</div>';
+                        echo '</li>';
+                    }
 
-                        if (empty($todayEvents) && empty($upcomingEvents)) {
-                            echo '<li>';
-                            echo '<div class="item">';
-                            echo '<div class="text-content">';
-                            echo '<h4>No Events Happening Today or Upcoming</h4>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</li>';
-                        }
-                        ?>
-                    </ul>
-                </section>
-            </div>
+                    if (empty($todayEvents) && empty($upcomingEvents)) {
+                        echo '<li>';
+                        echo '<div class="no-events">';
+                        echo '<h4>No Events Happening Today or Upcoming</h4>';
+                        echo '</div>';
+                        echo '</li>';
+                    }
+                    ?>
+                </ul>
+            </section>
         </div>
     </div>
+</div>
 </section>
 
 
@@ -1548,39 +1892,75 @@ $allAnnouncement = getAnnouncements($connection, $userId);
     
     
 
-        <section id="campusorgs" class="content-section">
+        <section id="campusorgs" class="content-section bg-gray-50">
         <div class="section-heading text-center borderYellow">
-        <h1><br><em>CAMPUS ORGS</em></h1>
-    </div>
-            <div class="section-content section-content-orgs">
-                <div class="row">
-                    <?php foreach ($allOrg as $row): ?>
-                        <div class="col-md-4">
-                            <div class="faculty-card">
-                                <div class="faculty-image">
-                                    <a href="#" 
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#newsModal"
-                                    data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                                    data-title="<?= htmlspecialchars($row['org_name']) ?>"
-                                    data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                    data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                    data-author="<?= htmlspecialchars($row['org_name']) ?>">
-                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                            alt="<?= htmlspecialchars($row['org_name']) ?>"
-                                            class="orgimage">
-                                    </a>
+            <h1 class="pt-16 pb-8">
+                <em class="text-4xl font-bold text-gray-800">CAMPUS ORGS</em>
+            </h1>
+            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+        </div>
+
+        <div class="container-fluid px-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <?php 
+        $counter = 0; // Initialize a counter variable
+        foreach ($allOrg as $row): ?>
+            <div class="col">
+                <div class="card h-100 border-0 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
+                    <!-- Card Header -->
+                    <div class="card-header position-relative p-0">
+                        <a href="#" 
+                        class="d-block"
+                            data-bs-toggle="modal"
+                            data-bs-target="#newsModal"
+                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                            data-title="<?= htmlspecialchars($row['org_name']) ?>"
+                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                            data-author="<?= htmlspecialchars($row['org_name']) ?>">
+                            
+                            <!-- Card Image -->
+                            <div class="aspect-ratio-box position-relative overflow-hidden rounded-top-xl">
+                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
+                                    alt="<?= htmlspecialchars($row['org_name']) ?>"
+                                    class="w-100 h-100 object-fit-cover transform-hover scale-hover">
+                                
+                                <!-- Overlay -->
+                                <div class="card-overlay position-absolute start-0 end-0 bottom-0 h-100 d-flex flex-column justify-content-end p-3 bg-gradient-dark opacity-0">
+                                    <div class="text-white p-2 rounded bg-black bg-opacity-20 backdrop-blur-sm">
+                                        <span class="d-inline-block bg-warning text-dark rounded-pill px-3 py-1 text-sm fw-medium">
+                                            View Details
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="faculty-info">
-                                <h6><?= htmlspecialchars($row['org_name']) ?></h6>
-                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body p-3">
+                        <h5 class="card-title mb-2 fw-bold text-dark fs-6 text-truncate">
+                            <?= htmlspecialchars($row['org_name']) ?>
+                        </h5>
+                        <div class="d-flex align-items-center">
+                            <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
+                            <small class="text-muted text-xs">Campus Organization</small>
                         </div>
-                    <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-           
-        </section>
+        
+        <?php 
+        $counter++; // Increment the counter
+        
+        // Add row div after every 4 items
+        if ($counter % 4 == 0): ?>
+            </div><div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+
+</section>
 
          
 
@@ -1722,22 +2102,37 @@ $allAnnouncement = getAnnouncements($connection, $userId);
     </div>
     
 </div>
-                <div class="modal fade custom-modal" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h3 class="modal-title" id="newsModalTitle">News Feed</h3>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div id="newsFeedContent" class="news-feed"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <!-- Optional footer buttons -->
-                            </div>
-                        </div>
+<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newsModalLabel">Organization Feed</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="feedTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="announcements-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#announcements" type="button" role="tab" 
+                                    aria-controls="announcements" aria-selected="true">
+                                Announcements
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="members-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#members" type="button" role="tab" 
+                                    aria-controls="members" aria-selected="false">
+                                Members
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="newsFeedContent">
+                        <!-- Content will be dynamically loaded here -->
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
                 <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg"> <!-- Changed to modal-lg for consistency -->
@@ -2168,189 +2563,217 @@ document.addEventListener("DOMContentLoaded", function() {
     tabButtons[0].classList.add("active");
     tabs[0].style.display = "block";
 });
-
-$(document).ready(function () {
-    $('#newsModal').on('show.bs.modal', function (e) {
-        var title = $(e.relatedTarget).data('title');
-        var imageSrc = $(e.relatedTarget).data('image');
-        var profilePhoto = $(e.relatedTarget).data('profilephoto');
-        var authorName = $(e.relatedTarget).data('author');
-        var orgId = $(e.relatedTarget).data('orgid'); // Get org_id from the data attribute
-
-        console.log('Organization ID:', orgId); // Debugging org_id to ensure it's fetched correctly
-
-        // Initial fetch for announcements
-        fetchAnnouncements(orgId, profilePhoto, authorName);
-    });
-
-    // Fetch announcements
-    function fetchAnnouncements(orgId, profilePhoto, authorName) {
-    $.ajax({
-        url: 'ajax/fetch_announcement.php',
-        type: 'POST',
-        dataType: 'json',
-        data: { org_id: orgId },
-        success: function (response) {
-            console.log('AJAX Success Response:', response);
-
-            if (response.error) {
-                $('#newsFeedContent').html('<p>' + response.error + '</p>');
-                return;
-            }
-
-            var content = `
-                <div class="news-feed-item">
-                    <div class="news-feed-header d-flex align-items-center mb-3">
-                        <img src="${profilePhoto}" alt="Profile Photo" class="img-fluid rounded-circle profile-photo" style="width: 50px; height: 50px; margin-right: 10px;">
-                        <h5 class="font-weight-bold mb-0">${authorName}</h5>
-                        <button type="button" class="btn btn-secondary show-members-btn" data-orgid="${orgId}" id="modalShowMembersBtn">
-                            Show Members
-                        </button>
-                    </div>
-            `;
-
-            if (response.announcements && response.announcements.length > 0) {
-                content += '<div class="announcement-details">';
-                response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-                response.announcements.forEach(function (announcement) {
-                    var createdAt = new Date(announcement.created_at);
-                    var timeAgo = formatRelativeTime(createdAt); // Function to format time
-                    var sanitizedDetails = removeColorTags(announcement.announcement_details);
+$(document).ready(function() {
+                    $('#newsModal').on('show.bs.modal', function (e) {
                     
-                    // Include creator_name from the response
-                    var creatorName = announcement.creator_name || 'Unknown Creator'; // Fallback if creator_name is not found
+                    var orgId = $(e.relatedTarget).data('orgid'); // Ensure this is accessing the correct element
+                    var title = $(e.relatedTarget).data('title');
+                    var imageSrc = $(e.relatedTarget).data('image');
+                    var profilePhoto = $(e.relatedTarget).data('profilephoto');
+                    var authorName = $(e.relatedTarget).data('author');
 
-                    content += `
-                        <div class="announcement-item mb-3 p-3 border rounded announcement-item-bg">
-                            <p class="announcement-date mb-1"><strong>Created:</strong> ${timeAgo} by ${creatorName}</p>
-                            <p class="announcement-details mb-1">${sanitizedDetails}</p>
-                            ${announcement.announcement_image ? `<img src="uploaded/annUploaded/${announcement.announcement_image}" class="img-fluid mb-2 announcement-image">` : ''}
-                        </div>`;
+                    // Check if orgId is retrieved successfully
+                    console.log("Organization ID:", orgId); // Debugging line
+
+                    // Initial fetch for announcements
+                    fetchAnnouncements(orgId, profilePhoto, authorName);
+                    fetchMembers(orgId);
                 });
-                content += '</div>';
-            } else {
-                content += '<p>No announcements found.</p>';
+
+            function fetchAnnouncements(orgId, profilePhoto, authorName) {
+                $.ajax({
+                    url: 'ajax/fetch_announcement.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { org_id: orgId },
+                    success: function (response) {
+                        if (response.error) {
+                            $('#newsFeedContent').html('<p class="text-danger">' + response.error + '</p>');
+                            return;
+                        }
+
+                        var content = `
+                            <div class="tab-pane fade show active" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
+                                <div class="news-feed-item">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <img src="${profilePhoto}" alt="Profile Photo" class="profile-photo rounded-circle me-3">
+                                        <h5 class="mb-0 me-3">${authorName}</h5>
+                                       <button type="button" class="show-members-btn" data-orgid="${orgId}" style="display:none">
+                                            Show Members    
+                                        </button>
+
+                                    </div>`;
+
+                        if (response.announcements && response.announcements.length > 0) {
+                            content += '<div class="announcement-details">';
+                            response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                            response.announcements.forEach(function (announcement) {
+                                var timeAgo = formatRelativeTime(new Date(announcement.created_at));
+                                var sanitizedDetails = removeColorTags(announcement.announcement_details);
+                                var creatorName = announcement.creator_name || 'Unknown Creator';
+
+                                content += `
+                                    <div class="announcement-item-bg p-4 mb-4 rounded">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <small class="announcement-date">
+                                                <i class="bi bi-clock"></i> ${timeAgo} by ${creatorName}
+                                            </small>
+                                        </div>
+                                        <p class="mb-3">${sanitizedDetails}</p>
+                                        ${announcement.announcement_image ? 
+                                            `<img src="uploaded/annUploaded/${announcement.announcement_image}" 
+                                             class="announcement-image img-fluid">` : ''}
+                                    </div>`;
+                            });
+                            content += '</div>';
+                        } else {
+                           content += `
+                                <div class="flex flex-col items-center justify-center p-8 space-y-4 text-center bg-gray-50 rounded-lg border border-gray-100">
+                                <div class="p-4 bg-gray-100 rounded-full">
+                                    <!-- Font Awesome 'Bullhorn' icon for announcements -->
+                                    <i class="fas fa-bullhorn w-12 h-12 text-white"></i>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <h3 class="text-lg font-semibold text-white">
+                                    No Announcements Found
+                                    </h3>
+                                    <p class="text-sm text-white max-w-sm">
+                                    There are currently no announcements available. Check back later for updates.
+                                    </p>
+                                </div>
+                                </div>`;
+
+                        }
+
+                        content += `</div></div>
+                            <div class="tab-pane fade" id="members" role="tabpanel" aria-labelledby="members-tab">
+                                <!-- Members content will be loaded here -->
+                            </div>`;
+
+                        $('#newsFeedContent').html(content);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                        $('#newsFeedContent').html(
+                            '<p class="text-danger">An error occurred while fetching announcements. Please try again later.</p>'
+                        );
+                    }
+                });
             }
 
-            content += '</div>';
-            $('#newsFeedContent').html(content);
-        },
-        error: function (xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-            $('#newsFeedContent').html('<p>An error occurred while fetching announcements. Please try again later.</p>');
-        }
-    });
-}
+            $(document).on('click', '#members-tab', function () {
+                    var orgId = $('.show-members-btn').data('orgid'); // Use any visible element with orgId if necessary
+                    if (!orgId) {
+                        console.error("Invalid orgId in #members-tab click event:", orgId);
+                        $('#members').html('<p class="text-danger">Invalid organization ID.</p>');
+                        return;
+                    }
+                    fetchMembers(orgId);
+                });
 
-
-$(document).on('click', '.show-members-btn', function () {
-    var orgId = $(this).data('orgid');
-    fetchMembers(orgId);
-});
-
-// Fetch members based on org ID
-function fetchMembers(orgId) {
-    $.ajax({
-        url: 'ajax/fetch_members.php', // Replace with the correct URL for fetching members
-        type: 'POST',
-        dataType: 'json',
-        data: { org_id: orgId },
-        success: function (response) {
-            console.log('AJAX Success Response (Members):', response);
-
-            if (response.error) {
-                $('#newsFeedContent').html('<p>' + response.error + '</p>');
-                return;
-            }
-
-            var membersContent = `
-    <div class="members-list">
-        <h5 style="color: yellow;">Members</h5>
-        <div class="row">
-`;
-
-if (response.members && response.members.length > 0) {
-    response.members.forEach(function (member, index) {
-        // Open a new row after every 4 members
-        if (index % 4 === 0 && index > 0) {
-            membersContent += `</div><div class="row">`; // Close and open a new row
-        }
-        
+            function fetchMembers(orgId) {
+                console.log("Fetching announcements for org ID:", orgId); // Debugging line
+                $.ajax({
+                    url: 'ajax/fetch_members.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { org_id: orgId },
+                    success: function (response) {
+                        if (response.error) {
+                            $('#members').html('<p class="text-danger">' + response.error + '</p>');
+                            return;
+                        }
+                        var membersContent = '<div class="row g-4">';
+                        if (response.members && response.members.length > 0) {
+    response.members.forEach(function (member) {
         membersContent += `
-    <div class="col-md-3 mb-4"> <!-- Use col-md-3 for four cards per row -->
-    <div class="card profile-card">
-        <img src="uploaded/orgUploaded/${member.member_img}" alt="${member.name}" class="card-img-top profile-img">
-        <div class="card-body">
-            <h5 class="card-title profile-name">${member.name}</h5>
-            <p class="card-text profile-username">@${member.username}</p>
-        </div>
-    </div>
-</div>
-
-
-        `;
+            <div class="col-md-3">
+                <div class="card border-0 bg-white h-100">
+                    <div class="position-relative aspect-ratio-1x1">
+                        <img src="uploaded/orgUploaded/${member.member_img}" 
+                             alt="${member.name}" 
+                             class="w-100"
+                             style="aspect-ratio: 1/1; object-fit: cover;"
+                             onerror="this.src='path/to/default-avatar.jpg'">
+                    </div>
+                    <div class="card-body text-center p-4">
+                        <h5 class="card-title mb-1" style="font-size: 12px; font-weight: 500;">
+                            ${member.name}
+                        </h5>
+                        <p class="card-text text-primary mb-3" style="font-size: 10px;">
+                           ${member.position}
+                        </p>
+                    </div>
+                </div>
+            </div>`;
     });
-} else {
-    membersContent += `<p>No members found.</p>`; // Handle case with no members
-}
+} else {           membersContent += `
+<div class="flex flex-col items-center justify-center p-8 space-y-4 text-center bg-gray-50 rounded-lg border border-gray-100">
+  <div class="p-4 bg-gray-100 rounded-full">
+    <!-- Font Awesome 'User X' icon -->
+    <i class="fas fa-user-slash w-12 h-12 text-white"></i>
+  </div>
 
-membersContent += `
-        </div> <!-- Close the last row -->
-    </div>
-`;
+  <div class="space-y-2">
+    <h3 class="text-lg font-semibold text-white">
+      No Members Found
+    </h3>
+    <p class="text-sm text-gray-500 max-w-sm">
+      We couldn't find any members matching your criteria. Try adjusting your search or filters.
+    </p>
+  </div>
 
-            $('#newsFeedContent').html(membersContent);
-        },
-        error: function (xhr, status, error) {
-            console.error('AJAX Error (Members):', status, error);
-            $('#newsFeedContent').html('<p>An error occurred while fetching members. Please try again later.</p>');
+  <button class="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors">
+    Clear Filters
+  </button>
+</div>`;
+
+
+                        }
+
+                        membersContent += '</div>';
+                        $('#members').html(membersContent);
+                    },
+                    error: function (xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+            $('#newsFeedContent').html(
+                '<p class="text-danger">An error occurred while fetching announcements. Please try again later.</p>'
+            );
         }
-    });
-}
+                });
+            }
 
-    // Utility function to remove font tags and color styles
-    function removeColorTags(content) {
-        return content
-            .replace(/<font[^>]*>/g, '') // Remove <font> tags
-            .replace(/<\/font>/g, '')    // Remove </font> tags
-            .replace(/style="[^"]*color:[^;"]*;?"/g, ''); // Remove inline color styles
-    }
+            function removeColorTags(content) {
+                return content
+                    .replace(/<font[^>]*>/g, '')
+                    .replace(/<\/font>/g, '')
+                    .replace(/style="[^"]*color:[^;"]*;?"/g, '');
+            }
 
-    function formatRelativeTime(date) {
-    const now = new Date();
-    const seconds = Math.floor((now - date) / 1000);
+            function formatRelativeTime(date) {
+                const now = new Date();
+                const seconds = Math.floor((now - date) / 1000);
 
-    if (seconds < 60) {
-        return seconds < 30 ? "just now" : seconds + " seconds ago";
-    }
-    
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) {
-        return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
-    }
+                if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+                
+                const minutes = Math.floor(seconds / 60);
+                if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
 
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) {
-        return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
-    }
+                const hours = Math.floor(minutes / 60);
+                if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
 
-    const days = Math.floor(hours / 24);
-    if (days < 30) {
-        return days + " day" + (days > 1 ? "s" : "") + " ago";
-    }
+                const days = Math.floor(hours / 24);
+                if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
 
-    const months = Math.floor(days / 30);
-    if (months < 12) {
-        return months + " month" + (months > 1 ? "s" : "") + " ago";
-    }
+                const months = Math.floor(days / 30);
+                if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
 
-    const years = Math.floor(months / 12);
-    return years + " year" + (years > 1 ? "s" : "") + " ago";
-}
-
-});
-
+                const years = Math.floor(months / 12);
+                return years + " year" + (years > 1 ? "s" : "") + " ago";
+            }
+        });
 function adjustModalPosition() {
         var modal = document.getElementById('myModal');
 
@@ -2692,10 +3115,11 @@ function updateProfileDisplay(name, specialization, consultationTime, imageUrl) 
 
 function openTab(event, tabName) {
     // Hide all tab contents
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(content => {
-        content.style.display = 'none';
-    });
+  // Select all .tab-content elements only within the #campusmap section
+const campusMapTabContents = document.querySelectorAll('#campusmap .tab-content');
+campusMapTabContents.forEach(content => {
+    content.style.display = 'none';
+});
 
     // Remove active class from all buttons
     const tabButtons = document.querySelectorAll('.tab-button');
@@ -2745,9 +3169,110 @@ document.addEventListener('DOMContentLoaded', () => {
             text: 'Please check the room name and try again.',
         });
     }
-}
+} function formatTimeAgo(dateString) {
+            const created = new Date(dateString);
+            const now = new Date();
+            const diffInHours = Math.floor((now - created) / (1000 * 60 * 60));
+            
+            if (diffInHours >= 24) {
+                return created.toLocaleDateString();
+            } else if (diffInHours > 0) {
+                return `${diffInHours} hours ago`;
+            } else {
+                const diffInMinutes = Math.floor((now - created) / (1000 * 60));
+                return diffInMinutes > 0 ? `${diffInMinutes} minutes ago` : 'just now';
+            }
+        }
 
+        function createAnnouncementCard(announcement, index) {
+            const card = document.createElement('div');
+            card.className = 'announcement-card';
+            card.style.animationDelay = `${index * 0.2}s`;
+            
+            const timeIcon = `
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+            `;
+            
+            const userIcon = `
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            `;
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="org-info">
+                        <img class="org-avatar" src="uploaded/orgUploaded/${announcement.org_image || '/api/placeholder/48/48'}" 
+                             alt="${announcement.org_name}" 
+                             onerror="this.src='/api/placeholder/48/48'">
+                        <div>
+                            <div class="org-name">${announcement.org_name}</div>
+                            <div class="meta-info">
+                                <span class="meta-item">
+                                    ${timeIcon}
+                                    ${formatTimeAgo(announcement.created_at)}
+                                </span>
+                                <span class="meta-item">
+                                    ${userIcon}
+                                    ${announcement.creator_name}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="content-wrapper">
+                        <div class="announcement-text truncated">
+                            ${announcement.announcement_details}
+                        </div>
+                        <a class="see-more-link" onclick="toggleDetails(this)">See more...</a>
+                        ${announcement.announcement_image ? `
+                            <div class="announcement-image">
+                                <img src="uploaded/annUploaded/${announcement.announcement_image}" 
+                                     alt="Announcement" 
+                                     onerror="this.parentElement.style.display='none'">
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
 
+        function toggleDetails(link) {
+            const textElement = link.previousElementSibling;
+            const isExpanded = !textElement.classList.contains('truncated');
+            
+            textElement.classList.toggle('truncated');
+            link.textContent = isExpanded ? 'See more...' : 'See less...';
+        }
+
+        // Initialize announcements with PHP data
+        document.addEventListener('DOMContentLoaded', function() {
+            const announcements = <?php echo json_encode($allAnnouncement); ?>;
+            const container = document.getElementById('announcements-container');
+            
+            if (Array.isArray(announcements)) {
+                announcements.forEach((announcement, index) => {
+                    container.appendChild(createAnnouncementCard(announcement, index));
+                });
+            } else {
+                container.innerHTML = `
+                    <div class="announcement-card">
+                        <div class="card-content">
+                            <div class="announcement-text">
+                                ${announcements}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        });
 </script>
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script> -->
 

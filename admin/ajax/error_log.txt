@@ -1,38 +1,48 @@
-[29-Oct-2024 04:19:43 Europe/Berlin] Type parameter: account
-[29-Oct-2024 04:20:56 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1Hashing Password for User: org1Inserting Account for User: org1[29-Oct-2024 04:22:32 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[29-Oct-2024 04:27:21 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[29-Oct-2024 04:28:52 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[29-Oct-2024 04:29:52 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[29-Oct-2024 04:30:54 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[29-Oct-2024 04:32:04 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[29-Oct-2024 04:32:41 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[29-Oct-2024 04:34:19 Europe/Berlin] Type parameter: faculty
-[29-Oct-2024 04:36:03 Europe/Berlin] Type parameter: faculty
-[29-Oct-2024 04:45:21 Europe/Berlin] Type parameter: excel_import
-[29-Oct-2024 04:45:21 Europe/Berlin] Spreadsheet loaded successfully.
-[29-Oct-2024 04:45:21 Europe/Berlin] Sheet Data: Array
+[01-Nov-2024 10:57:43 Europe/Berlin] Type parameter: faqs
+[01-Nov-2024 10:59:14 Europe/Berlin] Type parameter: faqs
+[01-Nov-2024 11:03:01 Europe/Berlin] Type parameter: faqs
+[01-Nov-2024 11:05:14 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:05:14 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 273
+[01-Nov-2024 11:05:14 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 273
+[01-Nov-2024 11:05:14 Europe/Berlin] Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'action' in 'field list'
+[01-Nov-2024 11:08:55 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:08:55 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 275
+[01-Nov-2024 11:08:55 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 275
+[01-Nov-2024 11:08:55 Europe/Berlin] PHP Warning:  Undefined variable $creators_name in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 354
+[01-Nov-2024 11:10:55 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:10:55 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 275
+[01-Nov-2024 11:10:55 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 275
+[01-Nov-2024 11:10:55 Europe/Berlin] PHP Warning:  Undefined variable $creators_name in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 354
+[01-Nov-2024 11:11:53 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:11:53 Europe/Berlin] PHP Warning:  Undefined variable $creators_name in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 356
+[01-Nov-2024 11:13:27 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:14:25 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:16:04 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:16:04 Europe/Berlin] PHP Warning:  Undefined variable $creators_name in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 357
+[01-Nov-2024 11:18:02 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:20:02 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:21:26 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:21:33 Europe/Berlin] Type parameter: faculty
+[01-Nov-2024 11:23:08 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:24:16 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:24:52 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:25:04 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:27:08 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:29:21 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:30:43 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:31:47 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:31:50 Europe/Berlin] Type parameter: organization
+[01-Nov-2024 11:32:54 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admindwadwadwadwa
+Hashing Password for User: admindwadwadwadwa
+Inserting Account for User: admindwadwadwadwa
+[01-Nov-2024 11:35:00 Europe/Berlin] Type parameter: membersaccount
+[01-Nov-2024 11:38:03 Europe/Berlin] Type parameter: membersaccount
+[01-Nov-2024 11:38:16 Europe/Berlin] Type parameter: membersaccount
+[01-Nov-2024 11:39:33 Europe/Berlin] Type parameter: membersaccount
+[01-Nov-2024 11:48:47 Europe/Berlin] Type parameter: excel_import
+[01-Nov-2024 11:48:47 Europe/Berlin] Spreadsheet loaded successfully.
+[01-Nov-2024 11:48:47 Europe/Berlin] Sheet Data: Array
 (
     [1] => Array
         (
@@ -43,18 +53,117 @@ Inserting Account for User: org1
 
     [2] => Array
         (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => 10 - * AM
+            [A] => John Wick
+            [B] => CS Department
+            [C] => 32131
+        )
+
+    [3] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => IS Department
+            [C] => 3213
+        )
+
+    [4] => Array
+        (
+            [A] => Shrek Org
+            [B] => IT Deparment
+            [C] => 23213
+        )
+
+    [5] => Array
+        (
+            [A] => Luffy
+            [B] => MIT
+            [C] => 3213
+        )
+
+    [6] => Array
+        (
+            [A] => Zoro
+            [B] => MIT
+            [C] => 1321
+        )
+
+    [7] => Array
+        (
+            [A] => Nami
+            [B] => CS Department
+            [C] => 21312
+        )
+
+    [8] => Array
+        (
+            [A] => EDIT FACULTY TEST
+            [B] => CS Department
+            [C] => 1321
+        )
+
+    [9] => Array
+        (
+            [A] => Alvinson L. Guzman
+            [B] => Dean
+            [C] => 3213
+        )
+
+    [10] => Array
+        (
+            [A] => Juan Dela Cruz
+            [B] => Asistant Dean
+            [C] => 3213
+        )
+
+    [11] => Array
+        (
+            [A] => Caroline Carmen
+            [B] => College Clerk
+            [C] => 3213
+        )
+
+    [12] => Array
+        (
+            [A] => Jane Mae De Vene
+            [B] => College Clerk
+            [C] => 321321
+        )
+
+    [13] => Array
+        (
+            [A] => Carlota Tupasuriano
+            [B] => Technical Assistant
+            [C] => 3213
+        )
+
+    [14] => Array
+        (
+            [A] => Raymundo Punzalan
+            [B] => College Secretary
+            [C] => 3213
+        )
+
+    [15] => Array
+        (
+            [A] => HANA
+            [B] => IT Deparment
+            [C] => 
+        )
+
+    [16] => Array
+        (
+            [A] => 
+            [B] => 
+            [C] => 
         )
 
 )
 
-[29-Oct-2024 04:45:21 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '10 - * AM', Image: 'dfi.jfif'
-[29-Oct-2024 04:45:21 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: '10 - * AM', Image: 'dfi.jfif'
-[29-Oct-2024 04:49:01 Europe/Berlin] Type parameter: excel_import
-[29-Oct-2024 04:49:02 Europe/Berlin] Spreadsheet loaded successfully.
-[29-Oct-2024 04:49:02 Europe/Berlin] Sheet Data: Array
+[01-Nov-2024 11:48:47 Europe/Berlin] Processing Row 2: Name: 'John Wick', Dept: 'cs department', Consultation Time: '32131'
+[01-Nov-2024 11:48:47 Europe/Berlin] Inserting: Name: 'John Wick', Dept ID: 2, Consultation Time: '32131'
+[01-Nov-2024 11:48:47 Europe/Berlin] Insert error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'action' in 'field list'
+[01-Nov-2024 11:50:09 Europe/Berlin] Type parameter: excel_import
+[01-Nov-2024 11:50:09 Europe/Berlin] Spreadsheet loaded successfully.
+[01-Nov-2024 11:50:09 Europe/Berlin] Sheet Data: Array
 (
     [1] => Array
         (
@@ -65,19 +174,19 @@ Inserting Account for User: org1
 
     [2] => Array
         (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => 10 - * AM
+            [A] => dwad
+            [B] => CS DEPARTMENT
+            [C] => 8 - 10 am
         )
 
 )
 
-[29-Oct-2024 04:49:02 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '10 - * AM'
-[29-Oct-2024 04:49:02 Europe/Berlin] No update necessary for 'Hanz Jansen'. Existing data matches the imported data.
-[29-Oct-2024 05:47:42 Europe/Berlin] Type parameter: faculty
-[29-Oct-2024 06:17:29 Europe/Berlin] Type parameter: excel_import
-[29-Oct-2024 06:17:29 Europe/Berlin] Spreadsheet loaded successfully.
-[29-Oct-2024 06:17:29 Europe/Berlin] Sheet Data: Array
+[01-Nov-2024 11:50:09 Europe/Berlin] Processing Row 2: Name: 'dwad', Dept: 'cs department', Consultation Time: '8 - 10 am'
+[01-Nov-2024 11:50:09 Europe/Berlin] Updating: Name: 'dwad', New Consultation Time: '8 - 10 am'
+[01-Nov-2024 11:50:09 Europe/Berlin] Update error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'action' in 'field list'
+[01-Nov-2024 11:56:50 Europe/Berlin] Type parameter: excel_import
+[01-Nov-2024 11:56:51 Europe/Berlin] Spreadsheet loaded successfully.
+[01-Nov-2024 11:56:51 Europe/Berlin] Sheet Data: Array
 (
     [1] => Array
         (
@@ -88,18 +197,17 @@ Inserting Account for User: org1
 
     [2] => Array
         (
-            [A] => Hanz Jansen awdewadwad
-            [B] => IT DEPARTMENT
-            [C] => 10 - * AM
+            [A] => dwad
+            [B] => CS DEPARTMENT
+            [C] => 8 - 10 adwadwadm
         )
 
 )
 
-[29-Oct-2024 06:17:29 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen awdewadwad', Dept: 'it department', Consultation Time: '10 - * AM'
-[29-Oct-2024 06:17:29 Europe/Berlin] Updating: Name: 'Hanz Jansen awdewadwad', New Consultation Time: '10 - * AM'
-[29-Oct-2024 06:28:13 Europe/Berlin] Type parameter: excel_import
-[29-Oct-2024 06:28:13 Europe/Berlin] Spreadsheet loaded successfully.
-[29-Oct-2024 06:28:13 Europe/Berlin] Sheet Data: Array
+[01-Nov-2024 11:56:51 Europe/Berlin] Processing Row 2: Name: 'dwad', Dept: 'cs department', Consultation Time: '8 - 10 adwadwadm'
+[01-Nov-2024 11:57:56 Europe/Berlin] Type parameter: excel_import
+[01-Nov-2024 11:57:56 Europe/Berlin] Spreadsheet loaded successfully.
+[01-Nov-2024 11:57:56 Europe/Berlin] Sheet Data: Array
 (
     [1] => Array
         (
@@ -110,60 +218,11 @@ Inserting Account for User: org1
 
     [2] => Array
         (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => 1236
+            [A] => dwad
+            [B] => CS DEPARTMENT
+            [C] => 8 - 10 addwadwadwadwadwadm
         )
 
 )
 
-[29-Oct-2024 06:28:13 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '1236'
-[29-Oct-2024 06:28:13 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: '1236'
-[29-Oct-2024 06:29:00 Europe/Berlin] Type parameter: excel_import
-[29-Oct-2024 06:29:00 Europe/Berlin] Spreadsheet loaded successfully.
-[29-Oct-2024 06:29:00 Europe/Berlin] Sheet Data: Array
-(
-    [1] => Array
-        (
-            [A] => Name
-            [B] => Department
-            [C] => Consultation Time
-        )
-
-    [2] => Array
-        (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => Hashndajksdaw
-        )
-
-)
-
-[29-Oct-2024 06:29:00 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: 'Hashndajksdaw'
-[29-Oct-2024 06:29:00 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: 'Hashndajksdaw'
-[29-Oct-2024 06:29:55 Europe/Berlin] Type parameter: excel_import
-[29-Oct-2024 06:29:55 Europe/Berlin] Spreadsheet loaded successfully.
-[29-Oct-2024 06:29:55 Europe/Berlin] Sheet Data: Array
-(
-    [1] => Array
-        (
-            [A] => Name
-            [B] => Department
-            [C] => Consultation Time
-        )
-
-    [2] => Array
-        (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => SAMPLE
-        )
-
-)
-
-[29-Oct-2024 06:29:55 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: 'SAMPLE'
-[29-Oct-2024 06:29:55 Europe/Berlin] Updating: Name: 'Hanz Jansen', New Consultation Time: 'SAMPLE'
-[31-Oct-2024 03:42:38 Europe/Berlin] Type parameter: announcement
-[31-Oct-2024 11:16:30 Europe/Berlin] Type parameter: announcement
-[31-Oct-2024 11:17:03 Europe/Berlin] Type parameter: announcement
-[31-Oct-2024 11:17:17 Europe/Berlin] Type parameter: event
+[01-Nov-2024 11:57:56 Europe/Berlin] Processing Row 2: Name: 'dwad', Dept: 'cs department', Consultation Time: '8 - 10 addwadwadwadwadwadm'

@@ -1,6 +1,7 @@
 <?php
 include_once ('assets/header.php');
-
+$uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
+$cid = $_SESSION['id'] ?? null; 
 if (isset($_POST['add_org'])) {
   $log_msg = $obj->add_org($_POST);
 }
@@ -340,7 +341,8 @@ if ($stmt->rowCount() == 1) {
   </div>
   
   <form id="accountForm" class="row" action="your_upload_script.php" method="post" enctype="multipart/form-data">
-    <!-- Modal -->
+    <!-- Modal --> <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+  <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
     <div class="modal fade bd-example-modal-lg" id="accountModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">

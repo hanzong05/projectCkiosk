@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
         if ($type === 'announcement') {
             $id = $_POST['id'] ?? null; // Existing announcement ID (if updating)
             $uid = $_POST['uid'] ?? null; // User ID from session
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $details = $_POST['announcement_details'] ?? null; // Announcement details
         
             // Set the timezone
-            date_default_timezone_set('Asia/Manila'); // No need for error check since it's common
+            date_default_timezone_set('Asia/Manila');
             // Get the current timestamp
             $date = date('Y-m-d H:i:s');
         
@@ -88,6 +87,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ]);
                     }
         
+                    // Fetch the creator's name from users_tbl
+                    $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+                    $creator_stmt = $connect->prepare($creator_name_sql);
+                    $creator_stmt->execute([':cid' => $cid]);
+                    $creators_name = $creator_stmt->fetchColumn();
+        
+                    // If not found, check orgmembers_tbl
+                    if (!$creators_name) {
+                        $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE orgmember_id = :cid";
+                        $org_member_stmt = $connect->prepare($org_member_sql);
+                        $org_member_stmt->execute([':cid' => $cid]);
+                        $creators_name = $org_member_stmt->fetchColumn();
+                    }
+        
+                    // If no name found, default to 'Unknown User'
+                    $creators_name = $creators_name ?: 'Unknown User';
+        
+                    // Add to audit trail
+                    $audit_message = "{$creators_name} created an announcement: {$details}";
+                    $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                    $audit_stmt = $connect->prepare($audit_sql);
+                    $audit_stmt->execute([':message' => $audit_message]);
+        
                     $response['success'] = true;
                     $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
                 } else {
@@ -126,21 +148,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ]);
                 }
         
+                // Fetch the creator's name from users_tbl
+                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+                $creator_stmt = $connect->prepare($creator_name_sql);
+                $creator_stmt->execute([':cid' => $cid]);
+                $creators_name = $creator_stmt->fetchColumn();
+        
+                // If not found, check orgmembers_tbl
+                if (!$creators_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':cid' => $cid]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+        
+                // If no name found, default to 'Unknown User'
+                $creators_name = $creators_name ?: 'Unknown User';
+        
+                // Add to audit trail
+                $audit_message = "{$creators_name} created an announcement: {$details}";
+                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_stmt->execute([':message' => $audit_message]);
+        
                 $response['success'] = true;
                 $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
             }
         }
         
-        // Output the response
-        
-         elseif ($type === 'event') {
+        elseif ($type === 'event') {
             $details = $_POST['event_details'] ?? null;
             $date = $_POST['event_date'] ?? null;
             $creator = $_POST['uid'] ?? null;
             $ecreator = $_POST['aid'] ?? null; // Get the event creator from the input
         
             // Adjust the SQL to include event_creator
-            $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator,created_by) VALUES (:date, :details, :creator, :ecreator)";
+            $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator, created_by) VALUES (:date, :details, :creator, :ecreator)";
             $stmt = $connect->prepare($sql);
             $stmt->execute([
                 ':date' => $date,
@@ -149,27 +192,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':creator' => $creator // Bind the creator value
             ]);
         
+            // Fetch the creator's name from users_tbl
+            $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :ecreator";
+            $creator_stmt = $connect->prepare($creator_name_sql);
+            $creator_stmt->execute([':ecreator' => $ecreator]);
+            $creators_name = $creator_stmt->fetchColumn();
+        
+            // If not found, check orgmembers_tbl
+            if (!$creators_name) {
+                $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :ecreator";
+                $org_member_stmt = $connect->prepare($org_member_sql);
+                $org_member_stmt->execute([':ecreator' => $ecreator]);
+                $creators_name = $org_member_stmt->fetchColumn();
+            }
+        
+            // If no name found, default to 'Unknown User'
+            $creators_name = $creators_name ?: 'Unknown User';
+        
+            // Add to audit trail
+            $audit_message = "{$creators_name} created an event: {$details} on {$date}";
+            $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+            $audit_stmt = $connect->prepare($audit_sql);
+            $audit_stmt->execute([':message' => $audit_message]);
+        
             $response['success'] = true;
             $response['message'] = 'Event added successfully.';
         }
         elseif ($type === 'faqs') {
             $question = $_POST['faqs_question'] ?? null;
             $answer = $_POST['faqs_answer'] ?? null;
-
+            $id = $_POST['id'] ?? null; // Existing FAQ ID (if updating)
+            $uid = $_POST['uid'] ?? null; // User ID from session
+            $cid = $_POST['cid'] ?? null; // Creator ID from session
+        
             if ($question && $answer) {
+                // Insert new FAQ
                 $sql = "INSERT INTO `faqs_tbl` (faqs_question, faqs_answer) VALUES (:question, :answer)";
                 $stmt = $connect->prepare($sql);
                 $stmt->execute([
                     ':question' => $question,
                     ':answer' => $answer
                 ]);
-
+        
+                // Fetch the creator's name from users_tbl
+                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+                $creator_stmt = $connect->prepare($creator_name_sql);
+                $creator_stmt->execute([':cid' => $cid]);
+                $creators_name = $creator_stmt->fetchColumn();
+        
+                // If not found, check orgmembers_tbl
+                if (!$creators_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':cid' => $cid]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+        
+                // If no name found, default to 'Unknown User'
+                $creators_name = $creators_name ?: 'Unknown User';
+        
+                // Add to audit trail with creator ID
+                $audit_message = "{$creators_name} added a FAQ: Question - {$question}";
+                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_stmt->execute([':message' => $audit_message]);
+        
                 $response['success'] = true;
                 $response['message'] = 'FAQ added successfully.';
             } else {
                 $response['message'] = 'Question and answer are required.';
             }
-
         }if ($type === 'faculty') {
             $name = $_POST['faculty_name'] ?? null;
             $dept = $_POST['department'] ?? null;
@@ -177,30 +269,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $consultationTime = $_POST['consultation_time'] ?? null;
             $imagePath = '';
         
+            $uid = $_POST['uid'] ?? null; // User ID from session
+            $cid = $_POST['cid'] ?? null; // Creator ID from session
+        
+            // Initialize creators_name to 'Unknown User'
+            $creators_name = 'Unknown User';
+        
+            // Fetch the creator's name from users_tbl
+            $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+            $creator_stmt = $connect->prepare($creator_name_sql);
+            $creator_stmt->execute([':cid' => $cid]);
+            $creators_name = $creator_stmt->fetchColumn();
+        
+            // If not found, check orgmembers_tbl
+            if (!$creators_name) {
+                $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                $org_member_stmt = $connect->prepare($org_member_sql);
+                $org_member_stmt->execute([':cid' => $cid]);
+                $creators_name = $org_member_stmt->fetchColumn();
+            }
+        
+            // If no name found, default to 'Unknown User'
+            $creators_name = $creators_name ?: 'Unknown User';
+        
             // Restricted department IDs that should not allow duplicates but update existing records
             $restrictedDeptIds = [5, 6, 7, 8, 9, 10, 11, 12, 13];
         
-            if (in_array($dept, $restrictedDeptIds)) {
-                // Check if the department already exists
-                $existingDeptQuery = $connect->prepare("SELECT faculty_id FROM faculty_tbl WHERE faculty_dept = :dept");
-                $existingDeptQuery->execute([':dept' => $dept]);
-                $existingFaculty = $existingDeptQuery->fetch(PDO::FETCH_ASSOC);
+            // Check for duplicate faculty member
+            $duplicateCheckQuery = $connect->prepare("SELECT faculty_id FROM faculty_tbl WHERE faculty_name = :name AND faculty_dept = :dept");
+            $duplicateCheckQuery->execute([':name' => $name, ':dept' => $dept]);
+            $existingFaculty = $duplicateCheckQuery->fetch(PDO::FETCH_ASSOC);
         
-                if ($existingFaculty) {
-                    // Update the existing faculty member's information if the department exists
-                    $updateStmt = $connect->prepare("UPDATE faculty_tbl SET faculty_name = :name, specialization = :specialization, consultation_time = :consultation_time WHERE faculty_dept = :dept");
-                    $updateStmt->execute([
-                        ':name' => $name,
-                        ':specialization' => $specialization,
-                        ':consultation_time' => $consultationTime,
-                        ':dept' => $dept
-                    ]);
-                    $response['success'] = true;
-                    $response['message'] = 'Faculty member information updated successfully.';
-                    echo json_encode($response);
-                    exit;
-                }
+            if ($existingFaculty) {
+                $response['success'] = false;
+                $response['message'] = 'Faculty member already exists in this department.';
+                echo json_encode($response);
+                exit;
             }
+        
+            // Existing faculty ID (if updating)
+            $id = $_POST['id'] ?? null;
         
             // If no existing faculty member in the restricted department, insert a new one
             if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
@@ -232,6 +340,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':consultation_time' => $consultationTime
                 ]);
         
+                // Add to audit trail for new faculty addition
+                $audit_message = "{$creators_name} added a new faculty member: Name - {$name}, Department ID - {$dept}";
+                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_stmt->execute([':message' => $audit_message]);
+        
             } else {
                 $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_dept, specialization, consultation_time) VALUES (:name, :dept, :specialization, :consultation_time)";
                 $stmt = $connect->prepare($sql);
@@ -241,6 +355,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':specialization' => $specialization,
                     ':consultation_time' => $consultationTime
                 ]);
+        
+                // Add to audit trail for new faculty addition without an image
+                $audit_message = "{$creators_name} added a new faculty member: Name - {$name}, Department ID - {$dept}";
+                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_stmt->execute([':message' => $audit_message]);
             }
         
             $response['success'] = true;
@@ -248,7 +368,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode($response);
             exit;
         }
-        
         elseif ($type === 'organization') {
             $name = $_POST['org_name'] ?? null;
             $imagePath = '';
@@ -282,6 +401,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         
+            // Get user ID and creator ID from POST data
+            $uid = $_POST['uid'] ?? null; // User ID from session
+            $cid = $_POST['cid'] ?? null; // Creator ID from session
+        
+            // Fetch the creator's name from users_tbl
+            $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+            $creator_stmt = $connect->prepare($creator_name_sql);
+            $creator_stmt->execute([':cid' => $cid]);
+            $creators_name = $creator_stmt->fetchColumn();
+        
+            // If not found, check orgmembers_tbl
+            if (!$creators_name) {
+                $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                $org_member_stmt = $connect->prepare($org_member_sql);
+                $org_member_stmt->execute([':cid' => $cid]);
+                $creators_name = $org_member_stmt->fetchColumn();
+            }
+        
+            // If no name found, default to 'Unknown User'
+            $creators_name = $creators_name ?: 'Unknown User';
+        
             // Process image upload if provided
             if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
@@ -309,6 +449,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ':image' => $newImage
                         ]);
         
+                        // Add to audit trail
+                        $audit_message = "{$creators_name} added a new organization: Name - {$name}";
+                        $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                        $audit_stmt = $connect->prepare($audit_sql);
+                        $audit_stmt->execute([':message' => $audit_message]);
+        
                         $response['success'] = true;
                         $response['message'] = 'Organization added successfully.';
                     } catch (Exception $e) {
@@ -326,6 +472,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt = $connect->prepare($sql);
                     $stmt->execute([':name' => $name]);
         
+                    // Add to audit trail
+                    $audit_message = "{$creators_name} added a new organization: Name - {$name}";
+                    $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                    $audit_stmt = $connect->prepare($audit_sql);
+                    $audit_stmt->execute([':message' => $audit_message]);
+        
                     $response['success'] = true;
                     $response['message'] = 'Organization added successfully without an image.';
                 } catch (Exception $e) {
@@ -334,8 +486,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         
+            echo json_encode($response);
+            exit;
         }
-        
         elseif ($type === 'account') {
             $user_type = $_POST['user_type'] ?? '2';
             $username = $_POST['username'] ?? null;
@@ -393,6 +546,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
         
+                // Get user ID and creator ID from POST data
+                $uid = $_POST['uid'] ?? null; // User ID from session
+                $cid = $_POST['cid'] ?? null; // Creator ID from session
+        
+                // Fetch the creator's name from users_tbl
+                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+                $creator_stmt = $connect->prepare($creator_name_sql);
+                $creator_stmt->execute([':cid' => $cid]);
+                $creators_name = $creator_stmt->fetchColumn();
+        
+                // If not found, check orgmembers_tbl
+                if (!$creators_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':cid' => $cid]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+        
+                // If no name found, default to 'Unknown User'
+                $creators_name = $creators_name ?: 'Unknown User';
+        
                 error_log("Hashing Password for User: $username\n", 3, __DIR__ . '/error_log.txt');
         
                 // Hash the password using SHA-256
@@ -410,6 +584,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':org' => $org
                 ]);
         
+                // Add to audit trail
+                $audit_message = "{$creators_name} created an account: Username - {$username}";
+                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_stmt->execute([':message' => $audit_message]);
+        
                 // Set the success response
                 $response['success'] = true;
                 $response['message'] = 'Account created successfully.';
@@ -426,150 +606,174 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode($response);
         }
         
-        
         elseif ($type === 'membersaccount') {
-    // Gather form inputs
-    $username = $_POST['username'] ?? null;
-    $password = $_POST['password'] ?? null;
-    $position = $_POST['position'] ?? null; 
-    $org = $_POST['org'] ?? null;
-    $name = $_POST['name'] ?? null;
-
-    // Initialize an array to collect validation errors
-    $errors = [];
-    
-    // Determine user type based on position
-    if ($position === "President" || $position === "Secretary") {
-        $user_type = '2'; // Set user type to '2' for President or Secretary
-    } else {
-        $user_type = '3'; // Default to '3' (standard user) for other positions
-    }
-
-    // Validate required fields
-    if ($name === null || empty(trim($name))) {
-        $errors[] = 'Name is required.';
-    }
-    if ($username === null || empty(trim($username))) {
-        $errors[] = 'Username is required.';
-    }
-    if ($password === null || empty(trim($password))) {
-        $errors[] = 'Password is required.';
-    } else {
-        // Validate password strength
-        if (strlen($password) < 8 || strlen($password) > 16) {
-            $errors[] = 'Password must be between 8 and 16 characters long.';
-        }
-        if (!preg_match('/[A-Z]/', $password)) {
-            $errors[] = 'Password must contain at least one uppercase letter.';
-        }
-        if (!preg_match('/[0-9]/', $password)) {
-            $errors[] = 'Password must contain at least one number.';
-        }
-        if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
-            $errors[] = 'Password must contain at least one special character.';
-        }
-    }
-    if ($position === null || empty(trim($position))) {
-        $errors[] = 'Position is required.';
-    }
-
-    // Check for errors
-    if (!empty($errors)) {
-        $response['success'] = false;
-        $response['message'] = implode('<br>', $errors);
-        echo json_encode($response);
-        exit;
-    }
-
-    try {
-        // Check for duplicate username or name
-        $checkSql = "SELECT COUNT(*) FROM `orgmembers_tbl` WHERE `username` = :username OR `name` = :name";
-        $checkStmt = $connect->prepare($checkSql);
-        $checkStmt->execute([
-            ':username' => $username,
-            ':name' => $name
-        ]);
-        $count = $checkStmt->fetchColumn();
-
-        if ($count > 0) {
-            $response['success'] = false;
-            $response['message'] = 'Username or Name already exists. Please choose a different one.';
-            echo json_encode($response);
-            exit;
-        }
-
-        // Process image upload
-        $member_img = null; // Default to null
-        if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
-            $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
-            if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
-                $response['message'] = 'Failed to create upload directory.';
-                echo json_encode($response);
-                exit;
-            }
-            $newImage = $username . "_" . $_FILES['org_image']['name']; // Use username for unique name
-            $tempPath = $_FILES["org_image"]["tmp_name"];
-            $basename = basename($newImage);
-            $originalPath = $uploadTo . $basename;
-
-            if (move_uploaded_file($tempPath, $originalPath)) {
-                $member_img = $basename; // Set the member_img to the uploaded file name
+            // Gather form inputs
+            $username = $_POST['username'] ?? null;
+            $password = $_POST['password'] ?? null;
+            $position = $_POST['position'] ?? null; 
+            $org = $_POST['org'] ?? null;
+            $name = $_POST['name'] ?? null;
+        
+            // Initialize an array to collect validation errors
+            $errors = [];
+            
+            // Determine user type based on position
+            if ($position === "President" || $position === "Secretary") {
+                $user_type = '2'; // Set user type to '2' for President or Secretary
             } else {
-                $response['message'] = 'Failed to move uploaded file.';
+                $user_type = '3'; // Default to '3' (standard user) for other positions
+            }
+        
+            // Validate required fields
+            if ($name === null || empty(trim($name))) {
+                $errors[] = 'Name is required.';
+            }
+            if ($username === null || empty(trim($username))) {
+                $errors[] = 'Username is required.';
+            }
+            if ($password === null || empty(trim($password))) {
+                $errors[] = 'Password is required.';
+            } else {
+                // Validate password strength
+                if (strlen($password) < 8 || strlen($password) > 16) {
+                    $errors[] = 'Password must be between 8 and 16 characters long.';
+                }
+                if (!preg_match('/[A-Z]/', $password)) {
+                    $errors[] = 'Password must contain at least one uppercase letter.';
+                }
+                if (!preg_match('/[0-9]/', $password)) {
+                    $errors[] = 'Password must contain at least one number.';
+                }
+                if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
+                    $errors[] = 'Password must contain at least one special character.';
+                }
+            }
+            if ($position === null || empty(trim($position))) {
+                $errors[] = 'Position is required.';
+            }
+        
+            // Check for errors
+            if (!empty($errors)) {
+                $response['success'] = false;
+                $response['message'] = implode('<br>', $errors);
                 echo json_encode($response);
                 exit;
             }
+        
+            try {
+                // Check for duplicate username or name
+                $checkSql = "SELECT COUNT(*) FROM `orgmembers_tbl` WHERE `username` = :username OR `name` = :name";
+                $checkStmt = $connect->prepare($checkSql);
+                $checkStmt->execute([
+                    ':username' => $username,
+                    ':name' => $name
+                ]);
+                $count = $checkStmt->fetchColumn();
+        
+                if ($count > 0) {
+                    $response['success'] = false;
+                    $response['message'] = 'Username or Name already exists. Please choose a different one.';
+                    echo json_encode($response);
+                    exit;
+                }
+        
+                // Process image upload
+                $member_img = null; // Default to null
+                if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
+                    $uploadTo = __DIR__ . "/../../uploaded/orgUploaded/";
+                    if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
+                        $response['message'] = 'Failed to create upload directory.';
+                        echo json_encode($response);
+                        exit;
+                    }
+                    $newImage = $username . "_" . $_FILES['org_image']['name']; // Use username for unique name
+                    $tempPath = $_FILES["org_image"]["tmp_name"];
+                    $basename = basename($newImage);
+                    $originalPath = $uploadTo . $basename;
+        
+                    if (move_uploaded_file($tempPath, $originalPath)) {
+                        $member_img = $basename; // Set the member_img to the uploaded file name
+                    } else {
+                        $response['message'] = 'Failed to move uploaded file.';
+                        echo json_encode($response);
+                        exit;
+                    }
+                }
+        
+                // Hash the password using SHA-256
+                $hashedPassword = hash('sha256', $password);
+        
+                // Insert account into database
+                $sql = "INSERT INTO `orgmembers_tbl` (name, username, password, users_type, position, org_type, member_img) VALUES (:name, :username, :password, :user_type, :position, :org, :member_img)";
+                $stmt = $connect->prepare($sql);
+        
+                // Execute the statement
+                $stmt->execute([
+                    ':name' => $name,
+                    ':username' => $username,
+                    ':password' => $hashedPassword,
+                    ':user_type' => $user_type,
+                    ':position' => $position,
+                    ':org' => $org,
+                    ':member_img' => $member_img // Insert image filename, can be null
+                ]);
+        
+                // Get user ID and creator ID from POST data
+                $uid = $_POST['uid'] ?? null; // User ID from session
+                $cid = $_POST['cid'] ?? null; // Creator ID from session
+        
+                // Fetch the creator's name from users_tbl
+                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+                $creator_stmt = $connect->prepare($creator_name_sql);
+                $creator_stmt->execute([':cid' => $cid]);
+                $creators_name = $creator_stmt->fetchColumn();
+        
+                // If not found, check orgmembers_tbl
+                if (!$creators_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':cid' => $cid]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+        
+                // If no name found, default to 'Unknown User'
+                $creators_name = $creators_name ?: 'Unknown User';
+        
+                // Add to audit trail
+                $audit_message = "{$creators_name} created a member account: Username - {$username}";
+                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_stmt->execute([':message' => $audit_message]);
+        
+                // Ensure the ID is an even number
+                $lastId = $connect->lastInsertId();
+                if ($lastId % 2 !== 0) {
+                    $newEvenId = $lastId + 1; // Increment to make it even
+                    // Update the ID in the database
+                    $updateSql = "UPDATE `orgmembers_tbl` SET id = :newEvenId WHERE id = :lastId";
+                    $updateStmt = $connect->prepare($updateSql);
+                    $updateStmt->execute([
+                        ':newEvenId' => $newEvenId,
+                        ':lastId' => $lastId,
+                    ]);
+                }
+        
+                $response['success'] = true;
+                $response['message'] = 'Account created successfully.';
+            } catch (Exception $e) {
+                error_log('Error: ' . $e->getMessage());
+                $response['success'] = false;
+                $response['message'] = 'An error occurred while processing your request.';
+            }
         }
-
-        // Hash the password using SHA-256
-        $hashedPassword = hash('sha256', $password);
-
-        // Insert account into database
-        $sql = "INSERT INTO `orgmembers_tbl` (name, username, password, users_type, position, org_type, member_img) VALUES (:name, :username, :password, :user_type, :position, :org, :member_img)";
-        $stmt = $connect->prepare($sql);
-
-        // Execute the statement
-        $stmt->execute([
-            ':name' => $name,
-            ':username' => $username,
-            ':password' => $hashedPassword,
-            ':user_type' => $user_type,
-            ':position' => $position,
-            ':org' => $org,
-            ':member_img' => $member_img // Insert image filename, can be null
-        ]);
-
-        // Get the last inserted ID
-        $lastId = $connect->lastInsertId();
-
-        // Ensure the ID is an even number
-        if ($lastId % 2 !== 0) {
-            $newEvenId = $lastId + 1; // Increment to make it even
-            // Update the ID in the database
-            $updateSql = "UPDATE `orgmembers_tbl` SET id = :newEvenId WHERE id = :lastId";
-            $updateStmt = $connect->prepare($updateSql);
-            $updateStmt->execute([
-                ':newEvenId' => $newEvenId,
-                ':lastId' => $lastId,
-            ]);
-        }
-
-        $response['success'] = true;
-        $response['message'] = 'Account created successfully.';
-    } catch (Exception $e) {
-        error_log('Error: ' . $e->getMessage());
-        $response['success'] = false;
-        $response['message'] = 'An error occurred while processing your request.';
-    }
-}
+        
 
         
-        
     } catch (Exception $e) {
         error_log('Error: ' . $e->getMessage());
         $response['message'] = 'An error occurred while processing your request.';
     }
-} if ($type === 'excel_import') {
+}if ($type === 'excel_import') {
     // Check if the file is uploaded without errors
     if (isset($_FILES['faculty_excel']) && $_FILES['faculty_excel']['error'] === UPLOAD_ERR_OK) {
         // Define the paths for the temporary and original files
@@ -606,6 +810,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'dean' => 5,
             // Add any additional mappings as needed
         ];
+
+        // Prepare audit trail statement
+        $auditStmt = $connect->prepare("INSERT INTO audit_trail (action, faculty_name, faculty_dept, consultation_time, timestamp) VALUES (:action, :faculty_name, :faculty_dept, :consultation_time, NOW())");
 
         // Get the data from the active sheet
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
@@ -660,6 +867,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 ':consultation_time' => $consultation_time
                             ]);
                             $updatedCount++; // Increment the count of updated records
+
+                            // Add to audit trail
+                            $auditStmt->execute([
+                                ':action' => 'update',
+                                ':faculty_name' => $faculty_name,
+                                ':faculty_dept' => $faculty_dept_id,
+                                ':consultation_time' => $consultation_time
+                            ]);
                         } catch (PDOException $e) {
                             error_log('Update error: ' . $e->getMessage());
                             $response['success'] = false;
@@ -670,18 +885,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         continue; // Skip to the next row
                     }
                 }
-
+                $uid = $_POST['uid'] ?? null; // User ID from session
+                $cid = $_POST['cid'] ?? null; // Creator ID from session
+                
+                // Fetch the updater's name from users_tbl
+                $updater_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+                $updater_stmt = $connect->prepare($updater_name_sql);
+                $updater_stmt->execute([':cid' => $cid]);
+                $updater_name = $updater_stmt->fetchColumn();
+                
+                // If not found, check orgmembers_tbl
+                if (!$updater_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':cid' => $cid]);
+                    $updater_name = $org_member_stmt->fetchColumn();
+                }
+                
+                // If no name found, default to 'Unknown User'
+                $updater_name = $updater_name ?: 'Unknown User';
+                
+                // Assuming $faculty_name and $consultation_time are defined
+                $existingDataQuery = $connect->prepare("SELECT consultation_time FROM faculty_tbl WHERE faculty_name = :faculty_name");
+                $existingDataQuery->execute([':faculty_name' => $faculty_name]);
+                $existingData = $existingDataQuery->fetch(PDO::FETCH_ASSOC);
+                
+                // Proceed with updates
                 if ($existingData) {
                     // If the faculty member exists, check if an update is necessary
                     if ($existingData['consultation_time'] != $consultation_time) {
                         // Update the record if consultation time has changed
-                        error_log("Updating: Name: '$faculty_name', New Consultation Time: '$consultation_time'");
                         try {
+                            $updateStmt = $connect->prepare("UPDATE faculty_tbl SET consultation_time = :consultation_time WHERE faculty_name = :faculty_name");
                             $updateStmt->execute([
                                 ':faculty_name' => $faculty_name,
                                 ':consultation_time' => $consultation_time
                             ]);
                             $updatedCount++; // Increment the count of updated records
+                
+                            // Add to audit trail
+                            $audit_message = "{$updater_name} updated '$faculty_name': New Consultation Time - '$consultation_time'";
+                            $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                            $audit_stmt = $connect->prepare($audit_sql);
+                            $audit_stmt->execute([':message' => $audit_message]);
+                
                         } catch (PDOException $e) {
                             error_log('Update error: ' . $e->getMessage());
                             $response['success'] = false;
@@ -703,6 +950,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ':consultation_time' => $consultation_time
                         ]);
                         $insertedCount++; // Increment the count of inserted records
+
+                        // Add to audit trail
+                        $auditStmt->execute([
+                            ':action' => 'insert',
+                            ':faculty_name' => $faculty_name,
+                            ':faculty_dept' => $faculty_dept_id,
+                            ':consultation_time' => $consultation_time
+                        ]);
                     } catch (PDOException $e) {
                         error_log('Insert error: ' . $e->getMessage());
                         $response['success'] = false;
@@ -733,18 +988,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $errorCode = $_FILES['faculty_excel']['error'];
         $response['success'] = false;
-        $response['message'] = isset($errorMessages[$errorCode]) ? $errorMessages[$errorCode] : 'No Excel file uploaded or there was an upload error.';
-        error_log("Upload error code: $errorCode - " . $response['message']);
+        $response['message'] = isset($errorMessages[$errorCode]) ? $errorMessages[$errorCode] : 'An unknown error occurred during file upload.';
     }
 
-    exit; // Terminate the script
+    // Output the JSON response
+    echo json_encode($response);
 }
 
-
-
-else {
-    $response['message'] = 'Saved.';
-}
-
-echo json_encode($response);
 ?>

@@ -1,4 +1,7 @@
 <?php
+// Now you can safely access $_SESSION
+$uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
+$cid = $_SESSION['id'] ?? null; 
 include_once ('assets/header.php');
 if (isset($_POST['add_faqs'])) {
   $log_msg = $obj->add_faqs($_POST);
@@ -238,7 +241,8 @@ $allFaqs = $obj->show_faqs();
 
   <!-- add event pop up -->
   <form id="faqForm" class="row" action="" method="post">
-    <!-- Modal -->
+    <!-- Modal -->   <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+          <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
     <div class="modal fade bd-example-modal-lg" id="faqsModal" tabindex="-1" role="dialog" data-backdrop="static"
       data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -282,6 +286,7 @@ $allFaqs = $obj->show_faqs();
             </button>
           </div>
           <div class="modal-body" id="faqsData">
+       
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

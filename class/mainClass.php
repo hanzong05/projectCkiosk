@@ -402,6 +402,17 @@ class mainClass
 
 
     function archive_announcement($appID) {
+        // First, fetch the editor's name for the audit trail
+        $editor_id = $_SESSION['id'] ?? ''; 
+        $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+        $editor_stmt->execute([':editor_id' => $editor_id]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+    
+        // Fetch the announcement details to be archived
+        $announcement_stmt = $this->connection->prepare("SELECT announcement_details FROM announcement_tbl WHERE announcement_id = :appID");
+        $announcement_stmt->execute([':appID' => $appID]);
+        $announcement_details = $announcement_stmt->fetchColumn();
+    
         $query = "UPDATE announcement_tbl SET is_archived = 1 WHERE announcement_id = :appID";
         $statement = $this->connection->prepare($query);
         
@@ -418,6 +429,13 @@ class mainClass
         
         // Execute the query and check if it was successful
         if ($statement->execute(array("appID" => $appID))) {
+            // Log the archiving in the audit trail with the editor's name and the archived announcement's details
+            $audit_message = "{$editor_name} archived an announcement (Details: {$announcement_details})";
+            
+            // Insert audit trail
+            $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
+            
             return '<script>
                     const Toast = Swal.mixin({
                         toast: true,
@@ -448,39 +466,7 @@ class mainClass
         }
     }
     
-    function delete_announcement($appID)
-    {
-        $query = "DELETE FROM announcement_tbl WHERE announcement_id = :appID";
-        $statement = $this->connection->prepare($query);
-        $statement->execute(array("appID" => $appID));
-        if ($statement->execute()) {
-            return '<script>
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Announcement Deleted successfully"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                          document.location = "announcement.php";
-                        } else {
-                          document.location = "announcement.php";
-                        }
-                      });
-                </script>';
-        } else {
-            return "Error Deleting";
-        }
-    }
+    
     public function get_announcements_by_org($orgId)
     {
         try {
@@ -786,39 +772,64 @@ function show_announcement2()
 }
 
 
-    function delete_event($appID)
-    {
-        $query = "DELETE FROM calendar_tbl WHERE calendar_id = :appID";
-        $statement = $this->connection->prepare($query);
-        $statement->execute(array("appID" => $appID));
-        if ($statement->execute()) {
-            return '<script>
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
+function delete_event($appID)
+{
+    // First, fetch the editor's name for the audit trail
+    $editor_id = $_SESSION['id'] ?? ''; 
+    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+    $editor_stmt->execute([':editor_id' => $editor_id]);
+    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+
+    // Fetch the event details to be deleted
+    $event_stmt = $this->connection->prepare("SELECT calendar_details FROM calendar_tbl WHERE calendar_id = :appID");
+    $event_stmt->execute([':appID' => $appID]);
+    $event_details = $event_stmt->fetchColumn();
+
+    // Prepare the deletion query
+    $query = "DELETE FROM calendar_tbl WHERE calendar_id = :appID";
+    $statement = $this->connection->prepare($query);
+
+    // Execute the deletion
+    if ($statement->execute(['appID' => $appID])) {
+        // Log the deletion in the audit trail with the editor's name and the deleted event's details
+        $audit_message = "{$editor_name} deleted an event: (Details - {$event_details})";
+        
+        // Insert audit trail
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+        $audit_stmt->execute([':message' => $audit_message]);
+
+        // Return success message
+        return '<script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
                         toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Event Deleted successfully"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                          document.location = "schoolcalendar.php";
-                        } else {
-                          document.location = "schoolcalendar.php";
-                        }
-                      });
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Event Deleted successfully"
+                }).then((result) => {
+                    document.location = "schoolcalendar.php"; // Redirect to the school calendar page
+                });
+            </script>';
+    } else {
+        // Return error message if deletion fails
+        return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Failed to delete the event."
+                });
                 </script>';
-        } else {
-            return "Error Deleting";
-        }
     }
+}
+
 
     function show_events()
     {
@@ -1142,39 +1153,63 @@ function show_announcement2()
     return $script;
 }
 
-    function delete_faculty($appID)
-    {
-        $query = "DELETE FROM faculty_tbl WHERE faculty_id = :appID";
-        $statement = $this->connection->prepare($query);
-        $statement->execute(array("appID" => $appID));
-        if ($statement->execute()) {
-            return '<script>
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
+ function delete_faculty($appID)
+{
+    // First, fetch the editor's name for the audit trail
+    $editor_id = $_SESSION['id'] ?? ''; 
+    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+    $editor_stmt->execute([':editor_id' => $editor_id]);
+    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+
+    // Fetch the faculty member's details to be deleted
+    $faculty_stmt = $this->connection->prepare("SELECT faculty_name FROM faculty_tbl WHERE faculty_id = :appID");
+    $faculty_stmt->execute([':appID' => $appID]);
+    $faculty_details = $faculty_stmt->fetchColumn();
+
+    // Prepare the deletion query
+    $query = "DELETE FROM faculty_tbl WHERE faculty_id = :appID";
+    $statement = $this->connection->prepare($query);
+
+    // Execute the deletion
+    if ($statement->execute(['appID' => $appID])) {
+        // Log the deletion in the audit trail with the editor's name and the deleted faculty's details
+        $audit_message = "{$editor_name} deleted a faculty member:  (Name - {$faculty_details})";
+
+        // Insert audit trail
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+        $audit_stmt->execute([':message' => $audit_message]);
+
+        // Return success message
+        return '<script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
                         toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Member Deleted successfully"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                          document.location = "facultymembers.php";
-                        } else {
-                          document.location = "facultymembers.php";
-                        }
-                      });
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Member Deleted successfully"
+                }).then((result) => {
+                    document.location = "facultymembers.php"; // Redirect to the faculty members page
+                });
+            </script>';
+    } else {
+        // Return error message if deletion fails
+        return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Failed to delete the faculty member."
+                });
                 </script>';
-        } else {
-            return "Error Deleting";
-        }
     }
+}
 
     function show_facultyheads($department_ids = null)
     {
@@ -1384,11 +1419,31 @@ function save_org($data)
 
     function delete_org($appID)
     {
+        // First, fetch the editor's name for the audit trail
+        $editor_id = $_SESSION['id'] ?? ''; 
+        $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+        $editor_stmt->execute([':editor_id' => $editor_id]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+    
+        // Fetch the organization's details to be deleted
+        $org_stmt = $this->connection->prepare("SELECT org_name FROM organization_tbl WHERE org_id = :appID");
+        $org_stmt->execute([':appID' => $appID]);
+        $org_details = $org_stmt->fetchColumn();
+    
+        // Prepare the deletion query
         $query = "DELETE FROM organization_tbl WHERE org_id = :appID";
         $statement = $this->connection->prepare($query);
     
-        // Execute the statement
-        if ($statement->execute(array("appID" => $appID))) {
+        // Execute the deletion
+        if ($statement->execute(['appID' => $appID])) {
+            // Log the deletion in the audit trail with the editor's name and the deleted organization's details
+            $audit_message = "{$editor_name} deleted an organization: (Organization Name - {$org_details})";
+    
+            // Insert audit trail
+            $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+            $audit_stmt->execute([':message' => $audit_message]);
+    
+            // Return success message
             return '<script>
                     const Toast = Swal.mixin({
                         toast: true,
@@ -1397,22 +1452,19 @@ function save_org($data)
                         timer: 2000,
                         timerProgressBar: true,
                         didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
                         }
                     });
                     Toast.fire({
                         icon: "success",
                         title: "Organization Deleted successfully"
                     }).then((result) => {
-                        if (result.isConfirmed) {
-                          document.location = "organization.php";
-                        } else {
-                          document.location = "organization.php";
-                        }
+                        document.location = "organization.php"; // Redirect to the organization page
                     });
                 </script>';
         } else {
+            // Return error message if deletion fails
             return '<script>
                     Swal.fire({
                         icon: "error",
@@ -1423,7 +1475,6 @@ function save_org($data)
         }
     }
     
-
     function add_faqs($data) {
         // Escape PHP variables to be safely included in JavaScript
         $question = htmlspecialchars($data['faqs_question'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -1566,59 +1617,101 @@ function save_faqs($data)
 }
 
 
-    function delete_faqs($appID)
-    {
-        $query = "DELETE FROM faqs_tbl WHERE faqs_id = :appID";
-        $statement = $this->connection->prepare($query);
-        $statement->execute(array("appID" => $appID));
-        if ($statement->execute()) {
-            return '<script>
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
+function delete_faqs($appID)
+{
+    // First, fetch the editor's name for the audit trail
+    $editor_id = $_SESSION['id'] ?? ''; 
+    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+    $editor_stmt->execute([':editor_id' => $editor_id]);
+    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+
+    // Fetch the FAQ details to be deleted
+    $faq_stmt = $this->connection->prepare("SELECT faqs_question FROM faqs_tbl WHERE faqs_id = :appID");
+    $faq_stmt->execute([':appID' => $appID]);
+    $faq_details = $faq_stmt->fetchColumn();
+
+    // Prepare the deletion query
+    $query = "DELETE FROM faqs_tbl WHERE faqs_id = :appID";
+    $statement = $this->connection->prepare($query);
+
+    // Execute the deletion
+    if ($statement->execute(['appID' => $appID])) {
+        // Log the deletion in the audit trail with the editor's name and the deleted FAQ's details
+        $audit_message = "{$editor_name} deleted a FAQ: (Question - {$faq_details})";
+
+        // Insert audit trail
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+        $audit_stmt->execute([':message' => $audit_message]);
+
+        // Return success message
+        return '<script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
                         toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "FAQs Deleted successfully"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                          document.location = "faqs.php";
-                        } else {
-                          document.location = "faqs.php";
-                        }
-                      });
-                </script>';
-        } else {
-            return "Error Deleting";
-        }
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "FAQs Deleted successfully"
+                }).then((result) => {
+                    document.location = "faqs.php"; // Redirect to the FAQs page
+                });
+            </script>';
+    } else {
+        // Return error message if deletion fails
+        return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to delete the FAQ."
+                });
+            </script>';
     }
-    public function show_faqs()
-    {
-        $query = "SELECT * FROM faqs_tbl";
-        $statement = $this->connection->prepare($query);
-    
-        if ($statement->execute()) {
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
-    
-            // Loop through each FAQ and strip HTML tags
-            foreach ($result as &$faq) {
-                $faq['faqs_question'] = strip_tags($faq['faqs_question']); // Sanitize question
-                $faq['faqs_answer'] = strip_tags($faq['faqs_answer']);     // Sanitize answer
-            }
-    
-            return $result;
-        } else {
-            return "No Data";
+}
+public function show_audit_trail()
+{
+    // Modify the query to select all entries and order them by created_at in descending order
+    $query = "SELECT * FROM audit_trail ORDER BY created_at DESC";
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
+
+        // Loop through each audit trail entry and sanitize the message
+        foreach ($result as &$entry) {
+            $entry['message'] = strip_tags($entry['message']); // Sanitize message
         }
+
+        return $result;
+    } else {
+        return "No Data";
     }
-    
+}
+public function show_faqs()
+{
+    $query = "SELECT * FROM faqs_tbl";
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
+
+        // Loop through each FAQ and strip HTML tags
+        foreach ($result as &$faq) {
+            $faq['faqs_question'] = strip_tags($faq['faqs_question']); // Sanitize question
+            $faq['faqs_answer'] = strip_tags($faq['faqs_answer']);     // Sanitize answer
+        }
+
+        return $result;
+    } else {
+        return "No Data";
+    }
+} 
     function add_account($data) {
         $username = htmlspecialchars($data['username'] ?? '', ENT_QUOTES, 'UTF-8');
         $password = password_hash($data['password'] ?? '', PASSWORD_DEFAULT); // Hashing the password
@@ -1684,171 +1777,202 @@ function save_faqs($data)
                     }
                 });
             </script>';
-    }
+    }function save_account($data)
+    {
+        // Retrieve and sanitize data
+        $uid = htmlspecialchars($data['uid'] ?? '', ENT_QUOTES, 'UTF-8'); // Use null coalescing operator to prevent undefined index
+        $username = htmlspecialchars($data['username'] ?? '', ENT_QUOTES, 'UTF-8');
+        $password = $data['password'] ?? '';
+        $org_id = htmlspecialchars($data['org'] ?? '', ENT_QUOTES, 'UTF-8');
+        $editor_id = $_SESSION['id'] ?? ''; 
+        
+        try {
+            // Check if the user exists
+            $sql = "SELECT users_password FROM users_tbl WHERE users_id = :uid";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+            $stmt->execute();
     
-function save_account($data)
-{
-    // Retrieve and sanitize data
-    $uid = htmlspecialchars($data['uid'], ENT_QUOTES, 'UTF-8');
-    $username = htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8');
-    $password = $data['password'] ?? ''; 
-    $position = htmlspecialchars($data['position'], ENT_QUOTES, 'UTF-8');
-
-    try {
-        // Check if the user exists
-        $sql = "SELECT password FROM orgmembers_tbl WHERE id = :uid";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
-        $stmt->execute();
-
-        if ($stmt->rowCount() == 1) {
-            $existingPasswordHash = $stmt->fetchColumn();
-
-            // Initialize an array to collect validation errors
-            $errors = [];
-
-            // Validate the password if a new one is provided
-            if (!empty($password)) {
-                // Check minimum and maximum length (8 to 16 characters)
-                if (strlen($password) < 8 || strlen($password) > 16) {
-                    $errors[] = "Password must be between 8 and 16 characters long.";
+            if ($stmt->rowCount() == 1) {
+                $existingPasswordHash = $stmt->fetchColumn();
+    
+                // Initialize an array to collect validation errors
+                $errors = [];
+    
+                // Validate the password if a new one is provided
+                if (!empty($password)) {
+                    // Check minimum and maximum length (8 to 16 characters)
+                    if (strlen($password) < 8 || strlen($password) > 16) {
+                        $errors[] = "Password must be between 8 and 16 characters long.";
+                    }
+    
+                    // Check for at least one uppercase letter
+                    if (!preg_match('/[A-Z]/', $password)) {
+                        $errors[] = "Password must contain at least one uppercase letter.";
+                    }
+    
+                    // Check for at least one number
+                    if (!preg_match('/[0-9]/', $password)) {
+                        $errors[] = "Password must contain at least one number.";
+                    }
+    
+                    // Check for at least one special character
+                    if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
+                        $errors[] = "Password must contain at least one special character.";
+                    }
+    
+                    // If there are validation errors, display all of them and cancel the form submission
+                    if (!empty($errors)) {
+                        $errorMessage = implode('<br>', $errors);
+                        return '<script>
+                            Swal.fire({
+                                icon: "error",
+                                title: "Invalid Password",
+                                html: "' . $errorMessage . '",
+                                timer: 5000,
+                                timerProgressBar: true
+                            }).then(() => {
+                                window.history.back(); // Go back to the previous form/page
+                            });
+                        </script>';
+                    }
+    
+                    // Hash the new password using SHA-256
+                    $hashedPassword = hash('sha256', $password);
+                } else {
+                    // Keep the existing hashed password if no new password is provided
+                    $hashedPassword = $existingPasswordHash;
                 }
-
-                // Check for at least one uppercase letter
-                if (!preg_match('/[A-Z]/', $password)) {
-                    $errors[] = "Password must contain at least one uppercase letter.";
-                }
-
-                // Check for at least one number
-                if (!preg_match('/[0-9]/', $password)) {
-                    $errors[] = "Password must contain at least one number.";
-                }
-
-                // Check for at least one special character
-                if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
-                    $errors[] = "Password must contain at least one special character.";
-                }
-
-                // If there are validation errors, display all of them and cancel the form submission
-                if (!empty($errors)) {
-                    $errorMessage = implode('<br>', $errors);
+    
+                // Update the user account
+                $query = "UPDATE users_tbl 
+                SET users_username = :username, users_password = :password, users_org = :org_id
+                WHERE users_id = :uid";
+                $statement = $this->connection->prepare($query);
+    
+                // Execute the update statement
+                if ($statement->execute([
+                    ":username" => $username,
+                    ":password" => $hashedPassword,
+                    ":org_id" => $org_id,
+                    ":uid" => $uid
+                ])) {
+                    // Fetch editor's name
+                    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+                    $editor_stmt->execute([':editor_id' => $editor_id]);
+                    $editor_name = $editor_stmt->fetchColumn();
+    
+                    if (!$editor_name) {
+                        // If not found in users_tbl, search in orgmembers_tbl
+                        $editor_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+                        $editor_stmt->execute([':editor_id' => $editor_id]);
+                        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+                    }
+    
+                    // Get organization name
+                    $org_stmt = $this->connection->prepare("SELECT org_name FROM organization_tbl WHERE org_id = :org_id");
+                    $org_stmt->execute([':org_id' => $org_id]);
+                    $org_name = $org_stmt->fetchColumn() ?: 'Unknown Organization';
+    
+                    // Create detailed audit message
+                    $changes = [];
+                    if (!empty($password)) {
+                        $changes[] = "password was updated";
+                    }
+                    $changes[] = "username set to '{$username}'";
+                    $changes[] = "organization set to '{$org_name}'";
+    
+                    $audit_message = "{$editor_name} updated account for user '{$username}' : " . implode(', ', $changes);
+                    
+                    // Insert audit trail
+                    $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+                    $audit_stmt->execute([':message' => $audit_message]);
+    
+                    // Log the successful update
+                    error_log("Account Update Success - Editor: {$editor_name} (ID: {$editor_id}), User: {$username} (ID: {$uid})");
+    
+                    // Return success message
+                    return '<script>
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "Do you want to save these changes?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, save it!",
+                            cancelButtonText: "No, cancel!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Account Updated Successfully",
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                }).then(() => {
+                                    window.location.href = "organization.php";
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: "info",
+                                    title: "Cancelled",
+                                    text: "The account update has been cancelled.",
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                });
+                            }
+                        });
+                    </script>';
+                } else {
+                    // Log error if update fails
+                    error_log("Failed to update account for UID = $uid");
+    
                     return '<script>
                         Swal.fire({
                             icon: "error",
-                            title: "Invalid Password",
-                            html: "' . $errorMessage . '",
-                            timer: 5000,
+                            title: "Error",
+                            text: "Failed to update account.",
+                            timer: 3000,
                             timerProgressBar: true
-                        }).then(() => {
-                            // Auto cancel the form submission after showing validation errors
-                            window.history.back(); // Go back to the previous form/page
                         });
                     </script>';
                 }
-
-                // Hash the new password using SHA-256 if all validations pass
-                $hashedPassword = hash('sha256', $password);
             } else {
-                // Keep the existing hashed password if no new password is provided
-                $hashedPassword = $existingPasswordHash;
-            }
-
-            // Prepare and execute the database update
-            $query = "UPDATE orgmembers_tbl 
-                      SET username = :username, password = :password, position = :position
-                      WHERE id = :uid";
-            $statement = $this->connection->prepare($query);
-
-            // Debug: Log query and parameters
-            error_log("Executing update query for UID = $uid");
-            error_log("Parameters: Username = $username, Password = $hashedPassword, position = $position");
-
-            if ($statement->execute([
-                ":username" => $username,
-                ":password" => $hashedPassword,
-                ":position" => $position,
-                ":uid" => $uid
-            ])) {
-                return '<script>
-                    Swal.fire({
-                        title: "Are you sure?",
-                        text: "Do you want to save these changes?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, save it!",
-                        cancelButtonText: "No, cancel!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Account Updated Successfully",
-                                timer: 2000,
-                                timerProgressBar: true
-                            }).then(() => {
-                                window.location.href = "organization.php"; // Redirect to the appropriate page
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: "info",
-                                title: "Cancelled",
-                                text: "The account update has been cancelled.",
-                                timer: 2000,
-                                timerProgressBar: true
-                            });
-                        }
-                    });
-                </script>';
-            } else {
-                // Log error if update fails
-                error_log("Failed to update account for UID = $uid");
-
                 return '<script>
                     Swal.fire({
                         icon: "error",
                         title: "Error",
-                        text: "Failed to update account.",
+                        text: "User not found.",
                         timer: 3000,
                         timerProgressBar: true
                     });
                 </script>';
             }
-        } else {
+        } catch (PDOException $e) {
+            error_log("PDOException: " . $e->getMessage());
             return '<script>
                 Swal.fire({
                     icon: "error",
                     title: "Error",
-                    text: "User not found.",
+                    text: "Database error occurred.",
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            </script>';
+        } catch (Exception $e) {
+            error_log("Exception: " . $e->getMessage());
+            return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred.",
                     timer: 3000,
                     timerProgressBar: true
                 });
             </script>';
         }
-    } catch (PDOException $e) {
-        error_log("PDOException: " . $e->getMessage());
-        return '<script>
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "Database error occurred.",
-                timer: 3000,
-                timerProgressBar: true
-            });
-        </script>';
-    } catch (Exception $e) {
-        error_log("Exception: " . $e->getMessage());
-        return '<script>
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "An unexpected error occurred.",
-                timer: 3000,
-                timerProgressBar: true
-            });
-        </script>';
     }
-}function save_membersaccount($data)
+    function save_membersaccount($data) // Add editor_id as a parameter
 {
     // Retrieve and sanitize data
     $uid = htmlspecialchars($data['uid'], ENT_QUOTES, 'UTF-8');
@@ -1856,6 +1980,7 @@ function save_account($data)
     $username = htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8');
     $password = $data['password'] ?? ''; 
     $position = htmlspecialchars($data['position'], ENT_QUOTES, 'UTF-8');
+    $editor_id = $_SESSION['id'] ?? ''; 
 
     try {
         // Check if the user exists
@@ -1922,6 +2047,33 @@ function save_account($data)
             error_log("Parameters: name= $name, Username = $username, Password = $hashedPassword, position = $position");
 
             if ($statement->execute()) {
+                // Fetch editor's name
+                $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+                $editor_stmt->execute([':editor_id' => $editor_id]);
+                $editor_name = $editor_stmt->fetchColumn();
+
+                if (!$editor_name) {
+                    // If not found in users_tbl, search in orgmembers_tbl
+                    $editor_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+                    $editor_stmt->execute([':editor_id' => $editor_id]);
+                    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+                }
+
+                // Create detailed audit message
+                $changes = [];
+                if (!empty($password)) {
+                    $changes[] = "password was updated";
+                }
+                $changes[] = "username set to '{$username}'";
+                $changes[] = "position set to '{$position}'";
+                $changes[] = "name set to '{$name}'";
+
+                $audit_message = "{$editor_name} updated account for user '{$username}' : " . implode(', ', $changes);
+                
+                // Insert audit trail
+                $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+                $audit_stmt->execute([':message' => $audit_message]);
+
                 return '<script>
                     Swal.fire({
                         title: "Are you sure?",
@@ -2001,6 +2153,7 @@ function save_account($data)
         </script>';
     }
 }
+
 function save_profile($data)
 {
     // Retrieve and sanitize data
@@ -2009,6 +2162,9 @@ function save_profile($data)
     $username = htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8');
     $password = $data['password'] ?? ''; 
     $profileImagePath = ''; // Initialize profile image path variable
+
+    // Assume editor ID is stored in session, replace with your actual logic
+    $editor_id = $_SESSION['id']; // Get the editor ID from the session
 
     try {
         // Check if the user exists
@@ -2113,6 +2269,32 @@ function save_profile($data)
             $statement->bindParam(":uid", $uid, PDO::PARAM_INT);
 
             if ($statement->execute()) {
+                // Fetch editor's name
+                $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+                $editor_stmt->execute([':editor_id' => $editor_id]);
+                $editor_name = $editor_stmt->fetchColumn();
+
+                if (!$editor_name) {
+                    // If not found in users_tbl, search in orgmembers_tbl
+                    $editor_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+                    $editor_stmt->execute([':editor_id' => $editor_id]);
+                    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+                }
+
+                // Create detailed audit message
+                $changes = [];
+                if (!empty($password)) {
+                    $changes[] = "password was updated";
+                }
+                $changes[] = "username set to '{$username}'";
+                $changes[] = "name set to '{$name}'";
+
+                $audit_message = "{$editor_name} updated his account '{$username}' : " . implode(', ', $changes);
+                
+                // Insert audit trail
+                $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+                $audit_stmt->execute([':message' => $audit_message]);
+
                 // Log the successful update
                 error_log("Successfully updated account for UID = $uid");
                 return '<script>
@@ -2182,16 +2364,40 @@ function save_profile($data)
             });
         </script>';
     }
-}
-
-
-function delete_account($appID)
+}function delete_account($appID)
 {
+    // First, fetch the editor's name for the audit trail
+    $editor_id = $_SESSION['id'] ?? ''; 
+    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+    $editor_stmt->execute([':editor_id' => $editor_id]);
+    $editor_name = $editor_stmt->fetchColumn();
+
+    if (!$editor_name) {
+        // If not found in users_tbl, search in orgmembers_tbl
+        $editor_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+        $editor_stmt->execute([':editor_id' => $editor_id]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+    }
+
+    // Fetch the username of the account to be deleted
+    $account_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :appID");
+    $account_stmt->execute([':appID' => $appID]);
+    $account_username = $account_stmt->fetchColumn();
+
+    // Prepare the deletion query
     $query = "DELETE FROM users_tbl WHERE users_id = :appID";
     $statement = $this->connection->prepare($query);
-    $statement->execute(array("appID" => $appID));
 
-    if ($statement->execute()) {
+    // Execute the deletion
+    if ($statement->execute(['appID' => $appID])) {
+        // Log the deletion in the audit trail with the editor's name and the deleted account's username
+        $audit_message = "{$editor_name} deleted an account: (Username - {$account_username})";
+        
+        // Insert audit trail
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+        $audit_stmt->execute([':message' => $audit_message]);
+
+        // Return success message
         return '<script>
                 const Toast = Swal.mixin({
                     toast: true,
@@ -2208,17 +2414,22 @@ function delete_account($appID)
                     icon: "success",
                     title: "User Deleted successfully"
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                      document.location = "organization.php";
-                    } else {
-                      document.location = "organization.php";
-                    }
+                    document.location = "organization.php"; // Redirect to the organization page
                 });
             </script>';
     } else {
-        return "Error Deleting";
+        // Return error message if deletion fails
+        return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Failed to delete the user account."
+                });
+            </script>';
     }
 }
+
+
 
     function show_account()
     {
@@ -2247,39 +2458,71 @@ function delete_account($appID)
 }
 
 
-    function delete_membersaccount($appID)
-    {
-        $query = "DELETE FROM orgmembers_tbl WHERE id = :appID";
-        $statement = $this->connection->prepare($query);
-        $statement->execute(array("appID" => $appID));
-        if ($statement->execute()) {
-            return '<script>
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
+function delete_membersaccount($appID)
+{
+    // First, fetch the editor's name for the audit trail
+    $editor_id = $_SESSION['id'] ?? ''; 
+    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+    $editor_stmt->execute([':editor_id' => $editor_id]);
+    $editor_name = $editor_stmt->fetchColumn();
+
+    if (!$editor_name) {
+        // If not found in users_tbl, search in orgmembers_tbl
+        $editor_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+        $editor_stmt->execute([':editor_id' => $editor_id]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+    }
+
+    // Fetch the name of the member account to be deleted
+    $member_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :appID");
+    $member_stmt->execute([':appID' => $appID]);
+    $member_name = $member_stmt->fetchColumn();
+
+    // Prepare the deletion query
+    $query = "DELETE FROM orgmembers_tbl WHERE id = :appID";
+    $statement = $this->connection->prepare($query);
+
+    // Execute the deletion
+    if ($statement->execute(['appID' => $appID])) {
+        // Log the deletion in the audit trail with the editor's name and the deleted member's name
+        $audit_message = "{$editor_name} deleted a member account: (Name - {$member_name})";
+        
+        // Insert audit trail
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+        $audit_stmt->execute([':message' => $audit_message]);
+
+        // Return success message
+        return '<script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
                         toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "User Deleted successfully"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                          document.location = "membersmanagement.php";
-                        } else {
-                          document.location = "membersmanagement.php";
-                        }
-                      });
-                </script>';
-        } else {
-            return "Error Deleting";
-        }
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "User Deleted successfully"
+                }).then((result) => {
+                    document.location = "membersmanagement.php"; // Redirect to the members management page
+                });
+            </script>';
+    } else {
+        // Return error message if deletion fails
+        return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Failed to delete the member account."
+                });
+            </script>';
     }
+}
+
     function show_membersaccount()
     {
         // First, retrieve the org_type based on the logged-in user's organization

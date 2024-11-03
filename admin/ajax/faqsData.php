@@ -28,12 +28,12 @@ $array = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Initialize the response variable
 $response = '';
-
 if ($array) {
     foreach ($array as $value) {
-        // Safely output values and include editor_id
+        // Debugging output for editor_id
+        echo "<script>console.log('Editor ID in form: " . htmlspecialchars($_SESSION['aid'], ENT_QUOTES, 'UTF-8') . "');</script>";
+        
         $response .= '<input type="hidden" value="' . htmlspecialchars($value['faqs_id']) . '" name="fid">
-                      <input type="hidden" value="' . htmlspecialchars($_SESSION['aid']) . '" name="editor_id"> <!-- Add editor_id -->
                       <div class="mb-3">
                           <label for="faqs_questionEdit" class="form-label fw-bold">Question</label>
                           <textarea id="faqs_questionEdit" class="form-control" name="faqs_question" required>' . htmlspecialchars($value['faqs_question']) . '</textarea>
@@ -46,10 +46,6 @@ if ($array) {
 } else {
     $response = '<p>No FAQ found.</p>'; // Handle no results
 }
-
-// Log the FAQs ID and the updater ID for debugging purposes
-$updater_id = $_SESSION['aid']; // Assuming 'aid' is the user ID in the session
-error_log("FAQs ID requested: " . $faqsID . ", Updater ID: " . $updater_id . "\n", 3, "error_log.txt");
 
 echo $response; // Output the response
 ?>

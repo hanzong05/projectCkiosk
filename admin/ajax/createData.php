@@ -617,7 +617,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Always return the response
             echo json_encode($response);
         }
-        
         elseif ($type === 'membersaccount') {
             // Gather form inputs
             $username = $_POST['username'] ?? null;
@@ -770,6 +769,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ]);
                 }
         
+                // Set success response only after all operations are successful
                 $response['success'] = true;
                 $response['message'] = 'Account created successfully.';
             } catch (Exception $e) {
@@ -777,9 +777,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $response['success'] = false;
                 $response['message'] = 'An error occurred while processing your request.';
             }
+        
+            echo json_encode($response);
         }
         
-
         
     } catch (Exception $e) {
         error_log('Error: ' . $e->getMessage());

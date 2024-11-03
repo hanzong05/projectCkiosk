@@ -58,7 +58,10 @@ if ($stmt->rowCount() == 1) {
       </title>
       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
-      <!--     Fonts and icons     -->
+      <!--     Fonts and icons     -->  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
       <!-- CSS Files -->
@@ -111,86 +114,90 @@ if ($stmt->rowCount() == 1) {
 
     </head>
 
-    <body class="">
-    <div class="wrapper ">
-        <!-- sweetalert start-->
-        <?= isset($log_msg) ? $log_msg : '' ?>
-        <!-- sweetalert end -->
-        <div class="sidebar" data-color="white" data-active-color="danger">
-      <div class="logo">
-        <a href="dashboard.php" class="simple-text logo-normal">
-          <img src="../img/C.png" alt="" width="240">
-        </a>
-      </div>
-      <div class="sidebar-wrapper ">
-      <?php if ($account_type != '0') { ?>
-    <ul class="nav">
-    <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      <li >
-        <a href="./announcement.php">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Announcement</p>
-        </a>
-      </li>
-      <li>
-          <a href="./schoolcalendar.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>School Calendar</p>
-          </a>
-      </li>
-      <?php if ($account_type == '1') { ?>
-        <li >
-          <a href="./facultymembers.php">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>Faculty Members</p>
-          </a>
-        </li>
-        <li>
-          <a href="./map.php">
-            <i class="nc-icon nc-single-02"></i>
-            <p>Campus Map</p>
-          </a>
-        </li>
-        <li>
-          <a href="./organization.php">
-            <i class="nc-icon nc-caps-small"></i>
-            <p>Campus Organization</p>
-          </a>
-        </li>
-      <?php } ?>
-     
-      <li>
-        <a href="./faqs.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>FAQS</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-    <?php if ($account_type == '0') { ?>
-      <ul class="nav">
-      <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-        
-      <li>
-        <a href="./ratings.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Ratings</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-      </div>
+    <body class=""><div class="wrapper ">
+    <!-- sweetalert start-->
+    <?= isset($log_msg) ? $log_msg : '' ?>
+    <!-- sweetalert end -->
+    <div class="sidebar" data-color="white" data-active-color="danger">
+        <div class="logo">
+            <a href="dashboard.php" class="simple-text logo-normal">
+                <img src="../img/C.png" alt="" width="240">
+            </a>
+        </div>
+        <div class="sidebar-wrapper ">
+            <?php if ($account_type != '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./announcement.php">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Announcement</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="./schoolcalendar.php">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>School Calendar</p>
+                        </a>
+                    </li>
+                    <?php if ($account_type == '1') { ?>
+                        <li>
+                            <a href="./facultymembers.php">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p>Faculty Members</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./map.php">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Campus Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./organization.php">
+                                <i class="fas fa-users"></i>
+                                <p>Campus Organization</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./audit.php">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Audit Trails</p>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li>
+                        <a href="./faqs.php">
+                            <i class="fas fa-question-circle"></i>
+                            <p>FAQS</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+            <?php if ($account_type == '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./ratings.php">
+                            <i class="fas fa-star"></i>
+                            <p>Ratings</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
     </div>
+
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -236,106 +243,67 @@ if ($stmt->rowCount() == 1) {
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="container-fluid p-0">
-                  <hr>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                      <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab"
-                        aria-controls="account" aria-selected="true">Accounts</a>
-                    </li>
-                    
-                  </ul>
-                  <div class="tab-content" id="myTabContent">
-                    
-                  <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                    <div class="d-flex justify-content-between">
-                      <div class="p-2">
-                        <button class="btn text-end" data-toggle="modal" data-target="#accountModal">
-                          Create Account For Members
-                        </button>
-                      </div>
+      <div class="content"><div class="p-6">
+    <div class="bg-white rounded-lg shadow-lg">
+        <div class="p-6">
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="flex-grow mb-2 md:mb-0 md:mr-2">
+                        <input type="text" id="searchAccountInput" placeholder="Search accounts..." 
+                               class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchAccounts()">
                     </div>
-                    <table class="table table-light table-hover table-bordered" id="myTable">
-                      <thead>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition duration-200 flex items-center gap-2" 
+                            data-toggle="modal" data-target="#accountModal">
+                        <i class="fas fa-plus"></i>
+                        Create Account
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg overflow-hidden" id="myTable">
+                    <thead class="bg-gray-100">
                         <tr>
-                          <th>
-                            <center>NO.</center>
-                          </th>
-                          <th>
-                            <center>Username</center>
-                          </th>
-                          <th>
-                            <center>Name</center>
-                          </th>
-                          <th>
-                            <center>Position</center>
-                          </th>
-                          <th>
-                            <center>ACTION</center>
-                          </th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">No.</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Username</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Name</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Position</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Action</th>
                         </tr>
-                      </thead>
-                      <tbody>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
                         <?php
                         $count = 1;
                         foreach ($allAccount as $row) {
-                          ?>
-                          <tr class="table-row">
-                            <td>
-                              <center><?php echo $count; ?></center>
-                            </td>
-                            <td>
-                              <center><?php echo $row["username"]; ?></center>
-                            </td>
-                            <td>
-                              <center>
-                                <?php echo $row["name"]; ?>
-                                <?php if ($row['is_active']) { ?>
-                                  <span class="dot"></span>
-                                <?php } else { ?>
-                                  <span class="last-active">
-                                    <?php 
-                                    // Display last active if not active
-                                    echo $row["last_active"] ? " (Last Active: " . date("Y-m-d H:i:s", strtotime($row["last_active"])) . ")" : "(Never Active)";
-                                    ?>
-                                  </span>
-                                <?php } ?>
-                              </center>
-                            </td>
-                            <td>
-                              <center><?php echo $row["position"]; ?></center>
-                            </td>
-                            <td class="text-center">
-                              <center>
-                                <button class="btn accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $row['id'] ?>">
-                                  Edit Account
+                        ?>
+                        <tr class="hover:bg-gray-50 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $count; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["username"]; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["name"]; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["position"]; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 accountModalEdit" 
+                                        data-toggle="modal" data-target="#accountModalEdit" 
+                                        data-id="<?= $row['id'] ?>">
+                                    Edit
                                 </button>
-
-                                <a class="btn btn-danger btn-delete-account" href='membersmanagement.php?aid=<?= $row['id'] ?>'>
-                                  Delete
+                                <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition duration-200" 
+                                   href='membersmanagement.php?aid=<?= $row['id'] ?>'>
+                                    Delete
                                 </a>
-                              </center>
                             </td>
-                          </tr>
-                          <?php
-                          $count++;
+                        </tr>
+                        <?php
+                        $count++;
                         }
                         ?>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  </div>
-                </div>
-              </div>
+                    </tbody>
+                </table>
             </div>
-          </div>
         </div>
+    </div>
+</div>
+
       </div>
     </div>
   </div>
@@ -456,6 +424,37 @@ if ($stmt->rowCount() == 1) {
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1">
   </script><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+<script>
+  // Define the search function in the global scope
+  function searchAccounts() {
+    const input = document.getElementById('searchAccountInput');
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById('myTable');
+    const rows = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header
+      const cells = rows[i].getElementsByTagName('td');
+      let match = false;
+
+      // Check each cell for the search term
+      for (let j = 0; j < cells.length; j++) {
+        if (cells[j]) {
+          const cellText = cells[j].textContent || cells[j].innerText;
+          if (cellText.toLowerCase().indexOf(filter) > -1) {
+            match = true;
+            break; // Exit loop if a match is found
+          }
+        }
+      }
+
+      // Toggle row visibility based on match
+      rows[i].style.display = match ? "" : "none";
+    }
+  }
+</script>
+
+
   <script type="text/javascript">
  
 

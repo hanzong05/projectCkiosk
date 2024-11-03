@@ -13,6 +13,8 @@
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
     name='viewport' />
   <!--     Fonts and icons     -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
@@ -104,93 +106,98 @@
 }
 
 #room-svg, #room-svg-1,#room-svg-2,#room-svg-3   {
-    width: 100%; /* SVG scales to the width of its container */
-    height: auto; /* Maintain the aspect ratio */
-    min-width: 800px; /* Set a minimum width */
-    max-width: 1200px; /* Optional: Set a max width for large screens */
+    height: 100%; /* Maintain the aspect ratio */
+    min-height:450px;
+    max-height:auto;
 }
 
 
 </style>
 </head>
 
-<body class="">
-<div class="sidebar" data-color="white" data-active-color="danger">
-  <div class="logo">
-    <a href="dashboard.php" class="simple-text logo-normal">
-      <img src="../img/C.png" alt="" width="240">
-    </a>
-  </div>
-  <div class="sidebar-wrapper ">
-  <?php if ($account_type != '0') { ?>
-    <ul class="nav">
-    <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      <li >
-        <a href="./announcement.php">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Announcement</p>
-        </a>
-      </li>
-      <li>
-          <a href="./schoolcalendar.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>School Calendar</p>
-          </a>
-      </li>
-      <?php if ($account_type == '1') { ?>
-        <li >
-          <a href="./facultymembers.php">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>Faculty Members</p>
-          </a>
-        </li>
-        <li class="active">
-          <a href="./map.php">
-            <i class="nc-icon nc-single-02"></i>
-            <p>Campus Map</p>
-          </a>
-        </li>
-        <li>
-          <a href="./organization.php">
-            <i class="nc-icon nc-caps-small"></i>
-            <p>Campus Organization</p>
-          </a>
-        </li>
-      <?php } ?>
-     
-      <li>
-        <a href="./faqs.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>FAQS</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-    <?php if ($account_type == '0') { ?>
-      <ul class="nav">
-      <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-        
-      <li>
-        <a href="./ratings.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Ratings</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-  </div>
-</div>
-
+<body class=""><div class="wrapper ">
+    <!-- sweetalert start-->
+    <?= isset($log_msg) ? $log_msg : '' ?>
+    <!-- sweetalert end -->
+    <div class="sidebar" data-color="white" data-active-color="danger">
+        <div class="logo">
+            <a href="dashboard.php" class="simple-text logo-normal">
+                <img src="../img/C.png" alt="" width="240">
+            </a>
+        </div>
+        <div class="sidebar-wrapper ">
+            <?php if ($account_type != '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./announcement.php">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Announcement</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="./schoolcalendar.php">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>School Calendar</p>
+                        </a>
+                    </li>
+                    <?php if ($account_type == '1') { ?>
+                        <li>
+                            <a href="./facultymembers.php">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p>Faculty Members</p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="./map.php">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Campus Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./organization.php">
+                                <i class="fas fa-users"></i>
+                                <p>Campus Organization</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./audit.php">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Audit Trails</p>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li>
+                        <a href="./faqs.php">
+                            <i class="fas fa-question-circle"></i>
+                            <p>FAQS</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+            <?php if ($account_type == '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./ratings.php">
+                            <i class="fas fa-star"></i>
+                            <p>Ratings</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
+    </div>
 
     <div class="main-panel">
       <!-- Navbar -->
@@ -250,8 +257,8 @@
     <div id="ccs" class="tab-content">
         <div id="map">
             <div class="map ">
-                <div class="dropdown">
-                    <input type="text" id="search-input" placeholder="Enter room name">
+                <div class="dropdown"> 
+                    <input type="text" id="search-input" class="search" placeholder="Enter room name">
                     <button onclick="searchAndHighlight()" class="search-button">
                         <i class="fa fa-search"></i>
                     </button>
@@ -449,7 +456,7 @@
     <div id="map">
         <div class="map">
             <div class="dropdown">
-                <input type="text" id="search" placeholder="Enter room name">
+                <input type="text" id="search" class="search" placeholder="Enter room name">
                 <button onclick="searchElement()" class="search-button">
                     <i class="fa fa-search"></i>
                 </button>
@@ -515,7 +522,7 @@
     <div id="map">
         <div class="map">
             <div class="dropdown">
-                <input type="text" id="search2" placeholder="Enter room name" aria-label="Search for a room">
+                <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
                 <button onclick="searchElement2()" class="search-button" aria-label="Search">
                     <i class="fa fa-search"></i>
                 </button>

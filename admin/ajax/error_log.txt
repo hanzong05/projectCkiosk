@@ -1,6 +1,37 @@
-[02-Nov-2024 05:48:58 Europe/Berlin] Type parameter: excel_import
-[02-Nov-2024 05:49:01 Europe/Berlin] Spreadsheet loaded successfully.
-[02-Nov-2024 05:49:01 Europe/Berlin] Sheet Data: Array
+[03-Nov-2024 10:11:06 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admin
+[03-Nov-2024 10:11:28 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admin
+[03-Nov-2024 10:11:40 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: org1
+Hashing Password for User: org1
+Inserting Account for User: org1
+[03-Nov-2024 10:12:12 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 10:12:24 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 10:12:41 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 10:16:23 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 10:18:06 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 10:19:59 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 10:32:53 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admin
+Hashing Password for User: admin
+Inserting Account for User: admin
+[03-Nov-2024 10:36:29 Europe/Berlin] Type parameter: announcement
+[03-Nov-2024 10:42:04 Europe/Berlin] Type parameter: announcement
+[03-Nov-2024 10:43:05 Europe/Berlin] Type parameter: event
+[03-Nov-2024 10:50:31 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admindwadwa
+Hashing Password for User: admindwadwa
+Inserting Account for User: admindwadwa
+[03-Nov-2024 10:53:35 Europe/Berlin] Type parameter: announcement
+[03-Nov-2024 10:53:44 Europe/Berlin] Type parameter: announcement
+[03-Nov-2024 10:54:14 Europe/Berlin] Type parameter: event
+[03-Nov-2024 10:54:21 Europe/Berlin] Type parameter: event
+[03-Nov-2024 10:54:55 Europe/Berlin] Type parameter: faculty
+[03-Nov-2024 10:55:13 Europe/Berlin] Type parameter: faculty
+[03-Nov-2024 10:56:09 Europe/Berlin] Type parameter: excel_import
+[03-Nov-2024 10:56:09 Europe/Berlin] Spreadsheet loaded successfully.
+[03-Nov-2024 10:56:09 Europe/Berlin] Sheet Data: Array
 (
     [1] => Array
         (
@@ -11,101 +42,46 @@
 
     [2] => Array
         (
-            [A] => Hanz Jansen
+            [A] => batman
             [B] => IT DEPARTMENT
-            [C] => SAMPLE
+            [C] => 12345
         )
 
 )
 
-[02-Nov-2024 05:49:01 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: 'SAMPLE'
-[02-Nov-2024 05:49:01 Europe/Berlin] Inserting: Name: 'Hanz Jansen', Dept ID: 1, Consultation Time: 'SAMPLE'
-[02-Nov-2024 05:49:01 Europe/Berlin] Insert error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'action' in 'field list'
-[02-Nov-2024 05:50:06 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 05:55:34 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 05:56:19 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 05:56:44 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 05:59:51 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 06:06:40 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 06:06:57 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 06:08:49 Europe/Berlin] Type parameter: announcement
-[02-Nov-2024 10:29:29 Europe/Berlin] Type parameter: event
-[02-Nov-2024 10:33:28 Europe/Berlin] Type parameter: event
-[02-Nov-2024 10:33:57 Europe/Berlin] Type parameter: faculty
-[02-Nov-2024 10:34:16 Europe/Berlin] Type parameter: organization
-[02-Nov-2024 10:34:23 Europe/Berlin] Type parameter: faqs
-[02-Nov-2024 10:36:09 Europe/Berlin] Type parameter: faqs
-[02-Nov-2024 10:36:41 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org11232
-Hashing Password for User: org11232
-Inserting Account for User: org11232
-[02-Nov-2024 10:39:33 Europe/Berlin] Type parameter: excel_import
-[02-Nov-2024 10:39:34 Europe/Berlin] Spreadsheet loaded successfully.
-[02-Nov-2024 10:39:34 Europe/Berlin] Sheet Data: Array
-(
-    [1] => Array
-        (
-            [A] => Name
-            [B] => Department
-            [C] => Consultation Time
-        )
-
-    [2] => Array
-        (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => 123456
-        )
-
-)
-
-[02-Nov-2024 10:39:34 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '123456'
-[02-Nov-2024 10:42:00 Europe/Berlin] Type parameter: excel_import
-[02-Nov-2024 10:42:00 Europe/Berlin] Spreadsheet loaded successfully.
-[02-Nov-2024 10:42:00 Europe/Berlin] Sheet Data: Array
-(
-    [1] => Array
-        (
-            [A] => Name
-            [B] => Department
-            [C] => Consultation Time
-        )
-
-    [2] => Array
-        (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => 1234dwadwadwad56
-        )
-
-)
-
-[02-Nov-2024 10:42:00 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: '1234dwadwadwad56'
-[02-Nov-2024 10:44:31 Europe/Berlin] Type parameter: excel_import
-[02-Nov-2024 10:45:11 Europe/Berlin] Type parameter: excel_import
-[02-Nov-2024 10:45:58 Europe/Berlin] Type parameter: excel_import
-[02-Nov-2024 10:45:58 Europe/Berlin] Spreadsheet loaded successfully.
-[02-Nov-2024 10:45:58 Europe/Berlin] Sheet Data: Array
-(
-    [1] => Array
-        (
-            [A] => Name
-            [B] => Department
-            [C] => Consultation Time
-        )
-
-    [2] => Array
-        (
-            [A] => Hanz Jansen
-            [B] => IT DEPARTMENT
-            [C] => dwadwadwadwadwawdawadwadw
-        )
-
-)
-
-[02-Nov-2024 10:45:58 Europe/Berlin] Processing Row 2: Name: 'Hanz Jansen', Dept: 'it department', Consultation Time: 'dwadwadwadwadwawdawadwadw'
-[02-Nov-2024 11:08:18 Europe/Berlin] Type parameter: organization
-[02-Nov-2024 11:25:37 Europe/Berlin] Type parameter: faqs
-FAQs ID requested: 1
-FAQs ID requested: 1, Updater ID: 1
-FAQs ID requested: 1, Updater ID: 1
+[03-Nov-2024 10:56:09 Europe/Berlin] Processing Row 2: Name: 'batman', Dept: 'it department', Consultation Time: '12345'
+[03-Nov-2024 10:56:28 Europe/Berlin] Type parameter: organization
+[03-Nov-2024 10:56:47 Europe/Berlin] Type parameter: organization
+[03-Nov-2024 10:57:31 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admindwadw
+Hashing Password for User: admindwadw
+Inserting Account for User: admindwadw
+[03-Nov-2024 10:58:04 Europe/Berlin] Type parameter: faqs
+[03-Nov-2024 10:58:08 Europe/Berlin] Type parameter: faqs
+[03-Nov-2024 10:59:20 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admin
+[03-Nov-2024 10:59:27 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: org1
+Hashing Password for User: org1
+Inserting Account for User: org1
+[03-Nov-2024 11:00:03 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 11:00:50 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 11:01:04 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 11:02:13 Europe/Berlin] Type parameter: membersaccount
+[03-Nov-2024 12:23:29 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_faqs() in C:\xampp\htdocs\ckiosk\admin\faqs.php:25
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 25
+[03-Nov-2024 12:23:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_faqs() in C:\xampp\htdocs\ckiosk\admin\faqs.php:25
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 25
+[03-Nov-2024 14:29:34 Europe/Berlin] Type parameter: faculty
+[03-Nov-2024 16:20:21 Europe/Berlin] Type parameter: announcement
+[03-Nov-2024 16:22:21 Europe/Berlin] Type parameter: announcement
+[03-Nov-2024 16:38:28 Europe/Berlin] PHP Warning:  Undefined variable $allFAQs in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
+[03-Nov-2024 16:38:28 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
+[03-Nov-2024 16:38:50 Europe/Berlin] PHP Warning:  Undefined variable $allFAQs in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
+[03-Nov-2024 16:38:50 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
+[03-Nov-2024 16:39:39 Europe/Berlin] PHP Warning:  Undefined variable $allFAQs in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 213
+[03-Nov-2024 16:39:39 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 213

@@ -28,11 +28,13 @@ if (isset($_POST['save_profile'])) {
         Campus Kiosk Admin
       </title>
       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-        name='viewport' />
+        name='viewport' />      <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
       <!--     Fonts and icons     -->
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-      <!-- CSS Files -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <!-- CSS Files --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
       <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
       <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
@@ -112,86 +114,90 @@ if (isset($_POST['save_profile'])) {
 
     </head>
 
-    <body class="">
-    <div class="wrapper ">
-        <!-- sweetalert start-->
-        <?= isset($log_msg) ? $log_msg : '' ?>
-        <!-- sweetalert end -->
-        <div class="sidebar" data-color="white" data-active-color="danger">
-      <div class="logo">
-        <a href="dashboard.php" class="simple-text logo-normal">
-          <img src="../img/C.png" alt="" width="240">
-        </a>
-      </div>
-      <div class="sidebar-wrapper ">
-      <?php if ($account_type != '0') { ?>
-    <ul class="nav">
-    <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      <li >
-        <a href="./announcement.php">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Announcement</p>
-        </a>
-      </li>
-      <li>
-          <a href="./schoolcalendar.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>School Calendar</p>
-          </a>
-      </li>
-      <?php if ($account_type == '1') { ?>
-        <li >
-          <a href="./facultymembers.php">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>Faculty Members</p>
-          </a>
-        </li>
-        <li>
-          <a href="./map.php">
-            <i class="nc-icon nc-single-02"></i>
-            <p>Campus Map</p>
-          </a>
-        </li>
-        <li>
-          <a href="./organization.php">
-            <i class="nc-icon nc-caps-small"></i>
-            <p>Campus Organization</p>
-          </a>
-        </li>
-      <?php } ?>
-     
-      <li>
-        <a href="./faqs.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>FAQS</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-    <?php if ($account_type == '0') { ?>
-      <ul class="nav">
-      <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-        
-      <li>
-        <a href="./ratings.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Ratings</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-      </div>
+    <body class=""><div class="wrapper ">
+    <!-- sweetalert start-->
+    <?= isset($log_msg) ? $log_msg : '' ?>
+    <!-- sweetalert end -->
+    <div class="sidebar" data-color="white" data-active-color="danger">
+        <div class="logo">
+            <a href="dashboard.php" class="simple-text logo-normal">
+                <img src="../img/C.png" alt="" width="240">
+            </a>
+        </div>
+        <div class="sidebar-wrapper ">
+            <?php if ($account_type != '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./announcement.php">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Announcement</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="./schoolcalendar.php">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>School Calendar</p>
+                        </a>
+                    </li>
+                    <?php if ($account_type == '1') { ?>
+                        <li>
+                            <a href="./facultymembers.php">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p>Faculty Members</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./map.php">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Campus Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./organization.php">
+                                <i class="fas fa-users"></i>
+                                <p>Campus Organization</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./audit.php">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Audit Trails</p>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li>
+                        <a href="./faqs.php">
+                            <i class="fas fa-question-circle"></i>
+                            <p>FAQS</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+            <?php if ($account_type == '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./ratings.php">
+                            <i class="fas fa-star"></i>
+                            <p>Ratings</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
     </div>
+
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -238,92 +244,87 @@ if (isset($_POST['save_profile'])) {
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="container-fluid p-0">
-                  <hr>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                      <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab"
-                        aria-controls="account" aria-selected="true">User Profile</a>
-                    </li>
-                  </ul>
-                  <div class="tab-content" id="myTabContent">
-                    
-                  <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                  <div class="d-flex justify-content-center align-items-center">
-                  <div class="p-2 text-center">
-                      <?php if (!empty($memberInfo['member_img'])): ?>
-                          <img src="../uploaded/orgUploaded/<?=htmlspecialchars($memberInfo['member_img']); ?>" 
-                              alt="Profile Image" 
-                              class="img-fluid"
-                              style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;"> 
-                      <?php else: ?>
-                          <img src="../../path/to/default/image.png" 
-                              alt="Default Profile Image" 
-                              class="img-fluid"
-                              style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;"> 
-                      <?php endif; ?>
-                  </div>
-              </div>
-
-
-                </div>
-
-                    </div>
-                    <form id="editProfileForm" method="POST" action="update_profile.php">
-                        <div class="form-group">
-                          <label for="editUsername">Username</label>
-                          <input type="text" class="form-control" id="editUsername" name="username" value="<?php echo htmlspecialchars($memberInfo['username']); ?>" required readonly>
-                        </div>
-                        <div class="form-group">
-                          <label for="editName">Name</label>
-                          <input type="text" class="form-control" id="editName" name="name" value="<?php echo htmlspecialchars($memberInfo['name']); ?>" required readonly>
-                        </div>
-                        <div class="form-group">
-                          <label for="editPosition">Position</label>
-                          <input type="text" class="form-control" id="editPosition" value="<?php echo htmlspecialchars($memberInfo['position']); ?>" name="position" required readonly>
-                        </div>
-                        <input type="hidden" id="editId" name="id" value="<?php echo htmlspecialchars($memberInfo['id']); ?>">
-                        
-                      </form>
-                      <button class="btn accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $memberInfo['id'] ?>">
-            Edit Account
-        </button>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="container mx-auto p-6">
+    <div class="bg-white shadow-lg rounded-lg">
+        <div class="p-6 border-b border-gray-200">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active text-blue-600 font-semibold" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">User Profile</a>
+                </li>
+            </ul>
         </div>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+                <div class="flex justify-center items-center my-6">
+                    <div class="flex flex-col items-center">
+                        <?php if (!empty($memberInfo['member_img'])): ?>
+                            <img src="../uploaded/orgUploaded/<?= htmlspecialchars($memberInfo['member_img']); ?>" 
+                                 alt="Profile Image" 
+                                 class="w-24 h-24 rounded-full mb-4 border-2 border-gray-300"> 
+                        <?php else: ?>
+                            <img src="../../path/to/default/image.png" 
+                                 alt="Default Profile Image" 
+                                 class="w-24 h-24 rounded-full mb-4 border-2 border-gray-300"> 
+                        <?php endif; ?>
+                        <h2 class="text-lg font-semibold"><?= htmlspecialchars($memberInfo['name']); ?></h2>
+                        <p class="text-gray-600"><?= htmlspecialchars($memberInfo['position']); ?></p>
+                    </div>
+                </div>
+
+                <form id="editProfileForm" method="POST" action="update_profile.php" class="p-6">
+                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="editor_id"> 
+                    
+                    <div class="mb-4">
+                        <label for="editUsername" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="editUsername" name="username" value="<?php echo htmlspecialchars($memberInfo['username']); ?>" required readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label for="editName" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="editName" name="name" value="<?php echo htmlspecialchars($memberInfo['name']); ?>" required readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label for="editPosition" class="block text-sm font-medium text-gray-700">Position</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="editPosition" value="<?php echo htmlspecialchars($memberInfo['position']); ?>" name="position" required readonly>
+                    </div>
+                    <input type="hidden" id="editId" name="id" value="<?php echo htmlspecialchars($memberInfo['id']); ?>">
+                    
+                    <button type="button" class=" accountModalEdit mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $memberInfo['id'] ?>">
+                        Edit Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
       </div>
     </div>
   </div>
-
   <form class="row" action="" method="post" enctype="multipart/form-data">
-    <div class="modal fade bd-example-modal-lg" id="accountModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="accountModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Account Edit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-content rounded-lg shadow-lg overflow-hidden">
+                <div class="modal-header bg-blue-600 text-white">
+                    <h5 class="modal-title text-lg font-semibold" id="exampleModalLabel">Account Edit</h5>
+                    <button type="button" class="close text-white hover:text-gray-300" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="profiledata">
-                    <!-- Fetched data will be inserted here -->
+                <div class="modal-body p-6 bg-white">
+                    <div id="profiledata">
+                        <!-- Fetched data will be inserted here -->
+                    </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer bg-gray-100">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn" value="Save" name="save_profile">
+                    <input type="submit" class="btn bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition duration-200 px-4 py-2" value="Save" name="save_profile">
                 </div>
             </div>
         </div>
     </div>
 </form>
+
 
 
   <script src="assets/js/core/jquery.min.js"></script>

@@ -2,6 +2,12 @@
 // Now you can safely access $_SESSION
 $uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
 $cid = $_SESSION['id'] ?? null; 
+
+   $editor_id = $_POST['editor_id'] ?? ''; // Get editor ID from POST data
+    error_log("Editor ID: $editor_id"); // Log the editor ID
+
+    ini_set('error_log', 'ajax/error_log.txt');
+
 include_once ('assets/header.php');
 if (isset($_POST['add_faqs'])) {
   $log_msg = $obj->add_faqs($_POST);
@@ -32,8 +38,10 @@ $allFaqs = $obj->show_faqs();
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
     name='viewport' />
   <!--     Fonts and icons     -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
@@ -44,86 +52,89 @@ $allFaqs = $obj->show_faqs();
   <link href="assets/css/css.css" rel="stylesheet" />
 </head>
 
-<body class="">
-<div class="wrapper ">
+<body class=""><div class="wrapper ">
     <!-- sweetalert start-->
     <?= isset($log_msg) ? $log_msg : '' ?>
     <!-- sweetalert end -->
     <div class="sidebar" data-color="white" data-active-color="danger">
-      <div class="logo">
-        <a href="dashboard.php" class="simple-text logo-normal">
-          <img src="../img/C.png" alt="" width="240">
-        </a>
-      </div>
-      <div class="sidebar-wrapper ">
-      <?php if ($account_type != '0') { ?>
-    <ul class="nav">
-    <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      <li >
-        <a href="./announcement.php">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Announcement</p>
-        </a>
-      </li>
-      <li>
-          <a href="./schoolcalendar.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>School Calendar</p>
-          </a>
-      </li>
-      <?php if ($account_type == '1') { ?>
-        <li >
-          <a href="./facultymembers.php">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>Faculty Members</p>
-          </a>
-        </li>
-        <li>
-          <a href="./map.php">
-            <i class="nc-icon nc-single-02"></i>
-            <p>Campus Map</p>
-          </a>
-        </li>
-        <li>
-          <a href="./organization.php">
-            <i class="nc-icon nc-caps-small"></i>
-            <p>Campus Organization</p>
-          </a>
-        </li>
-      <?php } ?>
-     
-      <li class="active">
-        <a href="./faqs.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>FAQS</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-    <?php if ($account_type == '0') { ?>
-      <ul class="nav">
-      <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-        
-      <li>
-        <a href="./ratings.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Ratings</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-      </div>
-</div>
+        <div class="logo">
+            <a href="dashboard.php" class="simple-text logo-normal">
+                <img src="../img/C.png" alt="" width="240">
+            </a>
+        </div>
+        <div class="sidebar-wrapper ">
+            <?php if ($account_type != '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./announcement.php">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Announcement</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./schoolcalendar.php">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>School Calendar</p>
+                        </a>
+                    </li>
+                    <?php if ($account_type == '1') { ?>
+                        <li>
+                            <a href="./facultymembers.php">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p>Faculty Members</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./map.php">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Campus Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./organization.php">
+                                <i class="fas fa-users"></i>
+                                <p>Campus Organization</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./audit.php">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Audit Trails</p>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li  class="active">
+                        <a href="./faqs.php">
+                            <i class="fas fa-question-circle"></i>
+                            <p>FAQS</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+            <?php if ($account_type == '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./ratings.php">
+                            <i class="fas fa-star"></i>
+                            <p>Ratings</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
+    </div>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -136,7 +147,7 @@ $allFaqs = $obj->show_faqs();
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Campus Frequently Asked Questions</a>
+            <a class="navbar-brand" href="javascript:;">Campus FAQs</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
             aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,79 +181,79 @@ $allFaqs = $obj->show_faqs();
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="container-fluid p-0">
-                  <hr>
-                  <div class="d-flex justify-content-between">
-                    <div class="p-2">
-                      <button class="btn text-end" data-toggle="modal" data-target="#faqsModal">
-                        Add FAQs
-                      </button>
-                    </div>
-                  </div>
-                  <table class="table table-light table-hover table-bordered" id="myTable">
-                    <thead>
-                      <th>
-                        <center>NO.</center>
-                      </th>
-                      <th>
-                        <center>Question</center>
-                      </th>
-                      <th>
-                        <center>Answer</center>
-                      </th>
-                      <th>
-                        <center>ACTION</center>
-                      </th>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $count = 1;
-                      foreach ($allFaqs as $row) {
-                        ?>
-                        <tr class="table-row">
-                          <td>
-                            <?php echo $count; ?>
-                          </td>
-                          <td>
-                            <?php echo $row["faqs_question"]; ?>
-                          </td>
-                          <td>
-                            <?php echo $row["faqs_answer"]; ?>
-                          </td>
-                          <td class="text-center">
-                            <button class="btn faqsModalEdit" data-toggle="modal" data-target="#faqsModalEdit"
-                              data-id="<?= $row['faqs_id'] ?>">
-                              Edit
-                            </button>
-                            <a class="btn btn-danger btn-delete" href='faqs.php?did=<?= $row['faqs_id'] ?>'>
-                                Delete
-                            </a>
+      <div class="p-6">
+    <div class="bg-white rounded-lg shadow-lg">
+        <div class="p-6">
 
-                          </td>
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="flex-grow mb-2 md:mb-0 md:mr-2">
+                        <input type="text" id="searchFAQInput" placeholder="Search FAQs..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchFAQs()">
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition duration-200 flex items-center gap-2" data-toggle="modal" data-target="#faqsModal">
+    <i class="fas fa-plus"></i>
+    Create FAQ
+</button>
+
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">No.</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Question</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Answer</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200" id="faqTableBody">
+                        <?php
+                        $count = 1;
+                        foreach ($allFaqs as $row) {
+                        ?>
+                        <tr class="hover:bg-gray-50 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $count; ?></td>
+                            <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["faqs_question"]; ?></td>
+                            <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["faqs_answer"]; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                                <div class="flex justify-center gap-2">
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 faqModalEdit" 
+                                            data-toggle="modal" data-target="#faqModalEdit" 
+                                            data-id="<?= $row['faqs_id'] ?>">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition duration-200" 
+                                       href='faqs.php?did=<?= $row['faqs_id'] ?>'>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                         <?php
-                        $count++;
-                      }
-                      ?>
+                            $count++;
+                        }
+                        ?>
                     </tbody>
-                  </table>
-                </div>
-              </div>
+                </table>
             </div>
-          </div>
         </div>
+    </div>
+</div>
+
+
       </div>
     </div>
   </div>
 
   <!-- add event pop up -->
   <form id="faqForm" class="row" action="" method="post">
-    <!-- Modal -->   <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-          <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
+  <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+  <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
+
+
+
     <div class="modal fade bd-example-modal-lg" id="faqsModal" tabindex="-1" role="dialog" data-backdrop="static"
       data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -272,34 +283,31 @@ $allFaqs = $obj->show_faqs();
     </div>
   </form>
 
-  <!-- edit course pop up -->
-  <form class="row" action="" method="post">
-   <!-- Add a hidden input field for editor_id -->
-   <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="editor_id">
-
-
-
-    <div class="modal fade bd-example-modal-lg" id="faqsModalEdit" tabindex="-1" role="dialog" data-backdrop="static"
+<form id="editfaqsform" class="row" action="" method="post" enctype="multipart/form-data">
+<input type="hidden" value="<?= $_SESSION['id'] ?>" name="editor_id"> 
+   <div class="modal fade bd-example-modal-lg" id="faqsModalEdit" tabindex="-1" role="dialog" data-backdrop="static"
       data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Campus Faqs Edit</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body" id="faqsData">
-       
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <input type="submit" class="btn" value="Save" name="save_faqs">
-          </div>
-        </div>
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Campus Faqs Edit</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body" id="faqsData">
+               <!-- Content here -->
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+               <input type="submit" class="btn" value="Save" name="save_faqs">
+            </div>
+         </div>
       </div>
-    </div>
-  </form>
+   </div>
+</form>
+
 
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
@@ -312,6 +320,28 @@ $allFaqs = $obj->show_faqs();
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
+  <script>function searchFAQs() {
+    const input = document.getElementById('searchFAQInput');
+    const filter = input.value.toLowerCase();
+    const tableBody = document.getElementById('faqTableBody');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+
+        for (let j = 1; j < cells.length - 1; j++) { // Exclude the No. and Actions columns
+            if (cells[j]) {
+                if (cells[j].innerText.toLowerCase().indexOf(filter) > -1) {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        rows[i].style.display = match ? '' : 'none'; // Show or hide based on match
+    }
+}
+</script>
   <script type="text/javascript">
     $(document).ready(function () {
       $('#myTable').DataTable();
@@ -402,10 +432,12 @@ document.getElementById('faqForm').addEventListener('submit', function(event) {
             });
         }
     });
-});$('#faqsModalEdit form').on('submit', function (e) {
+});
+$('#editfaqsform').on('submit', function (e) {
     e.preventDefault(); // Prevent the default form submission
 
     var form = $(this);
+
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to save this FAQ?",
@@ -417,19 +449,9 @@ document.getElementById('faqForm').addEventListener('submit', function(event) {
         cancelButtonText: "No, cancel!"
     }).then((result) => {
         if (result.isConfirmed) {
-            var formData = new FormData(form[0]); // Create FormData from the form element
-            formData.append('type', 'faq'); // Append a type for identifying the request
+            var formData = new FormData(this); // Create FormData from the form element
+            formData.append('type', 'faq');  // Add type to FormData
 
-            // Log to see if fid is being retrieved
-            var fid = form.find('input[name="fid"]').val(); // Ensure this is 'fid'
-            console.log('FID:', fid); // Log to see if fid is being retrieved
-            if (fid) {
-                formData.append('fid', fid); // Append 'fid' to FormData explicitly
-            } else {
-                console.error("FID is missing from form data!");
-            }
-
-            // Adjust the URL if necessary to point to the correct PHP handler
             fetch("../admin/ajax/editData.php", {
                 method: "POST",
                 body: formData
@@ -446,14 +468,14 @@ document.getElementById('faqForm').addEventListener('submit', function(event) {
             })
             .catch(error => {
                 Swal.fire("Error!", "There was an error saving the FAQ.", "error");
-                console.error("Error saving FAQ:", error); // Log any errors to console for debugging
+                console.error("Error:", error); // Keep error logging for debugging
             });
         }
     });
 });
-
     });
   </script>
+  
 </body>
 
 </html>

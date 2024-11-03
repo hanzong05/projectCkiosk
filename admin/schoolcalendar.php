@@ -30,8 +30,10 @@ $allEvents = $obj->show_events();
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
     name='viewport' />
   <!--     Fonts and icons     -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
@@ -88,86 +90,89 @@ $allEvents = $obj->show_events();
   }
 }
 </style>
-<body class="">
-<div class="wrapper ">
+<body class=""><div class="wrapper ">
     <!-- sweetalert start-->
     <?= isset($log_msg) ? $log_msg : '' ?>
     <!-- sweetalert end -->
     <div class="sidebar" data-color="white" data-active-color="danger">
-  <div class="logo">
-    <a href="dashboard.php" class="simple-text logo-normal">
-      <img src="../img/C.png" alt="" width="240">
-    </a>
-  </div>
-  <div class="sidebar-wrapper ">
-  <?php if ($account_type != '0') { ?>
-    <ul class="nav">
-    <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      <li >
-        <a href="./announcement.php">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Announcement</p>
-        </a>
-      </li>
-      <li class="active">
-          <a href="./schoolcalendar.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>School Calendar</p>
-          </a>
-      </li>
-      <?php if ($account_type == '1') { ?>
-        <li >
-          <a href="./facultymembers.php">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>Faculty Members</p>
-          </a>
-        </li>
-        <li>
-          <a href="./map.php">
-            <i class="nc-icon nc-single-02"></i>
-            <p>Campus Map</p>
-          </a>
-        </li>
-        <li>
-          <a href="./organization.php">
-            <i class="nc-icon nc-caps-small"></i>
-            <p>Campus Organization</p>
-          </a>
-        </li>
-      <?php } ?>
-     
-      <li>
-        <a href="./faqs.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>FAQS</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-    <?php if ($account_type == '0') { ?>
-      <ul class="nav">
-      <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-        
-      <li>
-        <a href="./ratings.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Ratings</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-  </div>
-</div>
+        <div class="logo">
+            <a href="dashboard.php" class="simple-text logo-normal">
+                <img src="../img/C.png" alt="" width="240">
+            </a>
+        </div>
+        <div class="sidebar-wrapper ">
+            <?php if ($account_type != '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./announcement.php">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Announcement</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="./schoolcalendar.php">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>School Calendar</p>
+                        </a>
+                    </li>
+                    <?php if ($account_type == '1') { ?>
+                        <li>
+                            <a href="./facultymembers.php">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p>Faculty Members</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./map.php">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Campus Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./organization.php">
+                                <i class="fas fa-users"></i>
+                                <p>Campus Organization</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./audit.php">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Audit Trails</p>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li>
+                        <a href="./faqs.php">
+                            <i class="fas fa-question-circle"></i>
+                            <p>FAQS</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+            <?php if ($account_type == '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./ratings.php">
+                            <i class="fas fa-star"></i>
+                            <p>Ratings</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
+    </div>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -215,99 +220,76 @@ $allEvents = $obj->show_events();
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="container-fluid p-0">
-                  <hr>
-                  <div class="d-flex justify-content-between">
-                    <div class="p-2">
-                      <button class="btn text-end" data-toggle="modal" data-target="#eventModal">
-                        Create Event
-                      </button>
-                    </div>
+      <div class="flex flex-col w-full">
+    <div class="w-full">
+        <div class="bg-white shadow-lg rounded-lg">
+            <div class="p-5">
+                <hr class="my-4">
+                <div class="mb-6">
+                  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                      <div class="flex-grow mb-2 md:mb-0 md:mr-2">
+                          <input type="text" id="searchInput" placeholder="Search events..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchEvents()">
+                      </div>
+                      <div>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition duration-200 flex items-center gap-2" data-toggle="modal" data-target="#eventModal">
+                              Create Event
+                          </button>
+                      </div>
                   </div>
-                  <div class="table-responsive">
-                  <table class="table table-light table-hover table-bordered" id="myTable">
-                    <thead>
-                      <th>
-                        <center>NO.</center>
-                      </th>
-                      <th>
-                        <center>Event Date</center>
-                      </th>
-                      <th>
-                        <center>Event Details</center>
-                      </th>
-                      <th>
-                        <center>Created By</center>
-                      </th>
-                      <th>
-                        <center>Updated By</center>
-                      </th>
-                      <th>
-                        <center>Updated At</center>
-                      </th>
-                      <th>
-                        <center>ACTION</center>
-                      </th>
-                    </thead>
-                    <tbody>
-  <?php
-  $count = 1;
-  function sanitize_html($html) {
-    // Allow only specific HTML tags
-    return strip_tags($html, '<b><i><u>'); // Adjust tags as needed
-}
-  foreach ($allEvents as $row) {
-    ?>
-    <tr class="table-row">
-      <td>
-        <?php echo $count; ?>
-      </td>
-      <td>
-        <?php echo date('F d Y', strtotime($row["calendar_date"])); ?>
-      </td>
-      <td>
-      <?php  echo isset($row["calendar_details"]) ? sanitize_html($row["calendar_details"]) : 'No details available'; 
-       ?>
-      </td>
-      <td>
-      <?php echo htmlspecialchars($row["creator_name"], ENT_QUOTES, 'UTF-8'); ?>
-       
-      </td>
-      <td>
-        <!-- Show updated_by name (if available) -->
-        <?php echo !empty($row['updated_by_name']) ? htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8') : 'Not yet updated'; ?>
-      </td>
-      <td>
-        <!-- Show updated_at date (if available), otherwise display "Not updated yet" -->
-        <?php echo !empty($row["updated_at"]) ? date('F d Y H:i A', strtotime($row["updated_at"])) : 'Not updated yet'; ?>
-      </td>
-      <td class="text-center">
-        <button class="btn eventModalEdit" data-toggle="modal" data-target="#eventModalEdit"
-          data-id="<?= $row['calendar_id'] ?>">
-          Edit
-        </button>
-        <a class="btn btn-danger btn-delete" href='schoolcalendar.php?did=<?= $row['calendar_id'] ?>'>
-            Delete
-        </a>
-      </td>
-    </tr>
-    <?php
-    $count++;
-  }
-  ?>
-</tbody>
-
-                  </table>
-                  </div>  
-                </div>
               </div>
+
+
+                <div class="overflow-x-auto mt-4">
+                    <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="py-2 text-center border-b">NO.</th>
+                                <th class="py-2 text-center border-b">Event Date</th>
+                                <th class="py-2 text-center border-b">Event Details</th>
+                                <th class="py-2 text-center border-b">Created By</th>
+                                <th class="py-2 text-center border-b">Updated By</th>
+                                <th class="py-2 text-center border-b">Updated At</th>
+                                <th class="py-2 text-center border-b">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventTableBody">
+                            <?php
+                            $count = 1;
+                            function sanitize_html($html) {
+                                return strip_tags($html, '<b><i><u>'); // Allow specific HTML tags
+                            }
+                            foreach ($allEvents as $row) {
+                            ?>
+                            <tr class="table-row hover:bg-gray-50 transition duration-200">
+                                <td class="border-b text-center py-2"><?php echo $count; ?></td>
+                                <td class="border-b text-center py-2"><?php echo date('F d Y', strtotime($row["calendar_date"])); ?></td>
+                                <td class="border-b text-center py-2"><?php echo isset($row["calendar_details"]) ? sanitize_html($row["calendar_details"]) : 'No details available'; ?></td>
+                                <td class="border-b text-center py-2"><?php echo htmlspecialchars($row["creator_name"], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td class="border-b text-center py-2"><?php echo !empty($row['updated_by_name']) ? htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8') : 'Not yet updated'; ?></td>
+                                <td class="border-b text-center py-2"><?php echo !empty($row["updated_at"]) ? date('F d Y H:i A', strtotime($row["updated_at"])) : 'Not updated yet'; ?></td>
+                                <td class="border-b text-center py-2">
+                                    <div class="flex space-x-2">
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 eventModalEdit" data-toggle="modal" data-target="#eventModalEdit" data-id="<?= $row['calendar_id'] ?>">
+                                        <i class="fas fa-edit"></i> <!-- Edit Icon -->
+                                    </button>
+                                    <a class="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 btn-delete" href='schoolcalendar.php?did=<?= $row['calendar_id'] ?>'>
+                                        <i class="fas fa-trash"></i> <!-- Delete Icon -->
+                                    </a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
+                            $count++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>  
             </div>
-          </div>
         </div>
+    </div>
+</div>
       </div>
     </div>
   </div>
@@ -382,7 +364,29 @@ $allEvents = $obj->show_events();
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
+  <script>
+    function searchEvents() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#eventTableBody tr');
 
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let match = false;
+
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(input)) {
+                    match = true;
+                }
+            });
+
+            if (match) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Get today's date in the format YYYY-MM-DD

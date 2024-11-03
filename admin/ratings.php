@@ -32,7 +32,8 @@ $allratings = $obj->show_ratings();
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
+  <!-- CSS Files -->  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
@@ -112,7 +113,13 @@ $allratings = $obj->show_ratings();
             <i class="nc-icon nc-caps-small"></i>
             <p>Campus Organization</p>
           </a>
-        </li>
+        </li>'
+        <li>
+                                <a href="./audit.php" >
+                                    <i class="nc-icon nc-caps-small"></i>
+                                    <p>Audit Trails</p>
+                                </a>
+                            </li>
       <?php } ?>
      
       <li>
@@ -189,77 +196,103 @@ $allratings = $obj->show_ratings();
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="container-fluid p-0">
-                  <!-- <h1 class="h3 mb-3"><strong>Announcement</strong></h1> -->
-                  <hr>
-        
-                  <table class="table table-light table-hover table-bordered" id="myTable">
-    <thead>
-        <th><center>NO.</center></th>
-        <th><center>DETAILS</center></th>
-        <th><center>Name</center></th>
-        <th><center>Emails</center></th>
-        <th><center>College</center></th> 
-        <th><center>Year</center></th><!-- Shows who created the announcement -->
-        <th><center>Ratings</center></th> <!-- Shows the rating -->
-    </thead>
-    <tbody>
-        <?php
-        $count = 1;
-        foreach ($allratings as $row) {
-            ?>
-            <tr class="table-row">
-                <td><center><?php echo $count; ?></center></td>
-                <td class="ellipsis" style="width:30%;">
-                <center> <span><?php echo $row["feedback_text"]; ?></span></center>
-                </td>
-                <td><center><?php echo $row["name"] ?? 'Anonymous'; ?></center></td>
-                <td><center><?php echo $row["email"] ?? 'N/A'; ?></center></td> <!-- Emails -->
-                <td><center><?php echo $row["college"] ?? 'N/A'; ?></center></td> <!-- College -->
-                <td><center>
-    <?php 
-    if (isset($row["year"])) {
-        switch ($row["year"]) {
-            case 1:
-                echo "1st year";
-                break;
-            case 2:
-                echo "2nd year";
-                break;
-            case 3:
-                echo "3rd year";
-                break;
-            case 4:
-                echo "4th year";
-                break;
-            default:
-                echo $row["year"]; // Display the year if it's not between 1 and 4
-                break;
-        }
-    } else {
-        echo 'N/A'; // If 'year' is not set
-    }
-    ?>
-</center></td> <!-- College -->
-                <td><center><?php echo $row["rating"] ?? 'No rating'; ?></center></td> <!-- Ratings -->
-            </tr>
-            <?php
-            $count++;
-        }
-        ?>
-    </tbody>
-</table>
-
+      <div class="content"><div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="px-6 py-8">
+                <div class="overflow-x-auto">
+                    <!-- Wrapper for max height and responsive width -->
+                    <div class="max-h-96 overflow-auto">
+                        <table class="min-w-full max-w-full lg:max-w-screen-lg divide-y divide-gray-200"> <!-- Max width for larger screens -->
+                            <!-- Table Header -->
+                            <thead class="bg-gradient-to-r from-orange-100 to-amber-100">
+                                <tr>
+                                    <th class="px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                                        No.
+                                    </th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                                        Details
+                                    </th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                                        Name
+                                    </th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                                        Email
+                                    </th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                                        College
+                                    </th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                                        Year
+                                    </th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                                        Rating
+                                    </th>
+                                </tr>
+                            </thead>
+                            <!-- Table Body -->
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <?php $count = 1; foreach ($allratings as $row): ?>
+                                <tr class="hover:bg-orange-50 transition-colors duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                                        <?php echo $count; ?>
+                                    </td>
+                                    <td class="px-6 py-4 text-center text-sm text-gray-800 max-w-md">
+                                        <div class="truncate">
+                                            <?php echo $row["feedback_text"]; ?>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800">
+                                        <?php echo $row["name"] ?? '<span class="text-gray-500">Anonymous</span>'; ?>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800">
+                                        <?php echo $row["email"] ?? '<span class="text-gray-500">N/A</span>'; ?>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800">
+                                        <?php echo $row["college"] ?? '<span class="text-gray-500">N/A</span>'; ?>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800">
+                                        <?php 
+                                        if (isset($row["year"])) {
+                                            $yearText = match ((int)$row["year"]) {
+                                                1 => '<span class="px-2 py-1 text-green-700 bg-green-100 rounded-full">1st year</span>',
+                                                2 => '<span class="px-2 py-1 text-blue-700 bg-blue-100 rounded-full">2nd year</span>',
+                                                3 => '<span class="px-2 py-1 text-purple-700 bg-purple-100 rounded-full">3rd year</span>',
+                                                4 => '<span class="px-2 py-1 text-red-700 bg-red-100 rounded-full">4th year</span>',
+                                                default => '<span class="px-2 py-1 text-gray-700 bg-gray-100 rounded-full">' . $row["year"] . '</span>'
+                                            };
+                                            echo $yearText;
+                                        } else {
+                                            echo '<span class="text-gray-500">N/A</span>';
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <?php 
+                                        $rating = $row["rating"] ?? 'No rating';
+                                        $ratingClass = match(true) {
+                                            $rating >= 4 => 'text-green-700 bg-green-100',
+                                            $rating >= 3 => 'text-blue-700 bg-blue-100',
+                                            $rating >= 2 => 'text-yellow-700 bg-yellow-100',
+                                            $rating >= 1 => 'text-red-700 bg-red-100',
+                                            default => 'text-gray-700 bg-gray-100'
+                                        };
+                                        ?>
+                                        <span class="px-2 py-1 rounded-full text-sm font-medium <?php echo $ratingClass; ?>">
+                                            <?php echo $rating; ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <?php $count++; endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div> <!-- End of wrapper for max height and scrollbar -->
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+    </div>
+</div>
+
       </div>
     </div>
   </div>

@@ -54,90 +54,268 @@ try {
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
     name='viewport' />
   <!--     Fonts and icons     -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <link href="assets/css/css.css" rel="stylesheet" />
+  <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -15px;
+        }
+        
+        .col-lg-6, .col-lg-12, .col-md-12 {
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        @media (min-width: 992px) {
+            .col-lg-6 { width: 50%; }
+            .col-lg-12 { width: 100%; }
+        }
+        
+        @media (max-width: 991px) {
+            .col-md-12 { width: 100%; }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            background: linear-gradient(45deg, #83435d, #573131);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-header:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        .card-title {
+            color: white;
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+        
+      
+
+
+        .card-body {
+    padding: 20px;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: rgba(234, 182, 118, 0.7);  /* Base golden color */
+    animation: pulseBG 3s ease-in-out infinite;
+    backdrop-filter: blur(8px);
+    color: #2d2d2d;  /* Dark text for contrast */
+    border: 1px solid rgba(234, 182, 118, 0.3);  /* Subtle border */
+    box-shadow: 0 4px 20px rgba(234, 182, 118, 0.2);  /* Warm shadow */
+}
+
+@keyframes pulseBG {
+    0% { 
+        background: rgba(234, 182, 118, 0.7);
+        box-shadow: 0 4px 20px rgba(234, 182, 118, 0.2);
+    }
+    50% { 
+        background: rgba(234, 182, 118, 0.9);
+        box-shadow: 0 4px 25px rgba(234, 182, 118, 0.3);
+    }
+    100% { 
+        background: rgba(234, 182, 118, 0.7);
+        box-shadow: 0 4px 20px rgba(234, 182, 118, 0.2);
+    }
+}
+
+        canvas {
+            max-width: 100%;
+            height: auto !important;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer {
+            padding: 20px 0;
+            text-align: center;
+            background: #f8f9fa;
+            margin-top: 30px;
+        }
+        
+        .heart {
+            color: #ff4d4d;
+            display: inline-block;
+            animation: pulse 1.5s ease infinite;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+    
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Custom legend styling */
+        #pieChartLegend {
+            right: 20px;
+        }
+        
+        #pieChartLegend li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        #pieChartLegend li::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 
-<body class="">
+<body class=""><div class="wrapper ">
+    <!-- sweetalert start-->
+    <?= isset($log_msg) ? $log_msg : '' ?>
+    <!-- sweetalert end -->
     <div class="sidebar" data-color="white" data-active-color="danger">
-  <div class="logo">
-    <a href="dashboard.php" class="simple-text logo-normal">
-      <img src="../img/C.png" alt="" width="240">
-    </a>
-  </div>
-  <div class="sidebar-wrapper ">
-  <?php if ($account_type != '0') { ?>
-    <ul class="nav">
-    <li  class="active" >
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      <li >
-        <a href="./announcement.php">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Announcement</p>
-        </a>
-      </li>
-      <li>
-          <a href="./schoolcalendar.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>School Calendar</p>
-          </a>
-      </li>
-      <?php if ($account_type == '1') { ?>
-        <li >
-          <a href="./facultymembers.php">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>Faculty Members</p>
-          </a>
-        </li>
-        <li>
-          <a href="./map.php">
-            <i class="nc-icon nc-single-02"></i>
-            <p>Campus Map</p>
-          </a>
-        </li>
-        <li>
-          <a href="./organization.php">
-            <i class="nc-icon nc-caps-small"></i>
-            <p>Campus Organization</p>
-          </a>
-        </li>
-      <?php } ?>
-     
-      <li>
-        <a href="./faqs.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>FAQS</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-    <?php if ($account_type == '0') { ?>
-      <ul class="nav">
-      <li  class="active" >
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-        
-      <li>
-        <a href="./ratings.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Ratings</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-  </div>
-</div>
+        <div class="logo">
+            <a href="dashboard.php" class="simple-text logo-normal">
+                <img src="../img/C.png" alt="" width="240">
+            </a>
+        </div>
+        <div class="sidebar-wrapper ">
+            <?php if ($account_type != '0') { ?>
+                <ul class="nav">
+                    <li class="active">
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./announcement.php">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Announcement</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="./schoolcalendar.php">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>School Calendar</p>
+                        </a>
+                    </li>
+                    <?php if ($account_type == '1') { ?>
+                        <li>
+                            <a href="./facultymembers.php">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p>Faculty Members</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./map.php">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Campus Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./organization.php">
+                                <i class="fas fa-users"></i>
+                                <p>Campus Organization</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./audit.php">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Audit Trails</p>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li>
+                        <a href="./faqs.php">
+                            <i class="fas fa-question-circle"></i>
+                            <p>FAQS</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+            <?php if ($account_type == '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./ratings.php">
+                            <i class="fas fa-star"></i>
+                            <p>Ratings</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
+    </div>
 
     <div class="main-panel">
       <!-- Navbar -->
@@ -185,164 +363,159 @@ try {
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-              <div class="card-body ">
-                <div class="row">
-                  <div class="col-5 col-md-4">
-                    <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-globe text-warning"></i>
+      <div class="row">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+        <!-- Organizations Card -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 p-4 bg-yellow-100 rounded-lg">
+                        <i class="fas fa-building text-2xl text-yellow-600"></i>
                     </div>
-                  </div>
-                  <div class="col-7 col-md-8">
-                    <div class="numbers">
-                      <p class="card-category">Organization</p>
-                      <p class="card-title"><?php echo htmlspecialchars($organization_count); ?></p>
-                      <p>
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-500">Organizations</h3>
+                        <div class="flex items-baseline">
+                            <p class="text-2xl font-semibold text-gray-900">
+                                <?php echo htmlspecialchars($organization_count); ?>
+                            </p>
+                            <p class="ml-2 text-sm text-gray-500">total</p>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="card-footer ">
-                <hr>
-              </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-              <div class="card-body ">
-                <div class="row">
-                  <div class="col-5 col-md-4">
-                    <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-money-coins text-success"></i>
-                    </div>
-                  </div>
-                  <div class="col-7 col-md-8">
-                    <div class="numbers">
-                      <p class="card-category">Members</p>
-                      <p class="card-title"><?php echo htmlspecialchars($members_count); ?></p>
-                      <p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer ">
-                <hr>
-              </div>
+            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
+                <div class="h-1 w-full bg-yellow-200 rounded-full"></div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-              <div class="card-body ">
-                <div class="row">
-                  <div class="col-5 col-md-4">
-                    <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-vector text-danger"></i>
-                    </div>
-                  </div>
-                  <div class="col-7 col-md-8">
-                    <div class="numbers">
-                      <p class="card-category">Announcement</p>
-                      <p class="card-title"><?php echo htmlspecialchars($announcements_count); ?></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer ">
-                <hr>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-              <div class="card-body ">
-                <div class="row">
-                  <div class="col-5 col-md-4">
-                    <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-favourite-28 text-primary"></i>
-                    </div>
-                  </div>
-                  <div class="col-7 col-md-8">
-                    <div class="numbers">
-                      <p class="card-category">Events</p>
-                      <p class="card-title"><?php echo htmlspecialchars($events_count); ?></p>
-                      <p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer ">
-                <hr>
-              </div>
-            </div>
-          </div>
         </div>
 
-          <?php if ($account_type == '0') { ?>
+        <!-- Members Card -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 p-4 bg-green-100 rounded-lg">
+                        <i class="fas fa-users text-2xl text-green-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-500">Members</h3>
+                        <div class="flex items-baseline">
+                            <p class="text-2xl font-semibold text-gray-900">
+                                <?php echo htmlspecialchars($members_count); ?>
+                            </p>
+                            <p class="ml-2 text-sm text-gray-500">total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
+                <div class="h-1 w-full bg-green-200 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Announcements Card -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 p-4 bg-red-100 rounded-lg">
+                        <i class="fas fa-bullhorn text-2xl text-red-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-500">Announcements</h3>
+                        <div class="flex items-baseline">
+                            <p class="text-2xl font-semibold text-gray-900">
+                                <?php echo htmlspecialchars($announcements_count); ?>
+                            </p>
+                            <p class="ml-2 text-sm text-gray-500">total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
+                <div class="h-1 w-full bg-red-200 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Events Card -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 p-4 bg-blue-100 rounded-lg">
+                        <i class="fas fa-calendar-alt text-2xl text-blue-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-500">Events</h3>
+                        <div class="flex items-baseline">
+                            <p class="text-2xl font-semibold text-gray-900">
+                                <?php echo htmlspecialchars($events_count); ?>
+                            </p>
+                            <p class="ml-2 text-sm text-gray-500">total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
+                <div class="h-1 w-full bg-blue-200 rounded-full"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <?php if ($account_type == '0') { ?>
+        
            
         
-  <div class="row">
-  
-  <div class="col-lg-6 col-md-12">
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Pie Chart</h4>
-        </div>
-        <div class="card-body" style="position: relative;">
-            <canvas id="pieChart" ></canvas>
-            <ul id="pieChartLegend" style="list-style-type: none; padding: 0; margin: 0; position: absolute;  top: 50%; transform: translateY(-50%);">
-                <!-- Custom legend items will be injected here -->
-            </ul>
-        </div>
-    </div>
-</div>
-
-  <div class="col-lg-6 col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Number Of Ratings</h4>
-      </div>
-      <div class="card-body">
-        <canvas id="barChart"></canvas>
-      </div>
-    </div>
-  </div>
-  
-</div>
-<div class="row">
-<div class="col-lg-12 col-md-12">
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Total Number Of ratings per Month</h4>
-        </div>
-        <div class="card-body">
-            <canvas id="lineChart" width="400" height="100"></canvas>
-        </div>
-    </div>
-</div>
-  
-</div>
-      </div>
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                ©
-                <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i>
-              </span>
+            <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Pie Chart</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-loading"></div>
+                    <canvas id="pieChart"></canvas>
+                    <ul id="pieChartLegend"></ul>
+                </div>
             </div>
-          </div>
         </div>
-      </footer>
+        
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Number Of Ratings</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-loading"></div>
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Total Number Of ratings per Month</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-loading"></div>
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="credits">
+                    <span class="copyright">
+                        © <script>document.write(new Date().getFullYear())</script>, 
+                        made with <i class="heart">❤</i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
     </div>
   </div>
     <?php } ?>

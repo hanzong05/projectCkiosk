@@ -30,8 +30,10 @@ $allAnnouncement = $obj->show_announcement();
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
     name='viewport' />
   <!--     Fonts and icons     -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
@@ -109,82 +111,90 @@ $allAnnouncement = $obj->show_announcement();
   </style>
 </head>
 
-<body class="">
-  <div class="wrapper ">
+<body class=""><div class="wrapper ">
     <!-- sweetalert start-->
     <?= isset($log_msg) ? $log_msg : '' ?>
     <!-- sweetalert end -->
     <div class="sidebar" data-color="white" data-active-color="danger">
-  <div class="logo">
-    <a href="dashboard.php" class="simple-text logo-normal">
-      <img src="../img/C.png" alt="" width="240">
-    </a>
-  </div>
-  <div class="sidebar-wrapper ">
-  <?php if ($account_type != '0') { ?>
-    <ul class="nav">
-    <li>
-        <a href="./dashboard.php">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>
-      
-      <li class="active">
-        <a href="./announcement.php">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Announcement</p>
-        </a>
-      </li>
-      <li>
-          <a href="./schoolcalendar.php">
-            <i class="nc-icon nc-pin-3"></i>
-            <p>School Calendar</p>
-          </a>
-      </li>
-      <?php if ($account_type == '1') { ?>
-        <li >
-          <a href="./facultymembers.php">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>Faculty Members</p>
-          </a>
-        </li>
-        <li>
-          <a href="./map.php">
-            <i class="nc-icon nc-single-02"></i>
-            <p>Campus Map</p>
-          </a>
-        </li>
-        <li>
-          <a href="./organization.php">
-            <i class="nc-icon nc-caps-small"></i>
-            <p>Campus Organization</p>
-          </a>
-        </li>
-      <?php } ?>
-     
-      <li>
-        <a href="./faqs.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>FAQS</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-    <?php if ($account_type == '0') { ?>
-      <ul class="nav">
-    
-        
-      <li>
-        <a href="./ratings.php">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Ratings</p>
-        </a>
-      </li>
-    </ul>
-    <?php } ?>
-  </div>
-</div>
+        <div class="logo">
+            <a href="dashboard.php" class="simple-text logo-normal">
+                <img src="../img/C.png" alt="" width="240">
+            </a>
+        </div>
+        <div class="sidebar-wrapper ">
+            <?php if ($account_type != '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="./announcement.php">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Announcement</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="./schoolcalendar.php">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>School Calendar</p>
+                        </a>
+                    </li>
+                    <?php if ($account_type == '1') { ?>
+                        <li>
+                            <a href="./facultymembers.php">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p>Faculty Members</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./map.php">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Campus Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./organization.php">
+                                <i class="fas fa-users"></i>
+                                <p>Campus Organization</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./audit.php">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Audit Trails</p>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li>
+                        <a href="./faqs.php">
+                            <i class="fas fa-question-circle"></i>
+                            <p>FAQS</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+            <?php if ($account_type == '0') { ?>
+                <ul class="nav">
+                    <li>
+                        <a href="./dashboard.php">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./ratings.php">
+                            <i class="fas fa-star"></i>
+                            <p>Ratings</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
+    </div>
+
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -233,69 +243,77 @@ $allAnnouncement = $obj->show_announcement();
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="container-fluid p-0">
-                  <!-- <h1 class="h3 mb-3"><strong>Announcement</strong></h1> -->
-                  <hr>
-                  <div class="d-flex justify-content-between">
-                    <div class="p-2">
-                      <button class="btn text-end" data-toggle="modal" data-target="#announcementModal">
-                        Create Announcement
-                      </button>
-                    </div>
-                  </div> 
-                  <div class="table-responsive">
-                  <table class="table table-light table-hover table-bordered" id="myTable">
-                    <thead>
-                        <th><center>NO.</center></th>
-                        <th><center>DETAILS</center></th>
-                        <th><center>ORG NAME</center></th>
-                        <th><center>CREATED AT</center></th>
-                        <th><center>CREATED BY</center></th> <!-- Shows who created the announcement -->
-                        <th><center>UPDATED BY</center></th> <!-- Shows who updated the announcement -->
-                        <th><center>UPDATED AT</center></th> <!-- Shows when the announcement was updated -->
-                        <th><center>ACTION</center></th>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $count = 1;
-                      foreach ($allAnnouncement as $row) {
-                          ?>
-                          <tr class="table-row">
-                              <td><center><?php echo $count; ?></center></td>
-                              <td class="ellipsis" style="width:30%;">
-                                  <span><?php echo $row["announcement_details"]; ?></span>
-                              </td>
-                              <td><center><?php echo $row["org_name"] ?? 'N/A'; ?></center></td>
-                              <td><center><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></center></td> <!-- Created At -->
-                              <td><center><?php echo $row["creator_name"] ?? 'N/A'; ?></center></td> <!-- Created By -->
-                              <td><center><?php echo $row["updated_by_name"] ?? 'Not yet updated'; ?></center></td> <!-- Updated By -->
-                              <td><center><?php echo date('F d, Y H:i:s', strtotime($row["updated_at"] ?? 'N/A')); ?></center></td> <!-- Updated At -->
-                              <td class="text-center">
-                                  <button class="btn announcementModalEdit" data-toggle="modal"
-                                          data-target="#announcementModalEdit" data-id="<?= $row['announcement_id'] ?>">
-                                      Edit
-                                  </button>
-                                  <a class="btn btn-warning btn-archive" href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
-                                      Archive
-                                  </a>
-                              </td>
-                          </tr>
-                          <?php
-                          $count++;
-                      }
-                      ?>
-                      </tbody>
-                    </table>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="p-6">
+    <div class="bg-white rounded-lg shadow-lg">
+        <div class="p-6">
+          
+            <div class="mb-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div class="flex-grow mb-2 md:mb-0 md:mr-2">
+            <input type="text" id="searchAnnouncementInput" placeholder="Search announcements..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchAnnouncements()">
         </div>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition duration-200 flex items-center gap-2" data-toggle="modal" data-target="#announcementModal">
+            <i class="fas fa-plus"></i>
+            Create Announcement
+        </button>
+    </div>
+</div>
+
+
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">No.</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Details</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Org Name</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Created At</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Created By</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Updated By</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Updated At</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200" id="announcementTableBody">
+                        <?php
+                        $count = 1;
+                        foreach ($allAnnouncement as $row) {
+                        ?>
+                        <tr class="hover:bg-gray-50 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $count; ?></td>
+                            <td class="px-6 py-4 text-sm text-gray-800 max-w-md">
+                                <div class="line-clamp-2"><?php echo $row["announcement_details"]; ?></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["org_name"] ?? 'N/A'; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["creator_name"] ?? 'N/A'; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["updated_by_name"] ?? 'Not yet updated'; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo date('F d, Y H:i:s', strtotime($row["updated_at"] ?? 'N/A')); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                                <div class="flex justify-center gap-2">
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 announcementModalEdit" 
+                                            data-toggle="modal" data-target="#announcementModalEdit" 
+                                            data-id="<?= $row['announcement_id'] ?>">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <a class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded transition duration-200" 
+                                       href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
+                                        <i class="fas fa-archive"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php
+                            $count++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
       </div>
     </div>
   </div>
@@ -382,7 +400,31 @@ $allAnnouncement = $obj->show_announcement();
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
+  <script>
+    function searchAnnouncements() {
+        const input = document.getElementById('searchAnnouncementInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#announcementTableBody tr');
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let match = false;
+
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(input)) {
+                    match = true;
+                }
+            });
+
+            if (match) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
   <script type="text/javascript">
+    
     $(document).ready(function () {
       $('#myTable').DataTable();
       $('#summernote').summernote({

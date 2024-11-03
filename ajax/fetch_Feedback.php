@@ -21,7 +21,7 @@ try {
         if (!empty($feedback['image'])) {
             $feedback['image'] = $imageDirectory . $feedback['image'];
         } else {
-            $feedback['image'] = $imageDirectory . 'default.jpg'; // Default image URL
+            $feedback['image'] = $imageDirectory . 'default.png'; // Default image URL
         }
     }
 

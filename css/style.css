@@ -368,7 +368,7 @@
     align-items: center;
 }
 
-#search-input {
+.search{
     flex: 1;
     min-width: 200px;
     padding: 8px;
@@ -651,7 +651,7 @@
         gap: 8px;
     }
 
-    #search-input {
+    .search {
         min-width: 150px;
     }
 
@@ -699,7 +699,7 @@
         gap: 5px;
     }
 
-    #search-input,
+    .search,
     #dropdownMenu,
     .search-button {
         width: 100%;

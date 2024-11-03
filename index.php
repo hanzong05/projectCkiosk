@@ -106,14 +106,15 @@ $showfaqs = $obj->show_allFAQS();
         }
 
         .announcement-image {
-    width: 100%; /* Make the container full width */
+    width: auto; /* Make the container full width */
     height: auto; /* Maintain the aspect ratio */
+    padding:100px;
+   
 }
 
 .announcement-image img {
     width: 100%; /* Make the image full width */
     height: auto; /* Maintain the aspect ratio */
-    display: block; /* Prevent extra space below the image */
 }
 
 
@@ -802,15 +803,13 @@ $showfaqs = $obj->show_allFAQS();
 
        
         .announcement-card {
-            background: #2e0f13;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.5s ease forwards;
-        }
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid rgba(221, 221, 221, 0.5); /* Light gray border with transparency */
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for the cards */
+}
 
         @keyframes fadeIn {
             to {
@@ -841,7 +840,7 @@ $showfaqs = $obj->show_allFAQS();
         .org-name {
             font-weight: 600;
             font-size: 1.1em;
-            color: yellow;
+            color: black;
             margin-bottom: 4px;
         }
 
@@ -910,6 +909,22 @@ $showfaqs = $obj->show_allFAQS();
     height: auto; /* Maintain the aspect ratio */
     display: block; /* Prevent extra space below the image */
 }
+.ann-container {
+    max-height: 600px; /* Maximum height for scrolling */
+    overflow-y: auto;
+    padding: 20px; /* Adds padding around content */
+    padding-right: 15px; /* Space for scrollbar */
+    background: #2e0f13;
+    border-radius: 8px; /* Smooth rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-top: 20px;
+}
+
+.announcement-card p {
+    font-size: 1rem;
+    color: #555; /* Softer color for secondary text */
+    line-height: 1.5;
+}
 
 
         @media (max-width: 600px) {
@@ -942,8 +957,11 @@ $showfaqs = $obj->show_allFAQS();
 
             .announcement-image {
                 order: 3; /* Keeps image at bottom */
-                margin-top: 16px;
-            }
+                margin-top: 16px; 
+                width: auto; /* Make the container full width */
+                height: auto; /* Maintain the aspect ratio */
+                padding:0;
+            
         }
     
     
@@ -1107,7 +1125,7 @@ $allAnnouncement = getAllAnnouncements($connection);
     <div class="section-heading text-center borderYellow">
         <h1><br><em>ANNOUNCEMENT</em></h1>
     </div>
-    <div class="container">
+    <div class="ann-container">
         
 
         <div class="announcements" id="announcements-container">
@@ -1222,7 +1240,7 @@ $allAnnouncement = getAllAnnouncements($connection);
         <div id="map">
             <div class="map section-content-map">
                 <div class="dropdown">
-                    <input type="text" id="search-input" placeholder="Enter room name">
+                    <input type="text" id="search-input" class="search"placeholder="Enter room name">
                     <button onclick="searchAndHighlight()" class="search-button">
                         <i class="fa fa-search"></i>
                     </button>
@@ -1420,7 +1438,7 @@ $allAnnouncement = getAllAnnouncements($connection);
     <div id="map">
         <div class="map section-content-map">
             <div class="dropdown">
-                <input type="text" id="search" placeholder="Enter room name">
+                <input type="text" id="search"  class="search" placeholder="Enter room name">
                 <button onclick="searchElement()" class="search-button">
                     <i class="fa fa-search"></i>
                 </button>
@@ -1486,7 +1504,7 @@ $allAnnouncement = getAllAnnouncements($connection);
     <div id="map">
         <div class="map section-content-map">
             <div class="dropdown">
-                <input type="text" id="search2" placeholder="Enter room name" aria-label="Search for a room">
+                <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
                 <button onclick="searchElement2()" class="search-button" aria-label="Search">
                     <i class="fa fa-search"></i>
                 </button>
@@ -3185,94 +3203,99 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function createAnnouncementCard(announcement, index) {
-            const card = document.createElement('div');
-            card.className = 'announcement-card';
-            card.style.animationDelay = `${index * 0.2}s`;
-            
-            const timeIcon = `
-                <svg class="icon" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 6v6l4 2"/>
-                </svg>
-            `;
-            
-            const userIcon = `
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-            `;
-            
-            card.innerHTML = `
-                <div class="card-header">
-                    <div class="org-info">
-                        <img class="org-avatar" src="uploaded/orgUploaded/${announcement.org_image || '/api/placeholder/48/48'}" 
-                             alt="${announcement.org_name}" 
-                             onerror="this.src='/api/placeholder/48/48'">
-                        <div>
-                            <div class="org-name">${announcement.org_name}</div>
-                            <div class="meta-info">
-                                <span class="meta-item">
-                                    ${timeIcon}
-                                    ${formatTimeAgo(announcement.created_at)}
-                                </span>
-                                <span class="meta-item">
-                                    ${userIcon}
-                                    ${announcement.creator_name}
-                                </span>
-                            </div>
-                        </div>
+    const card = document.createElement('div');
+    card.className = 'announcement-card';
+    card.style.animationDelay = `${index * 0.2}s`;
+
+    const timeIcon = `
+        <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+        </svg>
+    `;
+
+    const userIcon = `
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+        </svg>
+    `;
+
+    // Check if the details exceed 100 characters to determine if "See more..." link is needed
+    const shouldShowSeeMore = announcement.announcement_details.length > 100;
+
+    card.innerHTML = `
+        <div class="card-header">
+            <div class="org-info">
+                <img class="org-avatar" src="uploaded/orgUploaded/${announcement.org_image || '/api/placeholder/48/48'}" 
+                     alt="${announcement.org_name}" 
+                     onerror="this.src='/api/placeholder/48/48'">
+                <div>
+                    <div class="org-name">${announcement.org_name}</div>
+                    <div class="meta-info">
+                        <span class="meta-item">
+                            ${timeIcon}
+                            ${formatTimeAgo(announcement.created_at)}
+                        </span>
+                        <span class="meta-item">
+                            ${userIcon}
+                            ${announcement.creator_name}
+                        </span>
                     </div>
                 </div>
-                <div class="card-content">
-                    <div class="content-wrapper">
-                        <div class="announcement-text truncated">
-                            ${announcement.announcement_details}
-                        </div>
-                        <a class="see-more-link" onclick="toggleDetails(this)">See more...</a>
-                        ${announcement.announcement_image ? `
-                            <div class="announcement-image">
-                                <img src="uploaded/annUploaded/${announcement.announcement_image}" 
-                                     alt="Announcement" 
-                                     onerror="this.parentElement.style.display='none'">
-                            </div>
-                        ` : ''}
-                    </div>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="content-wrapper">
+                <div class="announcement-text ${shouldShowSeeMore ? 'truncated' : ''}">
+                    ${announcement.announcement_details}
                 </div>
-            `;
-            
-            return card;
-        }
-
-        function toggleDetails(link) {
-            const textElement = link.previousElementSibling;
-            const isExpanded = !textElement.classList.contains('truncated');
-            
-            textElement.classList.toggle('truncated');
-            link.textContent = isExpanded ? 'See more...' : 'See less...';
-        }
-
-        // Initialize announcements with PHP data
-        document.addEventListener('DOMContentLoaded', function() {
-            const announcements = <?php echo json_encode($allAnnouncement); ?>;
-            const container = document.getElementById('announcements-container');
-            
-            if (Array.isArray(announcements)) {
-                announcements.forEach((announcement, index) => {
-                    container.appendChild(createAnnouncementCard(announcement, index));
-                });
-            } else {
-                container.innerHTML = `
-                    <div class="announcement-card">
-                        <div class="card-content">
-                            <div class="announcement-text">
-                                ${announcements}
-                            </div>
-                        </div>
+                ${shouldShowSeeMore ? '<a class="see-more-link" onclick="toggleDetails(this)">See more...</a>' : ''}
+                ${announcement.announcement_image ? `
+                    <div class="announcement-image">
+                        <img src="uploaded/annUploaded/${announcement.announcement_image}" 
+                             alt="Announcement" 
+                             onerror="this.parentElement.style.display='none'">
                     </div>
-                `;
-            }
+                ` : ''}
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+function toggleDetails(link) {
+    const textElement = link.previousElementSibling;
+    const isExpanded = !textElement.classList.contains('truncated');
+    
+    textElement.classList.toggle('truncated');
+    link.textContent = isExpanded ? 'See more...' : 'See less...';
+}
+
+// Initialize announcements with PHP data
+document.addEventListener('DOMContentLoaded', function() {
+    const announcements = <?php echo json_encode($allAnnouncement); ?>;
+    const container = document.getElementById('announcements-container');
+    
+    if (Array.isArray(announcements)) {
+        announcements.forEach((announcement, index) => {
+            container.appendChild(createAnnouncementCard(announcement, index));
         });
+    } else {
+        container.innerHTML = `
+            <div class="announcement-card">
+                <div class="card-content">
+                    <div class="announcement-text">
+                        ${announcements}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+});
+
+
 </script>
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script> -->
 

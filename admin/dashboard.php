@@ -126,7 +126,7 @@ try {
       
 
 
-        .card-body {
+        .chart-card .card-body {
     padding: 20px;
     min-height: 300px;
     display: flex;
@@ -364,100 +364,98 @@ try {
       <!-- End Navbar -->
       <div class="content">
       <div class="row">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-        <!-- Organizations Card -->
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div class="p-6">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 p-4 bg-yellow-100 rounded-lg">
-                        <i class="fas fa-building text-2xl text-yellow-600"></i>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-globe text-warning"></i>
                     </div>
-                    <div class="ml-4">
-                        <h3 class="text-sm font-medium text-gray-500">Organizations</h3>
-                        <div class="flex items-baseline">
-                            <p class="text-2xl font-semibold text-gray-900">
-                                <?php echo htmlspecialchars($organization_count); ?>
-                            </p>
-                            <p class="ml-2 text-sm text-gray-500">total</p>
-                        </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">Organization</p>
+                      <p class="card-title"><?php echo htmlspecialchars($organization_count); ?></p>
+                      <p>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+              </div>
             </div>
-            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
-                <div class="h-1 w-full bg-yellow-200 rounded-full"></div>
-            </div>
-        </div>
-
-        <!-- Members Card -->
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div class="p-6">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 p-4 bg-green-100 rounded-lg">
-                        <i class="fas fa-users text-2xl text-green-600"></i>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
-                    <div class="ml-4">
-                        <h3 class="text-sm font-medium text-gray-500">Members</h3>
-                        <div class="flex items-baseline">
-                            <p class="text-2xl font-semibold text-gray-900">
-                                <?php echo htmlspecialchars($members_count); ?>
-                            </p>
-                            <p class="ml-2 text-sm text-gray-500">total</p>
-                        </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">Members</p>
+                      <p class="card-title"><?php echo htmlspecialchars($members_count); ?></p>
+                      <p>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+              </div>
             </div>
-            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
-                <div class="h-1 w-full bg-green-200 rounded-full"></div>
-            </div>
-        </div>
-
-        <!-- Announcements Card -->
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div class="p-6">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 p-4 bg-red-100 rounded-lg">
-                        <i class="fas fa-bullhorn text-2xl text-red-600"></i>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-vector text-danger"></i>
                     </div>
-                    <div class="ml-4">
-                        <h3 class="text-sm font-medium text-gray-500">Announcements</h3>
-                        <div class="flex items-baseline">
-                            <p class="text-2xl font-semibold text-gray-900">
-                                <?php echo htmlspecialchars($announcements_count); ?>
-                            </p>
-                            <p class="ml-2 text-sm text-gray-500">total</p>
-                        </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">Announcement</p>
+                      <p class="card-title"><?php echo htmlspecialchars($announcements_count); ?></p>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+              </div>
             </div>
-            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
-                <div class="h-1 w-full bg-red-200 rounded-full"></div>
-            </div>
-        </div>
-
-        <!-- Events Card -->
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div class="p-6">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 p-4 bg-blue-100 rounded-lg">
-                        <i class="fas fa-calendar-alt text-2xl text-blue-600"></i>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-favourite-28 text-primary"></i>
                     </div>
-                    <div class="ml-4">
-                        <h3 class="text-sm font-medium text-gray-500">Events</h3>
-                        <div class="flex items-baseline">
-                            <p class="text-2xl font-semibold text-gray-900">
-                                <?php echo htmlspecialchars($events_count); ?>
-                            </p>
-                            <p class="ml-2 text-sm text-gray-500">total</p>
-                        </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">Events</p>
+                      <p class="card-title"><?php echo htmlspecialchars($events_count); ?></p>
+                      <p>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+              </div>
             </div>
-            <div class="bg-gray-50 px-6 py-3 rounded-b-xl">
-                <div class="h-1 w-full bg-blue-200 rounded-full"></div>
-            </div>
+          </div>
         </div>
-    </div>
-</div>
 
         <?php if ($account_type == '0') { ?>
         
@@ -465,7 +463,7 @@ try {
         
             <div class="row">
         <div class="col-lg-6 col-md-12">
-            <div class="card">
+            <div class="card chart-card">
                 <div class="card-header">
                     <h4 class="card-title">Pie Chart</h4>
                 </div>
@@ -478,7 +476,7 @@ try {
         </div>
         
         <div class="col-lg-6 col-md-12">
-            <div class="card">
+            <div class="card chart-card">
                 <div class="card-header">
                     <h4 class="card-title">Number Of Ratings</h4>
                 </div>
@@ -492,7 +490,7 @@ try {
     
     <div class="row">
         <div class="col-lg-12 col-md-12">
-            <div class="card">
+            <div class="card chart-card">
                 <div class="card-header">
                     <h4 class="card-title">Total Number Of ratings per Month</h4>
                 </div>
@@ -507,7 +505,7 @@ try {
     <footer class="footer">
         <div class="container-fluid">
             <div class="row">
-                <div class="credits">
+                <div class="credits chart-card">
                     <span class="copyright">
                         © <script>document.write(new Date().getFullYear())</script>, 
                         made with <i class="heart">❤</i>

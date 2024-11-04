@@ -1331,18 +1331,35 @@ function add_org($data) {
         </script>';
 }
 
-
 function save_org($data)
 {
     // Retrieve and sanitize data
     $oid = $data['oid'];
-    $name = htmlspecialchars($data['org_name'], ENT_QUOTES, 'UTF-8'); // Sanitize org_name
+    $name = htmlspecialchars(trim($data['org_name']), ENT_QUOTES, 'UTF-8'); // Sanitize and trim org_name
     $previous = $data['previous']; // No need to sanitize previous image
+
+    // Check for duplicate organization name
+    $duplicateQuery = "SELECT COUNT(*) FROM organization_tbl WHERE TRIM(LOWER(org_name)) = TRIM(LOWER(:org_name)) AND org_id != :oid";
+    $duplicateStatement = $this->connection->prepare($duplicateQuery);
+    $duplicateStatement->execute([':org_name' => $name, ':oid' => $oid]);
+    $duplicateCount = $duplicateStatement->fetchColumn();
+
+    if ($duplicateCount > 0) {
+        return '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Duplicate Organization Name",
+                text: "An organization with this name already exists.",
+                timer: 2000,
+                timerProgressBar: true
+            });
+        </script>';
+    }
 
     $newImage = "";
 
     // Handle image upload
-    if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] <= 0) {
+    if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
         $uploadTo = "../uploaded/orgUploaded/";
         $newImage = $name . "_" . basename($_FILES['org_image']['name']); // Create a new image name
         $tempPath = $_FILES["org_image"]["tmp_name"];
@@ -1400,9 +1417,19 @@ function save_org($data)
             });
         </script>';
     } else {
-        return 'Error';
+        error_log('Update failed: ' . implode(", ", $statement->errorInfo()), 3, '../error_log.txt');
+        return '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Update Failed",
+                text: "There was an error updating the organization. Please try again.",
+                timer: 2000,
+                timerProgressBar: true
+            });
+        </script>';
     }
 }
+
 
     function show_org()
     {
@@ -1787,6 +1814,24 @@ public function show_faqs()
         $editor_id = $_SESSION['id'] ?? ''; 
         
         try {
+            // Check if the username already exists (excluding the current user)
+            $usernameCheckSql = "SELECT COUNT(*) FROM users_tbl WHERE users_username = :username AND users_id != :uid";
+            $usernameCheckStmt = $this->connection->prepare($usernameCheckSql);
+            $usernameCheckStmt->execute([':username' => $username, ':uid' => $uid]);
+            $usernameCount = $usernameCheckStmt->fetchColumn();
+    
+            if ($usernameCount > 0) {
+                return '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Invalid Username",
+                        text: "The username is already taken.",
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+                </script>';
+            }
+    
             // Check if the user exists
             $sql = "SELECT users_password FROM users_tbl WHERE users_id = :uid";
             $stmt = $this->connection->prepare($sql);
@@ -1971,190 +2016,211 @@ public function show_faqs()
                 });
             </script>';
         }
-    }
-    function save_membersaccount($data) // Add editor_id as a parameter
-{
-    // Retrieve and sanitize data
-    $uid = htmlspecialchars($data['uid'], ENT_QUOTES, 'UTF-8');
-    $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
-    $username = htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8');
-    $password = $data['password'] ?? ''; 
-    $position = htmlspecialchars($data['position'], ENT_QUOTES, 'UTF-8');
-    $editor_id = $_SESSION['id'] ?? ''; 
-
-    try {
-        // Check if the user exists
-        $sql = "SELECT password FROM orgmembers_tbl WHERE id = :uid";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
-        $stmt->execute();
-
-        if ($stmt->rowCount() == 1) {
-            $existingPasswordHash = $stmt->fetchColumn();
-            $errors = [];
-
-            // Validate the password if a new one is provided
-            if (!empty($password)) {
-                if (strlen($password) < 8 || strlen($password) > 16) {
-                    $errors[] = "Password must be between 8 and 16 characters long.";
+    }function save_membersaccount($data) 
+    {
+        // Retrieve and sanitize data
+        $uid = htmlspecialchars($data['uid'], ENT_QUOTES, 'UTF-8');
+        $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
+        $username = htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8');
+        $password = $data['password'] ?? ''; 
+        $position = htmlspecialchars($data['position'], ENT_QUOTES, 'UTF-8');
+        $editor_id = $_SESSION['id'] ?? ''; 
+    
+        try {
+            // Check if the user exists
+            $sql = "SELECT password FROM orgmembers_tbl WHERE id = :uid";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            if ($stmt->rowCount() == 1) {
+                $existingPasswordHash = $stmt->fetchColumn();
+                $errors = [];
+    
+                // Validate the password if a new one is provided
+                if (!empty($password)) {
+                    if (strlen($password) < 8 || strlen($password) > 16) {
+                        $errors[] = "Password must be between 8 and 16 characters long.";
+                    }
+                    if (!preg_match('/[A-Z]/', $password)) {
+                        $errors[] = "Password must contain at least one uppercase letter.";
+                    }
+                    if (!preg_match('/[0-9]/', $password)) {
+                        $errors[] = "Password must contain at least one number.";
+                    }
+                    if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
+                        $errors[] = "Password must contain at least one special character.";
+                    }
+    
+                    if (!empty($errors)) {
+                        $errorMessage = implode('<br>', $errors);
+                        return '<script>
+                            Swal.fire({
+                                icon: "error",
+                                title: "Invalid Password",
+                                html: "' . $errorMessage . '",
+                                timer: 5000,
+                                timerProgressBar: true
+                            }).then(() => {
+                                window.history.back(); 
+                            });
+                        </script>';
+                    }
+    
+                    // Hash the new password using SHA-256 if all validations pass
+                    $hashedPassword = hash('sha256', $password);
+                } else {
+                    $hashedPassword = $existingPasswordHash; // Keep the existing hashed password if no new password
                 }
-                if (!preg_match('/[A-Z]/', $password)) {
-                    $errors[] = "Password must contain at least one uppercase letter.";
-                }
-                if (!preg_match('/[0-9]/', $password)) {
-                    $errors[] = "Password must contain at least one number.";
-                }
-                if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
-                    $errors[] = "Password must contain at least one special character.";
-                }
-
-                if (!empty($errors)) {
-                    $errorMessage = implode('<br>', $errors);
+    
+                // Check for duplicate username across both tables
+                $usernameCheckSQL = "
+                    SELECT id FROM orgmembers_tbl WHERE username = :username AND id != :uid
+                    UNION
+                    SELECT users_id FROM users_tbl WHERE users_username = :username
+                ";
+                $usernameCheckStmt = $this->connection->prepare($usernameCheckSQL);
+                $usernameCheckStmt->bindParam(":username", $username, PDO::PARAM_STR);
+                $usernameCheckStmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+                $usernameCheckStmt->execute();
+                if ($usernameCheckStmt->rowCount() > 0) {
                     return '<script>
                         Swal.fire({
                             icon: "error",
-                            title: "Invalid Password",
-                            html: "' . $errorMessage . '",
+                            title: "Username Taken",
+                            text: "The username \'' . $username . '\' is already in use. Please choose another.",
                             timer: 5000,
                             timerProgressBar: true
                         }).then(() => {
-                            window.history.back(); // Go back to the previous form/page
+                            window.history.back(); 
                         });
                     </script>';
                 }
-
-                // Hash the new password using SHA-256 if all validations pass
-                $hashedPassword = hash('sha256', $password);
-            } else {
-                $hashedPassword = $existingPasswordHash; // Keep the existing hashed password if no new password
-            }
-
-            // Prepare and execute the database update
-            $query = "UPDATE orgmembers_tbl 
-                      SET username = :username, password = :password, position = :position, name = :name
-                      WHERE id = :uid";
-            $statement = $this->connection->prepare($query);
-
-            // Bind parameters
-            $statement->bindParam(":username", $username, PDO::PARAM_STR);
-            $statement->bindParam(":password", $hashedPassword, PDO::PARAM_STR);
-            $statement->bindParam(":position", $position, PDO::PARAM_STR);
-            $statement->bindParam(":name", $name, PDO::PARAM_STR);
-            $statement->bindParam(":uid", $uid, PDO::PARAM_INT);
-
-            // Debug: Log query execution
-            error_log("Executing update query for UID = $uid");
-            error_log("Parameters: name= $name, Username = $username, Password = $hashedPassword, position = $position");
-
-            if ($statement->execute()) {
-                // Fetch editor's name
-                $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
-                $editor_stmt->execute([':editor_id' => $editor_id]);
-                $editor_name = $editor_stmt->fetchColumn();
-
-                if (!$editor_name) {
-                    // If not found in users_tbl, search in orgmembers_tbl
-                    $editor_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+                // Prepare and execute the database update
+                $query = "UPDATE orgmembers_tbl 
+                          SET username = :username, password = :password, position = :position, name = :name
+                          WHERE id = :uid";
+                $statement = $this->connection->prepare($query);
+    
+                // Bind parameters
+                $statement->bindParam(":username", $username, PDO::PARAM_STR);
+                $statement->bindParam(":password", $hashedPassword, PDO::PARAM_STR);
+                $statement->bindParam(":position", $position, PDO::PARAM_STR);
+                $statement->bindParam(":name", $name, PDO::PARAM_STR);
+                $statement->bindParam(":uid", $uid, PDO::PARAM_INT);
+    
+                // Debug: Log query execution
+                error_log("Executing update query for UID = $uid");
+                error_log("Parameters: name= $name, Username = $username, Password = $hashedPassword, position = $position");
+    
+                if ($statement->execute()) {
+                    // Fetch editor's name
+                    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
                     $editor_stmt->execute([':editor_id' => $editor_id]);
-                    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+                    $editor_name = $editor_stmt->fetchColumn();
+    
+                    if (!$editor_name) {
+                        // If not found in users_tbl, search in orgmembers_tbl
+                        $editor_stmt = $this->connection->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+                        $editor_stmt->execute([':editor_id' => $editor_id]);
+                        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+                    }
+    
+                    // Create detailed audit message
+                    $changes = [];
+                    if (!empty($password)) {
+                        $changes[] = "password was updated";
+                    }
+                    $changes[] = "username set to '{$username}'";
+                    $changes[] = "position set to '{$position}'";
+                    $changes[] = "name set to '{$name}'";
+    
+                    $audit_message = "{$editor_name} updated account for user '{$username}' : " . implode(', ', $changes);
+                    
+                    // Insert audit trail
+                    $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+                    $audit_stmt->execute([':message' => $audit_message]);
+    
+                    return '<script>
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "Do you want to save these changes?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, save it!",
+                            cancelButtonText: "No, cancel!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Account Updated Successfully",
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                }).then(() => {
+                                    window.location.href = "membersmanagement.php"; 
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: "info",
+                                    title: "Cancelled",
+                                    text: "The account update has been cancelled.",
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                });
+                            }
+                        });
+                    </script>';
+                } else {
+                    // Log error if update fails
+                    error_log("Failed to update account for UID = $uid");
+                    return '<script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Failed to update account.",
+                            timer: 3000,
+                            timerProgressBar: true
+                        });
+                    </script>';
                 }
-
-                // Create detailed audit message
-                $changes = [];
-                if (!empty($password)) {
-                    $changes[] = "password was updated";
-                }
-                $changes[] = "username set to '{$username}'";
-                $changes[] = "position set to '{$position}'";
-                $changes[] = "name set to '{$name}'";
-
-                $audit_message = "{$editor_name} updated account for user '{$username}' : " . implode(', ', $changes);
-                
-                // Insert audit trail
-                $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-                $audit_stmt->execute([':message' => $audit_message]);
-
-                return '<script>
-                    Swal.fire({
-                        title: "Are you sure?",
-                        text: "Do you want to save these changes?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, save it!",
-                        cancelButtonText: "No, cancel!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Account Updated Successfully",
-                                timer: 2000,
-                                timerProgressBar: true
-                            }).then(() => {
-                                window.location.href = "membersmanagement.php"; // Redirect to the appropriate page
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: "info",
-                                title: "Cancelled",
-                                text: "The account update has been cancelled.",
-                                timer: 2000,
-                                timerProgressBar: true
-                            });
-                        }
-                    });
-                </script>';
             } else {
-                // Log error if update fails
-                error_log("Failed to update account for UID = $uid");
                 return '<script>
                     Swal.fire({
                         icon: "error",
                         title: "Error",
-                        text: "Failed to update account.",
+                        text: "User not found.",
                         timer: 3000,
                         timerProgressBar: true
                     });
                 </script>';
             }
-        } else {
+        } catch (PDOException $e) {
+            error_log("PDOException: " . $e->getMessage());
             return '<script>
                 Swal.fire({
                     icon: "error",
                     title: "Error",
-                    text: "User not found.",
+                    text: "Database error occurred: ' . $e->getMessage() . '",
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            </script>';
+        } catch (Exception $e) {
+            error_log("Exception: " . $e->getMessage());
+            return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred: ' . $e->getMessage() . '",
                     timer: 3000,
                     timerProgressBar: true
                 });
             </script>';
         }
-    } catch (PDOException $e) {
-        error_log("PDOException: " . $e->getMessage());
-        return '<script>
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "Database error occurred: ' . $e->getMessage() . '",
-                timer: 3000,
-                timerProgressBar: true
-            });
-        </script>';
-    } catch (Exception $e) {
-        error_log("Exception: " . $e->getMessage());
-        return '<script>
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "An unexpected error occurred: ' . $e->getMessage() . '",
-                timer: 3000,
-                timerProgressBar: true
-            });
-        </script>';
     }
-}
-
-function save_profile($data)
+    function save_profile($data)
 {
     // Retrieve and sanitize data
     $uid = htmlspecialchars($data['uid'], ENT_QUOTES, 'UTF-8');
@@ -2178,6 +2244,34 @@ function save_profile($data)
             $existingPasswordHash = $userData['password'];
             $existingProfileImage = $userData['member_img']; // Retrieve the current profile image path
             $errors = [];
+            // Check if the username is already taken in orgmembers_tbl
+            $usernameCheckOrgSql = "SELECT COUNT(*) FROM orgmembers_tbl WHERE username = :username AND id != :uid";
+            $usernameCheckOrgStmt = $this->connection->prepare($usernameCheckOrgSql);
+            $usernameCheckOrgStmt->bindParam(":username", $username, PDO::PARAM_STR);
+            $usernameCheckOrgStmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+            $usernameCheckOrgStmt->execute();
+            $usernameExistsInOrg = $usernameCheckOrgStmt->fetchColumn();
+
+            // Check if the username is already taken in users_tbl
+            $usernameCheckUsersSql = "SELECT COUNT(*) FROM users_tbl WHERE users_username = :username";
+            $usernameCheckUsersStmt = $this->connection->prepare($usernameCheckUsersSql);
+            $usernameCheckUsersStmt->bindParam(":username", $username, PDO::PARAM_STR);
+            $usernameCheckUsersStmt->execute();
+            $usernameExistsInUsers = $usernameCheckUsersStmt->fetchColumn();
+
+            // Check if username exists in either table
+            if ($usernameExistsInOrg > 0 || $usernameExistsInUsers > 0) {
+                return '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Username Taken",
+                        text: "The username is already in use. Please choose a different one.",
+                        timer: 5000,
+                        timerProgressBar: true
+                    });
+                </script>';
+            }
+
 
             // Validate the password if a new one is provided
             if (!empty($password)) {
@@ -2353,18 +2447,19 @@ function save_profile($data)
             </script>';
         }
     } catch (Exception $e) {
-        error_log("Error in save_profile: " . $e->getMessage());
+        error_log("Exception caught while saving profile: " . $e->getMessage());
         return '<script>
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "An unexpected error occurred.",
+                text: "An unexpected error occurred. Please try again.",
                 timer: 3000,
                 timerProgressBar: true
             });
         </script>';
     }
-}function delete_account($appID)
+}
+function delete_account($appID)
 {
     // First, fetch the editor's name for the audit trail
     $editor_id = $_SESSION['id'] ?? ''; 

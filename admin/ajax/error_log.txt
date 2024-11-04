@@ -85,3 +85,20 @@ Stack trace:
 [03-Nov-2024 16:38:50 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
 [03-Nov-2024 16:39:39 Europe/Berlin] PHP Warning:  Undefined variable $allFAQs in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 213
 [03-Nov-2024 16:39:39 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 213
+[04-Nov-2024 22:20:56 Europe/Berlin] PHP Warning:  Undefined array key "aid" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 252
+[04-Nov-2024 22:20:56 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 253
+[04-Nov-2024 22:20:56 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 287
+[04-Nov-2024 22:20:58 Europe/Berlin] PHP Warning:  Undefined array key "aid" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 252
+[04-Nov-2024 22:20:58 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 253
+[04-Nov-2024 22:20:58 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 287
+[04-Nov-2024 22:24:14 Europe/Berlin] Type parameter: organization
+[04-Nov-2024 22:26:12 Europe/Berlin] Type parameter: organization
+[04-Nov-2024 22:26:18 Europe/Berlin] Type parameter: organization
+[04-Nov-2024 22:41:05 Europe/Berlin] Type parameter: faculty
+[04-Nov-2024 22:42:09 Europe/Berlin] Type parameter: faculty
+[04-Nov-2024 23:05:24 Europe/Berlin] Type parameter: organization
+[04-Nov-2024 23:15:48 Europe/Berlin] Type parameter: organization
+[04-Nov-2024 23:23:56 Europe/Berlin] Type parameter: organization
+[04-Nov-2024 23:24:31 Europe/Berlin] Type parameter: organization
+[04-Nov-2024 23:29:08 Europe/Berlin] Type parameter: membersaccount
+[04-Nov-2024 23:29:49 Europe/Berlin] Type parameter: membersaccount

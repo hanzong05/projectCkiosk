@@ -144,13 +144,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         elseif ($type === 'faculty') {
             $fid = $_POST['fid'] ?? '';
-            $name = $_POST['faculty_name'] ?? '';
-            $dept = $_POST['department'] ?? '';
-            $previousImage = $_POST['previous'] ?? '';
-            $specialization = $_POST['specialization'] ?? '';
-            $consultationTime = $_POST['consultation_time'] ?? '';
-            $newImage = $previousImage;
-            $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
+    $name = $_POST['faculty_name'] ?? '';
+    $dept = $_POST['department'] ?? '';
+    $previousImage = $_POST['previous'] ?? '';
+    $specialization = $_POST['specialization'] ?? '';
+    $consultationTime = $_POST['consultation_time'] ?? '';
+    $newImage = $previousImage;
+    $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
+
+    // Check for duplicate faculty member by name and department
+    $duplicate_check_sql = "SELECT COUNT(*) FROM faculty_tbl WHERE faculty_name = :name AND faculty_dept = :dept AND faculty_id != :fid";
+    $duplicate_stmt = $connect->prepare($duplicate_check_sql);
+    $duplicate_stmt->execute([':name' => $name, ':dept' => $dept, ':fid' => $fid]);
+    
+    if ($duplicate_stmt->fetchColumn() > 0) {
+        $response['success'] = false;
+        $response['message'] = 'A faculty member with the same name and department already exists.';
+        echo json_encode($response);
+        exit;
+    }
         
             // File upload handling for faculty image
             if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
@@ -217,13 +229,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'Faculty member updated successfully.';
         }
         
-        
         elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';
             $orgName = $_POST['org_name'] ?? '';
             $previousImage = $_POST['previous_image'] ?? '';
             $newImage = $previousImage; // Default to previous image
             $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
+        
+            // Check for duplicate organization by name
+            $duplicate_check_sql = "SELECT COUNT(*) FROM organization_tbl WHERE org_name = :name AND org_id != :id";
+            $duplicate_stmt = $connect->prepare($duplicate_check_sql);
+            $duplicate_stmt->execute([':name' => $orgName, ':id' => $orgId]);
+        
+            if ($duplicate_stmt->fetchColumn() > 0) {
+                $response['success'] = false;
+                $response['message'] = 'An organization with the same name already exists.';
+                echo json_encode($response);
+                exit;
+            }
         
             // File upload handling for organization image
             if (isset($_FILES['org_image']) && $_FILES['org_image']['error'] === UPLOAD_ERR_OK) {
@@ -284,7 +307,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             $response['success'] = true;
             $response['message'] = 'Organization updated successfully.';
+            echo json_encode($response);
         }
+        
         elseif ($type === 'faq') {
             $fid = $_POST['fid'] ?? '';
             $question = htmlspecialchars_decode($_POST['faqs_question'] ?? '');

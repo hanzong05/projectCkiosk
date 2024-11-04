@@ -284,7 +284,7 @@ $allAccount = $obj->show_account();
                             <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto" data-toggle="modal" data-target="#orgModal">
                                 Add Campus Organization
                             </button>
-                        </div>
+                            
                     </div>
                 </div>
 
@@ -573,35 +573,147 @@ $allAccount = $obj->show_account();
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
-  <script>
-       function changeTab(event, tabName) {
-        // Prevent default link behavior
-        event.preventDefault();
+  <script>function changeTab(event, tabName) {
+    // Prevent default link behavior
+    event.preventDefault();
 
-        // Hide all tab contents
-        const contents = document.querySelectorAll('.tab-content > div'); // Select only the tab content divs
-        contents.forEach(content => {
-            content.classList.add('hidden'); // Add 'hidden' class
-        });
+    // Hide all tab contents
+    const contents = document.querySelectorAll('.tab-content > div');
+    contents.forEach(content => {
+        content.classList.add('hidden');
+    });
 
-        // Remove active class from all tabs
-        const tabs = document.querySelectorAll('[role="tab"]');
-        tabs.forEach(tab => {
-            tab.classList.remove('active', 'text-blue-500'); // Remove active styles
-            tab.classList.add('text-gray-500'); // Add inactive styles
-        });
+    // Remove active class from all tabs
+    const tabs = document.querySelectorAll('[role="tab"]');
+    tabs.forEach(tab => {
+        tab.classList.remove('active', 'text-blue-500');
+        tab.classList.add('text-gray-500');
+        tab.classList.remove('border-l', 'border-t', 'border-r');
+    });
 
-        // Show the selected tab content
-        const selectedContent = document.getElementById(tabName);
-        if (selectedContent) {
-            selectedContent.classList.remove('hidden'); // Remove 'hidden' class
-        }
-
-        // Set the clicked tab as active
-        event.currentTarget.classList.add('active', 'text-blue-500');
-        event.currentTarget.classList.remove('text-gray-500');
-        changeTab(event, tabName);
+    // Show the selected tab content
+    const selectedContent = document.getElementById(tabName);
+    if (selectedContent) {
+        selectedContent.classList.remove('hidden');
     }
+
+    // Set the clicked tab as active
+    event.currentTarget.classList.add('active', 'text-blue-500');
+    event.currentTarget.classList.remove('text-gray-500');
+    event.currentTarget.classList.add('border-l', 'border-t', 'border-r');
+
+    // Update buttons and search based on active tab
+    updateButtonsAndSearch(tabName);
+}
+
+function updateButtonsAndSearch(tabName) {
+    const buttonsContainer = document.querySelector('.flex.space-x-2');
+    const searchInput = document.getElementById('searchOrgInput');
+
+    if (tabName === 'organization') {
+        // Update for Organizations tab
+        searchInput.placeholder = 'Search organizations...';
+        searchInput.setAttribute('onkeyup', 'searchOrg()');
+        buttonsContainer.innerHTML = `
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto" 
+                    data-toggle="modal" 
+                    data-target="#orgModal">
+                Add Campus Organization
+            </button>
+        `;
+    } else if (tabName === 'account') {
+        // Update for Accounts tab
+        searchInput.placeholder = 'Search accounts...';
+        searchInput.setAttribute('onkeyup', 'searchAccount()');
+        buttonsContainer.innerHTML = `
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto" 
+                    data-toggle="modal" 
+                    data-target="#accountModal">
+                Add Organization Account
+            </button>
+        `;
+    }
+
+    // Reattach modal event listeners
+    attachModalListeners();
+}
+
+// Function for searching organizations
+function searchOrg() {
+    const input = document.getElementById('searchOrgInput');
+    const filter = input.value.toUpperCase();
+    const rows = document.querySelectorAll('#organization tbody tr');
+
+    rows.forEach(row => {
+        const nameCell = row.querySelector('td:nth-child(3)'); // Name is in the third column
+        if (nameCell) {
+            const txtValue = nameCell.textContent || nameCell.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+}
+
+// Function for searching accounts
+function searchAccount() {
+    const input = document.getElementById('searchOrgInput');
+    const filter = input.value.toUpperCase();
+    const rows = document.querySelectorAll('#account tbody tr');
+
+    rows.forEach(row => {
+        const usernameCell = row.querySelector('td:nth-child(2)'); // Username is in the second column
+        if (usernameCell) {
+            const txtValue = usernameCell.textContent || usernameCell.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+}
+
+// Function to attach modal event listeners
+function attachModalListeners() {
+    // Event listeners for add buttons
+    const modalButtons = document.querySelectorAll('[data-toggle="modal"]');
+    modalButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetModal = this.getAttribute('data-target');
+            const modal = document.querySelector(targetModal);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        });
+    });
+
+    // Event listeners for edit buttons
+    const editButtons = document.querySelectorAll('.orgModalEdit, .accountModalEdit');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetModal = this.getAttribute('data-target');
+            const id = this.getAttribute('data-id');
+            const modal = document.querySelector(targetModal);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        });
+    });
+}
+
+// Initialize the page with organization tab active
+document.addEventListener('DOMContentLoaded', function() {
+    const organizationTab = document.getElementById('organization-tab');
+    const event = { 
+        preventDefault: () => {}, 
+        currentTarget: organizationTab 
+    };
+    changeTab(event, 'organization');
+});
+
   </script>
   <script>
 function searchOrg() {

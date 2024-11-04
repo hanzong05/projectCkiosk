@@ -233,11 +233,12 @@ $allDepartment = $obj->show_department();
                     </nav>
                     <div class="content">
                     <div class="flex flex-col w-full">
-                    <div class="w-full">
-                        <div class="bg-white shadow-md rounded-lg">
-                            <div class="p-5">
-                                <hr class="my-4">
-                                <div class="mb-6">
+    <div class="w-full">
+        <div class="bg-white shadow-md rounded-lg">
+            <div class="p-5">
+                <hr class="my-4">
+                <!-- Search and Buttons -->
+                <div class="mb-6">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                         <div class="flex-grow mb-2 md:mb-0 md:mr-2">
                             <input type="text" id="searchFacultyInput" placeholder="Search faculty..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchFaculty()">
@@ -253,132 +254,146 @@ $allDepartment = $obj->show_department();
                     </div>
                 </div>
 
+                <!-- Nav tabs -->
+                <ul class="flex border-b">
+                    <li class="mr-1">
+                        <a class="bg-white inline-block py-2 px-4 text-blue-500 border-l border-t border-r rounded-t-lg active" 
+                           id="faculty-tab" 
+                           href="#faculty" 
+                           role="tab" 
+                           aria-controls="faculty" 
+                           aria-selected="true" 
+                           onclick="changeTab(event, 'faculty')">
+                            Faculty Members
+                        </a>
+                    </li>
+                    <li class="mr-1">
+                        <a class="bg-white inline-block py-2 px-4 text-gray-500 hover:text-blue-500 rounded-t-lg" 
+                           id="facultyheads-tab" 
+                           href="#facultyheads" 
+                           role="tab" 
+                           aria-controls="facultyheads" 
+                           aria-selected="false" 
+                           onclick="changeTab(event, 'facultyheads')">
+                            Faculty Heads
+                        </a>
+                    </li>
+                </ul>
 
+                <!-- Tab content -->
+                <div class="tab-content mt-4">
+                    <!-- Faculty Members Tab -->
+                    <div class="tab-pane fade show active" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200">
+                                <thead>
+                                    <tr>
+                                        <th class="py-2 text-left border-b">NO.</th>
+                                        <th class="py-2 text-left border-b">Faculty Department</th>
+                                        <th class="py-2 text-left border-b">Photo</th>
+                                        <th class="py-2 text-left border-b">Name</th>
+                                        <th class="py-2 text-left border-b">Specialization</th>
+                                        <th class="py-2 text-left border-b">Consultation Time</th>
+                                        <th class="py-2 text-left border-b">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $count = 1;
+                                    foreach ($allFaculty as $row) {
+                                    ?>
+                                    <tr class="table-row hover:bg-gray-100">
+                                        <td class="border-b px-4 py-2"><?php echo $count; ?></td>
+                                        <td class="border-b px-4 py-2"><?php echo $row["department_name"]; ?></td>
+                                        <td class="border-b px-4 py-2">
+                                            <img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image']; ?>" 
+                                                 height="80" 
+                                                 width="100"
+                                                 alt="Faculty photo" 
+                                                 class="object-cover" />
+                                        </td>
+                                        <td class="border-b px-4 py-2"><?php echo $row["faculty_name"]; ?></td>
+                                        <td class="border-b px-4 py-2"><?php echo !empty($row["specialization"]) ? $row["specialization"] : 'NULL'; ?></td>
+                                        <td class="border-b px-4 py-2"><?php echo !empty($row["consultation_time"]) ? $row["consultation_time"] : 'NULL'; ?></td>
+                                        <td class="border-b px-4 py-2 text-center">
+                                            <div class="flex space-x-2">
+                                                <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 facultyModalEdit" 
+                                                        data-toggle="modal" 
+                                                        data-target="#facultyModalEdit" 
+                                                        data-id="<?= $row['faculty_id']; ?>">
+                                                    <i class="fas fa-edit mr-1"></i>
+                                                </button>
+                                                <a class="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 btn-delete" 
+                                                   href='facultymembers.php?did=<?= $row['faculty_id']; ?>'>
+                                                    <i class="fas fa-trash mr-1"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                        $count++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                                <!-- Nav tabs -->
-                                <ul class="flex border-b">
-                                    <li class="mr-1">
-                                        <a 
-                                            class="bg-white inline-block py-2 px-4 text-blue-500 border-l border-t border-r rounded-t-lg active" 
-                                            id="faculty-tab" 
-                                            href="#faculty" 
-                                            role="tab" 
-                                            aria-controls="faculty" 
-                                            aria-selected="true" 
-                                            onclick="changeTab(event, 'faculty')">Faculty Members
-                                        </a>
-                                    </li>
-                                    <li class="mr-1">
-                                        <a 
-                                            class="bg-white inline-block py-2 px-4 text-gray-500 hover:text-blue-500 rounded-t-lg" 
-                                            id="facultyheads-tab" 
-                                            href="#facultyheads" 
-                                            role="tab" 
-                                            aria-controls="facultyheads" 
-                                            aria-selected="false" 
-                                            onclick="changeTab(event, 'facultyheads')">Faculty Heads
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <!-- Tab content -->
-                                <div class="tab-content mt-4">
-                                    <!-- Faculty Members Tab -->
-                                    <div class="tab-pane fade show active" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
-                                    <div class="overflow-x-auto">
-                                            <table class="min-w-full bg-white border border-gray-200">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="py-2 text-left border-b">NO.</th>
-                                                        <th class="py-2 text-left border-b">Faculty Department</th>
-                                                        <th class="py-2 text-left border-b">Photo</th>
-                                                        <th class="py-2 text-left border-b">Name</th>
-                                                        <th class="py-2 text-left border-b">Specialization</th>
-                                                        <th class="py-2 text-left border-b">Consultation Time</th>
-                                                        <th class="py-2 text-left border-b">ACTION</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $count = 1;
-                                                    foreach ($allFaculty as $row) {
-                                                        ?>
-                                                        <tr class="table-row hover:bg-gray-100">
-                                                            <td class="border-b px-4 py-2"><?php echo $count; ?></td>
-                                                            <td class="border-b px-4 py-2"><?php echo $row["department_name"]; ?></td>
-                                                            <td class="border-b px-4 py-2"><img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" /></td>
-                                                            <td class="border-b px-4 py-2"><?php echo $row["faculty_name"]; ?></td>
-                                                            <td class="border-b px-4 py-2"><?php echo !empty($row["specialization"]) ? $row["specialization"] : 'NULL'; ?></td>
-                                                            <td class="border-b px-4 py-2"><?php echo !empty($row["consultation_time"]) ? $row["consultation_time"] : 'NULL'; ?></td>
-                                                            <td class="border-b px-4 py-2 text-center">
-                                                            <div class="flex space-x-2">
-                                                                <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">
-                                                                    <i class="fas fa-edit mr-1"></i>
-                                                                </button>
-                                                                <a class="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 btn-delete" href='facultymembers.php?did=<?= $row['faculty_id'] ?>'>
-                                                                    <i class="fas fa-trash mr-1"></i>
-                                                                </a>
-                                                            </div>
-
-                                                            </td>
-                                                        </tr>
-                                                        <?php
-                                                        $count++;
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <!-- Faculty Heads Tab --><div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade" id="facultyheads" role="tabpanel" aria-labelledby="facultyheads-tab">
-
-                                        <div class="overflow-x-auto">
-                                            <table class="min-w-full bg-white border border-gray-200">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="py-2 text-left border-b">NO.</th>
-                                                        <th class="py-2 text-left border-b">Faculty Department</th>
-                                                        <th class="py-2 text-left border-b">Photo</th>
-                                                        <th class="py-2 text-left border-b">Name</th>
-                                                        <th class="py-2 text-left border-b">Specialization</th>
-                                                        <th class="py-2 text-left border-b">Consultation Time</th>
-                                                        <th class="py-2 text-left border-b">ACTION</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $count = 1;
-                                                    foreach ($allFacultyheads as $row) {
-                                                        ?>
-                                                        <tr class="table-row hover:bg-gray-100">
-                                                            <td class="border-b px-4 py-2"><?php echo $count; ?></td>
-                                                            <td class="border-b px-4 py-2"><?php echo $row["department_name"]; ?></td>
-                                                            <td class="border-b px-4 py-2"><img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" /></td>
-                                                            <td class="border-b px-4 py-2"><?php echo $row["faculty_name"]; ?></td>
-                                                            <td class="border-b px-4 py-2"><?php echo !empty($row["specialization"]) ? $row["specialization"] : 'NULL'; ?></td>
-                                                            <td class="border-b px-4 py-2"><?php echo !empty($row["consultation_time"]) ? $row["consultation_time"] : 'NULL'; ?></td>
-                                                            <td class="border-b px-4 py-2 text-center">
-                                                            <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">
-                                                                    <i class="fas fa-edit mr-1"></i>
-                                                                </button>                                            </td>
-                                                        </tr>
-                                                        <?php
-                                                        $count++;
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> </div>
-                            </div>
+                    <!-- Faculty Heads Tab -->
+                    <div class="tab-pane fade" id="facultyheads" role="tabpanel" aria-labelledby="facultyheads-tab">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200">
+                                <thead>
+                                    <tr>
+                                        <th class="py-2 text-left border-b">NO.</th>
+                                        <th class="py-2 text-left border-b">Faculty Department</th>
+                                        <th class="py-2 text-left border-b">Photo</th>
+                                        <th class="py-2 text-left border-b">Name</th>
+                                        <th class="py-2 text-left border-b">Specialization</th>
+                                        <th class="py-2 text-left border-b">Consultation Time</th>
+                                        <th class="py-2 text-left border-b">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $count = 1;
+                                    foreach ($allFacultyheads as $row) {
+                                    ?>
+                                    <tr class="table-row hover:bg-gray-100">
+                                        <td class="border-b px-4 py-2"><?php echo $count; ?></td>
+                                        <td class="border-b px-4 py-2"><?php echo $row["department_name"]; ?></td>
+                                        <td class="border-b px-4 py-2">
+                                            <img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image']; ?>" 
+                                                 height="80" 
+                                                 width="100"
+                                                 alt="Faculty head photo" 
+                                                 class="object-cover" />
+                                        </td>
+                                        <td class="border-b px-4 py-2"><?php echo $row["faculty_name"]; ?></td>
+                                        <td class="border-b px-4 py-2"><?php echo !empty($row["specialization"]) ? $row["specialization"] : 'NULL'; ?></td>
+                                        <td class="border-b px-4 py-2"><?php echo !empty($row["consultation_time"]) ? $row["consultation_time"] : 'NULL'; ?></td>
+                                        <td class="border-b px-4 py-2 text-center">
+                                            <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 facultyModalEdit" 
+                                                    data-toggle="modal" 
+                                                    data-target="#facultyModalEdit" 
+                                                    data-id="<?= $row['faculty_id']; ?>">
+                                                <i class="fas fa-edit mr-1"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                        $count++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-
             </div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>
@@ -415,51 +430,60 @@ $allDepartment = $obj->show_department();
     </div>
 </div>
 
-<!-- Faculty Heads Tab -->
-<div class="tab-pane fade" id="facultyheads" role="tabpanel" aria-labelledby="facultyheads-tab">
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200">
-            <thead>
-                <tr>
-                    <th class="py-2 text-left border-b">NO.</th>
-                    <th class="py-2 text-left border-b">Faculty Department</th>
-                    <th class="py-2 text-left border-b">Photo</th>
-                    <th class="py-2 text-left border-b">Name</th>
-                    <th class="py-2 text-left border-b">Specialization</th>
-                    <th class="py-2 text-left border-b">Consultation Time</th>
-                    <th class="py-2 text-left border-b">ACTION</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $count = 1;
-                foreach ($allFacultyheads as $row) {
-                    ?>
-                    <tr class="table-row hover:bg-gray-100">
-                        <td class="border-b px-4 py-2"><?php echo $count; ?></td>
-                        <td class="border-b px-4 py-2"><?php echo $row["department_name"]; ?></td>
-                        <td class="border-b px-4 py-2"><img src="../uploaded/facultyUploaded/<?php echo $row['faculty_image'] ?>" height="80" width="100" /></td>
-                        <td class="border-b px-4 py-2"><?php echo $row["faculty_name"]; ?></td>
-                        <td class="border-b px-4 py-2"><?php echo !empty($row["specialization"]) ? $row["specialization"] : 'NULL'; ?></td>
-                        <td class="border-b px-4 py-2"><?php echo !empty($row["consultation_time"]) ? $row["consultation_time"] : 'NULL'; ?></td>
-                        <td class="border-b px-4 py-2 text-center">
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 facultyModalEdit" data-toggle="modal" data-target="#facultyModalEdit" data-id="<?= $row['faculty_id'] ?>">
-                                <i class="fas fa-edit mr-1"></i>
-                            </button>                                            </td>
-                    </tr>
-                    <?php
-                    $count++;
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</div>
-
+  <!-- add faculty pop up --><form id="facultyModalForm" class="row" method="post" enctype="multipart/form-data">
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="facultyModal" tabindex="-1" role="dialog" data-backdrop="static"
+         data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Faculty Member Creation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="faculty_name" class="form-label fw-bold">Faculty Name</label>
+                        <input type="text" id="faculty_name" class="form-control" name="faculty_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="department" class="form-label fw-bold">Department</label>
+                        <select name="department" id="department" class="form-control" required>
+                            <option value="" selected>Select department</option>
+                            <?php
+                            foreach ($allDepartment as $row) {
+                                echo '<option value="' . $row['department_id'] . '">' . $row['department_name'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="specialization" class="form-label fw-bold">Specialization</label>
+                        <input type="text" id="specialization" class="form-control" name="specialization" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="consultation_time" class="form-label fw-bold">Consultation Time</label>
+                        <input type="text" id="consultation_time" class="form-control" name="consultation_time" placeholder="e.g., 'Monday - Thursday 8:00 AM to 4:00 PM'" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="faculty_image" class="form-label fw-bold">Photo</label>
+                        <input type="file" id="faculty_image" class="form-control" name="faculty_image" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Add" name="add_faculty_member">
+                </div>
+            </div>
         </div>
     </div>
 </form>
 
+
+      </div>
+    </div>
+</div>
 
 
 <!-- Modal -->
@@ -528,32 +552,34 @@ $allDepartment = $obj->show_department();
 }
 </script>
 
-  <script type="text/javascript">
-function changeTab(event, tabName) {
+  <script type="text/javascript">function changeTab(event, tabName) {
     // Prevent default link behavior
     event.preventDefault();
 
     // Hide all tab content
     const tabContents = document.querySelectorAll('.tab-pane');
     tabContents.forEach(content => {
-        content.classList.remove('show', 'active'); // Remove Bootstrap's active classes
+        content.classList.remove('show', 'active'); // Remove active classes from all tab panes
     });
 
     // Remove active class from all tabs
-    const tabs = document.querySelectorAll('a[data-toggle="tab"]');
+    const tabs = document.querySelectorAll('ul.flex a'); // Modify this selector to match your structure
     tabs.forEach(tab => {
-        tab.classList.remove('text-blue-500', 'border-b-2', 'border-blue-500');
+        tab.classList.remove('text-blue-500', 'border-l', 'border-t', 'border-r', 'active');
         tab.classList.add('text-gray-500');
     });
 
     // Show the selected tab content
     const selectedTabContent = document.getElementById(tabName);
-    selectedTabContent.classList.add('show', 'active'); // Add Bootstrap's active classes
+    if (selectedTabContent) {
+        selectedTabContent.classList.add('show', 'active'); // Add active classes to selected tab pane
+    }
 
-    // Set the active tab
-    event.currentTarget.classList.add('text-blue-500', 'border-b-2', 'border-blue-500');
+    // Set the active tab with border styling
+    event.currentTarget.classList.add('text-blue-500', 'border-l', 'border-t', 'border-r', 'rounded-t-lg', 'active');
     event.currentTarget.classList.remove('text-gray-500');
 }
+
 
     $(document).ready(function () {
 
@@ -709,11 +735,8 @@ function changeTab(event, tabName) {
             });
         }
     });
-});
-
-$('#editFacultyForm').on('submit', function (e) {
-    e.preventDefault(); // Prevent the default form submission
-    
+});$('#editFacultyForm').on('submit', function (e) {
+    e.preventDefault();
 
     var form = $(this);
 
@@ -728,10 +751,9 @@ $('#editFacultyForm').on('submit', function (e) {
         cancelButtonText: "No, cancel!"
     }).then((result) => {
         if (result.isConfirmed) {
-            var formData = new FormData(this); // Create FormData from the form element
-            formData.append('type', 'faculty');  // Add type to FormData
+            var formData = new FormData(form[0]);
+            formData.append('type', 'faculty'); // Add the missing 'type' parameter
 
-            // Adjust the URL if necessary to point to the correct PHP handler
             fetch("../admin/ajax/editData.php", {
                 method: "POST",
                 body: formData
@@ -740,7 +762,7 @@ $('#editFacultyForm').on('submit', function (e) {
             .then(result => {
                 if (result.success) {
                     Swal.fire("Saved!", result.message, "success").then(() => {
-                        location.reload(); // Optionally reload the page
+                        location.reload(); 
                     });
                 } else {
                     Swal.fire("Error!", result.message, "error");
@@ -752,6 +774,8 @@ $('#editFacultyForm').on('submit', function (e) {
         }
     });
 });
+
+
 const table = document.querySelector('#myTable');
 table.parentElement.style.overflowX = 'auto';
     });

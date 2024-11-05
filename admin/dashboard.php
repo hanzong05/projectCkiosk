@@ -117,7 +117,7 @@ try {
         }
         
         .card-title {
-            color: white;
+            color: gray ;
             margin: 0;
             font-size: 1.25rem;
             font-weight: 500;

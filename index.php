@@ -3014,15 +3014,7 @@ function nextStep() {
                        
                             <div class="second py-2 px-2"><span class="text1">${feedback.feedback_text}</span></div>
 
-                            <div class="d-flex justify-content-between py-1 pt-2">
-                                <div><img src="${imageUrl}" width="18"><span class="text2">${feedback.name || 'Anonymous'} (${feedback.email}</span></div>
-                            </div>
-
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
-                                </small>
-                            </p>
+                             
                         </div>
                         `;
                     feedbackList.appendChild(newFeedback);
@@ -3279,7 +3271,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('announcements-container');
     
     if (Array.isArray(announcements)) {
-        announcements.forEach((announcement, index) => {
+        // Sort announcements by created_at date in descending order (latest first)
+        const sortedAnnouncements = announcements.sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at);
+        });
+        
+        sortedAnnouncements.forEach((announcement, index) => {
             container.appendChild(createAnnouncementCard(announcement, index));
         });
     } else {
@@ -3294,7 +3291,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 });
-
 
 </script>
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script> -->

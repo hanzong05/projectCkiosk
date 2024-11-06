@@ -1,16 +1,16 @@
 <?php
-// Start session and include the database connection
 session_start();
 include "../../class/connection.php";
 
-// Set error reporting to log all errors and warnings
-error_reporting(E_ALL); // Report all errors
-ini_set('log_errors', '1'); // Enable error logging
-ini_set('error_log', 'error_log.txt'); // Specify the log file
+// Set error reporting for all errors and warnings
+error_reporting(E_ALL);
+ini_set('log_errors', '1');
+ini_set('error_log', 'error_log.txt');
 
+// Fetch the announcement ID from the request
 $announcementID = isset($_REQUEST['announcementID']) ? intval($_REQUEST['announcementID']) : 0;
 
-// Fetch the announcement details along with its associated images
+// SQL query to fetch announcement details with associated images
 $sql = '
     SELECT 
         a.*, 
@@ -27,7 +27,7 @@ try {
     $stmt = $connect->prepare($sql);
     $stmt->bindValue(':announcementID', $announcementID, PDO::PARAM_INT);
     $stmt->execute();
-    $array = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     error_log("Database error: " . $e->getMessage());
 }
@@ -35,18 +35,14 @@ try {
 $response = '';
 $images = [];
 
-// Collect images for display and announcement details
-if (!empty($array)) {
-    $firstAnnouncement = $array[0]; // Get the first announcement for details
+if (!empty($announcements)) {
+    $firstAnnouncement = $announcements[0]; // Get the first announcement details
+    $response .= '<input type="hidden" id="removed-images" name="removed_images" value="">';
 
-    // Display announcement detail
-    $response .= '<input type="hidden" id="removed-images" name="removed_images" value="">'; // Add this line
-
-    $announcementTitle = isset($firstAnnouncement['announcement_title']) ? htmlspecialchars($firstAnnouncement['announcement_title'], ENT_QUOTES, 'UTF-8') : '';
-    $announcementDetails = isset($firstAnnouncement['announcement_details']) ? htmlspecialchars($firstAnnouncement['announcement_details'], ENT_QUOTES, 'UTF-8') : '';
-
-    // Get the announcement ID safely
-    $announcementId = isset($firstAnnouncement['announcement_id']) ? htmlspecialchars($firstAnnouncement['announcement_id'], ENT_QUOTES, 'UTF-8') : '';
+    // Prepare announcement details
+    $announcementTitle = htmlspecialchars($firstAnnouncement['announcement_title'] ?? '', ENT_QUOTES, 'UTF-8');
+    $announcementDetails = htmlspecialchars($firstAnnouncement['announcement_details'] ?? '', ENT_QUOTES, 'UTF-8');
+    $announcementId = htmlspecialchars($firstAnnouncement['announcement_id'] ?? '', ENT_QUOTES, 'UTF-8');
 
     $response .= '<div class="mb-3">    
         <input type="text" id="announcement_title" name="announcement_title" class="form-control" value="' . $announcementTitle . '" required>
@@ -58,10 +54,9 @@ if (!empty($array)) {
     </div>';
 
     // Collect images for display
-    $images = []; // Initialize images array
-    foreach ($array as $value) {
-        if (isset($value['image_path']) && !empty($value['image_path'])) {
-            $images[] = htmlspecialchars($value['image_path'], ENT_QUOTES, 'UTF-8');
+    foreach ($announcements as $announcement) {
+        if (!empty($announcement['image_path'])) {
+            $images[] = htmlspecialchars($announcement['image_path'], ENT_QUOTES, 'UTF-8');
         }
     }
 
@@ -70,7 +65,7 @@ if (!empty($array)) {
             <div class="image-preview-container-edit" style="display: inline-block; width: 120px; margin-right: 10px; text-align: center;">';
         foreach ($images as $index => $image) {
             $response .= '<div class="image-preview-container-edit" style="display: inline-block; width: 120px; margin-right: 10px; text-align: center;">
-                <img src="../uploaded/annUploaded/' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '" alt="Announcement Image" class="announcement-image" data-index="' . $index . '">
+                <img src="../uploaded/annUploaded/' . $image . '" alt="Announcement Image" class="announcement-image" data-index="' . $index . '">
                 <input type="file" class="form-control" name="ann_imgs[]" accept=".jpg, .jpeg, .png, .gif" style="display: none;" onchange="handleImagePreview(event, this)">
                 <div class="button-container" style="margin-top: 5px; display: flex; justify-content: center; gap: 10px;">
                     <button type="button" class="inline-flex items-center justify-center p-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md edit-image">
@@ -85,18 +80,22 @@ if (!empty($array)) {
         $response .= '</div>';
     }
 
-    // Add button to allow adding new images directly in the existing section
+    // Button to add new images
     $response .= '<button type="button" id="add-image-edit" class="inline-flex items-center justify-center p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition duration-200 ease-in-out mt-2">
         <i class="fas fa-plus"></i>
     </button>';
 }
-
 
 echo $response;
 ?>
 
 <script>
 $(document).ready(function () {
+    // Define addedImages and removedImages arrays at the beginning
+    let addedImages = [];
+    let removedImages = [];
+
+    // Initialize summernote for rich text editing
     $('#summernote2').summernote({
         height: 220,
         toolbar: [
@@ -122,52 +121,89 @@ $(document).ready(function () {
         }
     });
 
+    // Show the "Add Image" button
     $('#add-image-edit').show();
 
-    $(document).on('click', '.edit-image', function () {
-        const imageContainer = $(this).closest('.image-preview-container-edit');
-        const fileInput = imageContainer.find('input[type="file"]');
-        fileInput.trigger('click');
-    });
-
     window.handleImagePreview = function(event, input) {
-        const preview = $(input).siblings('.announcement-image');
-        const removeButton = $(input).siblings('.button-container').find('.remove-image');
-        const editButton = $(input).siblings('.button-container').find('.edit-image');
+        const container = $(input).closest('.image-preview-container-edit');
+        const preview = container.find('.announcement-image');
+        const oldImagePath = preview.attr('src').split('/').pop();
+        const removeButton = container.find('.remove-image');
+        const editButton = container.find('.edit-image');
 
         const file = input.files[0];
         if (file) {
+            // Add the old image filename to the removed images input
+            if (oldImagePath) {
+                const removedImagesInput = $('#removed-images');
+                let removedImagesVal = removedImagesInput.val();
+                if (removedImagesVal) {
+                    removedImagesVal += ','; 
+                }
+                removedImagesVal += oldImagePath;
+                removedImagesInput.val(removedImagesVal);
+            }
+
+            // Display the new image
             const reader = new FileReader();
             reader.onload = function(e) {
                 preview.attr('src', e.target.result).show();
                 removeButton.show();
                 editButton.show();
                 $(input).hide();
+
+                // Save the image filename to the addedImages array
+                const fileName = file.name;
+                addedImages.push(fileName);
+                
+                // Log addedImages array for debugging
+                console.log('Added images:', addedImages);
+                
+                // Send the added images array to the server via AJAX
+                $.ajax({
+                    url: 'ajax/error_log.php',
+                    method: 'POST',
+                    data: {
+                        added_images: JSON.stringify(addedImages)
+                    },
+                    success: function(response) {
+                        console.log('Images logged to server');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error logging images to server:', error);
+                    }
+                });
+
+                // Re-show the "Add Image" button if needed
+                if ($('.existing-images .image-preview-container-edit').length > 0) {
+                    $('#add-image-edit').show();
+                }
             };
             reader.readAsDataURL(file);
         }
     };
 
+    // Handle image removal
     $(document).on('click', '.remove-image', function () {
         const container = $(this).closest('.image-preview-container-edit');
-        const imagePath = container.find('.announcement-image').attr('src').split('/').pop(); // Get the image filename
+        const imagePath = container.find('.announcement-image').attr('src').split('/').pop();
         container.remove();
 
-        // Update the hidden input with the removed image
         const removedImagesInput = $('#removed-images');
-        let removedImages = removedImagesInput.val();
-
-        if (removedImages) {
-            removedImages += ','; 
+        let removedImagesVal = removedImagesInput.val();
+        if (removedImagesVal) {
+            removedImagesVal += ','; 
         }
-        removedImages += imagePath; 
-        removedImagesInput.val(removedImages); 
+        removedImagesVal += imagePath;
+        removedImagesInput.val(removedImagesVal);
 
+        // Show "Add Image" button again if no images are left
         if ($('.existing-images .image-preview-container-edit').length === 0) {
-            $('#add-image-edit').hide();
+            $('#add-image-edit').show();
         }
     });
 
+    // Add new image input
     $('#add-image-edit').click(function () {
         $(this).hide();
         const newImagePreview = `
@@ -184,7 +220,7 @@ $(document).ready(function () {
                 </div>
             </div>
         `;
-        $('.existing-images').append(newImagePreview);
+        $(this).before(newImagePreview);
     });
 });
 </script>

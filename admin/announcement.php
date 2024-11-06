@@ -619,11 +619,81 @@ $('.announcementModalEdit').on('click', function () {
             $(this).closest('.image-container').remove();
         });
 
-     
-$('#editannouncementForm').on('submit', function (e) {
-    e.preventDefault(); // Prevent the default form submission
+        let addedImages = [];
+let removedImages = [];
 
-    var form = $(this);
+// Handle image preview (upload new images)
+window.handleImagePreview = function(event, input) {
+    const container = $(input).closest('.image-preview-container-edit');
+    const preview = container.find('.announcement-image');
+    const oldImagePath = preview.attr('src').split('/').pop();
+    const removeButton = container.find('.remove-image');
+    const editButton = container.find('.edit-image');
+
+    const file = input.files[0];
+    if (file) {
+        // Add the old image filename to the removed images input
+        if (oldImagePath) {
+            const removedImagesInput = $('#removed-images');
+            let removedImagesVal = removedImagesInput.val();
+            if (removedImagesVal) {
+                removedImagesVal += ','; 
+            }
+            removedImagesVal += oldImagePath;
+            removedImagesInput.val(removedImagesVal);
+        }
+
+        // Display the new image
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.attr('src', e.target.result).show();
+            removeButton.show();
+            editButton.show();
+            $(input).hide();
+
+            // Save the image filename to the addedImages array
+            const fileName = file.name;
+            addedImages.push(fileName);
+            
+            // Log addedImages array for debugging
+            console.log('Added images:', addedImages);
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
+// Handle image removal
+$(document).on('click', '.remove-image', function () {
+    const container = $(this).closest('.image-preview-container-edit');
+    const imagePath = container.find('.announcement-image').attr('src').split('/').pop();
+    container.remove();
+
+    const removedImagesInput = $('#removed-images');
+    let removedImagesVal = removedImagesInput.val();
+    if (removedImagesVal) {
+        removedImagesVal += ','; 
+    }
+    removedImagesVal += imagePath;
+    removedImagesInput.val(removedImagesVal);
+});
+
+// Handle form submission
+$('#editannouncementForm').on('submit', function (e) {
+    e.preventDefault();
+    const form = $(this);
+    const submitButton = form.find('button[type="submit"]');
+    submitButton.prop('disabled', true);
+
+    const formData = new FormData(this);
+    formData.append('type', 'announcement');
+    
+    // Append images to formData as JSON strings
+    if (addedImages.length > 0) {
+        formData.append('added_images', JSON.stringify(addedImages));
+    }
+    if (removedImages.length > 0) {
+        formData.append('removed_images', JSON.stringify(removedImages));
+    }
 
     Swal.fire({
         title: "Are you sure?",
@@ -636,34 +706,29 @@ $('#editannouncementForm').on('submit', function (e) {
         cancelButtonText: "No, cancel!"
     }).then((result) => {
         if (result.isConfirmed) {
-            var formData = new FormData(this); // Create FormData from the form element
-            formData.append('type', 'announcement');  // Add type to FormData
-
-            // Debugging FormData
-            for (var pair of formData.entries()) {
-                console.log(pair[0]+ ', '+ pair[1]); 
-            }
-
             fetch("../admin/ajax/editData.php", {
                 method: "POST",
                 body: formData
             })
             .then(response => response.json())
             .then(result => {
+                submitButton.prop('disabled', false);
                 if (result.success) {
-                    Swal.fire("Saved!", result.message, "success").then(() => {
-                        location.reload(); // Optionally reload the page
-                    });
+                    Swal.fire("Saved!", result.message, "success").then(() => location.reload());
                 } else {
                     Swal.fire("Error!", result.message, "error");
                 }
             })
             .catch(error => {
-                Swal.fire("Error!", "There was an error saving the announcement.", "error");
+                submitButton.prop('disabled', false);
+                Swal.fire("Error!", "There was an error saving the announcement: " + error.message, "error");
             });
+        } else {
+            submitButton.prop('disabled', false);
         }
     });
 });
+
 
 const table = document.querySelector('#myTable');
 table.parentElement.style.overflowX = 'auto';

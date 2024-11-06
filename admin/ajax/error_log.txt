@@ -1,14 +1,81 @@
-[06-Nov-2024 02:44:26 Europe/Berlin] Type parameter: announcement
-[06-Nov-2024 09:44:26 Asia/Manila] Database Error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.announcement_tbl' doesn't exist
-[06-Nov-2024 02:47:01 Europe/Berlin] Type parameter: announcement
-[06-Nov-2024 09:47:01 Asia/Manila] Database Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'announcement_title' in 'field list'
-[06-Nov-2024 02:48:05 Europe/Berlin] Type parameter: announcement
-[06-Nov-2024 09:48:05 Asia/Manila] Database Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'image_path' in 'field list'
-[06-Nov-2024 02:48:50 Europe/Berlin] Type parameter: announcement
-[06-Nov-2024 09:48:50 Asia/Manila] Database Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'uploaded_at' in 'field list'
-[06-Nov-2024 02:49:26 Europe/Berlin] Type parameter: announcement
-[06-Nov-2024 09:49:26 Asia/Manila] Image uploaded and saved: dwadw_img1.jpg
-[06-Nov-2024 09:49:26 Asia/Manila] Image uploaded and saved: dwadw_img2.jpg
-[06-Nov-2024 02:50:11 Europe/Berlin] Type parameter: announcement
-[06-Nov-2024 09:50:12 Asia/Manila] Image uploaded and saved: dwadwa_img1.png
-[06-Nov-2024 09:50:12 Asia/Manila] Image uploaded and saved: dwadwa_img2.jpg
+[06-Nov-2024 06:57:57 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 13:57:57 Asia/Manila] Image uploaded and saved: dwadwad_img1.jpg
+[06-Nov-2024 13:57:57 Asia/Manila] Image uploaded and saved: dwadwad_img2.png
+[06-Nov-2024 13:57:57 Asia/Manila] Image uploaded and saved: dwadwad_img3.png
+New Image Uploaded: Array
+(
+    [file_name] => 
+    [file_type] => 
+    [file_size] => 0
+    [tmp_name] => 
+)
+
+New Image Uploaded: Array
+(
+    [file_name] => BW logo png.png
+    [file_type] => image/png
+    [file_size] => 431923
+    [tmp_name] => C:\xampp\tmp\phpCDD7.tmp
+)
+
+New Image Uploaded: Array
+(
+    [file_name] => 
+    [file_type] => 
+    [file_size] => 0
+    [tmp_name] => 
+)
+
+New Image Uploaded: Array
+(
+    [file_name] => Pullman Loaf.jpg
+    [file_type] => image/jpeg
+    [file_size] => 591797
+    [tmp_name] => C:\xampp\tmp\php4C90.tmp
+)
+
+New Image Uploaded: Array
+(
+    [file_name] => wood-table-top-on-blurred-kitchen-background-free-photo.jpg
+    [file_type] => image/jpeg
+    [file_size] => 283993
+    [tmp_name] => C:\xampp\tmp\php4C91.tmp
+)
+
+New Image Uploaded: Array
+(
+    [file_name] => 462571734_528393156287203_8805517516209094933_n.png
+    [file_type] => image/png
+    [file_size] => 271290
+    [tmp_name] => C:\xampp\tmp\php4C92.tmp
+)
+
+Error: Invalid file type for file: 
+File uploaded successfully: flixier-2024-10-30T06_14_39.651Z.png -> uploads/annUploads/672b2545877b0-flixier-2024-10-30T06_14_39.651Z.png
+File uploaded successfully: wood-table-top-on-blurred-kitchen-background-free-photo.jpg -> uploads/annUploads/672b254587d65-wood-table-top-on-blurred-kitchen-background-free-photo.jpg
+File uploaded successfully: Pullman-Photoroom.jpg -> ../../uploads/annUploads/672b25e8352be-Pullman-Photoroom.jpg
+Error: Invalid file type for file: 
+File uploaded successfully: Pullman Loaf.jpg -> ../../uploads/annUploads/672b25f3df02f-Pullman Loaf.jpg
+[06-Nov-2024 09:18:18 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:18:18 Europe/Berlin] PHP Warning:  error_log(/var/log/php_errors.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 35
+[06-Nov-2024 09:18:42 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:18:42 Europe/Berlin] PHP Warning:  error_log(/var/log/php_errors.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 35
+[06-Nov-2024 09:19:33 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:19:33 Europe/Berlin] PHP Warning:  error_log(/var/log/php_errors.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 35
+[06-Nov-2024 09:20:42 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:20:42 Europe/Berlin] PHP Warning:  error_log(/var/log/php_errors.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 35
+[06-Nov-2024 09:21:55 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:21:55 Europe/Berlin] PHP Warning:  error_log(/var/log/php_errors.log): Failed to open stream: No such file or directory in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 35
+[06-Nov-2024 09:23:15 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 16:23:15 Asia/Manila] Image uploaded and saved: dwadwa_img1.png
+Error: Invalid file type for file: 
+File uploaded successfully: Pullman Loaf.jpg -> ../../uploaded/annUploads/672b277f5eb33-Pullman Loaf.jpg
+[06-Nov-2024 09:25:12 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 16:25:12 Asia/Manila] Image uploaded and saved: dwadwa_img1.png
+[06-Nov-2024 16:25:12 Asia/Manila] Image uploaded and saved: dwadwa_img2.jpg
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+File uploaded successfully: Pullman-Photoroom.jpg -> ../../uploaded/annUploads/672b27fe606f5-Pullman-Photoroom.jpg
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+File uploaded successfully: 462571734_528393156287203_8805517516209094933_n.png -> ../../uploaded/annUploaded/672b284c1e155-462571734_528393156287203_8805517516209094933_n.png

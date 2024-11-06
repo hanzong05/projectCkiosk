@@ -621,7 +621,7 @@ $('.announcementModalEdit').on('click', function () {
 
         let addedImages = [];
 let removedImages = [];
-
+let replacedImages = [];  // Array to store replaced images 
 // Handle image preview (upload new images)
 window.handleImagePreview = function(event, input) {
     const container = $(input).closest('.image-preview-container-edit');

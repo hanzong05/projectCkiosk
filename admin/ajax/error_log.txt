@@ -79,3 +79,80 @@ File uploaded successfully: Pullman-Photoroom.jpg -> ../../uploaded/annUploads/6
 Error: Invalid file type for file: 
 Error: Invalid file type for file: 
 File uploaded successfully: 462571734_528393156287203_8805517516209094933_n.png -> ../../uploaded/annUploaded/672b284c1e155-462571734_528393156287203_8805517516209094933_n.png
+[06-Nov-2024 14:18:58 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 21:18:58 Asia/Manila] Image uploaded and saved: dwad_img1.jpg
+[06-Nov-2024 21:18:58 Asia/Manila] Image uploaded and saved: dwad_img2.jpg
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+File uploaded successfully: pastries.jpg -> ../../uploaded/annUploaded/672b6cce5e873-pastries.jpg
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+File uploaded successfully: e3a95ea66a9ba30614d76dbf4d835a62.jpg -> ../../uploaded/annUploaded/672b6cda498b5-e3a95ea66a9ba30614d76dbf4d835a62.jpg
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+File uploaded successfully: e3a95ea66a9ba30614d76dbf4d835a62.jpg -> ../../uploaded/annUploaded/672b6cea8f105-e3a95ea66a9ba30614d76dbf4d835a62.jpg
+File uploaded successfully: good_bye_depression_by_klarem_dagk85u-pre.jpg -> ../../uploaded/annUploaded/672b6cea91049-good_bye_depression_by_klarem_dagk85u-pre.jpg
+File uploaded successfully: e3a95ea66a9ba30614d76dbf4d835a62.jpg -> ../../uploaded/annUploaded/672b6e84a9290-e3a95ea66a9ba30614d76dbf4d835a62.jpg
+File uploaded successfully: 460420182_813571780676732_2248905488976422245_n.jpg -> ../../uploaded/annUploaded/672b6e84aa658-460420182_813571780676732_2248905488976422245_n.jpg
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+File uploaded successfully: FlavoredBread.jpg -> ../../uploaded/annUploaded/672b72b7b8593-FlavoredBread.jpg
+File uploaded successfully: good_bye_depression_by_klarem_dagk85u-pre.jpg -> ../../uploaded/annUploaded/672b72b7ba23f-good_bye_depression_by_klarem_dagk85u-pre.jpg
+Removed Images: annUploaded,annUploaded,annUploaded,annUploaded,annUploaded,annUploaded,annUploaded,annUploaded,annUploaded
+Error: Invalid file type for file: 
+Error: Invalid file type for file: 
+Removed Images: 672b6cce5e873-pastries.jpg,672b6cda498b5-e3a95ea66a9ba30614d76dbf4d835a62.jpg
+Removed Images: dwad_img1.jpg,dwad_img2.jpg,672b6cea8f105-e3a95ea66a9ba30614d76dbf4d835a62.jpg,672b6cea91049-good_bye_depression_by_klarem_dagk85u-pre.jpg,672b6e84a9290-e3a95ea66a9ba30614d76dbf4d835a62.jpg,672b6e84aa658-460420182_813571780676732_2248905488976422245_n.jpg,672b72b7b8593-FlavoredBread.jpg
+File uploaded successfully: S(1).jpg -> ../../uploaded/annUploaded/672b749c13b62-S(1).jpg
+File uploaded successfully: 460536542_3148258328650716_8523106795125365583_n (1).jpg -> ../../uploaded/annUploaded/672b750dc04c1-460536542_3148258328650716_8523106795125365583_n (1).jpg
+Removed Images: 672b749c13b62-S(1).jpg
+File uploaded successfully: 460420182_813571780676732_2248905488976422245_n.jpg -> C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672beb7c6eab9-460420182_813571780676732_2248905488976422245_n.jpg
+File uploaded successfully: FlavoredBread.jpg -> C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672beb7c71903-FlavoredBread.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672b72b7ba23f-good_bye_depression_by_klarem_dagk85u-pre.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672b750dc04c1-460536542_3148258328650716_8523106795125365583_n (1).jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672beb7c6eab9-460420182_813571780676732_2248905488976422245_n.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672beb7c71903-FlavoredBread.jpg
+File uploaded successfully: 460536542_3148258328650716_8523106795125365583_n.jpg -> C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bec52889de-460536542_3148258328650716_8523106795125365583_n.jpg
+File uploaded successfully: 460536542_3148258328650716_8523106795125365583_n (1).jpg -> C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bec52896bc-460536542_3148258328650716_8523106795125365583_n (1).jpg
+File uploaded successfully: 460536542_3148258328650716_8523106795125365583_n (1).jpg -> ../../uploaded/annUploaded/672bed6bf3126-460536542_3148258328650716_8523106795125365583_n (1).jpg
+File uploaded successfully: 460536542_3148258328650716_8523106795125365583_n (1).jpg -> ../../uploaded/annUploaded/672bed7644872-460536542_3148258328650716_8523106795125365583_n (1).jpg
+File uploaded successfully: good_bye_depression_by_klarem_dagk85u-pre.jpg -> ../../uploaded/annUploaded/672bed7f5a662-good_bye_depression_by_klarem_dagk85u-pre.jpg
+File uploaded successfully: 459409450_1204033984034802_1712324931392426873_n.png -> ../../uploaded/annUploaded/672bf09c3dd78-459409450_1204033984034802_1712324931392426873_n.png
+File uploaded successfully: 459409450_1204033984034802_1712324931392426873_n.png -> ../../uploaded/annUploaded/672bf10e60067-459409450_1204033984034802_1712324931392426873_n.png
+File uploaded successfully: 459409450_1204033984034802_1712324931392426873_n.png -> ../../uploaded/annUploaded/672bf2635da91-459409450_1204033984034802_1712324931392426873_n.png
+File uploaded successfully: FlavoredBread.jpg -> ../../uploaded/annUploaded/672bf28dc6b00-FlavoredBread.jpg
+File uploaded successfully: e3a95ea66a9ba30614d76dbf4d835a62.jpg -> ../../uploaded/annUploaded/672bf2997d4fd-e3a95ea66a9ba30614d76dbf4d835a62.jpg
+File uploaded successfully: FlavoredBread.jpg -> ../../uploaded/annUploaded/672bf2b1ae48a-FlavoredBread.jpg
+File uploaded successfully: 458655329_1643189073206492_3274066267445684011_n.jpg -> ../../uploaded/annUploaded/672bf2cae67a0-458655329_1643189073206492_3274066267445684011_n.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bed6bf3126-460536542_3148258328650716_8523106795125365583_n (1).jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bed7644872-460536542_3148258328650716_8523106795125365583_n (1).jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bed7f5a662-good_bye_depression_by_klarem_dagk85u-pre.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bf09c3dd78-459409450_1204033984034802_1712324931392426873_n.png
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bf10e60067-459409450_1204033984034802_1712324931392426873_n.png
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bf2635da91-459409450_1204033984034802_1712324931392426873_n.png
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bf28dc6b00-FlavoredBread.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bf2997d4fd-e3a95ea66a9ba30614d76dbf4d835a62.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bf2b1ae48a-FlavoredBread.jpg
+Old image deleted: C:/xampp/htdocs/ckiosk/uploaded/annUploaded/672bf2cae67a0-458655329_1643189073206492_3274066267445684011_n.jpg
+Error: Invalid file type for file: 
+[06-Nov-2024 23:53:39 Europe/Berlin] Type parameter: announcement
+[07-Nov-2024 06:53:39 Asia/Manila] Image uploaded and saved: dwad_img1.jpg
+File uploaded successfully: 460536542_3148258328650716_8523106795125365583_n (1).jpg -> ../../uploaded/annUploaded/672bf3b861a9a-460536542_3148258328650716_8523106795125365583_n (1).jpg
+File uploaded successfully: 459409450_1204033984034802_1712324931392426873_n.png -> ../../uploaded/annUploaded/672bf3bfdccd7-459409450_1204033984034802_1712324931392426873_n.png
+File uploaded successfully: FlavoredBread.jpg -> ../../uploaded/annUploaded/672bf45617a6d-FlavoredBread.jpg
+File uploaded successfully: 460536542_3148258328650716_8523106795125365583_n.jpg -> ../../uploaded/annUploaded/672bf4b5e0ed5-460536542_3148258328650716_8523106795125365583_n.jpg
+File uploaded successfully: 458655329_1643189073206492_3274066267445684011_n.jpg -> ../../uploaded/annUploaded/672bf4cf01648-458655329_1643189073206492_3274066267445684011_n.jpg
+Removed Images: ["672bf3bfdccd7-459409450_1204033984034802_1712324931392426873_n.png","672bf45617a6d-FlavoredBread.jpg","672bf45617a6d-FlavoredBread.jpg","672bf4b5e0ed5-460536542_3148258328650716_8523106795125365583_n.jpg","672bf4cf01648-458655329_1643189073206492_3274066267445684011_n.jpg"]
+Removed Images: Z,672bf45617a6d-FlavoredBread.jpg,672bf45617a6d-FlavoredBread.jpg,672bf4b5e0ed5-460536542_3148258328650716_8523106795125365583_n.jpg,672bf4cf01648-458655329_1643189073206492_3274066267445684011_n.jpg,672bf3b861a9a-460536542_3148258328650716_8523106795125365583_n (1).jpg
+Removed Images: 672bf3bfdccd7-459409450_1204033984034802_1712324931392426873_n.png
+File uploaded successfully: Id.jpg -> ../../uploaded/annUploaded/672bf5839c98d-Id.jpg
+File uploaded successfully: 458655329_1643189073206492_3274066267445684011_n.jpg -> ../../uploaded/annUploaded/672bf5839dec1-458655329_1643189073206492_3274066267445684011_n.jpg

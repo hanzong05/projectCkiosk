@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $removedImages = $_POST['removed_images'] ?? ''; // Removed images
             $newImages = $_FILES['ann_imgs'] ?? []; // New uploaded images
             $date = date('Y-m-d H:i:s'); // Current timestamp for updated_at
-        
+            
+    $replacedImages = $_POST['replaced_images'] ?? ''; // Images being replaced
             $response = [
                 'success' => true,
                 'message' => '',
@@ -70,7 +71,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 error_log("Error: Failed to update announcement - " . implode(", ", $stmt->errorInfo()) . "\n", 3, 'error_log.txt');
                 exit;
             }
-        
+            
+
+// Log Requested Replaced Images
+if (!empty($replacedImages)) {
+    $replacedImagesArray = explode(',', $replacedImages);
+    foreach ($replacedImagesArray as $image) {
+        $image = trim($image);
+        if (!empty($image)) {
+            // Log requested replaced image
+            error_log("Requested Replacement of Image: $image\n", 3, 'error_log.php');
+            
+            // Log replaced image
+            error_log("Replaced Image: $image\n", 3, 'error_log.php');
+
+            $deleteStmt = $connect->prepare("DELETE FROM announcement_images WHERE image_path = :imagePath");
+            $deleteStmt->execute([':imagePath' => $image]);
+
+            $filePath = "C:/xampp/htdocs/ckiosk/uploaded/annUploaded/" . $image;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+                error_log("Deleted replaced image file: $filePath\n", 3, 'error_log.php');
+            }
+        }
+    }
+}
+
             // Handle new images upload (Defined here within the if block)
             if (!empty($newImages) && is_array($newImages['name'])) {
                 $uploadedFiles = [];

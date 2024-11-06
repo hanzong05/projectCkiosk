@@ -3279,7 +3279,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('announcements-container');
     
     if (Array.isArray(announcements)) {
-        announcements.forEach((announcement, index) => {
+        // Sort announcements by created_at date in descending order (latest first)
+        const sortedAnnouncements = announcements.sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at);
+        });
+        
+        sortedAnnouncements.forEach((announcement, index) => {
             container.appendChild(createAnnouncementCard(announcement, index));
         });
     } else {
@@ -3294,7 +3299,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 });
-
 
 </script>
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script> -->

@@ -791,7 +791,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['faculty_excel']) && $_FILES['faculty_excel']['error'] === UPLOAD_ERR_OK) {
         // Define the paths for the temporary and original files
         $tempPath = $_FILES['faculty_excel']['tmp_name'];
-        $originalPath = __DIR__ . '/' . basename($_FILES['faculty_excel']['name']); // Adjust the path
+        $originalPath = __DIR__ . '/' . basename($_FILES['faculty_excel']['name']);
 
         // Attempt to move the uploaded file to the desired directory
         if (!move_uploaded_file($tempPath, $originalPath)) {
@@ -814,177 +814,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Define the department mapping
-        $deptMapping = [
-            'it department' => 1,
-            'cs department' => 2,
-            'mis department' => 3,
-            'mit' => 4,
-            'dean' => 5,
-            // Add any additional mappings as needed
-        ];
-
-        // Prepare audit trail statement
-        $auditStmt = $connect->prepare("INSERT INTO audit_trail (action, faculty_name, faculty_dept, consultation_time, timestamp) VALUES (:action, :faculty_name, :faculty_dept, :consultation_time, NOW())");
-
         // Get the data from the active sheet
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-        error_log("Sheet Data: " . print_r($sheetData, true)); // Log the entire sheet data for review
-
-        $insertedCount = 0; // Count of inserted records
         $updatedCount = 0;  // Count of updated records
 
-        // Prepare statements
-        $insertStmt = $connect->prepare("INSERT INTO faculty_tbl (faculty_name, faculty_dept, consultation_time) VALUES (:faculty_name, :faculty_dept, :consultation_time)");
+        // Prepare update statement
         $updateStmt = $connect->prepare("UPDATE faculty_tbl SET consultation_time = :consultation_time WHERE faculty_name = :faculty_name");
+
+        // Get user information for audit trail
+        $uid = $_POST['uid'] ?? null;
+        $cid = $_POST['cid'] ?? null;
+        
+        // Fetch the updater's name
+        $updater_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+        $updater_stmt = $connect->prepare($updater_name_sql);
+        $updater_stmt->execute([':cid' => $cid]);
+        $updater_name = $updater_stmt->fetchColumn();
+        
+        if (!$updater_name) {
+            $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+            $org_member_stmt = $connect->prepare($org_member_sql);
+            $org_member_stmt->execute([':cid' => $cid]);
+            $updater_name = $org_member_stmt->fetchColumn();
+        }
+        
+        $updater_name = $updater_name ?: 'Unknown User';
 
         // Loop through the sheet data
         foreach ($sheetData as $rowIndex => $row) {
             if ($rowIndex === 1) continue; // Skip header row
 
-            // Get and trim each column
+            // Get and trim faculty name and consultation time
             $faculty_name = trim($row['A'] ?? null);
-            $faculty_dept = strtolower(trim($row['B'] ?? null)); // Convert department to lowercase for mapping
-            $consultation_time = trim($row['C'] ?? null); // Assuming Consultation Time is in column C
+            $consultation_time = trim($row['C'] ?? null);
 
-            // Log the current row data for debugging
-            error_log("Processing Row $rowIndex: Name: '$faculty_name', Dept: '$faculty_dept', Consultation Time: '$consultation_time'");
-
-            // Check for faculty department mapping
-            $faculty_dept_id = null;
-            if ($faculty_dept && isset($deptMapping[$faculty_dept])) {
-                $faculty_dept_id = $deptMapping[$faculty_dept];
-            } else {
-                error_log("Invalid department '$faculty_dept' at Row $rowIndex. Skipping.");
-                continue; // Skip this row if the department is not valid
-            }
-
-            // Proceed if faculty name is provided
-            if ($faculty_name) {
-                // Check if the faculty member already exists in the database
-                $existingQuery = $connect->prepare("SELECT faculty_dept, consultation_time FROM faculty_tbl WHERE faculty_name = :faculty_name");
-                $existingQuery->execute([':faculty_name' => $faculty_name]);
-                $existingData = $existingQuery->fetch(PDO::FETCH_ASSOC);
-
-                // Check for duplicates in departments 5 to 13
-                $restrictedDepts = [5, 6, 7, 8, 9, 10, 11, 12, 13];
-                if (in_array($faculty_dept_id, $restrictedDepts)) {
-                    $duplicateQuery = $connect->prepare("SELECT faculty_name FROM faculty_tbl WHERE faculty_dept = :faculty_dept AND faculty_name != :faculty_name");
-                    $duplicateQuery->execute([':faculty_dept' => $faculty_dept_id, ':faculty_name' => $faculty_name]);
-                    if ($duplicateQuery->fetch(PDO::FETCH_ASSOC)) {
-                        error_log("Duplicate department found for '$faculty_name'. Updating existing record.");
-                        // Update the existing record
-                        try {
-                            $updateStmt->execute([
-                                ':faculty_name' => $faculty_name,
-                                ':consultation_time' => $consultation_time
-                            ]);
-                            $updatedCount++; // Increment the count of updated records
-
-                            // Add to audit trail
-                            $auditStmt->execute([
-                                ':action' => 'update',
-                                ':faculty_name' => $faculty_name,
-                                ':faculty_dept' => $faculty_dept_id,
-                                ':consultation_time' => $consultation_time
-                            ]);
-                        } catch (PDOException $e) {
-                            error_log('Update error: ' . $e->getMessage());
-                            $response['success'] = false;
-                            $response['message'] = 'Error updating data: ' . $e->getMessage();
-                            echo json_encode($response);
-                            exit;
-                        }
-                        continue; // Skip to the next row
-                    }
-                }
-                $uid = $_POST['uid'] ?? null; // User ID from session
-                $cid = $_POST['cid'] ?? null; // Creator ID from session
-                
-                // Fetch the updater's name from users_tbl
-                $updater_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
-                $updater_stmt = $connect->prepare($updater_name_sql);
-                $updater_stmt->execute([':cid' => $cid]);
-                $updater_name = $updater_stmt->fetchColumn();
-                
-                // If not found, check orgmembers_tbl
-                if (!$updater_name) {
-                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
-                    $org_member_stmt = $connect->prepare($org_member_sql);
-                    $org_member_stmt->execute([':cid' => $cid]);
-                    $updater_name = $org_member_stmt->fetchColumn();
-                }
-                
-                // If no name found, default to 'Unknown User'
-                $updater_name = $updater_name ?: 'Unknown User';
-                
-                // Assuming $faculty_name and $consultation_time are defined
+            if ($faculty_name && $consultation_time) {
+                // Check if the faculty member exists
                 $existingDataQuery = $connect->prepare("SELECT consultation_time FROM faculty_tbl WHERE faculty_name = :faculty_name");
                 $existingDataQuery->execute([':faculty_name' => $faculty_name]);
                 $existingData = $existingDataQuery->fetch(PDO::FETCH_ASSOC);
-                
+
                 if ($existingData) {
-                    // If the faculty member exists, check if an update is necessary
-                    if ($existingData['consultation_time'] != $consultation_time) {
-                        // Update the record if consultation time has changed
+                    // Only update if consultation time is different
+                    if ($existingData['consultation_time'] !== $consultation_time) {
                         try {
                             $updateStmt->execute([
                                 ':faculty_name' => $faculty_name,
                                 ':consultation_time' => $consultation_time
                             ]);
-                            $updatedCount++; // Increment the count of updated records
-                
-                            // Add to audit trail only if there's an actual update
+                            $updatedCount++;
+
+                            // Add to audit trail
                             $audit_message = "{$updater_name} updated '$faculty_name': New Consultation Time - '$consultation_time'";
                             $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
                             $audit_stmt = $connect->prepare($audit_sql);
                             $audit_stmt->execute([':message' => $audit_message]);
-                
+
                         } catch (PDOException $e) {
                             error_log('Update error: ' . $e->getMessage());
-                            $response['success'] = false;
-                            $response['message'] = 'Error updating data: ' . $e->getMessage();
-                            echo json_encode($response);
-                            exit;
+                            continue; // Skip this record and continue with the next one
                         }
-                    } else {
-                        // Log that no update is needed
-                        error_log("No update necessary for '$faculty_name'. Existing data matches the imported data.");
-                    }
-                } else {
-                    // If the faculty member does not exist, insert a new record
-                    error_log("Inserting: Name: '$faculty_name', Dept ID: $faculty_dept_id, Consultation Time: '$consultation_time'");
-                    try {
-                        $insertStmt->execute([
-                            ':faculty_name' => $faculty_name,
-                            ':faculty_dept' => $faculty_dept_id,
-                            ':consultation_time' => $consultation_time
-                        ]);
-                        $insertedCount++; // Increment the count of inserted records
-                
-                        // Add to audit trail for new insertions
-                        $auditStmt->execute([
-                            ':action' => 'insert',
-                            ':faculty_name' => $faculty_name,
-                            ':faculty_dept' => $faculty_dept_id,
-                            ':consultation_time' => $consultation_time
-                        ]);
-                    } catch (PDOException $e) {
-                        error_log('Insert error: ' . $e->getMessage());
-                        $response['success'] = false;
-                        $response['message'] = 'Error inserting data: ' . $e->getMessage();
-                        echo json_encode($response);
-                        exit;
                     }
                 }
-            } else {
-                error_log("Row $rowIndex skipped: No Faculty Name provided.");
+                // If faculty doesn't exist, silently continue to the next record
             }
         }
 
         // Set the response message after processing
         $response['success'] = true;
-        $response['message'] = "$insertedCount faculty members imported successfully. $updatedCount records updated.";
+        $response['message'] = "$updatedCount faculty consultation schedules updated successfully.";
+
     } else {
         // Handle specific upload errors
         $errorMessages = [
@@ -1005,5 +904,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Output the JSON response
     echo json_encode($response);
 }
-
 ?>

@@ -53,7 +53,7 @@
 
 .map {
     max-width: max-content;
-    height: 600px;
+    height: auto;
     padding: 2%;
     background-color: #2e0f13;
 }

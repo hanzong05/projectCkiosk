@@ -2812,7 +2812,7 @@ function delete_membersaccount($appID)
         FROM faculty_tbl 
         INNER JOIN department_tbl 
         ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 10
+        WHERE faculty_tbl.faculty_dept = 13
     ";
     
     $statement = $this->connection->prepare($query);

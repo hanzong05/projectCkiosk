@@ -216,6 +216,9 @@ $allaudit = $obj->show_audit_trail();
                                 if (strpos($log['message'], 'add') !== false) {
                                     $icon = 'fas fa-plus-circle'; // Add icon
                                     $iconColor = 'text-green-500'; // Green color for add
+                                }elseif (strpos($log['message'], 'created') !== false) {
+                                    $icon = 'fas fa-plus-circle'; // Add icon
+                                    $iconColor = 'text-green-500'; // Green color for add
                                 } elseif (strpos($log['message'], 'edit') !== false) {
                                     $icon = 'fas fa-edit'; // Edit icon
                                     $iconColor = 'text-yellow-500'; // Yellow color for edit

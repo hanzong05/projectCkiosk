@@ -18,139 +18,127 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Debugging: Log the type parameter
     error_log('Type parameter: ' . $type);
 
-    try {
-        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try { 
         if ($type === 'announcement') {
             $id = $_POST['id'] ?? null; // Existing announcement ID (if updating)
             $uid = $_POST['uid'] ?? null; // User ID from session
             $cid = $_POST['cid'] ?? null; // Creator ID from session
+            $title = $_POST['announcement_title'] ?? null; // Announcement title
             $details = $_POST['announcement_details'] ?? null; // Announcement details
-        
+    
             // Set the timezone
             date_default_timezone_set('Asia/Manila');
             $date = date('Y-m-d H:i:s');
-        
-            $imagePath = "";
+    
             $response = ['success' => false, 'message' => ''];
-        
-            if (isset($_FILES['ann_img']) && $_FILES['ann_img']['error'] === UPLOAD_ERR_OK) {
-                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                $maxFileSize = 5 * 1024 * 1024; // 5 MB
-                $fileMimeType = mime_content_type($_FILES['ann_img']['tmp_name']);
-                $fileSize = $_FILES['ann_img']['size'];
-        
-                if (!in_array($fileMimeType, $allowedMimeTypes) || $fileSize > $maxFileSize) {
-                    $response['message'] = 'Invalid file type or size.';
-                    echo json_encode($response);
-                    exit;
-                }
-        
-                $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
-        
-                if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
-                    error_log('Failed to create announcement directory.');
-                    $response['message'] = 'Failed to create upload directory.';
-                    echo json_encode($response);
-                    exit;
-                }
-        
-                $imagePath = time() . "_" . basename($_FILES['ann_img']['name']);
-                $tempPath = $_FILES["ann_img"]["tmp_name"];
-                $originalPath = $uploadTo . $imagePath;
-        
-                if (move_uploaded_file($tempPath, $originalPath)) {
-                    try {
-                        if ($id) {
-                            $sql = "UPDATE `announcement_tbl` 
-                                    SET announcement_details = :details, 
-                                        announcement_creator = :uid, 
-                                        announcement_image = :imagePath, 
-                                        updated_at = :date, 
-                                        created_by = :cid
-                                    WHERE announcement_id = :id";
-                            $stmt = $connect->prepare($sql);
-                            $stmt->execute([
-                                ':details' => $details,
-                                ':uid' => $uid,
-                                ':imagePath' => $imagePath,
-                                ':date' => $date,
-                                ':id' => $id,
-                                ':cid' => $cid
-                            ]);
-                        } else {
-                            $sql = "INSERT INTO `announcement_tbl` 
-                                    (announcement_details, announcement_creator, 
-                                    announcement_image, created_at, updated_at, created_by) 
-                                    VALUES (:details, :uid, :imagePath, :date, :date, :cid)";
-                            $stmt = $connect->prepare($sql);
-                            $stmt->execute([
-                                ':details' => $details,
-                                ':uid' => $uid,
-                                ':imagePath' => $imagePath,
-                                ':date' => $date,
-                                ':cid' => $cid
-                            ]);
-                        }
-        
-                        // Fetch creator's name
-                        $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :cid");
-                        $creator_stmt->execute([':cid' => $cid]);
-                        $creators_name = $creator_stmt->fetchColumn() ?: 'Unknown User';
-        
-                        // Audit trail
-                        $audit_message = "{$creators_name} created an announcement: {$details}";
-                        $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-                        $audit_stmt->execute([':message' => $audit_message]);
-        
-                        $response['success'] = true;
-                        $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
-                    } catch (PDOException $e) {
-                        error_log("Database Error: " . $e->getMessage());
-                        $response['message'] = 'Database operation failed.';
-                    }
-                } else {
-                    $response['message'] = 'Failed to move uploaded file.';
-                }
-            } else {
-                // Handle case where no image is uploaded
-                try {
-                    if ($id) {
-                        $sql = "UPDATE `announcement_tbl` 
-                                SET announcement_details = :details, 
-                                    announcement_creator = :uid, 
-                                    updated_at = :date, 
-                                    created_by = :cid
-                                WHERE announcement_id = :id";
-                        $stmt = $connect->prepare($sql);
-                        $stmt->execute([
-                            ':details' => $details,
-                            ':uid' => $uid,
-                            ':date' => $date,
-                            ':cid' => $cid,
-                            ':id' => $id
-                        ]);
-                    } else {
-                        $sql = "INSERT INTO `announcement_tbl` 
-                                (announcement_details, announcement_creator, 
-                                created_at, updated_at, created_by) 
-                                VALUES (:details, :uid, :date, :date, :cid)";
-                        $stmt = $connect->prepare($sql);
-                        $stmt->execute([
-                            ':details' => $details,
-                            ':uid' => $uid,
-                            ':date' => $date,
-                            ':cid' => $cid
-                        ]);
-                    }
-        
-                    $response['success'] = true;
-                    $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
-                } catch (PDOException $e) {
-                    error_log("Database Error: " . $e->getMessage());
-                    $response['message'] = 'Database operation failed.';
-                }
+    
+            // Directory for uploaded images
+            $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
+            if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
+                error_log('Failed to create announcement directory.');
+                $response['message'] = 'Failed to create upload directory.';
+                echo json_encode($response);
+                exit;
             }
-        
+    
+            try {
+                // Insert or update the main announcement record
+                if ($id) {
+                    $sql = "UPDATE `announcement_tbl` 
+                            SET announcement_title = :title, 
+                                announcement_details = :details, 
+                                announcement_creator = :uid, 
+                                updated_at = :date, 
+                                created_by = :cid
+                            WHERE announcement_id = :id";
+                    $stmt = $connect->prepare($sql);
+                    $stmt->execute([
+                        ':title' => $title,
+                        ':details' => $details,
+                        ':uid' => $uid,
+                        ':date' => $date,
+                        ':cid' => $cid,
+                        ':id' => $id
+                    ]);
+                } else {
+                    $sql = "INSERT INTO `announcement_tbl` 
+                            (announcement_title, announcement_details, announcement_creator, created_at, updated_at, created_by) 
+                            VALUES (:title, :details, :uid, :date, :date, :cid)";
+                    $stmt = $connect->prepare($sql);
+                    $stmt->execute([
+                        ':title' => $title,
+                        ':details' => $details,
+                        ':uid' => $uid,
+                        ':date' => $date,
+                        ':cid' => $cid
+                    ]);
+                    $id = $connect->lastInsertId();
+                }
+    
+                // Image upload logic
+                if (isset($_FILES['ann_img']['name']) && is_array($_FILES['ann_img']['name'])) {
+                    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+                    $maxFileSize = 5 * 1024 * 1024; // 5 MB
+    
+                    // Image counter for naming
+                    $imageCounter = 1; 
+    
+                    foreach ($_FILES['ann_img']['name'] as $index => $imageName) {
+                        $fileTmpName = $_FILES['ann_img']['tmp_name'][$index];
+                        $fileSize = $_FILES['ann_img']['size'][$index];
+                        $fileMimeType = mime_content_type($fileTmpName);
+    
+                        // Check mime type and file size
+                        if (in_array($fileMimeType, $allowedMimeTypes) && $fileSize <= $maxFileSize) {
+                            // Sanitize the title to create a valid filename
+                            $titleSanitized = preg_replace('/[^a-zA-Z0-9-_]/', '_', strtolower($title)); // Clean title
+                            
+                            // Generate a unique filename using the specified format
+                            $imagePath = "{$titleSanitized}_img{$imageCounter}." . pathinfo($imageName, PATHINFO_EXTENSION);
+                            $originalPath = $uploadTo . $imagePath;
+    
+                            if (move_uploaded_file($fileTmpName, $originalPath)) {
+                                // Insert each image path into the announcement_images table
+                                $imageSql = "INSERT INTO `announcement_images` (announcement_id, image_path, uploaded_at) 
+                                             VALUES (:announcement_id, :image_path, :uploaded_at)";
+                                $imageStmt = $connect->prepare($imageSql);
+                                $imageStmt->execute([
+                                    ':announcement_id' => $id,
+                                    ':image_path' => $imagePath,
+                                    ':uploaded_at' => $date
+                                ]);
+    
+                                // Log success for each file
+                                error_log("Image uploaded and saved: " . $imagePath);
+                            } else {
+                                error_log("Failed to move uploaded file: " . $imagePath);
+                            }
+                        } else {
+                            error_log("Invalid file type or size for file: " . $imageName);
+                        }
+                        // Increment the counter for the next image
+                        $imageCounter++;
+                    }
+                }
+    
+                // Fetch creator's name
+                $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :cid");
+                $creator_stmt->execute([':cid' => $cid]);
+                $creators_name = $creator_stmt->fetchColumn() ?: 'Unknown User';
+    
+                // Audit trail
+                $audit_message = "{$creators_name} created an announcement: {$details}";
+                $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+                $audit_stmt->execute([':message' => $audit_message]);
+    
+                $response['success'] = true;
+                $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
+    
+            } catch (PDOException $e) {
+                error_log("Database Error: " . $e->getMessage());
+                $response['message'] = 'Database operation failed.';
+            }
+    
             echo json_encode($response);
         }
         
@@ -792,6 +780,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Define the paths for the temporary and original files
         $tempPath = $_FILES['faculty_excel']['tmp_name'];
         $originalPath = __DIR__ . '/' . basename($_FILES['faculty_excel']['name']);
+        $originalPath = __DIR__ . '/' . basename($_FILES['faculty_excel']['name']);
 
         // Attempt to move the uploaded file to the desired directory
         if (!move_uploaded_file($tempPath, $originalPath)) {
@@ -819,8 +808,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updatedCount = 0;  // Count of updated records
 
         // Prepare update statement
+        // Prepare update statement
         $updateStmt = $connect->prepare("UPDATE faculty_tbl SET consultation_time = :consultation_time WHERE faculty_name = :faculty_name");
 
+        // Get user information for audit trail
+        $uid = $_POST['uid'] ?? null;
+        $cid = $_POST['cid'] ?? null;
+        
+        // Fetch the updater's name
+        $updater_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+        $updater_stmt = $connect->prepare($updater_name_sql);
+        $updater_stmt->execute([':cid' => $cid]);
+        $updater_name = $updater_stmt->fetchColumn();
+        
+        if (!$updater_name) {
+            $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+            $org_member_stmt = $connect->prepare($org_member_sql);
+            $org_member_stmt->execute([':cid' => $cid]);
+            $updater_name = $org_member_stmt->fetchColumn();
+        }
+        
+        $updater_name = $updater_name ?: 'Unknown User';
+
+        // Loop through the sheet data
+        foreach ($sheetData as $rowIndex => $row) {
+            if ($rowIndex === 1) continue; // Skip header row
+
+            // Get and trim faculty name and consultation time
+            $faculty_name = trim($row['A'] ?? null);
+            $consultation_time = trim($row['C'] ?? null);
+
+            if ($faculty_name && $consultation_time) {
+                // Check if the faculty member exists
         // Get user information for audit trail
         $uid = $_POST['uid'] ?? null;
         $cid = $_POST['cid'] ?? null;
@@ -854,7 +873,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $existingDataQuery->execute([':faculty_name' => $faculty_name]);
                 $existingData = $existingDataQuery->fetch(PDO::FETCH_ASSOC);
 
+
                 if ($existingData) {
+                    // Only update if consultation time is different
+                    if ($existingData['consultation_time'] !== $consultation_time) {
                     // Only update if consultation time is different
                     if ($existingData['consultation_time'] !== $consultation_time) {
                         try {
@@ -865,13 +887,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $updatedCount++;
 
                             // Add to audit trail
+                            $updatedCount++;
+
+                            // Add to audit trail
                             $audit_message = "{$updater_name} updated '$faculty_name': New Consultation Time - '$consultation_time'";
                             $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
                             $audit_stmt = $connect->prepare($audit_sql);
                             $audit_stmt->execute([':message' => $audit_message]);
 
+
                         } catch (PDOException $e) {
                             error_log('Update error: ' . $e->getMessage());
+                            continue; // Skip this record and continue with the next one
+                        }
+                    }
+                }
+                // If faculty doesn't exist, silently continue to the next record
                             continue; // Skip this record and continue with the next one
                         }
                     }
@@ -882,6 +913,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Set the response message after processing
         $response['success'] = true;
+        $response['message'] = "$updatedCount faculty consultation schedules updated successfully.";
+
         $response['message'] = "$updatedCount faculty consultation schedules updated successfully.";
 
     } else {

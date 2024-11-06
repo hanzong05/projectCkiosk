@@ -54,6 +54,7 @@
 .map {
     max-width: max-content;
     height: auto;
+    height: auto;
     padding: 2%;
     background-color: #2e0f13;
 }

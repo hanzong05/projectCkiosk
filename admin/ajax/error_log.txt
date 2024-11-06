@@ -1,110 +1,14 @@
-[03-Nov-2024 10:11:06 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: admin
-[03-Nov-2024 10:11:28 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: admin
-[03-Nov-2024 10:11:40 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[03-Nov-2024 10:12:12 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 10:12:24 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 10:12:41 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 10:16:23 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 10:18:06 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 10:19:59 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 10:32:53 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: admin
-Hashing Password for User: admin
-Inserting Account for User: admin
-[03-Nov-2024 10:36:29 Europe/Berlin] Type parameter: announcement
-[03-Nov-2024 10:42:04 Europe/Berlin] Type parameter: announcement
-[03-Nov-2024 10:43:05 Europe/Berlin] Type parameter: event
-[03-Nov-2024 10:50:31 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: admindwadwa
-Hashing Password for User: admindwadwa
-Inserting Account for User: admindwadwa
-[03-Nov-2024 10:53:35 Europe/Berlin] Type parameter: announcement
-[03-Nov-2024 10:53:44 Europe/Berlin] Type parameter: announcement
-[03-Nov-2024 10:54:14 Europe/Berlin] Type parameter: event
-[03-Nov-2024 10:54:21 Europe/Berlin] Type parameter: event
-[03-Nov-2024 10:54:55 Europe/Berlin] Type parameter: faculty
-[03-Nov-2024 10:55:13 Europe/Berlin] Type parameter: faculty
-[03-Nov-2024 10:56:09 Europe/Berlin] Type parameter: excel_import
-[03-Nov-2024 10:56:09 Europe/Berlin] Spreadsheet loaded successfully.
-[03-Nov-2024 10:56:09 Europe/Berlin] Sheet Data: Array
-(
-    [1] => Array
-        (
-            [A] => Name
-            [B] => Department
-            [C] => Consultation Time
-        )
-
-    [2] => Array
-        (
-            [A] => batman
-            [B] => IT DEPARTMENT
-            [C] => 12345
-        )
-
-)
-
-[03-Nov-2024 10:56:09 Europe/Berlin] Processing Row 2: Name: 'batman', Dept: 'it department', Consultation Time: '12345'
-[03-Nov-2024 10:56:28 Europe/Berlin] Type parameter: organization
-[03-Nov-2024 10:56:47 Europe/Berlin] Type parameter: organization
-[03-Nov-2024 10:57:31 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: admindwadw
-Hashing Password for User: admindwadw
-Inserting Account for User: admindwadw
-[03-Nov-2024 10:58:04 Europe/Berlin] Type parameter: faqs
-[03-Nov-2024 10:58:08 Europe/Berlin] Type parameter: faqs
-[03-Nov-2024 10:59:20 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: admin
-[03-Nov-2024 10:59:27 Europe/Berlin] Type parameter: account
-Duplicate Check Started for Username: org1
-Hashing Password for User: org1
-Inserting Account for User: org1
-[03-Nov-2024 11:00:03 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 11:00:50 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 11:01:04 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 11:02:13 Europe/Berlin] Type parameter: membersaccount
-[03-Nov-2024 12:23:29 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_faqs() in C:\xampp\htdocs\ckiosk\admin\faqs.php:25
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 25
-[03-Nov-2024 12:23:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_faqs() in C:\xampp\htdocs\ckiosk\admin\faqs.php:25
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 25
-[03-Nov-2024 14:29:34 Europe/Berlin] Type parameter: faculty
-[03-Nov-2024 16:20:21 Europe/Berlin] Type parameter: announcement
-[03-Nov-2024 16:22:21 Europe/Berlin] Type parameter: announcement
-[03-Nov-2024 16:38:28 Europe/Berlin] PHP Warning:  Undefined variable $allFAQs in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
-[03-Nov-2024 16:38:28 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
-[03-Nov-2024 16:38:50 Europe/Berlin] PHP Warning:  Undefined variable $allFAQs in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
-[03-Nov-2024 16:38:50 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 215
-[03-Nov-2024 16:39:39 Europe/Berlin] PHP Warning:  Undefined variable $allFAQs in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 213
-[03-Nov-2024 16:39:39 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 213
-[04-Nov-2024 22:20:56 Europe/Berlin] PHP Warning:  Undefined array key "aid" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 252
-[04-Nov-2024 22:20:56 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 253
-[04-Nov-2024 22:20:56 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 287
-[04-Nov-2024 22:20:58 Europe/Berlin] PHP Warning:  Undefined array key "aid" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 252
-[04-Nov-2024 22:20:58 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 253
-[04-Nov-2024 22:20:58 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\ckiosk\admin\faqs.php on line 287
-[04-Nov-2024 22:24:14 Europe/Berlin] Type parameter: organization
-[04-Nov-2024 22:26:12 Europe/Berlin] Type parameter: organization
-[04-Nov-2024 22:26:18 Europe/Berlin] Type parameter: organization
-[04-Nov-2024 22:41:05 Europe/Berlin] Type parameter: faculty
-[04-Nov-2024 22:42:09 Europe/Berlin] Type parameter: faculty
-[04-Nov-2024 23:05:24 Europe/Berlin] Type parameter: organization
-[04-Nov-2024 23:15:48 Europe/Berlin] Type parameter: organization
-[04-Nov-2024 23:23:56 Europe/Berlin] Type parameter: organization
-[04-Nov-2024 23:24:31 Europe/Berlin] Type parameter: organization
-[04-Nov-2024 23:29:08 Europe/Berlin] Type parameter: membersaccount
-[04-Nov-2024 23:29:49 Europe/Berlin] Type parameter: membersaccount
-[05-Nov-2024 02:21:12 Europe/Berlin] Type parameter: excel_import
-[05-Nov-2024 02:21:15 Europe/Berlin] Spreadsheet loaded successfully.
-[05-Nov-2024 02:22:01 Europe/Berlin] Type parameter: excel_import
-[05-Nov-2024 02:22:01 Europe/Berlin] Spreadsheet loaded successfully.
-[05-Nov-2024 02:25:09 Europe/Berlin] Type parameter: announcement
-[05-Nov-2024 02:35:28 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 02:44:26 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:44:26 Asia/Manila] Database Error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.announcement_tbl' doesn't exist
+[06-Nov-2024 02:47:01 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:47:01 Asia/Manila] Database Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'announcement_title' in 'field list'
+[06-Nov-2024 02:48:05 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:48:05 Asia/Manila] Database Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'image_path' in 'field list'
+[06-Nov-2024 02:48:50 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:48:50 Asia/Manila] Database Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'uploaded_at' in 'field list'
+[06-Nov-2024 02:49:26 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:49:26 Asia/Manila] Image uploaded and saved: dwadw_img1.jpg
+[06-Nov-2024 09:49:26 Asia/Manila] Image uploaded and saved: dwadw_img2.jpg
+[06-Nov-2024 02:50:11 Europe/Berlin] Type parameter: announcement
+[06-Nov-2024 09:50:12 Asia/Manila] Image uploaded and saved: dwadwa_img1.png
+[06-Nov-2024 09:50:12 Asia/Manila] Image uploaded and saved: dwadwa_img2.jpg

@@ -29,7 +29,11 @@ $allAnnouncement = $obj->show_announcement();
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
     name='viewport' />
-  <!--     Fonts and icons     -->
+
+    <!-- Other head elements -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -41,6 +45,7 @@ $allAnnouncement = $obj->show_announcement();
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  
   <link href="assets/css/css.css" rel="stylesheet" />
   <style>
     .ellipsis {
@@ -266,7 +271,7 @@ $allAnnouncement = $obj->show_announcement();
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">No.</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Details</th>
+                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Title</th>
                             <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Org Name</th>
                             <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Created At</th>
                             <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Created By</th>
@@ -283,7 +288,7 @@ $allAnnouncement = $obj->show_announcement();
                         <tr class="hover:bg-gray-50 transition duration-150">
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $count; ?></td>
                             <td class="px-6 py-4 text-sm text-gray-800 max-w-md">
-                                <div class="line-clamp-2"><?php echo $row["announcement_details"]; ?></div>
+                                <div class="line-clamp-2"><?php echo $row["announcement_title"]; ?></div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["org_name"] ?? 'N/A'; ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></td>
@@ -317,8 +322,6 @@ $allAnnouncement = $obj->show_announcement();
       </div>
     </div>
   </div>
-
-  <!-- add announcement pop up -->
   <form id="addAnnouncementForm" class="row" action="" method="post" enctype="multipart/form-data">
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="announcementModal" tabindex="-1" role="dialog"
@@ -334,13 +337,21 @@ $allAnnouncement = $obj->show_announcement();
                 <div class="modal-body">
                     <div class="mb-3">
                         <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid"> 
-                        <label for="announcement_details" class="form-label fw-bold">Announcement Details</label>
-                        <textarea id="summernote" name="announcement_details" id="announcement_details" required></textarea>
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
+
+                        <label for="announcement_title" class="form-label fw-bold">Announcement Title</label>
+                        <input type="text" class="form-control" id="announcement_title" name="announcement_title" required>
                     </div>
                     <div class="mb-3">
-                        <label for="ann_img" class="form-label fw-bold">Photo</label>
-                        <input type="file" class="form-control" name="ann_img" id="ann_img">
+                        <label for="announcement_details" class="form-label fw-bold">Announcement Details</label>
+                        <textarea id="summernote" name="announcement_details" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ann_img" class="form-label fw-bold">Photos</label>
+                        <div id="image-upload-container" class="d-flex" style="max-height: 200px; overflow-x: auto; overflow-y: hidden; white-space: nowrap; border: 1px solid #ccc; padding: 5px;">
+                            <!-- Dynamic Image Previews will be appended here -->
+                        </div>
+                        <button type="button" class="btn btn-primary mt-2" id="add-image" style="float: right;">Add Photo</button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -352,12 +363,8 @@ $allAnnouncement = $obj->show_announcement();
     </div>
 </form>
 
-
-  <!-- Edit Announcement Modal -->
-<form id="editannouncementForm" class="row" action="" method="post" enctype="multipart/form-data">
-    <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" id="announcementModalEdit" tabindex="-1" role="dialog"
-        data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form id="editannouncementForm" class="row" action="ajax/editData.php" method="post" enctype="multipart/form-data">
+    <div class="modal fade bd-example-modal-lg" id="announcementModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -367,16 +374,19 @@ $allAnnouncement = $obj->show_announcement();
                     </button>
                 </div>
                 <div class="modal-body" id="announcementData">
-                    <!-- Example fields -->
                     <input type="hidden" name="aid" id="announcementId" value="">
-                    <input type="hidden" name="previous_image" id="previousImage" value="">
+                    <input type="hidden" name="previous_images" id="previousImages" value="">
                     <div class="form-group">
+                    <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
                         <label for="announcementDetails">Details</label>
                         <textarea class="form-control" id="announcementDetails" name="announcement_details"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="annImg">Image</label>
-                        <input type="file" class="form-control-file" id="annImg" name="ann_img">
+                        <label for="annImg">Images</label>
+                        <div id="currentImagesContainer"></div>
+                        <input type="file" class="form-control-file" id="annImg" name="ann_imgs[]" multiple>
+                        <button type="button" id="addImageBtn" class="btn btn-secondary mt-2">Add More Images</button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -387,8 +397,6 @@ $allAnnouncement = $obj->show_announcement();
         </div>
     </div>
 </form>
-
-
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
@@ -422,6 +430,90 @@ $allAnnouncement = $obj->show_announcement();
             }
         });
     }
+
+ // Handle adding new image previews
+ $('#addImageBtn').click(function () {
+        const newImagePreview = `
+            <div class="image-preview-container">
+                <input type="file" class="form-control" name="ann_imgs[]" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage(event, this)" multiple>
+                <img src="" alt="Image Preview" class="image-preview">
+                <button type="button" class="btn btn-danger remove-input" style="margin-top: 5px;">Remove File Input</button>
+            </div>`;
+        $('#currentImagesContainer').append(newImagePreview);
+    });
+
+    // Preview the image
+    window.previewImage = function(event, input) {
+        const preview = $(input).siblings('.image-preview');
+        const removeInputButton = $(input).siblings('.remove-input');
+
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.attr('src', e.target.result).show();
+                $(input).hide(); // Hide the file input after selection
+                removeInputButton.show(); // Show the Remove File Input button
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Remove the file input container
+    $(document).on('click', '.remove-input', function() {
+        $(this).closest('.image-preview-container').remove(); // Remove the input container
+    });
+
+    $(document).ready(function () {
+    // Handle adding new image previews
+    $('#add-image').click(function () {
+        // Create a new image preview container with an input field
+        const newImagePreview = `
+            <div class="image-preview-container" style="position: relative; margin-right: 10px; margin-bottom: 10px; display: inline-block;">
+                <input type="file" class="form-control" name="ann_img[]" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage(event, this)">
+                <img src="" alt="Image Preview" class="image-preview" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 5px;">
+                <div class="button-container" style="margin-top: 5px; display: flex; gap: 5px;">
+                    <button type="button" class="btn btn-secondary edit-image" style="display:none;">Edit</button>
+                    <button type="button" class="btn btn-danger remove-image" style="display:none;">Remove</button>
+                </div>
+                <button type="button" class="btn btn-danger remove-input" style="margin-top: 5px;">Remove File Input</button>
+            </div>`;
+        $('#image-upload-container').append(newImagePreview);
+    });
+
+    // Preview the image and show the remove button
+    window.previewImage = function(event, input) {
+        const preview = $(input).siblings('.image-preview');
+        const removeButton = $(input).siblings('.button-container').find('.remove-image');
+        const editButton = $(input).siblings('.button-container').find('.edit-image');
+        const removeInputButton = $(input).siblings('.remove-input');
+
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.attr('src', e.target.result).show();
+                removeButton.show(); // Show the Remove button
+                editButton.show(); // Show the Edit button
+                $(input).hide(); // Hide the file input after selection
+                removeInputButton.hide(); // Hide the Remove File Input button
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Remove image preview and associated elements
+    $(document).on('click', '.remove-image', function() {
+        const container = $(this).closest('.image-preview-container');
+        container.remove(); // Remove the entire container
+    });
+
+    // Remove the file input container
+    $(document).on('click', '.remove-input', function() {
+        $(this).closest('.image-preview-container').remove();
+    });
+});
+
 </script>
   <script type="text/javascript">
     
@@ -482,6 +574,11 @@ $('.announcementModalEdit').on('click', function () {
       document.getElementById('addAnnouncementForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
+    // Validate files before proceeding
+    if (!$("#annImg, .image-upload-row input[type='file']").change()) {
+        return; // Stop if validation fails
+    }
+
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to save this announcement?",
@@ -516,6 +613,13 @@ $('.announcementModalEdit').on('click', function () {
     });
 });
 
+
+        // Handle the removal of images
+        $(document).on('click', '.remove-image', function () {
+            $(this).closest('.image-container').remove();
+        });
+
+     
 $('#editannouncementForm').on('submit', function (e) {
     e.preventDefault(); // Prevent the default form submission
 

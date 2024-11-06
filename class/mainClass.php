@@ -329,12 +329,10 @@ class mainClass
         }
     }
     
-    
-
     function save_announcement($data) {
         $aid = $data['aid'] ?? '';
         $details = $data['announcement_details'] ?? '';
-        $previousImage = $data['previous_image'] ?? '';
+        $previousImages = $data['previous_images'] ?? []; // Array of previously uploaded images
     
         return '
             <script>
@@ -354,12 +352,27 @@ class mainClass
                             formData.append("type", "announcement");
                             formData.append("aid", "' . addslashes($aid) . '");
                             formData.append("announcement_details", "' . addslashes($details) . '");
-                            var annImg = document.querySelector("input[name=ann_img]").files[0];
-                            if (annImg) {
-                                formData.append("ann_img", annImg);
-                            } else {
-                                formData.append("previous_image", "' . addslashes($previousImage) . '");
+    
+                            // Add previously uploaded images if no new images are selected
+                            previousImages.forEach(function(image) {
+                                formData.append("previous_images[]", image); // Include previously uploaded images
+                            });
+    
+                            // Handle new image uploads
+                            var annImgs = document.querySelector("input[name=ann_imgs]");
+                            if (annImgs && annImgs.files.length > 0) {
+                                for (var i = 0; i < annImgs.files.length; i++) {
+                                    formData.append("ann_imgs[]", annImgs.files[i]); // Append each new image
+                                }
                             }
+    
+                            // Handle removed images
+                            var removedImages = []; // Initialize an array for removed images
+                     
+                            document.querySelectorAll("input[name=\'removed_images[]\']:checked").forEach(function(input) {
+                                removedImages.push(input.value); // Collect the values of removed images
+                            });
+                            formData.append("removed_images", JSON.stringify(removedImages)); // Send as JSON
     
                             fetch("../admin/ajax/editData.php", {
                                 method: "POST",
@@ -383,10 +396,12 @@ class mainClass
                         }
                     });
                 }
+    
                 // Automatically call the function if needed
                 updateAnnouncement();
             </script>';
     }
+    
     
     
     public function handleRequest() {

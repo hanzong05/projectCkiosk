@@ -1,13 +1,15 @@
 <?php
 include "../../class/connection.php"; // Adjust the path as needed
-
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-header('Content-Type: application/json');
+// Set the error log file
+ini_set('error_log', 'error_log.php');
 
+// Set the header for JSON response
+header('Content-Type: application/json');
 $response = ['success' => false, 'message' => ''];
 
 // Log the received POST data for debugging
@@ -26,59 +28,106 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $aid = $_POST['aid'] ?? '';
             $details = $_POST['announcement_details'] ?? '';
             $update = $_POST['announcement_creator'] ?? '';
-            $previousImage = $_POST['previous_image'] ?? '';
+            $removedImages = $_POST['removed_images'] ?? ''; // Get removed images
+            $newImages = $_FILES['ann_imgs'] ?? []; // New uploaded images
             $date = date('Y-m-d H:i:s'); // Current timestamp for updated_at
-            $image = $previousImage; // Default to the previous image
         
-            // File upload handling for announcement image
-            if (isset($_FILES['ann_img']) && $_FILES['ann_img']['error'] === UPLOAD_ERR_OK) {
-                $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
-        
-                // Create upload directory if it doesn't exist
-                if (!file_exists($uploadTo)) {
-                    if (!mkdir($uploadTo, 0777, true)) {
-                        error_log('Failed to create announcement directory.');
-                        $response['message'] = 'Failed to create upload directory.';
-                        echo json_encode($response);
-                        exit;
-                    }
-                }
-        
-                $image = basename($_FILES['ann_img']['name']);
-                $tempPath = $_FILES["ann_img"]["tmp_name"];
-                $originalPath = $uploadTo . $image;
-        
-                // Move uploaded file to the specified location
-                if (!move_uploaded_file($tempPath, $originalPath)) {
-                    $response['message'] = 'Failed to move uploaded file.';
-                    echo json_encode($response);
-                    exit;
-                }
-        
-                // Remove old image if it exists
-                if ($previousImage && file_exists($uploadTo . $previousImage)) {
-                    unlink($uploadTo . $previousImage);
-                }
+            // Validate input data
+            if (empty($aid) || empty($details) || empty($update)) {
+                $response['success'] = false;
+                $response['message'] = 'Missing required fields.';
+                echo json_encode($response);
+                exit;
             }
         
-            // Update announcement in the database
+            // Update the announcement details
             $sql = "UPDATE `announcement_tbl` 
                     SET announcement_details = :details, 
-                        announcement_image = :image, 
                         updated_at = :date, 
                         updated_by = :update
                     WHERE announcement_id = :aid";
         
             $stmt = $connect->prepare($sql);
-            $stmt->execute([
+            if (!$stmt->execute([
                 ':details' => $details,
-                ':image' => $image,
-                ':date' => $date, // Set updated_at to the current date
+                ':date' => $date,
                 ':update' => $update,
                 ':aid' => $aid
-            ]);
+            ])) {
+                $response['success'] = false;
+                $response['message'] = 'Failed to update announcement: ' . implode(", ", $stmt->errorInfo());
+                echo json_encode($response);
+                exit;
+            }
         
-            // Fetch updater's name, first from `users_tbl`, and if not found, from `orgmembers_tbl`
+            // Handle image removal
+            if (!empty($removedImages)) {
+                $removedImagesArray = explode(',', $removedImages);
+                foreach ($removedImagesArray as $image) {
+                    // Delete from the database
+                    $deleteStmt = $connect->prepare("DELETE FROM `announcement_images` WHERE image_path = :imagePath AND announcement_id = :aid");
+                    $deleteStmt->execute([':imagePath' => $image, ':aid' => $aid]);
+        
+                    // Remove the actual image file from the server
+                    $filePath = "C:/xampp/htdocs/ckiosk/uploaded/annUploaded/" . $image;
+                    if (file_exists($filePath)) {
+                        if (!unlink($filePath)) {
+                            // Handle error if the file couldn't be deleted
+                            $response['success'] = false;
+                            $response['message'] = 'Failed to delete image file from server: ' . $image;
+                            echo json_encode($response);
+                            exit; // Stop further execution
+                        }
+                    }
+                }
+            }
+        
+            $targetDir = "C:/xampp/htdocs/ckiosk/uploaded/annUploaded/";
+            // Create directory if it doesn't exist
+            if (!file_exists($targetDir)) {
+                if (!mkdir($targetDir, 0755, true)) {
+                    $response['success'] = false;
+                    $response['message'] = 'Failed to create directory.';
+                    echo json_encode($response);
+                    exit; // Stop further execution
+                }
+            }
+        
+            // Handle new image uploads
+            if (!empty($newImages['name'][0])) { // Check if any new images are uploaded
+                foreach ($newImages['tmp_name'] as $index => $tmpName) {
+                    if ($newImages['error'][$index] === UPLOAD_ERR_OK) {
+                        $fileName = basename($newImages['name'][$index]);
+                        $targetPath = $targetDir . $fileName; // Define the complete path
+        
+                        if (move_uploaded_file($tmpName, $targetPath)) {
+                            // Insert the new image into the announcement_images table
+                            $insertStmt = $connect->prepare("INSERT INTO announcement_images (announcement_id, image_path) VALUES (:aid, :imagePath)");
+                            if (!$insertStmt->execute([':aid' => $aid, ':imagePath' => $fileName])) {
+                                $response['success'] = false;
+                                $response['message'] = 'Failed to insert image path: ' . implode(", ", $insertStmt->errorInfo());
+                                echo json_encode($response);
+                                exit; // Stop further execution
+                            }
+                        } else {
+                            // Handle the error if the file could not be moved
+                            $response['success'] = false;
+                            $response['message'] = 'Failed to upload the image.';
+                            echo json_encode($response);
+                            exit; // Stop further execution
+                        }
+                    } else {
+                        // Handle upload errors
+                        $error = $newImages['error'][$index];
+                        $response['success'] = false;
+                        $response['message'] = 'Upload error: ' . $error; // Provide specific error message
+                        echo json_encode($response);
+                        exit; // Stop further execution
+                    }
+                }
+            }
+        
+            // Fetch updater's name for the audit trail
             $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :update");
             $creator_stmt->execute([':update' => $update]);
             $updater_name = $creator_stmt->fetchColumn();
@@ -97,6 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             $response['success'] = true;
             $response['message'] = 'Announcement updated successfully.';
+            echo json_encode($response);
         }
         
         elseif ($type === 'event') {
@@ -456,20 +506,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $response['message'] = 'User not found.';
                 }
             } catch (Exception $e) {
-                error_log('Error: ' . $e->getMessage());
+                // Log the exception message
+                error_log('Error occurred: ' . $e->getMessage(), 3, 'error_log.php');
                 $response['success'] = false;
-                $response['message'] = 'An error occurred while processing your request.';
+                $response['message'] = 'An error occurred. Please try again.';
+                echo json_encode($response);
             }
         }
         else {
-            $response['message'] = 'Invalid type specified.';
+            $response['success'] = false;
+            $response['message'] = 'Invalid request type.';
+            echo json_encode($response);
         }
     } catch (PDOException $e) {
-        error_log("PDOException: " . $e->getMessage());
+        // Log database-related errors
+        error_log('Database error: ' . $e->getMessage(), 3, 'error_log.php');
+        $response['success'] = false;
         $response['message'] = 'Database error occurred.';
+        echo json_encode($response);
     } catch (Exception $e) {
-        error_log("Exception: " . $e->getMessage());
+        // Log general errors
+        error_log('General error: ' . $e->getMessage(), 3, 'error_log.php');
+        $response['success'] = false;
         $response['message'] = 'An error occurred.';
+        echo json_encode($response);
     }
 } else {
     $response['message'] = 'Invalid request method.';

@@ -137,7 +137,6 @@ $(document).ready(function () {
             // Add the old image filename to the replacedImages array if it exists
             if (oldImagePath && !replacedImages.includes(oldImagePath)) {
                 replacedImages.push(oldImagePath);
-                console.log('Replaced images:', replacedImages);
             }
 
             // Display the new image
@@ -247,6 +246,8 @@ $(document).ready(function () {
         `;
         $(this).before(newImagePreview);
     });
+
+    
 });
 </script>
 

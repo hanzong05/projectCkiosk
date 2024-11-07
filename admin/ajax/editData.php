@@ -28,11 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $aid = $_POST['aid'] ?? '';
             $details = $_POST['announcement_details'] ?? '';
             $update = $_POST['announcement_creator'] ?? '';
-            $removedImages = $_POST['removed_images'] ?? ''; // Removed images
+            $removedImages = $_POST['removed_images'] ?? ''; 
+              $removedImages = $_POST['removed_images'] ?? ''; // Removed images
             $newImages = $_FILES['ann_imgs'] ?? []; // New uploaded images
             $date = date('Y-m-d H:i:s'); // Current timestamp for updated_at
-            
-    $replacedImages = $_POST['replaced_images'] ?? ''; // Images being replaced
+            $replacedImages = $_POST['replaced_images'] ?? '';
+        
             $response = [
                 'success' => true,
                 'message' => '',
@@ -71,33 +72,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 error_log("Error: Failed to update announcement - " . implode(", ", $stmt->errorInfo()) . "\n", 3, 'error_log.txt');
                 exit;
             }
+        
+ 
+            // Remove deleted images
+            if (!empty($replacedImages)) {
+                $foundImages = false; // Track if any image is processed
+                
+                foreach ($replacedImages as $image) {
+                    $image = trim($image);
+                    
+                    if (!empty($image)) {
+                        $foundImages = true;
+                        // Log requested replacement image
+                        error_log("Requested Replacement of Image: $image\n", 3, 'error_log.txt');
+                        
+                        // Delete from database
+                        $deleteStmt = $connect->prepare("DELETE FROM announcement_images WHERE image_path = :imagePath");
+                        if ($deleteStmt->execute([':imagePath' => $image])) {
+                            error_log("Deleted image from database: $image\n", 3, 'error_log.txt');
+                        } else {
+                            error_log("Failed to delete image from database: $image\n", 3, 'error_log.txt');
+                        }
             
-
-// Log Requested Replaced Images
-if (!empty($replacedImages)) {
-    $replacedImagesArray = explode(',', $replacedImages);
-    foreach ($replacedImagesArray as $image) {
-        $image = trim($image);
-        if (!empty($image)) {
-            // Log requested replaced image
-            error_log("Requested Replacement of Image: $image\n", 3, 'error_log.php');
-            
-            // Log replaced image
-            error_log("Replaced Image: $image\n", 3, 'error_log.php');
-
-            $deleteStmt = $connect->prepare("DELETE FROM announcement_images WHERE image_path = :imagePath");
-            $deleteStmt->execute([':imagePath' => $image]);
-
-            $filePath = "C:/xampp/htdocs/ckiosk/uploaded/annUploaded/" . $image;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-                error_log("Deleted replaced image file: $filePath\n", 3, 'error_log.php');
-            }
-        }
-    }
-}
-
-            // Handle new images upload (Defined here within the if block)
+                        // Delete from filesystem
+                        $filePath = "C:/xampp/htdocs/ckiosk/uploaded/annUploaded/" . $image;
+                        if (file_exists($filePath)) {
+                            if (unlink($filePath)) {
+                                error_log("Deleted replaced image file: $filePath\n", 3, 'error_log.txt');
+                            } else {
+                                error_log("Failed to delete file from filesystem: $filePath\n", 3, 'error_log.txt');
+                            }
+                        } else {
+                            error_log("File not found on filesystem: $filePath\n", 3, 'error_log.txt');
+                        }
+                    }
+                }
+                
+                if (!$foundImages) {
+                    error_log("Error: No valid images found in replacedImages array.\n", 3, 'error_log.txt');
+                }
+            } else {
+                error_log("Error: No images provided in replacedImages array.\n", 3, 'error_log.txt');
+            }            // Handle new images upload (Defined here within the if block)
             if (!empty($newImages) && is_array($newImages['name'])) {
                 $uploadedFiles = [];
                 foreach ($newImages['name'] as $key => $fileName) {

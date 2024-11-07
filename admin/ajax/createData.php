@@ -144,19 +144,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         elseif ($type === 'event') {
             $details = $_POST['event_details'] ?? null;
-            $date = $_POST['event_date'] ?? null;
+            $start_date = $_POST['event_date_from'] ?? null; // Event Start Date
+            $end_date = $_POST['event_date_to'] ?? null; // Event End Date
             $creator = $_POST['uid'] ?? null;
-            $ecreator = $_POST['aid'] ?? null; // Get the event creator ID
+            $ecreator = $_POST['aid'] ?? null; // Event creator ID
         
             $response = ['success' => false, 'message' => ''];
         
             try {
-                // Insert event into calendar_tbl
-                $sql = "INSERT INTO `calendar_tbl` (calendar_date, calendar_details, event_creator, created_by) 
-                        VALUES (:date, :details, :creator, :ecreator)";
+                // Insert event into calendar_tbl with both start and end dates
+                $sql = "INSERT INTO `calendar_tbl` (calendar_start_date, calendar_end_date, calendar_details, event_creator, created_by) 
+                        VALUES (:start_date, :end_date, :details, :creator, :ecreator)";
                 $stmt = $connect->prepare($sql);
                 $stmt->execute([
-                    ':date' => $date,
+                    ':start_date' => $start_date,
+                    ':end_date' => $end_date,
                     ':details' => $details,
                     ':creator' => $creator,
                     ':ecreator' => $ecreator
@@ -180,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $creators_name = $creators_name ?: 'Unknown User';
         
                 // Add entry to audit trail
-                $audit_message = "{$creators_name} created an event: {$details} on {$date}";
+                $audit_message = "{$creators_name} created an event: {$details} from {$start_date} to {$end_date}";
                 $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
                 $audit_stmt = $connect->prepare($audit_sql);
                 $audit_stmt->execute([':message' => $audit_message]);
@@ -194,6 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             echo json_encode($response);
         }
+        
         
         elseif ($type === 'faqs') {
             $question = $_POST['faqs_question'] ?? null;

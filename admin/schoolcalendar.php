@@ -244,7 +244,8 @@ $allEvents = $obj->show_events();
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="py-2 text-center border-b">NO.</th>
-                                <th class="py-2 text-center border-b">Event Date</th>
+                                <th class="py-2 text-center border-b">Start Date</th>
+                                <th class="py-2 text-center border-b">End Date</th>
                                 <th class="py-2 text-center border-b">Event Details</th>
                                 <th class="py-2 text-center border-b">Created By</th>
                                 <th class="py-2 text-center border-b">Updated By</th>
@@ -262,7 +263,8 @@ $allEvents = $obj->show_events();
                             ?>
                             <tr class="table-row hover:bg-gray-50 transition duration-200">
                                 <td class="border-b text-center py-2"><?php echo $count; ?></td>
-                                <td class="border-b text-center py-2"><?php echo date('F d Y', strtotime($row["calendar_date"])); ?></td>
+                                <td class="border-b text-center py-2"><?php echo date('F d Y', strtotime($row["calendar_start_date"])); ?></td>
+                                <td class="border-b text-center py-2"><?php echo date('F d Y', strtotime($row["calendar_end_date"])); ?></td>
                                 <td class="border-b text-center py-2"><?php echo isset($row["calendar_details"]) ? sanitize_html($row["calendar_details"]) : 'No details available'; ?></td>
                                 <td class="border-b text-center py-2"><?php echo htmlspecialchars($row["creator_name"], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td class="border-b text-center py-2"><?php echo !empty($row['updated_by_name']) ? htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8') : 'Not yet updated'; ?></td>
@@ -295,6 +297,7 @@ $allEvents = $obj->show_events();
   </div>
 
   <!-- add event pop up -->
+   
   <form id="addForm" class="row" action="" method="post">
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="eventModal" tabindex="-1" role="dialog" data-backdrop="static"
@@ -311,8 +314,12 @@ $allEvents = $obj->show_events();
                     <div class="mb-3">
                         <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
                         <input type="hidden" value="<?= $_SESSION['id'] ?>" name="aid">
-                        <label for="event_date" class="form-label fw-bold">Event Date</label>
-                        <input type="date" id="event_date" class="form-control" name="event_date" required>
+                        <label for="event_date_from" class="form-label fw-bold">Event Start Date</label>
+                        <input type="date" id="event_date_from" class="form-control" name="event_date_from" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="event_date_to" class="form-label fw-bold">Event End Date</label>
+                        <input type="date" id="event_date_to" class="form-control" name="event_date_to" required>
                     </div>
                     <div class="mb-3">
                         <label for="summernote" class="form-label fw-bold">Event Details</label>
@@ -327,7 +334,6 @@ $allEvents = $obj->show_events();
         </div>
     </div>
 </form>
-
 
   <!-- edit course pop up -->
   <form id="editForm"class="row" action="" method="post">

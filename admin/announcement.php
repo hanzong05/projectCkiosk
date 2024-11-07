@@ -621,7 +621,7 @@ $('.announcementModalEdit').on('click', function () {
 
         let addedImages = [];
 let removedImages = [];
-let replacedImages = [];  // Array to store replaced images 
+let replacedImages = [];
 // Handle image preview (upload new images)
 window.handleImagePreview = function(event, input) {
     const container = $(input).closest('.image-preview-container-edit');
@@ -654,9 +654,11 @@ window.handleImagePreview = function(event, input) {
             // Save the image filename to the addedImages array
             const fileName = file.name;
             addedImages.push(fileName);
-            
-            // Log addedImages array for debugging
+
+            // Log the arrays for debugging
             console.log('Added images:', addedImages);
+            console.log('Replaced images:', replacedImages);
+            console.log('Removed images:', removedImages);
         };
         reader.readAsDataURL(file);
     }
@@ -677,7 +679,7 @@ $(document).on('click', '.remove-image', function () {
     removedImagesInput.val(removedImagesVal);
 });
 
-// Handle form submission
+
 $('#editannouncementForm').on('submit', function (e) {
     e.preventDefault();
     const form = $(this);
@@ -687,12 +689,30 @@ $('#editannouncementForm').on('submit', function (e) {
     const formData = new FormData(this);
     formData.append('type', 'announcement');
     
-    // Append images to formData as JSON strings
+    // Append added and removed images as JSON strings
     if (addedImages.length > 0) {
         formData.append('added_images', JSON.stringify(addedImages));
     }
     if (removedImages.length > 0) {
         formData.append('removed_images', JSON.stringify(removedImages));
+    }
+
+    // Append actual image files (added and replaced) to FormData
+    for (let i = 0; i < addedImages.length; i++) {
+        const fileInput = form.find('input[type="file"]')[i]; // Assuming one file input per image
+        if (fileInput && fileInput.files[0]) {
+            formData.append('added_images_files[]', fileInput.files[0]); // Append each file
+        }
+    }
+
+    // Append replaced images file data
+    if (replacedImages.length > 0) {
+        replacedImages.forEach(function(image) {
+            // Assuming image object contains a 'file' key for the new file
+            if (image.file) {
+                formData.append('replaced_images_files[]', image.file); // Append the new file
+            }
+        });
     }
 
     Swal.fire({
@@ -708,7 +728,7 @@ $('#editannouncementForm').on('submit', function (e) {
         if (result.isConfirmed) {
             fetch("../admin/ajax/editData.php", {
                 method: "POST",
-                body: formData
+                body: formData // Send FormData (which includes the file)
             })
             .then(response => response.json())
             .then(result => {
@@ -728,6 +748,7 @@ $('#editannouncementForm').on('submit', function (e) {
         }
     });
 });
+
 
 
 const table = document.querySelector('#myTable');

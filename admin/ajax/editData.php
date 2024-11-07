@@ -1,6 +1,8 @@
 <?php
+
 include "../../class/connection.php"; // Adjust the path as needed
-// Enable error reporting for debugging
+
+ob_start();  // Start output buffering// Enable error reporting for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -257,10 +259,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $consultationTime = isset($_POST['consultation_time']) ? filter_var($_POST['consultation_time'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : '';
             $previousImage = isset($_POST['previous']) ? $_POST['previous'] : '';
             $editor_id = isset($_POST['editor_id']) ? (int)$_POST['editor_id'] : 0; // ID of the person making the update
+            $addedDepartments = isset($_POST['addedDepartments']) ? json_decode($_POST['addedDepartments'], true) : [];  // Decode addedDepartments from JSON
+            $newImage = $previousImage ?: '';  // If no new image is uploaded, use the previous image or set as an empty string.
             $departmentIds = isset($_POST['department']) && is_array($_POST['department']) ? array_map('intval', $_POST['department']) : [];
         
-            // Default to the previous image if no new image is uploaded
-            $newImage = $previousImage;
+            // Log the added departments for debugging
+            error_log('Added Departments: ' . json_encode($addedDepartments));
         
             // Check for duplicate faculty member by name and department
             $duplicate_check_sql = "SELECT COUNT(*) FROM faculty_tbl WHERE faculty_name = :name AND faculty_id != :fid";
@@ -270,7 +274,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($duplicate_stmt->fetchColumn() > 0) {
                 $response['success'] = false;
                 $response['message'] = 'A faculty member with the same name already exists.';
-                echo json_encode($response);
+                header('Content-Type: application/json');  
+                echo json_encode($response);  
+                ob_end_clean();  
                 exit;
             }
         
@@ -282,7 +288,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
                     error_log('Failed to create faculty directory.');
                     $response['message'] = 'Failed to create upload directory.';
-                    echo json_encode($response);
+                    header('Content-Type: application/json');  
+                    echo json_encode($response);  
+                    ob_end_clean();  
                     exit;
                 }
         
@@ -292,7 +300,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                 if (!in_array($fileType, $allowedTypes)) {
                     $response['message'] = 'Invalid image type. Only JPEG, PNG, and GIF are allowed.';
+                    header('Content-Type: application/json');
                     echo json_encode($response);
+                    ob_end_clean();
                     exit;
                 }
         
@@ -302,7 +312,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                 if (!move_uploaded_file($tempPath, $originalPath)) {
                     $response['message'] = 'Failed to move uploaded file.';
+                    header('Content-Type: application/json');
                     echo json_encode($response);
+                    ob_end_clean();
                     exit;
                 }
         
@@ -326,33 +338,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':fid' => $fid
             ]);
         
-            // Step 1: Get the current departments for the faculty member
-            $getCurrentDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
-            $getCurrentDepartmentsStmt = $connect->prepare($getCurrentDepartmentsSql);
-            $getCurrentDepartmentsStmt->execute([':fid' => $fid]);
-            $currentDepartments = $getCurrentDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);
+         // Step 1: Fetch current departments associated with the faculty
+$getCurrentDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
+$getCurrentDepartmentsStmt = $connect->prepare($getCurrentDepartmentsSql);
+$getCurrentDepartmentsStmt->execute([':fid' => $fid]);
+$currentDepartments = $getCurrentDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Step 3: Insert new departments (not previously associated)
+$departmentsToAdd = array_diff($addedDepartments, $currentDepartments);
+
+// Log the added departments (for debugging)
+error_log('Added Departments: ' . json_encode($departmentsToAdd));
+
+foreach ($departmentsToAdd as $departmentId) {
+    $insertDeptSql = "INSERT INTO faculty_departments_tbl (faculty_id, department_id) VALUES (:fid, :department_id)";
+    $insertDeptStmt = $connect->prepare($insertDeptSql);
+    $insertDeptStmt->execute([':fid' => $fid, ':department_id' => $departmentId]);
+}
+
+// Step 4: Remove the departments that are no longer associated with the faculty member
+
+$getremovedDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
+    $getremovedDepartmentsStmt = $connect->prepare($getCurrentDepartmentsSql);
+    $getremovedDepartmentsStmt->execute([':fid' => $fid]);
+    $currentremovedDepartments = $getremovedDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);  // Step 2: Collect department IDs from the form
+    $departmentIds = [];
+    foreach ($_POST as $key => $value) {
+        if (strpos($key, 'department_') === 0) {
+            $departmentIds[] = (int) $value;  // Collect department IDs from the form
+        }
+    }
+
+    // Step 3: Calculate the removed departments (those that were in currentDepartments but not in departmentIds)
+    $removedDepartments = array_diff($currentDepartments, $departmentIds);
+
+    // Log the removed departments (for debugging)
+    error_log('Removed Departments: ' . json_encode($removedDepartments));
+
+    // Step 4: If there are departments to remove, execute the deletion
+    if (!empty($removedDepartments)) {
+        $deleteDeptSql = "DELETE FROM faculty_departments_tbl WHERE faculty_id = :fid AND department_id IN (" . implode(',', array_map('intval', $removedDepartments)) . ")";
+        $deleteDeptStmt = $connect->prepare($deleteDeptSql);
+        $deleteDeptStmt->execute([':fid' => $fid]);
+    }
         
-            // Step 2: Collect department IDs from the form
-            $departmentIds = [];
-            foreach ($_POST as $key => $value) {
-                if (strpos($key, 'department_') === 0) {
-                    $departmentIds[] = (int) $value;  // Collect department IDs from the form
-                }
-            }
-        
-            // Step 3: Calculate the removed departments (those that were in currentDepartments but not in departmentIds)
-            $removedDepartments = array_diff($currentDepartments, $departmentIds);
-        
-            // Log the removed departments (for debugging)
-            error_log('Removed Departments: ' . json_encode($removedDepartments));
-        
-            // Step 4: If there are departments to remove, execute the deletion
-            if (!empty($removedDepartments)) {
-                $deleteDeptSql = "DELETE FROM faculty_departments_tbl WHERE faculty_id = :fid AND department_id IN (" . implode(',', array_map('intval', $removedDepartments)) . ")";
-                $deleteDeptStmt = $connect->prepare($deleteDeptSql);
-                $deleteDeptStmt->execute([':fid' => $fid]);
-            }
-        
+// Step 8: Update the faculty departments (if necessary)
+foreach ($departmentIds as $departmentId) {
+    // Update department if necessary (if changes exist)
+    // Example of an update, assuming you want to modify some data related to departments
+    $updateDeptSql = "UPDATE faculty_departments_tbl SET department_id = :department_id WHERE faculty_id = :fid AND department_id = :department_id";
+    $updateDeptStmt = $connect->prepare($updateDeptSql);
+    $updateDeptStmt->execute([':fid' => $fid, ':department_id' => $departmentId]);
+}
+
+// Optional: Log the final state of departments after all updates
+$getUpdatedDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
+$getUpdatedDepartmentsStmt = $connect->prepare($getUpdatedDepartmentsSql);
+$getUpdatedDepartmentsStmt->execute([':fid' => $fid]);
+$updatedDepartments = $getUpdatedDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);
+error_log('Updated Departments: ' . json_encode($updatedDepartments));
+
+
             // Fetch editor's name from `users_tbl`, or fallback to `orgmembers_tbl`
             $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
             $editor_stmt->execute([':editor_id' => $editor_id]);
@@ -372,8 +418,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Final response
             $response['success'] = true;
             $response['message'] = 'Faculty member updated successfully.';
-            echo json_encode($response);
+            header('Content-Type: application/json');  // Ensure proper header
+            echo json_encode($response);  // Output JSON response
+            ob_end_clean();  // Clean output buffer after response
         }
+        
         
         elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';

@@ -1,5 +1,6 @@
 <?php
 include "../../class/connection.php";
+
 $facultyID = 0;
 if (!empty($_REQUEST['facultyID'])) {
     $facultyID = $_REQUEST['facultyID'];
@@ -51,30 +52,33 @@ if ($faculty) {
 
     // Set up the form (only once)
     $req = $faculty['faculty_image'] == "" ? "required" : "";
-    $response .= '<div class="faculty-form-container">
+    $response .= '<div class="faculty-form-container p-4 bg-white shadow-md rounded-lg max-w-4xl mx-auto">
                     <input type="hidden" value="' . $faculty['faculty_id'] . '" name="fid">
-                    
+                   <input type="hidden" name="removedDepartments" id="removedDepartments" />
+                   <input type="hidden" name="addedDepartments" id="addedDepartments" />
+
                     <!-- Faculty Image Section -->
-                    <div class="mb-4 text-center">
-                        <h3>Current Photo</h3>
-                        <img src="../uploaded/facultyUploaded/' . $faculty['faculty_image'] . '" height="120" width="150" id="faculty_image_p" class="img-thumbnail"/>
+                    <div class="mb-6 text-center">
+                        <h3 class="text-xl font-semibold mb-2">Current Photo</h3>
+                        <img src="../uploaded/facultyUploaded/' . $faculty['faculty_image'] . '" height="120" width="150" id="faculty_image_p" class="img-thumbnail rounded-full"/>
                         <input type="hidden" name="previous" value="' . $faculty['faculty_image'] . '" />
                     </div>
                     <!-- Upload New Faculty Image -->
-                    <div class="mb-3">
-                        <label for="faculty_image" class="form-label fw-bold">Upload New Photo</label>
-                        <input type="file" id="faculty_image" class="form-control" name="faculty_image" ' . $req . '>
+                    <div class="mb-6">
+                        <label for="faculty_image" class="block text-lg font-medium">Upload New Photo</label>
+                        <input type="file" id="faculty_image" class="form-control mt-2 p-2 border border-gray-300 rounded-lg" name="faculty_image" ' . $req . '>
                     </div>
                     
                     <!-- Faculty Name Section -->
-                    <div class="mb-3">
-                        <label for="faculty_name" class="form-label fw-bold">Faculty Name</label>
-                        <input type="text" id="faculty_name" class="form-control" value="' . $faculty['faculty_name'] . '" name="faculty_name" required>
+                    <div class="mb-6">
+                        <label for="faculty_name" class="block text-lg font-medium">Faculty Name</label>
+                        <input type="text" id="faculty_name" class="form-control mt-2 p-2 border border-gray-300 rounded-lg w-full" value="' . $faculty['faculty_name'] . '" name="faculty_name" required>
                     </div>' ;
 
     // Now, create a dropdown for each department the faculty is associated with
-    $response .= '<div class="department-dropdowns">';
+    $response .= '<div class="department-dropdowns mb-4 overflow-auto" style="max-height: 300px;">';
 
+    $response .= '<label for="departments"" class="w-1/4 text-lg font-medium"> DEPARTMENTS </label>';
     // Loop through the departments the faculty member is assigned to
     foreach ($departments as $index => $departmentId) {
         // Fetch the department name for the specific department
@@ -87,37 +91,40 @@ if ($faculty) {
         }
 
         // Add a dropdown for each department (using different ids for each)
-        $response .= '<div class="mb-3 department-entry" data-department-id="' . $departmentId . '">
-                        <label for="department_' . $departmentId . '" class="form-label fw-bold">Edit Department for ' . $departmentName . '</label>
-                        <select name="department_' . $index . '" id="department_' . $departmentId . '" class="form-control department-dropdown" data-department-id="' . $departmentId . '">
-                            <option value="">Select Department</option>';
+        $response .= '<div class="mb-3 department-entry " data-department-id="' . $departmentId . '">
+       <select name="department_' . $index . '" id="department_' . $departmentId . '" class="form-control p-2 border border-gray-300 rounded-lg flex-1 mb-4">
+    <option value="" disabled selected>Select Department</option>
 
-        // Loop through all departments and show the ones that are linked to the faculty
-        foreach ($allDepartment as $row) {
-            // Check if the department is already selected and disable it for other dropdowns
-            $selected = ($row['department_id'] == $departmentId) ? 'selected' : '';
-            $response .= '<option value="' . $row['department_id'] . '" ' . $selected . '>' . $row['department_name'] . '</option>';
-        }
+';
 
-        $response .= '</select>
-                      <button type="button" class="btn btn-danger btn-sm remove-department-btn">Remove</button>
-                    </div>';
+// Loop through all departments and show the ones that are linked to the faculty
+foreach ($allDepartment as $row) {
+// Check if the department is already selected and disable it for other dropdowns
+$selected = ($row['department_id'] == $departmentId) ? 'selected' : '';
+$response .= '<option value="' . $row['department_id'] . '" ' . $selected . '>' . htmlspecialchars($row['department_name']) . '</option>';
+}
+
+$response .= '</select>
+<button type="button" class="btn-sm remove-department-btn w-100 text-white hover:bg-red-800" style="background-color:rgba(220,38,38,var(--tw-bg-opacity))">Remove</button>
+
+
+    </div>';
+
     }
 
     $response .= '</div>';
+    $response .= '<button type="button" id="add-department-btn" class="btn btn-success p-2 bg-green-500 text-white rounded-lg mt-4 w-full font-sans" style="background-color: rgba(37, 99, 235, var(--tw-bg-opacity));">Add Department</button>';
 
-// Add the "Add Department" button after the department dropdowns
-$response .= '<button type="button" id="add-department-btn" class="btn btn-success">Add Department</button>';
     // Specialization Section
-    $response .= '<div class="mb-3">
-                    <label for="specialization" class="form-label fw-bold">Specialization</label>
-                    <input type="text" id="specialization" class="form-control" value="' . $faculty['specialization'] . '" name="specialization">
+    $response .= '<div class="mb-6">
+                    <label for="specialization" class="block text-lg font-medium">Specialization</label>
+                    <input type="text" id="specialization" class="form-control mt-2 p-2 border border-gray-300 rounded-lg w-full" value="' . $faculty['specialization'] . '" name="specialization">
                 </div>
                 
                 <!-- Consultation Time Section -->
-                <div class="mb-3">
-                    <label for="consultation_time" class="form-label fw-bold">Consultation Time</label>
-                    <input type="text" id="consultation_time" class="form-control" value="' . $faculty['consultation_time'] . '" name="consultation_time">
+                <div class="mb-6">
+                    <label for="consultation_time" class="block text-lg font-medium">Consultation Time</label>
+                    <input type="text" id="consultation_time" class="form-control mt-2 p-2 border border-gray-300 rounded-lg w-full" value="' . $faculty['consultation_time'] . '" name="consultation_time">
                 </div>
             </div>';
 }
@@ -140,100 +147,25 @@ echo $response;
         ]
     });
 </script>
-
-<script>
-   $(document).ready(function() {
-    var removedDepartments = []; // Array to store removed department ids
-
-    // When the department dropdown changes
-    $('.department-dropdown').on('change', function() {
-        var selectedDepartments = [];
-        
-        // Collect all selected department ids
-        $('.department-dropdown').each(function() {
-            var selectedValue = $(this).val();
-            if (selectedValue) {
-                selectedDepartments.push(selectedValue);
-            }
-        });
-
-        // Disable the options that have been selected in other dropdowns
-        $('.department-dropdown').each(function() {
-            var $this = $(this);
-            $this.find('option').each(function() {
-                var optionValue = $(this).val();
-                if (selectedDepartments.includes(optionValue) && optionValue !== $this.val()) {
-                    $(this).prop('disabled', true);
-                } else {
-                    $(this).prop('disabled', false);
-                }
-            });
-        });
-    });
-
-    // Trigger change event to initialize disabled options on page load
-    $('.department-dropdown').trigger('change');
-
-    // Handle the remove department button click
-    $(document).on('click', '.remove-department-btn', function() {
-        var departmentEntry = $(this).closest('.department-entry');
-        var departmentId = departmentEntry.data('department-id');
-        
-        // Hide the department entry
-        departmentEntry.hide();
-
-        // Store the removed department id in the array
-        if (!removedDepartments.includes(departmentId)) {
-            removedDepartments.push(departmentId);
-        }
-
-        console.log('Removed Departments:', removedDepartments);
-    });
-
-    // Add a new department dropdown when the "Add Department" button is clicked
-    $('#add-department-btn').on('click', function() {
-        var newDepartmentIndex = $('.department-entry').length; // Get the number of existing department entries
+<script>$(document).ready(function() {
+    var removedDepartments = []; // Array to store removed department IDs
+    var addedDepartments = []; // Array to store new department IDs (replacements or additions)
+    
+    // Add new department dropdown
+    $('#add-department-btn').on('click', function () {
+        var newDepartmentIndex = $('.department-entry').length;
         var departmentDropdownHTML = `
             <div class="mb-3 department-entry" data-department-id="new_${newDepartmentIndex}">
-                <label for="department_new_${newDepartmentIndex}" class="form-label fw-bold">New Department</label>
                 <select name="department_${newDepartmentIndex}" id="department_new_${newDepartmentIndex}" class="form-control department-dropdown" data-department-id="new_${newDepartmentIndex}">
                     <option value="">Select Department</option>
                     ${generateDepartmentOptions()}
                 </select>
-                <button type="button" class="btn btn-danger btn-sm remove-department-btn">Remove</button>
+                <button type="button" class="btn btn-sm remove-department-btn w-100" style="background-color:rgba(220,38,38,var(--tw-bg-opacity))">Remove</button>
             </div>
         `;
-        
-        // Append the new department dropdown
+
         $('.department-dropdowns').append(departmentDropdownHTML);
-
-        // Re-initialize the event listener for the new dropdown
-        $('#department_new_' + newDepartmentIndex).on('change', function() {
-            var selectedDepartments = [];
-            
-            // Collect all selected department ids
-            $('.department-dropdown').each(function() {
-                var selectedValue = $(this).val();
-                if (selectedValue) {
-                    selectedDepartments.push(selectedValue);
-                }
-            });
-
-            // Disable the options that have been selected in other dropdowns
-            $('.department-dropdown').each(function() {
-                var $this = $(this);
-                $this.find('option').each(function() {
-                    var optionValue = $(this).val();
-                    if (selectedDepartments.includes(optionValue) && optionValue !== $this.val()) {
-                        $(this).prop('disabled', true);
-                    } else {
-                        $(this).prop('disabled', false);
-                    }
-                });
-            });
-        });
-
-        // Trigger change event to initialize disabled options on the new dropdown
+        $('#department_new_' + newDepartmentIndex).on('change', handleDropdownChange);
         $('#department_new_' + newDepartmentIndex).trigger('change');
     });
 
@@ -245,6 +177,54 @@ echo $response;
         <?php endforeach; ?>
         return optionsHTML;
     }
+
+    // Handle department dropdown changes
+    function handleDropdownChange() {
+        var selectedDepartments = [];
+
+        // Collect all selected department IDs
+        $('.department-dropdown').each(function() {
+            var selectedValue = $(this).val();
+            if (selectedValue) {
+                selectedDepartments.push(selectedValue);
+            }
+        });
+
+        // Disable options that are selected in other dropdowns
+        $('.department-dropdown').each(function() {
+            var $this = $(this);
+            $this.find('option').each(function() {
+                var optionValue = $(this).val();
+                if (selectedDepartments.includes(optionValue) && optionValue !== $this.val()) {
+                    $(this).prop('disabled', true);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            });
+        });
+
+        // Store newly selected department IDs (if it's a new department)
+        addedDepartments = selectedDepartments.filter(function(departmentId) {
+            return !$(this).find('.department-dropdown').val();
+        });
+    }
+
+    // Handle remove department button click
+    $(document).on('click', '.remove-department-btn', function() {
+        var departmentEntry = $(this).closest('.department-entry');
+        var departmentId = departmentEntry.find('.department-dropdown').val();
+
+        // Add to removedDepartments if it has a valid ID
+        if (departmentId) {
+            removedDepartments.push(departmentId);
+        }
+
+        departmentEntry.remove(); // Remove the department entry from the form
+    });
+
+    // You can log `addedDepartments` and `removedDepartments` to see what's being added and removed
+    console.log('Added Departments: ', addedDepartments);
+    console.log('Removed Departments: ', removedDepartments);
 });
 
 </script>

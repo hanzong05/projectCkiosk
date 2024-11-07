@@ -1,1 +1,27 @@
 [07-Nov-2024 10:49:22 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:04:20 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:04:20 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 351
+[07-Nov-2024 12:04:20 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: implode(): Argument #2 ($array) must be of type ?array, string given in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php:359
+Stack trace:
+#0 C:\xampp\htdocs\ckiosk\admin\ajax\createData.php(359): implode(', ', '2')
+#1 {main}
+  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\createData.php on line 359
+[07-Nov-2024 12:06:31 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:09:06 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:11:41 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:14:11 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:16:25 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:20:15 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:22:33 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:25:01 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:27:01 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:32:01 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:35:11 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:37:33 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:38:37 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:39:23 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:41:38 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:41:42 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:48:02 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:48:06 Europe/Berlin] Type parameter: faculty
+[07-Nov-2024 12:49:09 Europe/Berlin] Type parameter: faculty

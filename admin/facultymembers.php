@@ -607,235 +607,272 @@ $allDepartment = $obj->show_department();
             });
         });
     });
-</script>
-  <script type="text/javascript">function changeTab(event, tabName) {
-    // Prevent default link behavior
-    event.preventDefault();
+</script><script type="text/javascript">
+    // Function to handle tab changes
+    function changeTab(event, tabName) {
+        // Prevent default link behavior
+        event.preventDefault();
 
-    // Hide all tab content
-    const tabContents = document.querySelectorAll('.tab-pane');
-    tabContents.forEach(content => {
-        content.classList.remove('show', 'active'); // Remove active classes from all tab panes
-    });
+        // Hide all tab content
+        const tabContents = document.querySelectorAll('.tab-pane');
+        tabContents.forEach(content => {
+            content.classList.remove('show', 'active');
+        });
 
-    // Remove active class from all tabs
-    const tabs = document.querySelectorAll('ul.flex a'); // Modify this selector to match your structure
-    tabs.forEach(tab => {
-        tab.classList.remove('text-blue-500', 'border-l', 'border-t', 'border-r', 'active');
-        tab.classList.add('text-gray-500');
-    });
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('ul.flex a'); // Modify this selector to match your structure
+        tabs.forEach(tab => {
+            tab.classList.remove('text-blue-500', 'border-l', 'border-t', 'border-r', 'active');
+            tab.classList.add('text-gray-500');
+        });
 
-    // Show the selected tab content
-    const selectedTabContent = document.getElementById(tabName);
-    if (selectedTabContent) {
-        selectedTabContent.classList.add('show', 'active'); // Add active classes to selected tab pane
+        // Show the selected tab content
+        const selectedTabContent = document.getElementById(tabName);
+        if (selectedTabContent) {
+            selectedTabContent.classList.add('show', 'active');
+        }
+
+        // Set the active tab with border styling
+        event.currentTarget.classList.add('text-blue-500', 'border-l', 'border-t', 'border-r', 'rounded-t-lg', 'active');
+        event.currentTarget.classList.remove('text-gray-500');
     }
 
-    // Set the active tab with border styling
-    event.currentTarget.classList.add('text-blue-500', 'border-l', 'border-t', 'border-r', 'rounded-t-lg', 'active');
-    event.currentTarget.classList.remove('text-gray-500');
-}
-
-
     $(document).ready(function () {
+        // Handle the Excel import form submission
+        $('#excelImportForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
 
-        $('#excelImportForm').on('submit', function(e) {
-    e.preventDefault(); // Prevent default form submission
-
-    // Show confirmation dialog before proceeding
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "Do you want to upload this Excel file?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, upload it!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Show loading spinner
+            // Show confirmation dialog before proceeding
             Swal.fire({
-                title: 'Uploading...',
-                text: 'Please wait while your file is being uploaded.',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading(); // Show loading indicator
-                }
-            });
-
-            // Create FormData and append the type
-            var formData = new FormData(this);
-            formData.append('type', 'excel_import'); // Set type value
-
-            // Get content from Summernote
-            var specializationContent = $('#specialization').summernote('code');
-            formData.append('specialization', specializationContent); // Append Summernote content
-
-            $.ajax({
-                url: $(this).attr('action'), // Use the form action
-                method: $(this).attr('method'),
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    // Hide loading spinner and show success message
+                title: 'Are you sure?',
+                text: "Do you want to upload this Excel file?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, upload it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading spinner
                     Swal.fire({
-                        title: "Success",
-                        text: response.message,
-                        icon: "success",
-                        confirmButtonText: 'Okay'
-                    }).then(() => {
-                        // Close modal and refresh the page
-                        $('#excelImportModal').modal('hide');
-                        location.reload(); // Refresh the page
+                        title: 'Uploading...',
+                        text: 'Please wait while your file is being uploaded.',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
                     });
+
+                    // Create FormData and append the type
+                    var formData = new FormData(this);
+                    formData.append('type', 'excel_import');
+
+                    // Get content from Summernote
+                    var specializationContent = $('#specialization').summernote('code');
+                    formData.append('specialization', specializationContent);
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: $(this).attr('method'),
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            // Hide loading spinner and show success message
+                            Swal.fire({
+                                title: "Success",
+                                text: response.message,
+                                icon: "success",
+                                confirmButtonText: 'Okay'
+                            }).then(() => {
+                                // Close modal and refresh the page
+                                $('#excelImportModal').modal('hide');
+                                location.reload();
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            // Hide loading spinner and show error message
+                            Swal.fire("Error", "An error occurred during the upload. Please try again.", "error");
+                            console.error(error);
+                        }
+                    });
+                }
+            });
+        });
+
+        // Image file validation for faculty image input
+        $("#faculty_image").change(function () {
+            var fileExtension = ['jpg', 'png', 'jpeg'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Only formats are allowed : " + fileExtension.join(', '));
+                $("#faculty_image").val('');
+            }
+        });
+
+        // Faculty Modal Edit
+        $(document).on('click', '.facultyModalEdit', function () {
+            var facultyID = $(this).data('id');
+            $.ajax({
+                url: 'ajax/facultyData.php',
+                type: 'post',
+                data: { facultyID: facultyID },
+                success: function (response) {
+                    $('#facultyData').html(response);
                 },
-                error: function(xhr, status, error) {
-                    // Hide loading spinner and show error message
-                    Swal.fire("Error", "An error occurred during the upload. Please try again.", "error");
-                    console.error(error);
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
                 }
             });
-        }
-    });
-});
-
-
-
-
-
-
-
-
-      $("#faculty_image").change(function () {
-        var fileExtension = ['jpg', 'png', 'jpeg'];
-        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-          alert("Only formats are allowed : " + fileExtension.join(', '));
-          $("#faculty_image").val('');
-        }
-      });
-
-      
-    $(document).on('click', '.facultyModalEdit', function () {
-        var facultyID = $(this).data('id');
-        $.ajax({
-            url: 'ajax/facultyData.php',
-            type: 'post',
-            data: { facultyID: facultyID },
-            success: function (response) {
-                $('#facultyData').html(response);
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-            }
         });
-    });
 
-    // Use event delegation for dynamically added delete buttons
+        // Delete Faculty Member
         $(document).on('click', '.btn-delete', function (e) {
-        e.preventDefault(); // Prevent default link behavior
-        var deleteUrl = $(this).attr('href'); // Get the href attribute of the clicked link
+            e.preventDefault();
+            var deleteUrl = $(this).attr('href');
 
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = deleteUrl; // Redirect to the delete URL
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
         });
-    });document.getElementById('facultyModalForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
 
-    // Show confirmation dialog before proceeding
-    Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to add this faculty member?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, add it!",
-        cancelButtonText: "No, cancel!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            var formData = new FormData(this);
-            formData.append('type', 'faculty'); // Ensure type parameter is included
+        // Faculty Modal Form Submission
+        document.getElementById('facultyModalForm').addEventListener('submit', function (event) {
+            event.preventDefault();
 
-            fetch('../admin/ajax/createData.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-                Swal.fire("Response", result.message, "info");
-                if (result.success) {
-                    Swal.fire("Added!", "The faculty member has been added.", "success")
-                        .then(() => {
-                            document.location = "facultymembers.php"; // Redirect to the faculty members page
-                        });
-                } else {
-                    Swal.fire("Error!", result.message, "error");
-                }
-            })
-            .catch(error => {
-                Swal.fire("Error!", "There was an error adding the faculty member.", "error");
-            });
-        }
-    });
-});$('#editFacultyForm').on('submit', function (e) {
-    e.preventDefault();
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to add this faculty member?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, add it!",
+                cancelButtonText: "No, cancel!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var formData = new FormData(this);
+                    formData.append('type', 'faculty'); // Ensure type parameter is included
 
-    var form = $(this);
-
-    Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to save this faculty member?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, save it!",
-        cancelButtonText: "No, cancel!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            var formData = new FormData(form[0]);
-            formData.append('type', 'faculty'); // Add the missing 'type' parameter
-
-            fetch("../admin/ajax/editData.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    Swal.fire("Saved!", result.message, "success").then(() => {
-                        location.reload(); 
+                    fetch('../admin/ajax/createData.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        Swal.fire("Response", result.message, "info");
+                        if (result.success) {
+                            Swal.fire("Added!", "The faculty member has been added.", "success")
+                                .then(() => {
+                                    document.location = "facultymembers.php"; // Redirect to the faculty members page
+                                });
+                        } else {
+                            Swal.fire("Error!", result.message, "error");
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire("Error!", "There was an error adding the faculty member.", "error");
                     });
-                } else {
-                    Swal.fire("Error!", result.message, "error");
                 }
-            })
-            .catch(error => {
-                Swal.fire("Error!", "There was an error saving the faculty member.", "error");
             });
+        });
+
+        // Handling department dropdowns and removing departments
+        let removedDepartments = [];
+
+        $('button.remove-department').on('click', function () {
+            let departmentId = $(this).data('department-id');
+            removedDepartments.push(departmentId);
+        });
+
+        $(document).on('click', '.remove-department-btn', function () {
+            var departmentEntry = $(this).closest('.department-entry');
+            var departmentId = departmentEntry.data('department-id');
+
+            departmentEntry.hide();
+            if (!removedDepartments.includes(departmentId)) {
+                removedDepartments.push(departmentId);
+            }
+            console.log('Removed Departments:', removedDepartments);
+        });
+
+        // Add new department dropdown
+        $('#add-department-btn').on('click', function () {
+            var newDepartmentIndex = $('.department-entry').length;
+            var departmentDropdownHTML = `
+                <div class="mb-3 department-entry" data-department-id="new_${newDepartmentIndex}">
+                    <label for="department_new_${newDepartmentIndex}" class="form-label fw-bold">New Department</label>
+                    <select name="department_${newDepartmentIndex}" id="department_new_${newDepartmentIndex}" class="form-control department-dropdown" data-department-id="new_${newDepartmentIndex}">
+                        <option value="">Select Department</option>
+                        ${generateDepartmentOptions()}
+                    </select>
+                    <button type="button" class="btn btn-danger btn-sm remove-department-btn">Remove</button>
+                </div>
+            `;
+            $('.department-dropdowns').append(departmentDropdownHTML);
+            $('#department_new_' + newDepartmentIndex).trigger('change');
+        });
+
+        // Function to generate department options
+        function generateDepartmentOptions() {
+            var optionsHTML = '';
+            <?php foreach ($allDepartment as $dept): ?>
+                optionsHTML += '<option value="<?= $dept['department_id']; ?>"><?= $dept['department_name']; ?></option>';
+            <?php endforeach; ?>
+            return optionsHTML;
         }
-    });
-});
 
+        // Form submission handling for editing faculty member
+        $('#editFacultyForm').on('submit', function (e) {
+            e.preventDefault();
 
-const table = document.querySelector('#myTable');
-table.parentElement.style.overflowX = 'auto';
+            var form = $(this);
+            $('#removedDepartments').val(JSON.stringify(removedDepartments));
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to save this faculty member?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, save it!",
+                cancelButtonText: "No, cancel!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var formData = new FormData(form[0]);
+                    formData.append('type', 'faculty');
+
+                    fetch("../admin/ajax/editData.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(jsonData => {
+                        if (jsonData.success) {
+                            Swal.fire("Success", jsonData.message, "success");
+                        } else {
+                            Swal.fire("Error", jsonData.message, "error");
+                        }
+                    });
+                }
+            });
+        });
     });
-  </script>
+</script>
+
 </body>
 
 </html>

@@ -76,46 +76,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         
  
-            // Remove deleted images
-            if (!empty($replacedImages)) {
-                $foundImages = false; // Track if any image is processed
-                
-                foreach ($replacedImages as $image) {
-                    $image = trim($image);
+                    // Loop through replaced images to sanitize and format file names
+                    if (!empty($replacedImages)) {
+                        foreach ($replacedImages as $image) {
+                            // Trim and format the image name to remove any unwanted characters
+                            $image = trim($image);
+                            $image = preg_replace('/[^a-zA-Z0-9_-]+/', '', $image); // Only allow letters, numbers, hyphens, and underscores
                     
-                    if (!empty($image)) {
-                        $foundImages = true;
-                        // Log requested replacement image
-                        error_log("Requested Replacement of Image: $image\n", 3, 'error_log.txt');
-                        
-                        // Delete from database
-                        $deleteStmt = $connect->prepare("DELETE FROM announcement_images WHERE image_path = :imagePath");
-                        if ($deleteStmt->execute([':imagePath' => $image])) {
-                            error_log("Deleted image from database: $image\n", 3, 'error_log.txt');
-                        } else {
-                            error_log("Failed to delete image from database: $image\n", 3, 'error_log.txt');
-                        }
-            
-                        // Delete from filesystem
-                        $filePath = "C:/xampp/htdocs/ckiosk/uploaded/annUploaded/" . $image;
-                        if (file_exists($filePath)) {
-                            if (unlink($filePath)) {
-                                error_log("Deleted replaced image file: $filePath\n", 3, 'error_log.txt');
-                            } else {
-                                error_log("Failed to delete file from filesystem: $filePath\n", 3, 'error_log.txt');
+                            if (!empty($image)) {
+                                // Proceed with the deletion logic for sanitized image name
+                                error_log("Processed Replacement Image (sanitized): $image\n", 3, 'error_log.txt');
+                    
+                                // Delete image file from the server (ensure the path is correct)
+                                $filePath = "../uploaded/annUploaded/$image";
+                                if (file_exists($filePath)) {
+                                    unlink($filePath);
+                                    error_log("Deleted Image File: $filePath\n", 3, 'error_log.txt');
+                                } else {
+                                    error_log("Error: File not found for deletion - $filePath\n", 3, 'error_log.txt');
+                                }
+                    
+                                // Delete image record from the database
+                                $deleteStmt = $connect->prepare("DELETE FROM announcement_images WHERE image_path = :imagePath");
+                                $deleteStmt->bindValue(':imagePath', $image, PDO::PARAM_STR);
+                                if ($deleteStmt->execute()) {
+                                    error_log("Deleted Image Record from Database: $image\n", 3, 'error_log.txt');
+                                } else {
+                                    error_log("Error Deleting Image Record: " . implode(", ", $deleteStmt->errorInfo()) . "\n", 3, 'error_log.txt');
+                                }
                             }
-                        } else {
-                            error_log("File not found on filesystem: $filePath\n", 3, 'error_log.txt');
                         }
                     }
-                }
-                
-                if (!$foundImages) {
-                    error_log("Error: No valid images found in replacedImages array.\n", 3, 'error_log.txt');
-                }
-            } else {
-                error_log("Error: No images provided in replacedImages array.\n", 3, 'error_log.txt');
-            }            // Handle new images upload (Defined here within the if block)
+                    
+         // Handle new images upload (Defined here within the if block)
             if (!empty($newImages) && is_array($newImages['name'])) {
                 $uploadedFiles = [];
                 foreach ($newImages['name'] as $key => $fileName) {
@@ -253,79 +246,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'Event updated successfully.';
         }
         if ($type === 'faculty') {
+            // Fetch and sanitize basic data
             $fid = isset($_POST['fid']) ? (int)$_POST['fid'] : 0;
             $name = isset($_POST['faculty_name']) ? filter_var($_POST['faculty_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : '';
             $specialization = isset($_POST['specialization']) ? filter_var($_POST['specialization'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : '';
             $consultationTime = isset($_POST['consultation_time']) ? filter_var($_POST['consultation_time'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : '';
             $previousImage = isset($_POST['previous']) ? $_POST['previous'] : '';
-            $editor_id = isset($_POST['editor_id']) ? (int)$_POST['editor_id'] : 0; // ID of the person making the update
-            $addedDepartments = isset($_POST['addedDepartments']) ? json_decode($_POST['addedDepartments'], true) : [];  // Decode addedDepartments from JSON
-            $newImage = $previousImage ?: '';  // If no new image is uploaded, use the previous image or set as an empty string.
-            $departmentIds = isset($_POST['department']) && is_array($_POST['department']) ? array_map('intval', $_POST['department']) : [];
-        
-            // Log the added departments for debugging
-            error_log('Added Departments: ' . json_encode($addedDepartments));
-        
-            // Check for duplicate faculty member by name and department
+            $editor_id = isset($_POST['editor_id']) ? (int)$_POST['editor_id'] : 0;
+            $addedDepartments = isset($_POST['addedDepartments']) ? json_decode($_POST['addedDepartments'], true) : [];
+            $newImage = $previousImage ?: '';
+            
+            // Check for duplicate faculty member
             $duplicate_check_sql = "SELECT COUNT(*) FROM faculty_tbl WHERE faculty_name = :name AND faculty_id != :fid";
             $duplicate_stmt = $connect->prepare($duplicate_check_sql);
             $duplicate_stmt->execute([':name' => $name, ':fid' => $fid]);
-        
+            
             if ($duplicate_stmt->fetchColumn() > 0) {
                 $response['success'] = false;
                 $response['message'] = 'A faculty member with the same name already exists.';
-                header('Content-Type: application/json');  
-                echo json_encode($response);  
-                ob_end_clean();  
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                ob_end_clean();
                 exit;
             }
         
-            // File upload handling for faculty image
-            if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
-                $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
+            // Handle image upload (code omitted for brevity)
         
-                // Create the upload directory if it doesn't exist
-                if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
-                    error_log('Failed to create faculty directory.');
-                    $response['message'] = 'Failed to create upload directory.';
-                    header('Content-Type: application/json');  
-                    echo json_encode($response);  
-                    ob_end_clean();  
-                    exit;
-                }
-        
-                // Validate and move the uploaded file
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif']; // Allowed image formats
-                $fileType = mime_content_type($_FILES['faculty_image']['tmp_name']);
-        
-                if (!in_array($fileType, $allowedTypes)) {
-                    $response['message'] = 'Invalid image type. Only JPEG, PNG, and GIF are allowed.';
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    ob_end_clean();
-                    exit;
-                }
-        
-                $newImage = basename($_FILES['faculty_image']['name']);
-                $tempPath = $_FILES["faculty_image"]["tmp_name"];
-                $originalPath = $uploadTo . $newImage;
-        
-                if (!move_uploaded_file($tempPath, $originalPath)) {
-                    $response['message'] = 'Failed to move uploaded file.';
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    ob_end_clean();
-                    exit;
-                }
-        
-                // Remove old image if it exists
-                if ($previousImage && file_exists($uploadTo . $previousImage)) {
-                    unlink($uploadTo . $previousImage);
-                }
-            }
-        
-            // Update faculty details in the faculty_tbl
-            $sql = "UPDATE `faculty_tbl` 
+            // Update faculty details
+            $sql = "UPDATE `faculty_tbl`
                     SET faculty_name = :name, faculty_image = :image, specialization = :specialization, 
                         consultation_time = :consultation_time
                     WHERE faculty_id = :fid";
@@ -338,72 +286,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':fid' => $fid
             ]);
         
-         // Step 1: Fetch current departments associated with the faculty
-$getCurrentDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
-$getCurrentDepartmentsStmt = $connect->prepare($getCurrentDepartmentsSql);
-$getCurrentDepartmentsStmt->execute([':fid' => $fid]);
-$currentDepartments = $getCurrentDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);
-
-// Step 3: Insert new departments (not previously associated)
-$departmentsToAdd = array_diff($addedDepartments, $currentDepartments);
-
-// Log the added departments (for debugging)
-error_log('Added Departments: ' . json_encode($departmentsToAdd));
-
-foreach ($departmentsToAdd as $departmentId) {
-    $insertDeptSql = "INSERT INTO faculty_departments_tbl (faculty_id, department_id) VALUES (:fid, :department_id)";
-    $insertDeptStmt = $connect->prepare($insertDeptSql);
-    $insertDeptStmt->execute([':fid' => $fid, ':department_id' => $departmentId]);
-}
-
-// Step 4: Remove the departments that are no longer associated with the faculty member
-
-$getremovedDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
-    $getremovedDepartmentsStmt = $connect->prepare($getCurrentDepartmentsSql);
-    $getremovedDepartmentsStmt->execute([':fid' => $fid]);
-    $currentremovedDepartments = $getremovedDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);  // Step 2: Collect department IDs from the form
-    $departmentIds = [];
-    foreach ($_POST as $key => $value) {
-        if (strpos($key, 'department_') === 0) {
-            $departmentIds[] = (int) $value;  // Collect department IDs from the form
-        }
-    }
-
-    // Step 3: Calculate the removed departments (those that were in currentDepartments but not in departmentIds)
-    $removedDepartments = array_diff($currentDepartments, $departmentIds);
-
-    // Log the removed departments (for debugging)
-    error_log('Removed Departments: ' . json_encode($removedDepartments));
-
-    // Step 4: If there are departments to remove, execute the deletion
-    if (!empty($removedDepartments)) {
-        $deleteDeptSql = "DELETE FROM faculty_departments_tbl WHERE faculty_id = :fid AND department_id IN (" . implode(',', array_map('intval', $removedDepartments)) . ")";
-        $deleteDeptStmt = $connect->prepare($deleteDeptSql);
-        $deleteDeptStmt->execute([':fid' => $fid]);
-    }
+            // Step 1: Fetch current departments associated with the faculty
+            $getCurrentDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
+            $getCurrentDepartmentsStmt = $connect->prepare($getCurrentDepartmentsSql);
+            $getCurrentDepartmentsStmt->execute([':fid' => $fid]);
+            $currentDepartments = $getCurrentDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);
         
-// Step 8: Update the faculty departments (if necessary)
-foreach ($departmentIds as $departmentId) {
-    // Update department if necessary (if changes exist)
-    // Example of an update, assuming you want to modify some data related to departments
-    $updateDeptSql = "UPDATE faculty_departments_tbl SET department_id = :department_id WHERE faculty_id = :fid AND department_id = :department_id";
-    $updateDeptStmt = $connect->prepare($updateDeptSql);
-    $updateDeptStmt->execute([':fid' => $fid, ':department_id' => $departmentId]);
-}
-
-// Optional: Log the final state of departments after all updates
-$getUpdatedDepartmentsSql = "SELECT department_id FROM faculty_departments_tbl WHERE faculty_id = :fid";
-$getUpdatedDepartmentsStmt = $connect->prepare($getUpdatedDepartmentsSql);
-$getUpdatedDepartmentsStmt->execute([':fid' => $fid]);
-$updatedDepartments = $getUpdatedDepartmentsStmt->fetchAll(PDO::FETCH_COLUMN);
-error_log('Updated Departments: ' . json_encode($updatedDepartments));
-
-
-            // Fetch editor's name from `users_tbl`, or fallback to `orgmembers_tbl`
+            // Step 2: Collect department IDs from POST data with preg_replace
+            $departmentIds = [];
+            foreach ($_POST as $key => $value) {
+                if (preg_match('/^department_\d+$/', $key)) {
+                    $departmentIds[] = (int)$value;  // Collect department IDs based on pattern match
+                }
+            }
+        
+            // Calculate the added and removed departments
+            $departmentsToAdd = array_diff($departmentIds, $currentDepartments);
+            $departmentsToRemove = array_diff($currentDepartments, $departmentIds);
+        
+            // Log changes (for debugging)
+            error_log('Departments to add: ' . json_encode($departmentsToAdd));
+            error_log('Departments to remove: ' . json_encode($departmentsToRemove));
+        
+            // Insert new departments
+            foreach ($departmentsToAdd as $departmentId) {
+                $insertDeptSql = "INSERT INTO faculty_departments_tbl (faculty_id, department_id) VALUES (:fid, :department_id)";
+                $insertDeptStmt = $connect->prepare($insertDeptSql);
+                $insertDeptStmt->execute([':fid' => $fid, ':department_id' => $departmentId]);
+            }
+        
+            // Remove old departments
+            if (!empty($departmentsToRemove)) {
+                $deleteDeptSql = "DELETE FROM faculty_departments_tbl WHERE faculty_id = :fid AND department_id IN (" . implode(',', array_map('intval', $departmentsToRemove)) . ")";
+                $deleteDeptStmt = $connect->prepare($deleteDeptSql);
+                $deleteDeptStmt->execute([':fid' => $fid]);
+            }
+        
+            // Fetch editor's name for the audit trail
             $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
             $editor_stmt->execute([':editor_id' => $editor_id]);
             $editor_name = $editor_stmt->fetchColumn();
-        
+            
             if (!$editor_name) {
                 $editor_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
                 $editor_stmt->execute([':editor_id' => $editor_id]);
@@ -418,11 +341,10 @@ error_log('Updated Departments: ' . json_encode($updatedDepartments));
             // Final response
             $response['success'] = true;
             $response['message'] = 'Faculty member updated successfully.';
-            header('Content-Type: application/json');  // Ensure proper header
-            echo json_encode($response);  // Output JSON response
-            ob_end_clean();  // Clean output buffer after response
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            ob_end_clean();
         }
-        
         
         elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';

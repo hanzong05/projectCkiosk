@@ -267,23 +267,24 @@ $allAnnouncement = $obj->show_announcement();
 
 
             <div class="overflow-x-auto">
-                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">No.</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Title</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Org Name</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Created At</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Created By</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Updated By</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Updated At</th>
-                            <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Actions</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Organization</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Creator</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Last Updated By</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200" id="announcementTableBody">
                         <?php
                         $count = 1;
                         foreach ($allAnnouncement as $row) {
+                            error_log("Displaying announcement ID: " . $row['announcement_id'], 3, 'error_log.txt');
                         ?>
                         <tr class="hover:bg-gray-50 transition duration-150">
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $count; ?></td>
@@ -337,8 +338,6 @@ $allAnnouncement = $obj->show_announcement();
                 <div class="modal-body">
                     <div class="mb-3">
                         <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
-
                         <label for="announcement_title" class="form-label fw-bold">Announcement Title</label>
                         <input type="text" class="form-control" id="announcement_title" name="announcement_title" required>
                     </div>

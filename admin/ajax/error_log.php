@@ -1792,3 +1792,175 @@ Stack trace:
 [07-Nov-2024 19:12:24 Europe/Berlin] Added Departments: []
 [07-Nov-2024 19:12:24 Europe/Berlin] Removed Departments: ["2"]
 [07-Nov-2024 19:12:24 Europe/Berlin] Updated Departments: []
+[07-Nov-2024 22:33:19 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 34
+    [fid] => 2
+    [removedDepartments] => []
+    [addedDepartments] => ["2"]
+    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
+    [faculty_name] => dwadwaddwadwadwadwa`2
+    [department_0] => 2
+    [specialization] => 
+    [consultation_time] => 
+    [type] => faculty
+)
+
+[07-Nov-2024 22:33:19 Europe/Berlin] Received type: faculty
+[07-Nov-2024 22:33:19 Europe/Berlin] Departments to add: [2]
+[07-Nov-2024 22:33:19 Europe/Berlin] Departments to remove: []
+[07-Nov-2024 22:33:28 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 34
+    [fid] => 2
+    [removedDepartments] => []
+    [addedDepartments] => ["6"]
+    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
+    [faculty_name] => dwadwaddwadwadwadwa`2
+    [department_0] => 2
+    [department_1] => 6
+    [specialization] => 
+    [consultation_time] => 
+    [type] => faculty
+)
+
+[07-Nov-2024 22:33:28 Europe/Berlin] Received type: faculty
+[07-Nov-2024 22:33:28 Europe/Berlin] Departments to add: {"1":6}
+[07-Nov-2024 22:33:28 Europe/Berlin] Departments to remove: []
+[07-Nov-2024 22:33:42 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 34
+    [fid] => 2
+    [removedDepartments] => []
+    [addedDepartments] => ["5"]
+    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
+    [faculty_name] => dwadwaddwadwadwadwa`2
+    [department_0] => 2
+    [department_1] => 1
+    [department_2] => 5
+    [specialization] => 
+    [consultation_time] => 
+    [type] => faculty
+)
+
+[07-Nov-2024 22:33:42 Europe/Berlin] Received type: faculty
+[07-Nov-2024 22:33:42 Europe/Berlin] Departments to add: {"1":1,"2":5}
+[07-Nov-2024 22:33:42 Europe/Berlin] Departments to remove: {"1":"6"}
+[07-Nov-2024 22:34:01 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 34
+    [fid] => 2
+    [removedDepartments] => []
+    [addedDepartments] => []
+    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
+    [faculty_name] => dwadwaddwadwadwadwa`2
+    [department_0] => 2
+    [department_1] => 13
+    [department_2] => 5
+    [specialization] => 
+    [consultation_time] => 
+    [type] => faculty
+)
+
+[07-Nov-2024 22:34:01 Europe/Berlin] Received type: faculty
+[07-Nov-2024 22:34:01 Europe/Berlin] Departments to add: {"1":13}
+[07-Nov-2024 22:34:01 Europe/Berlin] Departments to remove: {"1":"1"}
+[07-Nov-2024 22:34:22 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 34
+    [fid] => 2
+    [removedDepartments] => []
+    [addedDepartments] => ["11"]
+    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
+    [faculty_name] => dwadwaddwadwadwadwa`2
+    [department_0] => 2
+    [department_1] => 5
+    [department_2] => 1
+    [department_3] => 11
+    [specialization] => 
+    [consultation_time] => 
+    [type] => faculty
+)
+
+[07-Nov-2024 22:34:22 Europe/Berlin] Received type: faculty
+[07-Nov-2024 22:34:22 Europe/Berlin] Departments to add: {"2":1,"3":11}
+[07-Nov-2024 22:34:22 Europe/Berlin] Departments to remove: {"2":"13"}
+[07-Nov-2024 22:34:49 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 34
+    [fid] => 2
+    [removedDepartments] => []
+    [addedDepartments] => ["7"]
+    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
+    [faculty_name] => dwadwaddwadwadwadwa`2
+    [department_0] => 2
+    [department_1] => 5
+    [department_2] => 1
+    [department_3] => 9
+    [department_4] => 7
+    [specialization] => 
+    [consultation_time] => 
+    [type] => faculty
+)
+
+[07-Nov-2024 22:34:49 Europe/Berlin] Received type: faculty
+[07-Nov-2024 22:34:49 Europe/Berlin] Departments to add: {"3":9,"4":7}
+[07-Nov-2024 22:34:49 Europe/Berlin] Departments to remove: {"3":"11"}
+[07-Nov-2024 23:15:00 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwad
+    [announcement_creator] => 1
+    [aid] => 1
+    [announcement_details] => <p>dwadwadwdwadwadwa</p>
+    [type] => announcement
+)
+
+[07-Nov-2024 23:15:00 Europe/Berlin] Received type: announcement
+[07-Nov-2024 23:15:00 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 80
+[07-Nov-2024 23:18:03 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwa
+    [announcement_creator] => 1
+    [aid] => 4
+    [announcement_details] => <p>dwadw</p>
+    [type] => announcement
+)
+
+[07-Nov-2024 23:18:03 Europe/Berlin] Received type: announcement
+[07-Nov-2024 23:18:03 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 80
+[07-Nov-2024 23:18:14 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwa
+    [announcement_creator] => 1
+    [aid] => 4
+    [announcement_details] => <p>dwadw</p>
+    [type] => announcement
+)
+
+[07-Nov-2024 23:18:14 Europe/Berlin] Received type: announcement
+[07-Nov-2024 23:18:14 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 80
+[07-Nov-2024 23:21:02 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 672d3c9b2b4fa-e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwa
+    [announcement_creator] => 1
+    [aid] => 4
+    [announcement_details] => <p>dwadw</p>
+    [type] => announcement
+)
+
+[07-Nov-2024 23:21:02 Europe/Berlin] Received type: announcement
+[07-Nov-2024 23:21:11 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwa
+    [announcement_creator] => 1
+    [aid] => 4
+    [announcement_details] => <p>dwadw</p>
+    [type] => announcement
+)
+
+[07-Nov-2024 23:21:11 Europe/Berlin] Received type: announcement

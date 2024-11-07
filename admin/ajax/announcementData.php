@@ -34,7 +34,6 @@ try {
 
 $response = '';
 $images = [];
-
 if (!empty($announcements)) {
     $firstAnnouncement = $announcements[0]; // Get the first announcement details
     $response .= '<input type="hidden" id="removed-images" name="removed_images" value="">';
@@ -53,40 +52,84 @@ if (!empty($announcements)) {
         <textarea id="summernote2" name="announcement_details" required>' . $announcementDetails . '</textarea>
     </div>';
 
-    // Collect images for display
+    // Collect unique images for display
+    $images = [];
     foreach ($announcements as $announcement) {
-        if (!empty($announcement['image_path'])) {
+        if (!empty($announcement['image_path']) && !in_array($announcement['image_path'], $images)) {
             $images[] = htmlspecialchars($announcement['image_path'], ENT_QUOTES, 'UTF-8');
         }
     }
-
     if (!empty($images)) {
         $response .= '<div class="existing-images" style="display: flex; gap: 10px; align-items: center; overflow-x: auto; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">';
-            foreach ($images as $index => $image) {
-                $response .= '<div class="image-preview-container-edit" style="width: 120px; text-align: center; flex-shrink: 0;">
-                    <img src="../uploaded/annUploaded/' . $image . '" alt="Announcement Image" class="announcement-image" style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 5px;">
-                    <div class="button-container" style="display: flex; justify-content: center; gap: 5px;">
-                        <button type="button" class="inline-flex items-center justify-center p-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md edit-image">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button type="button" class="inline-flex items-center justify-center p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md remove-image">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </div>';
-            }
-            $response .= '<button type="button" id="add-image-edit" class="inline-flex items-center justify-center p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition duration-200 ease-in-out" style="width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <i class="fas fa-plus"></i>
-            </button>';
-            $response .= '</div>';
-
+        foreach ($images as $index => $image) {
+            $response .= '<div class="image-preview-container-edit" style="width: 120px; text-align: center; flex-shrink: 0;">
+                <div class="mb-6 text-center">
+                
+                    <!-- Display the current image -->
+                    <img src="../uploaded/annUploaded/' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '" height="120" width="150" id="announcement_image_p" class="img-thumbnail rounded-full" />
+                    
+                    <!-- Hidden field for the previous image (used for reference during form submission) -->
+                    <input type="hidden" name="previous_image[]" value="' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '" />
+            
+                    <!-- Display the file name of the uploaded image -->
+                    <p class="file-name" style="margin-top: 5px;">
+                        ' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '
+                    </p>
+                     
+                    <!-- Edit Image Button -->
+                    <button type="button" class="inline-flex items-center justify-center p-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg shadow-md edit-image" data-index="' . $index . '">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+        
+                    <!-- Remove Image Button -->
+                    <button type="button" class="inline-flex items-center justify-center p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md remove-image" data-index="' . $index . '">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+        
+                    <!-- Hidden file input for selecting a new image -->
+                    <input type="file" name="new_image[]" class="hidden file-input" data-index="' . $index . '" accept="image/*" />
+                </div>
+            </div>';
+        }
+        $response .= '<button type="button" id="add-image-edit" class="inline-flex items-center justify-center p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition duration-200 ease-in-out" style="width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <i class="fas fa-plus"></i>
+        </button>';
+        $response .= '</div>';
     }
-
-
+    
 }
-
 echo $response;
 ?>
+
+<script>// Add event listener to edit buttons for showing the file input
+document.querySelectorAll('.edit-image').forEach(button => {
+    button.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        const fileInput = document.querySelector(`.file-input[data-index="${index}"]`);
+        fileInput.classList.remove('hidden');  // Show the file input when "Edit" button is clicked
+    });
+});
+
+// Handle file input change event to preview the new image
+document.querySelectorAll('.file-input').forEach(input => {
+    input.addEventListener('change', function() {
+        const index = this.getAttribute('data-index');
+        const file = this.files[0];
+
+        // If a file is selected, preview it
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgPreview = document.querySelector(`#image-preview-${index}`);
+                imgPreview.src = e.target.result; // Update the image preview
+            };
+            reader.readAsDataURL(file); // Read the selected file as a DataURL
+        }
+    });
+});
+
+</script>
+
 
 <script>
 $(document).ready(function () {

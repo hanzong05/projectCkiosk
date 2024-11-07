@@ -1226,76 +1226,79 @@ function delete_event($appID)
     }
 }
 
-    function show_facultyheads($department_ids = null)
-    {
-       // Base query to get faculty members
-$query = "SELECT f.*, d.department_name 
-          FROM faculty_tbl f 
-          LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
+function show_facultyheads($department_ids = null)
+{
+    // Base query to get faculty members and their associated departments
+    $query = "SELECT f.*, GROUP_CONCAT(d.department_name SEPARATOR ', ') AS departments
+              FROM faculty_tbl f
+              LEFT JOIN faculty_departments_tbl fd ON f.faculty_id = fd.faculty_id
+              LEFT JOIN department_tbl d ON fd.department_id = d.department_id";
 
-// Add condition to filter by departments if provided
-if ($department_ids) {
-    // Create a placeholder string for the IN clause
-    $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
-    $query .= " WHERE f.faculty_dept IN ($placeholders)";
-}
+    // Add condition to filter by departments if provided
+    if ($department_ids) {
+        // Create a placeholder string for the IN clause
+        $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
+        $query .= " WHERE fd.department_id IN ($placeholders)";
+    }
 
-// Prepare the statement
-$statement = $this->connection->prepare($query);
+    // Group by faculty to ensure we get each faculty member with their departments concatenated
+    $query .= " GROUP BY f.faculty_id";
 
-// Bind department IDs if filtering by departments
-if ($department_ids) {
-    foreach ($department_ids as $key => $id) {
-        $statement->bindValue($key + 1, $id, PDO::PARAM_INT); // Bind department IDs
+    // Prepare the statement
+    $statement = $this->connection->prepare($query);
+
+    // Bind department IDs if filtering by departments
+    if ($department_ids) {
+        foreach ($department_ids as $key => $id) {
+            $statement->bindValue($key + 1, $id, PDO::PARAM_INT); // Bind department IDs
+        }
+    }
+
+    // Execute query
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
+    }
+}function show_facultymembers($department_ids = null)
+{
+    // Base query to get faculty members, joining with faculty_departments_tbl to get department IDs
+    $query = "SELECT f.*, GROUP_CONCAT(d.department_name SEPARATOR ', ') AS departments 
+              FROM faculty_tbl f
+              LEFT JOIN faculty_departments_tbl fd ON f.faculty_id = fd.faculty_id
+              LEFT JOIN department_tbl d ON fd.department_id = d.department_id";  // Correct join for departments
+
+    // Add condition to filter by departments if provided
+    if ($department_ids) {
+        // Create a placeholder string for the IN clause
+        $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
+        $query .= " WHERE fd.department_id IN ($placeholders)";  // Filter by department IDs
+    }
+
+    // Group by faculty_id to ensure unique faculty records
+    $query .= " GROUP BY f.faculty_id";
+
+    // Prepare the statement
+    $statement = $this->connection->prepare($query);
+
+    // Bind department IDs if filtering by departments
+    if ($department_ids) {
+        foreach ($department_ids as $key => $id) {
+            $statement->bindValue($key + 1, $id, PDO::PARAM_INT); // Bind department IDs
+        }
+    }
+
+    // Execute query
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
     }
 }
 
-// Execute query
-if ($statement->execute()) {
-    $result = $statement->fetchAll();
-    return $result;
-} else {
-    return "No Data";
-}
 
-    }
-    function show_facultymembers($department_ids = null)
-    {
-        // Assuming the Dean's ID is 5, adjust as necessary
-        $dean_id = 5;
-    
-        // Base query to get faculty members
-        $query = "SELECT f.*, d.department_name 
-                  FROM faculty_tbl f 
-                  LEFT JOIN department_tbl d ON f.faculty_dept = d.department_id";
-        
-        // Add condition to filter by departments if provided and exclude the Dean
-        if ($department_ids) {
-            // Create a placeholder string for the IN clause
-            $placeholders = rtrim(str_repeat('?,', count($department_ids)), ',');
-            $query .= " WHERE f.faculty_dept IN ($placeholders) AND f.faculty_dept != ?";
-        }
-        
-        $statement = $this->connection->prepare($query);
-        
-        // Bind parameters if filtering by departments
-        if ($department_ids) {
-            // Bind each department ID and the dean's ID
-            foreach ($department_ids as $key => $id) {
-                $statement->bindValue($key + 1, $id, PDO::PARAM_INT);
-            }
-            $statement->bindValue(count($department_ids) + 1, $dean_id, PDO::PARAM_INT);
-        }
-    
-        // Execute query
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
-    }
-    
 function add_org($data) {
     $name = htmlspecialchars($data['org_name'] ?? '', ENT_QUOTES, 'UTF-8');
 

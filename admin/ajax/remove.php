@@ -7,7 +7,7 @@ $pdo = new PDO($dsn, 'root', ''); // Replace 'root' and '' with actual username 
 
 // Clean past events from calendar_tbl
 $today = date('Y-m-d');
-$stmt = $pdo->prepare("DELETE FROM calendar_tbl WHERE calendar_date < :today");
+$stmt = $pdo->prepare("DELETE FROM calendar_tbl WHERE   calendar_end_date < :today");
 $stmt->execute([':today' => $today]);
 
 // Archive announcements older than 14 days

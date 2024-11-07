@@ -267,23 +267,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         if ($type === 'faculty') {
             $name = $_POST['faculty_name'] ?? null;
-            $dept = $_POST['department'] ?? null;
             $specialization = $_POST['specialization'] ?? null;
             $consultationTime = $_POST['consultation_time'] ?? null;
             $imagePath = '';
-        
+            
             $uid = $_POST['uid'] ?? null; // User ID from session
             $cid = $_POST['cid'] ?? null; // Creator ID from session
+            $departments = $_POST['department'] ?? []; // Array of departments selected in the form
         
             // Initialize creators_name to 'Unknown User'
             $creators_name = 'Unknown User';
-        
+            
             // Fetch the creator's name from users_tbl
             $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
             $creator_stmt = $connect->prepare($creator_name_sql);
             $creator_stmt->execute([':cid' => $cid]);
             $creators_name = $creator_stmt->fetchColumn();
-        
+            
             // If not found, check orgmembers_tbl
             if (!$creators_name) {
                 $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
@@ -291,86 +291,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $org_member_stmt->execute([':cid' => $cid]);
                 $creators_name = $org_member_stmt->fetchColumn();
             }
-        
+            
             // If no name found, default to 'Unknown User'
             $creators_name = $creators_name ?: 'Unknown User';
-        
-            // Restricted department IDs that should not allow duplicates but update existing records
-            $restrictedDeptIds = [5, 6, 7, 8, 9, 10, 11, 12, 13];
-        
+            
             // Check for duplicate faculty member
-            $duplicateCheckQuery = $connect->prepare("SELECT faculty_id FROM faculty_tbl WHERE faculty_name = :name AND faculty_dept = :dept");
-            $duplicateCheckQuery->execute([':name' => $name, ':dept' => $dept]);
+            $duplicateCheckQuery = $connect->prepare("SELECT faculty_id FROM faculty_tbl WHERE faculty_name = :name");
+            $duplicateCheckQuery->execute([':name' => $name]);
             $existingFaculty = $duplicateCheckQuery->fetch(PDO::FETCH_ASSOC);
-        
+            
             if ($existingFaculty) {
                 $response['success'] = false;
-                $response['message'] = 'Faculty member already exists in this department.';
+                $response['message'] = 'Faculty member already exists.';
                 echo json_encode($response);
                 exit;
             }
-        
+            
             // Existing faculty ID (if updating)
             $id = $_POST['id'] ?? null;
-        
-            // If no existing faculty member in the restricted department, insert a new one
+            
+            // If an image is provided, process the image upload
             if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
                 $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
-        
+                
                 if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
                     $response['message'] = 'Failed to create upload directory.';
                     echo json_encode($response);
                     exit;
                 }
-        
+                
                 $imagePath = basename($_FILES['faculty_image']['name']);
                 $tempPath = $_FILES["faculty_image"]["tmp_name"];
                 $originalPath = $uploadTo . $imagePath;
-        
+                
                 if (!move_uploaded_file($tempPath, $originalPath)) {
                     $response['message'] = 'Failed to move uploaded file.';
                     echo json_encode($response);
                     exit;
                 }
-        
-                $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_dept, faculty_image, specialization, consultation_time) VALUES (:name, :dept, :image, :specialization, :consultation_time)";
-                $stmt = $connect->prepare($sql);
-                $stmt->execute([
-                    ':name' => $name,
-                    ':dept' => $dept,
-                    ':image' => $imagePath,
-                    ':specialization' => $specialization,
-                    ':consultation_time' => $consultationTime
-                ]);
-        
-                // Add to audit trail for new faculty addition
-                $audit_message = "{$creators_name} added a new faculty member: Name - {$name}, Department ID - {$dept}";
-                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
-                $audit_stmt = $connect->prepare($audit_sql);
-                $audit_stmt->execute([':message' => $audit_message]);
-        
-            } else {
-                $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_dept, specialization, consultation_time) VALUES (:name, :dept, :specialization, :consultation_time)";
-                $stmt = $connect->prepare($sql);
-                $stmt->execute([
-                    ':name' => $name,
-                    ':dept' => $dept,
-                    ':specialization' => $specialization,
-                    ':consultation_time' => $consultationTime
-                ]);
-        
-                // Add to audit trail for new faculty addition without an image
-                $audit_message = "{$creators_name} added a new faculty member: Name - {$name}, Department ID - {$dept}";
-                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
-                $audit_stmt = $connect->prepare($audit_sql);
-                $audit_stmt->execute([':message' => $audit_message]);
             }
+        
+            // Insert main faculty information
+            $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_image, specialization, consultation_time) VALUES (:name, :image, :specialization, :consultation_time)";
+            $stmt = $connect->prepare($sql);
+            $stmt->execute([
+                ':name' => $name,
+                ':image' => $imagePath,
+                ':specialization' => $specialization,
+                ':consultation_time' => $consultationTime
+            ]);
+        
+            // Retrieve the newly inserted faculty ID
+            $facultyId = $connect->lastInsertId();
+            
+            // Insert selected departments into faculty_departments_tbl
+            $deptInsertSql = "INSERT INTO `faculty_departments_tbl` (faculty_id, department_id) VALUES (:faculty_id, :department_id)";
+            $deptStmt = $connect->prepare($deptInsertSql);
+            
+            foreach ($departments as $deptId) {
+                $deptStmt->execute([
+                    ':faculty_id' => $facultyId,
+                    ':department_id' => $deptId
+                ]);
+            }
+        
+            // Add to audit trail for new faculty addition
+            $audit_message = "{$creators_name} added a new faculty member: Name - {$name}, Departments - " . implode(', ', $departments);
+            $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+            $audit_stmt = $connect->prepare($audit_sql);
+            $audit_stmt->execute([':message' => $audit_message]);
         
             $response['success'] = true;
             $response['message'] = 'Faculty member added successfully.';
             echo json_encode($response);
             exit;
         }
+        
         elseif ($type === 'organization') {
             $name = $_POST['org_name'] ?? null;
             $imagePath = '';

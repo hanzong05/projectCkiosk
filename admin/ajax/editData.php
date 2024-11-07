@@ -251,93 +251,111 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'Event updated successfully.';
         }
         
-        elseif ($type === 'faculty') {
-            $fid = $_POST['fid'] ?? '';
+   if ($type === 'faculty') {
+    // Get POST data
+    $fid = $_POST['fid'] ?? '';
     $name = $_POST['faculty_name'] ?? '';
-    $dept = $_POST['department'] ?? '';
-    $previousImage = $_POST['previous'] ?? '';
     $specialization = $_POST['specialization'] ?? '';
     $consultationTime = $_POST['consultation_time'] ?? '';
-    $newImage = $previousImage;
+    $previousImage = $_POST['previous'] ?? '';
     $editor_id = $_POST['editor_id'] ?? ''; // ID of the person making the update
+    $departmentIds = $_POST['department'] ?? []; // Array of department IDs (should be passed as an array)
+
+    // Default to the previous image if no new image is uploaded
+    $newImage = $previousImage;
 
     // Check for duplicate faculty member by name and department
-    $duplicate_check_sql = "SELECT COUNT(*) FROM faculty_tbl WHERE faculty_name = :name AND faculty_dept = :dept AND faculty_id != :fid";
+    $duplicate_check_sql = "SELECT COUNT(*) FROM faculty_tbl WHERE faculty_name = :name AND faculty_id != :fid";
     $duplicate_stmt = $connect->prepare($duplicate_check_sql);
-    $duplicate_stmt->execute([':name' => $name, ':dept' => $dept, ':fid' => $fid]);
-    
+    $duplicate_stmt->execute([':name' => $name, ':fid' => $fid]);
+
     if ($duplicate_stmt->fetchColumn() > 0) {
         $response['success'] = false;
         $response['message'] = 'A faculty member with the same name and department already exists.';
         echo json_encode($response);
         exit;
     }
-        
-            // File upload handling for faculty image
-            if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
-                $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
-        
-                if (!file_exists($uploadTo)) {
-                    if (!mkdir($uploadTo, 0777, true)) {
-                        error_log('Failed to create faculty directory.');
-                        $response['message'] = 'Failed to create upload directory.';
-                        echo json_encode($response);
-                        exit;
-                    }
-                }
-        
-                $newImage = basename($_FILES['faculty_image']['name']);
-                $tempPath = $_FILES["faculty_image"]["tmp_name"];
-                $originalPath = $uploadTo . $newImage;
-        
-                if (!move_uploaded_file($tempPath, $originalPath)) {
-                    $response['message'] = 'Failed to move uploaded file.';
-                    echo json_encode($response);
-                    exit;
-                }
-        
-                // Remove old image if it exists
-                if ($previousImage && file_exists($uploadTo . $previousImage)) {
-                    unlink($uploadTo . $previousImage);
-                }
+
+    // File upload handling for faculty image
+    if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
+        $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
+
+        if (!file_exists($uploadTo)) {
+            if (!mkdir($uploadTo, 0777, true)) {
+                error_log('Failed to create faculty directory.');
+                $response['message'] = 'Failed to create upload directory.';
+                echo json_encode($response);
+                exit;
             }
-        
-            // Update faculty in the database
-            $sql = "UPDATE `faculty_tbl` 
-                    SET faculty_name = :name, faculty_dept = :dept, faculty_image = :image, 
-                        specialization = :specialization, consultation_time = :consultation_time
-                    WHERE faculty_id = :fid";
-            $stmt = $connect->prepare($sql);
-            $stmt->execute([
-                ':name' => $name,
-                ':dept' => $dept,
-                ':image' => $newImage,
-                ':specialization' => $specialization,
-                ':consultation_time' => $consultationTime,
-                ':fid' => $fid
-            ]);
-        
-            // Fetch editor's name, first from `users_tbl`, and if not found, from `orgmembers_tbl`
-            $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
-            $editor_stmt->execute([':editor_id' => $editor_id]);
-            $editor_name = $editor_stmt->fetchColumn();
-        
-            if (!$editor_name) {
-                // If not found in `users_tbl`, search in `orgmembers_tbl`
-                $editor_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
-                $editor_stmt->execute([':editor_id' => $editor_id]);
-                $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
-            }
-        
-            // Audit trail
-            $audit_message = "{$editor_name} updated faculty member: Name - {$name}, Department - {$dept}, Specialization - {$specialization}, Consultation Time - {$consultationTime}";
-            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-            $audit_stmt->execute([':message' => $audit_message]);
-        
-            $response['success'] = true;
-            $response['message'] = 'Faculty member updated successfully.';
         }
-        
+
+        $newImage = basename($_FILES['faculty_image']['name']);
+        $tempPath = $_FILES["faculty_image"]["tmp_name"];
+        $originalPath = $uploadTo . $newImage;
+
+        if (!move_uploaded_file($tempPath, $originalPath)) {
+            $response['message'] = 'Failed to move uploaded file.';
+            echo json_encode($response);
+            exit;
+        }
+
+        // Remove old image if it exists
+        if ($previousImage && file_exists($uploadTo . $previousImage)) {
+            unlink($uploadTo . $previousImage);
+        }
+    }
+
+    // Update faculty details in the faculty_tbl
+    $sql = "UPDATE `faculty_tbl` 
+            SET faculty_name = :name, faculty_image = :image, specialization = :specialization, 
+                consultation_time = :consultation_time
+            WHERE faculty_id = :fid";
+    $stmt = $connect->prepare($sql);
+    $stmt->execute([
+        ':name' => $name,
+        ':image' => $newImage,
+        ':specialization' => $specialization,
+        ':consultation_time' => $consultationTime,
+        ':fid' => $fid
+    ]);
+
+    // Update the faculty's associated departments
+    // First, remove the old departments
+    $deleteDeptSql = "DELETE FROM faculty_departments_tbl WHERE faculty_id = :fid";
+    $deleteDeptStmt = $connect->prepare($deleteDeptSql);
+    $deleteDeptStmt->execute([':fid' => $fid]);
+
+    // Now, add the new departments
+    foreach ($departmentIds as $deptId) {
+        $insertDeptSql = "INSERT INTO faculty_departments_tbl (faculty_id, department_id) VALUES (:fid, :deptId)";
+        $insertDeptStmt = $connect->prepare($insertDeptSql);
+        $insertDeptStmt->execute([
+            ':fid' => $fid,
+            ':deptId' => $deptId
+        ]);
+    }
+
+    // Fetch editor's name, first from `users_tbl`, and if not found, from `orgmembers_tbl`
+    $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+    $editor_stmt->execute([':editor_id' => $editor_id]);
+    $editor_name = $editor_stmt->fetchColumn();
+
+    if (!$editor_name) {
+        // If not found in `users_tbl`, search in `orgmembers_tbl`
+        $editor_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :editor_id");
+        $editor_stmt->execute([':editor_id' => $editor_id]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+    }
+
+    // Audit trail
+    $audit_message = "{$editor_name} updated faculty member: Name - {$name}, Specialization - {$specialization}, Consultation Time - {$consultationTime}";
+    $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
+    $audit_stmt->execute([':message' => $audit_message]);
+
+    $response['success'] = true;
+    $response['message'] = 'Faculty member updated successfully.';
+    echo json_encode($response);
+}
         elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';
             $orgName = $_POST['org_name'] ?? '';

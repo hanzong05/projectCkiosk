@@ -367,6 +367,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
         
+        
         elseif ($type === 'organization') {
             $name = $_POST['org_name'] ?? null;
             $imagePath = '';

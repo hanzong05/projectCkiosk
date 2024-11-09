@@ -1,23 +1,23 @@
 <?php
-include_once ("class/mainclass.php");
+include_once ("class/mainClass.php");
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $obj = new mainClass();
 $allAnnouncement = $obj->show_announcement2();
-$allEvent = $obj->show_eventsByMonth();
-$allIt = $obj->show_allIt();
-$allCs = $obj->show_allCs();
-$allIs = $obj->show_allIs();
-$allOrg = $obj->show_org();
-$allMit = $obj->show_allMit();
-
-$allItHeads = $obj->show_allItHeads();
-$allCsHeads = $obj->show_allCsHeads();
-$allIsHeads = $obj->show_allIsHeads();
-$allMitHeads = $obj->show_allMitHeads();
-$allDean = $obj->show_allDeanHeads();
-$all2 = $obj->show_alllvl2();
-$all3 = $obj->show_alllvl3();
+$allIt = $obj->show_allIt(1);            // IT members or data for some purpose
+$allItHeads = $obj->show_allItHeads(10);  // IT heads data
+$allCs = $obj->show_allcs(3);            // CS members or data
+$allCsHeads = $obj->show_allCsHeads(12);  // CS heads data
+$allIs = $obj->show_allis(2);            // IS members or data
+$allIsHeads = $obj->show_allIsHeads(11);  // IS heads data
+$allMit = $obj->show_allmit(13);         // MIT members or data
+$allMitHeads = $obj->show_allMitHeads(13);
 $showfaqs = $obj->show_allFAQS();
+$allOrg = $obj->show_org();
 
+$allEvent = $obj->show_eventsByMonth();
 
 ?>
 <!DOCTYPE html>
@@ -30,12 +30,16 @@ $showfaqs = $obj->show_allFAQS();
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.2.4/dist/tailwind.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -50,1852 +54,861 @@ $showfaqs = $obj->show_allFAQS();
 
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <style>
-          .member-card {
-        transition: all 0.3s ease;
-    }
-    .member-card:hover {
-        transform: translateY(-5px);
-    }
-    .member-card .card-img-top {
-        transition: all 0.5s ease;
-    }
-    .member-card:hover .card-img-top {
-        transform: scale(1.1);
-    }
-    .overlay-gradient {
-        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 100%);
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-    .member-card:hover .overlay-gradient {
-        opacity: 1;
-    }
-    .btn-primary {
-        transition: all 0.3s ease;
-    }
-    .btn-primary:active {
-        transform: scale(0.95);
-    }
-          .news-feed-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .profile-photo {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-        }
-
-        .announcement-item-bg {
-            background-color: #f8f9fa;
-            transition: all 0.3s ease;
-            border-left: 4px solid #0d6efd;
-        }
-
-        .announcement-item-bg:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .announcement-date {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .announcement-image {
-    width: auto; /* Make the container full width */
-    height: auto; /* Maintain the aspect ratio */
-    padding:100px;
-   
-}
-
-.announcement-image img {
-    width: 100%; /* Make the image full width */
-    height: auto; /* Maintain the aspect ratio */
-}
-
-
-        .profile-card {
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .profile-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
-
-        .profile-img {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .profile-name {
-            margin-bottom: 4px;
-            color: #2c3e50;
-        }
-
-        .profile-username {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .nav-tabs {
-            border-bottom: 2px solid #dee2e6;
-            margin-bottom: 20px;
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            color: #6c757d;
-            font-weight: 500;
-            padding: 12px 20px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #0d6efd;
-            border-bottom: 3px solid #0d6efd;
-            background: transparent;
-        }
-
-        .show-members-btn {
-            margin-left: auto;
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .show-members-btn:hover {
-            background-color: #0b5ed7;
-            transform: translateY(-1px);
-        }
-
-        #newsFeedContent {
-            min-height: 400px;
-        }
-.card {
-    background: #ffffff;
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* Aspect Ratio Box */
-.aspect-ratio-box {
-    position: relative; /* Ensure this is set for absolute positioning of the img */
-    height: 200px; /* Set a fixed height */
-    overflow: hidden; /* Hide any overflow to maintain the aspect ratio */
-}
-
-.aspect-ratio-box img {
-    /* Center horizontally */
-    width: 100%; /* Let width auto to maintain aspect ratio */
-    height: 100%; /* Fixed height */
-    object-fit: cover; /* Cover the container */
-    transition: transform 0.5s ease;
-}
-/* Hover Effects */
-.transform-hover {
-    transition: transform 0.5s ease;
-}
-
-.card:hover .transform-hover {
-    transform: scale(1.1);
-}
-
-.card:hover .card-overlay {
-    opacity: 1;
-}
-
-/* Gradient Overlay */
-.bg-gradient-dark {
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-    transition: opacity 0.3s ease;
-}
-
-/* Rounded Corners */
-.rounded-top-xl {
-    border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
-}
-
-.rounded-xl {
-    border-radius: 0.75rem;
-}
-
-/* Text Sizes */
-.text-sm {
-    font-size: 0.875rem;
-}
-
-.text-xs {
-    font-size: 0.75rem;
-}
-
-/* Backdrop Blur */
-.backdrop-blur-sm {
-    backdrop-filter: blur(4px);
-}
-
-/* Row Spacing */
-.row {
-    margin-bottom: 2rem;
-}
-
-/* Equal Height Cards */
-.row-cols-1 > * {
-    height: 100%;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-    .row-cols-lg-4 > * {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
-
-@media (max-width: 576px) {
-    .row-cols-lg-4 > * {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-}
-        .tab-navigation {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .tab-button {
-        background-color: #f1f1f1;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        margin: 0 5px;
-    }
-    .tab-button.active {
-        background-color: #ccc;
-        font-weight: bold;
-    }
-    .tab-content {
-        display: block;
-    }
-    .tab-content.active {
-        display: block;
-    }
-    .svg-container {
-        width: 100%;
-        overflow: auto;
-    }
-    .map-building {
-        cursor: pointer;
-        transition: fill 0.3s;
-    }
-    .map-building:hover {
-        fill: orange;
-    }
-        .highlight {
-            fill: yellow; /* Highlight color */
-        }
-        svg {
-            width: 100%;
-            height: auto;
-        }
-        
-        /* Hover effects */
-        rect {
-            transition: fill 0.3s;
-                
-        }
-
-        rect:hover {
-            fill: #B0B0B0; /* Change color on hover */
-        }
-
-        text {
-            font-family: Arial, sans-serif;
-            
-            fill: black;
-            pointer-events: none; /* Prevent hover effects on text */
-        }
-           .faq-header h1 {
-            font-weight: bold;
-        }
-
-        .faq-header p.lead {
-            margin-bottom: 30px;
-            color: #666;
-        }
-
-        .accordion-button {
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        .accordion-body {
-            font-size: 1rem;
-        }
-
-        .faq-image {
-            text-align: center;
-            display: flex;
-            justify-content: center; /* Center the image */
-            align-items: center; /* Vertically center the image */
-            height: 90%; /* Make the column full height */
-        }
-
-        .faq-image img {
-            max-width: 80%;
-            height: auto; /* Keep aspect ratio */
-        }
-
-        .faq-toggle-icon {
-    right: 10px; /* Adjust the spacing from the right as needed */
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease; /* Smooth transition */
-}
-   .floating-card {
-    position: relative;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 10px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    margin-bottom: 20px;
-    max-width: 400px;
-    margin: 0 auto;
-    z-index: 1;
-}
-
-.floating-card:before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    width: 100px;
-    height: 15px;
-    background: rgba(0, 0, 0, 0.15);
-    filter: blur(10px);
-    border-radius: 50%;
-    transform: translateX(-50%);
-    z-index: -1;
-    transition: all 0.3s ease-in-out;
-}
-
-.floating-card:hover {
-    transform: translateY(-10px);
-}
-
-.floating-card:hover:before {
-    width: 120px;
-    height: 20px;
-    filter: blur(12px);
-    opacity: 0.8;
-}
-
-
-.text1{
-	font-size: 13px;
-    font-weight: 500;
-    color: #56575b;
-}
-.text2{
-	font-size: 13px;
-    font-weight: 500;
-    margin-left: 6px;
-    color: #56575b;
-}
-.text3{
-	font-size: 13px;
-    font-weight: 500;
-    margin-right: 4px;
-    color: #828386;
-}
-.text3o{
-	color: #00a5f4;
-
-}
-.text4{
-	font-size: 13px;
-    font-weight: 500;
-    color: #828386;
-}
-.text4i{
-	color: #00a5f4;
-}
-.text4o{
-	color: white;
-} /* Styles for the backdrop */
-       .highlight {
-    background-color: yellow !important; /* Use !important to override inline styles if needed */
-    }
-    .feedback-list {
-            max-height: 300px; /* Limit height of feedback list */
-            overflow-y: auto; /* Enable scrolling if content exceeds height */
-        }
-        .emoji-select {
-            cursor: pointer;
-            font-size: 2rem;
-            transition: transform 0.2s;
-        }
-        .emoji-select:hover {
-            transform: scale(1.2);
-        }
-        .selected {
-    color: gold; /* Change color to indicate selection */
-    transform: scale(1.5); /* Scale up the selected emoji for emphasis */
-}
-.avatar {
-        width: 30px; /* Set the width */
-        height: 30px; /* Set the height */
-        object-fit: cover; /* Cover ensures the image fills the circle without distorting */
-        border-radius: 50%; /* Make it circular */
-    }
-
-#backdrop {
-    position: fixed; /* Make backdrop cover the entire viewport */
-    top: 0;
-    left: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
-    display: none; /* Hidden by default */
-    z-index: 999; /* On top of other elements */
-}
-
-#profileCard {
-      display: none; /* Initially hidden */
-      position: fixed; /* Fixed position */
-      top: 50%; /* Center vertically */
-      left: 50%; /* Center horizontally */
-      transform: translate(-50%, -50%); /* Adjust position */
-      z-index: 1000; /* Ensure it appears on top */
-      background-color: white; /* Background color */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-      border-radius: 10px; /* Rounded corners */
-      overflow: hidden; /* Prevent overflow */
-      width: 300px; /* Adjust width to fit the content */
-      height: auto; /* Automatic height based on content */
-      padding: 20px; /* Padding around content */
-  }
-
-  .card {
-      width: 100%; /* Full width of the profile card */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center; /* Center items */
-      text-align: center; /* Center text */
-  }
-
-    .modal-body img {
-    /* Make the image circular */
-    border: 2px solid #f0f0f0; /* Optional: Add a border around the image */
-    object-fit: cover; /* Ensure the image covers the entire area */
-    }
-.org-chart {
-    text-align: center;
-    background-color: #f9f9f9; /* Light gray background */
-    padding: 20px;
-}
-
-.level1, .level2, .level3 {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-/* Level 1 specific styling */
-.level1 .member {
-    background-color: #2e0f13; /* Deep pink for main level */
-}
-
-/* Level 2 specific styling */
-.level2 {
-    justify-content: space-around;
-    margin-top: 50px;
-}
-
-.level2 .member {
-    background-color: #2e0f13; /* Deep indigo for secondary levels */
-}
-
-/* Level 3 specific styling */
-.level3 {
-    justify-content: center; /* Center items for responsiveness */
-    flex-wrap: wrap; /* Allow wrapping of items */
-    margin-top: 50px;
-    width: 90%;
-    margin: 0 auto;
-}
-
-/* Member ovals */
-.member {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: #2e0f13; /* Deep indigo for default */
-    padding: 10px 20px;
-    border-radius: 50px; /* Oval shape */
-    max-width: 250px; /* Set a max width */
-    height: 80px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    transition: background-color 0.3s, transform 0.2s;
-    margin: 10px; /* Add margin for spacing between items */
-    flex: 0 1 auto; /* Allow the flex item to be auto-sized */
-}
-
-/* Adjust member width for different item counts */
-.level3 .member {
-    flex: 0 1 calc(33.33% - 20px); /* 3 items per row with margin */
-}
-
-/* For 4 or fewer items, center them */
-.level3 .member:nth-last-child(-n+4) {
-    flex: 0 1 calc(50% - 20px); /* 2 items per row if 4 or fewer */
-}
-
-.level3 .member:nth-last-child(1) {
-    flex: 0 1 100%; /* 1 item should take full width */
-}
-
-/* Hover effect for ovals */
-.member:hover {
-    background-color: #1E88E5; /* Lighter blue on hover */
-    transform: scale(1.05); /* Slight scale on hover */
-}
-
-/* Image in the oval */
-.member img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Circle image */
-    object-fit: cover;
-    border: 2px solid #ffffff; /* White border for contrast */
-    margin-right: 10px;
-}
-
-/* Text inside the oval */
-.member p {
-    color: #FFD700; /* Gold text for contrast */
-    font-size: 12px; /* Smaller font size for readability */
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-}
-
-/* Active state for member */
-.button-faculty-btn.active {
-    background-color: #F06292; /* Light pink for active state */
-}
-
-/* Hover and focus effect for buttons */
-.button-faculty-btn:hover,
-.button-faculty-btn.active {
-    background-color: #F06292;
-    transform: scale(1.05);
-}
-
-.button-faculty-btn:focus {
-    outline: none;
-}
-
-.faculty-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #333;
-    margin-bottom: 10px;
-}
-
-.faculty-info {
-    padding: 15px;
-    text-align: center;
-}
-
-.faculty-info h6 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.faculty-info a {
-    font-size: 14px;
-    color: #fff;
-    display: block;
-    margin-top: 5px;
-}
-
-@media (max-width: 576px) {
-    .section-heading h1 {
-        font-size: 1.25em;
-    }
-
-    .content-section {
-        padding: 10px;
-    }
-
-    .item {
-        padding: 10px;
-    }
-
-    .timestamp {
-        font-size: 0.7em;
-        text-align: left;
-    }
-
-    .text-content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .text-content img.avaatar {
-        width: 40px;
-        height: 40px;
-        margin: 0 0 5px 0;
-    }
-
-    .text-content span {
-        font-size: 0.9em;
-    }
-
-    .square img {
-        max-width: 90%;
-        margin: 5px 0;
-    }
-    .fclty-div {
-        flex-direction: row; /* Stack buttons vertically */
-        align-items: center;
-    }
-
-    .button-faculty-btn {
-        width: 20%; /* Adjust width to fit screen */
-        padding: 15px;
-        font-size: 10px; /* Smaller font for smaller screens */
-    }
-}
-.calendar-wrapper {
-        padding: 1.5rem;
-    }
     
-    .event-section {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-        backdrop-filter: blur(10px);
-    }
-    
-    .event-section h4 {
-        color: #ffd700;
-        font-size: 1.2rem;
-        margin: 0 0 1rem 0;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-    }
-    
-    .event-grid {
-        display: grid;
-        gap: 1rem;
-    }
-    
-    .event-card {
-        display: flex;
-        gap: 1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
-        padding: 1rem;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .event-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        background: rgba(255, 255, 255, 0.05);
-    }
-    
-    .event-date {
-        min-width: 100px;
-        text-align: center;
-        padding: 0.5rem;
-        background: rgba(255, 215, 0, 0.1);
-        border-radius: 6px;
-        color: #ffd700;
-    }
-    
-    .event-details {
-        flex: 1;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-    
-    .no-events {
-        text-align: center;
-        padding: 2rem;
-        color: rgba(255, 255, 255, 0.7);
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-
-        @media (max-width: 768px) {
-            .section-header h1 {
-                font-size: 2rem;
-            }
-
-            .card-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .meta-info {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    @media (max-width: 640px) {
-        .event-card {
-            flex-direction: column;
-        }
-        
-        .event-date {
-            width: 100%;
-        }
-    }
-    .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .yellow-line {
-            height: 0.25rem;
-            width: 5rem;
-            background: #ffd700;
-            margin: 0 auto;
-            border-radius: 9999px;
-        }
-
-        .announcements {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-       
-        .announcement-card {
-    margin-bottom: 15px;
-    padding: 15px;
-    border: 1px solid rgba(221, 221, 221, 0.5); /* Light gray border with transparency */
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for the cards */
-}
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card-header {
-            
-            padding: 16px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .org-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .org-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .org-name {
-            font-weight: 600;
-            font-size: 1.1em;
-            color: black;
-            margin-bottom: 4px;
-        }
-
-        .meta-info {
-            display: flex;
-            gap: 16px;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .icon {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .card-content {
-            padding: 16px;
-        }
-
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .announcement-text {
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .announcement-text.truncated {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .see-more-link {
-            color: white; /* Optional: Set a color */
-            text-decoration: none; /* Removes underline */
-            cursor: pointer;
-            font-weight: 500;
-            display: block;
-            margin-top: 8px;
-        }
-
-        .announcement-image {
-    width: 100%; /* Make the container full width */
-    height: auto; /* Maintain the aspect ratio */
-    overflow: hidden; /* Hide overflow */
-}
-
-.announcement-image img {
-    width: 100%; /* Make the image full width */
-    height: auto; /* Maintain the aspect ratio */
-    display: block; /* Prevent extra space below the image */
-}
-.ann-container {
-    max-height: 600px; /* Maximum height for scrolling */
-    overflow-y: auto;
-    padding: 20px; /* Adds padding around content */
-    padding-right: 15px; /* Space for scrollbar */
-    background: #2e0f13;
-    border-radius: 8px; /* Smooth rounded corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    margin-top: 20px;
-}
-
-.announcement-card p {
-    font-size: 1rem;
-    color: #555; /* Softer color for secondary text */
-    line-height: 1.5;
-}
-
-
-        @media (max-width: 600px) {
-            .announcements-container {
-                padding: 12px;
-            }
-
-            .meta-info {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .see-more-link {
-            order: 2;
-            display: block;
-            font-size: 0.85em; /* Adjust this value as needed for smaller text */
-            color: white; /* Optional: Set a color */
-            text-decoration: none; /* Removes underline */
-        }
-
-            .content-wrapper {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .announcement-text {
-                order: 1; /* Moves text to top */
-                
-            }
-
-            .announcement-image {
-                order: 3; /* Keeps image at bottom */
-                margin-top: 16px; 
-                width: auto; /* Make the container full width */
-                height: auto; /* Maintain the aspect ratio */
-                padding:0;
-            
-        }
-    
-    
-</style>
 </head>
 
 <body>
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="img/C.png" alt="Logo" width="120"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mobileNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#announcement">ANNOUNCEMENT</a></li>
-                <li class="nav-item"><a class="nav-link" href="#schoolcalendar">SCHOOL CALENDAR</a></li>
-                <li class="nav-item"><a class="nav-link" href="#campusmap">CAMPUS MAP</a></li>
-                <li class="nav-item"><a class="nav-link" href="#facultymembers">FACULTY MEMBERS</a></li>
-                <li class="nav-item"><a class="nav-link" href="#campusorgs">CAMPUS ORGS</a></li>
-                <li class="nav-item"><a class="nav-link" href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
-                <li class="nav-item"><a class="nav-link" href="#feed">FEEDBACK</a></li>
-                <li class="nav-item"><a class="nav-link" href="#aboutus ">ABOUT US</a></li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="img/C.png" alt="Logo" width="120"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mobileNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#announcement">ANNOUNCEMENT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#schoolcalendar">SCHOOL CALENDAR</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#campusmap">CAMPUS MAP</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#facultymembers">FACULTY MEMBERS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#campusorgs">CAMPUS ORGS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#feed">FEEDBACK</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#aboutus ">ABOUT US</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-
-<!-- Desktop Sidebar Navigation -->
-<div class="sidebar-navigation d-none d-lg-block">
-    <div class="logo">
-        <a href="#"><img src="img/C.png" alt="Logo" width="240"></a>
-    </div>
-    <nav>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="#announcement">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    ANNOUNCEMENT
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#schoolcalendar">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    SCHOOL CALENDAR
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#campusmap">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    CAMPUS MAP
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#facultymembers">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    FACULTY MEMBERS
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#campusorgs">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    CAMPUS ORGS
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#faqs">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    FREQUENTLY ASKED QUESTIONS
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#feed">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    FEEDBACK
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#aboutus">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    ABOUT US
-                </a>
-            </li>
-        </ul>
     </nav>
-   
-</div>
+
+    <!-- Desktop Sidebar Navigation -->
+    <div class="sidebar-navigation d-none d-lg-block">
+        <div class="logo">
+            <a href="#"><img src="img/C.png" alt="Logo" width="240"></a>
+        </div>
+        <nav>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#announcement">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        ANNOUNCEMENT
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#schoolcalendar">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        SCHOOL CALENDAR
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#campusmap">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        CAMPUS MAP
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#facultymembers">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        FACULTY MEMBERS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#campusorgs">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        CAMPUS ORGS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#faqs">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        FREQUENTLY ASKED QUESTIONS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#feed">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        FEEDBACK
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#aboutus">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        ABOUT US
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
     <div class="page-content">
 
-    
     <?php
-// Database connection (assuming you have a PDO connection)
-$dsn = 'mysql:host=localhost;dbname=ckiosk';
-$username = 'root';
-$password = '';
-$connection = new PDO($dsn, $username, $password);
-
-// Set the default timezone to Asia/Manila
-date_default_timezone_set('Asia/Manila');
+include_once ("class/connection.php");
 
 function getAllAnnouncements($connection) {
-    // Main announcement query to retrieve all announcements
+    // Main announcement query to retrieve all announcements with images
     $query = "
         SELECT a.*, 
                u.users_username AS author_name, 
                COALESCE(c.users_username, o.username, 'Unknown Creator') AS creator_name, 
                org.org_name, 
-               org.org_image 
+               org.org_image,
+               GROUP_CONCAT(ai.image_path) AS announcement_images
         FROM announcement_tbl a 
         LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
         LEFT JOIN users_tbl c ON a.created_by = c.users_id  
         LEFT JOIN orgmembers_tbl o ON a.created_by = o.id  
         LEFT JOIN organization_tbl org ON u.users_org = org.org_id  
+        LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
         WHERE a.is_archived = 0
+        GROUP BY a.announcement_id
     ";
 
-    // Prepare and execute the statement
-    $statement = $connection->prepare($query);
-
-    if ($statement->execute()) {
+    try {
+        $statement = $connection->prepare($query);
+        $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        // Clean and prepare data for output
         foreach ($result as &$row) {
-            $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
-                                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                                : 'default_org_image.jpg'; 
+            // Assign default image if org image is not available
+            $row['org_image'] = !empty($row['org_image'])
+                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                : 'default_org_image.jpg';
 
-            // Sanitize creator name
+            // Convert announcement_images to an array; handle cases where no images are available
+            $row['announcement_images'] = !empty($row['announcement_images'])
+                ? explode(',', $row['announcement_images'])
+                : [];
+            
             $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
-
-            // Ensure the org_name has a default if not found
-            $row['org_name'] = isset($row['org_name']) && !empty($row['org_name'])
-                               ? htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8')
-                               : 'Unknown Organization'; 
+            $row['org_name'] = !empty($row['org_name'])
+                ? htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8')
+                : 'Unknown Organization'; 
         }
 
         return $result;
-    } else {
-        return "No Data";
+    } catch (PDOException $e) {
+        return "Error: " . $e->getMessage();
     }
 }
 
 // Get all announcements
-$allAnnouncement = getAllAnnouncements($connection);
+$allAnnouncement = getAllAnnouncements($connect);
 ?>
+        <!-- HTML Section -->
+        <div class="section-heading text-center mb-10">
+    <h1 class="text-4xl font-semibold text-yellow-600"><em>ANNOUNCEMENT</em></h1>
+</div>
 
-
-<!-- HTML Section -->
-<section id="announcement" class="content-section">
-    <div class="section-heading text-center borderYellow">
-        <h1><br><em>ANNOUNCEMENT</em></h1>
+<div class="ann-container px-4 sm:px-6 lg:px-8">
+    <div class="announcements space-y-8" id="announcements-container">
+        <!-- Announcements will be inserted here dynamically by JavaScript -->
     </div>
-    <div class="ann-container">
-        
-
-        <div class="announcements" id="announcements-container">
-            <!-- Announcements will be inserted here by JavaScript -->
-        </div>
-    </div>
-</section>
+</div>
 
 
-
-</section>
 <section id="schoolcalendar" class="content-section">
     <div class="section-heading text-center borderYellow">
         <h1><em>SCHOOL CALENDAR</em></h1>
     </div>
     <div class="section-content">
-    <div class="tabs-content">
-        <div class="wrapper calendar-wrapper">
-            <section class="tabgroup">
-                <ul>
-                    <?php 
-                    $today = date('Y-m-d');
-                    $todayEvents = [];
-                    $upcomingEvents = [];
+        <div class="tabs-content">
+            <div class="wrapper calendar-wrapper">
+                <section class="tabgroup">
+                    <ul>
+                        <?php 
+                        $today = date('Y-m-d');  // Format today's date
+                        $todayEvents = [];
+                        $upcomingEvents = [];
 
-                    foreach ($allEvent as $month => $events) {
-                        foreach ($events as $event) {
-                            if (isset($event['calendar_date'], $event['calendar_id'], $event['calendar_details'])) {
-                                if ($event['calendar_date'] === $today) {
-                                    $todayEvents[] = $event;
-                                } elseif ($event['calendar_date'] > $today) {
-                                    $upcomingEvents[] = $event;
+                        foreach ($allEvent as $month => $events) {
+                            foreach ($events as $event) {
+                                if (isset($event['calendar_start_date'], $event['calendar_id'], $event['calendar_details'])) {
+                                    $eventDate = new DateTime($event['calendar_start_date']);
+                                    $eventFormatted = $eventDate->format('Y-m-d');  // Ensure it's only the date part
+
+                                    // Check if the event is today or upcoming
+                                    if ($eventFormatted === $today) {
+                                        $todayEvents[] = $event;
+                                    } elseif ($eventFormatted > $today) {
+                                        $upcomingEvents[] = $event;
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (!empty($todayEvents)) {
-                        echo '<li class="event-section">';
-                        echo '<h4>Happening Today</h4>';
-                        echo '<div class="event-grid">';
-                        
-                        foreach ($todayEvents as $event) {
-                            $date = new DateTime($event['calendar_date']);
-                            echo '<div class="event-card">';
-                            echo '<div class="event-date">';
-                            echo $date->format('M d, Y');
+                        // Debugging: Check if there are events to display
+                        // Uncomment for debugging:
+                        // echo '<pre>';
+                        // print_r($todayEvents);
+                        // print_r($upcomingEvents);
+                        // echo '</pre>';
+
+                        // Display today's events
+                        if (!empty($todayEvents)) {
+                            echo '<li class="event-section">';
+                            echo '<h4>Happening Today</h4>';
+                            echo '<div class="event-grid">';
+                            foreach ($todayEvents as $event) {
+                                $date = new DateTime($event['calendar_start_date']);
+                                echo '<div class="event-card">';
+                                echo '<div class="event-date">';
+                                echo $date->format('M d, Y');
+                                echo '</div>';
+                                echo '<div class="event-details">';
+                                echo htmlspecialchars(strip_tags($event['calendar_details'] ?? 'No details available'));
+                                echo '</div>';
+                                echo '</div>';
+                            }
                             echo '</div>';
-                            echo '<div class="event-details">';
-                            echo htmlspecialchars(strip_tags($event['calendar_details']));
-                            echo '</div>';
-                            echo '</div>';
+                            echo '</li>';
                         }
-                        
-                        echo '</div>';
-                        echo '</li>';
-                    }
 
-                    if (!empty($upcomingEvents)) {
-                        echo '<li class="event-section">';
-                        echo '<h4>Upcoming Events</h4>';
-                        echo '<div class="event-grid">';
-                        
-                        foreach ($upcomingEvents as $event) {
-                            $date = new DateTime($event['calendar_date']);
-                            echo '<div class="event-card">';
-                            echo '<div class="event-date">';
-                            echo $date->format('M d, Y');
+                        // Display upcoming events
+                        if (!empty($upcomingEvents)) {
+                            echo '<li class="event-section">';
+                            echo '<h4>Upcoming Events</h4>';
+                            echo '<div class="event-grid">';
+                            foreach ($upcomingEvents as $event) {
+                                $date = new DateTime($event['calendar_start_date']);
+                                echo '<div class="event-card">';
+                                echo '<div class="event-date">';
+                                echo $date->format('M d, Y');
+                                echo '</div>';
+                                echo '<div class="event-details">';
+                                echo htmlspecialchars(strip_tags($event['calendar_details'] ?? 'No details available'));
+                                echo '</div>';
+                                echo '</div>';
+                            }
                             echo '</div>';
-                            echo '<div class="event-details">';
-                            echo htmlspecialchars(strip_tags($event['calendar_details']));
-                            echo '</div>';
-                            echo '</div>';
+                            echo '</li>';
                         }
-                        
-                        echo '</div>';
-                        echo '</li>';
-                    }
 
-                    if (empty($todayEvents) && empty($upcomingEvents)) {
-                        echo '<li>';
-                        echo '<div class="no-events">';
-                        echo '<h4>No Events Happening Today or Upcoming</h4>';
-                        echo '</div>';
-                        echo '</li>';
-                    }
-                    ?>
-                </ul>
-            </section>
+                        // If no events are found
+                        if (empty($todayEvents) && empty($upcomingEvents)) {
+                            echo '<li>';
+                            echo '<div class="no-events">';
+                            echo '<h4>No Events Happening Today or Upcoming</h4>';
+                            echo '</div>';
+                            echo '</li>';
+                        }
+                        ?>
+                    </ul>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 </section>
 
 
 
 
-<section id="campusmap" class="content-section">
-    <div class="section-heading text-center borderYellow">
-        <h1><br><em>CAMPUS MAP</em></h1>
-    </div>
 
-    <!-- Tab Navigation -->
-    <div class="tab-container">
-    <button class="tab-button active" onclick="openTab(event, 'ccs')">CCS</button>
-    <button class="tab-button" onclick="openTab(event, 'cit')">CIT</button>
-    <button class="tab-button" onclick="openTab(event, 'cafa')">CAFA</button>
-    </div>
 
-    <!-- Floor Map Section -->
-    <div id="ccs" class="tab-content">
-        <div id="map">
-            <div class="map section-content-map">
-                <div class="dropdown">
-                    <input type="text" id="search-input" class="search"placeholder="Enter room name">
-                    <button onclick="searchAndHighlight()" class="search-button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <select id="dropdownMenu">
-                        <option value="1" selected>1st Floor</option>
-                        <option value="2">2nd Floor</option>
-                        <option value="3">3rd Floor</option>
-                        <option value="4">4th Floor</option>
-                        <option value="5">5th Floor</option>
-                    </select>
-                </div>
-                <div class="table-container">
-                    <table class="floor-table" id="floor-1" border="1">
-                        <tbody>
-                            <tr>
-                                <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
-                                <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
-                                <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                <td id="7" class="floor-gray" colspan="2"></td>
-                            </tr>
-                            <tr>
-                                <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
-                                <td id="9" class="floor-gray" colspan="2"></td>
-                            </tr>
-                            <tr>
-                                <td class="floor-gray" colspan="2" id="10">0</td>
-                                <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
-                                <td id="12" class="floor-gray" colspan="2">2</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="13">3</td>
-                                <td id="14" class="floor-gray" colspan="2">4</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
-                                <td id="16" class="floor-gray" colspan="2">6</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
-                                <td id="18" class="floor-gray" colspan="2">8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="floor-table" id="floor-2" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
-                                <td id="20" class="floor-gray" rowspan="2">19</td>
-                                <td id="21" class="floor-gray" rowspan="2">20</td>
-                                <td id="22" class="floor-gray" rowspan="2">21</td>
-                                <td id="23" class="floor-gray" rowspan="2">22</td>
-                                <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
-                                <td id="25" class="floor-gray" colspan="2">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
-                                <td id="27" class="floor-gray" colspan="2">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="28">27</td>
-                                <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
-                                <td id="32" class="floor-gray" colspan="2">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="31">30</td>
-                                <td id="30" class="floor-gray" colspan="2">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
-                                <td id="34" class="floor-gray" colspan="2">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
-                                <td id="36" class="floor-gray" colspan="2">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <section id="campusmap" class="content-section">
+            <div class="section-heading text-center borderYellow">
+                <h1><br><em>CAMPUS MAP</em></h1>
+            </div>
 
-                    <table class="floor-table" id="floor-3" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
-                                <td id="38" rowspan="2" class="floor-gray">19</td>
-                                <td id="39" rowspan="2" class="floor-gray">20</td>
-                                <td id="40" rowspan="2" class="floor-gray">21</td>
-                                <td id="41" rowspan="2" class="floor-gray">22</td>
-                                <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
-                                <td id="43" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="45" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="46" class="floor-gray">27</td>
-                                <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="48" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="50" class="floor-gray">30</td>
-                                <td id="49" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="52" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="54" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Tab Navigation -->
+            <div class="tab-container">
+                <button class="tab-button active" onclick="openTab(event, 'ccs')">CCS</button>
+                <button class="tab-button" onclick="openTab(event, 'cit')">CIT</button>
+                <button class="tab-button" onclick="openTab(event, 'cafa')">CAFA</button>
+            </div>
 
-                    <table class="floor-table" id="floor-4" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
-                                <td id="56" rowspan="2" class="floor-gray">19</td>
-                                <td id="57" rowspan="2" class="floor-gray">20</td>
-                                <td id="58" rowspan="2" class="floor-gray">21</td>
-                                <td id="59" rowspan="2" class="floor-gray">22</td>
-                                <td id="60" rowspan="2" class="floor-gray">23</td>
-                                <td id="61" rowspan="2" class="floor-gray">23</td>
-                                <td id="62" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="64" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="65" class="floor-gray">27</td>
-                                <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="67" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="68" class="floor-gray">30</td>
-                                <td id="69" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="71" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="73" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Floor Map Section -->
+            <div id="ccs" class="tab-content">
+                <div id="map">
+                    <div class="map section-content-map">
+                        <div class="dropdown">
+                            <input type="text" id="search-input" class="search" placeholder="Enter room name">
+                            <button onclick="searchAndHighlight()" class="search-button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <select id="dropdownMenu">
+                                <option value="1" selected>1st Floor</option>
+                                <option value="2">2nd Floor</option>
+                                <option value="3">3rd Floor</option>
+                                <option value="4">4th Floor</option>
+                                <option value="5">5th Floor</option>
+                            </select>
+                        </div>
+                        <div class="table-container">
+                            <table class="floor-table" id="floor-1" border="1">
+                                <tbody>
+                                    <tr>
+                                        <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
+                                        <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
+                                        <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
+                                        <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
+                                        <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
+                                        <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
+                                        <td id="7" class="floor-gray" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
+                                        <td id="9" class="floor-gray" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="floor-gray" colspan="2" id="10">0</td>
+                                        <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
+                                        <td id="12" class="floor-gray" colspan="2">2</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="floor-gray" id="13">3</td>
+                                        <td id="14" class="floor-gray" colspan="2">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
+                                        <td id="16" class="floor-gray" colspan="2">6</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
+                                        <td id="18" class="floor-gray" colspan="2">8</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="floor-table" id="floor-2" border="1">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
+                                        <td id="20" class="floor-gray" rowspan="2">19</td>
+                                        <td id="21" class="floor-gray" rowspan="2">20</td>
+                                        <td id="22" class="floor-gray" rowspan="2">21</td>
+                                        <td id="23" class="floor-gray" rowspan="2">22</td>
+                                        <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
+                                        <td id="25" class="floor-gray" colspan="2">24</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
+                                        <td id="27" class="floor-gray" colspan="2">26</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="floor-gray" id="28">27</td>
+                                        <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
+                                        <td id="32" class="floor-gray" colspan="2">29</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="floor-gray" id="31">30</td>
+                                        <td id="30" class="floor-gray" colspan="2">31</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
+                                        <td id="34" class="floor-gray" colspan="2">33</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
+                                        <td id="36" class="floor-gray" colspan="2">35</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                    <table class="floor-table" id="floor-5" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
-                                <td id="75" rowspan="2" class="floor-gray">19</td>
-                                <td id="76" rowspan="2" class="floor-gray">20</td>
-                                <td id="77" rowspan="2" class="floor-gray">21</td>
-                                <td id="78" rowspan="2" class="floor-gray">22</td>
-                                <td id="79" rowspan="2" class="floor-gray">23</td>
-                                <td id="80" rowspan="2" class="floor-gray">23</td>
-                                <td id="81" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="83" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="84" class="floor-gray">27</td>
-                                <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="86" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="87" class="floor-gray">30</td>
-                                <td id="88" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="90" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="92" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <table class="floor-table" id="floor-3" border="1">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
+                                        <td id="38" rowspan="2" class="floor-gray">19</td>
+                                        <td id="39" rowspan="2" class="floor-gray">20</td>
+                                        <td id="40" rowspan="2" class="floor-gray">21</td>
+                                        <td id="41" rowspan="2" class="floor-gray">22</td>
+                                        <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
+                                        <td id="43" colspan="2" class="floor-gray">24</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
+                                        <td id="45" colspan="2" class="floor-gray">26</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="46" class="floor-gray">27</td>
+                                        <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                        <td id="48" colspan="2" class="floor-gray">29</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="50" class="floor-gray">30</td>
+                                        <td id="49" colspan="2" class="floor-gray">31</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
+                                        <td id="52" colspan="2" class="floor-gray">33</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
+                                        <td id="54" colspan="2" class="floor-gray">35</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="floor-table" id="floor-4" border="1">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
+                                        <td id="56" rowspan="2" class="floor-gray">19</td>
+                                        <td id="57" rowspan="2" class="floor-gray">20</td>
+                                        <td id="58" rowspan="2" class="floor-gray">21</td>
+                                        <td id="59" rowspan="2" class="floor-gray">22</td>
+                                        <td id="60" rowspan="2" class="floor-gray">23</td>
+                                        <td id="61" rowspan="2" class="floor-gray">23</td>
+                                        <td id="62" colspan="2" class="floor-gray">24</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
+                                        <td id="64" colspan="2" class="floor-gray">26</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="65" class="floor-gray">27</td>
+                                        <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                        <td id="67" colspan="2" class="floor-gray">29</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="68" class="floor-gray">30</td>
+                                        <td id="69" colspan="2" class="floor-gray">31</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
+                                        <td id="71" colspan="2" class="floor-gray">33</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
+                                        <td id="73" colspan="2" class="floor-gray">35</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="floor-table" id="floor-5" border="1">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
+                                        <td id="75" rowspan="2" class="floor-gray">19</td>
+                                        <td id="76" rowspan="2" class="floor-gray">20</td>
+                                        <td id="77" rowspan="2" class="floor-gray">21</td>
+                                        <td id="78" rowspan="2" class="floor-gray">22</td>
+                                        <td id="79" rowspan="2" class="floor-gray">23</td>
+                                        <td id="80" rowspan="2" class="floor-gray">23</td>
+                                        <td id="81" colspan="2" class="floor-gray">24</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
+                                        <td id="83" colspan="2" class="floor-gray">26</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="84" class="floor-gray">27</td>
+                                        <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                        <td id="86" colspan="2" class="floor-gray">29</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="87" class="floor-gray">30</td>
+                                        <td id="88" colspan="2" class="floor-gray">31</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
+                                        <td id="90" colspan="2" class="floor-gray">33</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
+                                        <td id="92" colspan="2" class="floor-gray">35</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
             <!-- SVG Map Section -->
             <div id="cit" class="tab-content" style="display: none;">
-    <div id="map">
-        <div class="map section-content-map">
-            <div class="dropdown">
-                <input type="text" id="search"  class="search" placeholder="Enter room name">
-                <button onclick="searchElement()" class="search-button">
-                    <i class="fa fa-search"></i>
-                </button>
+                <div id="map">
+                    <div class="map section-content-map">
+                        <div class="dropdown">
+                            <input type="text" id="search" class="search" placeholder="Enter room name">
+                            <button onclick="searchElement()" class="search-button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <svg id="room-svg" viewBox="0 0 985 588" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black" />
+                                <rect x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black" />
+                                <rect id="cit-5-a-b" x="167.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black" />
+                                <text id="stock-room" x="195" y="250" text-anchor="middle" font-size="12">
+                                    STOCK
+                                    <tspan dy="1.2em" dx="-44">ROOM</tspan>
+                                </text>
+                                <rect id="ctl-1-a" x="40.5" y="301.5" width="52" height="67" fill="#D9D9D9" stroke="black" />
+                                <text id="ctl-1-a-text" x="63" y="335" text-anchor="middle" font-size="12">CTL 1-A</text>
+                                <rect id="cit-3-b-rect" x="303.5" y="72.5" width="49" height="69" fill="#D9D9D9" stroke="black" />
+                                <text id="cit-3-b-text" x="328" y="105" text-anchor="middle" font-size="12">CIT 3-B</text>
+                                <rect id="cit-5-a-b-rect" x="353.5" y="72.5" width="53" height="69" fill="#D9D9D9" stroke="black" />
+                                <rect id="cit-5-a-b-combined" x="361.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                <text id="cit-5-a-b-text" x="406" y="250" text-anchor="middle" font-size="12">CIT 5-A & 5-B
+                                    <tspan dy="1.2em" dx="-80">ELECTRICAL</tspan>
+                                </text>
+                                <rect id="etl-5" x="452.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                <text id="etl-5-text" x="497" y="250" text-anchor="middle" font-size="12">ETL 5</text>
+                                <rect id="cit-5-b-lec" x="543.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                <text id="cit-5-b-lec-text" x="588" y="250" text-anchor="middle" font-size="12">CIT 5-B LEC</text>
+                                <rect id="bodega" x="634.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                <text id="bodega-text" x="679" y="250" text-anchor="middle" font-size="12">BODEGA</text>
+                                <rect id="library" x="725.5" y="205.5" width="89" height="95" fill="#D9D9D9" stroke="black" />
+                                <text id="library-text" x="770" y="250" text-anchor="middle" font-size="12">LIBRARY</text>
+                                <rect id="chairperson-office" x="220.5" y="136.5" width="53" height="68" fill="#D9D9D9" stroke="black" />
+                                <text id="chairperson-office-text" x="250" y="170" text-anchor="middle" font-size="8">
+                                    CHAIRPERSON
+                                    <tspan dy="1.2em" dx="-44">OFFICE</tspan>
+                                </text>
+                                <rect id="d-o" x="40.5" y="369.5" width="52" height="68" fill="#D9D9D9" stroke="black" />
+                                <text id="d-o-text" x="63" y="405" text-anchor="middle" font-size="12">D.O.</text>
+                                <rect id="cr" x="40.5" y="438.5" width="52" height="69" fill="#D9D9D9" stroke="black" />
+                                <text id="cr-text" x="63" y="475" text-anchor="middle" font-size="12">CR</text>
+                                <rect id="cit-2-a" x="93.5" y="205.5" width="73" height="46" fill="#D9D9D9" stroke="black" />
+                                <text id="cit-2-a-text" x="130" y="230" text-anchor="middle" font-size="12">CIT 2-A</text>
+                                <path id="welding" d="M274 205H361V301H274V205Z" fill="#D9D9D9" />
+                                <text id="welding-text" x="317" y="250" text-anchor="middle" font-size="12">WELDING</text>
+                                <rect id="cit-3-a" x="220.5" y="72.5" width="82" height="69" fill="#D9D9D9" stroke="black" />
+                                <text id="cit-3-a-text" x="261" y="105" text-anchor="middle" font-size="12">CIT 3-A</text>
+                                <rect id="cit-2-b" x="93.5" y="252.5" width="73" height="48" fill="#D9D9D9" stroke="black" />
+                                <text id="cit-2-b-text" x="130" y="280" text-anchor="middle" font-size="12">CIT 2-B</text>
+                                <path id="pantry" d="M274 142H407V205H274V142Z" fill="#D9D9D9" />
+                                <text id="pantry-text" x="340" y="172" text-anchor="middle" font-size="12">PANTRY</text>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M405.629 205H407V142H405.629V205Z" fill="black" />
+                                <rect id="breaker" x="815.5" y="180.5" width="39" height="48" fill="#D9D9D9" stroke="black" />
+                                <text id="breaker-text" x="834" y="205" text-anchor="middle" font-size="8">BREAKER</text>
+                                <rect id="ctl-6" x="855.5" y="286.5" width="89" height="94" fill="#D9D9D9" stroke="black" />
+                                <text id="ctl-6-text" x="900" y="322" text-anchor="middle" font-size="12">CTL 6</text>
+                                <rect id="ctl-6-a-b" x="855.5" y="190.5" width="89" height="95" fill="#D9D9D9" stroke="black" />
+                                <text id="ctl-6-a-b-text" x="900" y="225" text-anchor="middle" font-size="12">CTL 6-A & 6-B</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="table-container">
-                <svg id="room-svg" viewBox="0 0 985 588" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect  x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <rect  x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-5-a-b" x="167.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="stock-room" x="195" y="250" text-anchor="middle" font-size="12">
-                        STOCK
-                        <tspan dy="1.2em" dx="-44">ROOM</tspan>
-                    </text>
-                    <rect id="ctl-1-a" x="40.5" y="301.5" width="52" height="67" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-1-a-text" x="63" y="335" text-anchor="middle" font-size="12">CTL 1-A</text>
-                    <rect id="cit-3-b-rect" x="303.5" y="72.5" width="49" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-3-b-text" x="328" y="105" text-anchor="middle" font-size="12">CIT 3-B</text>
-                    <rect id="cit-5-a-b-rect" x="353.5" y="72.5" width="53" height="69" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-5-a-b-combined" x="361.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-5-a-b-text" x="406" y="250" text-anchor="middle" font-size="12">CIT 5-A & 5-B
-                        <tspan dy="1.2em" dx="-80">ELECTRICAL</tspan>
-                    </text>
-                    <rect id="etl-5" x="452.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="etl-5-text" x="497" y="250" text-anchor="middle" font-size="12">ETL 5</text>
-                    <rect id="cit-5-b-lec" x="543.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-5-b-lec-text" x="588" y="250" text-anchor="middle" font-size="12">CIT 5-B LEC</text>
-                    <rect id="bodega" x="634.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="bodega-text" x="679" y="250" text-anchor="middle" font-size="12">BODEGA</text>
-                    <rect id="library" x="725.5" y="205.5" width="89" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="library-text" x="770" y="250" text-anchor="middle" font-size="12">LIBRARY</text>
-                    <rect id="chairperson-office" x="220.5" y="136.5" width="53" height="68" fill="#D9D9D9" stroke="black"/>
-                    <text id="chairperson-office-text" x="250" y="170" text-anchor="middle" font-size="8">
-                        CHAIRPERSON
-                        <tspan dy="1.2em" dx="-44">OFFICE</tspan>
-                    </text>
-                    <rect id="d-o" x="40.5" y="369.5" width="52" height="68" fill="#D9D9D9" stroke="black"/>
-                    <text id="d-o-text" x="63" y="405" text-anchor="middle" font-size="12">D.O.</text>
-                    <rect id="cr" x="40.5" y="438.5" width="52" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cr-text" x="63" y="475" text-anchor="middle" font-size="12">CR</text>
-                    <rect id="cit-2-a" x="93.5" y="205.5" width="73" height="46" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-2-a-text" x="130" y="230" text-anchor="middle" font-size="12">CIT 2-A</text>
-                    <path id="welding" d="M274 205H361V301H274V205Z" fill="#D9D9D9"/>
-                    <text id="welding-text" x="317" y="250" text-anchor="middle" font-size="12">WELDING</text>
-                    <rect id="cit-3-a" x="220.5" y="72.5" width="82" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-3-a-text" x="261" y="105" text-anchor="middle" font-size="12">CIT 3-A</text>
-                    <rect id="cit-2-b" x="93.5" y="252.5" width="73" height="48" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-2-b-text" x="130" y="280" text-anchor="middle" font-size="12">CIT 2-B</text>
-                    <path id="pantry" d="M274 142H407V205H274V142Z" fill="#D9D9D9"/>
-                    <text id="pantry-text" x="340" y="172" text-anchor="middle" font-size="12">PANTRY</text>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M405.629 205H407V142H405.629V205Z" fill="black"/>
-                    <rect id="breaker" x="815.5" y="180.5" width="39" height="48" fill="#D9D9D9" stroke="black"/>
-                    <text id="breaker-text" x="834" y="205" text-anchor="middle" font-size="8">BREAKER</text>
-                    <rect id="ctl-6" x="855.5" y="286.5" width="89" height="94" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-6-text" x="900" y="322" text-anchor="middle" font-size="12">CTL 6</text>
-                    <rect id="ctl-6-a-b" x="855.5" y="190.5" width="89" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-6-a-b-text" x="900" y="225" text-anchor="middle" font-size="12">CTL 6-A & 6-B</text>
-                </svg>
+            <div id="cafa" class="tab-content" style="display: none;">
+                <div id="map">
+                    <div class="map section-content-map">
+                        <div class="dropdown">
+                            <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
+                            <button onclick="searchElement2()" class="search-button" aria-label="Search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <select id="dropdown" aria-label="Select floor" onchange="showFloor(this.value)">
+                                <option value="1" selected>1st Floor</option>
+                                <option value="2">2nd Floor</option>
+                                <option value="3">3rd Floor</option>
+                            </select>
+                        </div>
+
+                        <div class="table-container">
+                            <!-- Floor 1 -->
+                            <!--floor 1-->
+                            <svg id="room-svg-1" class="floor-svg" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="100" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+
+                                <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
+
+
+
+                                <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
+
+                                <rect id="s-104-rect" x="620.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-104-text" x="650" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
+
+                                <rect id="s-106-rect" x="550" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-106-text" x="585" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
+
+                                <rect id="s-102-rect" x="755" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-102-text" x="780" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
+
+                                <rect id="s-103-rect" x="680.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-103-text" x="720" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
+
+                                <rect id="s-101-rect" x="890" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-101-text" x="930" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-101</text>
+
+                                <rect id="male-cr-rect" x="820.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="male-cr-text" x="860" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
+
+                                <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
+
+                                <rect id="pwd-cr-base-rect" x="408.5" y="140.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
+
+                                <rect id="stairs-2-rect" x="965" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="stairs-2-text" x="1000" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+
+                                <mask id="path-18-inside-1_0_1" fill="white">
+                                    <path d="M267 140H332V206H267V140Z" />
+                                </mask>
+
+                                <path d="M267 140H332V206H267V140Z" fill="#D9D9D9" />
+                                <path d="M267 141H332V139H267V141Z" fill="#0D0D0D" mask="url(#path-18-inside-1_0_1)" />
+
+                                <rect id="s-108-rect" x="202.5" y="206.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-108-text" x="230" y="240" font-family="Arial" font-size="12" text-anchor="middle">S-108</text>
+                            </svg>
+                            <!--floor 2-->
+                            <svg id="room-svg-2" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="stairs-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+
+                                <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
+
+                                <rect id="s-205-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-205-text" x="600" y="182" font-family="Arial" font-size="12" fill="black">S-205</text>
+
+                                <rect id="s-206-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-206-text" x="520" y="182" font-family="Arial" font-size="12" fill="black">S-206</text>
+
+                                <rect id="s-201-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-201-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-201</text>
+
+                                <rect id="s-204-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-204-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-204</text>
+
+                                <rect id="female-cr-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="female-cr-text" x="950" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
+
+                                <rect id="s-202-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-202-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-202</text>
+
+                                <rect id="s-203-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-203-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-203</text>
+
+                                <rect id="s-208-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-208-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">S-208</text>
+
+                                <rect id="s-207-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-207-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-207</text>
+
+                                <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+                            </svg>
+                            <!--floor 3-->
+                            <svg id="room-svg-3" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect id="stairs-1" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="stairs-1-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+
+                                <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">S-307</text>
+
+                                <rect id="male-cr-2-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="male-cr-2-text" x="580" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
+
+                                <rect id="female-cr-1-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="female-cr-1-text" x="498" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
+
+                                <rect id="s-301-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-301-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-301</text>
+
+                                <rect id="s-305-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-305-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-305</text>
+
+                                <rect id="female-cr-2-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="female-cr-2-text" x="950" y="182" font-family="Arial" font-size="8" fill="black">FACULTY ROOM</text>
+
+                                <rect id="s-303-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-303-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-303</text>
+
+                                <rect id="s-304-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-304-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-304</text>
+
+                                <rect id="uapsa-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="uapsa-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">UAPSA</text>
+
+                                <rect id="s-306-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="s-306-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-306</text>
+
+                                <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
+                                <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+                            </svg>
+
+
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    </div>
-    <div id="cafa" class="tab-content" style="display: none;">
-    <div id="map">
-        <div class="map section-content-map">
-            <div class="dropdown">
-                <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
-                <button onclick="searchElement2()" class="search-button" aria-label="Search">
-                    <i class="fa fa-search"></i>
-                </button>
-                <select id="dropdown" aria-label="Select floor" onchange="showFloor(this.value)">
-                    <option value="1" selected>1st Floor</option>
-                    <option value="2">2nd Floor</option>
-                    <option value="3">3rd Floor</option>
-                </select>
-            </div>
 
-            <div class="table-container">
-                <!-- Floor 1 -->
-                <!--floor 1-->
-         <svg id="room-svg-1" class="floor-svg" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-         <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="100" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
-    
-    <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
-    
-
-    
-    <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
-    
-    <rect id="s-104-rect" x="620.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-104-text" x="650" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
-    
-    <rect id="s-106-rect" x="550" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-106-text" x="585" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
-    
-    <rect id="s-102-rect" x="755" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-102-text" x="780" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
-    
-    <rect id="s-103-rect" x="680.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-103-text" x="720" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
-    
-    <rect id="s-101-rect" x="890" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-101-text" x="930" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-101</text>
-    
-    <rect id="male-cr-rect" x="820.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="860" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
-    
-    <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
-
-    <rect id="pwd-cr-base-rect" x="408.5" y="140.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
-    
-    <rect id="stairs-2-rect" x="965" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1000" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
-    
-    <mask id="path-18-inside-1_0_1" fill="white">
-        <path d="M267 140H332V206H267V140Z"/>
-    </mask>
-    
-    <path d="M267 140H332V206H267V140Z" fill="#D9D9D9"/>
-    <path d="M267 141H332V139H267V141Z" fill="#0D0D0D" mask="url(#path-18-inside-1_0_1)"/>
-    
-    <rect id="s-108-rect" x="202.5" y="206.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-108-text" x="230" y="240" font-family="Arial" font-size="12" text-anchor="middle">S-108</text>
-</svg>
-<!--floor 2-->
-<svg id="room-svg-2" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-    <rect id="s-205-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-205-text" x="600" y="182" font-family="Arial" font-size="12" fill="black">S-205</text>
-
-    <rect id="s-206-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-206-text" x="520" y="182" font-family="Arial" font-size="12" fill="black">S-206</text>
-
-    <rect id="s-201-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-201-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-201</text>
-
-    <rect id="s-204-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-204-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-204</text>
-
-    <rect id="female-cr-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-text" x="950" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-    <rect id="s-202-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-202-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-202</text>
-
-    <rect id="s-203-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-203-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-203</text>
-
-    <rect id="s-208-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-208-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">S-208</text>
-
-    <rect id="s-207-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-207-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-207</text>
-
-    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-</svg>
-<!--floor 3-->
-<svg id="room-svg-3" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect id="stairs-1" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-1-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">S-307</text>
-
-    <rect id="male-cr-2-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-2-text" x="580" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-    <rect id="female-cr-1-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-1-text" x="498" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-    <rect id="s-301-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-301-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-301</text>
-
-    <rect id="s-305-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-305-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-305</text>
-
-    <rect id="female-cr-2-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-2-text" x="950" y="182" font-family="Arial" font-size="8" fill="black">FACULTY ROOM</text>
-
-    <rect id="s-303-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-303-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-303</text>
-
-    <rect id="s-304-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-304-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-304</text>
-
-    <rect id="uapsa-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="uapsa-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">UAPSA</text>
-
-    <rect id="s-306-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-306-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-306</text>
-
-    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-</svg>
+        </section>
 
 
-            </div>
-        </div>
-    </div>
-    </div>
-
-</section>
-
-    
-    <section id="facultymembers" class="content-section">
+        <section id="facultymembers" class="content-section">
     <div class="section-heading text-center borderYellow">
         <h1><br><em>FACULTY MEMBERS</em></h1>
     </div>
-        <div class="section-content">
-        <div class="org-chart">
-        <div class="level1">
-                 <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-            </div>
-    
-            <div class="level2">
-                <?php foreach ($all2 as $head): ?>
-                    <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                        <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                        <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                    </div>
-                <?php endforeach; ?>
+    <div class="section-content">
+        <div class="wrapper">
+            <!-- Department Buttons -->
+            <div class="fclty-div">
+                <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
+                <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
+                <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
+                <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
             </div>
 
-    
-            <div class="level3">
-                     <?php foreach ($all3 as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-            </div>
-        </div>
-    
-        <div class="wrapper">
-        <!-- Department Buttons -->
-        <div class="fclty-div">
-            <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
-        </div>
-    
-        <!-- Tab Content -->
-       <section id="first-tab-group" class="tabgroup">
-        <!-- IT Department Tab -->
-        <div id="tab1" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                <?php foreach ($allDean as $head): ?>
-                    <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?> </strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <div class="level2">
-                    <?php foreach ($allItHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <!-- Faculty Members -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allIt as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
+            <!-- IT Department Tab -->
+            <div id="tab1" class="org-chart">
+                <div class="section-content">
+                    <!-- Campus Heads -->
+                    <h3>Campus Heads</h3>
+                    <div class="level2">
+                        <?php foreach ($allItHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <!-- Faculty Members -->
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allIt as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-        <!-- IS Department Tab -->
-        <div id="tab2" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads for IS Department -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                    <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <div class="level2">
-                    <?php foreach ($allIsHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <!-- Faculty Members for IS Department -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allIs as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
+
+            <!-- IS Department Tab -->
+            <div id="tab2" class="org-chart">
+                <div class="section-content">
+                    <!-- Campus Heads -->
+                    <h3>Campus Heads</h3>
+                    <div class="level2">
+                        <?php foreach ($allIsHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <!-- Faculty Members -->
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allIs as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-        <!-- CS Department Tab -->
-        <div id="tab3" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads for CS Department -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                    <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <div class="level2">
-                    <?php foreach ($allCsHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <!-- Faculty Members for CS Department -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allCs as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
+
+            <!-- CS Department Tab -->
+            <div id="tab3" class="org-chart">
+                <div class="section-content">
+                    <!-- Campus Heads -->
+                    <h3>Campus Heads</h3>
+                    <div class="level2">
+                        <?php foreach ($allCsHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <!-- Faculty Members -->
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allCs as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-        <!-- MIT Department Tab -->
-        <div id="tab4" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads for MIT Department -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                    <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <div class="level2">
-                    <?php foreach ($allMitHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <!-- Faculty Members for MIT Department -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allMit as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
+
+            <!-- MIT Department Tab -->
+            <div id="tab4" class="org-chart">
+                <div class="section-content">
+                    <!-- Campus Heads -->
+                    <h3>Campus Heads</h3>
+                    <div class="level2">
+                        <?php foreach ($allMitHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <!-- Faculty Members -->
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allMit as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>" 
+                                 data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>" 
+                                 data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>" 
+                                 data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); // Show all departments ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </section>
-    
-    
-    
     </div>
-    
-        </div>
-    </section>
+
     <!-- Profile Modal -->
     <div id="backdrop" class="backdrop" style="display: none;"></div>
     <div id="profileCard" class="card mb-4">
@@ -1904,223 +917,215 @@ $allAnnouncement = getAllAnnouncements($connection);
             <h5 class="my-3" id="profileName">Name</h5>
             <p class="text-muted mb-1" id="profileSpecialization">Specialization: <span class="specialization-value"></span></p>
             <p class="text-muted mb-4" id="profileConsultationTime">Consultation Time: <span class="consultation-value"></span></p>
-           
         </div>
     </div>
-    
-    
+</section>
+
+
+
 
         <section id="campusorgs" class="content-section bg-gray-50">
-        <div class="section-heading text-center borderYellow">
-            <h1 class="pt-16 pb-8">
-                <em class="text-4xl font-bold text-gray-800">CAMPUS ORGS</em>
-            </h1>
-            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
-        </div>
+            <div class="section-heading text-center borderYellow">
+                <h1 class="pt-16 pb-8">
+                    <em class="text-4xl font-bold text-gray-800">CAMPUS ORGS</em>
+                </h1>
+                <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+            </div>
 
-        <div class="container-fluid px-4">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <?php 
+            <div class="container-fluid px-4">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    <?php 
         $counter = 0; // Initialize a counter variable
         foreach ($allOrg as $row): ?>
-            <div class="col">
-                <div class="card h-100 border-0 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                    <!-- Card Header -->
-                    <div class="card-header position-relative p-0">
-                        <a href="#" 
-                        class="d-block"
-                            data-bs-toggle="modal"
-                            data-bs-target="#newsModal"
-                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                            data-title="<?= htmlspecialchars($row['org_name']) ?>"
-                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                            data-author="<?= htmlspecialchars($row['org_name']) ?>">
-                            
-                            <!-- Card Image -->
-                            <div class="aspect-ratio-box position-relative overflow-hidden rounded-top-xl">
-                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                    alt="<?= htmlspecialchars($row['org_name']) ?>"
-                                    class="w-100 h-100 object-fit-cover transform-hover scale-hover">
-                                
-                                <!-- Overlay -->
-                                <div class="card-overlay position-absolute start-0 end-0 bottom-0 h-100 d-flex flex-column justify-content-end p-3 bg-gradient-dark opacity-0">
-                                    <div class="text-white p-2 rounded bg-black bg-opacity-20 backdrop-blur-sm">
-                                        <span class="d-inline-block bg-warning text-dark rounded-pill px-3 py-1 text-sm fw-medium">
-                                            View Details
-                                        </span>
+                    <div class="col">
+                        <div class="card h-100 border-0 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
+                            <!-- Card Header -->
+                            <div class="card-header position-relative p-0">
+                                <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#newsModal" data-orgid="<?= htmlspecialchars($row['org_id']) ?>" data-title="<?= htmlspecialchars($row['org_name']) ?>" data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" data-author="<?= htmlspecialchars($row['org_name']) ?>">
+
+                                    <!-- Card Image -->
+                                    <div class="aspect-ratio-box position-relative overflow-hidden rounded-top-xl">
+                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="w-100 h-100 object-fit-cover transform-hover scale-hover">
+
+                                        <!-- Overlay -->
+                                        <div class="card-overlay position-absolute start-0 end-0 bottom-0 h-100 d-flex flex-column justify-content-end p-3 bg-gradient-dark opacity-0">
+                                            <div class="text-white p-2 rounded bg-black bg-opacity-20 backdrop-blur-sm">
+                                                <span class="d-inline-block bg-warning text-dark rounded-pill px-3 py-1 text-sm fw-medium">
+                                                    View Details
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
+                                </a>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="card-body p-3">
+                                <h5 class="card-title mb-2 fw-bold text-dark fs-6 text-truncate">
+                                    <?= htmlspecialchars($row['org_name']) ?>
+                                </h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
+                                    <small class="text-muted text-xs">Campus Organization</small>
                                 </div>
                             </div>
-                        </a>
-                    </div>
-
-                    <!-- Card Body -->
-                    <div class="card-body p-3">
-                        <h5 class="card-title mb-2 fw-bold text-dark fs-6 text-truncate">
-                            <?= htmlspecialchars($row['org_name']) ?>
-                        </h5>
-                        <div class="d-flex align-items-center">
-                            <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
-                            <small class="text-muted text-xs">Campus Organization</small>
                         </div>
                     </div>
-                </div>
-            </div>
-        
-        <?php 
+
+                    <?php 
         $counter++; // Increment the counter
         
         // Add row div after every 4 items
         if ($counter % 4 == 0): ?>
-            </div><div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <?php endif; ?>
-    <?php endforeach; ?>
-</div>
-
-</section>
-
-         
-
-        <section id="faqs" class="content-section">
-        <div class="section-heading text-center borderYellow">
-        <h1><br><em>FREQUENTLY ASKED QUESTIONS</em></h1>
-    </div>
-        <div class="container py-5">
-            <div class="row">
-                <!-- Left Column: Illustration -->
-                <div class="col-lg-6">
-                    <div class="faq-image">
-                        <img src="img/faq-img-1.png" alt="Illustration" class="img-fluid">
-                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </div>
 
-                <!-- Right Column: FAQ Section -->
-                <div class="col-lg-5">
-                    <div class="faq-header text-center">
-                        <h1>How can we help you?</h1>
-                        <p class="lead">
-                            We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.
-                        </p>
+        </section>
+
+
+
+        <section id="faqs" class="content-section">
+            <div class="section-heading text-center borderYellow">
+                <h1><br><em>FREQUENTLY ASKED QUESTIONS</em></h1>
+            </div>
+            <div class="container py-5">
+                <div class="row">
+                    <!-- Left Column: Illustration -->
+                    <div class="col-lg-6">
+                        <div class="faq-image">
+                            <img src="img/faq-img-1.png" alt="Illustration" class="img-fluid">
+                        </div>
                     </div>
 
-                    <div class="accordion accordion-flush" id="faqsAccordion">
-                        <?php if(!empty($showfaqs)): ?>
+                    <!-- Right Column: FAQ Section -->
+                    <div class="col-lg-5">
+                        <div class="faq-header text-center">
+                            <h1>How can we help you?</h1>
+                            <p class="lead">
+                                We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.
+                            </p>
+                        </div>
+
+                        <div class="accordion accordion-flush" id="faqsAccordion">
+                            <?php if(!empty($showfaqs)): ?>
                             <?php foreach ($showfaqs as $index => $faq): ?>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="heading<?php echo $index; ?>">
-                                        <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $index; ?>" aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" aria-controls="collapse<?php echo $index; ?>" style="background-color: #e7f1ff; color: #004085; position: relative;">
-                                            <?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?>
-                                            <!-- Drop-down/up icon -->
-                                            <i class="fas fa-chevron-down ms-auto faq-toggle-icon" style="position: absolute; right: 10px;"></i>
-                                        </button>
-                                    </h2>
-                                    <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" aria-labelledby="heading<?php echo $index; ?>" data-bs-parent="#faqsAccordion">
-                                        <div class="accordion-body">
-                                            <?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading<?php echo $index; ?>">
+                                    <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $index; ?>" aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" aria-controls="collapse<?php echo $index; ?>" style="background-color: #e7f1ff; color: #004085; position: relative;">
+                                        <?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?>
+                                        <!-- Drop-down/up icon -->
+                                        <i class="fas fa-chevron-down ms-auto faq-toggle-icon" style="position: absolute; right: 10px;"></i>
+                                    </button>
+                                </h2>
+                                <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" aria-labelledby="heading<?php echo $index; ?>" data-bs-parent="#faqsAccordion">
+                                    <div class="accordion-body">
+                                        <?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <p>No FAQs available at the moment.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="feed" class="content-section">
+            <div class="section-heading text-center borderYellow">
+                <h1><br><em>FEED BACKS</em></h1>
+            </div>
+            <div class="container mt-5">
+                <!-- Heading -->
+                <h2 class="section-heading text-center mb-4">Give Us Your Feedback</h2>
+
+                <!-- Feedback Display Section -->
+                <div class="row d-flex justify-content-center mt-4">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                            <div class="card-body p-4">
+                                <div class="text-end mb-4 border-bottom pb-3">
+                                    <button type="button" class="btn btn-modern border" data-bs-toggle="modal" data-bs-target="#feedbackModal" style="border: 1px solid #ccc; border-radius: 5px;">
+                                        <i class="fas fa-comments me-2"></i>Add Your Feedback
+                                    </button>
+                                </div>
+                                <h5 class="card-title text-center mb-3">Recent Feedback</h5>
+                                <div id="feedbackList" class="feedback-list mb-4">
+                                </div>
+                                <div class="total-ratings">
+                                    <h6>Average Rating:</h6>
+                                    <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section id="aboutus" class="content-section">
+            <div class="section-heading text-center borderYellow">
+                <h1><br><em>ABOUT US</em></h1>
+            </div>
+            <div class="container py-5">
+                <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
+                    <div class="col-12 col-lg-6 col-xl-5">
+                        <img class="img-fluid rounded" loading="lazy" src="img/about.jpg" alt="About 1">
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl-6">
+                        <div class="row justify-content-xl-center">
+                            <div class="col-12 col-xl-11">
+                                <h2 class="mb-3">Who Are We?</h2>
+                                <p class="lead fs-4 text-secondary mb-3">We help people to build incredible brands and superior products. Our perspective is to furnish outstanding captivating services.</p>
+                                <p class="mb-5">We are a fast-growing company, but we have never lost sight of our core values. We believe in collaboration, innovation, and customer satisfaction. We are always looking for new ways to improve our products and services.</p>
+                                <div class="row gy-4 gy-md-0 gx-xxl-5X">
+                                    <div class="col-11 col-md-5">
+                                        <div class="d-flex">
+                                            <div class="me-4 text-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                                                    <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h2 class="h3 mb-3">Versatile Brand</h2>
+                                                <p class="text-secondary mb-0">We are crafting a digital method that subsists life across all mediums.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-11 col-md-5">
+                                        <div class="d-flex">
+                                            <div class="me-3 text-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
+                                                    <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h2 class="h4 mb-3">Digital Agency</h2>
+                                                <p class="text-secondary mb-0">We believe in innovation by merging primary with elaborate ideas.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>No FAQs available at the moment.</p>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-        <section id="feed" class="content-section">
-        <div class="section-heading text-center borderYellow">
-        <h1><br><em>FEED BACKS</em></h1>
-    </div>
-                <div class="container mt-5">
-                    <!-- Heading -->
-                    <h2 class="section-heading text-center mb-4">Give Us Your Feedback</h2>
-
-                    <!-- Feedback Display Section -->
-                    <div class="row d-flex justify-content-center mt-4">
-                        <div class="col-md-8 col-lg-6">
-                            <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-                                <div class="card-body p-4">
-                                    <div class="text-end mb-4 border-bottom pb-3">
-                                        <button type="button" class="btn btn-modern border" data-bs-toggle="modal" data-bs-target="#feedbackModal" style="border: 1px solid #ccc; border-radius: 5px;">
-                                            <i class="fas fa-comments me-2"></i>Add Your Feedback
-                                        </button>
-                                    </div>
-                                    <h5 class="card-title text-center mb-3">Recent Feedback</h5>
-                                    <div id="feedbackList" class="feedback-list mb-4">
-                                    </div>
-                                    <div class="total-ratings">
-                            <h6>Average Rating:</h6>
-                            <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</section>
-<section id="aboutus" class="content-section">
-    <div class="section-heading text-center borderYellow">
-    <h1><br><em>ABOUT US</em></h1>
-    </div>
-    <div class="container py-5">
-        <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
-            <div class="col-12 col-lg-6 col-xl-5">
-                <img class="img-fluid rounded" loading="lazy" src="img/about.jpg" alt="About 1">
-            </div>
-            <div class="col-12 col-lg-6 col-xl-6">
-                <div class="row justify-content-xl-center">
-                    <div class="col-12 col-xl-11">
-                        <h2 class="mb-3">Who Are We?</h2>
-                        <p class="lead fs-4 text-secondary mb-3">We help people to build incredible brands and superior products. Our perspective is to furnish outstanding captivating services.</p>
-                        <p class="mb-5">We are a fast-growing company, but we have never lost sight of our core values. We believe in collaboration, innovation, and customer satisfaction. We are always looking for new ways to improve our products and services.</p>
-                        <div class="row gy-4 gy-md-0 gx-xxl-5X">
-                            <div class="col-11 col-md-5">
-                                <div class="d-flex">
-                                    <div class="me-4 text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h2 class="h3 mb-3">Versatile Brand</h2>
-                                        <p class="text-secondary mb-0">We are crafting a digital method that subsists life across all mediums.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-11 col-md-5">
-                                <div class="d-flex">
-                                    <div class="me-3 text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
-                                            <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h2 class="h4 mb-3">Digital Agency</h2>
-                                        <p class="text-secondary mb-0">We believe in innovation by merging primary with elaborate ideas.</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-</section>
-</div>
 
-        <!-- <section class="footer">
+    <!-- <section class="footer">
                 <p>Copyright &copy; 2024.</p>
             </section> -->
     </div>
-    
-</div>
-<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+
+    </div>
+    <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2130,16 +1135,12 @@ $allAnnouncement = getAllAnnouncements($connection);
                 <div class="modal-body">
                     <ul class="nav nav-tabs" id="feedTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="announcements-tab" data-bs-toggle="tab" 
-                                    data-bs-target="#announcements" type="button" role="tab" 
-                                    aria-controls="announcements" aria-selected="true">
+                            <button class="nav-link active" id="announcements-tab" data-bs-toggle="tab" data-bs-target="#announcements" type="button" role="tab" aria-controls="announcements" aria-selected="true">
                                 Announcements
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="members-tab" data-bs-toggle="tab" 
-                                    data-bs-target="#members" type="button" role="tab" 
-                                    aria-controls="members" aria-selected="false">
+                            <button class="nav-link" id="members-tab" data-bs-toggle="tab" data-bs-target="#members" type="button" role="tab" aria-controls="members" aria-selected="false">
                                 Members
                             </button>
                         </li>
@@ -2152,109 +1153,109 @@ $allAnnouncement = getAllAnnouncements($connection);
         </div>
     </div>
 
-                <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg"> <!-- Changed to modal-lg for consistency -->
-                        <div class="modal-content" style="color: white">
-                            <div class="modal-header">
-                                <h3 class="modal-title" id="feedbackModalLabel">Feedback Form</h3> <!-- Changed to h3 for consistency -->
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="feedbackForm" enctype="multipart/form-data">
-                                    <!-- Step 1: Emoji Rating -->
-                                    <div class="step" id="step1">
-                                        <h4>Rate Your Experience</h4>
-                                        <div class="d-flex justify-content-around my-4">
-                                            <span class="emoji-select" data-value="1">😠</span>
-                                            <span class="emoji-select" data-value="2">😞</span>
-                                            <span class="emoji-select" data-value="3">😐</span>
-                                            <span class="emoji-select" data-value="4">😊</span>
-                                            <span class="emoji-select" data-value="5">😍</span>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                                    </div>
-
-                                    <!-- Step 2: Personal Information -->
-                                    <div class="step" id="step2" style="display:none;">
-                                        <h4>Provide Your Information</h4>
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Email address (required)</label>
-                                            <input type="email" class="form-control" name="email"id="email" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Name (optional)</label>
-                                            <input type="text" class="form-control"  name="name" id="name">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="address" class="form-label">Address (optional)</label>
-                                            <input type="text" class="form-control" name="address" id="address">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Course</label><br>
-                                            <div>
-                                                <input type="radio" id="college1" name="college" value="Information Systems" required>
-                                                <label for="college1">Information Systems</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="college2" name="college" value="Information Technology">
-                                                <label for="college2">Information Technology</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="college3" name="college" value="Computer Science">
-                                                <label for="college3">Computer Science</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="college4" name="college" value="other">
-                                                <label for="college4">Other / From Other College</label>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Year (required)</label><br>
-                                            <div>
-                                                <input type="radio" id="year1" name="year" value="1" required>
-                                                <label for="year1">1st Year</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="year2" name="year" value="2">
-                                                <label for="year2">2nd Year</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="year3" name="year" value="3">
-                                                <label for="year3">3rd Year</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="year4" name="year" value="4">
-                                                <label for="year4">4th Year</label>
-                                            </div>
-                                        </div>
-
-                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                                    </div>
-
-                                    <!-- Step 3: Feedback and Image Upload -->
-                                    <div class="step" id="step3" style="display:none;">
-                                        <h4>Leave Your Feedback</h4>
-                                        <div class="mb-3">
-                                            <label for="feedback" class="form-label">Your feedback</label>
-                                            <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="image" class="form-label">Upload a Profile Image (optional)</label>
-                                            <input class="form-control" type="file" id="image">
-                                        </div>
-                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <!-- Optional footer buttons, if needed -->
-                            </div>
-                        </div>
-                    </div>
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <!-- Changed to modal-lg for consistency -->
+            <div class="modal-content" style="color: white">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="feedbackModalLabel">Feedback Form</h3> <!-- Changed to h3 for consistency -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <form id="feedbackForm" enctype="multipart/form-data">
+                        <!-- Step 1: Emoji Rating -->
+                        <div class="step" id="step1">
+                            <h4>Rate Your Experience</h4>
+                            <div class="d-flex justify-content-around my-4">
+                                <span class="emoji-select" data-value="1">😠</span>
+                                <span class="emoji-select" data-value="2">😞</span>
+                                <span class="emoji-select" data-value="3">😐</span>
+                                <span class="emoji-select" data-value="4">😊</span>
+                                <span class="emoji-select" data-value="5">😍</span>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                        </div>
 
+                        <!-- Step 2: Personal Information -->
+                        <div class="step" id="step2" style="display:none;">
+                            <h4>Provide Your Information</h4>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address (required)</label>
+                                <input type="email" class="form-control" name="email" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name (optional)</label>
+                                <input type="text" class="form-control" name="name" id="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address (optional)</label>
+                                <input type="text" class="form-control" name="address" id="address">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Course</label><br>
+                                <div>
+                                    <input type="radio" id="college1" name="college" value="Information Systems" required>
+                                    <label for="college1">Information Systems</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="college2" name="college" value="Information Technology">
+                                    <label for="college2">Information Technology</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="college3" name="college" value="Computer Science">
+                                    <label for="college3">Computer Science</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="college4" name="college" value="other">
+                                    <label for="college4">Other / From Other College</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Year (required)</label><br>
+                                <div>
+                                    <input type="radio" id="year1" name="year" value="1" required>
+                                    <label for="year1">1st Year</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="year2" name="year" value="2">
+                                    <label for="year2">2nd Year</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="year3" name="year" value="3">
+                                    <label for="year3">3rd Year</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="year4" name="year" value="4">
+                                    <label for="year4">4th Year</label>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                        </div>
+
+                        <!-- Step 3: Feedback and Image Upload -->
+                        <div class="step" id="step3" style="display:none;">
+                            <h4>Leave Your Feedback</h4>
+                            <div class="mb-3">
+                                <label for="feedback" class="form-label">Your feedback</label>
+                                <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Upload a Profile Image (optional)</label>
+                                <input class="form-control" type="file" id="image">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- Optional footer buttons, if needed -->
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
     </script>
@@ -2262,6 +1263,9 @@ $allAnnouncement = getAllAnnouncements($connection);
     <!-- Popper.js and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+
+
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -2272,7 +1276,51 @@ $allAnnouncement = getAllAnnouncements($connection);
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
-    
+    <script>
+    // Wait for the DOM to load before attaching the event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all the tab buttons
+        const tabButtons = document.querySelectorAll('.button-faculty-btn');
+        
+        // Get all the tab content sections
+        const tabContent = document.querySelectorAll('.org-chart');
+
+        // Function to show the active tab and hide the others
+        function showTab(tabName) {
+            // Hide all tabs
+            tabContent.forEach(tab => {
+                tab.style.display = 'none';
+            });
+
+            // Remove the 'active' class from all buttons
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show the selected tab
+            document.getElementById(tabName).style.display = 'block';
+            
+            // Add 'active' class to the clicked button
+            const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+
+        // Initially show the first tab (tab1)
+        showTab('tab1');
+
+        // Add click event listeners to each tab button
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Get the tab name (tab1, tab2, etc.) from the button's data-tab attribute
+                const tabName = button.getAttribute('data-tab');
+                showTab(tabName);
+            });
+        });
+    });
+</script>
+
 <script>
 const roomFloors = {
     // Floor 1
@@ -2376,8 +1424,7 @@ function searchElement2() {
     }
 }
 </script>
-<script> 
-    // Add event listener to toggle the icon on click
+<script> // Accordion Button Toggle Icon
 document.addEventListener('DOMContentLoaded', function () {
     var accordionItems = document.querySelectorAll('.accordion-button');
     
@@ -2395,62 +1442,57 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-        // Hide Header on on scroll down
-        var didScroll;
-        var lastScrollTop = 0;
-        var delta = 5;
-        var navbarHeight = $('header').outerHeight();
+// Hide Header on Scroll Down (Debounced)
+let scrollTimeout;
+var lastScrollTop = 0;
+var delta = 5;
+var navbarHeight = $('header').outerHeight();
 
-        $(window).scroll(function (event) {
-            didScroll = true;
-        });
+$(window).scroll(function (event) {
+    clearTimeout(scrollTimeout); // Clear any previous timeout
+    scrollTimeout = setTimeout(function () {
+        hasScrolled(); // Call hasScrolled after a delay to avoid multiple triggers
+    }, 250); // Adjust delay as necessary
+});
 
-        setInterval(function () {
-            if (didScroll) {
-                hasScrolled();
-                didScroll = false;
-            }
-        }, 250);
+function hasScrolled() {
+    var st = $(this).scrollTop();
 
-        function hasScrolled() {
-            var st = $(this).scrollTop();
+    // Make sure they scroll more than delta
+    if (Math.abs(lastScrollTop - st) <= delta) return;
 
-            // Make sure they scroll more than delta
-            if (Math.abs(lastScrollTop - st) <= delta)
-                return;
-
-            // If they scrolled down and are past the navbar, add class .nav-up.
-            // This is necessary so you never see what is "behind" the navbar.
-            if (st > lastScrollTop && st > navbarHeight) {
-                // Scroll Down
-                $('header').removeClass('nav-down').addClass('nav-up');
-            } else {
-                // Scroll Up
-                if (st + $(window).height() < $(document).height()) {
-                    $('header').removeClass('nav-up').addClass('nav-down');
-                }
-            }
-
-            lastScrollTop = st;
+    // If they scrolled down and are past the navbar, add class .nav-up.
+    if (st > lastScrollTop && st > navbarHeight) {
+        $('header').removeClass('nav-down').addClass('nav-up');
+    } else {
+        // If they scrolled up
+        if (st + $(window).height() < $(document).height()) {
+            $('header').removeClass('nav-up').addClass('nav-down');
         }
-        
-      // Attach event listener to search button
+    }
+
+    lastScrollTop = st;
+}
+
+// Attach event listener to search button
 document.querySelector('button[onclick="searchAndHighlight()"]').addEventListener('click', searchAndHighlight);
 
 // Attach change event listener to dropdown
 const dropdownMenu = document.getElementById('dropdownMenu');
-dropdownMenu.addEventListener('change', function () {
-    const floorId = this.value;
-    if (floorId) {
-        fetchRoomsForFloor(floorId);
-        showFloorTable(floorId);
-    } else {
-        clearTableCells();
-    }
-});
+if (dropdownMenu) {
+    dropdownMenu.addEventListener('change', function () {
+        const floorId = this.value;
+        if (floorId) {
+            fetchRoomsForFloor(floorId);
+            showFloorTable(floorId);
+        } else {
+            clearTableCells();
+        }
+    });
 
-// Trigger the change event to load the default table
-dropdownMenu.dispatchEvent(new Event('change'));
+    // Trigger the change event to load the default table
+    dropdownMenu.dispatchEvent(new Event('change'));
+}
 
 // Fetch and update rooms based on the selected floor
 function fetchRoomsForFloor(floorId) {
@@ -2465,6 +1507,7 @@ function fetchRoomsForFloor(floorId) {
                 updateTableWithRooms(rooms);
             } catch (e) {
                 console.error("Error parsing JSON:", e);
+                console.error("Response Text:", xhr.responseText); // Log the raw response
             }
         } else {
             console.error('Fetch Error:', xhr.statusText);
@@ -2472,6 +1515,7 @@ function fetchRoomsForFloor(floorId) {
     };
     xhr.send('floor_id=' + floorId);
 }
+
 
 // Function to update table with room data
 function updateTableWithRooms(rooms) {
@@ -3013,9 +2057,6 @@ function nextStep() {
                      
                        
                             <div class="second py-2 px-2"><span class="text1">${feedback.feedback_text}</span></div>
-
-                            <div class="d-flex justify-content-between py-1 pt-2">
-                                <div><img src="${imageUrl}" width="18"><span class="text2">${feedback.name || 'Anonymous'} (${feedback.email}</span></div>
                             </div>
 
                             <p class="card-text">
@@ -3188,104 +2229,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 } function formatTimeAgo(dateString) {
-            const created = new Date(dateString);
-            const now = new Date();
-            const diffInHours = Math.floor((now - created) / (1000 * 60 * 60));
-            
-            if (diffInHours >= 24) {
-                return created.toLocaleDateString();
-            } else if (diffInHours > 0) {
-                return `${diffInHours} hours ago`;
-            } else {
-                const diffInMinutes = Math.floor((now - created) / (1000 * 60));
-                return diffInMinutes > 0 ? `${diffInMinutes} minutes ago` : 'just now';
-            }
-        }
-
-        function createAnnouncementCard(announcement, index) {
-    const card = document.createElement('div');
-    card.className = 'announcement-card';
-    card.style.animationDelay = `${index * 0.2}s`;
-
-    const timeIcon = `
-        <svg class="icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 6v6l4 2"/>
-        </svg>
-    `;
-
-    const userIcon = `
-        <svg class="icon" viewBox="0 0 24 24">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-        </svg>
-    `;
-
-    // Check if the details exceed 100 characters to determine if "See more..." link is needed
-    const shouldShowSeeMore = announcement.announcement_details.length > 100;
-
-    card.innerHTML = `
-        <div class="card-header">
-            <div class="org-info">
-                <img class="org-avatar" src="uploaded/orgUploaded/${announcement.org_image || '/api/placeholder/48/48'}" 
-                     alt="${announcement.org_name}" 
-                     onerror="this.src='/api/placeholder/48/48'">
-                <div>
-                    <div class="org-name">${announcement.org_name}</div>
-                    <div class="meta-info">
-                        <span class="meta-item">
-                            ${timeIcon}
-                            ${formatTimeAgo(announcement.created_at)}
-                        </span>
-                        <span class="meta-item">
-                            ${userIcon}
-                            ${announcement.creator_name}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-content">
-            <div class="content-wrapper">
-                <div class="announcement-text ${shouldShowSeeMore ? 'truncated' : ''}">
-                    ${announcement.announcement_details}
-                </div>
-                ${shouldShowSeeMore ? '<a class="see-more-link" onclick="toggleDetails(this)">See more...</a>' : ''}
-                ${announcement.announcement_image ? `
-                    <div class="announcement-image">
-                        <img src="uploaded/annUploaded/${announcement.announcement_image}" 
-                             alt="Announcement" 
-                             onerror="this.parentElement.style.display='none'">
-                    </div>
-                ` : ''}
-            </div>
-        </div>
-    `;
-
-    return card;
-}
-
-function toggleDetails(link) {
-    const textElement = link.previousElementSibling;
-    const isExpanded = !textElement.classList.contains('truncated');
+    const created = new Date(dateString);
+    const now = new Date();
+    const diffInHours = Math.floor((now - created) / (1000 * 60 * 60));
     
-    textElement.classList.toggle('truncated');
-    link.textContent = isExpanded ? 'See more...' : 'See less...';
+    if (diffInHours >= 24) {
+        return created.toLocaleDateString();
+    } else if (diffInHours > 0) {
+        return `${diffInHours} hours ago`;
+    } else {
+        const diffInMinutes = Math.floor((now - created) / (1000 * 60));
+        return diffInMinutes > 0 ? `${diffInMinutes} minutes ago` : 'just now';
+    }
 }
-
-// Initialize announcements with PHP data
 document.addEventListener('DOMContentLoaded', function() {
-    const announcements = <?php echo json_encode($allAnnouncement); ?>;
     const container = document.getElementById('announcements-container');
-    
+
+    // Clear the container before appending new announcements
+    container.innerHTML = '';
+
+    const announcements = <?php echo json_encode($allAnnouncement); ?>;
+
+    console.log("Announcements data:", announcements); // Log the data
+
     if (Array.isArray(announcements)) {
         // Sort announcements by created_at date in descending order (latest first)
         const sortedAnnouncements = announcements.sort((a, b) => {
             return new Date(b.created_at) - new Date(a.created_at);
         });
-        
-        sortedAnnouncements.forEach((announcement, index) => {
-            container.appendChild(createAnnouncementCard(announcement, index));
+
+        sortedAnnouncements.forEach((announcement) => {
+            console.log("Creating carousel for announcement:", announcement); // Log each announcement
+            const carousel = createCarousel(announcement.announcement_images);
+            container.appendChild(createAnnouncementDiv(announcement, carousel));
         });
     } else {
         container.innerHTML = `
@@ -3298,7 +2274,107 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
     }
-});
+});function createCarousel(images) {
+    const container = document.createElement('div');
+    container.className = 'carousel slide relative overflow-hidden';
+    container.setAttribute('data-bs-ride', 'carousel');
+    
+    // Set a unique ID for each carousel to enable navigation buttons to work
+    const carouselId = 'carousel-' + Math.floor(Math.random() * 1000); // Unique ID for each carousel
+    container.setAttribute('id', carouselId); // Assign unique ID to the container
+
+    const inner = document.createElement('div');
+    inner.className = 'carousel-inner relative w-full';
+
+    images.forEach((image, index) => {
+        const item = document.createElement('div');
+        item.className = 'carousel-item ' + (index === 0 ? 'active' : '');
+
+        const img = document.createElement('img');
+        img.src = `uploaded/annUploaded/${image}`;
+        img.className = 'd-block w-full object-cover max-h-64 rounded-lg shadow-lg'; // Fixed height with cover for cropping
+        img.style.objectFit = 'contain'; // Ensure the image is fully visible (no cropping)
+        img.style.height = '300px'; // Fixed height, adjust as necessary
+        img.alt = 'Announcement Image';
+
+        item.appendChild(img);
+        inner.appendChild(item);
+    });
+
+    // Previous Button (Black background)
+    const prevButton = document.createElement('button');
+    prevButton.className = 'carousel-control-prev absolute top-1/2 left-0 z-10 bg-black text-white p-2 rounded-full transform -translate-y-1/2';
+    prevButton.setAttribute('type', 'button');
+    prevButton.setAttribute('data-bs-target', `#${carouselId}`); // Use the unique ID
+    prevButton.setAttribute('data-bs-slide', 'prev');
+
+    const prevIcon = document.createElement('span');
+    prevIcon.className = 'carousel-control-prev-icon';
+    prevButton.appendChild(prevIcon);
+
+    // Next Button (Black background)
+    const nextButton = document.createElement('button');
+    nextButton.className = 'carousel-control-next absolute top-1/2 right-0 z-10 bg-black text-white p-2 rounded-full transform -translate-y-1/2';
+    nextButton.setAttribute('type', 'button');
+    nextButton.setAttribute('data-bs-target', `#${carouselId}`); // Use the unique ID
+    nextButton.setAttribute('data-bs-slide', 'next');
+
+    const nextIcon = document.createElement('span');
+    nextIcon.className = 'carousel-control-next-icon';
+    nextButton.appendChild(nextIcon);
+
+    // Append inner carousel and buttons
+    container.appendChild(inner);
+    container.appendChild(prevButton);
+    container.appendChild(nextButton);
+
+    // Initialize the carousel using Bootstrap's JavaScript with automatic sliding every 3 seconds
+    const bootstrapCarousel = new bootstrap.Carousel(container, {
+        interval: 3000 // Set to 2000 milliseconds (2 seconds)
+    });
+
+    return container;
+}
+
+
+function createAnnouncementDiv(announcement, carousel) {
+    const div = document.createElement('div');
+    div.className = 'announcement-item bg-white rounded-lg shadow-lg p-6 space-y-4 hover:shadow-xl transition-shadow duration-300';
+
+    const title = document.createElement('h2');
+    title.textContent = `${announcement.org_name} - ${announcement.creator_name}`;
+    title.className = 'text-2xl font-bold text-gray-800';
+    div.appendChild(title);
+
+    const orgImage = document.createElement('img');
+    orgImage.src = `uploaded/orgUploaded/${announcement.org_image}`;
+    orgImage.alt = 'Organization Image';
+    orgImage.className = 'w-16 h-16 rounded-full object-cover';
+    div.appendChild(orgImage);
+
+    const announcementDetails = document.createElement('p');
+    announcementDetails.textContent = announcement.announcement_details;
+    announcementDetails.className = 'text-gray-600 text-sm';
+    div.appendChild(announcementDetails);
+
+    const timeAgo = document.createElement('span');
+    timeAgo.className = 'text-xs text-gray-500';
+    timeAgo.textContent = formatTimeAgo(announcement.created_at);
+    div.appendChild(timeAgo);
+
+    div.appendChild(carousel);
+
+    return div;
+}
+
+function toggleDetails(link) {
+    const textElement = link.previousElementSibling;
+    const isExpanded = !textElement.classList.contains('truncated');
+    
+    textElement.classList.toggle('truncated');
+    link.textContent = isExpanded ? 'See more...' : 'See less...';
+}
+
 
 </script>
 

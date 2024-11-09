@@ -1,0 +1,765 @@
+[09-Nov-2024 03:07:02 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:02 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:02 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:07 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:07 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:07 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:08 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:08 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:08 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:08 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:08 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:08 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:09 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:09 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:09 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:11 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:11 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:11 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:12 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:12 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:12 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:13 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:13 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:13 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:14 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:14 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:14 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:15 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:15 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:15 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:16 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:16 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:16 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:17 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:17 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:17 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:17 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:17 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:17 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:18 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:18 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:18 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:19 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:19 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:19 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:07:20 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:20 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:07:20 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:08:17 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:08:17 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:08:17 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/dashboard.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:11:59 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:11:59 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:11:59 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:12:34 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:12:34 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:12:34 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:12:44 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:12:44 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:12:44 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:12:54 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:12:54 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:12:54 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:05 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:05 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:05 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:12 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:12 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:12 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:16 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:16 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:16 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:20 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:20 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:20 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:23 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:23 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:23 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:26 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:26 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:26 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:27 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:27 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:27 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:13:32 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:32 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:13:32 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(2): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:14:14 UTC] PHP Warning:  include_once(../class/mainclass.php): Failed to open stream: No such file or directory in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:14:14 UTC] PHP Warning:  include_once(): Failed opening '../class/mainclass.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/tsukiosk/public_html/admin/assets/header.php on line 3
+[09-Nov-2024 03:14:14 UTC] PHP Fatal error:  Uncaught Error: Class "mainClass" not found in /home/tsukiosk/public_html/admin/assets/header.php:4
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/index.php(7): include_once()
+#1 {main}
+  thrown in /home/tsukiosk/public_html/admin/assets/header.php on line 4
+[09-Nov-2024 03:16:04 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 71
+[09-Nov-2024 03:16:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:71) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 03:18:55 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 71
+[09-Nov-2024 03:18:55 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:71) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 03:18:57 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 71
+[09-Nov-2024 03:18:57 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:71) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 03:18:59 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 71
+[09-Nov-2024 03:18:59 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:71) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 03:19:01 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 71
+[09-Nov-2024 03:19:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:71) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 03:19:03 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 71
+[09-Nov-2024 03:19:03 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:71) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 03:19:06 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 71
+[09-Nov-2024 03:19:06 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:71) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 03:21:00 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 74
+[09-Nov-2024 03:21:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:74) in /home/tsukiosk/public_html/class/mainClass.php on line 88
+[09-Nov-2024 03:21:02 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 74
+[09-Nov-2024 03:21:02 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:74) in /home/tsukiosk/public_html/class/mainClass.php on line 88
+[09-Nov-2024 03:21:03 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 74
+[09-Nov-2024 03:21:03 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:74) in /home/tsukiosk/public_html/class/mainClass.php on line 88
+[09-Nov-2024 03:21:05 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 74
+[09-Nov-2024 03:21:05 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:74) in /home/tsukiosk/public_html/class/mainClass.php on line 88
+[09-Nov-2024 03:21:45 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:21:50 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:14 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:15 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:25 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:22:43 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:23:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:24:04 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(3): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:24:14 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:24:40 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:24:52 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:24:56 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:24:58 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:25:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:25:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:25:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:25:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:39:41 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 74
+[09-Nov-2024 03:39:41 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:74) in /home/tsukiosk/public_html/class/mainClass.php on line 88
+[09-Nov-2024 03:39:46 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:40:24 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:40:31 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:40:36 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:40:41 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 03:40:56 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 03:40:59 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 03:41:07 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 03:41:49 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 03:45:19 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 74
+[09-Nov-2024 03:45:19 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:74) in /home/tsukiosk/public_html/class/mainClass.php on line 88
+[09-Nov-2024 03:46:03 UTC] Successfully updated is_active in orgmembers_tbl for user ID 1.
+[09-Nov-2024 03:46:06 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 74
+[09-Nov-2024 03:46:06 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:74) in /home/tsukiosk/public_html/class/mainClass.php on line 88
+[09-Nov-2024 03:58:44 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 03:58:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/admin/index.php on line 17
+[09-Nov-2024 03:58:46 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 03:58:46 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/admin/index.php on line 17
+[09-Nov-2024 03:58:48 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 03:58:48 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/admin/index.php on line 17
+[09-Nov-2024 03:58:49 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 03:58:49 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/admin/index.php on line 17
+[09-Nov-2024 03:58:50 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 03:58:50 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/admin/index.php on line 17
+[09-Nov-2024 04:00:25 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 04:00:25 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/admin/index.php on line 17
+[09-Nov-2024 04:00:26 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 04:00:27 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 04:00:29 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 04:00:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/admin/index.php on line 17
+[09-Nov-2024 04:19:20 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 04:19:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/class/mainClass.php on line 86
+[09-Nov-2024 04:29:52 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 04:29:52 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:3) in /home/tsukiosk/public_html/class/mainClass.php on line 86
+[09-Nov-2024 04:35:35 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 04:35:56 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 3
+[09-Nov-2024 04:37:33 UTC] PHP Parse error:  syntax error, unexpected variable "$log_msg", expecting "function" or "const" in /home/tsukiosk/public_html/class/mainClass.php on line 236
+[09-Nov-2024 04:41:35 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 04:42:16 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/tsukiosk/public_html/admin/ajax/remove.php:6
+Stack trace:
+#0 /home/tsukiosk/public_html/admin/ajax/remove.php(6): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/tsukiosk/public_html/admin/dashboard.php(4): include_once('/home/tsukiosk/...')
+#2 {main}
+  thrown in /home/tsukiosk/public_html/admin/ajax/remove.php on line 6
+[09-Nov-2024 04:42:48 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 04:42:50 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 340
+[09-Nov-2024 04:42:50 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 340
+[09-Nov-2024 04:42:50 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 379
+[09-Nov-2024 04:42:50 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 379
+[09-Nov-2024 04:42:50 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 380
+[09-Nov-2024 04:42:50 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 380
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  foreach() argument must be of type array|object, string given in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 262
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 315
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 315
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 316
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 316
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  foreach() argument must be of type array|object, string given in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 262
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 315
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 315
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 316
+[09-Nov-2024 04:42:52 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/schoolcalendar.php on line 316
+[09-Nov-2024 04:42:53 UTC] Editor ID: 
+[09-Nov-2024 04:42:55 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 04:42:58 UTC] Successfully updated is_active in orgmembers_tbl for user ID 1.
+[09-Nov-2024 04:43:02 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 542
+[09-Nov-2024 04:43:05 UTC] Successfully updated is_active in orgmembers_tbl for user ID 1.
+[09-Nov-2024 04:44:11 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:45:09 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:45:17 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 72
+[09-Nov-2024 04:45:17 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:72) in /home/tsukiosk/public_html/class/mainClass.php on line 86
+[09-Nov-2024 04:47:11 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 63
+[09-Nov-2024 04:47:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:63) in /home/tsukiosk/public_html/class/mainClass.php on line 77
+[09-Nov-2024 04:47:23 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 130
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 150
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 184
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 235
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 239
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 340
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 340
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 379
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 379
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 380
+[09-Nov-2024 04:47:27 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 380
+[09-Nov-2024 04:47:28 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:01 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:12 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:13 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:14 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:14 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:14 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:14 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:15 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:15 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:15 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:16 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:49:16 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:51 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:52 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:53 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:53 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:54 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:55 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:56 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 130
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 150
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 184
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 235
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined variable $account_type in /home/tsukiosk/public_html/admin/announcement.php on line 239
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 340
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 340
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 379
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 379
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Undefined global variable $_SESSION in /home/tsukiosk/public_html/admin/announcement.php on line 380
+[09-Nov-2024 04:52:57 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/tsukiosk/public_html/admin/announcement.php on line 380
+[09-Nov-2024 04:52:59 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:52:59 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 552
+[09-Nov-2024 04:54:31 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:33 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:34 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:34 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:34 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:34 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:34 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:35 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:35 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:35 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:35 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:35 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:36 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:36 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:54:36 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:55:23 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:55:25 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:55:25 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:55:25 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:55:25 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:55:25 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 532
+[09-Nov-2024 04:59:40 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 481
+[09-Nov-2024 04:59:43 UTC] Successfully updated is_active in orgmembers_tbl for user ID 1.
+[09-Nov-2024 04:59:46 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 63
+[09-Nov-2024 04:59:46 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:63) in /home/tsukiosk/public_html/class/mainClass.php on line 77
+[09-Nov-2024 05:01:31 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 63
+[09-Nov-2024 05:01:31 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:63) in /home/tsukiosk/public_html/class/mainClass.php on line 77
+[09-Nov-2024 05:01:33 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 63
+[09-Nov-2024 05:01:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:63) in /home/tsukiosk/public_html/class/mainClass.php on line 77
+[09-Nov-2024 05:01:33 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 63
+[09-Nov-2024 05:01:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:63) in /home/tsukiosk/public_html/class/mainClass.php on line 77
+[09-Nov-2024 05:01:34 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 63
+[09-Nov-2024 05:01:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:63) in /home/tsukiosk/public_html/class/mainClass.php on line 77
+[09-Nov-2024 05:01:42 UTC] Successfully updated is_active in orgmembers_tbl for user ID 1.
+[09-Nov-2024 05:01:45 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/class/mainClass.php on line 63
+[09-Nov-2024 05:01:45 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/class/mainClass.php:63) in /home/tsukiosk/public_html/class/mainClass.php on line 77
+[09-Nov-2024 05:04:15 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:15 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:16 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:18 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:18 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:19 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:19 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:20 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:21 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:21 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:22 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:23 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:24 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:25 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:25 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:26 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:26 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:04:27 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:04:27 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:05:02 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:05:02 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:05:04 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:05:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:05:06 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/tsukiosk/public_html/admin/index.php on line 9
+[09-Nov-2024 05:05:06 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tsukiosk/public_html/admin/index.php:9) in /home/tsukiosk/public_html/class/mainClass.php on line 85
+[09-Nov-2024 05:05:21 UTC] Successfully updated is_active in orgmembers_tbl for user ID 1.
+[09-Nov-2024 05:05:25 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 544
+[09-Nov-2024 05:07:49 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 22
+[09-Nov-2024 05:10:45 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:10:45 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:10:45 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 514
+[09-Nov-2024 05:10:45 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 805
+[09-Nov-2024 05:10:45 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 805
+[09-Nov-2024 05:12:28 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:12:28 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:12:28 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 517
+[09-Nov-2024 05:12:28 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 808
+[09-Nov-2024 05:12:28 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 808
+[09-Nov-2024 05:17:36 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:17:36 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:17:36 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 513
+[09-Nov-2024 05:17:36 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 806
+[09-Nov-2024 05:17:36 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 806
+[09-Nov-2024 05:19:01 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:19:01 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:19:01 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 513
+[09-Nov-2024 05:19:01 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 806
+[09-Nov-2024 05:19:01 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 806
+[09-Nov-2024 05:19:30 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:19:30 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:19:30 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 512
+[09-Nov-2024 05:19:30 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 811
+[09-Nov-2024 05:19:30 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 811
+[09-Nov-2024 05:19:52 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:19:52 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:19:53 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 512
+[09-Nov-2024 05:19:53 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 811
+[09-Nov-2024 05:19:53 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 811
+[09-Nov-2024 05:21:19 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:21:19 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 402
+[09-Nov-2024 05:21:19 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 512
+[09-Nov-2024 05:21:19 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 810
+[09-Nov-2024 05:21:19 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 810
+[09-Nov-2024 05:23:16 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 22
+[09-Nov-2024 05:24:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 22
+[09-Nov-2024 05:24:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 22
+[09-Nov-2024 05:24:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 22
+[09-Nov-2024 05:26:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:26:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:29:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:29:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:29:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:29:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:29:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:30:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:30:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 19
+[09-Nov-2024 05:51:41 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:51:41 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:51:41 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 511
+[09-Nov-2024 05:51:41 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:51:41 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:52:04 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:52:04 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:52:04 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 511
+[09-Nov-2024 05:52:04 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:52:04 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:52:08 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:52:08 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:52:08 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 511
+[09-Nov-2024 05:52:08 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:52:08 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:53:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 05:56:49 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:56:49 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 401
+[09-Nov-2024 05:56:49 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 511
+[09-Nov-2024 05:56:49 UTC] PHP Warning:  Undefined variable $allDepartment in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:56:49 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/tsukiosk/public_html/admin/facultymembers.php on line 802
+[09-Nov-2024 05:57:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 05:59:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 05:59:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 05:59:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 05:59:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 05:59:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:02 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:02 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:00:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mainClass::show_department() in /home/tsukiosk/public_html/admin/facultymembers.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/tsukiosk/public_html/admin/facultymembers.php on line 24
+[09-Nov-2024 06:01:33 UTC] PHP Fatal error:  Uncaught TypeError: htmlspecialchars(): Argument #1 ($string) must be of type string, array given in /home/tsukiosk/public_html/class/mainClass.php:980
+Stack trace:
+#0 /home/tsukiosk/public_html/class/mainClass.php(980): htmlspecialchars(Array, 3, 'UTF-8')
+#1 /home/tsukiosk/public_html/admin/facultymembers.php(12): mainClass->add_faculty_member(Array)
+#2 {main}
+  thrown in /home/tsukiosk/public_html/class/mainClass.php on line 980
+[09-Nov-2024 13:39:07 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 544
+[09-Nov-2024 13:39:59 UTC] Account Update Success - Editor: admin (ID: 1), User: admin (ID: 1)
+[09-Nov-2024 14:58:41 UTC] PHP Warning:  Undefined variable $aid in /home/tsukiosk/public_html/admin/dashboard.php on line 544

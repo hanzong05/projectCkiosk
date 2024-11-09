@@ -48,6 +48,61 @@ $allAnnouncement = $obj->show_announcement();
   
   <link href="assets/css/css.css" rel="stylesheet" />
   <style>
+    .existing-images {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        overflow-x: auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        flex-wrap: wrap;  /* Allow wrapping on smaller screens */
+        justify-content: flex-start;  /* Ensure images are aligned at the start */
+    }
+
+    .image-preview-container-edit {
+        width: 120px;
+        text-align: center;
+        flex-shrink: 0;
+        margin-bottom: 10px;
+        flex-basis: 120px; /* Ensures consistent size */
+    }
+
+    .image-preview-container-edit img {
+        width: 100%;  /* Makes the image responsive */
+        height: auto;  /* Maintain aspect ratio */
+        max-width: 150px; /* Limits the size */
+        max-height: 150px; /* Limits the size */
+    }
+
+    /* Make adjustments for small screens */
+    @media (max-width: 768px) {
+        .existing-images {
+            justify-content: center;  /* Center images on smaller screens */
+        }
+
+        .image-preview-container-edit {
+            width: 100px; /* Slightly smaller width for small screens */
+        }
+
+        .image-preview-container-edit img {
+            max-width: 120px; /* Smaller image size on small screens */
+            max-height: 120px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .image-preview-container-edit {
+            width: 80px; /* Even smaller width for very small screens */
+        }
+
+        .image-preview-container-edit img {
+            max-width: 100px; /* Smaller image size */
+            max-height: 100px;
+        }
+    }
+</style>
+  <style>
     .ellipsis {
       position: relative;
       overflow-x: auto; /* Enables horizontal scrolling */
@@ -337,7 +392,9 @@ $allAnnouncement = $obj->show_announcement();
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">'
+                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">'
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">'
                         <label for="announcement_title" class="form-label fw-bold">Announcement Title</label>
                         <input type="text" class="form-control" id="announcement_title" name="announcement_title" required>
                     </div>
@@ -360,42 +417,42 @@ $allAnnouncement = $obj->show_announcement();
             </div>
         </div>
     </div>
-</form>
+    </form>
 
-<form id="editannouncementForm" class="row" action="ajax/editData.php" method="post" enctype="multipart/form-data">
-    <div class="modal fade bd-example-modal-lg" id="announcementModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Announcement Edit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="announcementData">
-                    <input type="hidden" name="aid" id="announcementId" value="">
-                    <input type="hidden" name="previous_images" id="previousImages" value="">
-                    <div class="form-group">
-                    <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
-                        <label for="announcementDetails">Details</label>
-                        <textarea class="form-control" id="announcementDetails" name="announcement_details"></textarea>
+    <form id="editannouncementForm" class="row" action="ajax/editData.php" method="post" enctype="multipart/form-data">
+        <div class="modal fade bd-example-modal-lg" id="announcementModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Announcement Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="annImg">Images</label>
-                        <div id="currentImagesContainer"></div>
-                        <input type="file" class="form-control-file" id="annImg" name="ann_imgs[]" multiple>
-                        <button type="button" id="addImageBtn" class="btn btn-secondary mt-2">Add More Images</button>
+                    <div class="modal-body" id="announcementData">
+                        <input type="hidden" name="aid" id="announcementId" value="">
+                        <input type="hidden" name="previous_images" id="previousImages" value="">
+                        <div class="form-group">
+                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
+                            <label for="announcementDetails">Details</label>
+                            <textarea class="form-control" id="announcementDetails" name="announcement_details"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="annImg">Images</label>
+                            <div id="currentImagesContainer"></div>
+                            <input type="file" class="form-control-file" id="annImg" name="ann_imgs[]" multiple>
+                            <button type="button" id="addImageBtn" class="btn btn-secondary mt-2">Add More Images</button>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Save">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
@@ -610,109 +667,10 @@ $('.announcementModalEdit').on('click', function () {
             });
         }
     });
-});
+});$('#editannouncementForm').on('submit', function (e) {
+    e.preventDefault(); // Prevent the default form submission
 
-
-        // Handle the removal of images
-        $(document).on('click', '.remove-image', function () {
-            $(this).closest('.image-container').remove();
-        });
-
-        let addedImages = [];
-let removedImages = [];
-let replacedImages = [];
-// Handle image preview (upload new images)
-window.handleImagePreview = function(event, input) {
-    const container = $(input).closest('.image-preview-container-edit');
-    const preview = container.find('.announcement-image');
-    const oldImagePath = preview.attr('src').split('/').pop();
-    const removeButton = container.find('.remove-image');
-    const editButton = container.find('.edit-image');
-
-    const file = input.files[0];
-    if (file) {
-        // Add the old image filename to the removed images input
-        if (oldImagePath) {
-            const removedImagesInput = $('#removed-images');
-            let removedImagesVal = removedImagesInput.val();
-            if (removedImagesVal) {
-                removedImagesVal += ','; 
-            }
-            removedImagesVal += oldImagePath;
-            removedImagesInput.val(removedImagesVal);
-        }
-
-        // Display the new image
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            preview.attr('src', e.target.result).show();
-            removeButton.show();
-            editButton.show();
-            $(input).hide();
-
-            // Save the image filename to the addedImages array
-            const fileName = file.name;
-            addedImages.push(fileName);
-
-            // Log the arrays for debugging
-            console.log('Added images:', addedImages);
-            console.log('Replaced images:', replacedImages);
-            console.log('Removed images:', removedImages);
-        };
-        reader.readAsDataURL(file);
-    }
-};
-
-// Handle image removal
-$(document).on('click', '.remove-image', function () {
-    const container = $(this).closest('.image-preview-container-edit');
-    const imagePath = container.find('.announcement-image').attr('src').split('/').pop();
-    container.remove();
-
-    const removedImagesInput = $('#removed-images');
-    let removedImagesVal = removedImagesInput.val();
-    if (removedImagesVal) {
-        removedImagesVal += ','; 
-    }
-    removedImagesVal += imagePath;
-    removedImagesInput.val(removedImagesVal);
-});
-
-
-$('#editannouncementForm').on('submit', function (e) {
-    e.preventDefault();
-    const form = $(this);
-    const submitButton = form.find('button[type="submit"]');
-    submitButton.prop('disabled', true);
-
-    const formData = new FormData(this);
-    formData.append('type', 'announcement');
-    
-    // Append added and removed images as JSON strings
-    if (addedImages.length > 0) {
-        formData.append('added_images', JSON.stringify(addedImages));
-    }
-    if (removedImages.length > 0) {
-        formData.append('removed_images', JSON.stringify(removedImages));
-    }
-
-    // Append actual image files (added and replaced) to FormData
-    for (let i = 0; i < addedImages.length; i++) {
-        const fileInput = form.find('input[type="file"]')[i]; // Assuming one file input per image
-        if (fileInput && fileInput.files[0]) {
-            formData.append('added_images_files[]', fileInput.files[0]); // Append each file
-        }
-    }
-
-    // Append replaced images file data
-    if (replacedImages.length > 0) {
-        replacedImages.forEach(function(image) {
-            // Assuming image object contains a 'file' key for the new file
-            if (image.file) {
-                formData.append('replaced_images_files[]', image.file); // Append the new file
-            }
-        });
-    }
+    var form = $(this);
 
     Swal.fire({
         title: "Are you sure?",
@@ -725,30 +683,44 @@ $('#editannouncementForm').on('submit', function (e) {
         cancelButtonText: "No, cancel!"
     }).then((result) => {
         if (result.isConfirmed) {
+            var formData = new FormData(this); // Create FormData from the form element
+            formData.append('type', 'announcement');  // Add type to FormData
+
+            // Debugging FormData to check contents
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+
             fetch("../admin/ajax/editData.php", {
                 method: "POST",
-                body: formData // Send FormData (which includes the file)
+                body: formData
             })
             .then(response => response.json())
             .then(result => {
-                submitButton.prop('disabled', false);
                 if (result.success) {
-                    Swal.fire("Saved!", result.message, "success").then(() => location.reload());
+                    Swal.fire("Saved!", result.message, "success").then(() => {
+                        location.reload(); // Optionally reload the page after success
+                    });
                 } else {
                     Swal.fire("Error!", result.message, "error");
                 }
             })
             .catch(error => {
-                submitButton.prop('disabled', false);
-                Swal.fire("Error!", "There was an error saving the announcement: " + error.message, "error");
+                Swal.fire("Error!", "There was an error saving the announcement.", "error");
             });
-        } else {
-            submitButton.prop('disabled', false);
         }
     });
 });
 
+    
+    $('#editannouncementForm').on('focusin', function() {
+    $(this).removeAttr('aria-hidden');
+});
 
+$('#editannouncementForm').on('focusout', function() {
+    // Optionally set it back to "true" when focus leaves
+    $(this).attr('aria-hidden', 'true');
+});
 
 const table = document.querySelector('#myTable');
 table.parentElement.style.overflowX = 'auto';

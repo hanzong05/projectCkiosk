@@ -1,1966 +1,4500 @@
-[07-Nov-2024 16:16:54 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:43:18 Europe/Berlin] POST data: Array
 (
-    [editor_id] => 34
-    [fid] => 1
-    [removedDepartments] => []
-    [previous] => 462548260_546001258149982_243441605802519392_n.jpg
-    [faculty_name] => dwadwad
-    [department_0] => 5
-    [department_1] => 6
-    [department_2] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+        )
+
+    [type] => announcement
 )
 
-[07-Nov-2024 16:16:54 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:16:54 Europe/Berlin] PHP Warning:  Undefined variable $currentDepartments in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:16:54 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #2 must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:348
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(348): array_diff(Array, NULL)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:18:19 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:43:18 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:43:18 Europe/Berlin] POST Data: Array
 (
-    [editor_id] => 34
-    [fid] => 1
-    [removedDepartments] => []
-    [previous] => 462548260_546001258149982_243441605802519392_n.jpg
-    [faculty_name] => dwadwad
-    [department_0] => 5
-    [department_1] => 6
-    [department_2] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+        )
+
+    [type] => announcement
 )
 
-[07-Nov-2024 16:18:19 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:18:19 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:18:19 Europe/Berlin] Removed Departments: ["5","6"]
-[07-Nov-2024 16:21:54 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:43:18 Europe/Berlin] FILES Data: Array
 (
-    [editor_id] => 34
-    [fid] => 1
-    [removedDepartments] => []
-    [previous] => 462548260_546001258149982_243441605802519392_n.jpg
-    [faculty_name] => dwadwad
-    [department_0] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+                    [2] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+                    [2] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\php3070.tmp
+                    [2] => C:\xampp\tmp\php3071.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 21997
+                    [2] => 329406
+                )
+
+        )
+
 )
 
-[07-Nov-2024 16:21:54 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:21:54 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:21:54 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 16:22:04 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:43:18 Europe/Berlin] Replaced Images: Array
 (
-    [editor_id] => 34
+)
+
+[09-Nov-2024 23:43:18 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[09-Nov-2024 23:43:18 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:43:18 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[09-Nov-2024 23:43:18 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:43:18 Europe/Berlin] No images to remove.
+[09-Nov-2024 23:46:43 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+            [2] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+            [2] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+            [3] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:46:43 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:46:43 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+            [2] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+            [2] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+            [3] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:46:43 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 460536542_3148258328650716_8523106795125365583_n.jpg
+                    [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 460536542_3148258328650716_8523106795125365583_n.jpg
+                    [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => image/jpeg
+                    [4] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => C:\xampp\tmp\php5020.tmp
+                    [4] => C:\xampp\tmp\php5031.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                    [3] => 0
+                    [4] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 93966
+                    [4] => 87849
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:46:43 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:46:43 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [1] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+    [2] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+)
+
+[09-Nov-2024 23:46:43 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:46:43 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[09-Nov-2024 23:46:43 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:46:43 Europe/Berlin] Error uploading image index 1: 4
+[09-Nov-2024 23:46:43 Europe/Berlin] Error uploading image index 2: 4
+[09-Nov-2024 23:46:43 Europe/Berlin] No images to remove.
+[09-Nov-2024 23:46:52 Europe/Berlin] POST data: Array
+(
+    [removed_images] => e3a95ea66a9ba30614d76dbf4d835a62.jpg,Colorful Pink and Yellow Magical Birthday Party Invitation.jpg,,e38cb34b-7af4-407f-80fd-61840205904c.jfif
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:46:52 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:46:52 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => e3a95ea66a9ba30614d76dbf4d835a62.jpg,Colorful Pink and Yellow Magical Birthday Party Invitation.jpg,,e38cb34b-7af4-407f-80fd-61840205904c.jfif
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:46:52 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:46:52 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:46:52 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[09-Nov-2024 23:46:52 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:46:52 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [1] => Colorful Pink and Yellow Magical Birthday Party Invitation.jpg
+    [3] => e38cb34b-7af4-407f-80fd-61840205904c.jfif
+)
+
+[09-Nov-2024 23:46:52 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:52:24 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [2] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:52:24 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:52:24 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [2] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:52:24 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+                    [3] => FlavoredBread.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+                    [3] => FlavoredBread.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => image/png
+                    [3] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => C:\xampp\tmp\php85B1.tmp
+                    [3] => C:\xampp\tmp\php85C2.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 0
+                    [3] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 14259
+                    [3] => 119104
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:52:24 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:52:24 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [1] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[09-Nov-2024 23:52:24 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:52:24 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[09-Nov-2024 23:52:24 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:52:24 Europe/Berlin] Error uploading image index 1: 4
+[09-Nov-2024 23:52:24 Europe/Berlin] No images to remove.
+[09-Nov-2024 23:52:32 Europe/Berlin] POST data: Array
+(
+    [removed_images] => FlavoredBread.jpg,455066839_1035805071409163_8163619333427296827_n-removebg-preview.png,460536542_3148258328650716_8523106795125365583_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:52:32 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:52:32 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => FlavoredBread.jpg,455066839_1035805071409163_8163619333427296827_n-removebg-preview.png,460536542_3148258328650716_8523106795125365583_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:52:32 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:52:32 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:52:32 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[09-Nov-2024 23:52:32 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:52:32 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => FlavoredBread.jpg
+    [1] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+    [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[09-Nov-2024 23:52:32 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:56:14 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:56:14 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:56:14 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:56:14 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+                    [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+                    [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\php70A.tmp
+                    [2] => C:\xampp\tmp\php71A.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 108133
+                    [2] => 93966
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:56:14 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:56:14 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[09-Nov-2024 23:56:14 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:56:14 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[09-Nov-2024 23:56:14 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:56:14 Europe/Berlin] No images to remove.
+[09-Nov-2024 23:59:16 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+            [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+            [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [3] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:59:16 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:59:16 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+            [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+            [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [3] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:59:16 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [4] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [4] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => image/jpeg
+                    [4] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => C:\xampp\tmp\phpCFB1.tmp
+                    [4] => C:\xampp\tmp\phpCFB2.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                    [3] => 0
+                    [4] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 87849
+                    [4] => 7094
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:59:16 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:59:16 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [1] => 455657021_3441338802835268_7216133741851703356_n.jpg
+    [2] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[09-Nov-2024 23:59:16 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:59:16 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[09-Nov-2024 23:59:16 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:59:16 Europe/Berlin] Error uploading image index 1: 4
+[09-Nov-2024 23:59:16 Europe/Berlin] Error uploading image index 2: 4
+[09-Nov-2024 23:59:16 Europe/Berlin] No images to remove.
+[09-Nov-2024 23:59:47 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif,460536542_3148258328650716_8523106795125365583_n.jpg,,455657021_3441338802835268_7216133741851703356_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:59:47 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:59:47 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif,460536542_3148258328650716_8523106795125365583_n.jpg,,455657021_3441338802835268_7216133741851703356_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:59:47 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:59:47 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:59:47 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[09-Nov-2024 23:59:47 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:59:47 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+    [1] => 460536542_3148258328650716_8523106795125365583_n.jpg
+    [3] => 455657021_3441338802835268_7216133741851703356_n.jpg
+)
+
+[09-Nov-2024 23:59:47 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:59:56 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif,460536542_3148258328650716_8523106795125365583_n.jpg,,455657021_3441338802835268_7216133741851703356_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:59:56 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:59:56 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif,460536542_3148258328650716_8523106795125365583_n.jpg,,455657021_3441338802835268_7216133741851703356_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[09-Nov-2024 23:59:56 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => S(1).jpg
+                    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => S(1).jpg
+                    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\php69F0.tmp
+                    [2] => C:\xampp\tmp\php69F1.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 97991
+                    [2] => 87849
+                )
+
+        )
+
+)
+
+[09-Nov-2024 23:59:56 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[09-Nov-2024 23:59:56 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[09-Nov-2024 23:59:56 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:59:56 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+    [1] => 460536542_3148258328650716_8523106795125365583_n.jpg
+    [3] => 455657021_3441338802835268_7216133741851703356_n.jpg
+)
+
+[09-Nov-2024 23:59:56 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:59:56 Europe/Berlin] File does not exist: 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+[09-Nov-2024 23:59:56 Europe/Berlin] File does not exist: 460536542_3148258328650716_8523106795125365583_n.jpg
+[09-Nov-2024 23:59:56 Europe/Berlin] File does not exist: 455657021_3441338802835268_7216133741851703356_n.jpg
+[10-Nov-2024 00:04:55 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+            [3] => 450201972_402927692336483_4434925940872582745_n.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:04:55 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:04:55 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+            [3] => 450201972_402927692336483_4434925940872582745_n.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:04:55 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 450201972_402927692336483_4434925940872582745_n.png
+                    [4] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 450201972_402927692336483_4434925940872582745_n.png
+                    [4] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => image/png
+                    [4] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => C:\xampp\tmp\phpF94D.tmp
+                    [4] => C:\xampp\tmp\phpF96E.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                    [3] => 0
+                    [4] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 296738
+                    [4] => 23431
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:04:55 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:04:55 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [2] => S(1).jpg
+)
+
+[10-Nov-2024 00:04:55 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:04:55 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:04:55 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:04:55 Europe/Berlin] Error uploading image index 1: 4
+[10-Nov-2024 00:04:55 Europe/Berlin] Error uploading image index 2: 4
+[10-Nov-2024 00:04:55 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:05:37 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 450201972_402927692336483_4434925940872582745_n.png,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:05:37 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:05:37 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 450201972_402927692336483_4434925940872582745_n.png,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:05:37 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:05:37 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:05:37 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [2] => S(1).jpg
+)
+
+[10-Nov-2024 00:05:37 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:05:37 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 450201972_402927692336483_4434925940872582745_n.png
+)
+
+[10-Nov-2024 00:05:37 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:05:37 Europe/Berlin] Error uploading image index 1: 4
+[10-Nov-2024 00:05:37 Europe/Berlin] Error uploading image index 2: 4
+[10-Nov-2024 00:05:46 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:05:46 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:05:46 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [2] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:05:46 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:05:46 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:05:46 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [2] => S(1).jpg
+)
+
+[10-Nov-2024 00:05:46 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:05:46 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif
+)
+
+[10-Nov-2024 00:05:46 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:05:46 Europe/Berlin] Error uploading image index 1: 4
+[10-Nov-2024 00:05:46 Europe/Berlin] Error uploading image index 2: 4
+[10-Nov-2024 00:05:52 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif,S(1).jpg,e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:05:52 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:05:52 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif,S(1).jpg,e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:05:52 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:05:52 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:05:52 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[10-Nov-2024 00:05:52 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:05:52 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif
+    [1] => S(1).jpg
+    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+)
+
+[10-Nov-2024 00:05:52 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:05:52 Europe/Berlin] File does not exist: 5b29382a-d58e-4cbd-a235-c933256a3b04.jfif
+[10-Nov-2024 00:06:11 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:06:11 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:06:11 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:06:11 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => C:\xampp\tmp\php2358.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 93966
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:06:11 Europe/Berlin] Replaced Images: Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[10-Nov-2024 00:06:11 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[10-Nov-2024 00:06:11 Europe/Berlin] Added Images: Array
+(
+    [0] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+)
+
+[10-Nov-2024 00:06:11 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:06:11 Europe/Berlin] Successfully deleted image: good_bye_depression_by_klarem_dagk85u-pre.jpg
+[10-Nov-2024 00:06:11 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:07:08 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:07:08 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:07:08 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:07:08 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                    [2] => S(1).jpg
+                    [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                    [2] => S(1).jpg
+                    [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                    [3] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\php3F5.tmp
+                    [2] => C:\xampp\tmp\php406.tmp
+                    [3] => C:\xampp\tmp\php407.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 172188
+                    [2] => 97991
+                    [3] => 46225
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:07:08 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:07:08 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[10-Nov-2024 00:07:08 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:07:08 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:07:08 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:07:08 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:08:45 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+            [2] => S(1).jpg
+            [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+            [2] => S(1).jpg
+            [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+            [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:08:45 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:08:45 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+            [2] => S(1).jpg
+            [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+            [2] => S(1).jpg
+            [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+            [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:08:45 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                    [5] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [6] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                    [5] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [6] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => image/jpeg
+                    [5] => image/jpeg
+                    [6] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => C:\xampp\tmp\php7DF6.tmp
+                    [5] => C:\xampp\tmp\php7E06.tmp
+                    [6] => C:\xampp\tmp\php7E07.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                    [3] => 4
+                    [4] => 0
+                    [5] => 0
+                    [6] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                    [4] => 172188
+                    [5] => 87849
+                    [6] => 172188
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:08:45 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:08:45 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+    [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+    [2] => S(1).jpg
+    [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+)
+
+[10-Nov-2024 00:08:45 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:08:45 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:08:45 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:08:45 Europe/Berlin] Error uploading image index 1: 4
+[10-Nov-2024 00:08:45 Europe/Berlin] Error uploading image index 2: 4
+[10-Nov-2024 00:08:45 Europe/Berlin] Error uploading image index 3: 4
+[10-Nov-2024 00:08:45 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:08:59 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif,e3a95ea66a9ba30614d76dbf4d835a62.jpg,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:08:59 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:08:59 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif,e3a95ea66a9ba30614d76dbf4d835a62.jpg,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:08:59 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:08:59 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:08:59 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[10-Nov-2024 00:08:59 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:08:59 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+    [1] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+)
+
+[10-Nov-2024 00:08:59 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:09:10 Europe/Berlin] POST data: Array
+(
+    [removed_images] => S(1).jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:09:10 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:09:10 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => S(1).jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:09:10 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:09:10 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:09:10 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[10-Nov-2024 00:09:10 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:09:10 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => S(1).jpg
+)
+
+[10-Nov-2024 00:09:10 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:09:25 Europe/Berlin] POST data: Array
+(
+    [removed_images] => S(1).jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => Messenger_creation_5eb1b6b0-c514-4716-ac92-bc1e85a1035c.jpeg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:09:25 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:09:25 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => S(1).jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+            [1] => Messenger_creation_5eb1b6b0-c514-4716-ac92-bc1e85a1035c.jpeg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:09:25 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => FlavoredBread.jpg
+                    [2] => Messenger_creation_5eb1b6b0-c514-4716-ac92-bc1e85a1035c.jpeg
+                    [3] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => FlavoredBread.jpg
+                    [2] => Messenger_creation_5eb1b6b0-c514-4716-ac92-bc1e85a1035c.jpeg
+                    [3] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                    [3] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\php1AA6.tmp
+                    [2] => C:\xampp\tmp\php1AA7.tmp
+                    [3] => C:\xampp\tmp\php1AB8.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 119104
+                    [2] => 39739
+                    [3] => 87849
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:09:25 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:09:25 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[10-Nov-2024 00:09:25 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:09:25 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => S(1).jpg
+)
+
+[10-Nov-2024 00:09:25 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:09:25 Europe/Berlin] File does not exist: S(1).jpg
+[10-Nov-2024 00:09:43 Europe/Berlin] POST data: Array
+(
+    [removed_images] => e3a95ea66a9ba30614d76dbf4d835a62.jpg,Messenger_creation_5eb1b6b0-c514-4716-ac92-bc1e85a1035c.jpeg,FlavoredBread.jpg,460536542_3148258328650716_8523106795125365583_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [type] => announcement
+)
+
+[10-Nov-2024 00:09:43 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:09:43 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => e3a95ea66a9ba30614d76dbf4d835a62.jpg,Messenger_creation_5eb1b6b0-c514-4716-ac92-bc1e85a1035c.jpeg,FlavoredBread.jpg,460536542_3148258328650716_8523106795125365583_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [type] => announcement
+)
+
+[10-Nov-2024 00:09:43 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[10-Nov-2024 00:09:43 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:09:43 Europe/Berlin] Kept Images (updated previous images): Array
+(
+)
+
+[10-Nov-2024 00:09:43 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:09:43 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [1] => Messenger_creation_5eb1b6b0-c514-4716-ac92-bc1e85a1035c.jpeg
+    [2] => FlavoredBread.jpg
+    [3] => 460536542_3148258328650716_8523106795125365583_n.jpg
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [added_image] => Array
+        (
+            [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+            [1] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:10:08 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [added_image] => Array
+        (
+            [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+            [1] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [3] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+                    [4] => FlavoredBread.jpg
+                    [5] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [3] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+                    [4] => FlavoredBread.jpg
+                    [5] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => image/jpeg
+                    [3] => image/jpeg
+                    [4] => image/jpeg
+                    [5] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => C:\xampp\tmp\phpC263.tmp
+                    [3] => C:\xampp\tmp\phpC273.tmp
+                    [4] => C:\xampp\tmp\phpC274.tmp
+                    [5] => C:\xampp\tmp\phpC275.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 0
+                    [3] => 0
+                    [4] => 0
+                    [5] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 87849
+                    [3] => 104961
+                    [4] => 119104
+                    [5] => 172188
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] Kept Images (updated previous images): Array
+(
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:10:08 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:10:08 Europe/Berlin] Error uploading image index 1: 4
+[10-Nov-2024 00:10:08 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:10:21 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif,FlavoredBread.jpg,03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:10:21 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:10:21 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif,FlavoredBread.jpg,03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:10:21 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:10:21 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:10:21 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+)
+
+[10-Nov-2024 00:10:21 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:10:21 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 6ebe6b09-fd1c-49b3-9fcf-8eb2e7cc1cd6.jfif
+    [1] => FlavoredBread.jpg
+    [2] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+)
+
+[10-Nov-2024 00:10:21 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:11:25 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [1] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:11:25 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:11:25 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [1] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:11:25 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+                    [2] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+                    [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+                    [2] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+                    [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                    [3] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\phpEEC1.tmp
+                    [2] => C:\xampp\tmp\phpEEC2.tmp
+                    [3] => C:\xampp\tmp\phpEED3.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 148968
+                    [2] => 46225
+                    [3] => 143783
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:11:25 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:11:25 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+)
+
+[10-Nov-2024 00:11:25 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:11:25 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:11:25 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:11:25 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:14:06 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [1] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [2] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [1] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [2] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+            [4] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:14:06 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:14:06 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [1] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [2] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+            [1] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+            [2] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+            [4] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:14:06 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => 450201972_402927692336483_4434925940872582745_n.png
+                    [5] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+                    [6] => 460420182_813571780676732_2248905488976422245_n.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => 450201972_402927692336483_4434925940872582745_n.png
+                    [5] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+                    [6] => 460420182_813571780676732_2248905488976422245_n.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => image/png
+                    [5] => image/png
+                    [6] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => C:\xampp\tmp\php62C2.tmp
+                    [5] => C:\xampp\tmp\php62C3.tmp
+                    [6] => C:\xampp\tmp\php62D4.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                    [3] => 4
+                    [4] => 0
+                    [5] => 0
+                    [6] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                    [4] => 296738
+                    [5] => 67281
+                    [6] => 143783
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:14:06 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:14:06 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [1] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [2] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+    [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+)
+
+[10-Nov-2024 00:14:06 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:14:06 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:14:06 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:14:06 Europe/Berlin] Error uploading image index 1: 4
+[10-Nov-2024 00:14:06 Europe/Berlin] Error uploading image index 2: 4
+[10-Nov-2024 00:14:06 Europe/Berlin] Error uploading image index 3: 4
+[10-Nov-2024 00:14:06 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:14:31 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,450201972_402927692336483_4434925940872582745_n.png,good_bye_depression_by_klarem_dagk85u-pre.jpg,,e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:14:31 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:14:31 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,450201972_402927692336483_4434925940872582745_n.png,good_bye_depression_by_klarem_dagk85u-pre.jpg,,e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:14:31 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:14:31 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:14:31 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:14:31 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:14:31 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+    [1] => 450201972_402927692336483_4434925940872582745_n.png
+    [2] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+)
+
+[10-Nov-2024 00:14:31 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:14:58 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,450201972_402927692336483_4434925940872582745_n.png,good_bye_depression_by_klarem_dagk85u-pre.jpg,,e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:14:58 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:14:58 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,450201972_402927692336483_4434925940872582745_n.png,good_bye_depression_by_klarem_dagk85u-pre.jpg,,e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:14:58 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:14:58 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:14:58 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:14:58 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:14:58 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+    [1] => 450201972_402927692336483_4434925940872582745_n.png
+    [2] => good_bye_depression_by_klarem_dagk85u-pre.jpg
+    [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+)
+
+[10-Nov-2024 00:14:58 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:14:58 Europe/Berlin] File does not exist: 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+[10-Nov-2024 00:14:58 Europe/Berlin] File does not exist: 450201972_402927692336483_4434925940872582745_n.png
+[10-Nov-2024 00:14:58 Europe/Berlin] File does not exist: good_bye_depression_by_klarem_dagk85u-pre.jpg
+[10-Nov-2024 00:14:58 Europe/Berlin] File does not exist: e3a95ea66a9ba30614d76dbf4d835a62.jpg
+[10-Nov-2024 00:15:04 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 460420182_813571780676732_2248905488976422245_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:15:04 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:15:04 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 460420182_813571780676732_2248905488976422245_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:15:04 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:15:04 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:15:04 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:15:04 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:15:04 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 460420182_813571780676732_2248905488976422245_n.jpg
+)
+
+[10-Nov-2024 00:15:04 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:15:28 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => 450810063_1593279727914314_2788975136376984070_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:15:28 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:15:28 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => 450810063_1593279727914314_2788975136376984070_n.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:15:28 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+                    [2] => 450810063_1593279727914314_2788975136376984070_n.jpg
+                    [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+                    [2] => 450810063_1593279727914314_2788975136376984070_n.jpg
+                    [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/png
+                    [2] => image/jpeg
+                    [3] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\phpA373.tmp
+                    [2] => C:\xampp\tmp\phpA374.tmp
+                    [3] => C:\xampp\tmp\phpA384.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 69172
+                    [2] => 79718
+                    [3] => 143783
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:15:28 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:15:28 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:15:28 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:15:28 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:15:28 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:15:28 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:15:48 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+            [2] => 450810063_1593279727914314_2788975136376984070_n.jpg
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+            [2] => 450810063_1593279727914314_2788975136376984070_n.jpg
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+            [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:15:48 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:15:48 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+            [2] => 450810063_1593279727914314_2788975136376984070_n.jpg
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+            [2] => 450810063_1593279727914314_2788975136376984070_n.jpg
+            [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+            [4] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:15:48 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+                    [5] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [6] => 455657021_3441338802835268_7216133741851703356_n.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+                    [5] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [6] => 455657021_3441338802835268_7216133741851703356_n.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => image/png
+                    [5] => image/jpeg
+                    [6] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => 
+                    [3] => 
+                    [4] => C:\xampp\tmp\phpF242.tmp
+                    [5] => C:\xampp\tmp\phpF252.tmp
+                    [6] => C:\xampp\tmp\phpF253.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 4
+                    [3] => 4
+                    [4] => 0
+                    [5] => 0
+                    [6] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                    [4] => 14259
+                    [5] => 87849
+                    [6] => 108133
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:15:48 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:15:48 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+    [1] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+    [2] => 450810063_1593279727914314_2788975136376984070_n.jpg
+    [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+)
+
+[10-Nov-2024 00:15:48 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:15:48 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:15:48 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:15:48 Europe/Berlin] Error uploading image index 1: 4
+[10-Nov-2024 00:15:48 Europe/Berlin] Error uploading image index 2: 4
+[10-Nov-2024 00:15:48 Europe/Berlin] Error uploading image index 3: 4
+[10-Nov-2024 00:15:48 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:17:23 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 455657021_3441338802835268_7216133741851703356_n.jpg,e3a95ea66a9ba30614d76dbf4d835a62.jpg,Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png,460420182_813571780676732_2248905488976422245_n.jpg,,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:17:23 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:17:23 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 455657021_3441338802835268_7216133741851703356_n.jpg,e3a95ea66a9ba30614d76dbf4d835a62.jpg,Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png,460420182_813571780676732_2248905488976422245_n.jpg,,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:17:23 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:17:23 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:17:23 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:17:23 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:17:23 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 455657021_3441338802835268_7216133741851703356_n.jpg
+    [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [2] => Messenger_creation_eb0a8e78-4a24-405c-898e-a88e9ed85199.png
+    [3] => 460420182_813571780676732_2248905488976422245_n.jpg
+)
+
+[10-Nov-2024 00:17:23 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:17:29 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png,450810063_1593279727914314_2788975136376984070_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:17:29 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:17:29 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png,450810063_1593279727914314_2788975136376984070_n.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:17:29 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:17:29 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:17:29 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:17:29 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:17:29 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 455066839_1035805071409163_8163619333427296827_n-removebg-preview.png
+    [1] => 450810063_1593279727914314_2788975136376984070_n.jpg
+)
+
+[10-Nov-2024 00:17:29 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:17:43 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:17:43 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:17:43 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:17:43 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+                    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+                    [2] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+                    [3] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                    [3] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => C:\xampp\tmp\phpB234.tmp
+                    [2] => C:\xampp\tmp\phpB235.tmp
+                    [3] => C:\xampp\tmp\phpB246.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 7094
+                    [2] => 87849
+                    [3] => 46225
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:17:43 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:17:43 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:17:43 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:17:43 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:17:43 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:17:43 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:18:02 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif,4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:18:02 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:18:02 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif,4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif,
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:18:02 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:18:02 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:18:02 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:18:02 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:18:02 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 868fc362-223c-4f6e-b1bd-508819ab68b2.jfif
+    [1] => 4e330eee-bb21-46e1-8822-1b5ed0b211ad.jfif
+)
+
+[10-Nov-2024 00:18:02 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:18:12 Europe/Berlin] POST data: Array
+(
+    [removed_images] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:18:12 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:18:12 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:18:12 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:18:12 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[10-Nov-2024 00:18:12 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:18:12 Europe/Berlin] Added Images: Array
+(
+)
+
+[10-Nov-2024 00:18:12 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => e3a95ea66a9ba30614d76dbf4d835a62.jpg
+)
+
+[10-Nov-2024 00:18:12 Europe/Berlin] Error uploading image index 0: 4
+[10-Nov-2024 00:22:04 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:22:04 Europe/Berlin] Received type: announcement
+[10-Nov-2024 00:22:04 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 
+    [announcement_title] => dwaadwadwa
+    [announcement_creator] => 1
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+            [1] => S(1).jpg
+        )
+
+    [type] => announcement
+)
+
+[10-Nov-2024 00:22:04 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+                    [1] => S(1).jpg
+                    [2] => S(1).jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+                    [1] => S(1).jpg
+                    [2] => S(1).jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => image/jpeg
+                    [1] => image/jpeg
+                    [2] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => C:\xampp\tmp\phpADBF.tmp
+                    [1] => C:\xampp\tmp\phpADC0.tmp
+                    [2] => C:\xampp\tmp\phpADD1.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 104961
+                    [1] => 97991
+                    [2] => 97991
+                )
+
+        )
+
+)
+
+[10-Nov-2024 00:22:04 Europe/Berlin] Replaced Images: Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:22:04 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+)
+
+[10-Nov-2024 00:22:04 Europe/Berlin] Added Images: Array
+(
+    [0] => Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+)
+
+[10-Nov-2024 00:22:04 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[10-Nov-2024 00:22:04 Europe/Berlin] Successfully deleted image: Messenger_creation_53d06400-8c7d-4a9b-a193-c459ec53a658.png
+[10-Nov-2024 00:22:04 Europe/Berlin] No images to remove.
+[10-Nov-2024 00:16:21 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
     [fid] => 1
     [removedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwad
+    [addedDepartments] => ["5","8"]
+    [previous] => pastries.jpg
+    [faculty_name] => dwad
+    [department_0] => 7
+    [department_1] => 5
+    [department_2] => 8
     [specialization] => dwad
-    [consultation_time] => dwad
+    [consultation_time] => dwadwa
     [type] => faculty
 )
 
-[07-Nov-2024 16:22:04 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:22:04 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:22:04 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 16:22:13 Europe/Berlin] POST data: Array
+[10-Nov-2024 00:16:21 Europe/Berlin] Received type: faculty
+[10-Nov-2024 00:16:21 Europe/Berlin] Departments to add: {"1":5,"2":8}
+[10-Nov-2024 00:16:21 Europe/Berlin] Departments to remove: []
+[10-Nov-2024 00:16:31 Europe/Berlin] POST data: Array
 (
-    [editor_id] => 34
-    [fid] => 1
-    [removedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwad
-    [department_0] => 2
-    [specialization] => dwad
-    [consultation_time] => dwad
-    [type] => faculty
-)
-
-[07-Nov-2024 16:22:13 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:22:13 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:22:13 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 16:23:13 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
+    [editor_id] => 1
     [fid] => 2
     [removedDepartments] => []
+    [addedDepartments] => []
     [previous] => 
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 4
-    [department_1] => 6
-    [department_2] => 9
-    [department_3] => 5
+    [faculty_name] => dwadwadwd
     [specialization] => 
     [consultation_time] => 
     [type] => faculty
 )
 
-[07-Nov-2024 16:23:13 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:23:13 Europe/Berlin] PHP Warning:  Undefined variable $currentDepartments in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:23:13 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #2 must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:348
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(348): array_diff(Array, NULL)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:23:45 Europe/Berlin] POST data: Array
+[10-Nov-2024 00:16:31 Europe/Berlin] Received type: faculty
+[10-Nov-2024 00:16:31 Europe/Berlin] Departments to add: []
+[10-Nov-2024 00:16:31 Europe/Berlin] Departments to remove: []
+[10-Nov-2024 00:16:43 Europe/Berlin] POST data: Array
 (
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [4]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_1] => 6
-    [department_2] => 9
-    [department_3] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:23:45 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:23:45 Europe/Berlin] PHP Warning:  Undefined variable $currentDepartments in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:23:45 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #2 must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:348
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(348): array_diff(Array, NULL)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:24:05 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [4]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_1] => 6
-    [department_2] => 9
-    [department_3] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:24:05 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:24:05 Europe/Berlin] PHP Warning:  Undefined variable $currentDepartments in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:24:05 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #2 must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:348
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(348): array_diff(Array, NULL)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:24:34 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [4,6]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_2] => 9
-    [department_3] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:24:34 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:24:34 Europe/Berlin] PHP Warning:  Undefined variable $currentDepartments in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:24:34 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #2 must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:348
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(348): array_diff(Array, NULL)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 348
-[07-Nov-2024 16:24:53 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [4]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_1] => 6
-    [department_2] => 9
-    [department_3] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:24:53 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:24:53 Europe/Berlin] Removed Departments: ["4"]
-[07-Nov-2024 16:25:00 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [6]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_1] => 9
-    [department_2] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:25:00 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:25:00 Europe/Berlin] Removed Departments: ["6"]
-[07-Nov-2024 16:26:13 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [9]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_1] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:26:13 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:26:13 Europe/Berlin] Removed Departments: ["9","5"]
-[07-Nov-2024 16:26:13 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:28:39 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
+    [editor_id] => 1
     [fid] => 2
     [removedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:28:39 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:28:39 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 16:28:39 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:29:02 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 3
-    [removedDepartments] => [7]
+    [addedDepartments] => []
     [previous] => 
-    [faculty_name] => dwad
-    [department_1] => 2
-    [department_2] => 3
+    [faculty_name] => dwadwadwd
     [specialization] => 
     [consultation_time] => 
     [type] => faculty
 )
 
-[07-Nov-2024 16:29:02 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:29:02 Europe/Berlin] Removed Departments: ["7","2","3"]
-[07-Nov-2024 16:29:02 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:31:04 Europe/Berlin] POST data: Array
+[10-Nov-2024 00:16:43 Europe/Berlin] Received type: faculty
+[10-Nov-2024 00:16:43 Europe/Berlin] Departments to add: []
+[10-Nov-2024 00:16:43 Europe/Berlin] Departments to remove: []
+[10-Nov-2024 00:11:22 Europe/Berlin] POST data: Array
 (
-    [editor_id] => 34
-    [fid] => 4
-    [removedDepartments] => []
-    [previous] => 
-    [faculty_name] => dwadwa
-    [department_0] => 4
-    [department_1] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:31:04 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:31:04 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:31:04 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:33:29 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 4
-    [removedDepartments] => []
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwa
-    [department_0] => 4
-    [department_1] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:33:29 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:33:29 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:33:29 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:33:54 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [5]
-    [previous] => 
-    [faculty_name] => 12321321
-    [department_1] => 2
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:33:54 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:33:54 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:33:54 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:34:03 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [1]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:34:03 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:34:03 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:34:03 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:34:28 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [5,1,2]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:34:28 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:34:28 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:34:28 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:40:01 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["5","2","1","3"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [department_3] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:40:01 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:40:01 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:40:01 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:40:16 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["5","2","1","3"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [department_3] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:40:16 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:40:16 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:40:16 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:41:49 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["5","2","1","4","9"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [department_3] => 4
-    [department_4] => 9
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:41:49 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:41:49 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:41:49 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:44:21 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["5","2","1","7"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [department_3] => 7
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:44:21 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:44:21 Europe/Berlin] Added Departments: ["5","2","1","7"]
-[07-Nov-2024 16:44:21 Europe/Berlin] PHP Warning:  Undefined variable $newImage in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 333
-[07-Nov-2024 16:44:21 Europe/Berlin] Departments to Add: {"3":"7"}
-[07-Nov-2024 16:44:21 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 358
-[07-Nov-2024 16:44:21 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:358
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(358): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 358
-[07-Nov-2024 16:47:32 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [7]
-    [addedDepartments] => ["5","2","1"]
-    [previous] => 
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:47:32 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:47:32 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:47:58 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["5","2","1","7","6"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [department_3] => 7
-    [department_4] => 6
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:47:58 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:47:58 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:48:30 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["5","2","1","7","6"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [department_3] => 7
-    [department_4] => 6
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:48:30 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:48:30 Europe/Berlin] Added Departments: ["5","2","1","7","6"]
-[07-Nov-2024 16:48:30 Europe/Berlin] Departments to Add: {"4":"6"}
-[07-Nov-2024 16:48:30 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:48:30 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:359
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(359): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:48:46 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [6,7,1]
-    [addedDepartments] => ["5","2"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:48:46 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:48:46 Europe/Berlin] Added Departments: ["5","2"]
-[07-Nov-2024 16:48:46 Europe/Berlin] Departments to Add: []
-[07-Nov-2024 16:48:46 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:48:46 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:359
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(359): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:49:01 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [1,7]
-    [addedDepartments] => ["5","2","6"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_4] => 6
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:49:01 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:49:01 Europe/Berlin] Added Departments: ["5","2","6"]
-[07-Nov-2024 16:49:01 Europe/Berlin] Departments to Add: []
-[07-Nov-2024 16:49:01 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:49:01 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:359
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(359): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:49:22 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [7]
-    [addedDepartments] => ["5","2","1","6"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 2
-    [department_2] => 1
-    [department_4] => 6
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:49:22 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:49:22 Europe/Berlin] Added Departments: ["5","2","1","6"]
-[07-Nov-2024 16:49:22 Europe/Berlin] PHP Warning:  Undefined variable $newImage in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 333
-[07-Nov-2024 16:49:22 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 346
-[07-Nov-2024 16:49:22 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:346
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(346): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 346
-[07-Nov-2024 16:49:45 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [5,1]
-    [addedDepartments] => ["2","7","6"]
-    [previous] => 
-    [faculty_name] => 12321321
-    [department_1] => 2
-    [department_3] => 7
-    [department_4] => 6
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:49:45 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:49:45 Europe/Berlin] Removed Departments: ["5","2","1","7","6"]
-[07-Nov-2024 16:49:45 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:50:28 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["3"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:50:28 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:50:28 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:50:44 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["3"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:50:44 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:50:44 Europe/Berlin] Added Departments: ["3"]
-[07-Nov-2024 16:50:44 Europe/Berlin] Departments to Add: ["3"]
-[07-Nov-2024 16:50:44 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:50:44 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:359
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(359): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 359
-[07-Nov-2024 16:53:32 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["3","1"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 3
-    [department_1] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:53:32 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:53:32 Europe/Berlin] Added Departments: ["3","1"]
-[07-Nov-2024 16:53:32 Europe/Berlin] Departments to Add: {"1":"1"}
-[07-Nov-2024 16:53:32 Europe/Berlin] Added Departments: {"1":"1"}
-[07-Nov-2024 16:53:43 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [1]
-    [addedDepartments] => ["3","1"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 3
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:53:43 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:53:43 Europe/Berlin] Added Departments: ["3","1"]
-[07-Nov-2024 16:53:43 Europe/Berlin] Departments to Add: []
-[07-Nov-2024 16:53:43 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:54:30 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [1]
-    [addedDepartments] => ["3","1"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 3
-    [department_1] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:54:30 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:54:30 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 16:54:43 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [1]
-    [addedDepartments] => ["3","1"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 3
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:54:43 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:54:43 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 16:54:59 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [3,1]
-    [addedDepartments] => ["1"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:54:59 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:54:59 Europe/Berlin] Removed Departments: ["3","1","1"]
-[07-Nov-2024 16:54:59 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:55:44 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["2","1","5"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 2
-    [department_1] => 1
-    [department_2] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:55:44 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:55:44 Europe/Berlin] Added Departments: ["2","1","5"]
-[07-Nov-2024 16:55:44 Europe/Berlin] Departments to Add: ["2","1","5"]
-[07-Nov-2024 16:55:44 Europe/Berlin] Added Departments: ["2","1","5"]
-[07-Nov-2024 16:56:30 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["2","1","5","8"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 2
-    [department_1] => 1
-    [department_2] => 5
-    [department_3] => 2
-    [department_4] => 1
-    [department_5] => 5
-    [department_6] => 8
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:56:30 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:56:30 Europe/Berlin] Added Departments: ["2","1","5","8"]
-[07-Nov-2024 16:56:30 Europe/Berlin] Added Departments: {"3":"8"}
-[07-Nov-2024 16:56:51 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [2]
-    [addedDepartments] => ["1","5","2","8"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => 12321321
-    [department_1] => 1
-    [department_2] => 5
-    [department_3] => 2
-    [department_4] => 1
-    [department_5] => 5
-    [department_6] => 8
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:56:51 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:56:51 Europe/Berlin] Added Departments: ["1","5","2","8"]
-[07-Nov-2024 16:56:51 Europe/Berlin] PHP Warning:  Undefined variable $newImage in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 333
-[07-Nov-2024 16:56:51 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 346
-[07-Nov-2024 16:56:51 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:346
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(346): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 346
-[07-Nov-2024 16:58:08 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [2]
-    [addedDepartments] => ["1","5","2","8"]
-    [previous] => 
-    [faculty_name] => 12321321
-    [department_1] => 1
-    [department_2] => 5
-    [department_3] => 2
-    [department_4] => 1
-    [department_5] => 5
-    [department_6] => 8
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:58:08 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:58:08 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:58:08 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:58:24 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [8,5,1]
-    [addedDepartments] => ["2","1"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 2
-    [department_1] => 1
-    [department_3] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:58:24 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:58:24 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:58:24 Europe/Berlin] Added Departments: []
-[07-Nov-2024 16:58:42 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [2,1]
-    [addedDepartments] => ["5","2","1","8"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => 12321321
-    [department_2] => 5
-    [department_3] => 2
-    [department_4] => 1
-    [department_5] => 5
-    [department_6] => 8
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:58:42 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:58:42 Europe/Berlin] Added Departments: ["5","2","1","8"]
-[07-Nov-2024 16:58:42 Europe/Berlin] PHP Warning:  Undefined variable $newImage in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 333
-[07-Nov-2024 16:58:42 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 346
-[07-Nov-2024 16:58:42 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:346
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(346): array_diff(NULL, Array)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 346
-[07-Nov-2024 16:59:27 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [8,5,2,1]
-    [addedDepartments] => ["2","5","1"]
-    [previous] => 
-    [faculty_name] => 12321321
-    [department_0] => 2
-    [department_2] => 5
-    [department_4] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:59:27 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:59:27 Europe/Berlin] Removed Departments: {"6":"8"}
-[07-Nov-2024 16:59:38 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [2,5,1]
-    [addedDepartments] => ["2","5"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 2
-    [department_5] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 16:59:38 Europe/Berlin] Received type: faculty
-[07-Nov-2024 16:59:38 Europe/Berlin] Removed Departments: {"1":"1","4":"1"}
-[07-Nov-2024 17:00:22 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [2,5]
-    [addedDepartments] => ["2","5"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_2] => 2
-    [department_3] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:00:22 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:00:22 Europe/Berlin] Added Departments: ["2","5"]
-[07-Nov-2024 17:00:22 Europe/Berlin] Added Departments: []
-[07-Nov-2024 17:00:22 Europe/Berlin] PHP Warning:  Undefined variable $departmentIds in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 360
-[07-Nov-2024 17:00:22 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: array_diff(): Argument #2 must be of type array, null given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php:360
-Stack trace:
-#0 C:\xampp\htdocs\ckiosk\admin\ajax\editData.php(360): array_diff(Array, NULL)
-#1 {main}
-  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 360
-[07-Nov-2024 17:02:17 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [2]
-    [addedDepartments] => ["5"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_1] => 5
-    [department_3] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:02:17 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:02:17 Europe/Berlin] Added Departments: ["5"]
-[07-Nov-2024 17:02:17 Europe/Berlin] Added Departments: []
-[07-Nov-2024 17:02:17 Europe/Berlin] Removed Departments: {"0":"2","2":"2"}
-[07-Nov-2024 17:02:25 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [5]
-    [addedDepartments] => ["5"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_1] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:02:25 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:02:25 Europe/Berlin] Added Departments: ["5"]
-[07-Nov-2024 17:02:25 Europe/Berlin] Added Departments: []
-[07-Nov-2024 17:02:25 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 17:02:34 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [5]
-    [addedDepartments] => []
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:02:34 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:02:34 Europe/Berlin] Added Departments: []
-[07-Nov-2024 17:02:34 Europe/Berlin] Added Departments: []
-[07-Nov-2024 17:02:34 Europe/Berlin] Removed Departments: ["5","5"]
-[07-Nov-2024 17:02:43 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["2"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:02:43 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:02:43 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 17:02:43 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 17:02:43 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 17:02:52 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["2","12"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 2
-    [department_1] => 12
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:02:52 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:02:52 Europe/Berlin] Added Departments: ["2","12"]
-[07-Nov-2024 17:02:52 Europe/Berlin] Added Departments: {"1":"12"}
-[07-Nov-2024 17:02:52 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 17:03:00 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["4","12"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 4
-    [department_1] => 12
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:03:00 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:03:00 Europe/Berlin] Added Departments: ["4","12"]
-[07-Nov-2024 17:03:00 Europe/Berlin] Added Departments: ["4"]
-[07-Nov-2024 17:03:00 Europe/Berlin] Removed Departments: ["2"]
-[07-Nov-2024 17:03:08 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["5","4"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 5
-    [department_1] => 4
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:03:08 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:03:08 Europe/Berlin] Added Departments: ["5","4"]
-[07-Nov-2024 17:03:08 Europe/Berlin] Added Departments: ["5"]
-[07-Nov-2024 17:03:08 Europe/Berlin] Removed Departments: ["12"]
-[07-Nov-2024 17:03:17 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => []
-    [addedDepartments] => ["4","9"]
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_0] => 4
-    [department_1] => 9
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 17:03:17 Europe/Berlin] Received type: faculty
-[07-Nov-2024 17:03:17 Europe/Berlin] Added Departments: ["4","9"]
-[07-Nov-2024 17:03:17 Europe/Berlin] Added Departments: {"1":"9"}
-[07-Nov-2024 17:03:17 Europe/Berlin] Removed Departments: {"1":"5"}
-[07-Nov-2024 18:05:07 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 10
-    [department_1] => 2
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:05:07 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:05:07 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:05:07 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:05:07 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:05:41 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["1"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:05:41 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:05:41 Europe/Berlin] Added Departments: ["1"]
-[07-Nov-2024 18:05:58 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["2"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:05:58 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:05:58 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 18:05:58 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 18:05:58 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:16:23 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["11"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 5
-    [department_1] => 11
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:16:23 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:16:23 Europe/Berlin] Added Departments: ["11"]
-[07-Nov-2024 18:16:23 Europe/Berlin] Added Departments: ["11"]
-[07-Nov-2024 18:16:23 Europe/Berlin] Removed Departments: ["2"]
-[07-Nov-2024 18:16:34 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["4"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 11
-    [department_1] => 4
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:16:34 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:16:34 Europe/Berlin] Added Departments: ["4"]
-[07-Nov-2024 18:16:34 Europe/Berlin] Added Departments: ["4"]
-[07-Nov-2024 18:16:34 Europe/Berlin] Removed Departments: ["11"]
-[07-Nov-2024 18:16:47 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 3
-    [removedDepartments] => []
-    [addedDepartments] => ["1"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwad
-    [department_0] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:16:47 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:16:47 Europe/Berlin] Added Departments: ["1"]
-[07-Nov-2024 18:16:47 Europe/Berlin] Added Departments: ["1"]
-[07-Nov-2024 18:16:47 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:16:56 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 3
-    [removedDepartments] => []
-    [addedDepartments] => ["13"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwad
-    [department_0] => 1
-    [department_1] => 13
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:16:56 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:16:56 Europe/Berlin] Added Departments: ["13"]
-[07-Nov-2024 18:16:56 Europe/Berlin] Added Departments: ["13"]
-[07-Nov-2024 18:16:56 Europe/Berlin] Removed Departments: ["1"]
-[07-Nov-2024 18:17:22 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["13"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 4
-    [department_1] => 13
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:17:22 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:17:22 Europe/Berlin] Added Departments: ["13"]
-[07-Nov-2024 18:17:22 Europe/Berlin] Added Departments: ["13"]
-[07-Nov-2024 18:17:22 Europe/Berlin] Removed Departments: ["4"]
-[07-Nov-2024 18:17:43 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 1
-    [department_1] => 7
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:17:43 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:17:43 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:17:43 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:17:43 Europe/Berlin] Removed Departments: ["13"]
-[07-Nov-2024 18:18:03 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["2"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:18:03 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:18:03 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 18:18:03 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 18:18:03 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:18:11 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["13"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 13
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:18:11 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:18:11 Europe/Berlin] Added Departments: ["13"]
-[07-Nov-2024 18:18:11 Europe/Berlin] Added Departments: ["13"]
-[07-Nov-2024 18:18:11 Europe/Berlin] Removed Departments: ["2"]
-[07-Nov-2024 18:18:44 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["12","10"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 13
-    [department_1] => 12
-    [department_2] => 10
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:18:44 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:18:44 Europe/Berlin] Added Departments: ["12","10"]
-[07-Nov-2024 18:18:44 Europe/Berlin] Added Departments: ["12","10"]
-[07-Nov-2024 18:18:44 Europe/Berlin] Removed Departments: ["13"]
-[07-Nov-2024 18:19:19 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [12,10]
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:19:19 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:19:19 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:19:19 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:19:19 Europe/Berlin] Removed Departments: ["12","10"]
-[07-Nov-2024 18:19:27 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["3"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:19:27 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:19:27 Europe/Berlin] Added Departments: ["3"]
-[07-Nov-2024 18:19:27 Europe/Berlin] Added Departments: ["3"]
-[07-Nov-2024 18:19:27 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:19:34 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:19:34 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:19:34 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:19:34 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:19:34 Europe/Berlin] Removed Departments: ["3"]
-[07-Nov-2024 18:21:32 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["2","13"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 13
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:21:32 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:21:32 Europe/Berlin] Added Departments: ["2","13"]
-[07-Nov-2024 18:21:32 Europe/Berlin] Added Departments: ["2","13"]
-[07-Nov-2024 18:21:32 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:21:37 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 13
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:21:37 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:21:37 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:21:37 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:21:37 Europe/Berlin] Removed Departments: ["2","13"]
-[07-Nov-2024 18:25:34 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["3","8","1"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 3
-    [department_1] => 8
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:25:34 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:25:34 Europe/Berlin] Added Departments: ["3","8","1"]
-[07-Nov-2024 18:25:34 Europe/Berlin] Added Departments: ["3","8","1"]
-[07-Nov-2024 18:25:34 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:25:38 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 3
-    [department_1] => 8
-    [department_2] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:25:38 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:25:38 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:25:38 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:25:38 Europe/Berlin] Removed Departments: ["3","8","1"]
-[07-Nov-2024 18:29:49 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["5","7"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 5
-    [department_1] => 7
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:29:49 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:29:49 Europe/Berlin] Added Departments: ["5","7"]
-[07-Nov-2024 18:29:49 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:29:49 Europe/Berlin] Added Departments: ["5","7"]
-[07-Nov-2024 18:29:55 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [7]
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:29:55 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:29:55 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:29:55 Europe/Berlin] Removed Departments: ["5","7"]
-[07-Nov-2024 18:29:55 Europe/Berlin] Removed Departments (from DB): ["5","7"]
-[07-Nov-2024 18:29:55 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:30:43 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 5
-    [removedDepartments] => [4]
-    [addedDepartments] => []
-    [previous] => 462570731_1587003682190700_7703824313581128901_n.jpg
-    [faculty_name] => 12321321
-    [department_1] => 9
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:30:43 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:30:43 Europe/Berlin] Removed Departments: ["4"]
-[07-Nov-2024 18:34:27 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 3
-    [removedDepartments] => []
-    [addedDepartments] => ["2"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwad
-    [department_0] => 13
-    [department_1] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:34:27 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:34:27 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 18:34:27 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 18:34:27 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:34:34 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 3
-    [removedDepartments] => [13]
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwad
-    [department_1] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:34:34 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:34:34 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:34:34 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:34:34 Europe/Berlin] Removed Departments: ["13"]
-[07-Nov-2024 18:35:11 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => ["new_0"]
-    [addedDepartments] => ["1","2"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 1
-    [department_1] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:35:11 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:35:11 Europe/Berlin] Added Departments: ["1","2"]
-[07-Nov-2024 18:35:11 Europe/Berlin] Added Departments: ["1","2"]
-[07-Nov-2024 18:35:11 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 18:48:58 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => ["new_2",2,1]
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:48:58 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:48:58 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:48:58 Europe/Berlin] Added Departments: []
-[07-Nov-2024 18:48:58 Europe/Berlin] Removed Departments: ["1","2"]
-[07-Nov-2024 18:54:40 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["1"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 18:54:40 Europe/Berlin] Received type: faculty
-[07-Nov-2024 18:54:40 Europe/Berlin] Added Departments: ["1"]
-[07-Nov-2024 18:54:40 Europe/Berlin] Added Departments: ["1"]
-[07-Nov-2024 18:54:40 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 19:00:21 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:00:21 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:00:21 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:00:21 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:00:21 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 19:00:35 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => ["new_1"]
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 3
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:00:35 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:00:35 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:00:35 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:00:35 Europe/Berlin] Removed Departments: ["1"]
-[07-Nov-2024 19:02:00 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["2","6","5"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 6
-    [department_2] => 5
-    [department_3] => 
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:02:00 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:02:00 Europe/Berlin] Added Departments: ["2","6","5"]
-[07-Nov-2024 19:02:00 Europe/Berlin] Added Departments: ["2","6","5"]
-[07-Nov-2024 19:02:00 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 19:04:17 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => [2]
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_1] => 6
-    [department_2] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:04:17 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:04:17 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:04:17 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:04:17 Europe/Berlin] Removed Departments: ["2"]
-[07-Nov-2024 19:04:28 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["2"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 6
-    [department_1] => 5
-    [department_2] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:04:28 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:04:28 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 19:04:28 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 19:04:28 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 19:04:42 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 6
-    [department_1] => 5
-    [department_2] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:04:42 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:04:42 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:04:42 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:04:42 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 19:04:57 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 11
-    [department_1] => 5
-    [department_2] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
+    [cid] => 1
+    [event_start_date] => 2024-11-22
+    [event_end_date] => 2024-11-28
+    [event_editor] => 1
+    [event_details] => <p>fdfesfesfesfesdwadwadw</p>
+    [type] => event
 )
 
-[07-Nov-2024 19:04:57 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:04:57 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:04:57 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:04:57 Europe/Berlin] Removed Departments: ["6"]
-[07-Nov-2024 19:07:32 Europe/Berlin] POST data: Array
+[10-Nov-2024 00:11:22 Europe/Berlin] Received type: event
+[10-Nov-2024 00:13:43 Europe/Berlin] POST data: Array
 (
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 3
-    [department_1] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:07:32 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:07:32 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:07:32 Europe/Berlin] Departments to Add: []
-[07-Nov-2024 19:07:32 Europe/Berlin] Departments to Remove: ["5","2"]
-[07-Nov-2024 19:08:51 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 3
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwad
-    [department_0] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:08:51 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:08:51 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:08:51 Europe/Berlin] Departments to Add: []
-[07-Nov-2024 19:08:51 Europe/Berlin] Departments to Remove: ["2"]
-[07-Nov-2024 19:08:51 Europe/Berlin] Updated Departments: []
-[07-Nov-2024 19:10:18 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["6","4"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 6
-    [department_1] => 4
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:10:18 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:10:18 Europe/Berlin] Added Departments: ["6","4"]
-[07-Nov-2024 19:10:18 Europe/Berlin] Departments to Add: []
-[07-Nov-2024 19:10:18 Europe/Berlin] Departments to Remove: []
-[07-Nov-2024 19:10:18 Europe/Berlin] Updated Departments: []
-[07-Nov-2024 19:10:18 Europe/Berlin] PHP Warning:  Undefined variable $removedDepartments in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 397
-[07-Nov-2024 19:10:18 Europe/Berlin] Removed Departments: null
-[07-Nov-2024 19:12:17 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["2"]
-    [previous] => 462555135_533204726368984_4277200895350344386_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:12:17 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:12:17 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 19:12:17 Europe/Berlin] Added Departments: ["2"]
-[07-Nov-2024 19:12:17 Europe/Berlin] Removed Departments: []
-[07-Nov-2024 19:12:17 Europe/Berlin] Updated Departments: ["2"]
-[07-Nov-2024 19:12:24 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 1
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 19:12:24 Europe/Berlin] Received type: faculty
-[07-Nov-2024 19:12:24 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:12:24 Europe/Berlin] Added Departments: []
-[07-Nov-2024 19:12:24 Europe/Berlin] Removed Departments: ["2"]
-[07-Nov-2024 19:12:24 Europe/Berlin] Updated Departments: []
-[07-Nov-2024 22:33:19 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["2"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 22:33:19 Europe/Berlin] Received type: faculty
-[07-Nov-2024 22:33:19 Europe/Berlin] Departments to add: [2]
-[07-Nov-2024 22:33:19 Europe/Berlin] Departments to remove: []
-[07-Nov-2024 22:33:28 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["6"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 6
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 22:33:28 Europe/Berlin] Received type: faculty
-[07-Nov-2024 22:33:28 Europe/Berlin] Departments to add: {"1":6}
-[07-Nov-2024 22:33:28 Europe/Berlin] Departments to remove: []
-[07-Nov-2024 22:33:42 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["5"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 1
-    [department_2] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 22:33:42 Europe/Berlin] Received type: faculty
-[07-Nov-2024 22:33:42 Europe/Berlin] Departments to add: {"1":1,"2":5}
-[07-Nov-2024 22:33:42 Europe/Berlin] Departments to remove: {"1":"6"}
-[07-Nov-2024 22:34:01 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => []
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 13
-    [department_2] => 5
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 22:34:01 Europe/Berlin] Received type: faculty
-[07-Nov-2024 22:34:01 Europe/Berlin] Departments to add: {"1":13}
-[07-Nov-2024 22:34:01 Europe/Berlin] Departments to remove: {"1":"1"}
-[07-Nov-2024 22:34:22 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["11"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 5
-    [department_2] => 1
-    [department_3] => 11
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
-)
-
-[07-Nov-2024 22:34:22 Europe/Berlin] Received type: faculty
-[07-Nov-2024 22:34:22 Europe/Berlin] Departments to add: {"2":1,"3":11}
-[07-Nov-2024 22:34:22 Europe/Berlin] Departments to remove: {"2":"13"}
-[07-Nov-2024 22:34:49 Europe/Berlin] POST data: Array
-(
-    [editor_id] => 34
-    [fid] => 2
-    [removedDepartments] => []
-    [addedDepartments] => ["7"]
-    [previous] => 462565562_907820604778498_571369625110707744_n.jpg
-    [faculty_name] => dwadwaddwadwadwadwa`2
-    [department_0] => 2
-    [department_1] => 5
-    [department_2] => 1
-    [department_3] => 9
-    [department_4] => 7
-    [specialization] => 
-    [consultation_time] => 
-    [type] => faculty
+    [cid] => 1
+    [event_start_date] => 2024-11-22
+    [event_end_date] => 2024-11-26
+    [event_editor] => 1
+    [event_details] => <p>fdfesfesfesfesdwadwadwdwadwad</p>
+    [type] => event
 )
 
-[07-Nov-2024 22:34:49 Europe/Berlin] Received type: faculty
-[07-Nov-2024 22:34:49 Europe/Berlin] Departments to add: {"3":9,"4":7}
-[07-Nov-2024 22:34:49 Europe/Berlin] Departments to remove: {"3":"11"}
-[07-Nov-2024 23:15:00 Europe/Berlin] POST data: Array
+[10-Nov-2024 00:13:43 Europe/Berlin] Received type: event
+[09-Nov-2024 23:33:23 Europe/Berlin] POST data: Array
 (
     [removed_images] => 
-    [announcement_title] => dwad
+    [announcement_title] => dwaadwadwa
     [announcement_creator] => 1
-    [aid] => 1
-    [announcement_details] => <p>dwadwadwdwadwadwa</p>
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+            [1] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+            [1] => S(1).jpg
+            [2] => Picture1.png
+        )
+
     [type] => announcement
 )
 
-[07-Nov-2024 23:15:00 Europe/Berlin] Received type: announcement
-[07-Nov-2024 23:15:00 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 80
-[07-Nov-2024 23:18:03 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:33:23 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:33:23 Europe/Berlin] POST Data: Array
 (
     [removed_images] => 
-    [announcement_title] => dwa
+    [announcement_title] => dwaadwadwa
     [announcement_creator] => 1
-    [aid] => 4
-    [announcement_details] => <p>dwadw</p>
+    [aid] => 10
+    [announcement_details] => <p>dwadwadwa</p>
+    [previous_image] => Array
+        (
+            [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+            [1] => S(1).jpg
+        )
+
+    [added_image] => Array
+        (
+            [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+            [1] => S(1).jpg
+            [2] => Picture1.png
+        )
+
     [type] => announcement
 )
 
-[07-Nov-2024 23:18:03 Europe/Berlin] Received type: announcement
-[07-Nov-2024 23:18:03 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 80
-[07-Nov-2024 23:18:14 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:33:23 Europe/Berlin] FILES Data: Array
 (
-    [removed_images] => 
-    [announcement_title] => dwa
-    [announcement_creator] => 1
-    [aid] => 4
-    [announcement_details] => <p>dwadw</p>
-    [type] => announcement
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => Picture1.png
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => Picture1.png
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => image/png
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => C:\xampp\tmp\phpEA0C.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                    [2] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 27757806
+                )
+
+        )
+
 )
 
-[07-Nov-2024 23:18:14 Europe/Berlin] Received type: announcement
-[07-Nov-2024 23:18:14 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\ckiosk\admin\ajax\editData.php on line 80
-[07-Nov-2024 23:21:02 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:33:23 Europe/Berlin] Replaced Images: Array
 (
-    [removed_images] => 672d3c9b2b4fa-e3a95ea66a9ba30614d76dbf4d835a62.jpg
-    [announcement_title] => dwa
-    [announcement_creator] => 1
-    [aid] => 4
-    [announcement_details] => <p>dwadw</p>
-    [type] => announcement
 )
 
-[07-Nov-2024 23:21:02 Europe/Berlin] Received type: announcement
-[07-Nov-2024 23:21:11 Europe/Berlin] POST data: Array
+[09-Nov-2024 23:33:23 Europe/Berlin] Kept Images (updated previous images): Array
 (
-    [removed_images] => 
-    [announcement_title] => dwa
-    [announcement_creator] => 1
-    [aid] => 4
-    [announcement_details] => <p>dwadw</p>
-    [type] => announcement
+    [0] => 03922528-0311-4891-8b4d-278e930c2371 (1).jfif
+    [1] => S(1).jpg
 )
 
-[07-Nov-2024 23:21:11 Europe/Berlin] Received type: announcement
+[09-Nov-2024 23:33:23 Europe/Berlin] Added Images: Array
+(
+)
+
+[09-Nov-2024 23:33:23 Europe/Berlin] Removed Images Array: Array
+(
+)
+
+[09-Nov-2024 23:33:23 Europe/Berlin] Error uploading image index 0: 4
+[09-Nov-2024 23:33:23 Europe/Berlin] Error uploading image index 1: 4
+[09-Nov-2024 23:33:23 Europe/Berlin] No images to remove.

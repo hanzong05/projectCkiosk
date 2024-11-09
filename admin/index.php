@@ -1,5 +1,19 @@
 <?php
+
+// Enable error reporting for all types of errors
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 include_once('assets/header.php');
+
+$account_type = isset($_SESSION['atype']) ? $_SESSION['atype'] : '2';
+if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
+    // Destroy the session
+    session_destroy();
+    // Redirect to the login page
+    header("Location: login.php");
+    exit;
+}
 
 if (isset($_POST['login'])) {
     $log_msg = $obj->admin_login($_POST);

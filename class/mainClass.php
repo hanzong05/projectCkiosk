@@ -523,25 +523,26 @@ class mainClass
     function show_announcement()
     {
         try {
-            // Fetch the user's organization ID based on session variable
+            // Fetch the user's organization ID and user type based on session variable
             $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
     
-            // Query to get the user's organization from users_tbl
-            $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
-            $orgStatement = $this->connection->prepare($orgQuery);
-            $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
-            $orgStatement->execute();
-            $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
+            // Query to get the user's organization and type from users_tbl
+            $userQuery = "SELECT users_org, users_type FROM users_tbl WHERE users_id = :userId";
+            $userStatement = $this->connection->prepare($userQuery);
+            $userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $userStatement->execute();
+            $userRow = $userStatement->fetch(PDO::FETCH_ASSOC);
     
-            // Safely escape the organization ID
-            $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
+            // Safely get the organization ID and user type
+            $userOrgId = $userRow ? intval($userRow['users_org']) : 0;
+            $userType = $userRow ? intval($userRow['users_type']) : 0;
     
-            // If the user has no organization, return an empty result or error message
-            if ($userOrgId == 0) {
+            // If user has no organization and is not type 1, return empty result
+            if ($userOrgId == 0 && $userType != 1) {
                 return []; // Return empty array if no organization is found
             }
     
-            // Main announcement query, filtered by the user's organization and non-archived announcements
+            // Main announcement query
             $query = "
                 SELECT a.*, 
                        u.users_username AS author_name, 
@@ -552,13 +553,22 @@ class mainClass
                 FROM announcement_tbl a 
                 LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
                 LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
-                LEFT JOIN users_tbl c ON a.created_by = c.users_id  -- Join to get the creator's name
+                LEFT JOIN users_tbl c ON a.created_by = c.users_id 
                 LEFT JOIN organization_tbl o ON u.users_org = o.org_id
-                WHERE u.users_org = :userOrgId AND a.is_archived = 0
+                WHERE a.is_archived = 0
             ";
     
+            // Add organization filter only if user is not type 1
+            if ($userType != 1) {
+                $query .= " AND u.users_org = :userOrgId";
+            }
+    
             $statement = $this->connection->prepare($query);
-            $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
+            
+            // Bind organization ID only if user is not type 1
+            if ($userType != 1) {
+                $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
+            }
     
             if ($statement->execute()) {
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -568,11 +578,11 @@ class mainClass
                     // Handle org_image, fallback to a placeholder if not available
                     $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
                                         ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                                        : 'placeholder.jpg'; // Default placeholder if no image is found
+                                        : 'placeholder.jpg';
     
                     // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
                     if (empty($row['creator_name'])) {
-                        $creatorId = $row['created_by']; // Get the creator ID
+                        $creatorId = $row['created_by'];
                         // Fetch the creator's name from orgmembers_tbl
                         $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
                         $fallbackStatement = $this->connection->prepare($fallbackQuery);

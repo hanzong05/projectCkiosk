@@ -695,7 +695,7 @@ $('.announcementModalEdit').on('click', function () {
                 method: "POST",
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => response.json())  // Parse the JSON response
             .then(result => {
                 if (result.success) {
                     Swal.fire("Saved!", result.message, "success").then(() => {

@@ -315,12 +315,9 @@ exit;  // Ensure no further code is executed after success
             $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
             $audit_stmt->execute([':message' => $audit_message]);
         
-            // Final response
-            $response['success'] = true;
-            $response['message'] = 'Faculty member updated successfully.';
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            ob_end_clean();
+            $response = ['success' => true, 'message' => 'Faculty member updated successfully.'];
+    echo json_encode($response);
+    exit;
         }
         elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';

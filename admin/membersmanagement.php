@@ -361,16 +361,9 @@ if ($stmt->rowCount() == 1) {
                     </div>
                     <div class="mb-3">
                         <label for="position" class="form-label fw-bold">Position</label>
-                        <select name="position" id="position" class="form-control" required>
-                            <option value="" selected>Select a position</option>
-                            <option value="Member">Member</option>
-                            <option value="President">President</option>
-                            <option value="VicePresident">Vice President</option>
-                            <option value="Auditor">Auditor</option>
-                            <option value="Secretary">Secretary</option>
-                            <option value="Treasurer">Treasurer</option>
-                        </select>
+                        <input type="text" name="position" id="position" class="form-control" placeholder="Enter a position" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="org_image" class="form-label fw-bold">Profile Image</label>
                         <input type="file" id="org_image" class="form-control" name="org_image" accept="image/*" required>

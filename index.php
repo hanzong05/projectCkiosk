@@ -23,26 +23,27 @@ $allEvent = $obj->show_eventsByMonth();
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Campus Kiosk</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.2.4/dist/tailwind.min.css" rel="stylesheet">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Campus Kiosk</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Font Awesome -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+<!-- Tailwind CSS -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.2.4/dist/tailwind.min.css" rel="stylesheet">
 
+<!-- Bootstrap 5.3.0 (corrected version) CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -54,7 +55,268 @@ $allEvent = $obj->show_eventsByMonth();
 
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    
+    <style> .page-header {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+}
+
+/* Announcement Header Styling */
+.announcement-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem; /* Adjusted for better spacing */
+}
+
+/* Organization Image Styling */
+.org-image {
+    width: 3.5rem; /* 56px */
+    height: 3.5rem; /* 56px */
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Spacing between the image and the text */
+.announcement-header .ml-6 { /* Increased margin-left for more space */
+    margin-left: 1.5rem; /* 24px */
+}
+
+/* Text Styling */
+.announcement-header h3 {
+    font-size: 1.125rem; /* 18px */
+    color: #333; /* Darker color for better readability */
+    font-weight: 600;
+    margin-bottom: 0.25rem; /* Small space below the name */
+}
+
+.announcement-header p {
+    font-size: 0.875rem; /* 14px */
+    color: #6B7280; /* Light gray */
+    margin-top: 0.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .org-image {
+        width: 3rem; /* 48px */
+        height: 3rem; /* 48px */
+    }
+
+    .announcement-header h3 {
+        font-size: 1rem; /* 16px */
+    }
+
+    .announcement-header p {
+        font-size: 0.75rem; /* 12px */
+    }
+}
+
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.page-header p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Announcement Cards */
+.announcement-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.announcement-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Section */
+.card-header {
+    padding: 1.5rem;
+    border-bottom: 2px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.org-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-content h3 {
+    margin: 0;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.header-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}.carousel-wrapper {
+    position: relative;
+    background: #f9fafb;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.carousel-item img {
+    width: 100%; /* Make the image take the full width of the container */
+    height: auto; /* Maintain the image's aspect ratio and allow it to adjust its height accordingly */
+    object-fit: contain; /* Ensure the entire image is visible */
+    border-radius: 0.75rem;
+}
+
+
+.carousel-control-prev, .carousel-control-next {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 1rem;
+}
+
+/* Content Section */
+.announcement-content {
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 1rem;
+}
+
+.announcement-text {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+/* Truncate Text */
+.truncate-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Read More Button */
+.read-more-btn {
+    color: #f59e0b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.read-more-btn:hover {
+    color: #d97706;
+}
+
+/* Footer Section */
+.card-footer {
+    padding: 1rem 1.5rem;
+    border-top: 2px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timestamp {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.timestamp svg {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+}
+
+/* Interaction Buttons */
+.interaction-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.interaction-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #777;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.interaction-btn:hover {
+    color: #f59e0b;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state svg {
+    width: 64px;
+    height: 64px;
+    color: #d1d5db;
+    margin-bottom: 1.5rem;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .announcement-card {
+        margin: 1rem;
+    }
+
+    .carousel-item img {
+        height: 300px;
+    }
+
+    .card-header {
+        padding: 1rem;
+    }
+
+    .announcement-content {
+        padding: 1rem;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -149,12 +411,10 @@ $allEvent = $obj->show_eventsByMonth();
 
     </div>
     <div class="page-content">
-
     <?php
-include_once ("class/connection.php");
+include_once("class/connection.php");
 
 function getAllAnnouncements($connection) {
-    // Main announcement query to retrieve all announcements with images
     $query = "
         SELECT a.*, 
                u.users_username AS author_name, 
@@ -178,20 +438,11 @@ function getAllAnnouncements($connection) {
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($result as &$row) {
-            // Assign default image if org image is not available
-            $row['org_image'] = !empty($row['org_image'])
-                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                : 'default_org_image.jpg';
-
-            // Convert announcement_images to an array; handle cases where no images are available
-            $row['announcement_images'] = !empty($row['announcement_images'])
-                ? explode(',', $row['announcement_images'])
-                : [];
-            
-            $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
-            $row['org_name'] = !empty($row['org_name'])
-                ? htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8')
-                : 'Unknown Organization'; 
+            $row['org_image'] = !empty($row['org_image']) ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8') : 'default_org_image.jpg';
+            $row['announcement_images'] = !empty($row['announcement_images']) ? explode(',', $row['announcement_images']) : [];
+            $row['creator_name'] = !empty($row['creator_name']) ? htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8') : 'Unknown Creator';
+            $row['org_name'] = !empty($row['org_name']) ? htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8') : 'Unknown Organization';
+            $row['announcement_details'] = $row['announcement_details'] ?? '';
         }
 
         return $result;
@@ -200,19 +451,100 @@ function getAllAnnouncements($connection) {
     }
 }
 
-// Get all announcements
 $allAnnouncement = getAllAnnouncements($connect);
 ?>
-        <!-- HTML Section -->
-        <div class="section-heading text-center mb-10">
-    <h1 class="text-4xl font-semibold text-yellow-600"><em>ANNOUNCEMENT</em></h1>
-</div>
+<section class="container mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-yellow-600 mb-2">
+            <span class="relative">
+                <span class="absolute inset-0 transform translate-x-1 translate-y-1 bg-yellow-200 rounded"></span>
+                <span class="relative">ANNOUNCEMENTS</span>
+            </span>
+        </h1>
+        <p class="text-gray-600 text-sm">Stay updated with the latest news and events</p>
+    </div>
 
-<div class="ann-container px-4 sm:px-6 lg:px-8">
-    <div class="announcements space-y-8" id="announcements-container">
-        <!-- Announcements will be inserted here dynamically by JavaScript -->
+    <!-- Announcement Container -->
+    <div class="outer-announcement-container max-w-lg mx-auto px-4 py-4 bg-gray-100 rounded-lg shadow-md">
+        <div class="announcement-container mx-auto max-w-sm bg-gray-50 p-4 rounded-md shadow">
+            <div class="grid grid-cols-1 gap-4">
+                <?php if (empty($allAnnouncement)): ?>
+                    <div class="empty-state col-span-full text-center">
+                        <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        </svg>
+                        <h3 class="mt-2 text-xs font-medium text-gray-900">No announcements</h3>
+                        <p class="mt-1 text-xs text-gray-500">Please check back later.</p>
+                    </div>
+                <?php else: ?>
+                    <!-- Loop through announcements here -->
+                    <?php foreach ($allAnnouncement as $announcement): ?>
+                        <div class="announcement-header flex items-center mb-4">
+    <!-- Organization Image -->
+    <img src="uploaded/orgUploaded/<?php echo htmlspecialchars($announcement['org_image']); ?>" 
+         alt="<?php echo htmlspecialchars($announcement['org_name']); ?>" 
+         class="org-image w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full object-cover">
+
+    <!-- Organization Name and Creator Info -->
+    <div class="ml-6"> <!-- Increased margin-left here -->
+        <h3 class="font-semibold text-lg text-gray-800"><?php echo htmlspecialchars($announcement['org_name']); ?></h3>
+        <p class="text-sm text-gray-500">Posted by <?php echo htmlspecialchars($announcement['creator_name']); ?></p>
     </div>
 </div>
+
+                            <?php if (!empty($announcement['announcement_images'])): ?>
+                                <div class="carousel-container mb-2">
+                                    <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
+                                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                                    <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
+                                                         class="d-block w-full rounded" 
+                                                         alt="Announcement image">
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <?php if (count($announcement['announcement_images']) > 1): ?>
+                                            <button class="carousel-control-prev" type="button" 
+                                                    data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" 
+                                                    data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" 
+                                                    data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" 
+                                                    data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="announcement-content">
+                                <p class="text-gray-600 text-xs mb-2 truncate-text" id="text-<?php echo $announcement['announcement_id']; ?>">
+                                    <?php echo nl2br(htmlspecialchars($announcement['announcement_details'])); ?>
+                                </p>
+                                <?php if (strlen($announcement['announcement_details'] ?? '') > 150): ?>
+                                    <button onclick="toggleDetails(<?php echo $announcement['announcement_id']; ?>)" 
+                                            class="text-yellow-600 hover:text-yellow-700 text-xs font-medium">
+                                        See more...
+                                    </button>
+                                <?php endif; ?>
+                                <div class="flex justify-between items-center mt-2">
+                                    <span class="time-badge text-xs text-gray-500">
+                                        <?php echo date('M d, Y', strtotime($announcement['created_at'])); ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
 <section id="schoolcalendar" class="content-section">

@@ -1,33 +1,32 @@
 <?php
-require_once '../class/connection.php'; // Ensure this path is correct
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Create a new PDO instance
+header('Content-Type: application/json'); // Set JSON content type
+
+require_once '../class/connection.php'; // Make sure this path is correct
+
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=ckiosk", "root", ""); // Update these parameters as needed
+    // Your existing code to fetch data from the database
+    // Example:
+    $pdo = new PDO("mysql:host=localhost;dbname=ckiosk", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Prepare and execute the query to fetch feedback
-    $stmt = $pdo->prepare("SELECT rating, feedback_text, email, name, address, college, year, image FROM feedback ORDER BY created_at DESC");
+    $stmt = $pdo->prepare("SELECT rating, feedback_text, name FROM feedback ORDER BY created_at DESC");
     $stmt->execute();
-
-    // Fetch all feedback records
     $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Define the directory where images are stored
-    $imageDirectory = 'uploaded/feedUploaded/'; // Update this path as needed
+    $totalFeedback = count($feedbacks);
+    $averageRating = $totalFeedback ? array_sum(array_column($feedbacks, 'rating')) / $totalFeedback : 0;
 
-    // Update the image URLs in the feedbacks array
-    foreach ($feedbacks as &$feedback) {
-        if (!empty($feedback['image'])) {
-            $feedback['image'] = $imageDirectory . $feedback['image'];
-        } else {
-            $feedback['image'] = $imageDirectory . 'default.png'; // Default image URL
-        }
-    }
+    $response = [
+        'total_feedback' => $totalFeedback,
+        'average_rating' => round($averageRating, 1),
+        'feedbacks' => $feedbacks
+    ];
 
-    // Return the feedbacks as JSON
-    header('Content-Type: application/json');
-    echo json_encode($feedbacks);
+    echo json_encode($response);
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }

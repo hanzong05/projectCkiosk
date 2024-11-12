@@ -55,7 +55,550 @@ $allEvent = $obj->show_eventsByMonth();
 
     <!-- Modernizr for browser feature detection -->
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <style> .page-header {
+    <style>/* Make sure the text doesn't overflow */
+.feedback-section * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.feedback-section {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.feedback-section .feedback-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feedback-section .header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+}
+
+.feedback-section .header h1 {
+    font-size: 3rem;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.feedback-section .header p {
+    color: #4b5563;
+    font-size: 1.2rem;
+}
+
+.feedback-section .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.feedback-section .stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.feedback-section .stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.feedback-section .stat-icon {
+    width: 48px;
+    height: 48px;
+    background: #e0e7ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.feedback-section .stat-info h3 {
+    color: #4b5563;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.feedback-section .stat-info p {
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.feedback-section .main-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-section .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.feedback-section .submit-btn {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feedback-section .submit-btn:hover {
+    background: #4338ca;
+    transform: scale(1.05);
+}
+
+.feedback-section .feedback-list {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 2rem;
+}
+
+.feedback-section .feedback-item {
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.feedback-section .feedback-item:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-section .feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.feedback-section .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.feedback-section .avatar {
+    width: 40px;
+    height: 40px;
+    background: #e0e7ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #4f46e5;
+}
+
+.feedback-section .rating {
+    color: #eab308;
+    font-size: 1.2rem;
+}
+
+.feedback-section .feedback-content {
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.feedback-section .footer {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.feedback-section .footer-stat h4 {
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-section .footer-stat p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4f46e5;
+}
+
+.feedback-section @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar Styling */
+.feedback-section .feedback-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feedback-section .feedback-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.feedback-section .feedback-list::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+    border-radius: 4px;
+}
+
+.feedback-section .feedback-list::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+@media (max-width: 768px) {
+    .feedback-section .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-section .footer {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-section .header h1 {
+        font-size: 2rem;
+    }
+}
+
+.event-details {
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsive adjustments for the event grid and cards */
+@media (max-width: 1024px) {
+    .event-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+    
+    .event-card {
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .event-date {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    .event-details {
+        font-size: 0.9rem;
+    }
+
+    .event-section h4 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .event-date {
+        font-size: 1rem;
+    }
+
+    .event-details {
+        font-size: 0.85rem;
+    }
+
+    .event-section h4 {
+        font-size: 1.2rem;
+    }
+
+    .tabs-content {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .event-date {
+        font-size: 1rem;
+    }
+
+    .event-details {
+        font-size: 0.8rem;
+    }
+
+    .event-card {
+        padding: 12px;
+    }
+}
+
+       .content-line {
+    width: 100%; /* Adjust the width of the line (can be modified) */
+    margin: 10px auto; /* Center the line and add space around it */
+}
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #6366f1, #b8b5bd);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem 0;
+            background-color: #f8f9fa;
+        }
+
+        .step-indicator {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 1rem;
+            position: relative;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            background-color: #6366f1;
+            color: white;
+        }
+
+        .step-indicator:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #e9ecef;
+            right: -100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .emoji-rating {
+            display: flex;
+            justify-content: space-around;
+            padding: 2rem 0;
+        }
+
+        .emoji-select {
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            opacity: 0.5;
+        }
+
+        .emoji-select:hover {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+
+        .emoji-select.selected {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-control:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .radio-group {
+            display: grid;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-option:hover {
+            background-color: #e9ecef;
+        }
+
+        .radio-option input {
+            margin-right: 0.75rem;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #e5e7eb;
+            padding: 1.25rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #6366f1;
+            border-color: #6366f1;
+        }
+
+        .btn-primary:hover {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            border-color: #10b981;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+            border-color: #059669;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <style> .image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.modal-img {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.close-modal:hover {
+    color: #fef08a;
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.modal-nav:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-prev { left: 20px; }
+.modal-next { right: 20px; }
+
+.carousel-item img {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-item img:hover {
+    opacity: 0.9;
+}
+.page-header {
     background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
     padding: 4rem 0;
     margin-bottom: 3rem;
@@ -64,7 +607,117 @@ $allEvent = $obj->show_eventsByMonth();
     text-align: center;
     color: white;
 }
+/* Announcement Container Colors and Styling */
+.outer-announcement-container {
+    background: linear-gradient(to bottom, #fefce8, #fff);
+    border: 1px solid #fef08a;
+}
 
+.announcement-container {
+    background-color: #fef08a;
+    border: 1px solid;
+    max-height: 700px; /* Adjust this value as needed */
+    overflow-y: auto;
+}
+
+
+/* Carousel Container Styling */
+.carousel-container {
+    position: relative;
+    height: max-content;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+    background-color: #fafafa;
+    border-radius: 0.5rem;
+}
+
+/* Carousel Image Styling */
+.carousel-item {
+    width: 100%;
+    max-height: 100%;
+    height: auto;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+/* Carousel Controls */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-container {
+        height: 250px;
+    }
+    
+    .carousel-item {
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-container {
+        height: 200px;
+    }
+    
+    .carousel-item {
+        height: 200px;
+    }
+}
+
+/* Enhanced announcement content styling */
+.announcement-content {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-content p {
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* Organization header enhanced styling */
+.announcement-header {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border-bottom: 2px solid #fef08a;
+}
+
+.announcement-header h3 {
+    color: #854d0e;
+}
+
+.announcement-header p {
+    color: #92400e;
+}
 /* Announcement Header Styling */
 .announcement-header {
     display: flex;
@@ -131,7 +784,7 @@ $allEvent = $obj->show_eventsByMonth();
 
 /* Announcement Cards */
 .announcement-card {
-    background: #fff;
+    background: #2e0f13;
     border-radius: 1rem;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -178,17 +831,11 @@ $allEvent = $obj->show_eventsByMonth();
     margin-top: 0.25rem;
 }.carousel-wrapper {
     position: relative;
-    background: #f9fafb;
+    background: #2e0f13;
     border-radius: 1rem;
     padding: 1rem;
 }
 
-.carousel-item img {
-    width: 100%; /* Make the image take the full width of the container */
-    height: auto; /* Maintain the image's aspect ratio and allow it to adjust its height accordingly */
-    object-fit: contain; /* Ensure the entire image is visible */
-    border-radius: 0.75rem;
-}
 
 
 .carousel-control-prev, .carousel-control-next {
@@ -316,7 +963,8 @@ $allEvent = $obj->show_eventsByMonth();
         padding: 1rem;
     }
 }
-</style>
+
+    </style>
 </head>
 
 <body>
@@ -417,11 +1065,11 @@ include_once("class/connection.php");
 function getAllAnnouncements($connection) {
     $query = "
         SELECT a.*, 
-               u.users_username AS author_name, 
-               COALESCE(c.users_username, o.username, 'Unknown Creator') AS creator_name, 
-               org.org_name, 
-               org.org_image,
-               GROUP_CONCAT(ai.image_path) AS announcement_images
+            u.users_username AS author_name, 
+            COALESCE(c.users_username, o.username, 'Unknown Creator') AS creator_name, 
+            org.org_name, 
+            org.org_image,
+            GROUP_CONCAT(ai.image_path) AS announcement_images
         FROM announcement_tbl a 
         LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
         LEFT JOIN users_tbl c ON a.created_by = c.users_id  
@@ -430,6 +1078,7 @@ function getAllAnnouncements($connection) {
         LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
         WHERE a.is_archived = 0
         GROUP BY a.announcement_id
+        ORDER BY a.created_at DESC  -- Order by the creation date (latest first)
     ";
 
     try {
@@ -453,7 +1102,8 @@ function getAllAnnouncements($connection) {
 
 $allAnnouncement = getAllAnnouncements($connect);
 ?>
-<section class="container mx-auto px-4 py-8">
+
+<section id="announcement"class="container mx-auto px-4 py-8">
     <!-- Header Section -->
     <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-yellow-600 mb-2">
@@ -465,9 +1115,19 @@ $allAnnouncement = getAllAnnouncements($connect);
         <p class="text-gray-600 text-sm">Stay updated with the latest news and events</p>
     </div>
 
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal" style="display: none;">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img class="modal-img" src="" alt="Full size image">
+            <button class="modal-nav modal-prev">&lt;</button>
+            <button class="modal-nav modal-next">&gt;</button>
+        </div>
+    </div>
+
     <!-- Announcement Container -->
-    <div class="outer-announcement-container max-w-lg mx-auto px-4 py-4 bg-gray-100 rounded-lg shadow-md">
-        <div class="announcement-container mx-auto max-w-sm bg-gray-50 p-4 rounded-md shadow">
+    <div class="outer-announcement-container max-w-lg mx-auto px-4 py-4  rounded-lg shadow-md">
+        <div class="announcement-container mx-auto max-w-sm bg-gray-50 p-4 bg-[#2e0f13] rounded-md shadow">
             <div class="grid grid-cols-1 gap-4">
                 <?php if (empty($allAnnouncement)): ?>
                     <div class="empty-state col-span-full text-center">
@@ -478,30 +1138,31 @@ $allAnnouncement = getAllAnnouncements($connect);
                         <p class="mt-1 text-xs text-gray-500">Please check back later.</p>
                     </div>
                 <?php else: ?>
-                    <!-- Loop through announcements here -->
                     <?php foreach ($allAnnouncement as $announcement): ?>
-                        <div class="announcement-header flex items-center mb-4">
-    <!-- Organization Image -->
-    <img src="uploaded/orgUploaded/<?php echo htmlspecialchars($announcement['org_image']); ?>" 
-         alt="<?php echo htmlspecialchars($announcement['org_name']); ?>" 
-         class="org-image w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full object-cover">
+                        <div class="announcement-item bg-white rounded-lg shadow-sm p-4 mb-4">
+                            <!-- Organization Header -->
+                            <div class="announcement-header flex items-center mb-4">
+                                <img src="/ckiosk/uploaded/orgUploaded/<?php echo htmlspecialchars($announcement['org_image']); ?>" 
+                                     alt="<?php echo htmlspecialchars($announcement['org_name']); ?>" 
+                                     class="org-image w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full object-cover">
+                                <div class="ml-6">
+                                    <h3 class="font-semibold text-lg text-gray-800"><?php echo htmlspecialchars($announcement['org_name']); ?></h3>
+                                    <p class="text-sm text-gray-500">Posted by <?php echo htmlspecialchars($announcement['creator_name']); ?></p>
+                                </div>
+                            </div>
 
-    <!-- Organization Name and Creator Info -->
-    <div class="ml-6"> <!-- Increased margin-left here -->
-        <h3 class="font-semibold text-lg text-gray-800"><?php echo htmlspecialchars($announcement['org_name']); ?></h3>
-        <p class="text-sm text-gray-500">Posted by <?php echo htmlspecialchars($announcement['creator_name']); ?></p>
-    </div>
-</div>
-
+                            <!-- Carousel/Images -->
                             <?php if (!empty($announcement['announcement_images'])): ?>
-                                <div class="carousel-container mb-2">
+                                <div class="carousel-container mb-4">
                                     <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-inner">
                                             <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
-                                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                                     data-image-index="<?php echo $index; ?>">
                                                     <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
-                                                         class="d-block w-full rounded" 
-                                                         alt="Announcement image">
+                                                         alt="Announcement image"
+                                                         onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
+                                                         class="cursor-pointer hover:opacity-90 transition-opacity">
                                                 </div>
                                             <?php endforeach; ?>
                                         </div>
@@ -521,19 +1182,41 @@ $allAnnouncement = getAllAnnouncements($connect);
                                 </div>
                             <?php endif; ?>
 
+                            <!-- Announcement Content -->
                             <div class="announcement-content">
-                                <p class="text-gray-600 text-xs mb-2 truncate-text" id="text-<?php echo $announcement['announcement_id']; ?>">
-                                    <?php echo nl2br(htmlspecialchars($announcement['announcement_details'])); ?>
+                                <p class="text-gray-600 text-sm mb-2 truncate-text" id="text-<?php echo $announcement['announcement_id']; ?>">
+                                   <?php echo nl2br(htmlspecialchars(strip_tags($announcement['announcement_details']))); ?>
                                 </p>
-                                <?php if (strlen($announcement['announcement_details'] ?? '') > 150): ?>
+                                <?php if (strlen($announcement['announcement_details']) > 150): ?>
                                     <button onclick="toggleDetails(<?php echo $announcement['announcement_id']; ?>)" 
                                             class="text-yellow-600 hover:text-yellow-700 text-xs font-medium">
                                         See more...
                                     </button>
                                 <?php endif; ?>
                                 <div class="flex justify-between items-center mt-2">
-                                    <span class="time-badge text-xs text-gray-500">
-                                        <?php echo date('M d, Y', strtotime($announcement['created_at'])); ?>
+                                    <span class="text-xs text-gray-500" id="time-<?php echo $announcement['announcement_id']; ?>">
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function() {
+                                                const timeElement = document.getElementById("time-<?php echo $announcement['announcement_id']; ?>");
+                                                const createdAt = "<?php echo $announcement['created_at']; ?>"; // PHP Date Format
+
+                                                timeElement.textContent = formatRelativeTime(createdAt);
+                                            });
+
+                                            function formatRelativeTime(dateString) {
+                                                const now = new Date();
+                                                const date = new Date(dateString);
+                                                const diffInSeconds = Math.floor((now - date) / 1000);
+                                                const diffInMinutes = Math.floor(diffInSeconds / 60);
+                                                const diffInHours = Math.floor(diffInMinutes / 60);
+                                                const diffInDays = Math.floor(diffInHours / 24);
+
+                                                if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
+                                                if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+                                                if (diffInHours < 24) return `${diffInHours} hours ago`;
+                                                return `${diffInDays} days ago`;
+                                            }
+                                        </script>
                                     </span>
                                 </div>
                             </div>
@@ -546,14 +1229,13 @@ $allAnnouncement = getAllAnnouncements($connect);
 </section>
 
 
-
 <section id="schoolcalendar" class="content-section">
     <div class="section-heading text-center borderYellow">
         <h1><em>SCHOOL CALENDAR</em></h1>
     </div>
     <div class="section-content">
-        <div class="tabs-content">
-            <div class="wrapper calendar-wrapper">
+        <div class="tabs-content w-full bg-gray-50 p-8 mx-auto">
+            <div class="wrapper calendar-wrapper max-w-lg mx-auto">
                 <section class="tabgroup">
                     <ul>
                         <?php 
@@ -577,13 +1259,6 @@ $allAnnouncement = getAllAnnouncements($connect);
                             }
                         }
 
-                        // Debugging: Check if there are events to display
-                        // Uncomment for debugging:
-                        // echo '<pre>';
-                        // print_r($todayEvents);
-                        // print_r($upcomingEvents);
-                        // echo '</pre>';
-
                         // Display today's events
                         if (!empty($todayEvents)) {
                             echo '<li class="event-section">';
@@ -595,6 +1270,10 @@ $allAnnouncement = getAllAnnouncements($connect);
                                 echo '<div class="event-date">';
                                 echo $date->format('M d, Y');
                                 echo '</div>';
+
+                                // Adding a horizontal line or extra space
+                                echo '<hr class="my-4">';
+                                
                                 echo '<div class="event-details">';
                                 echo htmlspecialchars(strip_tags($event['calendar_details'] ?? 'No details available'));
                                 echo '</div>';
@@ -615,9 +1294,17 @@ $allAnnouncement = getAllAnnouncements($connect);
                                 echo '<div class="event-date">';
                                 echo $date->format('M d, Y');
                                 echo '</div>';
+
+                                // Adding a horizontal line or extra space
+                            
+                                
                                 echo '<div class="event-details">';
+                             
                                 echo htmlspecialchars(strip_tags($event['calendar_details'] ?? 'No details available'));
+                                echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                echo '<hr class="my-4 content-line">';  
                                 echo '</div>';
+                                
                                 echo '</div>';
                             }
                             echo '</div>';
@@ -640,10 +1327,7 @@ $allAnnouncement = getAllAnnouncements($connect);
     </div>
 </section>
 
-
-
-
-
+                        
 
         <section id="campusmap" class="content-section">
             <div class="section-heading text-center borderYellow">
@@ -1319,87 +2003,52 @@ $allAnnouncement = getAllAnnouncements($connect);
 
 
 
-        <section id="faqs" class="content-section">
-            <div class="section-heading text-center borderYellow">
-                <h1><br><em>FREQUENTLY ASKED QUESTIONS</em></h1>
-            </div>
-            <div class="container py-5">
-                <div class="row">
-                    <!-- Left Column: Illustration -->
-                    <div class="col-lg-6">
-                        <div class="faq-image">
-                            <img src="img/faq-img-1.png" alt="Illustration" class="img-fluid">
-                        </div>
-                    </div>
-
-                    <!-- Right Column: FAQ Section -->
-                    <div class="col-lg-5">
-                        <div class="faq-header text-center">
-                            <h1>How can we help you?</h1>
-                            <p class="lead">
-                                We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.
-                            </p>
-                        </div>
-
-                        <div class="accordion accordion-flush" id="faqsAccordion">
-                            <?php if(!empty($showfaqs)): ?>
-                            <?php foreach ($showfaqs as $index => $faq): ?>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading<?php echo $index; ?>">
-                                    <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $index; ?>" aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" aria-controls="collapse<?php echo $index; ?>" style="background-color: #e7f1ff; color: #004085; position: relative;">
-                                        <?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?>
-                                        <!-- Drop-down/up icon -->
-                                        <i class="fas fa-chevron-down ms-auto faq-toggle-icon" style="position: absolute; right: 10px;"></i>
-                                    </button>
-                                </h2>
-                                <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" aria-labelledby="heading<?php echo $index; ?>" data-bs-parent="#faqsAccordion">
-                                    <div class="accordion-body">
-                                        <?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-                            <?php else: ?>
-                            <p>No FAQs available at the moment.</p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
+        <section class="feedback-section bg-light py-5">   
+    <div class="section-heading text-center borderYellow">
+        <h1 class="pt-16 pb-8">
+            <em class="text-4xl font-bold text-gray-800">FEED BACKS</em>
+        </h1>
+        <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+    </div>  
+    <br>  
+    <div class="feedback-container">
+    
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-info">
+                    <h3>Total Feedback</h3>
+                    <p id="total-feedback">0</p>
                 </div>
             </div>
-        </section>
+            <div class="stat-card">
+    <div class="stat-icon" id="average-rating-emoji">⭐</div> <!-- Dynamically updated emoji -->
+    <div class="stat-info">
+        <h3>Average Rating</h3>
+        <p id="average-rating">0.0</p>
+    </div>
+</div>
 
-        <section id="feed" class="content-section">
-            <div class="section-heading text-center borderYellow">
-                <h1><br><em>FEED BACKS</em></h1>
-            </div>
-            <div class="container mt-5">
-                <!-- Heading -->
-                <h2 class="section-heading text-center mb-4">Give Us Your Feedback</h2>
+        
+        </div>
 
-                <!-- Feedback Display Section -->
-                <div class="row d-flex justify-content-center mt-4">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-                            <div class="card-body p-4">
-                                <div class="text-end mb-4 border-bottom pb-3">
-                                    <button type="button" class="btn btn-modern border" data-bs-toggle="modal" data-bs-target="#feedbackModal" style="border: 1px solid #ccc; border-radius: 5px;">
-                                        <i class="fas fa-comments me-2"></i>Add Your Feedback
-                                    </button>
-                                </div>
-                                <h5 class="card-title text-center mb-3">Recent Feedback</h5>
-                                <div id="feedbackList" class="feedback-list mb-4">
-                                </div>
-                                <div class="total-ratings">
-                                    <h6>Average Rating:</h6>
-                                    <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="main-card">
+            <div class="card-header">
+                <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                    ✉️ Submit Feedback
+                </button>
             </div>
 
-        </section>
+            <div class="feedback-list" id="feedback-list">
+                <!-- Feedback items will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+</section>
+
+       
+
+
         <section id="aboutus" class="content-section">
             <div class="section-heading text-center borderYellow">
                 <h1><br><em>ABOUT US</em></h1>
@@ -1484,110 +2133,115 @@ $allAnnouncement = getAllAnnouncements($connect);
             </div>
         </div>
     </div>
+<!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Share Your Feedback</h3>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
-    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <!-- Changed to modal-lg for consistency -->
-            <div class="modal-content" style="color: white">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="feedbackModalLabel">Feedback Form</h3> <!-- Changed to h3 for consistency -->
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="feedbackForm" enctype="multipart/form-data">
-                        <!-- Step 1: Emoji Rating -->
-                        <div class="step" id="step1">
-                            <h4>Rate Your Experience</h4>
-                            <div class="d-flex justify-content-around my-4">
-                                <span class="emoji-select" data-value="1">😠</span>
-                                <span class="emoji-select" data-value="2">😞</span>
-                                <span class="emoji-select" data-value="3">😐</span>
-                                <span class="emoji-select" data-value="4">😊</span>
-                                <span class="emoji-select" data-value="5">😍</span>
-                            </div>
-                            <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+            <div class="progress-steps">
+                <div class="step-indicator active">1</div>
+                <div class="step-indicator">2</div>
+                <div class="step-indicator">3</div>
+            </div>
+
+            <div class="modal-body">
+                <form id="feedbackForm" enctype="multipart/form-data">
+                    <div class="step active" id="step1">
+                        <h4 class="text-center mb-4">How would you rate your experience?</h4>
+                        <div class="emoji-rating">
+                            <span class="emoji-select" data-value="1" title="Very Dissatisfied" onclick="setRating(1)">😠</span>
+                            <span class="emoji-select" data-value="2" title="Dissatisfied" onclick="setRating(2)">😞</span>
+                            <span class="emoji-select" data-value="3" title="Neutral" onclick="setRating(3)">😐</span>
+                            <span class="emoji-select" data-value="4" title="Satisfied" onclick="setRating(4)">😊</span>
+                            <span class="emoji-select" data-value="5" title="Very Satisfied" onclick="setRating(5)">😍</span>
+                        </div>
+                        <input type="hidden" id="rating" name="rating">
+                    </div>
+
+                    <div class="step" id="step2">
+                        <div class="form-group">
+                            <label class="form-label">Email address *</label>
+                            <input type="email" id="email" class="form-control" name="email" required placeholder="Enter your email">
                         </div>
 
-                        <!-- Step 2: Personal Information -->
-                        <div class="step" id="step2" style="display:none;">
-                            <h4>Provide Your Information</h4>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address (required)</label>
-                                <input type="email" class="form-control" name="email" id="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name (optional)</label>
-                                <input type="text" class="form-control" name="name" id="name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="address" class="form-label">Address (optional)</label>
-                                <input type="text" class="form-control" name="address" id="address">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Course</label><br>
-                                <div>
-                                    <input type="radio" id="college1" name="college" value="Information Systems" required>
-                                    <label for="college1">Information Systems</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="college2" name="college" value="Information Technology">
-                                    <label for="college2">Information Technology</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="college3" name="college" value="Computer Science">
-                                    <label for="college3">Computer Science</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="college4" name="college" value="other">
-                                    <label for="college4">Other / From Other College</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Year (required)</label><br>
-                                <div>
-                                    <input type="radio" id="year1" name="year" value="1" required>
-                                    <label for="year1">1st Year</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="year2" name="year" value="2">
-                                    <label for="year2">2nd Year</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="year3" name="year" value="3">
-                                    <label for="year3">3rd Year</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="year4" name="year" value="4">
-                                    <label for="year4">4th Year</label>
-                                </div>
-                            </div>
-
-                            <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                            <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                        <div class="form-group">
+                            <label class="form-label">Name (optional)</label>
+                            <input type="text" id="name" class="form-control" name="name" placeholder="Enter your name">
                         </div>
 
-                        <!-- Step 3: Feedback and Image Upload -->
-                        <div class="step" id="step3" style="display:none;">
-                            <h4>Leave Your Feedback</h4>
-                            <div class="mb-3">
-                                <label for="feedback" class="form-label">Your feedback</label>
-                                <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
+                        <div class="form-group">
+                            <label class="form-label">Course *</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="college" value="is" required>
+                                    Information Systems
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="college" value="it">
+                                    Information Technology
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="college" value="cs">
+                                    Computer Science
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="college" value="other">
+                                    Other / From Other College
+                                </label>
                             </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Upload a Profile Image (optional)</label>
-                                <input class="form-control" type="file" id="image">
-                            </div>
-                            <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                            <button type="submit" class="btn btn-success">Submit</button>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <!-- Optional footer buttons, if needed -->
-                </div>
+
+                        <div class="form-group mb-0">
+                            <label class="form-label">Year Level *</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="year" value="1" required>
+                                    1st Year
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="year" value="2">
+                                    2nd Year
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="year" value="3">
+                                    3rd Year
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="year" value="4">
+                                    4th Year
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step" id="step3">
+                        <div class="form-group">
+                            <label class="form-label">Attach Screenshot (optional)</label>
+                            <input type="file" id="image" class="form-control" name="image" accept="image/*">
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label class="form-label">Additional Comments</label>
+                            <textarea id="feedback" class="form-control" name="feedback" rows="4" placeholder="Share your thoughts with us..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="previousBtn" disabled>Previous</button>
+                <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                <!-- Changed to a submit button -->
+                <button type="submit" class="btn btn-success" id="submitBtn" form="feedbackForm" style="display:none;">Submit Feedback</button>
             </div>
         </div>
     </div>
+</div>
+
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
     </script>
@@ -1652,7 +2306,251 @@ $allAnnouncement = getAllAnnouncements($connect);
         });
     });
 </script>
+<script>
 
+
+// Function to handle setting the rating (optional, if you need it for other purposes)
+function setRating(rating) {
+    console.log("Setting rating to:", rating); // Log the rating being set
+    document.querySelectorAll('.emoji-select').forEach(emoji => emoji.classList.remove('selected'));
+    const selectedEmoji = document.querySelector(`.emoji-select[data-value="${rating}"]`);
+    if (selectedEmoji) {
+        selectedEmoji.classList.add('selected');
+        selectedRating = rating;
+        document.getElementById('rating').value = selectedRating; // Update hidden input
+    }
+}document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded and parsed.");
+
+    // Select emoji options for rating
+    document.querySelectorAll('.emoji-select').forEach(item => {
+        item.addEventListener('click', function() {
+            console.log("Emoji selected:", this.getAttribute('data-value'));
+            document.querySelectorAll('.emoji-select').forEach(emoji => emoji.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedRating = this.getAttribute('data-value');
+            document.getElementById('rating').value = selectedRating; // Update hidden input
+        });
+    });
+
+    // Multi-step form variables
+    const steps = document.querySelectorAll('.step');
+    const indicators = document.querySelectorAll('.step-indicator');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('previousBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const feedbackForm = document.getElementById('feedbackForm');
+    let currentStep = 0;
+    let selectedRating = null; // Store selected rating
+
+    // Update steps in the multi-step form
+    function updateSteps() {
+        console.log("Updating steps:", currentStep);
+        steps.forEach((step, index) => step.classList.toggle('active', index === currentStep));
+        indicators.forEach((indicator, index) => indicator.classList.toggle('active', index <= currentStep));
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.style.display = currentStep === steps.length - 1 ? 'none' : 'block';
+        submitBtn.style.display = currentStep === steps.length - 1 ? 'block' : 'none';
+    }
+
+    // Multi-step form navigation
+    nextBtn.addEventListener('click', () => {
+        console.log("Next button clicked. Current step:", currentStep);
+        if (currentStep < steps.length - 1) {
+            currentStep++;
+            updateSteps();
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        console.log("Previous button clicked. Current step:", currentStep);
+        if (currentStep > 0) {
+            currentStep--;
+            updateSteps();
+        }
+    });
+
+    // Handle feedback form submission
+    feedbackForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        console.log("Form submission initiated");
+
+        const feedbackInput = document.getElementById('feedback').value.trim();
+        const emailInput = document.getElementById('email').value.trim();
+        const nameInput = document.getElementById('name').value.trim();
+
+        const collegeInput = document.querySelector('input[name="college"]:checked');
+        const collegeValue = collegeInput ? collegeInput.value : '';
+
+        const yearInput = document.querySelector('input[name="year"]:checked');
+        const yearValue = yearInput ? yearInput.value : '';
+
+        const imageInput = document.getElementById('image').files[0];
+
+        // Check if required fields are filled
+        if (feedbackInput && selectedRating && collegeValue && yearValue) {
+            console.log("All fields validated. Preparing to send data...");
+
+            const formData = new FormData();
+            formData.append('rating', selectedRating);
+            formData.append('feedback', feedbackInput);
+            formData.append('email', emailInput);
+            formData.append('name', nameInput);
+            formData.append('college', collegeValue);
+            formData.append('year', yearValue);
+            if (imageInput) {
+                formData.append('image', imageInput);
+            }
+
+            // Show loading alert
+            Swal.fire({
+                title: 'Submitting your feedback',
+                text: 'Please wait...',
+                allowOutsideClick: false,
+                onOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Send data to PHP script via fetch
+            fetch('ajax/submit_Feedback.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log("Response received:", response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.close();
+                if (data.success) {
+                    console.log("Feedback successfully submitted:", data);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Feedback submitted successfully!'
+                    }).then(() => {
+                        location.reload(); // Reload the page after success
+                    });
+                } else {
+                    console.error('Submission failed:', data.message);
+                    Toast.fire({
+                        icon: 'error',
+                        title: data.message || 'An error occurred while submitting your feedback.'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                Swal.close();
+                Toast.fire({
+                    icon: 'error',
+                    title: 'An unexpected error occurred while submitting your feedback. Please try again later.'
+                });
+            });
+
+            // Close modal after submission
+            const modal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
+            modal.hide();
+        } else {
+            console.log("Form validation failed.");
+            alert('Please select a rating and provide feedback.');
+        }
+    });
+
+    // Initial steps view update
+    updateSteps();
+
+    // Toast configuration
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", loadFeedback);
+
+function loadFeedback() {
+    fetch('ajax/fetch_feedback.php')
+    .then(response => response.text()) // Fetch as text first to check response
+    .then(data => {
+        try {
+            const jsonData = JSON.parse(data); // Try parsing as JSON
+            console.log(jsonData); // Log the parsed JSON data
+
+            if (jsonData.error) {
+                console.error("Error loading feedback:", jsonData.error);
+                return;
+            }
+
+            // Function to map rating to emoji
+            const getEmojiForRating = (rating) => {
+                switch (rating) {
+                    case 5: return '😁';
+                    case 4: return '🙂';
+                    case 3: return '😐';
+                    case 2: return '🙁';
+                    case 1: return '😞';
+                    default: return '❓'; // Default in case there's an invalid rating
+                }
+            };
+
+            // Set the total feedback count
+            document.getElementById("total-feedback").textContent = jsonData.total_feedback;
+
+            // Set the average rating and emoji
+            const averageRating = jsonData.average_rating;
+
+            // Round the average rating to 1 decimal place
+            const roundedRating = averageRating.toFixed(1); // Example: rounding to 1 decimal place
+
+            document.getElementById("average-rating").textContent = roundedRating;
+            document.getElementById("average-rating-emoji").textContent = getEmojiForRating(Math.round(averageRating));
+
+            const feedbackContainer = document.getElementById("feedback-list");
+            feedbackContainer.innerHTML = "";
+
+            jsonData.feedbacks.forEach(feedback => {
+                const feedbackItem = document.createElement("div");
+                feedbackItem.className = "feedback-item";
+
+                // Create the feedback item with dynamic emoji for rating
+                feedbackItem.innerHTML = `
+                    <div class="feedback-header">
+                        <div class="user-info">
+                            <div class="avatar">${feedback.name.charAt(0)}</div>
+                            <div>
+                                <h3>${feedback.name}</h3>
+                                <small>${feedback.email || ''}</small>
+                            </div>
+                        </div>
+                        <div class="rating">${getEmojiForRating(feedback.rating)}</div>
+                    </div>
+                    <div class="feedback-content">
+                        ${feedback.feedback_text}
+                    </div>
+                `;
+                feedbackContainer.appendChild(feedbackItem);
+            });
+        } catch (error) {
+            console.error("Response is not valid JSON. Response received:", data);
+        }
+    })
+    .catch(error => console.error("Error fetching feedback:", error));
+}
+
+window.onload = loadFeedback;
+
+
+</script>
 <script>
 const roomFloors = {
     // Floor 1
@@ -2257,102 +3155,6 @@ function nextStep() {
         }
     }
 
-    let totalScore = 0; // To accumulate the total score
-    let averageRatingText = document.getElementById('averageRatingText'); // Reference to average rating display
-// Event listener for feedback submission
-        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission
-            const feedbackInput = document.getElementById('feedback').value.trim();
-            const emailInput = document.getElementById('email').value.trim();
-            const nameInput = document.getElementById('name').value.trim();
-            const addressInput = document.getElementById('address').value.trim();
-
-            // Retrieve selected college
-            const collegeInput = document.querySelector('input[name="college"]:checked');
-            const collegeValue = collegeInput ? collegeInput.value : '';
-
-            // Retrieve selected year
-            const yearInput = document.querySelector('input[name="year"]:checked');
-            const yearValue = yearInput ? yearInput.value : '';
-
-            const imageInput = document.getElementById('image').files[0];
-
-            if (feedbackInput && selectedRating && collegeValue && yearValue) {
-                const formData = new FormData();
-                formData.append('rating', selectedRating.getAttribute('data-value'));
-                formData.append('feedback', feedbackInput);
-                formData.append('email', emailInput);
-                formData.append('name', nameInput);
-                formData.append('address', addressInput);
-                formData.append('college', collegeValue);
-                formData.append('year', yearValue);
-                if (imageInput) {
-                    formData.append('image', imageInput);
-                }
-
-                // Show loading alert
-                Swal.fire({
-                    title: 'Submitting your feedback',
-                    text: 'Please wait...',
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-
-                // Send data to PHP script via fetch
-                fetch('ajax/submit_feedback.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    console.log('Response:', response); // Log the response
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok: ' + response.statusText);
-                    }
-                    return response.json(); // Parse response as JSON
-                })
-                .then(data => {
-                    // Close the loading alert
-                    Swal.close();
-
-                    if (data.success) {
-                        // Show Toast notification for success
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Feedback submitted successfully!'
-                        }).then(() => {
-                            // Reload the page after showing the toast
-                            location.reload();
-                        });
-                    } else {
-                        console.error('Submission failed:', data.message);
-                        // Show Toast notification for error
-                        Toast.fire({
-                            icon: 'error',
-                            title: data.message || 'An error occurred while submitting your feedback.'
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Close the loading alert
-                    Swal.close();
-                    // Show Toast notification for unexpected error
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'An unexpected error occurred. Please try again later.'
-                    });
-                });
-
-                // Close modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
-                modal.hide();
-            } else {
-                alert('Please select a rating and provide feedback.');
-            }
-        });
-
         // Toast configuration
         const Toast = Swal.mixin({
             toast: true,
@@ -2367,78 +3169,7 @@ function nextStep() {
         });
 
         // Load feedback when the page loads
-        function loadFeedback() {
-            fetch('ajax/fetch_feedback.php') // Point to your PHP script
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    const feedbackList = document.getElementById('feedbackList');
-                    feedbackList.innerHTML = ''; // Clear existing feedback
-                    let totalScore = 0; // Initialize total score
-                    let feedbackCount = data.length; // Get feedback count
-
-            if (feedbackCount > 0) {
-                data.forEach(feedback => {
-                    const newFeedback = document.createElement('div');
-                    newFeedback.className = 'card mb-4 card-body floating-card'; // Add card styling
-                       // Use a default image if no image is uploaded
-                       const imageUrl = feedback.image; // Set your default image path here
-                    newFeedback.innerHTML = `
-                     
-                       
-                            <div class="second py-2 px-2"><span class="text1">${feedback.feedback_text}</span></div>
-                            </div>
-
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
-                                </small>
-                            </p>
-                        </div>
-                        `;
-                    feedbackList.appendChild(newFeedback);
-
-                            // Sum the ratings for average calculation
-                            totalScore += parseInt(feedback.rating);
-                        });
-
-                        // Calculate average rating
-                        const averageRating = (totalScore / feedbackCount).toFixed(2);
-                        document.getElementById('averageRatingText').textContent = `${averageRating} ${getEmojiForRating(averageRating)}`;
-                    } else {
-                        feedbackList.innerText = 'No feedback available.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error during fetch:', error);
-                });
-        }
-        function getYearWithSuffix(year) {
-        if (!year) return ''; // Handle case where year is undefined or null
-
-        const ordinalSuffix = (n) => {
-            const suffixes = ["th", "st", "nd", "rd", "th"];
-            return n % 100 >= 11 && n % 100 <= 13 ? suffixes[0] : suffixes[(n % 10) > 4 ? 0 : n % 10];
-        };
-
-        return `${year}${ordinalSuffix(year)} year`;
-        }
-        // Function to get emoji for a given rating
-        function getEmojiForRating(rating) {
-            switch (parseInt(rating)) {
-                case 1: return '😠';
-                case 2: return '😞';
-                case 3: return '😐';
-                case 4: return '😊';
-                case 5: return '😍';
-                default: return '';
-            }
-        }
-
-        // Load feedback when the page loads
-        window.onload = loadFeedback;
+       
 
  
     
@@ -2710,6 +3441,124 @@ function toggleDetails(link) {
 
 </script>
 
+<script>
+// Format relative time
+function formatRelativeTime(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+
+    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+    const years = Math.floor(months / 12);
+    return years + " year" + (years > 1 ? "s" : "") + " ago";
+}
+
+// Convert PHP time to JS Date object and format it
+document.addEventListener('DOMContentLoaded', function () {
+    const announcementTimes = <?php echo json_encode(array_column($allAnnouncement, 'created_at')); ?>;
+    announcementTimes.forEach((timestamp, index) => {
+        const date = new Date(timestamp);
+        const relativeTime = formatRelativeTime(date);
+        document.getElementById(`time-<?php echo $announcement['announcement_id']; ?>`).textContent = relativeTime;
+    });
+});
+</script>
+<script>
+let currentImageSet = [];
+let currentImageIndex = 0;
+let currentAnnouncementId = null;
+
+function openModal(imgElement, announcementId) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = modal.querySelector('.modal-img');
+    const carousel = document.getElementById(`carousel-${announcementId}`);
+    
+    currentImageSet = Array.from(carousel.querySelectorAll('.carousel-item img')).map(img => img.src);
+    currentAnnouncementId = announcementId;
+    currentImageIndex = parseInt(imgElement.closest('.carousel-item').dataset.imageIndex);
+    
+    modal.style.display = 'block';
+    modalImg.src = imgElement.src;
+    updateModalNavigation();
+    
+    // Disable body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('imageModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function changeImage(direction) {
+    currentImageIndex += direction;
+    if (currentImageIndex >= currentImageSet.length) currentImageIndex = 0;
+    if (currentImageIndex < 0) currentImageIndex = currentImageSet.length - 1;
+    
+    const modalImg = document.querySelector('.modal-img');
+    modalImg.src = currentImageSet[currentImageIndex];
+    
+    const carousel = document.getElementById(`carousel-${currentAnnouncementId}`);
+    if (carousel) {
+        const carouselInstance = bootstrap.Carousel.getInstance(carousel);
+        if (carouselInstance) {
+            carouselInstance.to(currentImageIndex);
+        }
+    }
+    
+    updateModalNavigation();
+}
+
+function updateModalNavigation() {
+    const prevBtn = document.querySelector('.modal-prev');
+    const nextBtn = document.querySelector('.modal-next');
+    
+    if (currentImageSet.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+    } else {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+    }
+}
+
+// Event Listeners
+document.querySelector('.close-modal').onclick = closeModal;
+document.querySelector('.modal-prev').onclick = () => changeImage(-1);
+document.querySelector('.modal-next').onclick = () => changeImage(1);
+
+document.getElementById('imageModal').onclick = function(e) {
+    if (e.target === this) closeModal();
+};
+
+document.addEventListener('keydown', function(e) {
+    if (document.getElementById('imageModal').style.display === 'none') return;
+    
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') changeImage(-1);
+    if (e.key === 'ArrowRight') changeImage(1);
+});
+
+// Toggle announcement details
+function toggleDetails(announcementId) {
+    const textElement = document.getElementById(`text-${announcementId}`);
+    textElement.classList.toggle('truncate-text');
+    const button = textElement.nextElementSibling;
+    button.textContent = textElement.classList.contains('truncate-text') ? 'See more...' : 'See less';
+}
+</script>
 
 </body>
 

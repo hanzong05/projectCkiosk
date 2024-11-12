@@ -1587,7 +1587,6 @@ text {
     flex: 1;
     overflow-y: auto;
     padding: 15px;
-    background-color: #2e0f13;
 }
 
 
@@ -1620,7 +1619,7 @@ text {
 
 .modal-footer {
     flex-shrink: 0;
-    background-color: #962626;
+    background: linear-gradient(135deg, #6366f1, #b8b5bd);
 }
 
 /* News Feed Styles */

@@ -3476,3 +3476,209 @@ Stack trace:
 [10-Nov-2024 13:14:57 Europe/Berlin] Type parameter: announcement
 [10-Nov-2024 20:14:57 Asia/Manila] Image uploaded and saved: facebook_img1.jpeg
 [10-Nov-2024 20:14:57 Asia/Manila] Image uploaded and saved: facebook_img2.jpg
+[11-Nov-2024 05:30:51 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 672c47f96e4ab-Pullman Loaf.jpg,
+    [announcement_title] => dwad
+    [announcement_creator] => 1
+    [aid] => 3
+    [announcement_details] => <p>dwada</p>
+    [added_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [type] => announcement
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => Pullman-Photoroom-removebg-preview.png
+                    [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+                )
+
+            [full_path] => Array
+                (
+                    [0] => Pullman-Photoroom-removebg-preview.png
+                    [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+                )
+
+            [type] => Array
+                (
+                    [0] => image/png
+                    [1] => image/png
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => C:\xampp\tmp\php255E.tmp
+                    [1] => C:\xampp\tmp\php255F.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 169183
+                    [1] => 73449
+                )
+
+        )
+
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 672c48097a95a-Pullman Loaf.jpg,672c47f96e4ab-Pullman Loaf.jpg
+    [announcement_title] => dwad
+    [announcement_creator] => 1
+    [aid] => 3
+    [announcement_details] => <p>dwada</p>
+    [previous_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [type] => announcement
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                )
+
+        )
+
+)
+
+[11-Nov-2024 06:24:59 Europe/Berlin] Type parameter: announcement
+[11-Nov-2024 13:24:59 Asia/Manila] Image uploaded and saved: dwadwadwad_img1.jpg
+[11-Nov-2024 13:24:59 Asia/Manila] Image uploaded and saved: dwadwadwad_img2.jpg
+[12-Nov-2024 14:20:33 Europe/Berlin] Type parameter: organization
+[12-Nov-2024 14:20:46 Europe/Berlin] Type parameter: account
+Duplicate Check Started for Username: admin
+Hashing Password for User: admin
+Inserting Account for User: admin
+[12-Nov-2024 14:22:05 Europe/Berlin] Type parameter: announcement
+[12-Nov-2024 21:22:05 Asia/Manila] Image uploaded and saved: dwaadwaad_img1.jpg
+[12-Nov-2024 14:22:16 Europe/Berlin] Type parameter: event
+[12-Nov-2024 14:23:07 Europe/Berlin] Type parameter: event
+[12-Nov-2024 15:19:14 Europe/Berlin] POST Data: Array
+(
+    [cid] => 2
+    [event_start_date] => 2024-11-21
+    [event_end_date] => 2024-11-30
+    [event_editor] => 1
+    [event_details] => <p>dwadwadwaaaaaadwaddwadwadwadwadwadwadwadwadwadwadwa</p>d
+    [type] => event
+)
+
+[12-Nov-2024 15:19:14 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[12-Nov-2024 15:23:19 Europe/Berlin] POST Data: Array
+(
+    [cid] => 2
+    [event_start_date] => 2024-11-21
+    [event_end_date] => 2024-11-30
+    [event_editor] => 1
+    [event_details] => <p>dwadwadwaaaaaadwa</p>d
+    [type] => event
+)
+
+[12-Nov-2024 15:23:19 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+

@@ -1,92 +1,69 @@
 <?php
+// submit_feedback.php
 
-require_once '../class/connection.php';
-header('Content-Type: application/json');
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ensure all required fields are received
+    if (isset($_POST['rating'], $_POST['feedback'], $_POST['email'], $_POST['college'], $_POST['year'])) {
+        
+        // Sanitize input
+        $rating = htmlspecialchars($_POST['rating']);
+        $feedback = htmlspecialchars($_POST['feedback']);
+        $email = htmlspecialchars($_POST['email']);
+        $name = isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '';
+        $address = isset($_POST['address']) ? htmlspecialchars($_POST['address']) : '';
+        $college = htmlspecialchars($_POST['college']);
+        $year = htmlspecialchars($_POST['year']);
+        
+        // Handle file upload (optional)
+        $image = null;
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $imageName = basename($_FILES['image']['name']);
+            $uploadDir = 'uploads/'; // Folder to store images
+            $imagePath = $uploadDir . $imageName;
 
-// Enable error logging
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/errorlog.txt'); // Corrected path for error log file
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                $image = $imagePath; // Set image path
+            } else {
+                // Handle image upload error
+                $image = null;
+            }
+        }
 
-// Response array
-$response = [
-    'success' => false,
-    'message' => 'An error occurred'
-];
-
-try {
-    // Check if required POST data is set
-    if (!isset($_POST['rating']) || empty($_POST['rating'])) {
-        throw new Exception('Rating is required.');
-    }
-
-    // Prepare other fields (name, email, address, etc.)
-    $email = $_POST['email'] ?? '';
-    $name = $_POST['name'] ?? '';
-    $address = $_POST['address'] ?? '';
-    $college = $_POST['college'] ?? '';
-    $year = $_POST['year'] ?? '';
-    $feedback = $_POST['feedback'] ?? '';
-    $rating = $_POST['rating'];
-
-    // Handle image upload
-  // Handle image upload
-// Handle image upload
-$imagePath = null;
-if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-    $targetDir = __DIR__ . "/../uploaded/feedUploaded/"; // Absolute path for uploads
-    // Create the uploads directory if it doesn't exist
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0755, true);
-    }
-
-    // Get the original file extension
-    $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-    
-    // Create a unique filename using the email
-    // Sanitize the email to create a valid filename
-    $sanitizedEmail = strtolower(str_replace(['@', '.'], ['_', '_'], $email));
-    $uniqueFilename = $sanitizedEmail . '_' . uniqid() . '.' . $fileExtension;
-    
-    $targetFile = $targetDir . $uniqueFilename; // Use the new filename
-    
-    // Move the uploaded file to the target directory
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
-        // Store only the filename for database entry
-        $imagePath = $uniqueFilename; 
+        // Insert the data into the database (adjust according to your database structure)
+        try {
+            // Database connection
+            $pdo = new PDO('mysql:host=localhost;dbname=ckiosk', 'root', ''); 
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            // Prepare the SQL query
+            $sql = "INSERT INTO feedback (rating, feedback_text, email, name, address, college, year, image) 
+                    VALUES (:rating, :feedback, :email, :name, :address, :college, :year, :image)";
+            $stmt = $pdo->prepare($sql);
+            
+            // Bind parameters
+            $stmt->bindParam(':rating', $rating);
+            $stmt->bindParam(':feedback', $feedback);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':address', $address);
+            $stmt->bindParam(':college', $college);
+            $stmt->bindParam(':year', $year);
+            $stmt->bindParam(':image', $image);
+            
+            // Execute the statement
+            $stmt->execute();
+            
+            // Return success response
+            echo json_encode(['success' => true, 'message' => 'Feedback submitted successfully!']);
+        } catch (PDOException $e) {
+            // Handle any errors
+            echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+        }
     } else {
-        throw new Exception('Image upload failed');
+        // Missing required fields
+        echo json_encode(['success' => false, 'message' => 'Required fields are missing.']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
 }
-
-// Prepare SQL statement
-$sql = "INSERT INTO feedback (email, name, address, college, year, rating, feedback_text, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-$stmt = $connect->prepare($sql);
-
-// Check if statement preparation was successful
-if ($stmt === false) {
-    throw new Exception('SQL error: ' . implode(", ", $connect->errorInfo()));
-}
-
-// Execute statement with parameters
-$stmt->execute([$email, $name, $address, $college, $year, $rating, $feedback, $imagePath]);
-
-// Set success response
-$response['success'] = true;
-$response['rating'] = $rating;
-$response['feedback'] = $feedback; // Adjust this as necessary
-$response['image'] = $imagePath; // Include image filename in the response if needed
-
-
-
-
-} catch (Exception $e) {
-    $response['message'] = $e->getMessage(); // Capture any error message
-    error_log($e->getMessage()); // Log the error message
-}
-
-// Return JSON response
-echo json_encode($response);
 ?>

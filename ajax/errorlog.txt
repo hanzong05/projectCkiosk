@@ -8,3 +8,4 @@ Stack trace:
   thrown in C:\xampp\htdocs\ckiosk\ajax\submit_feedback.php on line 82
 [07-Oct-2024 21:26:06 Europe/Berlin] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.feedback_tbl' doesn't exist
 [07-Oct-2024 22:48:05 Europe/Berlin] Invalid file type. Only JPG, PNG, and GIF are allowed.
+[12-Nov-2024 09:25:10 Europe/Berlin] Rating is required.

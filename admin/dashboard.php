@@ -1,10 +1,7 @@
 <?php
-
 include_once('assets/header.php');
+include_once('ajax/remove.php');
 include_once('../class/connection.php');
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 
 try {
@@ -535,6 +532,8 @@ try {
   
   <!--  Notifications Plugin    -->
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
 
 
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->

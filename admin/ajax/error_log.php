@@ -4498,3 +4498,253 @@
 [09-Nov-2024 23:33:23 Europe/Berlin] Error uploading image index 0: 4
 [09-Nov-2024 23:33:23 Europe/Berlin] Error uploading image index 1: 4
 [09-Nov-2024 23:33:23 Europe/Berlin] No images to remove.
+[11-Nov-2024 05:30:51 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 672c47f96e4ab-Pullman Loaf.jpg,
+    [announcement_title] => dwad
+    [announcement_creator] => 1
+    [aid] => 3
+    [announcement_details] => <p>dwada</p>
+    [added_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [type] => announcement
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] Received type: announcement
+[11-Nov-2024 05:30:51 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 672c47f96e4ab-Pullman Loaf.jpg,
+    [announcement_title] => dwad
+    [announcement_creator] => 1
+    [aid] => 3
+    [announcement_details] => <p>dwada</p>
+    [added_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [type] => announcement
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => Pullman-Photoroom-removebg-preview.png
+                    [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+                )
+
+            [full_path] => Array
+                (
+                    [0] => Pullman-Photoroom-removebg-preview.png
+                    [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+                )
+
+            [type] => Array
+                (
+                    [0] => image/png
+                    [1] => image/png
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => C:\xampp\tmp\php255E.tmp
+                    [1] => C:\xampp\tmp\php255F.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 169183
+                    [1] => 73449
+                )
+
+        )
+
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] Kept Images (updated previous images): Array
+(
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] Added Images: Array
+(
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 672c47f96e4ab-Pullman Loaf.jpg
+)
+
+[11-Nov-2024 05:30:51 Europe/Berlin] File does not exist: 672c47f96e4ab-Pullman Loaf.jpg
+[11-Nov-2024 05:30:58 Europe/Berlin] POST data: Array
+(
+    [removed_images] => 672c48097a95a-Pullman Loaf.jpg,672c47f96e4ab-Pullman Loaf.jpg
+    [announcement_title] => dwad
+    [announcement_creator] => 1
+    [aid] => 3
+    [announcement_details] => <p>dwada</p>
+    [previous_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [type] => announcement
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] Received type: announcement
+[11-Nov-2024 05:30:58 Europe/Berlin] POST Data: Array
+(
+    [removed_images] => 672c48097a95a-Pullman Loaf.jpg,672c47f96e4ab-Pullman Loaf.jpg
+    [announcement_title] => dwad
+    [announcement_creator] => 1
+    [aid] => 3
+    [announcement_details] => <p>dwada</p>
+    [previous_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [added_image] => Array
+        (
+            [0] => Pullman-Photoroom-removebg-preview.png
+            [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+        )
+
+    [type] => announcement
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] FILES Data: Array
+(
+    [files] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [new_image] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                    [1] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                    [1] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                )
+
+        )
+
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] Replaced Images: Array
+(
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] Kept Images (updated previous images): Array
+(
+    [0] => Pullman-Photoroom-removebg-preview.png
+    [1] => att.kv5aujc2oURUc9TwCAa_EVpshU_R1Dq6KgHY1Mdb670.png
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] Added Images: Array
+(
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] Removed Images Array: Array
+(
+    [0] => 672c48097a95a-Pullman Loaf.jpg
+    [1] => 672c47f96e4ab-Pullman Loaf.jpg
+)
+
+[11-Nov-2024 05:30:58 Europe/Berlin] Error uploading image index 0: 4
+[11-Nov-2024 05:30:58 Europe/Berlin] Error uploading image index 1: 4
+[11-Nov-2024 05:30:58 Europe/Berlin] File does not exist: 672c48097a95a-Pullman Loaf.jpg
+[11-Nov-2024 05:30:58 Europe/Berlin] File does not exist: 672c47f96e4ab-Pullman Loaf.jpg
+[12-Nov-2024 15:19:14 Europe/Berlin] POST data: Array
+(
+    [cid] => 2
+    [event_start_date] => 2024-11-21
+    [event_end_date] => 2024-11-30
+    [event_editor] => 1
+    [event_details] => <p>dwadwadwaaaaaadwaddwadwadwadwadwadwadwadwadwadwadwa</p>d
+    [type] => event
+)
+
+[12-Nov-2024 15:19:14 Europe/Berlin] Received type: event
+[12-Nov-2024 15:23:19 Europe/Berlin] POST data: Array
+(
+    [cid] => 2
+    [event_start_date] => 2024-11-21
+    [event_end_date] => 2024-11-30
+    [event_editor] => 1
+    [event_details] => <p>dwadwadwaaaaaadwa</p>d
+    [type] => event
+)
+
+[12-Nov-2024 15:23:19 Europe/Berlin] Received type: event

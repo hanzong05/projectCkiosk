@@ -1,7 +1,5 @@
 <?php
-// Enable all error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 include_once ('assets/header.php');
 $uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
 $cid = $_SESSION['id'] ?? null; 
@@ -812,23 +810,27 @@ function generateDepartmentOptions() {
     <?php endforeach; ?>
     return optionsHTML;
 }
+
+// Collect new department IDs into newDepartments array during form submission
 $('#editFacultyForm').on('submit', function (e) {
     e.preventDefault();
 
-    // Collect new department IDs
-    let newDepartments = [];
+    // Clear newDepartments before collecting new values
+    newDepartments = [];  // Reset newDepartments before adding new departments
+
+    // Collect new department IDs from dropdowns
     $('.department-dropdown').each(function () {
         var departmentId = $(this).val();
         if (departmentId && !newDepartments.includes(departmentId)) {
-            newDepartments.push(departmentId);
+            newDepartments.push(departmentId);  // Add department if not already in the array
         }
     });
 
-    console.log("New Departments:", newDepartments);
+    console.log("New Departments:", newDepartments);  // Debug: Log new departments
 
-    // Update hidden inputs
-    $('#removedDepartments').val(JSON.stringify(removedDepartments)); // Ensure removedDepartments is defined
-    $('#addedDepartments').val(JSON.stringify(newDepartments));
+    // Update hidden inputs with removed and added departments
+    $('#removedDepartments').val(JSON.stringify(removedDepartments)); // Update removedDepartments
+    $('#addedDepartments').val(JSON.stringify(newDepartments)); // Update addedDepartments
 
     Swal.fire({
         title: "Are you sure?",
@@ -848,7 +850,7 @@ $('#editFacultyForm').on('submit', function (e) {
                 method: "POST",
                 body: formData
             })
-            .then(response => response.text()) // Using `text()` to read raw response
+            .then(response => response.text())
             .then(data => {
                 console.log("Raw Response Data:", data);  // Debugging raw response
 
@@ -860,20 +862,27 @@ $('#editFacultyForm').on('submit', function (e) {
                             location.reload(); // Refresh the page on success
                         });
                     } else {
-                        Swal.fire("Error", jsonData.message, "error");
+                        Swal.fire("Error", jsonData.message, "error").then(() => {
+                            location.reload(); // Refresh the page on failure
+                        });
                     }
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
-                    Swal.fire("Error", "An error occurred while saving the faculty member.", "error");
+                    Swal.fire("Error", "An error occurred while saving the faculty member.", "error").then(() => {
+                        location.reload(); // Refresh the page on error
+                    });
                 }
             })
             .catch(error => {
                 console.error("Fetch Error:", error);
-                Swal.fire("Error", "An error occurred while processing the request.", "error");
+                Swal.fire("Error", "An error occurred while processing the request.", "error").then(() => {
+                    location.reload(); // Refresh the page on network error
+                });
             });
         }
     });
 });
+
 
 });
 </script>

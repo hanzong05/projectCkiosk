@@ -12,16 +12,9 @@ body {
 
 p {
   font-size: 15px;
-  /* color: #7a7a7a; */
-  color: #ffffff;
   line-height: 24px;
   text-align: justify;
   text-justify: inter-word;
-}
-
-.page-content {
-  width: 77.5%;
-  float: right;
 }
 
 .content-section {
@@ -37,6 +30,8 @@ p {
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
   transform: translateX(-50%);
+  padding-left: 50px;
+    padding-right: 50px;
 }
 
 .section-heading {
@@ -203,7 +198,6 @@ header {
 
 .sidebar-navigation nav {
   padding-top: 50px; /* Space for nav items */
-  border-top: 2px solid #ffffff;
   text-align: center;
   overflow-y: auto; /* Enable vertical scrolling */
   height: calc(100vh - 60px); /* Adjust height for the logo */
@@ -538,10 +532,7 @@ header {
 }
 
 /* campusmap Style */
-
 #campusmap {
-  padding-left: 60px;
-  padding-right: 60px;
   padding-bottom: 50px;
 }
 
@@ -563,13 +554,7 @@ header {
 
 /* facultymembers , schoolcalendar Style */
 
-#facultymembers,
-#schoolcalendar,
-#announcement {
-  text-align: center;
-  /* background-color: #f4f4f4; */
-  padding: 100px 60px;
-}
+
 
 #facultymembers .section-heading,
 #schoolcalendar .section-heading,
@@ -674,8 +659,6 @@ header {
 #schoolcalendar,
 #announcement,
 #facultymembers {
-  padding-left: 60px;
-  padding-right: 60px;
   padding-bottom: 80px;
 }
 
@@ -688,8 +671,6 @@ header {
   padding: 0px;
   height: 90px;
   width: 100%;
-  /* background-color: #eee; */
-  /* border-bottom: 10px solid #45489a; */
   border-bottom: 10px solid #2e0f13;
 }
 
@@ -742,10 +723,6 @@ header {
   color: #fff;
 }
 
-.tabgroup {
-  /* background-color: #f4f4f4; */
-  padding: 20px 30px;
-}
 
 .clearfix:after {
   content: "";
@@ -905,6 +882,9 @@ header {
   letter-spacing: 0.25px;
   text-decoration: none;
   transition: all 0.3s;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #faqs button:hover {
@@ -916,10 +896,6 @@ header {
 
 #feed {
   padding-top: 0px;
-}
-
-#feed-content {
-  padding: 80px 60px;
 }
 
 #feed input {
@@ -956,14 +932,14 @@ header {
 
 #feed button {
   font-size: 13px;
-  border-radius: 0px;
+  border-radius: 10px;
   font-weight: 600;
-  color: #fff;
+  color: #ffc107;
   text-transform: capitalize;
   /* background-color: #45489a; */
   background-color: #2e0f13;
   display: inline-block;
-  height: 44px;
+  height: 50px;
   line-height: 24px;
   outline: none;
   box-shadow: none;
@@ -971,6 +947,25 @@ header {
   letter-spacing: 0.25px;
   text-decoration: none;
   transition: all 0.3s;
+}
+
+#feed button {
+    font-size: 13px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #ffc107;
+    text-transform: capitalize;
+    /* background-color: #45489a; */
+    background-color: #2e0f13;
+    display: inline-block;
+    height: 50px;
+    line-height: 24px;
+    outline: none;
+    box-shadow: none;
+    width: 100%;
+    letter-spacing: 0.25px;
+    text-decoration: none;
+    transition: all 0.3s;
 }
 
 #feed button:hover {
@@ -1073,10 +1068,7 @@ header {
     height: 60px;
   }
 
-  .page-content {
-    width: 100%;
-  }
-
+  
   .Modern-Slider .info {
     text-align: center;
     right: 0px;
@@ -1144,21 +1136,12 @@ header {
     right: 0;
   }
 
-  #campusmap {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
   #facultymembers {
     padding-left: 15px;
     padding-right: 15px;
   }
 
-  #campusorgs {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
+ 
   #campusorgs .tabs a {
     font-size: 13px;
   }
@@ -1170,11 +1153,6 @@ header {
   }
   #campusorgs .tabgroup ul li .text-content {
     display: block;
-  }
-
-  #faqs-content {
-    padding-left: 15px;
-    padding-right: 15px;
   }
 
   .sidebar-navigation .logo a img {

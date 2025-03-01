@@ -1,0 +1,6 @@
+Error fetching organizations: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.orgs_tbl' doesn't exist
+Error fetching organizations: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.orgs_tbl' doesn't exist
+Error fetching organizations: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.organizations_tbl' doesn't exist
+Error fetching organizations: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.organizations_tbl' doesn't exist
+Feedback submission error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.org_feedback' doesn't exist
+Feedback submission error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ckiosk.org_feedback' doesn't exist

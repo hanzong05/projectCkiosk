@@ -1,6 +1,20 @@
 <?php
 include_once ('assets/header.php');
 
+if (!isset($_SESSION['atype'])) {
+    // If the session is not set, redirect to the login page
+    header("Location: index.php");
+    exit;
+}
+
+$account_type = $_SESSION['atype'];
+if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
+    // Destroy the session if the account type is invalid
+    session_destroy();
+    // Redirect to the login page
+    header("Location: index.php");
+    exit;
+}
 if (isset($_POST['add_announcement'])) {
   $log_msg = $obj->add_announcement($_POST);
 }
@@ -11,8 +25,16 @@ if (isset($_POST['save_announcement'])) {
 if (isset($_REQUEST['archive_id'])) {
   $log_msg = $obj->archive_announcement($_REQUEST['archive_id']);
 }
+if (isset($_REQUEST['restore_id'])) {
+    $log_msg = $obj->restore_announcement($_REQUEST['restore_id']);
+  }
 
+  if (isset($_REQUEST['delete_id'])) {
+    $log_msg = $obj->delete_announcement($_REQUEST['delete_id']);
+  }
 $allAnnouncement = $obj->show_announcement();
+
+$archived = $obj->show_archived_announcements();
 
 
 ?>
@@ -47,6 +69,61 @@ $allAnnouncement = $obj->show_announcement();
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   
   <link href="assets/css/css.css" rel="stylesheet" />
+  <style>
+    .existing-images {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        overflow-x: auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        flex-wrap: wrap;  /* Allow wrapping on smaller screens */
+        justify-content: flex-start;  /* Ensure images are aligned at the start */
+    }
+
+    .image-preview-container-edit {
+        width: 120px;
+        text-align: center;
+        flex-shrink: 0;
+        margin-bottom: 10px;
+        flex-basis: 120px; /* Ensures consistent size */
+    }
+
+    .image-preview-container-edit img {
+        width: 100%;  /* Makes the image responsive */
+        height: auto;  /* Maintain aspect ratio */
+        max-width: 150px; /* Limits the size */
+        max-height: 150px; /* Limits the size */
+    }
+
+    /* Make adjustments for small screens */
+    @media (max-width: 768px) {
+        .existing-images {
+            justify-content: center;  /* Center images on smaller screens */
+        }
+
+        .image-preview-container-edit {
+            width: 100px; /* Slightly smaller width for small screens */
+        }
+
+        .image-preview-container-edit img {
+            max-width: 120px; /* Smaller image size on small screens */
+            max-height: 120px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .image-preview-container-edit {
+            width: 80px; /* Even smaller width for very small screens */
+        }
+
+        .image-preview-container-edit img {
+            max-width: 100px; /* Smaller image size */
+            max-height: 100px;
+        }
+    }
+</style>
   <style>
     .ellipsis {
       position: relative;
@@ -116,210 +193,162 @@ $allAnnouncement = $obj->show_announcement();
   </style>
 </head>
 
-<body class=""><div class="wrapper ">
+<body class="">
+<div class="wrapper ">
     <!-- sweetalert start-->
-    <?= isset($log_msg) ? $log_msg : '' ?>
-    <!-- sweetalert end -->
-    <div class="sidebar" data-color="white" data-active-color="danger">
-        <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
-                <img src="../img/C.png" alt="" width="240">
-            </a>
-        </div>
-        <div class="sidebar-wrapper ">
-            <?php if ($account_type != '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="./announcement.php">
-                            <i class="fas fa-bullhorn"></i>
-                            <p>Announcement</p>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="./schoolcalendar.php">
-                            <i class="fas fa-calendar-alt"></i>
-                            <p>School Calendar</p>
-                        </a>
-                    </li>
-                    <?php if ($account_type == '1') { ?>
-                        <li>
-                            <a href="./facultymembers.php">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                <p>Faculty Members</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./map.php">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Campus Map</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./organization.php">
-                                <i class="fas fa-users"></i>
-                                <p>Campus Organization</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./audit.php">
-                                <i class="fas fa-file-alt"></i>
-                                <p>Audit Trails</p>
-                            </a>
-                        </li>
-                    <?php } ?>
-                    <li>
-                        <a href="./faqs.php">
-                            <i class="fas fa-question-circle"></i>
-                            <p>FAQS</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-            <?php if ($account_type == '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./ratings.php">
-                            <i class="fas fa-star"></i>
-                            <p>Ratings</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-        </div>
-    </div>
-
-    <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="javascript:;">Campus Announcement </a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block"></span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="logout.php">Logout</a>
-                  <?php if ($account_type == '2') { ?>
-                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
-                <?php } ?>
-                
-                <?php if ($account_type == '3') { ?>
-                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
-                <?php } ?>
-                </div>
-                
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <?php include 'assets/includes/navbar.php'; ?>
       <!-- End Navbar -->
       <div class="content">
         <div class="p-6">
-    <div class="bg-white rounded-lg shadow-lg">
-        <div class="p-6">
-          
-            <div class="mb-6">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-        <div class="flex-grow mb-2 md:mb-0 md:mr-2">
-            <input type="text" id="searchAnnouncementInput" placeholder="Search announcements..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchAnnouncements()">
-        </div>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition duration-200 flex items-center gap-2" data-toggle="modal" data-target="#announcementModal">
-            <i class="fas fa-plus"></i>
-            Create Announcement
-        </button>
-    </div>
+    
+<div class="p-6">
+<div class="bg-white rounded-lg shadow-lg">
+    <div class="p-6">
+        <ul class="nav nav-tabs" id="announcementTabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="active-tab" data-toggle="tab" href="#activeAnnouncements" role="tab">Active Announcements</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="archived-tab" data-toggle="tab" href="#archivedAnnouncements" role="tab">Archived Announcements</a>
+            </li>
+        </ul>
+
+        <!-- Active Announcements Section -->
+        <div class="tab-content" style="padding-top:3%;"> 
+            <div class="tab-pane fade show active" id="activeAnnouncements" role="tabpanel">
+
+                <!-- Search and Create Announcement -->
+                <div class="mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="flex-grow mb-2 md:mb-0 md:mr-2">
+                            <input type="text" id="searchAnnouncementInput" placeholder="Search announcements..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchAnnouncements()">
+                        </div>
+
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition duration-200 flex items-center gap-2" data-toggle="modal" data-target="#announcementModal">
+                            <i class="fas fa-plus"></i>
+                            Create Announcement
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Announcements Table -->
+              <!-- Active Announcements Table -->
+<div class="overflow-x-auto">
+<table id="activeAnnouncementsTable" class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-100">
+        <tr>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Organization</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Creator</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Last Updated By</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200" id="announcementTableBody">
+        <?php
+        $count = 1;
+        foreach ($allAnnouncement as $row) {
+            echo '<tr class="hover:bg-gray-50 transition duration-150">
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">'.$count.'</td>
+                <td class="px-6 py-4 text-sm text-gray-800 max-w-md"><div class="line-clamp-2">'.$row["announcement_title"].'</div></td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">'.($row["org_name"] ?? 'N/A').'</td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">'.date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')).'</td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">'.($row["creator_name"] ?? 'N/A').'</td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">'.($row["updated_by_name"] ?? 'Not yet updated').'</td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">';
+                
+                // Check if updated_at is NULL or empty, then display "Not yet updated"
+                if (isset($row["updated_at"]) && !empty($row["updated_at"])) {
+                    echo date('F d, Y H:i:s', strtotime($row["updated_at"]));
+                } else {
+                    echo 'Not yet updated';
+                }
+
+            echo '</td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                    <div class="flex justify-center gap-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 announcementModalEdit"
+                            data-toggle="modal" data-target="#announcementModalEdit" data-id="'.$row['announcement_id'].'">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <a class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded transition duration-200"
+                            href="announcement.php?archive_id='.$row['announcement_id'].'">
+                            <i class="fas fa-archive"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>';
+            $count++;
+        }
+        ?>
+    </tbody>
+</table>
 </div>
 
-
-
-            <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Organization</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Creator</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Last Updated By</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200" id="announcementTableBody">
-                        <?php
-                        $count = 1;
-                        foreach ($allAnnouncement as $row) {
-                            error_log("Displaying announcement ID: " . $row['announcement_id'], 3, 'error_log.txt');
-                        ?>
-                        <tr class="hover:bg-gray-50 transition duration-150">
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $count; ?></td>
-                            <td class="px-6 py-4 text-sm text-gray-800 max-w-md">
-                                <div class="line-clamp-2"><?php echo $row["announcement_title"]; ?></div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["org_name"] ?? 'N/A'; ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo date('F d, Y H:i:s', strtotime($row["created_at"] ?? 'N/A')); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["creator_name"] ?? 'N/A'; ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $row["updated_by_name"] ?? 'Not yet updated'; ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo date('F d, Y H:i:s', strtotime($row["updated_at"] ?? 'N/A')); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
-                                <div class="flex justify-center gap-2">
-                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 announcementModalEdit" 
-                                            data-toggle="modal" data-target="#announcementModalEdit" 
-                                            data-id="<?= $row['announcement_id'] ?>">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <a class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded transition duration-200" 
-                                       href='announcement.php?archive_id=<?= $row['announcement_id'] ?>'>
-                                        <i class="fas fa-archive"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php
-                            $count++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
             </div>
+
+            
+
+
+<!-- Archived Announcements Section -->
+<div class="tab-pane fade" id="archivedAnnouncements" role="tabpanel">
+<div class="flex justify-between items-center mb-4">
+        <!-- Left: Title -->
+        <h5 class="mt-3">Archived Announcements</h5>
+
+        <!-- Right: Date Filter -->
+        <div class="flex items-center">
+            <label for="dateFilter" class="text-sm text-gray-700 mr-3">Filter by Date:</label>
+            <input type="date" id="dateFilter" class="px-3 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="YYYY-MM-DD">
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table id="archivedAnnouncementsTable" class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Archived At</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <?php
+                // Assuming $archivedAnnouncements is defined and contains data
+                $archiveCount = 1;
+                foreach ($archived as $archiveRow) {
+                    echo '<tr class="hover:bg-gray-50 transition duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">'.$archiveCount.'</td>
+                        <td class="px-6 py-4 text-sm text-gray-800"><div class="line-clamp-2">'.$archiveRow["announcement_title"].'</div></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">'.date('Y-m-d', strtotime($archiveRow["archived_at"] ?? 'N/A')).'</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                            <a class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition duration-200 btn-restore"
+                            href="announcement.php?restore_id='.$archiveRow['announcement_id'].'">
+                            <i class="fas fa-undo"></i>
+                            </a>
+                            <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition duration-200 btn-delete"
+                            href="announcement.php?delete_id='.$archiveRow['announcement_id'].'">
+                            <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>';
+                    $archiveCount++;
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Script for Date Filter -->
+
         </div>
     </div>
 </div>
+
       </div>
     </div>
   </div>
@@ -337,10 +366,21 @@ $allAnnouncement = $obj->show_announcement();
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">'
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">'
                         <label for="announcement_title" class="form-label fw-bold">Announcement Title</label>
                         <input type="text" class="form-control" id="announcement_title" name="announcement_title" required>
                     </div>
+                    <div class="form-group mb-3">
+        <label for="editAnnouncementCategory">Category</label>
+        <select class="form-control" id="editAnnouncementCategory" name="announcement_category" required>
+            <option value="">Select Category</option>
+            <option value="academic">Academic</option>
+            <option value="event">Events</option>
+            <option value="org">Organizations</option>
+            <option value="general">General</option>
+        </select>
+    </div>
                     <div class="mb-3">
                         <label for="announcement_details" class="form-label fw-bold">Announcement Details</label>
                         <textarea id="summernote" name="announcement_details" required></textarea>
@@ -360,54 +400,91 @@ $allAnnouncement = $obj->show_announcement();
             </div>
         </div>
     </div>
-</form>
+    </form>
 
-<form id="editannouncementForm" class="row" action="ajax/editData.php" method="post" enctype="multipart/form-data">
-    <div class="modal fade bd-example-modal-lg" id="announcementModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Announcement Edit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="announcementData">
-                    <input type="hidden" name="aid" id="announcementId" value="">
-                    <input type="hidden" name="previous_images" id="previousImages" value="">
-                    <div class="form-group">
-                    <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
-                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
-                        <label for="announcementDetails">Details</label>
-                        <textarea class="form-control" id="announcementDetails" name="announcement_details"></textarea>
+    <form id="editannouncementForm" class="row" action="ajax/editData.php" method="post" enctype="multipart/form-data">
+        <div class="modal fade bd-example-modal-lg" id="announcementModalEdit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Announcement Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="annImg">Images</label>
-                        <div id="currentImagesContainer"></div>
-                        <input type="file" class="form-control-file" id="annImg" name="ann_imgs[]" multiple>
-                        <button type="button" id="addImageBtn" class="btn btn-secondary mt-2">Add More Images</button>
+                    <div class="modal-body" id="announcementData">
+                        <input type="hidden" name="aid" id="announcementId" value="">
+                        <input type="hidden" name="previous_images" id="previousImages" value="">
+                        <div class="form-group">
+                        <input type="hidden" value="<?= $_SESSION['aid'] ?>" name="uid">
+                        <input type="hidden" value="<?= $_SESSION['id'] ?>" name="cid">
+                            <label for="announcementDetails">Details</label>
+                            <textarea class="form-control" id="announcementDetails" name="announcement_details"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="annImg">Images</label>
+                            <div id="currentImagesContainer"></div>
+                            <input type="file" class="form-control-file" id="annImg" name="ann_imgs[]" multiple>
+                            <button type="button" id="addImageBtn" class="btn btn-secondary mt-2">Add More Images</button>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Save">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
   <script>
+  
+  $(document).ready(function() {
+    var table = $('#archivedAnnouncementsTable').DataTable({
+        paging: true,
+        searching: false,  // Disable general search, since we're using a date filter
+        ordering: true,
+        responsive: true
+    });
+
+    // Date filter functionality
+  
+}); $(document).ready(function() {
+        $('#activeAnnouncementsTable').DataTable({
+            "paging": true,
+            "searching": false,
+            "ordering": true,
+            "info": true
+        });
+    });
+
+// Filter functionality for the Date Filter input
+document.getElementById("dateFilter").addEventListener("input", function () {
+    const filterDate = this.value;
+    const rows = document.querySelectorAll("#archivedAnnouncementsTable tbody tr");
+
+    rows.forEach(row => {
+        const archivedDateCell = row.cells[2]; // Assuming the date is in the 3rd column (index 2)
+        const archivedDate = archivedDateCell.textContent.trim();
+
+        if (filterDate && archivedDate !== filterDate) {
+            row.style.display = "none"; // Hide rows that don't match the filter
+        } else {
+            row.style.display = ""; // Show rows that match the filter
+        }
+    });
+});
+
     function searchAnnouncements() {
         const input = document.getElementById('searchAnnouncementInput').value.toLowerCase();
         const rows = document.querySelectorAll('#announcementTableBody tr');
@@ -548,6 +625,44 @@ $allAnnouncement = $obj->show_announcement();
         }
     });
 });   
+$('.btn-restore').on('click', function (e) {
+    e.preventDefault(); // Prevents the default link action
+    var restoreUrl = $(this).attr('href'); // Gets the restore URL
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This announcement will be restored!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, restore it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = restoreUrl; // Redirect to the restore URL
+        }
+    });
+});
+$('.btn-delete').on('click', function (e) {
+    e.preventDefault(); // Prevent default link action
+    var deleteUrl = $(this).attr('href'); // Get the href attribute for delete URL
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This announcement will be permanently deleted!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = deleteUrl; // Redirect to delete URL if confirmed
+        }
+    });
+});
 
 $('.announcementModalEdit').on('click', function () {
         var announcementID = $(this).data('id');
@@ -610,109 +725,10 @@ $('.announcementModalEdit').on('click', function () {
             });
         }
     });
-});
+});$('#editannouncementForm').on('submit', function (e) {
+    e.preventDefault(); // Prevent the default form submission
 
-
-        // Handle the removal of images
-        $(document).on('click', '.remove-image', function () {
-            $(this).closest('.image-container').remove();
-        });
-
-        let addedImages = [];
-let removedImages = [];
-let replacedImages = [];
-// Handle image preview (upload new images)
-window.handleImagePreview = function(event, input) {
-    const container = $(input).closest('.image-preview-container-edit');
-    const preview = container.find('.announcement-image');
-    const oldImagePath = preview.attr('src').split('/').pop();
-    const removeButton = container.find('.remove-image');
-    const editButton = container.find('.edit-image');
-
-    const file = input.files[0];
-    if (file) {
-        // Add the old image filename to the removed images input
-        if (oldImagePath) {
-            const removedImagesInput = $('#removed-images');
-            let removedImagesVal = removedImagesInput.val();
-            if (removedImagesVal) {
-                removedImagesVal += ','; 
-            }
-            removedImagesVal += oldImagePath;
-            removedImagesInput.val(removedImagesVal);
-        }
-
-        // Display the new image
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            preview.attr('src', e.target.result).show();
-            removeButton.show();
-            editButton.show();
-            $(input).hide();
-
-            // Save the image filename to the addedImages array
-            const fileName = file.name;
-            addedImages.push(fileName);
-
-            // Log the arrays for debugging
-            console.log('Added images:', addedImages);
-            console.log('Replaced images:', replacedImages);
-            console.log('Removed images:', removedImages);
-        };
-        reader.readAsDataURL(file);
-    }
-};
-
-// Handle image removal
-$(document).on('click', '.remove-image', function () {
-    const container = $(this).closest('.image-preview-container-edit');
-    const imagePath = container.find('.announcement-image').attr('src').split('/').pop();
-    container.remove();
-
-    const removedImagesInput = $('#removed-images');
-    let removedImagesVal = removedImagesInput.val();
-    if (removedImagesVal) {
-        removedImagesVal += ','; 
-    }
-    removedImagesVal += imagePath;
-    removedImagesInput.val(removedImagesVal);
-});
-
-
-$('#editannouncementForm').on('submit', function (e) {
-    e.preventDefault();
-    const form = $(this);
-    const submitButton = form.find('button[type="submit"]');
-    submitButton.prop('disabled', true);
-
-    const formData = new FormData(this);
-    formData.append('type', 'announcement');
-    
-    // Append added and removed images as JSON strings
-    if (addedImages.length > 0) {
-        formData.append('added_images', JSON.stringify(addedImages));
-    }
-    if (removedImages.length > 0) {
-        formData.append('removed_images', JSON.stringify(removedImages));
-    }
-
-    // Append actual image files (added and replaced) to FormData
-    for (let i = 0; i < addedImages.length; i++) {
-        const fileInput = form.find('input[type="file"]')[i]; // Assuming one file input per image
-        if (fileInput && fileInput.files[0]) {
-            formData.append('added_images_files[]', fileInput.files[0]); // Append each file
-        }
-    }
-
-    // Append replaced images file data
-    if (replacedImages.length > 0) {
-        replacedImages.forEach(function(image) {
-            // Assuming image object contains a 'file' key for the new file
-            if (image.file) {
-                formData.append('replaced_images_files[]', image.file); // Append the new file
-            }
-        });
-    }
+    var form = $(this);
 
     Swal.fire({
         title: "Are you sure?",
@@ -725,30 +741,44 @@ $('#editannouncementForm').on('submit', function (e) {
         cancelButtonText: "No, cancel!"
     }).then((result) => {
         if (result.isConfirmed) {
+            var formData = new FormData(this); // Create FormData from the form element
+            formData.append('type', 'announcement');  // Add type to FormData
+
+            // Debugging FormData to check contents
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+
             fetch("../admin/ajax/editData.php", {
                 method: "POST",
-                body: formData // Send FormData (which includes the file)
+                body: formData
             })
             .then(response => response.json())
             .then(result => {
-                submitButton.prop('disabled', false);
                 if (result.success) {
-                    Swal.fire("Saved!", result.message, "success").then(() => location.reload());
+                    Swal.fire("Saved!", result.message, "success").then(() => {
+                        location.reload(); // Optionally reload the page after success
+                    });
                 } else {
                     Swal.fire("Error!", result.message, "error");
                 }
             })
             .catch(error => {
-                submitButton.prop('disabled', false);
-                Swal.fire("Error!", "There was an error saving the announcement: " + error.message, "error");
+                Swal.fire("Error!", "There was an error saving the announcement.", "error");
             });
-        } else {
-            submitButton.prop('disabled', false);
         }
     });
 });
 
+    
+    $('#editannouncementForm').on('focusin', function() {
+    $(this).removeAttr('aria-hidden');
+});
 
+$('#editannouncementForm').on('focusout', function() {
+    // Optionally set it back to "true" when focus leaves
+    $(this).attr('aria-hidden', 'true');
+});
 
 const table = document.querySelector('#myTable');
 table.parentElement.style.overflowX = 'auto';

@@ -1,0 +1,44 @@
+[2025-01-12 00:38:09] [INFO] ExcelEventHandler initialized | Context: {"user_id":1,"account_id":1,"creator_name":"System Upload"}
+[2025-01-12 00:38:09] [INFO] Starting Excel upload process
+[2025-01-12 00:38:09] [INFO] File validation passed | Context: {"file":"calendar_events_template.xlsx"}
+[2025-01-12 00:38:09] [INFO] File structure validation passed
+[2025-01-12 00:38:09] [INFO] Event inserted successfully | Context: {"start_date":"2025-01-12","end_date":"2025-01-13"}
+[2025-01-12 00:38:09] [INFO] Successfully processed row 2 | Context: {"start_date":"2025-01-12","end_date":"2025-01-13","successful_so_far":1}
+[2025-01-12 00:38:10] [INFO] Transaction committed successfully | Context: {"successful":1,"failed":0}
+[2025-01-12 00:38:10] [INFO] Creating audit log entry | Context: {"creator":"admin","details":"Uploaded 1 events - First event: Sample Event Details..."}
+[2025-01-12 00:38:10] [INFO] Audit log entry created successfully
+[2025-01-12 00:38:10] [INFO] Excel upload completed | Context: {"successful":1,"failed":0,"total_processed":1}
+[2025-01-12 00:38:10] [INFO] Excel upload completed successfully | Context: {"successful":1,"failed":0}
+[2025-01-12 00:39:23] [INFO] ExcelEventHandler initialized | Context: {"user_id":1,"account_id":1,"creator_name":"System Upload"}
+[2025-01-12 00:39:23] [INFO] Starting Excel upload process
+[2025-01-12 00:39:23] [INFO] File validation passed | Context: {"file":"calendar_events_template.xlsx"}
+[2025-01-12 00:39:23] [INFO] File structure validation passed
+[2025-01-12 00:39:23] [INFO] Event inserted successfully | Context: {"start_date":"2025-01-12","end_date":"2025-01-13"}
+[2025-01-12 00:39:23] [INFO] Successfully processed row 2 | Context: {"start_date":"2025-01-12","end_date":"2025-01-13","successful_so_far":1}
+[2025-01-12 00:39:23] [INFO] Transaction committed successfully | Context: {"successful":1,"failed":0}
+[2025-01-12 00:39:23] [INFO] Creating audit log entry | Context: {"creator":"admin","details":"Uploaded 1 events - First event: Sample Event Details..."}
+[2025-01-12 00:39:24] [INFO] Audit log entry created successfully
+[2025-01-12 00:39:24] [INFO] Excel upload completed | Context: {"successful":1,"failed":0,"total_processed":1}
+[2025-01-12 00:39:24] [INFO] Excel upload completed successfully | Context: {"successful":1,"failed":0}
+[2025-01-12 00:42:08] [INFO] ExcelEventHandler initialized | Context: {"user_id":1,"account_id":1,"creator_name":"System Upload"}
+[2025-01-12 00:42:08] [INFO] Starting Excel upload process
+[2025-01-12 00:42:08] [INFO] File validation passed | Context: {"file":"calendar_events_template.xlsx"}
+[2025-01-12 00:42:08] [INFO] File structure validation passed
+[2025-01-12 00:42:09] [INFO] Event inserted successfully | Context: {"start_date":"2025-01-12","end_date":"2025-01-13"}
+[2025-01-12 00:42:09] [INFO] Successfully processed row 2 | Context: {"start_date":"2025-01-12","end_date":"2025-01-13","successful_so_far":1}
+[2025-01-12 00:42:09] [INFO] Transaction committed successfully | Context: {"successful":1,"failed":0}
+[2025-01-12 00:42:09] [INFO] Creating audit log entry | Context: {"creator":"admin","details":"Uploaded 1 events - First event: Sample Event Details..."}
+[2025-01-12 00:42:10] [INFO] Audit log entry created successfully
+[2025-01-12 00:42:10] [INFO] Excel upload completed | Context: {"successful":1,"failed":0,"total_processed":1}
+[2025-01-12 00:42:10] [INFO] Excel upload completed successfully | Context: {"successful":1,"failed":0}
+[2025-01-12 00:42:36] [INFO] ExcelEventHandler initialized | Context: {"user_id":1,"account_id":1,"creator_name":"System Upload"}
+[2025-01-12 00:42:36] [INFO] Starting Excel upload process
+[2025-01-12 00:42:36] [INFO] File validation passed | Context: {"file":"calendar_events_template.xlsx"}
+[2025-01-12 00:42:36] [INFO] File structure validation passed
+[2025-01-12 00:42:36] [INFO] Event inserted successfully | Context: {"start_date":"2025-01-12","end_date":"2025-01-13"}
+[2025-01-12 00:42:36] [INFO] Successfully processed row 2 | Context: {"start_date":"2025-01-12","end_date":"2025-01-13","successful_so_far":1}
+[2025-01-12 00:42:36] [INFO] Transaction committed successfully | Context: {"successful":1,"failed":0}
+[2025-01-12 00:42:36] [INFO] Creating audit log entry | Context: {"creator":"admin","details":"Uploaded 1 events - First event: Sample Event Details..."}
+[2025-01-12 00:42:36] [INFO] Audit log entry created successfully
+[2025-01-12 00:42:36] [INFO] Excel upload completed | Context: {"successful":1,"failed":0,"total_processed":1}
+[2025-01-12 00:42:36] [INFO] Excel upload completed successfully | Context: {"successful":1,"failed":0}

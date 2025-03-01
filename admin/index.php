@@ -1,5 +1,11 @@
 <?php
+
+// Enable error reporting for all types of errors
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 include_once('assets/header.php');
+
 
 if (isset($_POST['login'])) {
     $log_msg = $obj->admin_login($_POST);

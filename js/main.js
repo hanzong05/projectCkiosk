@@ -63,7 +63,16 @@ jQuery(document).ready(function($) {
                 loop: false
             }
         }
-    });
+    });var scrollTimeout;
+
+$(window).on('scroll', function() {
+    clearTimeout(scrollTimeout);  // Clear the previous timeout
+    scrollTimeout = setTimeout(function() {
+        // Your scroll event logic goes here
+        console.log("Scrolled");
+    }, 100);  // Adjust the delay as needed
+});
+
 
     // Smooth Scroll
     var contentSection = $('.content-section, .main-banner');

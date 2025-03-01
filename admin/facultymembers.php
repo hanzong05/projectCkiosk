@@ -1,6 +1,23 @@
 <?php
-
+// Enable all error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include_once ('assets/header.php');
+
+if (!isset($_SESSION['atype'])) {
+    // If the session is not set, redirect to the login page
+    header("Location: index.php");
+    exit;
+}
+
+$account_type = $_SESSION['atype'];
+if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
+    // Destroy the session if the account type is invalid
+    session_destroy();
+    // Redirect to the login page
+    header("Location: index.php");
+    exit;
+}
 $uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
 $cid = $_SESSION['id'] ?? null; 
 if (isset($_POST['add_faculty_member'])) {
@@ -125,218 +142,95 @@ $allDepartment = $obj->show_department();
 
 </style>
 <body class="">
-<div class="wrapper "><div class="wrapper ">
+    <div class="wrapper ">
     <!-- sweetalert start-->
-    <?= isset($log_msg) ? $log_msg : '' ?>
-    <!-- sweetalert end -->
-    <div class="sidebar" data-color="white" data-active-color="danger">
-        <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
-                <img src="../img/C.png" alt="" width="240">
-            </a>
-        </div>
-        <div class="sidebar-wrapper ">
-            <?php if ($account_type != '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./announcement.php">
-                            <i class="fas fa-bullhorn"></i>
-                            <p>Announcement</p>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="./schoolcalendar.php">
-                            <i class="fas fa-calendar-alt"></i>
-                            <p>School Calendar</p>
-                        </a>
-                    </li>
-                    <?php if ($account_type == '1') { ?>
-                        <li class="active">
-                            <a href="./facultymembers.php">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                <p>Faculty Members</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./map.php">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Campus Map</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./organization.php">
-                                <i class="fas fa-users"></i>
-                                <p>Campus Organization</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./audit.php">
-                                <i class="fas fa-file-alt"></i>
-                                <p>Audit Trails</p>
-                            </a>
-                        </li>
-                    <?php } ?>
-                    <li>
-                        <a href="./faqs.php">
-                            <i class="fas fa-question-circle"></i>
-                            <p>FAQS</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-            <?php if ($account_type == '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./ratings.php">
-                            <i class="fas fa-star"></i>
-                            <p>Ratings</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-        </div>
-    </div>
-    <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="javascript:;">Campus Faculty Members </a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block"></span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="logout.php">Logout</a>
-                  <?php if ($account_type == '2') { ?>
-                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
-                <?php } ?>
-                <?php if ($account_type == '3') { ?>
-                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
-                <?php } ?>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-                    </nav>
+    <?php include 'assets/includes/navbar.php'; ?>
+            <!-- End Navbar -->
                     <div class="content">
                     <div class="flex flex-col w-full">
     <div class="w-full">
-        <div class="bg-white shadow-lg rounded-lg">
-            <div class="p-6">
-                <hr class="my-6 border-t border-gray-200">
+    <div class="bg-white shadow-lg rounded-lg">
+    <div class="p-6">
+        <hr class="my-6 border-t border-gray-200">
 
-                <!-- Search and Buttons -->
-                <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
-                    <div class="flex-grow mb-4 md:mb-0 md:mr-4">
-                        <input type="text" id="searchFacultyInput" placeholder="Search faculty..." class="border border-gray-300 rounded-lg px-4 py-2 w-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div class="flex space-x-4">
-                    <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-200 ease-in-out w-full md:w-auto flex items-center justify-center" data-toggle="modal" data-target="#facultyModal">
-    <i class="fas fa-plus-circle mr-2"></i> Add Faculty Member
-</button>
+        <!-- Search and Buttons -->
+        <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+            <div class="flex-grow mb-4 md:mb-0 md:mr-4">
+                <input type="text" id="searchFacultyInput" placeholder="Search faculty..." class="border border-gray-300 rounded-lg px-4 py-2 w-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="flex space-x-4">
+                <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-200 ease-in-out w-full md:w-auto flex items-center justify-center" data-toggle="modal" data-target="#facultyModal">
+                    <i class="fas fa-plus-circle mr-2"></i> Add Faculty Member
+                </button>
 
-<!-- Update Via Excel Button -->
-<button class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-200 ease-in-out w-full md:w-auto flex items-center justify-center" data-toggle="modal" data-target="#excelImportModal">
-    <i class="fas fa-upload mr-2"></i> Update Via Excel
-</button>
-                    </div>
-                </div>
-
-                <!-- Faculty Members Table -->
-                <div class="overflow-x-auto rounded-lg shadow-md">
-                    <table class="min-w-full bg-white text-sm text-gray-800">
-                        <thead>
-                            <tr class="bg-gray-100 border-b">
-                                <th class="py-3 px-4 text-left">NO.</th>
-                                <th class="py-3 px-4 text-left">Faculty Departments</th>
-                                <th class="py-3 px-4 text-left">Photo</th>
-                                <th class="py-3 px-4 text-left">Name</th>
-                                <th class="py-3 px-4 text-left">Specialization</th>
-                                <th class="py-3 px-4 text-left">Consultation Time</th>
-                                <th class="py-3 px-4 text-left">ACTION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $count = 1;
-                            if ($allFaculty) {
-                                foreach ($allFaculty as $row) {
-                                    $departments = isset($row["departments"]) ? $row["departments"] : 'No departments assigned';
-                            ?>
-                            <tr class="hover:bg-gray-50 border-b">
-                                <td class="px-4 py-3"><?php echo $count; ?></td>
-                                <td class="px-4 py-3"><?php echo $departments; ?></td>
-                                <td class="px-4 py-3">
-                                    <img src="../uploaded/facultyUploaded/<?php echo htmlspecialchars($row['faculty_image']); ?>" 
-                                         height="80" 
-                                         width="100"
-                                         alt="Faculty photo" 
-                                         class="object-cover rounded-lg shadow-sm">
-                                </td>
-                                <td class="px-4 py-3"><?php echo htmlspecialchars($row["faculty_name"]); ?></td>
-                                <td class="px-4 py-3"><?php echo !empty($row["specialization"]) ? htmlspecialchars($row["specialization"]) : 'NULL'; ?></td>
-                                <td class="px-4 py-3"><?php echo !empty($row["consultation_time"]) ? htmlspecialchars($row["consultation_time"]) : 'NULL'; ?></td>
-                                <td class="px-4 py-3 text-center">
-                                    <div class="flex space-x-3 justify-center">
-                                    <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded-lg transition duration-200 flex items-center justify-center facultyModalEdit" 
-                                            data-toggle="modal" 
-                                            data-target="#facultyModalEdit" 
-                                            data-id="<?= $row['faculty_id']; ?>">
-                                        <i class="fas fa-edit mr-2"></i> Edit
-                                    </button>
-                                        <a class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200 flex items-center justify-center" 
-                                           href='facultymembers.php?did=<?= $row['faculty_id']; ?>'>
-                                            <i class="fas fa-trash mr-2"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
-                                    $count++;
-                                }
-                            } else {
-                                echo '<tr><td colspan="7" class="text-center py-4 text-gray-500">No faculty members available.</td></tr>';
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                <!-- Update Via Excel Button -->
+                <button class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-200 ease-in-out w-full md:w-auto flex items-center justify-center" data-toggle="modal" data-target="#excelImportModal">
+                    <i class="fas fa-upload mr-2"></i> Update Via Excel
+                </button>
             </div>
         </div>
+
+        <!-- Faculty Members Table -->
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table id="facultyTable" class="min-w-full bg-white text-sm text-gray-800">
+                <thead>
+                    <tr class="bg-gray-100 border-b">
+                        <th class="py-3 px-4 text-left">NO.</th>
+                        <th class="py-3 px-4 text-left">Faculty Departments</th>
+                        <th class="py-3 px-4 text-left">Photo</th>
+                        <th class="py-3 px-4 text-left">Name</th>
+                        <th class="py-3 px-4 text-left">Specialization</th>
+                        <th class="py-3 px-4 text-left">Consultation Time</th>
+                        <th class="py-3 px-4 text-left">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $count = 1;
+                    if ($allFaculty) {
+                        foreach ($allFaculty as $row) {
+                            $departments = isset($row["departments"]) ? $row["departments"] : 'No departments assigned';
+                    ?>
+                    <tr class="hover:bg-gray-50 border-b">
+                        <td class="px-4 py-3"><?php echo $count; ?></td>
+                        <td class="px-4 py-3"><?php echo $departments; ?></td>
+                        <td class="px-4 py-3">
+                            <img src="../uploaded/facultyUploaded/<?php echo htmlspecialchars($row['faculty_image']); ?>" 
+                                 height="80" 
+                                 width="100"
+                                 alt="Faculty photo" 
+                                 class="object-cover rounded-lg shadow-sm">
+                        </td>
+                        <td class="px-4 py-3"><?php echo htmlspecialchars($row["faculty_name"]); ?></td>
+                        <td class="px-4 py-3"><?php echo !empty($row["specialization"]) ? htmlspecialchars($row["specialization"]) : 'NULL'; ?></td>
+                        <td class="px-4 py-3"><?php echo !empty($row["consultation_time"]) ? htmlspecialchars($row["consultation_time"]) : 'NULL'; ?></td>
+                        <td class="px-4 py-3 text-center">
+                            <div class="flex space-x-3 justify-center">
+                            <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded-lg transition duration-200 flex items-center justify-center facultyModalEdit" 
+                                    data-toggle="modal" 
+                                    data-target="#facultyModalEdit" 
+                                    data-id="<?= $row['faculty_id']; ?>">
+                                <i class="fas fa-edit mr-2"></i> Edit
+                            </button>
+                            <a class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200 flex items-center justify-center btn-delete" 
+   href='facultymembers.php?did=<?= $row['faculty_id']; ?>'>
+    <i class="fas fa-trash mr-2"></i>
+</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                            $count++;
+                        }
+                    } else {
+                        echo '<tr><td colspan="7" class="text-center py-4 text-gray-500">No faculty members available.</td></tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
     </div>
 </div>
 
@@ -479,14 +373,58 @@ $allDepartment = $obj->show_department();
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
   <!--  Notifications Plugin    -->
-  <script src="assets/js/plugins/bootstrap-notify.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+  <script src="assets/js/plugins/bootstrap-notify.js"></script><!-- Include DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+<!-- Include DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
-  <script>function searchFaculty() {
+  
+  <script>
+  $(document).ready(function() {
+    // Initialize DataTables with search enabled but hidden default field
+    const facultyTable = $('#facultyTable').DataTable({
+        "paging": true,
+        "searching": true,
+        "lengthChange": true,
+        "order": [[0, 'asc']], 
+        "dom": 'rt<"bottom"lip><"clear">', // Removed 'f' to hide default search field
+        "language": {
+            "zeroRecords": "No faculty found",
+            "emptyTable": "No faculty members available",
+            "info": "Showing _START_ to _END_ of _TOTAL_ faculty members",
+            "infoEmpty": "Showing 0 faculty members",
+            "infoFiltered": "(filtered from _MAX_ total faculty members)"
+        }
+    });
+
+    // Connect custom search input to DataTables search
+    $('#searchFacultyInput').on('keyup', function() {
+        facultyTable.search(this.value).draw();
+    });
+
+    // Add placeholder text
+    $('#searchFacultyInput').attr('placeholder', 'Search faculty by name, department...');
+
+    // Add custom no results message handler
+    facultyTable.on('draw', function() {
+        if (facultyTable.page.info().recordsDisplay === 0) {
+            if ($('#noFacultyMessage').length === 0) {
+                $(facultyTable.table().container()).append(
+                    '<div id="noFacultyMessage" class="text-center py-4 text-gray-500" style="display: none;">' +
+                    'No faculty found' +
+                    '</div>'
+                );
+            }
+            $('#noFacultyMessage').show();
+        } else {
+            $('#noFacultyMessage').hide();
+        }
+    });
+});function searchFaculty() {
     const input = document.getElementById('searchFacultyInput');
     const filter = input.value.toLowerCase();
     const table = document.querySelector('#faculty table tbody');
@@ -724,46 +662,55 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Faculty Modal Form Submission
         document.getElementById('facultyModalForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            Swal.fire({
-                title: "Are you sure?",
-                text: "Do you want to add this faculty member?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, add it!",
-                cancelButtonText: "No, cancel!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var formData = new FormData(this);
-                    formData.append('type', 'faculty'); // Ensure type parameter is included
+    // Get the creator_id (assuming it's stored in the session or available in JS)
+    var creatorId = <?= $_SESSION['aid']; ?>; // This will get the creator_id from PHP session variable
 
-                    fetch('../admin/ajax/createData.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(result => {
-                        Swal.fire("Response", result.message, "info");
-                        if (result.success) {
-                            Swal.fire("Added!", "The faculty member has been added.", "success")
-                                .then(() => {
-                                    document.location = "facultymembers.php"; // Redirect to the faculty members page
-                                });
-                        } else {
-                            Swal.fire("Error!", result.message, "error");
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire("Error!", "There was an error adding the faculty member.", "error");
-                    });
+    // Show confirmation dialog before proceeding
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to add this faculty member?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, add it!",
+        cancelButtonText: "No, cancel!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var formData = new FormData(this);
+
+            // Ensure creator_id is appended to FormData
+            formData.append('creator_id', creatorId); // Append creator_id dynamically
+
+            formData.append('type', 'faculty'); // Ensure type parameter is included
+
+            // Perform the fetch request to submit the form
+            fetch('../admin/ajax/createData.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                Swal.fire("Response", result.message, "info");
+                if (result.success) {
+                    Swal.fire("Added!", "The faculty member has been added.", "success")
+                        .then(() => {
+                            document.location = "facultymembers.php"; // Redirect to the faculty members page
+                        });
+                } else {
+                    Swal.fire("Error!", result.message, "error");
                 }
+            })
+            .catch(error => {
+                Swal.fire("Error!", "There was an error adding the faculty member.", "error");
             });
-        });
+        }
+    });
+});
+
 // Handling department dropdowns and removing departments
 let removedDepartments = [];
 let newDepartments = [];  // Add this line to define newDepartments array
@@ -810,27 +757,23 @@ function generateDepartmentOptions() {
     <?php endforeach; ?>
     return optionsHTML;
 }
-
-// Collect new department IDs into newDepartments array during form submission
 $('#editFacultyForm').on('submit', function (e) {
     e.preventDefault();
 
-    // Clear newDepartments before collecting new values
-    newDepartments = [];  // Reset newDepartments before adding new departments
-
-    // Collect new department IDs from dropdowns
+    // Collect new department IDs
+    let newDepartments = [];
     $('.department-dropdown').each(function () {
         var departmentId = $(this).val();
         if (departmentId && !newDepartments.includes(departmentId)) {
-            newDepartments.push(departmentId);  // Add department if not already in the array
+            newDepartments.push(departmentId);
         }
     });
 
-    console.log("New Departments:", newDepartments);  // Debug: Log new departments
+    console.log("New Departments:", newDepartments);
 
-    // Update hidden inputs with removed and added departments
-    $('#removedDepartments').val(JSON.stringify(removedDepartments)); // Update removedDepartments
-    $('#addedDepartments').val(JSON.stringify(newDepartments)); // Update addedDepartments
+    // Update hidden inputs
+    $('#removedDepartments').val(JSON.stringify(removedDepartments)); // Ensure removedDepartments is defined
+    $('#addedDepartments').val(JSON.stringify(newDepartments));
 
     Swal.fire({
         title: "Are you sure?",
@@ -850,7 +793,7 @@ $('#editFacultyForm').on('submit', function (e) {
                 method: "POST",
                 body: formData
             })
-            .then(response => response.text())
+            .then(response => response.text()) // Using `text()` to read raw response
             .then(data => {
                 console.log("Raw Response Data:", data);  // Debugging raw response
 
@@ -862,27 +805,20 @@ $('#editFacultyForm').on('submit', function (e) {
                             location.reload(); // Refresh the page on success
                         });
                     } else {
-                        Swal.fire("Error", jsonData.message, "error").then(() => {
-                            location.reload(); // Refresh the page on failure
-                        });
+                        Swal.fire("Error", jsonData.message, "error");
                     }
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
-                    Swal.fire("Error", "An error occurred while saving the faculty member.", "error").then(() => {
-                        location.reload(); // Refresh the page on error
-                    });
+                    Swal.fire("Error", "An error occurred while saving the faculty member.", "error");
                 }
             })
             .catch(error => {
                 console.error("Fetch Error:", error);
-                Swal.fire("Error", "An error occurred while processing the request.", "error").then(() => {
-                    location.reload(); // Refresh the page on network error
-                });
+                Swal.fire("Error", "An error occurred while processing the request.", "error");
             });
         }
     });
 });
-
 
 });
 </script>

@@ -32,8 +32,10 @@ try {
     error_log("Database error: " . $e->getMessage());
 }
 
-$response = '';
+$response = ''; // Initialize response string
 $images = [];
+
+// Check if there are any announcements
 if (!empty($announcements)) {
     $firstAnnouncement = $announcements[0]; // Get the first announcement details
     $response .= '<input type="hidden" id="removed-images" name="removed_images" value="">';
@@ -43,6 +45,7 @@ if (!empty($announcements)) {
     $announcementDetails = htmlspecialchars($firstAnnouncement['announcement_details'] ?? '', ENT_QUOTES, 'UTF-8');
     $announcementId = htmlspecialchars($firstAnnouncement['announcement_id'] ?? '', ENT_QUOTES, 'UTF-8');
 
+    // Start form and display announcement details
     $response .= '<div class="mb-3">    
         <input type="text" id="announcement_title" name="announcement_title" class="form-control" value="' . $announcementTitle . '" required>
         <input type="hidden" value="' . htmlspecialchars($_SESSION['id'], ENT_QUOTES, 'UTF-8') . '" name="announcement_creator">
@@ -53,92 +56,69 @@ if (!empty($announcements)) {
     </div>';
 
     // Collect unique images for display
-    $images = [];
     foreach ($announcements as $announcement) {
         if (!empty($announcement['image_path']) && !in_array($announcement['image_path'], $images)) {
             $images[] = htmlspecialchars($announcement['image_path'], ENT_QUOTES, 'UTF-8');
         }
     }
+    
+    // Start the existing-images container (it will always be displayed)
+    $response .= '<div class="existing-images" style="display: flex; gap: 10px; align-items: center; overflow-x: auto; padding: 10px; border: 1px solid #ddd; border-radius: 5px; flex-wrap: wrap;">';
+    
+    // Check if there are any images
     if (!empty($images)) {
-        $response .= '<div class="existing-images" style="display: flex; gap: 10px; align-items: center; overflow-x: auto; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">';
+        $imageCount = count($images);
+        $response .= '<input type="hidden" id="image-count" value="' . $imageCount . '">';
         foreach ($images as $index => $image) {
             $response .= '<div class="image-preview-container-edit" style="width: 120px; text-align: center; flex-shrink: 0;">
                 <div class="mb-6 text-center">
-                
                     <!-- Display the current image -->
-                    <img src="../uploaded/annUploaded/' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '" height="120" width="150" id="announcement_image_p" class="img-thumbnail rounded-full" />
-                    
+                    <img src="../uploaded/annUploaded/' . $image . '" 
+                         height="120" width="150" id="announcement_image_p" 
+                         class="img-thumbnail rounded-full" 
+                         style="min-width: 100px; max-width: 150px; min-height: 100px; max-height: 150px;" 
+                         data-index="' . $index . '" />
+
                     <!-- Hidden field for the previous image (used for reference during form submission) -->
-                    <input type="hidden" name="previous_image[]" value="' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '" />
-            
-                    <!-- Display the file name of the uploaded image -->
-                    <p class="file-name" style="margin-top: 5px;">
-                        ' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '
-                    </p>
-                     
+                    <input type="hidden" name="previous_image[]" value="' . $image . '" />
+                    <input type="hidden" name="added_image[]" value="' . $image . '" />
+
                     <!-- Edit Image Button -->
                     <button type="button" class="inline-flex items-center justify-center p-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg shadow-md edit-image" data-index="' . $index . '">
                         <i class="fas fa-edit"></i> Edit
                     </button>
-        
+
                     <!-- Remove Image Button -->
                     <button type="button" class="inline-flex items-center justify-center p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md remove-image" data-index="' . $index . '">
                         <i class="fas fa-trash-alt"></i>
                     </button>
-        
+
                     <!-- Hidden file input for selecting a new image -->
                     <input type="file" name="new_image[]" class="hidden file-input" data-index="' . $index . '" accept="image/*" />
                 </div>
             </div>';
         }
-        $response .= '<button type="button" id="add-image-edit" class="inline-flex items-center justify-center p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition duration-200 ease-in-out" style="width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-            <i class="fas fa-plus"></i>
-        </button>';
-        $response .= '</div>';
+    } else {
+        // If no images exist, still create the image count input with 0
+        $response .= '<input type="hidden" id="image-count" value="0">';
     }
-    
+
+    // Close the existing-images container
+    $response .= '</div>';
+
+    // Add Image Button (always visible, even if there are no images)
+    $response .= '<button type="button" id="add-image-edit" class="inline-flex items-center justify-center p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition duration-200 ease-in-out" style="width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <i class="fas fa-plus"></i> Add Image
+    </button>';
 }
+
 echo $response;
 ?>
+<script>$(document).ready(function () {
+    let imageIndex = parseInt($('#image-count').val() || '0', 10);
+    let newImages = [];
 
-<script>// Add event listener to edit buttons for showing the file input
-document.querySelectorAll('.edit-image').forEach(button => {
-    button.addEventListener('click', function() {
-        const index = this.getAttribute('data-index');
-        const fileInput = document.querySelector(`.file-input[data-index="${index}"]`);
-        fileInput.classList.remove('hidden');  // Show the file input when "Edit" button is clicked
-    });
-});
-
-// Handle file input change event to preview the new image
-document.querySelectorAll('.file-input').forEach(input => {
-    input.addEventListener('change', function() {
-        const index = this.getAttribute('data-index');
-        const file = this.files[0];
-
-        // If a file is selected, preview it
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgPreview = document.querySelector(`#image-preview-${index}`);
-                imgPreview.src = e.target.result; // Update the image preview
-            };
-            reader.readAsDataURL(file); // Read the selected file as a DataURL
-        }
-    });
-});
-
-</script>
-
-
-<script>
-$(document).ready(function () {
-    // Arrays to store removed, added, and replaced images
-    const removedImages = [];
-    const addImages = [];
-    const replacedImages = [];
-
-    // Initialize summernote for rich text editing
+    // Summernote initialization remains the same
     $('#summernote2').summernote({
         height: 220,
         toolbar: [
@@ -164,133 +144,121 @@ $(document).ready(function () {
         }
     });
 
-    // Show the "Add Image" button
-    $('#add-image-edit').show();
-
-    // Function to handle image preview and array management when updating the image
-    window.handleImagePreview = function(event, input) {
-        const container = $(input).closest('.image-preview-container-edit');
-        const preview = container.find('.announcement-image');
-        const oldImagePath = preview.attr('src').split('/').pop(); // Get the current image filename
-        const removeButton = container.find('.remove-image');
-        const editButton = container.find('.edit-image');
-
-        const file = input.files[0]; // Get the file that was selected
-        if (file) {
-            // Add the old image filename to the replacedImages array if it exists
-            if (oldImagePath && !replacedImages.includes(oldImagePath)) {
-                replacedImages.push(oldImagePath);
+    // Function to handle file selection and preview
+    function handleFileSelection(file, index, isEdit = false) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            if (isEdit) {
+                // Update existing image preview
+                const img = $('img[data-index="' + index + '"]');
+                img.attr('src', e.target.result);
+                img.show(); // Make sure the image is visible
+            } else {
+                // Create new image preview for added images
+                const preview = `
+                <div class="image-preview-container-edit" data-index="${index}" style="width: 120px; text-align: center; flex-shrink: 0;">
+                    <div class="mb-6 text-center">
+                        <img src="${e.target.result}" 
+                             class="img-thumbnail rounded-full" 
+                             style="min-height: 100px; max-height: 150px; min-width: 100px; max-width: 150px;" />
+                        <input type="hidden" name="added_image[]" value="${file.name}" />
+                        <input type="file" name="new_image[]" class="hidden file-input" data-index="${index}" accept="image/*" />
+                        
+                        <button type="button" class="inline-flex items-center justify-center p-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg shadow-md edit-image-add" data-index="${index}">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button type="button" class="inline-flex items-center justify-center p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md remove-image-add" data-index="${index}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>`;
+                
+                $('.existing-images').append(preview);
+                newImages.push(file.name);
             }
+        };
+        reader.readAsDataURL(file);
+    }
 
-            // Display the new image
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.attr('src', e.target.result).show();
-                removeButton.show();  // Show remove button
-                editButton.show();  // Show edit button
-                $(input).hide();  // Hide the file input
-
-                // Add the new image filename to the addImages array
-                const fileName = file.name;
-                if (!addImages.includes(fileName)) {
-                    addImages.push(fileName);
-                }
-
-                // Log the arrays for debugging
-                console.log('Added images:', addImages);
-                console.log('Replaced images:', replacedImages);
-                console.log('Removed images:', removedImages);
-
-                // Optional: Send arrays to the server via AJAX
-                $.ajax({
-                    url: 'ajax/error_log.php',
-                    method: 'POST',
-                    data: {
-                        added_images: JSON.stringify(addImages),
-                        removed_images: JSON.stringify(removedImages),
-                        replaced_images: JSON.stringify(replacedImages),
-                    },
-                    success: function(response) {
-                        console.log('Images logged to server');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error logging images to server:', error);
-                    }
-                });
-
-                // Show "Add Image" button if needed
-                if ($('.existing-images .image-preview-container-edit').length > 0) {
-                    $('#add-image-edit').show();
-                }
-            };
-            reader.readAsDataURL(file);  // Read the selected file
-        }
-    };
-
-    // Handle the Edit button click to trigger file input for image update
-    $(document).on('click', '.edit-image', function () {
-        const container = $(this).closest('.image-preview-container-edit');
-
-        // Check if the file input exists, if not, create it dynamically
-        let fileInput = container.find('input[type="file"]');
-        
-        if (fileInput.length === 0) {
-            // Dynamically create a file input and append it to the container
-            fileInput = $('<input>', {
-                type: 'file',
-                class: 'form-control',
-                name: 'ann_imgs[]',
-                accept: '.jpg, .jpeg, .png, .gif',
-                style: 'display:none;'
-            });
-
-            container.append(fileInput);
-        }
-
-        // Trigger the file input click event to open the file dialog
+    // Handle Edit Image Button Click (original images)
+    $('.edit-image').on('click', function() {
+        const index = $(this).data('index');
+        const fileInput = $('input[type="file"][data-index="' + index + '"]');
         fileInput.trigger('click');
-
-        // Bind the change event to the file input to run the handleImagePreview function
-        fileInput.off('change').on('change', function(event) {
-            handleImagePreview(event, this); // Call the function to handle preview and array update
-        });
     });
 
-    // Handle remove image button click
-    $(document).on('click', '.remove-image', function () {
-        const container = $(this).closest('.image-preview-container-edit');
-        const imagePath = container.find('.announcement-image').attr('src').split('/').pop(); // Get the current image filename
-        container.remove();  // Remove the image preview container
+    // Handle file input change for original images
+    $('input[type="file"].file-input').on('change', function(event) {
+        const index = $(this).data('index');
+        const file = event.target.files[0];
+        if (file) {
+            handleFileSelection(file, index, true);
+        }
+    });
 
-        // Add the removed image to the removedImages array if not already there
-        if (imagePath && !removedImages.includes(imagePath)) {
+    // Handle Remove Image Button Click (original images)
+    $('.remove-image').on('click', function() {
+        const index = $(this).data('index');
+        const imagePath = $('input[name="previous_image[]"]').eq(index).val();
+        let removedImages = $('#removed-images').val() ? $('#removed-images').val().split(',') : [];
+        
+        if (!removedImages.includes(imagePath)) {
             removedImages.push(imagePath);
         }
-
-        console.log('Removed images:', removedImages);  // Log the removed images
+        $('#removed-images').val(removedImages.join(','));
+        $(this).closest('.image-preview-container-edit').remove();
     });
 
-    // Handle adding new images with the "Add Image" button
-    $('#add-image-edit').click(function () {
-        $(this).hide();
-        const newImagePreview = `
-            <div class="image-preview-container-edit" style="display: inline-block; width: 120px; margin-right: 10px; text-align: center;">
-                <input type="file" class="form-control" name="ann_imgs[]" accept=".jpg, .jpeg, .png, .gif" style="display:none;">
-                <img src="" alt="Image Preview" class="announcement-image" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 5px;">
-                <div class="button-container" style="margin-top: 5px; display: flex; justify-content: center; gap: 10px;">
-                    <button type="button" class="inline-flex items-center justify-center p-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md edit-image">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" class="inline-flex items-center justify-center p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md remove-image">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-        `;
-        $(this).before(newImagePreview);
+    // Add Image Button Click
+    $('#add-image-edit').on('click', function() {
+        const tempFileInput = $('<input type="file" accept="image/*" style="display: none;">');
+        $('body').append(tempFileInput);
+        
+        tempFileInput.on('change', function() {
+            const file = this.files[0];
+            if (file) {
+                handleFileSelection(file, imageIndex, false);
+                imageIndex++;
+            }
+            tempFileInput.remove();
+        });
+        
+        tempFileInput.click();
     });
 
-    
+    // Edit Added Image
+    $(document).on('click', '.edit-image-add', function() {
+        const index = $(this).data('index');
+        const container = $(`.image-preview-container-edit[data-index="${index}"]`);
+        const fileInput = container.find('input[type="file"]');
+        
+        fileInput.off('change').on('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    container.find('img').attr('src', e.target.result);
+                    container.find('input[name="added_image[]"]').val(file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        fileInput.trigger('click');
+    });
+
+    // Remove Added Image
+    $(document).on('click', '.remove-image-add', function() {
+        const index = $(this).data('index');
+        const container = $(`.image-preview-container-edit[data-index="${index}"]`);
+        const filename = container.find('input[name="added_image[]"]').val();
+        
+        const imageIndex = newImages.indexOf(filename);
+        if (imageIndex > -1) {
+            newImages.splice(imageIndex, 1);
+        }
+        
+        container.remove();
+    });
 });
 </script>
-

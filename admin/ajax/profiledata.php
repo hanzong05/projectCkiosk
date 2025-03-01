@@ -4,20 +4,31 @@ include "../../class/connection.php";
 $accountID = $_REQUEST['accountID'] ?? 0;
 $response = '';
 
-// Debug: Log accountID
-error_log("Requested accountID: " . $accountID);
 
-// Prepare the SQL query
-$sql = 'SELECT * FROM orgmembers_tbl WHERE id = :accountID';
+$sql = '
+    SELECT 
+        om.*, 
+        o.org_name 
+    FROM 
+        orgmembers_tbl AS om
+    LEFT JOIN 
+        organization_tbl AS o 
+    ON 
+        om.org_type = o.org_id 
+    WHERE 
+        om.id = :accountID';
+
 $stmt = $connect->prepare($sql);
 $stmt->bindParam(':accountID', $accountID, PDO::PARAM_INT);
 $stmt->execute();
 
 // Fetch the result
-$array = $stmt->fetch(PDO::FETCH_ASSOC);
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($array) {
-    $uid = htmlspecialchars($array['id'], ENT_QUOTES, 'UTF-8');
+if ($result) {
+    $uid = htmlspecialchars($result['id'], ENT_QUOTES, 'UTF-8');
+    $orgName = htmlspecialchars($result['org_name'], ENT_QUOTES, 'UTF-8'); // Sanitize org_name
+    
     $response .= '<input type="hidden" value="' . $uid . '" name="uid">
 
     <div class="mb-3">
@@ -25,8 +36,8 @@ if ($array) {
         <div class="d-flex align-items-center">
             <div class="me-3">';
             
-    if (!empty($array['member_img'])) {
-        $response .= '<img src="../uploaded/orgUploaded/' . htmlspecialchars($array['member_img'], ENT_QUOTES, 'UTF-8') . '" alt="Profile Image" class="img-fluid" style="width: 100px; height: 100px; border-radius: 50%;">';
+    if (!empty($result['member_img'])) {
+        $response .= '<img src="../uploaded/orgUploaded/' . htmlspecialchars($result['member_img'], ENT_QUOTES, 'UTF-8') . '" alt="Profile Image" class="img-fluid" style="width: 100px; height: 100px; border-radius: 50%;">';
     } else {
         $response .= '<img src="../../path/to/default/image.png" alt="Default Profile Image" class="img-fluid" style="width: 100px; height: 100px; border-radius: 50%;">';
     }
@@ -38,12 +49,19 @@ if ($array) {
 
     <div class="mb-3">
         <label for="name" class="form-label fw-bold">Name</label>
-        <input type="text" id="name" class="form-control" name="name" value="' . htmlspecialchars($array['name'], ENT_QUOTES, 'UTF-8') . '" required>
+        <input type="text" id="name" class="form-control" name="name" value="' . htmlspecialchars($result['name'], ENT_QUOTES, 'UTF-8') . '" required>
     </div>
+
     <div class="mb-3">
         <label for="username" class="form-label fw-bold">Username</label>
-        <input type="text" id="username" class="form-control" name="username" value="' . htmlspecialchars($array['username'], ENT_QUOTES, 'UTF-8') . '" required autocomplete="username">
+        <input type="text" id="username" class="form-control" name="username" value="' . htmlspecialchars($result['username'], ENT_QUOTES, 'UTF-8') . '" required autocomplete="username">
     </div>
+
+    <div class="mb-3">
+        <label for="org_name" class="form-label fw-bold">Organization</label>
+        <input type="text" id="org_name" class="form-control" name="org_name" value="' . $orgName . '" disabled>
+    </div>
+
     <div class="mb-3">
         <label for="password" class="form-label fw-bold">Password</label>
         <div class="input-group">
@@ -82,7 +100,6 @@ if ($array) {
 
 echo $response;
 ?>
-
 
 <!-- jQuery Library -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

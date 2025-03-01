@@ -1,0 +1,13 @@
+# Allow access to all files in the facultyUploaded directory
+<FilesMatch "\.(jpg|jpeg|png|gif|bmp|webp|svg|pdf|txt)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Allow access to the directory itself
+<Directory "/path/to/your/uploaded/facultyUploaded">
+    Allow from all
+</Directory>
+
+# Disable directory listing if needed (optional)
+Options -Indexes

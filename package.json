@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "chart.js": "^4.4.4"
+  },
+  "devDependencies": {
+    "stylelint": "^16.10.0",
+    "stylelint-config-standard": "^36.0.1"
   }
 }

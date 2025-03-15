@@ -1,0 +1,319 @@
+/* Progress Steps Styling */
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.progress-steps::after {
+    content: "";
+    position: absolute;
+    width: 80%;
+    height: 2px;
+    background-color: #e0e0e0;
+    z-index: -1;
+}
+
+.step-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin: 0 30px;
+    transition: all 0.3s ease;
+}
+
+.step-indicator.active {
+    background-color: #7a0000;
+    color: white;
+    border-color: #7a0000;
+    box-shadow: 0 0 0 4px rgba(122, 0, 0, 0.2);
+}
+
+/* Feedback Form Styling */
+#feedbackModal .modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#feedbackModal .modal-header {
+    background-color: #7a0000;
+    color: white;
+    border-bottom: none;
+    padding: 15px 20px;
+}
+
+#feedbackModal .modal-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+#feedbackModal .btn-close-white {
+    filter: brightness(0) invert(1);
+}
+
+/* Rating Options Styling */
+.rating-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Step Content Styling */
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+/* Category Cards */
+.feedback-category-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.feedback-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.feedback-category-card.selected {
+    border-color: #7a0000;
+    box-shadow: 0 5px 15px rgba(122, 0, 0, 0.2);
+}
+
+/* Form Sections */
+.form-section {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    color: #7a0000;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #7a0000;
+    padding-bottom: 8px;
+}
+
+/* Rating Scale */
+.rating-scale {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.rating-scale-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.rating-scale-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.rating-scale-grid div {
+    font-size: 0.85rem;
+}
+
+/* Rating Questions */
+.rating-question {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.tagalog {
+    font-style: italic;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.required {
+    color: #7a0000;
+    margin-left: 3px;
+}
+
+/* Form Layout */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.form-group {
+    flex: 1;
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+
+/* Radio Group */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Activity Relevance Section */
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.mb-6 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-3 {
+    margin-bottom: 0.75rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.text-gray-800 {
+    color: #2d3748;
+}
+
+.text-gray-700 {
+    color: #4a5568;
+}
+
+.block {
+    display: block;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.peer:checked + .px-4 {
+    background-color: #7a0000;
+    color: white;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.border {
+    border-width: 1px;
+}
+
+.border-gray-300 {
+    border-color: #d1d5db;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.hover\:bg-gray-50:hover {
+    background-color: #f9fafb;
+}
+
+/* Professional conduct section */
+.poor-excellent-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.rating-btn {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rating-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.rating-btn.selected {
+    background-color: #7a0000;
+    color: white;
+    border-color: #7a0000;
+} 

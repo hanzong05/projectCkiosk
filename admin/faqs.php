@@ -1,5 +1,20 @@
 <?php
-// Now you can safely access $_SESSION
+include_once ('assets/header.php');
+
+if (!isset($_SESSION['atype'])) {
+    // If the session is not set, redirect to the login page
+    header("Location: index.php");
+    exit;
+}
+
+$account_type = $_SESSION['atype'];
+if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
+    // Destroy the session if the account type is invalid
+    session_destroy();
+    // Redirect to the login page
+    header("Location: index.php");
+    exit;
+}
 $uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
 $cid = $_SESSION['id'] ?? null; 
 
@@ -53,133 +68,7 @@ $allFaqs = $obj->show_faqs();
 </head>
 
 <body class=""><div class="wrapper ">
-    <!-- sweetalert start-->
-    <?= isset($log_msg) ? $log_msg : '' ?>
-    <!-- sweetalert end -->
-    <div class="sidebar" data-color="white" data-active-color="danger">
-        <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
-                <img src="../img/C.png" alt="" width="240">
-            </a>
-        </div>
-        <div class="sidebar-wrapper ">
-            <?php if ($account_type != '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./announcement.php">
-                            <i class="fas fa-bullhorn"></i>
-                            <p>Announcement</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./schoolcalendar.php">
-                            <i class="fas fa-calendar-alt"></i>
-                            <p>School Calendar</p>
-                        </a>
-                    </li>
-                    <?php if ($account_type == '1') { ?>
-                        <li>
-                            <a href="./facultymembers.php">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                <p>Faculty Members</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./map.php">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Campus Map</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./organization.php">
-                                <i class="fas fa-users"></i>
-                                <p>Campus Organization</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./audit.php">
-                                <i class="fas fa-file-alt"></i>
-                                <p>Audit Trails</p>
-                            </a>
-                        </li>
-                    <?php } ?>
-                    <li  class="active">
-                        <a href="./faqs.php">
-                            <i class="fas fa-question-circle"></i>
-                            <p>FAQS</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-            <?php if ($account_type == '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./ratings.php">
-                            <i class="fas fa-star"></i>
-                            <p>Ratings</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-        </div>
-    </div>
-    <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="javascript:;">Campus FAQs</a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block"></span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="logout.php">Logout</a>
-                  <?php if ($account_type == '2') { ?>
-                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
-                <?php } ?>
-                <?php if ($account_type == '3') { ?>
-                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
-                <?php } ?>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- End Navbar -->
+<?php include 'assets/includes/navbar.php'; ?>
       <div class="content">
       <div class="p-6">
     <div class="bg-white rounded-lg shadow-lg">
@@ -219,15 +108,16 @@ $allFaqs = $obj->show_faqs();
                             <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["faqs_answer"]; ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
                                 <div class="flex justify-center gap-2">
-                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 faqModalEdit" 
-                                            data-toggle="modal" data-target="#faqModalEdit" 
-                                            data-id="<?= $row['faqs_id'] ?>">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition duration-200" 
-                                       href='faqs.php?did=<?= $row['faqs_id'] ?>'>
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 faqModalEdit" 
+        data-toggle="modal" data-target="#faqsModalEdit" 
+        data-id="<?= $row['faqs_id'] ?>">
+    <i class="fas fa-edit"></i>
+</button>
+                                    <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition duration-200 btn-delete" 
+   href='faqs.php?did=<?= $row['faqs_id'] ?>'>
+    <i class="fas fa-trash"></i>
+</a>
+
                                 </div>
                             </td>
                         </tr>
@@ -343,6 +233,64 @@ $allFaqs = $obj->show_faqs();
 }
 </script>
   <script type="text/javascript">
+    $(document).on('click', '.btn-delete', function (e) {
+   e.preventDefault();
+   var href = $(this).attr('href');
+   Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+   }).then((result) => {
+      if (result.isConfirmed) {
+         window.location.href = href;
+      }
+   });
+});
+
+
+$(document).ready(function() {
+    // Fix for edit button click event
+    $('.faqModalEdit').on('click', function() {
+        var faqsID = $(this).data('id');
+        
+        // Log for debugging
+        console.log('Edit button clicked for FAQ ID:', faqsID);
+        
+        // Make sure we're targeting the correct modal ID
+        $('#faqsModalEdit').modal('show');
+        
+        // Fetch the FAQ data
+        $.ajax({
+            url: 'ajax/faqsData.php',
+            type: 'post',
+            data: { faqsID: faqsID },
+            success: function(response) {
+                // Add response in Modal body
+                $('#faqsData').html(response);
+                
+                // Initialize Summernote for the loaded content if needed
+                $('#edit_faqs_question, #edit_faqs_answer').summernote({
+                    height: 180,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']]
+                    ]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                alert('Error loading FAQ data. Please try again.');
+            }
+        });
+    });
+});
     $(document).ready(function () {
       $('#myTable').DataTable();
       $('#faqs_question').summernote({

@@ -1,5 +1,20 @@
 <?php
 include_once ('assets/header.php');
+
+if (!isset($_SESSION['atype'])) {
+    // If the session is not set, redirect to the login page
+    header("Location: index.php");
+    exit;
+}
+
+$account_type = $_SESSION['atype'];
+if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
+    // Destroy the session if the account type is invalid
+    session_destroy();
+    // Redirect to the login page
+    header("Location: index.php");
+    exit;
+}
 $uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
 $cid = $_SESSION['id'] ?? null; 
 if (isset($_POST['add_org'])) {
@@ -141,271 +156,141 @@ $allAccount = $obj->show_account();
     </head>
 
     <body class="">
-    <div class="wrapper ">
-    <!-- sweetalert start-->
-    <?= isset($log_msg) ? $log_msg : '' ?>
-    <!-- sweetalert end -->
-    <div class="sidebar" data-color="white" data-active-color="danger">
-        <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
-                <img src="../img/C.png" alt="" width="240">
-            </a>
-        </div>
-        <div class="sidebar-wrapper ">
-            <?php if ($account_type != '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./announcement.php">
-                            <i class="fas fa-bullhorn"></i>
-                            <p>Announcement</p>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="./schoolcalendar.php">
-                            <i class="fas fa-calendar-alt"></i>
-                            <p>School Calendar</p>
-                        </a>
-                    </li>
-                    <?php if ($account_type == '1') { ?>
-                        <li>
-                            <a href="./facultymembers.php">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                <p>Faculty Members</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./map.php">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Campus Map</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./organization.php">
-                                <i class="fas fa-users"></i>
-                                <p>Campus Organization</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./audit.php">
-                                <i class="fas fa-file-alt"></i>
-                                <p>Audit Trails</p>
-                            </a>
-                        </li>
-                    <?php } ?>
-                    <li>
-                        <a href="./faqs.php">
-                            <i class="fas fa-question-circle"></i>
-                            <p>FAQS</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-            <?php if ($account_type == '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./ratings.php">
-                            <i class="fas fa-star"></i>
-                            <p>Ratings</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-        </div>
-    </div>
-    <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="javascript:;">Campus Organization </a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block"></span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="logout.php">Logout</a>
-                  <?php if ($account_type == '2') { ?>
-                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
-                <?php } ?>
-                <?php if ($account_type == '3') { ?>
-                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
-                <?php } ?>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- End Navbar -->
+   <div class="wrapper ">
+   <?php include 'assets/includes/navbar.php'; ?>
       <div class="content">
       <div class="flex flex-col w-full">
     <div class="w-full">
-        <div class="bg-white shadow-md rounded-lg">
-            <div class="p-5">
-                <hr class="my-4">
-                <div class="mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                        <div class="flex-grow mb-2 md:mb-0 md:mr-2">
-                            <input type="text" id="searchOrgInput" placeholder="Search organizations..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchOrg()">
-                        </div>
-                        <div class="flex space-x-2">
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto" data-toggle="modal" data-target="#orgModal">
-                                Add Campus Organization
-                            </button>
-                            
+    <div class="bg-white shadow-md rounded-lg">
+    <div class="p-5">
+        <hr class="my-4">
+        <div class="mb-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div class="flex-grow mb-2 md:mb-0 md:mr-2">
+                    <input type="text" id="searchOrgInput" placeholder="Search organizations..." class="border border-gray-300 rounded-lg px-3 py-2 w-full text-base" onkeyup="searchOrg()">
+                </div>
+                <div class="flex space-x-2">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto" data-toggle="modal" data-target="#orgModal">
+                        Add Student Organization
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav tabs -->
+        <div class="tabs">
+            <ul class="flex border-b">
+                <li class="mr-1">
+                    <a 
+                        class="bg-white inline-block py-2 px-4 text-blue-500 border-l border-t border-r rounded-t-lg active" 
+                        id="organization-tab" 
+                        href="#organization" 
+                        role="tab" 
+                        aria-controls="organization" 
+                        aria-selected="true" 
+                        onclick="changeTab(event, 'organization')">Organization
+                    </a>
+                </li>
+                <li class="mr-1">
+                    <a 
+                        class="bg-white inline-block py-2 px-4 text-gray-500 hover:text-blue-500 rounded-t-lg" 
+                        id="account-tab" 
+                        href="#account" 
+                        role="tab" 
+                        aria-controls="account" 
+                        aria-selected="false" 
+                        onclick="changeTab(event, 'account')">Accounts
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Tab content -->
+            <div class="tab-content mt-4">
+                <!-- Organization Tab -->
+                <div id="organization" role="tabpanel" aria-labelledby="organization-tab">
+                    <div class="overflow-x-auto">
+                        <table id="organizationTable" class="min-w-full bg-white border border-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 text-left border-b">NO.</th>
+                                    <th class="py-2 text-left border-b">Photo</th>
+                                    <th class="py-2 text-left border-b">Name</th>
+                                    <th class="py-2 text-left border-b">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $count = 1;
+                                foreach ($allOrg as $row) {
+                                    ?>
+                                    <tr class="table-row hover:bg-gray-100">
+                                        <td class="border-b px-4 py-2"><?php echo $count; ?></td>
+                                        <td class="border-b px-4 py-2"><img src="../uploaded/orgUploaded/<?php echo $row['org_image'] ?>" height="80" width="100" /></td>
+                                        <td class="border-b px-4 py-2"><?php echo $row["org_name"]; ?></td>
+                                        <td class="border-b px-4 py-2 text-center">
+                                            <div class="flex space-x-2">
+                                                <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 orgModalEdit" data-toggle="modal" data-target="#orgModalEdit" data-id="<?= $row['org_id'] ?>">
+                                                    <i class="fas fa-edit"></i> <!-- Edit Icon -->
+                                                </button>
+                                                <a class="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 btn-delete-org" href='organization.php?orgid=<?= $row['org_id'] ?>'>
+                                                    <i class="fas fa-trash"></i> <!-- Delete Icon -->
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $count++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Nav tabs -->
-                <div class="tabs">
-    <ul class="flex border-b">
-        <li class="mr-1">
-            <a 
-                class="bg-white inline-block py-2 px-4 text-blue-500 border-l border-t border-r rounded-t-lg active" 
-                id="organization-tab" 
-                href="#organization" 
-                role="tab" 
-                aria-controls="organization" 
-                aria-selected="true" 
-                onclick="changeTab(event, 'organization')">Organization
-            </a>
-        </li>
-        <li class="mr-1">
-            <a 
-                class="bg-white inline-block py-2 px-4 text-gray-500 hover:text-blue-500 rounded-t-lg" 
-                id="account-tab" 
-                href="#account" 
-                role="tab" 
-                aria-controls="account" 
-                aria-selected="false" 
-                onclick="changeTab(event, 'account')">Accounts
-            </a>
-        </li>
-    </ul>
-
-    <!-- Tab content -->
-    <div class="tab-content mt-4">
-        <!-- Organization Tab -->
-        <div id="organization" role="tabpanel" aria-labelledby="organization-tab">
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-white border border-gray-200">
-                    <thead>
-                        <tr>
-                            <th class="py-2 text-left border-b">NO.</th>
-                            <th class="py-2 text-left border-b">Photo</th>
-                            <th class="py-2 text-left border-b">Name</th>
-                            <th class="py-2 text-left border-b">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $count = 1;
-                        foreach ($allOrg as $row) {
-                            ?>
-                            <tr class="table-row hover:bg-gray-100">
-                                <td class="border-b px-4 py-2"><?php echo $count; ?></td>
-                                <td class="border-b px-4 py-2"><img src="../uploaded/orgUploaded/<?php echo $row['org_image'] ?>" height="80" width="100" /></td>
-                                <td class="border-b px-4 py-2"><?php echo $row["org_name"]; ?></td>
-                                <td class="border-b px-4 py-2 text-center">
-                                <div class="flex space-x-2">
-    <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 orgModalEdit" data-toggle="modal" data-target="#orgModalEdit" data-id="<?= $row['org_id'] ?>">
-        <i class="fas fa-edit"></i> <!-- Edit Icon -->
-    </button>
-    <a class="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 btn-delete-org" href='organization.php?orgid=<?= $row['org_id'] ?>'>
-        <i class="fas fa-trash"></i> <!-- Delete Icon -->
-    </a>
-</div>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
-                            $count++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Accounts Tab -->
-        <div id="account" role="tabpanel" aria-labelledby="account-tab" class="hidden">
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-white border border-gray-200">
-                    <thead>
-                        <tr>
-                            <th class="py-2 text-left border-b">NO.</th>
-                            <th class="py-2 text-left border-b">Username</th>
-                            <th class="py-2 text-left border-b">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $count = 1;
-                        foreach ($allAccount as $row) {
-                            ?>
-                            <tr class="table-row hover:bg-gray-100">
-                                <td class="border-b px-4 py-2"><?php echo $count; ?></td>
-                                <td class="border-b px-4 py-2"><?php echo $row["users_username"]; ?></td>
-                                <td class="border-b px-4 py-2 text-center">
-                                    <div class="flex space-x-2">
-                                    <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $row['users_id'] ?>">
-    <i class="fas fa-edit"></i> <!-- Edit Icon -->
-</button>
-<a class="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 btn-delete-account" href='organization.php?aid=<?= $row['users_id'] ?>'>
-    <i class="fas fa-trash"></i> <!-- Delete Icon -->
-</a>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
-                            $count++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                <!-- Accounts Tab -->
+                <div id="account" role="tabpanel" aria-labelledby="account-tab" class="hidden">
+                    <div class="overflow-x-auto">
+                        <table id="accountTable" class="min-w-full bg-white border border-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 text-left border-b">NO.</th>
+                                    <th class="py-2 text-left border-b">Username</th>
+                                    <th class="py-2 text-left border-b">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $count = 1;
+                                foreach ($allAccount as $row) {
+                                    ?>
+                                    <tr class="table-row hover:bg-gray-100">
+                                        <td class="border-b px-4 py-2"><?php echo $count; ?></td>
+                                        <td class="border-b px-4 py-2"><?php echo $row["users_username"]; ?></td>
+                                        <td class="border-b px-4 py-2 text-center">
+                                            <div class="flex space-x-2">
+                                                <button class="bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 accountModalEdit" data-toggle="modal" data-target="#accountModalEdit" data-id="<?= $row['users_id'] ?>">
+                                                    <i class="fas fa-edit"></i> <!-- Edit Icon -->
+                                                </button>
+                                                <a class="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center px-4 py-2 rounded transition duration-200 btn-delete-account" href='organization.php?aid=<?= $row['users_id'] ?>'>
+                                                    <i class="fas fa-trash"></i> <!-- Delete Icon -->
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $count++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-        </div>
-    </div>
-</div>
-
+      
       </div>
     </div>
   </div>
@@ -420,7 +305,7 @@ $allAccount = $obj->show_account();
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Campus Organization Creation</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Student Organization Creation</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -452,7 +337,7 @@ $allAccount = $obj->show_account();
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Campus Organization Edit</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Student Organization Edit</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -568,11 +453,30 @@ $allAccount = $obj->show_account();
   <script src="assets/js/core/bootstrap.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+<!-- Include DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
+  <script>
+    $(document).ready(function() {
+        // Initialize DataTables for both tables
+        $('#organizationTable').DataTable({
+            "paging": true,            // Enable pagination
+            "pageLength": 10,          // Set the default number of rows per page
+            "searching": false,         // Enable search functionality
+            "lengthChange": true,      // Allow changing the number of rows per page
+        });
+
+        $('#accountTable').DataTable({
+            "paging": true,            // Enable pagination
+            "pageLength": 10,          // Set the default number of rows per page
+            "searching": false,         // Enable search functionality
+            "lengthChange": true,      // Allow changing the number of rows per page
+        });
+    });
+</script>
   <script>function changeTab(event, tabName) {
     // Prevent default link behavior
     event.preventDefault();
@@ -618,7 +522,7 @@ function updateButtonsAndSearch(tabName) {
             <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto" 
                     data-toggle="modal" 
                     data-target="#orgModal">
-                Add Campus Organization
+                Add Student Organization
             </button>
         `;
     } else if (tabName === 'account') {

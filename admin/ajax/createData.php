@@ -1,6 +1,5 @@
 
 <?php
-// Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1); // Display errors on the page for debugging
 ini_set('log_errors', 1); // Enable error logging
@@ -19,75 +18,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log('Type parameter: ' . $type);
 
     try { 
-        if ($type === 'announcement') {
-            $id = $_POST['id'] ?? null; // Existing announcement ID (if updating)
-            $uid = $_POST['uid'] ?? null; // User ID from session
-            $cid = $_POST['cid'] ?? null; // Creator ID from session
-            $title = $_POST['announcement_title'] ?? null; // Announcement title
-            $details = $_POST['announcement_details'] ?? null; // Announcement details
-    
-            // Set the timezone
-            date_default_timezone_set('Asia/Manila');
-            $date = date('Y-m-d H:i:s');
-    
-            $response = ['success' => false, 'message' => ''];
-    
-            // Directory for uploaded images
-            $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
-            if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
-                error_log('Failed to create announcement directory.');
-                $response['message'] = 'Failed to create upload directory.';
-                echo json_encode($response);
-                exit;
+      if ($type === 'announcement') {
+        $id = $_POST['id'] ?? null;
+        $uid = $_POST['uid'] ?? null;
+        $cid = $_POST['cid'] ?? null;
+        $title = $_POST['announcement_title'] ?? null;
+        $details = $_POST['announcement_details'] ?? null;
+        $category = $_POST['announcement_category'] ?? null; // Add category field
+        
+        date_default_timezone_set('Asia/Manila');
+        $date = date('Y-m-d H:i:s');
+        
+        $response = ['success' => false, 'message' => ''];
+        
+        $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
+        if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
+            error_log('Failed to create announcement directory.');
+            $response['message'] = 'Failed to create upload directory.';
+            echo json_encode($response);
+            exit;
+        }
+        
+        try {
+            // Insert or update the main announcement record
+            if ($id) {
+                $sql = "UPDATE `announcement_tbl` 
+                        SET announcement_title = :title, 
+                            announcement_details = :details, 
+                            announcement_creator = :uid,
+                            category = :category, 
+                            updated_at = :date, 
+                            created_by = :cid
+                        WHERE announcement_id = :id";
+                $stmt = $connect->prepare($sql);
+                $stmt->execute([
+                    ':title' => $title,
+                    ':details' => $details,
+                    ':uid' => $uid,
+                    ':category' => $category,
+                    ':date' => $date,
+                    ':cid' => $cid,
+                    ':id' => $id
+                ]);
+            } else {
+                $sql = "INSERT INTO `announcement_tbl` 
+                        (announcement_title, announcement_details, announcement_creator, category, created_at, created_by) 
+                        VALUES (:title, :details, :uid, :category, :date, :cid)";
+                $stmt = $connect->prepare($sql);
+                $stmt->execute([
+                    ':title' => $title,
+                    ':details' => $details,
+                    ':uid' => $uid,
+                    ':category' => $category,
+                    ':date' => $date,
+                    ':cid' => $cid
+                ]);
+                $id = $connect->lastInsertId();
             }
-    
-            try {
-                // Insert or update the main announcement record
-                if ($id) {
-                    $sql = "UPDATE `announcement_tbl` 
-                            SET announcement_title = :title, 
-                                announcement_details = :details, 
-                                announcement_creator = :uid, 
-                                updated_at = :date, 
-                                created_by = :cid
-                            WHERE announcement_id = :id";
-                    $stmt = $connect->prepare($sql);
-                    $stmt->execute([
-                        ':title' => $title,
-                        ':details' => $details,
-                        ':uid' => $uid,
-                        ':date' => $date,
-                        ':cid' => $cid,
-                        ':id' => $id
-                    ]);
-                } else {
-                    $sql = "INSERT INTO `announcement_tbl` 
-                            (announcement_title, announcement_details, announcement_creator, created_at, updated_at, created_by) 
-                            VALUES (:title, :details, :uid, :date, :date, :cid)";
-                    $stmt = $connect->prepare($sql);
-                    $stmt->execute([
-                        ':title' => $title,
-                        ':details' => $details,
-                        ':uid' => $uid,
-                        ':date' => $date,
-                        ':cid' => $cid
-                    ]);
-                    $id = $connect->lastInsertId();
-                }
-    
                 // Image upload logic
                 if (isset($_FILES['ann_img']['name']) && is_array($_FILES['ann_img']['name'])) {
                     $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
                     $maxFileSize = 5 * 1024 * 1024; // 5 MB
-    
+                
                     // Image counter for naming
                     $imageCounter = 1; 
-    
+                
                     foreach ($_FILES['ann_img']['name'] as $index => $imageName) {
                         $fileTmpName = $_FILES['ann_img']['tmp_name'][$index];
                         $fileSize = $_FILES['ann_img']['size'][$index];
                         $fileMimeType = mime_content_type($fileTmpName);
-    
+                
                         // Check mime type and file size
                         if (in_array($fileMimeType, $allowedMimeTypes) && $fileSize <= $maxFileSize) {
                             // Sanitize the title to create a valid filename
@@ -96,18 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             // Generate a unique filename using the specified format
                             $imagePath = "{$titleSanitized}_img{$imageCounter}." . pathinfo($imageName, PATHINFO_EXTENSION);
                             $originalPath = $uploadTo . $imagePath;
-    
+                
                             if (move_uploaded_file($fileTmpName, $originalPath)) {
-                                // Insert each image path into the announcement_images table
-                                $imageSql = "INSERT INTO `announcement_images` (announcement_id, image_path, uploaded_at) 
-                                             VALUES (:announcement_id, :image_path, :uploaded_at)";
+                                // Insert each image path into the announcement_images table (without updated_at)
+                                $imageSql = "INSERT INTO `announcement_images` (announcement_id, image_path) 
+                                             VALUES (:announcement_id, :image_path)";
                                 $imageStmt = $connect->prepare($imageSql);
                                 $imageStmt->execute([
                                     ':announcement_id' => $id,
-                                    ':image_path' => $imagePath,
-                                    ':uploaded_at' => $date
+                                    ':image_path' => $imagePath
                                 ]);
-    
+                
                                 // Log success for each file
                                 error_log("Image uploaded and saved: " . $imagePath);
                             } else {
@@ -120,17 +119,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $imageCounter++;
                     }
                 }
-    
+                
                 // Fetch creator's name
                 $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :cid");
                 $creator_stmt->execute([':cid' => $cid]);
-                $creators_name = $creator_stmt->fetchColumn() ?: 'Unknown User';
+                $creators_name = $creator_stmt->fetchColumn();
+                
+                // If not found, check orgmembers_tbl
+                if (!$creators_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':cid' => $cid]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+                
+                // If still no name found, default to 'Unknown User'
+                $creators_name = $creators_name ?: 'Unknown User';
     
-                // Audit trail
-                $audit_message = "{$creators_name} created an announcement: {$details}";
-                $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-                $audit_stmt->execute([':message' => $audit_message]);
-    
+                // Audit trail - FIX: Added proper error handling
+                $audit_message = "{$creators_name} " . ($id ? "updated" : "created") . " an announcement: {$title}";
+                $audit_action = $id ? 'update' : 'add';  // Use appropriate action
+            
+                try {
+                    $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
+                    $audit_stmt = $connect->prepare($audit_sql);
+                    $audit_result = $audit_stmt->execute([
+                        ':message' => $audit_message,
+                        ':actions' => $audit_action
+                    ]);
+                    
+                    if (!$audit_result) {
+                        error_log("Audit trail insert failed for announcement: " . json_encode($audit_stmt->errorInfo()));
+                    }
+                } catch (PDOException $audit_e) {
+                    error_log("Audit trail error for announcement: " . $audit_e->getMessage());
+                }
+                
                 $response['success'] = true;
                 $response['message'] = $id ? 'Announcement updated successfully.' : 'Announcement added successfully.';
     
@@ -181,12 +205,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // If no name found, default to 'Unknown User'
                 $creators_name = $creators_name ?: 'Unknown User';
         
-                // Add entry to audit trail
+                // Add entry to audit trail - FIX: Added proper error handling
                 $audit_message = "{$creators_name} created an event: {$details} from {$start_date} to {$end_date}";
-                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
-                $audit_stmt = $connect->prepare($audit_sql);
-                $audit_stmt->execute([':message' => $audit_message]);
-        
+                $audit_action = 'add';  // Action to be recorded
+            
+                try {
+                    $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
+                    $audit_stmt = $connect->prepare($audit_sql);
+                    $audit_result = $audit_stmt->execute([
+                        ':message' => $audit_message,
+                        ':actions' => $audit_action
+                    ]);
+                    
+                    if (!$audit_result) {
+                        error_log("Audit trail insert failed for event: " . json_encode($audit_stmt->errorInfo()));
+                    }
+                } catch (PDOException $audit_e) {
+                    error_log("Audit trail error for event: " . $audit_e->getMessage());
+                }
+                
                 $response['success'] = true;
                 $response['message'] = 'Event added successfully.';
             } catch (PDOException $e) {
@@ -196,7 +233,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             echo json_encode($response);
         }
-        
         
         elseif ($type === 'faqs') {
             $question = $_POST['faqs_question'] ?? null;
@@ -249,10 +285,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                     // Add to audit trail with creator ID
                     $audit_message = "{$creators_name} {$action} a FAQ: Question - {$question}";
-                    $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                    $audit_action = 'add';  // Action to be recorded
+            
+                    $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
                     $audit_stmt = $connect->prepare($audit_sql);
-                    $audit_stmt->execute([':message' => $audit_message]);
-        
+                
+                    // Check if the statement is executed properly
+                    $audit_stmt->execute([
+                        ':message' => $audit_message,
+                        ':actions' => $audit_action
+                    ]);
+                    
                     $response['success'] = true;
                     $response['message'] = $id ? 'FAQ updated successfully.' : 'FAQ added successfully.';
                 } catch (PDOException $e) {
@@ -264,107 +307,130 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         
             echo json_encode($response);
-        }
-        if ($type === 'faculty') {
+        }if ($type === 'faculty') { 
             $name = $_POST['faculty_name'] ?? null;
             $specialization = $_POST['specialization'] ?? null;
             $consultationTime = $_POST['consultation_time'] ?? null;
-            $imagePath = '';
-            
+            $imagePath = ''; // Initialize imagePath
+        
             $uid = $_POST['uid'] ?? null; // User ID from session
-            $cid = $_POST['cid'] ?? null; // Creator ID from session
+            $creator_id = $_POST['creator_id'] ?? null; // Get creator_id from POST request
             $departments = $_POST['department'] ?? []; // Array of departments selected in the form
         
             // Initialize creators_name to 'Unknown User'
             $creators_name = 'Unknown User';
+        
+            try {
+                // Fetch the creator's name from users_tbl
+                if ($creator_id) {
+                    $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :creator_id";
+                    $creator_stmt = $connect->prepare($creator_name_sql);
+                    $creator_stmt->execute([':creator_id' => $creator_id]);
+                    $creators_name = $creator_stmt->fetchColumn();
+                }
+        
+                // If no name found in users_tbl, check orgmembers_tbl
+                if (!$creators_name && $creator_id) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :creator_id";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':creator_id' => $creator_id]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+        
+                // Default to 'Unknown User' if no name found
+                $creators_name = $creators_name ?: 'Unknown User';
+                
+                // Check for duplicate faculty member
+                $duplicateCheckQuery = $connect->prepare("SELECT faculty_id FROM faculty_tbl WHERE faculty_name = :name");
+                $duplicateCheckQuery->execute([':name' => $name]);
+                $existingFaculty = $duplicateCheckQuery->fetch(PDO::FETCH_ASSOC);
+        
+                if ($existingFaculty) {
+                    $response['success'] = false;
+                    $response['message'] = 'Faculty member already exists.';
+                    echo json_encode($response);
+                    exit;
+                }
+        
+                // Existing faculty ID (if updating)
+                $id = $_POST['id'] ?? null;
+        
+                // Handle image upload
+                if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
+                    $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
+        
+                    if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
+                        $response['message'] = 'Failed to create upload directory.';
+                        echo json_encode($response);
+                        exit;
+                    }
+        
+                    $imagePath = basename($_FILES['faculty_image']['name']);
+                    $tempPath = $_FILES["faculty_image"]["tmp_name"];
+                    $originalPath = $uploadTo . $imagePath;
+        
+                    if (!move_uploaded_file($tempPath, $originalPath)) {
+                        $response['message'] = 'Failed to move uploaded file.';
+                        echo json_encode($response);
+                        exit;
+                    }
+                }
+        
+                // If no image was uploaded, set the default image
+                if (empty($imagePath)) {
+                    $imagePath = 'default-profile-picture1.jpg'; // Default image
+                }
+        
+                // Insert main faculty information
+                $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_image, specialization, consultation_time) VALUES (:name, :image, :specialization, :consultation_time)";
+                $stmt = $connect->prepare($sql);
+                $stmt->execute([
+                    ':name' => $name,
+                    ':image' => $imagePath,
+                    ':specialization' => $specialization,
+                    ':consultation_time' => $consultationTime
+                ]);
+        
+                // Retrieve the newly inserted faculty ID
+                $facultyId = $connect->lastInsertId();
+        
+                // Insert selected departments into faculty_departments_tbl
+                $deptInsertSql = "INSERT INTO `faculty_departments_tbl` (faculty_id, department_id) VALUES (:faculty_id, :department_id)";
+                $deptStmt = $connect->prepare($deptInsertSql);
+        
+                foreach ($departments as $deptId) {
+                    $deptStmt->execute([
+                        ':faculty_id' => $facultyId,
+                        ':department_id' => $deptId
+                    ]);
+                }
+        
+                // Add to audit trail for new faculty addition
+                $audit_message = "{$creators_name} added a new faculty member: Name - {$name}, Departments - " . implode(', ', $departments);
+                $audit_action = 'add';  // Action to be recorded
             
-            // Fetch the creator's name from users_tbl
-            $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
-            $creator_stmt = $connect->prepare($creator_name_sql);
-            $creator_stmt->execute([':cid' => $cid]);
-            $creators_name = $creator_stmt->fetchColumn();
+                $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
+                $audit_stmt = $connect->prepare($audit_sql);
             
-            // If not found, check orgmembers_tbl
-            if (!$creators_name) {
-                $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
-                $org_member_stmt = $connect->prepare($org_member_sql);
-                $org_member_stmt->execute([':cid' => $cid]);
-                $creators_name = $org_member_stmt->fetchColumn();
-            }
-            
-            // If no name found, default to 'Unknown User'
-            $creators_name = $creators_name ?: 'Unknown User';
-            
-            // Check for duplicate faculty member
-            $duplicateCheckQuery = $connect->prepare("SELECT faculty_id FROM faculty_tbl WHERE faculty_name = :name");
-            $duplicateCheckQuery->execute([':name' => $name]);
-            $existingFaculty = $duplicateCheckQuery->fetch(PDO::FETCH_ASSOC);
-            
-            if ($existingFaculty) {
+                // Check if the statement is executed properly
+                $audit_stmt->execute([
+                    ':message' => $audit_message,
+                    ':actions' => $audit_action
+                ]);
+                
+                
+        
+                $response['success'] = true;
+                $response['message'] = 'Faculty member added successfully.';
+                echo json_encode($response);
+                exit;
+            } catch (Exception $e) {
+                // Handle error
                 $response['success'] = false;
-                $response['message'] = 'Faculty member already exists.';
+                $response['message'] = 'An error occurred: ' . $e->getMessage();
                 echo json_encode($response);
                 exit;
             }
-            
-            // Existing faculty ID (if updating)
-            $id = $_POST['id'] ?? null;
-            
-            // If an image is provided, process the image upload
-            if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] === UPLOAD_ERR_OK) {
-                $uploadTo = __DIR__ . "/../../uploaded/facultyUploaded/";
-                
-                if (!file_exists($uploadTo) && !mkdir($uploadTo, 0777, true)) {
-                    $response['message'] = 'Failed to create upload directory.';
-                    echo json_encode($response);
-                    exit;
-                }
-                
-                $imagePath = basename($_FILES['faculty_image']['name']);
-                $tempPath = $_FILES["faculty_image"]["tmp_name"];
-                $originalPath = $uploadTo . $imagePath;
-                
-                if (!move_uploaded_file($tempPath, $originalPath)) {
-                    $response['message'] = 'Failed to move uploaded file.';
-                    echo json_encode($response);
-                    exit;
-                }
-            }
-        
-            // Insert main faculty information
-            $sql = "INSERT INTO `faculty_tbl` (faculty_name, faculty_image, specialization, consultation_time) VALUES (:name, :image, :specialization, :consultation_time)";
-            $stmt = $connect->prepare($sql);
-            $stmt->execute([
-                ':name' => $name,
-                ':image' => $imagePath,
-                ':specialization' => $specialization,
-                ':consultation_time' => $consultationTime
-            ]);
-        
-            // Retrieve the newly inserted faculty ID
-            $facultyId = $connect->lastInsertId();
-            
-            // Insert selected departments into faculty_departments_tbl
-            $deptInsertSql = "INSERT INTO `faculty_departments_tbl` (faculty_id, department_id) VALUES (:faculty_id, :department_id)";
-            $deptStmt = $connect->prepare($deptInsertSql);
-            
-            foreach ($departments as $deptId) {
-                $deptStmt->execute([
-                    ':faculty_id' => $facultyId,
-                    ':department_id' => $deptId
-                ]);
-            }
-        
-            // Add to audit trail for new faculty addition
-            $audit_message = "{$creators_name} added a new faculty member: Name - {$name}, Departments - " . implode(', ', $departments);
-            $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
-            $audit_stmt = $connect->prepare($audit_sql);
-            $audit_stmt->execute([':message' => $audit_message]);
-        
-            $response['success'] = true;
-            $response['message'] = 'Faculty member added successfully.';
-            echo json_encode($response);
-            exit;
         }
         
         elseif ($type === 'organization') {
@@ -450,9 +516,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                         // Add to audit trail
                         $audit_message = "{$creators_name} added a new organization: Name - {$name}";
-                        $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                        $audit_action = 'add';  // Action to be recorded
+                
+                        $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
                         $audit_stmt = $connect->prepare($audit_sql);
-                        $audit_stmt->execute([':message' => $audit_message]);
+                        $audit_stmt->execute([
+                            ':message' => $audit_message,
+                            ':actions' => $audit_action
+                        ]);
         
                         $response['success'] = true;
                         $response['message'] = 'Organization added successfully.';
@@ -585,10 +656,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                 // Add to audit trail
                 $audit_message = "{$creators_name} created an account: Username - {$username}";
-                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_action = 'add';  // Action to be recorded
+                
+                $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
                 $audit_stmt = $connect->prepare($audit_sql);
-                $audit_stmt->execute([':message' => $audit_message]);
-        
+                $audit_stmt->execute([
+                    ':message' => $audit_message,
+                    ':actions' => $audit_action
+                ]);
                 // Set the success response
                 $response['success'] = true;
                 $response['message'] = 'Account created successfully.';
@@ -659,18 +734,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         
             try {
-                // Check for duplicate username or name
-                $checkSql = "SELECT COUNT(*) FROM `orgmembers_tbl` WHERE `username` = :username OR `name` = :name";
+                // Check for duplicate username or name in both orgmembers_tbl and users_tbl
+                $checkSql = "SELECT COUNT(*) FROM `orgmembers_tbl` WHERE `username` = :username 
+                             UNION 
+                             SELECT COUNT(*) FROM `users_tbl` WHERE `users_username` = :username";
                 $checkStmt = $connect->prepare($checkSql);
                 $checkStmt->execute([
                     ':username' => $username,
-                    ':name' => $name
                 ]);
-                $count = $checkStmt->fetchColumn();
+                $counts = $checkStmt->fetchAll(PDO::FETCH_COLUMN);
         
-                if ($count > 0) {
+                // If any table has a match for the username
+                if (array_sum($counts) > 0) {
                     $response['success'] = false;
-                    $response['message'] = 'Username or Name already exists. Please choose a different one.';
+                    $response['message'] = 'Username already exists. Please choose a different one.';
                     echo json_encode($response);
                     exit;
                 }
@@ -702,7 +779,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $hashedPassword = hash('sha256', $password);
         
                 // Insert account into database
-                $sql = "INSERT INTO `orgmembers_tbl` (name, username, password, users_type, position, org_type, member_img) VALUES (:name, :username, :password, :user_type, :position, :org, :member_img)";
+                $sql = "INSERT INTO `orgmembers_tbl` (name, username, password, users_type, position, org_type, member_img) 
+                        VALUES (:name, :username, :password, :user_type, :position, :org, :member_img)";
                 $stmt = $connect->prepare($sql);
         
                 // Execute the statement
@@ -739,10 +817,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                 // Add to audit trail
                 $audit_message = "{$creators_name} created a member account: Username - {$username}";
-                $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                $audit_action = 'add';  // Action to be recorded
+                
+                $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
                 $audit_stmt = $connect->prepare($audit_sql);
-                $audit_stmt->execute([':message' => $audit_message]);
-        
+                $audit_stmt->execute([
+                    ':message' => $audit_message,
+                    ':actions' => $audit_action
+                ]);
                 // Ensure the ID is an even number
                 $lastId = $connect->lastInsertId();
                 if ($lastId % 2 !== 0) {
@@ -767,6 +849,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             echo json_encode($response);
         }
+            
         
         
     } catch (Exception $e) {
@@ -890,9 +973,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             // Add to audit trail
                             $audit_message = "{$updater_name} updated '$faculty_name': New Consultation Time - '$consultation_time'";
-                            $audit_sql = "INSERT INTO audit_trail (message) VALUES (:message)";
+                            $audit_action = 'updated';  // Action to be recorded
+                
+                            $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
                             $audit_stmt = $connect->prepare($audit_sql);
-                            $audit_stmt->execute([':message' => $audit_message]);
+                            $audit_stmt->execute([
+                                ':message' => $audit_message,
+                                ':actions' => $audit_action
+                            ]);
 
 
                         } catch (PDOException $e) {

@@ -1,0 +1,33 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Prevent Directory Listing
+Options -Indexes
+
+# Default index file
+DirectoryIndex index.php index.html index.htm
+
+# Custom Cache-Control Headers (for performance optimization)
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+    Header set Cache-Control "max-age=2592000, public"
+</FilesMatch>
+
+# Error Document Redirection
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# PHP Settings (uncomment to use if necessary)
+php_value upload_max_filesize 64M
+php_value post_max_size 64M
+php_value memory_limit 256M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+# Redirect non-www to www (Case-Insensitive)
+RewriteCond %{HTTP_HOST} !^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+# Allow access to images
+<FilesMatch "\.(jpg|jpeg|png|gif|bmp|webp)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

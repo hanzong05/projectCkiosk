@@ -3,66 +3,58 @@
 include '../../class/connection.php';
 
 try {
-    // Query to get the count and total sum of ratings from the feedback table
-    $stmt = $connect->prepare("
-        SELECT rating, COUNT(*) AS count, SUM(rating) AS total 
-        FROM feedback 
-        WHERE rating IN (1, 2, 3, 4, 5) 
-        GROUP BY rating 
-        ORDER BY rating
-    ");
+    // Check if 'purpose' is set and not empty
+    if (isset($_GET['purpose']) && !empty($_GET['purpose'])) {
+        $purpose = $_GET['purpose'];
+
+        // Prepare query with filtering by purpose if 'purpose' is set
+        $stmt = $connect->prepare("
+            SELECT rating, COUNT(*) AS count, SUM(rating) AS total 
+            FROM feedback 
+            WHERE rating IN (1, 2, 3, 4, 5) 
+            AND feedback_purpose = :purpose  -- Assuming 'purpose_column' is the column for 'purpose'
+            GROUP BY rating 
+            ORDER BY rating
+        ");
+        $stmt->bindParam(':purpose', $purpose);
+    } else {
+        // Default query if no 'purpose' is set
+        $stmt = $connect->prepare("
+            SELECT rating, COUNT(*) AS count, SUM(rating) AS total 
+            FROM feedback 
+            WHERE rating IN (1, 2, 3, 4, 5) 
+            GROUP BY rating 
+            ORDER BY rating
+        ");
+    }
+
+    // Execute the query
     $stmt->execute();
     
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     // Initialize counts and totals for each rating
     $ratingsCount = [
-        1 => ['count' => 0, 'total' => 0],
-        2 => ['count' => 0, 'total' => 0],
-        3 => ['count' => 0, 'total' => 0],
-        4 => ['count' => 0, 'total' => 0],
-        5 => ['count' => 0, 'total' => 0]
+        1 => 0,
+        2 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0
     ];
 
-    // Populate counts and totals based on the query result
+    // Populate counts based on the query result
     foreach ($result as $row) {
-        $ratingsCount[$row['rating']]['count'] = (int)$row['count'];
-        $ratingsCount[$row['rating']]['total'] = (int)$row['total'];
+        $ratingsCount[$row['rating']] = (int)$row['count'];
     }
 
-    // Calculate total counts and total ratings for averages
-    $totalCount = 0;
-    $totalRatings = 0;
+    // Log the fetched counts to a file for debugging
+    file_put_contents('log.txt', print_r($ratingsCount, true), FILE_APPEND);
 
-    foreach ($ratingsCount as $rating => $data) {
-        $totalCount += $data['count'];
-        $totalRatings += $data['total'];
-    }
-
-    // Calculate averages
-    $averageRatings = [];
-
-    if ($totalCount > 0) {
-        foreach ($ratingsCount as $rating => $data) {
-            $averageRatings[$rating] = round(($data['total'] / $totalCount), 2); // Average rating value
-        }
-    } else {
-        // If no feedbacks, set all averages to 0
-        $averageRatings = [
-            1 => 0,
-            2 => 0,
-            3 => 0,
-            4 => 0,
-            5 => 0
-        ];
-    }
-
-    // Return JSON response with counts and averages
+    // Return JSON response with counts
     echo json_encode([
-        'counts' => array_column($ratingsCount, 'count'), // Extract only counts
-        'averages' => $averageRatings
+        'counts' => array_values($ratingsCount) // Extract only counts
     ]);
 } catch (PDOException $e) {
-    echo 'Error: ' . $e->getMessage();
+    echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
 }
 ?>

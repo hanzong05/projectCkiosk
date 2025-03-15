@@ -1,0 +1,777 @@
+/* Custom Color Palette
+ * Dark maroon/burgundy: #7A0000
+ * Red: #C23B22
+ * Beige/gold: #ECD898
+ * Light gray/off-white: #F2F2F2
+ */
+
+:root {
+    --primary-color: #7A0000;
+    --secondary-color: #C23B22;
+    --accent-color: #ECD898;
+    --light-color: #F2F2F2;
+    --dark-text: #333333;
+    --light-text: #FFFFFF;
+}
+
+/* Background Colors */
+body {
+    background-color: var(--light-color) !important;
+    color: var(--dark-text) !important;
+}
+
+.bg-primary, .btn-primary, .badge-primary, .bg-primary-custom {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.bg-secondary, .btn-secondary, .badge-secondary, .bg-secondary-custom {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.bg-accent, .badge-accent, .bg-accent-custom {
+    background-color: var(--accent-color) !important;
+}
+
+.bg-light, .bg-light-custom {
+    background-color: var(--light-color) !important;
+}
+
+/* Text Colors */
+.text-primary, .text-primary-custom {
+    color: var(--primary-color) !important;
+}
+
+.text-secondary, .text-secondary-custom {
+    color: var(--secondary-color) !important;
+}
+
+.text-accent, .text-accent-custom {
+    color: var(--accent-color) !important;
+}
+
+/* Navbar Styling */
+.navbar, .navbar-dark, .navbar-custom {
+    background-color: var(--primary-color) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link, .navbar-custom .navbar-nav .nav-link {
+    color: var(--light-text) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-custom .navbar-nav .nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+.navbar-dark .navbar-brand, .navbar-custom .navbar-brand {
+    color: var(--light-text) !important;
+}
+
+/* Card Styling */
+.card {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header, .card-header-custom {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.card:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Button Styling */
+.btn-primary, .btn-primary-custom {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary-custom:hover, .btn-primary-custom:focus {
+    background-color: #5a0000 !important; /* Darker shade of primary */
+    border-color: #5a0000 !important;
+}
+
+.btn-secondary, .btn-secondary-custom {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary-custom:hover, .btn-secondary-custom:focus {
+    background-color: #a32e1a !important; /* Darker shade of secondary */
+    border-color: #a32e1a !important;
+}
+
+.btn-accent, .btn-accent-custom {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: var(--dark-text) !important;
+}
+
+.btn-accent:hover, .btn-accent:focus, .btn-accent-custom:hover, .btn-accent-custom:focus {
+    background-color: #d9c27e !important; /* Darker shade of accent */
+    border-color: #d9c27e !important;
+}
+
+/* Modal Styling */
+.modal-header, .modal-header-custom {
+    background: linear-gradient(135deg, var(--primary-color), #5a0000) !important;
+    color: var(--light-text) !important;
+    border-bottom: none !important;
+}
+
+.modal-footer, .modal-footer-custom {
+    background-color: var(--light-color) !important;
+    border-top: none !important;
+}
+
+/* Table Styling */
+.table thead th, .table-custom thead th {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd), .table-custom tbody tr:nth-of-type(odd) {
+    background-color: rgba(236, 216, 152, 0.2) !important; /* Light accent color */
+}
+
+.table-hover tbody tr:hover, .table-custom tbody tr:hover {
+    background-color: rgba(236, 216, 152, 0.4) !important; /* Slightly darker accent color */
+}
+
+/* Form Controls */
+.form-control:focus, .form-control-custom:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 0.2rem rgba(122, 0, 0, 0.25) !important;
+}
+
+/* Announcement Styling */
+.announcement-title-gradient {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+.announcement-underline {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)) !important;
+    height: 4px !important;
+    width: 96px !important;
+    border-radius: 9999px !important;
+    margin: 1rem auto !important;
+}
+
+/* Organization Modal Styling */
+#newsModal .modal-header, .org-modal .modal-header {
+    background-color: var(--primary-color) !important;
+}
+
+#newsModal .modal-title, .org-modal .modal-title {
+    color: var(--light-text) !important;
+}
+
+#orgCoverPhoto, .org-cover-photo {
+    background-image: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+}
+
+.nav-tabs .nav-link, .custom-tabs .nav-link {
+    color: var(--dark-text) !important;
+}
+
+.nav-tabs .nav-link.active, .custom-tabs .nav-link.active {
+    color: var(--primary-color) !important;
+    font-weight: bold !important;
+}
+
+.nav-tabs .nav-link.active span, .custom-tabs .nav-link.active span {
+    background-color: var(--primary-color) !important;
+}
+
+/* Badge Styling */
+.badge-primary, .badge-primary-custom {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.badge-secondary, .badge-secondary-custom {
+    background-color: var(--secondary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.badge-accent, .badge-accent-custom {
+    background-color: var(--accent-color) !important;
+    color: var(--dark-text) !important;
+}
+
+/* Footer Styling */
+footer, .footer-custom {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+footer a, .footer-custom a {
+    color: var(--accent-color) !important;
+}
+
+footer a:hover, .footer-custom a:hover {
+    color: var(--light-color) !important;
+    text-decoration: none !important;
+}
+
+/* Gradient Backgrounds */
+.bg-gradient-primary, .bg-gradient-primary-custom {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+}
+
+/* Announcement Cards */
+.announcement-card, .announcement-card-custom {
+    border-left: 4px solid var(--primary-color) !important;
+}
+
+.announcement-date, .announcement-date-custom {
+    color: var(--secondary-color) !important;
+}
+
+/* Profile Elements */
+.profile-picture, .profile-picture-custom {
+    border-color: var(--light-color) !important;
+}
+
+/* Organization Cards */
+.card-overlay, .card-overlay-custom {
+    background: linear-gradient(to top, var(--primary-color), transparent) !important;
+}
+
+/* Search Elements */
+.search-button, .search-button-custom {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.search-button:hover, .search-button-custom:hover {
+    background-color: var(--secondary-color) !important;
+}
+
+/* Pagination */
+.pagination .page-item.active .page-link, .pagination-custom .page-item.active .page-link {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.pagination .page-link, .pagination-custom .page-link {
+    color: var(--primary-color) !important;
+}
+
+.pagination .page-link:hover, .pagination-custom .page-link:hover {
+    color: var(--secondary-color) !important;
+}
+
+/* Accordion */
+.accordion-button:not(.collapsed), .accordion-custom-button:not(.collapsed) {
+    background-color: rgba(122, 0, 0, 0.1) !important;
+    color: var(--primary-color) !important;
+}
+
+.accordion-button:focus, .accordion-custom-button:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(122, 0, 0, 0.25) !important;
+}
+
+/* Custom Classes for Backgrounds */
+.bg-maroon, .bg-maroon-custom {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.bg-red, .bg-red-custom {
+    background-color: var(--secondary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.bg-beige, .bg-beige-custom {
+    background-color: var(--accent-color) !important;
+    color: var(--dark-text) !important;
+}
+
+.bg-light-gray, .bg-light-gray-custom {
+    background-color: var(--light-color) !important;
+    color: var(--dark-text) !important;
+}
+
+/* Text Colors */
+.text-maroon, .text-maroon-custom {
+    color: var(--primary-color) !important;
+}
+
+.text-red, .text-red-custom {
+    color: var(--secondary-color) !important;
+}
+
+.text-beige, .text-beige-custom {
+    color: var(--accent-color) !important;
+}
+
+.text-light-gray, .text-light-gray-custom {
+    color: var(--light-color) !important;
+}
+
+/* Border Colors */
+.border-maroon, .border-maroon-custom {
+    border-color: var(--primary-color) !important;
+}
+
+.border-red, .border-red-custom {
+    border-color: var(--secondary-color) !important;
+}
+
+.border-beige, .border-beige-custom, .borderYellow {
+    border-color: var(--accent-color) !important;
+}
+
+.border-light-gray, .border-light-gray-custom {
+    border-color: var(--light-color) !important;
+}
+
+/* Floor Map Styling */
+.floor-maroon, .floor-maroon-custom {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.floor-red, .floor-red-custom {
+    background-color: var(--secondary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.floor-beige, .floor-beige-custom {
+    background-color: var(--accent-color) !important;
+    color: var(--dark-text) !important;
+}
+
+.floor-gray, .floor-gray-custom {
+    background-color: var(--light-color) !important;
+    color: var(--dark-text) !important;
+}
+
+/* Tab Buttons */
+.tab-button, .tab-button-custom {
+    background-color: var(--light-color) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid #ddd !important;
+}
+
+.tab-button:hover, .tab-button-custom:hover {
+    background-color: var(--accent-color) !important;
+    color: var(--dark-text) !important;
+}
+
+.tab-button.active, .tab-button-custom.active {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Faculty Member Styling */
+.member, .member-custom {
+    border-color: var(--accent-color) !important;
+}
+
+.member:hover, .member-custom:hover {
+    box-shadow: 0 0 10px rgba(122, 0, 0, 0.3) !important;
+}
+
+.button-faculty-btn, .button-faculty-btn-custom {
+    background-color: var(--light-color) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid #ddd !important;
+}
+
+.button-faculty-btn:hover, .button-faculty-btn-custom:hover {
+    background-color: var(--accent-color) !important;
+    color: var(--dark-text) !important;
+}
+
+.button-faculty-btn.active, .button-faculty-btn-custom.active {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Section Headings */
+.section-heading h1, .section-heading-custom h1, .section-heading em {
+    color: var(--primary-color) !important;
+}
+
+/* Progress Steps */
+.progress-steps::after, .progress-steps-custom::after {
+    background: var(--light-color) !important;
+}
+
+.step-indicator, .step-indicator-custom {
+    border-color: var(--light-color) !important;
+}
+
+.step-indicator.active, .step-indicator-custom.active {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 4px rgba(122, 0, 0, 0.2) !important;
+}
+
+/* Feedback Category Cards */
+.feedback-category-card, .feedback-category-card-custom {
+    border-color: var(--light-color) !important;
+}
+
+.feedback-category-card:hover, .feedback-category-card-custom:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.feedback-category-card.selected, .feedback-category-card-custom.selected {
+    border-color: var(--primary-color) !important;
+}
+
+.feedback-category-card.selected::before, .feedback-category-card-custom.selected::before {
+    border-color: transparent var(--primary-color) transparent transparent !important;
+}
+
+/* Rating Options */
+.rating-option input[type="radio"]:checked + label, .rating-option-custom input[type="radio"]:checked + label {
+    background-color: var(--primary-color) !important;
+    box-shadow: 0 2px 4px rgba(122, 0, 0, 0.2) !important;
+    color: var(--light-text) !important;
+}
+
+.rating-option:hover label, .rating-option-custom:hover label {
+    background-color: var(--light-color) !important;
+}
+
+/* Focus States */
+.rating-option input[type="radio"]:focus + label, .rating-option-custom input[type="radio"]:focus + label {
+    outline: 2px solid rgba(122, 0, 0, 0.5) !important;
+}
+
+/* Additional Specific Elements */
+.indicator {
+    background-color: var(--accent-color) !important;
+}
+
+.dropdown-menu {
+    border-color: var(--accent-color) !important;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(236, 216, 152, 0.2) !important;
+}
+
+.dropdown-item.active {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+/* Alerts */
+.alert-primary {
+    background-color: rgba(122, 0, 0, 0.1) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.alert-secondary {
+    background-color: rgba(194, 59, 34, 0.1) !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--secondary-color) !important;
+}
+
+.alert-accent {
+    background-color: rgba(236, 216, 152, 0.3) !important;
+    border-color: var(--accent-color) !important;
+    color: #8a7b3e !important;
+}
+
+/* List Groups */
+.list-group-item.active {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.list-group-item-action:hover {
+    background-color: rgba(236, 216, 152, 0.2) !important;
+}
+
+/* Tooltips */
+.tooltip .tooltip-inner {
+    background-color: var(--primary-color) !important;
+}
+
+.tooltip .arrow::before {
+    border-top-color: var(--primary-color) !important;
+}
+
+/* Popovers */
+.popover-header {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.popover {
+    border-color: var(--accent-color) !important;
+}
+
+/* Progress Bars */
+.progress-bar {
+    background-color: var(--primary-color) !important;
+}
+
+/* Spinners */
+.spinner-border.text-primary, .spinner-grow.text-primary {
+    color: var(--primary-color) !important;
+}
+
+/* Breadcrumbs */
+.breadcrumb-item.active {
+    color: var(--primary-color) !important;
+}
+
+.breadcrumb-item a {
+    color: var(--secondary-color) !important;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Custom Checkboxes and Radios */
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(122, 0, 0, 0.25) !important;
+}
+
+/* Switches */
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--primary-color) !important;
+}
+
+/* Input Groups */
+.input-group-text {
+    background-color: var(--light-color) !important;
+    border-color: #ced4da !important;
+}
+
+/* Carousel Controls */
+.carousel-control-prev, .carousel-control-next {
+    color: var(--primary-color) !important;
+}
+
+.carousel-indicators li.active {
+    background-color: var(--primary-color) !important;
+}
+
+/* Jumbotron */
+.jumbotron {
+    background-color: rgba(236, 216, 152, 0.2) !important;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid var(--primary-color) !important;
+}
+
+/* Code */
+code {
+    color: var(--secondary-color) !important;
+}
+
+pre {
+    background-color: var(--light-color) !important;
+    border: 1px solid #e9ecef !important;
+}
+
+/* Horizontal Rules */
+hr {
+    border-top-color: var(--accent-color) !important;
+}
+
+/* Specific Overrides for Campus Kiosk */
+.section-heading .borderYellow {
+    border-bottom: 3px solid var(--accent-color) !important;
+}
+
+.section-heading em {
+    color: var(--primary-color) !important;
+}
+
+.map .dropdown select {
+    border-color: var(--accent-color) !important;
+}
+
+.map .search-button {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.map .search-button:hover {
+    background-color: var(--secondary-color) !important;
+}
+
+.floor-table td {
+    border-color: var(--accent-color) !important;
+}
+
+.org-chart h3 {
+    color: var(--primary-color) !important;
+}
+
+#profileCard {
+    border-color: var(--accent-color) !important;
+}
+
+#profileCard h5 {
+    color: var(--primary-color) !important;
+}
+
+.card-title {
+    color: var(--primary-color) !important;
+}
+
+.indicator {
+    background-color: var(--accent-color) !important;
+}
+
+/* Fix for Bootstrap 5 specific classes */
+.btn-check:checked + .btn-primary, 
+.btn-check:active + .btn-primary, 
+.btn-primary:active, 
+.btn-primary.active, 
+.show > .btn-primary.dropdown-toggle {
+    background-color: #5a0000 !important;
+    border-color: #5a0000 !important;
+}
+
+.btn-check:checked + .btn-secondary, 
+.btn-check:active + .btn-secondary, 
+.btn-secondary:active, 
+.btn-secondary.active, 
+.show > .btn-secondary.dropdown-toggle {
+    background-color: #a32e1a !important;
+    border-color: #a32e1a !important;
+}
+
+/* Fix for Bootstrap 5 form validation */
+.was-validated .form-control:valid:focus, 
+.form-control.is-valid:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(122, 0, 0, 0.25) !important;
+}
+
+.was-validated .form-control:invalid:focus, 
+.form-control.is-invalid:focus {
+    border-color: var(--secondary-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(194, 59, 34, 0.25) !important;
+}
+
+/* Fix for Bootstrap 5 close button */
+.btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(122, 0, 0, 0.25) !important;
+}
+
+/* Fix for Bootstrap 5 accordion */
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%237A0000'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+
+/* Fix for Bootstrap 5 form select */
+.form-select:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(122, 0, 0, 0.25) !important;
+}
+
+/* Fix for Bootstrap 5 form check */
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-check-input:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(122, 0, 0, 0.25) !important;
+}
+
+/* Additional high-specificity overrides for common Bootstrap classes */
+.btn.btn-primary, button.btn-primary, input.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.btn.btn-secondary, button.btn-secondary, input.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--light-text) !important;
+}
+
+/* Override for Bootstrap's default blue focus */
+*:focus {
+    box-shadow: 0 0 0 0.25rem rgba(122, 0, 0, 0.25) !important;
+}
+
+/* Override for any inline styles */
+[style*="background-color"] {
+    background-color: inherit !important;
+}
+
+[style*="color"] {
+    color: inherit !important;
+}
+
+/* Override for any theme colors */
+.bg-primary, .bg-info, .bg-success, .bg-warning, .bg-danger {
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary, .text-info, .text-success, .text-warning, .text-danger {
+    color: var(--primary-color) !important;
+}
+
+/* Highest specificity overrides for critical elements */
+html body .navbar,
+html body .card-header,
+html body .btn-primary,
+html body .modal-header,
+html body footer {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+html body .card,
+html body .form-control:focus,
+html body .btn-primary {
+    border-color: var(--accent-color) !important;
+}
+
+/* Override for any Bootstrap utility classes */
+.bg-primary, .bg-info, .bg-success, .bg-warning, .bg-danger,
+.border-primary, .border-info, .border-success, .border-warning, .border-danger {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Override for any inline styles with !important */
+[style*="background-color: blue"],
+[style*="background-color: #007bff"],
+[style*="background-color: rgb(0, 123, 255)"] {
+    background-color: var(--primary-color) !important;
+}
+
+[style*="color: blue"],
+[style*="color: #007bff"],
+[style*="color: rgb(0, 123, 255)"] {
+    color: var(--primary-color) !important;
+} 

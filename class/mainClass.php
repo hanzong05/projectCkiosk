@@ -1,13 +1,5 @@
 <?php
-
-$account_type = isset($_SESSION['atype']) ? $_SESSION['atype'] : '2';
-if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
-    // Destroy the session
-    session_destroy();
-    // Redirect to the login page
-    header("Location: login.php");
-    exit;
-}
+session_start();
 
 class mainClass
 {
@@ -27,216 +19,239 @@ class mainClass
             echo "Connection failed: " . $e->getMessage();
         }
     }
-
-    // Method to get the connection
     public function getConnection()
     {
         return $this->connection;
     }
+    public function admin_account() {
+    // Ensure the session ID is available
+    $user_id = $_SESSION['id'] ?? null; // Get user ID from session
 
-    
-    public function admin_login($data)
-    {
-        $username = trim($data["username"]);
-        $password = trim($data['password']);
-        $log_msg = array();
-    
-        // Check for empty username and password
-        if (empty($username)) {
-            $log_msg['uname'] = "Username is empty";
-        }
-    
-        if (empty($password)) {
-            $log_msg['pwd'] = "Password is empty";
-        }
-    
-        if (count($log_msg) <= 0) {
-            $sql = "SELECT users_id, users_username, users_password, users_type FROM users_tbl WHERE users_username = :username";
-            if ($stmt = $this->connection->prepare($sql)) {
-                $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-                $param_username = $username;
-                if ($stmt->execute()) {
-                    if ($stmt->rowCount() == 1) {
-                        if ($row = $stmt->fetch()) {
-                            $stored_hash = $row["users_password"];
-    
-                            // Hash the input password with SHA-256
-                            $input_hash = hash('sha256', $password);
-    
-                            if ($input_hash === $stored_hash) {
-                                // Check user type
-                                if ($row['users_type'] == 2) {
-                                    // User type 2 - do not log in
-                                    $log_msg['msg'] = "You are not an Admin.";
-                                } elseif ($row['users_type'] == 0 || $row['users_type'] == 1) {
-                                    // User type 0 or 1 - allow login
-                                    session_start();
-                                    $_SESSION['aid'] = $row['users_id'];
-                                    $_SESSION['id'] = $row['users_id'];
-                                    $_SESSION['auname'] = $row['users_username'];
-                                    $_SESSION['atype'] = $row['users_type'];
-    
-                                    // Update is_active and last_active fields
-                                    $update_sql = "UPDATE users_tbl SET is_active = 1, last_active = NOW() WHERE users_id = :user_id";
-                                    if ($update_stmt = $this->connection->prepare($update_sql)) {
-                                        $update_stmt->bindParam(":user_id", $row['users_id'], PDO::PARAM_INT);
-                                        $update_stmt->execute();
-                                    }
-    
-                                    // Redirect to dashboard or appropriate page
-                                    header('Location: dashboard.php');
-                                    exit();
-                                } else {
-                                    // Handle other user types if necessary
-                                    $log_msg['msg'] = "You do not have permission to access the admin area.";
-                                }
-                            } else {
-                                $log_msg['msg'] = "Invalid username or password.";
-                            }
-                        }
-                    } else {
-                        $log_msg['msg'] = "Invalid username or password.";
-                    }
-                } else {
-                    echo "Oops! Something went wrong. Please try again later.";
-                }
-                unset($stmt);
-            }
-        }
-    
-        return $log_msg;
+    if ($user_id === null) {
+        throw new Exception("Session variable 'id' is not set.");
     }
-    
-    public function org_login($data)
-    {
-        $username = trim($data["username"]);
-        $password = trim($data['password']);
-        $log_msg = array();
-    
-        // Check for empty username and password
-        if (empty($username)) {
-            $log_msg['uname'] = "Username is empty";
+
+    // Prepare the SQL statement with a JOIN to fetch the orgname
+    $sql = "SELECT u.*, o.org_name 
+            FROM users_tbl u
+            LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+            WHERE u.users_id = :user_id"; // Perform a LEFT JOIN with the organization table
+
+    try {
+        $stmt = $this->connection->prepare($sql); // Prepare the statement
+        $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if a record was found and handle null values
+        if ($result) {
+            // Ensure all values are non-null for fields where htmlspecialchars will be applied
+            foreach ($result as $key => $value) {
+                $result[$key] = $value ?? ''; // Default to empty string if null
+            }
+            return $result;
+        } else {
+            return null; // No record found
         }
-    
-        if (empty($password)) {
-            $log_msg['pwd'] = "Password is empty";
-        }
-    
-        if (count($log_msg) <= 0) {
-            // Check in users_tbl first
-            $sql = "SELECT users_id, users_username, users_password, users_type FROM users_tbl WHERE users_username = :username";
-            if ($stmt = $this->connection->prepare($sql)) {
-                $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-                $param_username = $username;
-    
-                if ($stmt->execute()) {
-                    if ($stmt->rowCount() == 1) {
-                        if ($row = $stmt->fetch()) {
-                            $stored_hash = $row["users_password"];
-    
-                            // Hash the input password with SHA-256
-                            $input_hash = hash('sha256', $password);
-    
-                            if ($input_hash === $stored_hash) {
-                                // Check user type
-                                if ($row['users_type'] == 1) {
-                                    $log_msg['msg'] = "You are not an Organization.";
-                                } else {
-                                    // Successful login for users_tbl
-                                    session_start();
-                                    $_SESSION['aid'] = $row['users_id'];
-                                    $_SESSION['id'] = $row['users_id'];
-                                    $_SESSION['auname'] = $row['users_username'];
-                                    $_SESSION['atype'] = $row['users_type'];
-    
-                                    // Update is_active and last_active fields
-                                    $update_sql = "UPDATE users_tbl SET is_active = 1, last_active = NOW() WHERE users_id = :user_id";
-                                    if ($update_stmt = $this->connection->prepare($update_sql)) {
-                                        $update_stmt->bindParam(":user_id", $row['users_id'], PDO::PARAM_INT);
-                                        $update_stmt->execute();
-                                    }
-    
-                                    // Redirect to dashboard or appropriate page
-                                    header('Location: dashboard.php');
-                                    exit();
-                                }
-                            } else {
-                                $log_msg['msg'] = "Invalid username or password.";
-                            }
-                        }
-                    } else {
-                        // If user not found in users_tbl, check in orgmembers_tbl
-                        $sql = "SELECT * FROM orgmembers_tbl WHERE username = :username";
-                        
-                        if ($stmt = $this->connection->prepare($sql)) {
-                            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-                            $param_username = $username;
-                    
-                            if ($stmt->execute()) {
-                                if ($stmt->rowCount() == 1) {
-                                    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        $stored_hash = $row["password"];
-                                        
-                                        // Hash the input password with SHA-256
-                                        $input_hash = hash('sha256', $password);
-                    
-                                        if ($input_hash === $stored_hash) {
-                                            // Successful login for orgmembers_tbl
-                                            session_start();
-                                            $_SESSION['aid'] = $row['id'];
-                                            $_SESSION['id'] = $row['id'];
-                                            $_SESSION['auname'] = $row['username'];
+    } catch (PDOException $e) {
+        // Handle database error
+        throw new Exception("Database error: " . $e->getMessage());
+    } catch (Exception $e) {
+        // Handle general error
+        throw new Exception("An error occurred: " . $e->getMessage());
+    }
+}
+
+            public function admin_login($data)
+            {
+                $username = trim($data["username"]);
+                $password = trim($data['password']);
+                $log_msg = array();
+            
+                // Check for empty username and password
+                if (empty($username)) {
+                    $log_msg['uname'] = "Username is empty";
+                }
+            
+                if (empty($password)) {
+                    $log_msg['pwd'] = "Password is empty";
+                }
+            
+                if (count($log_msg) <= 0) {
+                    $sql = "SELECT users_id, users_username, users_password, users_type FROM users_tbl WHERE users_username = :username";
+                    if ($stmt = $this->connection->prepare($sql)) {
+                        $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+                        $param_username = $username;
+                        if ($stmt->execute()) {
+                            if ($stmt->rowCount() == 1) {
+                                if ($row = $stmt->fetch()) {
+                                    $stored_hash = $row["users_password"];
+            
+                                    // Hash the input password with SHA-256
+                                    $input_hash = hash('sha256', $password);
+            
+                                    if ($input_hash === $stored_hash) {
+                                        // Check user type
+                                        if ($row['users_type'] == 2) {
+                                            // User type 2 - do not log in
+                                            $log_msg['msg'] = "You are not an Admin.";
+                                        }  elseif ($row['users_type'] == 0 || $row['users_type'] == 1 || $row['users_type'] == 4) { 
+                                            // User type 0 or 1 - allow login
+                                            $_SESSION['aid'] = $row['users_id'];
+                                            $_SESSION['id'] = $row['users_id'];
+                                            $_SESSION['auname'] = $row['users_username'];
                                             $_SESSION['atype'] = $row['users_type'];
-                    
-                                            // Get the users_id from users_tbl based on org_type
-                                            $org_type = $row['org_type'];
-                                            $userSql = "SELECT users_id FROM users_tbl WHERE users_org = :org_type";
-                                            $userStmt = $this->connection->prepare($userSql);
-                                            $userStmt->bindParam(':org_type', $org_type, PDO::PARAM_INT);
-                    
-                                            if ($userStmt->execute()) {
-                                                if ($userRow = $userStmt->fetch(PDO::FETCH_ASSOC)) {
-                                                    $_SESSION['aid'] = $userRow['users_id'];
-                                                } else {
-                                                    $log_msg['msg'] = "No matching user ID found for the organization.";
-                                                }
-                                            } else {
-                                                $log_msg['msg'] = "Error fetching users ID from users_tbl.";
+            
+                                            // Update is_active and last_active fields
+                                            $update_sql = "UPDATE users_tbl SET is_active = 1, last_active = NOW() WHERE users_id = :user_id";
+                                            if ($update_stmt = $this->connection->prepare($update_sql)) {
+                                                $update_stmt->bindParam(":user_id", $row['users_id'], PDO::PARAM_INT);
+                                                $update_stmt->execute();
                                             }
-    
-                                            // Update is_active and last_active fields for orgmembers_tbl
-                                            $update_org_sql = "UPDATE orgmembers_tbl SET is_active = 1, last_active = NOW() WHERE id = :user_id";
-                                            if ($update_org_stmt = $this->connection->prepare($update_org_sql)) {
-                                                $update_org_stmt->bindParam(":user_id", $row['id'], PDO::PARAM_INT);
-                                                $update_org_stmt->execute();
-                                            }
-    
+            
                                             // Redirect to dashboard or appropriate page
                                             header('Location: dashboard.php');
                                             exit();
                                         } else {
-                                            $log_msg['msg'] = "Invalid username or password.";
+                                            // Handle other user types if necessary
+                                            $log_msg['msg'] = "You do not have permission to access the admin area.";
                                         }
+                                    } else {
+                                        $log_msg['msg'] = "Invalid username or password.";
+                                    }
+                                }
+                            } else {
+                                $log_msg['msg'] = "Invalid username or password.";
+                            }
+                        } else {
+                            echo "Oops! Something went wrong. Please try again later.";
+                        }
+                        unset($stmt);
+                    }
+                }
+            
+                return $log_msg;
+            }
+            
+            public function org_login($data)
+        {
+            $username = trim($data["username"]);
+            $password = trim($data['password']);
+            $log_msg = array();
+
+            // Check for empty username and password
+            if (empty($username)) {
+                $log_msg['uname'] = "Username is empty";
+            }
+
+            if (empty($password)) {
+                $log_msg['pwd'] = "Password is empty";
+            }
+
+            if (count($log_msg) <= 0) {
+                // Check in users_tbl first
+                $sql = "SELECT users_id, users_username, users_password, users_type FROM users_tbl WHERE users_username = :username";
+                if ($stmt = $this->connection->prepare($sql)) {
+                    $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+                    $param_username = $username;
+
+                    if ($stmt->execute()) {
+                        if ($stmt->rowCount() == 1) {
+                            if ($row = $stmt->fetch()) {
+                                $stored_hash = $row["users_password"];
+                                $input_hash = hash('sha256', $password);
+
+                                if ($input_hash === $stored_hash) {
+                                    if ($row['users_type'] == 1) {
+                                        $log_msg['msg'] = "You are not an Organization.";
+                                    } else {
+                                    
+                                        $_SESSION['aid'] = $row['users_id'];
+                                        $_SESSION['id'] = $row['users_id'];
+                                        $_SESSION['auname'] = $row['users_username'];
+                                        $_SESSION['atype'] = $row['users_type'];
+
+                                        $update_sql = "UPDATE users_tbl SET is_active = 1, last_active = NOW() WHERE users_id = :user_id";
+                                        if ($update_stmt = $this->connection->prepare($update_sql)) {
+                                            $update_stmt->bindParam(":user_id", $row['users_id'], PDO::PARAM_INT);
+                                            $update_stmt->execute();
+                                        }
+
+                                        header('Location: dashboard.php');
+                                        exit();
                                     }
                                 } else {
                                     $log_msg['msg'] = "Invalid username or password.";
                                 }
-                            } else { 
-                                $log_msg['msg'] = "Error executing the query.";
                             }
                         } else {
-                            $log_msg['msg'] = "Error preparing the SQL statement.";
+                            $sql = "SELECT * FROM orgmembers_tbl WHERE username = :username";
+                            if ($stmt = $this->connection->prepare($sql)) {
+                                $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+                                $param_username = $username;
+
+                                if ($stmt->execute()) {
+                                    if ($stmt->rowCount() == 1) {
+                                        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            $stored_hash = $row["password"];
+                                            $input_hash = hash('sha256', $password);
+
+                                            if ($input_hash === $stored_hash) {
+                                                
+                                                $_SESSION['aid'] = $row['id'];
+                                                $_SESSION['id'] = $row['id'];
+                                                $_SESSION['auname'] = $row['username'];
+                                                $_SESSION['atype'] = $row['users_type'];
+
+                                                $org_type = $row['org_type'];
+                                                $userSql = "SELECT users_id FROM users_tbl WHERE users_org = :org_type";
+                                                $userStmt = $this->connection->prepare($userSql);
+                                                $userStmt->bindParam(':org_type', $org_type, PDO::PARAM_INT);
+
+                                                if ($userStmt->execute()) {
+                                                    if ($userRow = $userStmt->fetch(PDO::FETCH_ASSOC)) {
+                                                        $_SESSION['aid'] = $userRow['users_id'];
+                                                    } else {
+                                                        $log_msg['msg'] = "No matching user ID found for the organization.";
+                                                    }
+                                                } else {
+                                                    $log_msg['msg'] = "Error fetching users ID from users_tbl.";
+                                                }
+
+                                                $update_org_sql = "UPDATE orgmembers_tbl SET is_active = 1, last_active = NOW() WHERE id = :user_id";
+                                                if ($update_org_stmt = $this->connection->prepare($update_org_sql)) {
+                                                    $update_org_stmt->bindParam(":user_id", $row['id'], PDO::PARAM_INT);
+                                                    $update_org_stmt->execute();
+                                                }
+
+                                                header('Location: dashboard.php');
+                                                exit();
+                                            } else {
+                                                $log_msg['msg'] = "Invalid username or password.";
+                                            }
+                                        }
+                                    } else {
+                                        $log_msg['msg'] = "Invalid username or password.";
+                                    }
+                                } else {
+                                    $log_msg['msg'] = "Error executing the query.";
+                                }
+                            } else {
+                                $log_msg['msg'] = "Error preparing the SQL statement.";
+                            }
                         }
-                    
-                        return $log_msg;
                     }
                 }
             }
+
+            return $log_msg;
         }
-    
-        return $log_msg;
-    }
-    
+
+                 
     function add_announcement($data) {
         $uid = htmlspecialchars($data['uid'] ?? '', ENT_QUOTES, 'UTF-8');
         $details = htmlspecialchars($data['announcement_details'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -292,43 +307,57 @@ class mainClass
             </script>';
     }
 
-    public function member_account() {
-        // Ensure the session ID is available
-        $user_id = $_SESSION['id'] ?? null; // Get user ID from session
-    
-        if ($user_id === null) {
-            throw new Exception("Session variable 'id' is not set.");
+
+    function show_department()
+    {
+        $query = "SELECT * FROM department_tbl";
+        $statement = $this->connection->prepare($query);
+
+        if ($statement->execute()) {
+            $result = $statement->fetchAll();
+            return $result;
+        } else {
+            return "No Data";
         }
-    
-        // Prepare the SQL statement
-        $sql = "SELECT * FROM orgmembers_tbl WHERE id = :user_id";
-    
-        try {
-            $stmt = $this->connection->prepare($sql); // Prepare the statement
-            // Bind the session ID to the parameter
-            $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
-            
-            // Execute the statement
-            $stmt->execute();
-            
-            // Fetch the result
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            // Check if a record was found and return it
-            if ($result) {
-                return $result;
-            } else {
-                return null; // No record found
+        }
+
+        public function member_account() {
+            // Ensure the session ID is available
+            $user_id = $_SESSION['id'] ?? null; // Get user ID from session
+        
+            if ($user_id === null) {
+                throw new Exception("Session variable 'id' is not set.");
             }
-        } catch (PDOException $e) {
-            // Handle database error
-            throw new Exception("Database error: " . $e->getMessage());
-        } catch (Exception $e) {
-            // Handle general error
-            throw new Exception("An error occurred: " . $e->getMessage());
+        
+            // Prepare the SQL statement
+            $sql = "SELECT * FROM orgmembers_tbl WHERE id = :user_id";
+        
+            try {
+                $stmt = $this->connection->prepare($sql); // Prepare the statement
+                // Bind the session ID to the parameter
+                $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+                
+                // Execute the statement
+                $stmt->execute();
+                
+                // Fetch the result
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+                // Check if a record was found and return it
+                if ($result) {
+                    return $result;
+                } else {
+                    return null; // No record found
+                }
+            } catch (PDOException $e) {
+                // Handle database error
+                throw new Exception("Database error: " . $e->getMessage());
+            } catch (Exception $e) {
+                // Handle general error
+                throw new Exception("An error occurred: " . $e->getMessage());
+            }
         }
-    }
-    
+        
     function save_announcement($data) {
         $aid = $data['aid'] ?? '';
         $details = $data['announcement_details'] ?? '';
@@ -402,55 +431,62 @@ class mainClass
             </script>';
     }
     
-    
-    
     public function handleRequest() {
-        // Check for the archive request
+        // Archive request
         if (isset($_GET['archive_id'])) {
             $appID = $_GET['archive_id'];
-            // Call the archive function and capture the result
             $result = $this->archive_announcement($appID);
-            echo $result; // Output the result
-            exit(); // Stop further execution
+            echo $result;
+            exit();
+        }
+    
+        // Restore request
+        if (isset($_GET['restore_id'])) {
+            $appID = $_GET['restore_id'];
+            $result = $this->restore_announcement($appID);
+            echo $result;
+            exit();
+        }
+    
+        // Delete request
+        if (isset($_GET['delete_id'])) {
+            $appID = $_GET['delete_id'];
+            $result = $this->delete_announcement($appID);
+            echo $result;
+            exit();
         }
     }
-
-
-    function archive_announcement($appID) {
-        // First, fetch the editor's name for the audit trail
-        $editor_id = $_SESSION['id'] ?? ''; 
+    
+    
+    function delete_announcement($appID) {
+        // Fetch editor's name for audit trail
+        $editor_id = $_SESSION['id'] ?? '';
         $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
         $editor_stmt->execute([':editor_id' => $editor_id]);
         $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
     
-        // Fetch the announcement details to be archived
-        $announcement_stmt = $this->connection->prepare("SELECT announcement_details FROM announcement_tbl WHERE announcement_id = :appID");
+        // Fetch announcement details for logging
+        $announcement_stmt = $this->connection->prepare("SELECT announcement_title FROM announcement_tbl WHERE announcement_id = :appID");
         $announcement_stmt->execute([':appID' => $appID]);
-        $announcement_details = $announcement_stmt->fetchColumn();
+        $announcement_title = $announcement_stmt->fetchColumn();
     
-        $query = "UPDATE announcement_tbl SET is_archived = 1 WHERE announcement_id = :appID";
+        // Delete announcement query
+        $query = "DELETE FROM announcement_tbl WHERE announcement_id = :appID";
         $statement = $this->connection->prepare($query);
-        
-        // Debugging: Check if the appID is received
-        if (!$appID) {
-            return '<script>
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error!",
-                        text: "No announcement ID provided."
-                    });
-                    </script>';
-        }
-        
-        // Execute the query and check if it was successful
-        if ($statement->execute(array("appID" => $appID))) {
-            // Log the archiving in the audit trail with the editor's name and the archived announcement's details
-            $audit_message = "{$editor_name} archived an announcement (Details: {$announcement_details})";
-            
-            // Insert audit trail
-            $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-            $audit_stmt->execute([':message' => $audit_message]);
-            
+    
+        if ($statement->execute([':appID' => $appID])) {
+            // Log the delete action to audit trail with action type and message
+            $audit_message = "{$editor_name} deleted an announcement (Title: {$announcement_title})";
+            $audit_action = 'delete';  // Action indicating that something was deleted
+    
+            // Insert audit trail with action and message
+            $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+            $audit_stmt->execute([
+                ':message' => $audit_message,
+                ':actions' => $audit_action
+            ]);
+    
+            // Success message
             return '<script>
                     const Toast = Swal.mixin({
                         toast: true,
@@ -465,8 +501,61 @@ class mainClass
                     });
                     Toast.fire({
                         icon: "success",
-                        title: "Announcement archived successfully"
+                        title: "Announcement deleted successfully"
                     }).then((result) => {
+                        document.location = "announcement.php"; // Redirect to the announcement page
+                    });
+                    </script>';
+        } else {
+            // Failure message
+            return '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "Failed to delete the announcement."
+                    });
+                    </script>';
+        }
+    }
+    
+    function restore_announcement($appID) {
+        // Fetch editor's name for audit trail
+        $editor_id = $_SESSION['id'] ?? ''; 
+        $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+        $editor_stmt->execute([':editor_id' => $editor_id]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+        
+        // Check for the announcement
+        $announcement_stmt = $this->connection->prepare("SELECT announcement_details FROM announcement_tbl WHERE announcement_id = :appID");
+        $announcement_stmt->execute([':appID' => $appID]);
+        $announcement_details = $announcement_stmt->fetchColumn();
+        
+        // Restore the announcement by updating the archive status
+        $query = "UPDATE announcement_tbl SET is_archived = 0 WHERE announcement_id = :appID";
+        $statement = $this->connection->prepare($query);
+        
+        if ($statement->execute(['appID' => $appID])) {
+            // Log audit trail with action and message
+            $audit_message = "{$editor_name} restored an announcement (Details: {$announcement_details})";
+            $audit_action = 'restore';  // Action indicating the restoration
+            
+            // Insert audit trail with action and message
+            $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+            $audit_stmt->execute([
+                ':message' => $audit_message,
+                ':actions' => $audit_action
+            ]);
+            
+            return '<script>
+                    Swal.fire({
+                        icon: "success",
+                        title: "Announcement restored successfully",
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true
+                    }).then(() => {
                         document.location = "announcement.php"; // Redirect to the announcement page
                     });
                     </script>';
@@ -475,12 +564,11 @@ class mainClass
                     Swal.fire({
                         icon: "error",
                         title: "Error!",
-                        text: "Failed to archive the announcement."
+                        text: "Failed to restore the announcement."
                     });
                     </script>';
         }
     }
-    
     
     public function get_announcements_by_org($orgId)
     {
@@ -522,85 +610,271 @@ class mainClass
             return ['error' => 'An error occurred while fetching announcements.'];
         }
     }
-    function show_announcement()
-    {
-        // Check account type for permissions
-        $account_type = isset($_SESSION['atype']) ? $_SESSION['atype'] : '2';
-        if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
-            // Destroy the session for invalid types and redirect to login
-            session_destroy();
-            header("Location: login.php");
-            exit;
+    function archive_announcement($appID) {
+        // First, fetch the editor's name for the audit trail
+        $editor_id = $_SESSION['id'] ?? ''; 
+        $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+        $editor_stmt->execute([':editor_id' => $editor_id]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+        
+        // Fetch the announcement details to be archived
+        $announcement_stmt = $this->connection->prepare("SELECT announcement_details FROM announcement_tbl WHERE announcement_id = :appID");
+        $announcement_stmt->execute([':appID' => $appID]);
+        $announcement_details = $announcement_stmt->fetchColumn();
+        
+        // Prepare the archive query
+        $query = "UPDATE announcement_tbl SET is_archived = 1 WHERE announcement_id = :appID";
+        $statement = $this->connection->prepare($query);
+        
+        // Debugging: Check if the appID is received
+        if (!$appID) {
+            return '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "No announcement ID provided."
+                    });
+                    </script>';
         }
-    
-        // Fetch the user's ID and determine if they are admin or organization member
+        
+        // Execute the query and check if it was successful
+        if ($statement->execute(array("appID" => $appID))) {
+            // Log the archiving action to audit trail with action type and message
+            $audit_message = "{$editor_name} archived an announcement (Details: {$announcement_details})";
+            $audit_action = 'archive';  // Action indicating that something was archived
+            
+            // Insert audit trail with action and message
+            $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+            $audit_stmt->execute([
+                ':message' => $audit_message,
+                ':actions' => $audit_action
+            ]);
+            
+            return '<script>
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Announcement archived successfully"
+                    }).then((result) => {
+                        document.location = "announcement.php"; // Redirect to the announcement page
+                    });
+                    </script>';
+        } else {
+            return '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "Failed to archive the announcement."
+                    });
+                    </script>';
+        }
+    }
+    function show_announcement()
+{
+    try {
+        // Fetch the user's ID from session
         $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
         
-        // Admin access: Show all announcements
-        if ($account_type == '1') {
+        // If user ID is 1 (admin), show all announcements without organization filter
+        if ($userId == 1) {
             $query = "
                 SELECT a.*, 
                        u.users_username AS author_name, 
                        om.name AS updated_by_name, 
+                       c.users_username AS creator_name, 
                        o.org_name, 
                        o.org_image
                 FROM announcement_tbl a 
                 LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
                 LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+                LEFT JOIN users_tbl c ON a.created_by = c.users_id  
                 LEFT JOIN organization_tbl o ON u.users_org = o.org_id
                 WHERE a.is_archived = 0
             ";
+            
+            $statement = $this->connection->prepare($query);
+            
         } else {
-            // Organization-specific access: Show only user's organization announcements
-            $userQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
-            $userStatement = $this->connection->prepare($userQuery);
-            $userStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
-            $userStatement->execute();
-            $orgRow = $userStatement->fetch(PDO::FETCH_ASSOC);
+            // For regular users, fetch their organization ID first
+            $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
+            $orgStatement = $this->connection->prepare($orgQuery);
+            $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $orgStatement->execute();
+            $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
+        
+            // Safely escape the organization ID
             $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
-    
+        
+            // If the user has no organization, return an empty result
             if ($userOrgId == 0) {
-                return []; // No organization found, return empty result
+                return []; // Return empty array if no organization is found
             }
-    
-            // Fetch announcements for the user's organization
+        
+            // Regular user query, filtered by organization
             $query = "
                 SELECT a.*, 
                        u.users_username AS author_name, 
                        om.name AS updated_by_name, 
+                       c.users_username AS creator_name, 
                        o.org_name, 
                        o.org_image
                 FROM announcement_tbl a 
                 LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
                 LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+                LEFT JOIN users_tbl c ON a.created_by = c.users_id 
                 LEFT JOIN organization_tbl o ON u.users_org = o.org_id
-                WHERE a.is_archived = 0 AND u.users_org = :userOrgId
+                WHERE u.users_org = :userOrgId AND a.is_archived = 0
             ";
-        }
-    
-        $statement = $this->connection->prepare($query);
-        if ($account_type != '1') {
-            // Bind organization ID for non-admins
+            
+            $statement = $this->connection->prepare($query);
             $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
         }
-    
+
         if ($statement->execute()) {
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-            
-            // Additional processing for each announcement
+
+            // Process the result set
             foreach ($result as &$row) {
-                // Attach organization image and fallback if missing
+                // Handle org_image, fallback to a placeholder if not available
                 $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
                                     ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                                    : 'placeholder.jpg';
+                                    : 'placeholder.jpg'; // Default placeholder if no image is found
+
+                // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
+                if (empty($row['creator_name'])) {
+                    $creatorId = $row['created_by']; // Get the creator ID
+                    // Fetch the creator's name from orgmembers_tbl
+                    $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
+                    $fallbackStatement = $this->connection->prepare($fallbackQuery);
+                    $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
+                    $fallbackStatement->execute();
+                    $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
+
+                    // If a name is found in orgmembers_tbl, use it
+                    $row['creator_name'] = $fallbackRow ? htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8') : 'Unknown';
+                } else {
+                    // Sanitize creator name from users_tbl
+                    $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+                }
             }
             return $result;
         } else {
-            return "No Data";
+            return [];
         }
+    } catch (Exception $e) {
+        error_log('Error fetching announcements: ' . $e->getMessage());
+        return [];
     }
-    
-    
+}
+function show_archived_announcements()
+{
+    try {
+        // Fetch the user's ID from session
+        $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+        
+        // If user ID is 1 (admin), show all archived announcements without organization filter
+        if ($userId == 1) {
+            $query = "
+                SELECT a.*, 
+                       u.users_username AS author_name, 
+                       om.name AS updated_by_name, 
+                       c.users_username AS creator_name, 
+                       o.org_name, 
+                       o.org_image
+                FROM announcement_tbl a 
+                LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+                LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+                LEFT JOIN users_tbl c ON a.created_by = c.users_id  
+                LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+                WHERE a.is_archived = 1
+            ";
+            
+            $statement = $this->connection->prepare($query);
+            
+        } else {
+            // For regular users, fetch their organization ID first
+            $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
+            $orgStatement = $this->connection->prepare($orgQuery);
+            $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $orgStatement->execute();
+            $orgRow = $orgStatement->fetch(PDO::FETCH_ASSOC);
+        
+            // Safely escape the organization ID
+            $userOrgId = $orgRow ? intval($orgRow['users_org']) : 0;
+        
+            // If the user has no organization, return an empty result
+            if ($userOrgId == 0) {
+                return []; // Return empty array if no organization is found
+            }
+        
+            // Regular user query, filtered by organization
+            $query = "
+                SELECT a.*, 
+                       u.users_username AS author_name, 
+                       om.name AS updated_by_name, 
+                       c.users_username AS creator_name, 
+                       o.org_name, 
+                       o.org_image
+                FROM announcement_tbl a 
+                LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
+                LEFT JOIN orgmembers_tbl om ON a.updated_by = om.id 
+                LEFT JOIN users_tbl c ON a.created_by = c.users_id 
+                LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+                WHERE u.users_org = :userOrgId AND a.is_archived = 1
+            ";
+            
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
+        }
+
+        if ($statement->execute()) {
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            // Process the result set
+            foreach ($result as &$row) {
+                // Handle org_image, fallback to a placeholder if not available
+                $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                    ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                    : 'placeholder.jpg'; // Default placeholder if no image is found
+
+                // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
+                if (empty($row['creator_name'])) {
+                    $creatorId = $row['created_by']; // Get the creator ID
+                    // Fetch the creator's name from orgmembers_tbl
+                    $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
+                    $fallbackStatement = $this->connection->prepare($fallbackQuery);
+                    $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
+                    $fallbackStatement->execute();
+                    $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
+
+                    // If a name is found in orgmembers_tbl, use it
+                    $row['creator_name'] = $fallbackRow ? htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8') : 'Unknown';
+                } else {
+                    // Sanitize creator name from users_tbl
+                    $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+                }
+            }
+            return $result;
+        } else {
+            return [];
+        }
+    } catch (Exception $e) {
+        error_log('Error fetching archived announcements: ' . $e->getMessage());
+        return [];
+    }
+}
+
+
 function show_announcement2()
 {
     // Fetch the user's name based on session variable
@@ -787,7 +1061,6 @@ function show_announcement2()
     return $script;
 }
 
-
 function delete_event($appID)
 {
     // First, fetch the editor's name for the audit trail
@@ -806,13 +1079,17 @@ function delete_event($appID)
     $statement = $this->connection->prepare($query);
 
     // Execute the deletion
-    if ($statement->execute(['appID' => $appID])) {
-        // Log the deletion in the audit trail with the editor's name and the deleted event's details
+    if ($statement->execute([':appID' => $appID])) {
+        // Log the deletion in the audit trail with the editor's name, the deleted event's details, and action
         $audit_message = "{$editor_name} deleted an event: (Details - {$event_details})";
+        $audit_action = 'delete';  // Action indicating that something was deleted
         
-        // Insert audit trail
-        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-        $audit_stmt->execute([':message' => $audit_message]);
+        // Insert audit trail with action and message
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+        $audit_stmt->execute([
+            ':message' => $audit_message,
+            ':actions' => $audit_action
+        ]);
 
         // Return success message
         return '<script>
@@ -846,13 +1123,29 @@ function delete_event($appID)
     }
 }
 
-
-    function show_events()
-    {
-        // Fetch the user's organization ID based on session variable
-        $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
+function show_events()
+{
+    // Fetch the user's ID from session
+    $userId = isset($_SESSION['aid']) ? intval($_SESSION['aid']) : 0;
     
-        // Query to get the user's organization from users_tbl
+    // If user ID is 1 (admin), show all events without organization filter
+    if ($userId == 1) {
+        $query = "
+            SELECT e.*, 
+                   u.users_username AS creator_name, 
+                   om.name AS updated_by_name, 
+                   o.org_name, 
+                   o.org_image
+            FROM calendar_tbl e
+            LEFT JOIN users_tbl u ON e.event_creator = u.users_id
+            LEFT JOIN orgmembers_tbl om ON e.updated_by = om.id
+            LEFT JOIN organization_tbl o ON u.users_org = o.org_id
+        ";
+        
+        $statement = $this->connection->prepare($query);
+        
+    } else {
+        // For regular users, fetch their organization ID first
         $orgQuery = "SELECT users_org FROM users_tbl WHERE users_id = :userId";
         $orgStatement = $this->connection->prepare($orgQuery);
         $orgStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
@@ -867,7 +1160,7 @@ function delete_event($appID)
             return "No organization found for the user.";
         }
     
-        // Main event query, filtered by the user's organization
+        // Regular user query, filtered by organization
         $query = "
             SELECT e.*, 
                    u.users_username AS creator_name, 
@@ -880,86 +1173,96 @@ function delete_event($appID)
             LEFT JOIN organization_tbl o ON u.users_org = o.org_id
             WHERE u.users_org = :userOrgId
         ";
-    
+        
         $statement = $this->connection->prepare($query);
         $statement->bindValue(':userOrgId', $userOrgId, PDO::PARAM_INT);
-    
-        if ($statement->execute()) {
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
-            // Check for creator names and fallback to orgmembers_tbl if necessary
-            foreach ($result as &$row) {
-                // Handle org_image, fallback to a placeholder if not available
-                $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
-                                    ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                                    : 'placeholder.jpg'; // Default placeholder if no image is found
-    
-                // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
-                if (empty($row['creator_name'])) {
-                    $creatorId = $row['event_creator']; // Get the creator ID
-                    // Fetch the creator's name from orgmembers_tbl
-                    $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
+    }
+
+    if ($statement->execute()) {
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // Process each event row
+        foreach ($result as &$row) {
+            // Handle org_image, fallback to a placeholder if not available
+            $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
+                                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
+                                : 'placeholder.jpg'; // Default placeholder if no image is found
+
+            // If creator name is not found in users_tbl, try to find it in orgmembers_tbl
+            if (empty($row['creator_name'])) {
+                $creatorId = $row['event_creator']; // Get the creator ID
+                // Fetch the creator's name from orgmembers_tbl
+                $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :creatorId";
+                $fallbackStatement = $this->connection->prepare($fallbackQuery);
+                $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
+                $fallbackStatement->execute();
+                $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
+
+                // If a name is found in orgmembers_tbl, use it
+                if ($fallbackRow) {
+                    $row['creator_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
+                } else {
+                    $row['creator_name'] = 'Unknown'; // Fallback if no name is found
+                }
+            } else {
+                // Sanitize creator name from users_tbl
+                $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+            }
+
+            // Check if updated_by has a valid name; otherwise, fallback to orgmembers_tbl
+            if (empty($row['updated_by_name']) || !$row['updated_by']) { // Check if updated_by is 0 or null
+                $updatedById = $row['updated_by']; // Get the updated_by ID
+                if ($updatedById > 0) { // Only query if updated_by is a valid ID
+                    // Fetch the updater's name from orgmembers_tbl
+                    $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :updatedById";
                     $fallbackStatement = $this->connection->prepare($fallbackQuery);
-                    $fallbackStatement->bindValue(':creatorId', $creatorId, PDO::PARAM_INT);
+                    $fallbackStatement->bindValue(':updatedById', $updatedById, PDO::PARAM_INT);
                     $fallbackStatement->execute();
                     $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
-                    
+
                     // If a name is found in orgmembers_tbl, use it
                     if ($fallbackRow) {
-                        $row['creator_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
+                        $row['updated_by_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
                     } else {
-                        $row['creator_name'] = 'Unknown'; // Fallback if no name is found
+                        $row['updated_by_name'] = 'Unknown'; // Fallback if no name is found
                     }
                 } else {
-                    // Sanitize creator name from users_tbl
-                    $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
+                    $row['updated_by_name'] = 'Unknown'; // No valid ID, set to Unknown
                 }
-    
-                // Check if updated_by has a valid name; otherwise, fallback to orgmembers_tbl
-                if (empty($row['updated_by_name']) || !$row['updated_by']) { // Check if updated_by is 0 or null
-                    $updatedById = $row['updated_by']; // Get the updated_by ID
-                    if ($updatedById > 0) { // Only query if updated_by is a valid ID
-                        // Fetch the updater's name from orgmembers_tbl
-                        $fallbackQuery = "SELECT name FROM orgmembers_tbl WHERE id = :updatedById";
-                        $fallbackStatement = $this->connection->prepare($fallbackQuery);
-                        $fallbackStatement->bindValue(':updatedById', $updatedById, PDO::PARAM_INT);
-                        $fallbackStatement->execute();
-                        $fallbackRow = $fallbackStatement->fetch(PDO::FETCH_ASSOC);
-                        
-                        // If a name is found in orgmembers_tbl, use it
-                        if ($fallbackRow) {
-                            $row['updated_by_name'] = htmlspecialchars($fallbackRow['name'], ENT_QUOTES, 'UTF-8');
-                        } else {
-                            $row['updated_by_name'] = 'Unknown'; // Fallback if no name is found
-                        }
-                    } else {
-                        $row['updated_by_name'] = 'Unknown'; // No valid ID, set to Unknown
-                    }
-                } else {
-                    // Sanitize updated_by_name from orgmembers_tbl
-                    $row['updated_by_name'] = htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8');
-                }
+            } else {
+                // Sanitize updated_by_name from orgmembers_tbl
+                $row['updated_by_name'] = htmlspecialchars($row['updated_by_name'], ENT_QUOTES, 'UTF-8');
             }
-            return $result;
-        } else {
-            return "No Data";
         }
+        return $result;
+    } else {
+        return "No Data";
     }
-    
-    
-    function show_eventsByMonth()
-    {
-        $query = "SELECT *, DATE_FORMAT(calendar_date, '%m-%d') as monthDate FROM calendar_tbl ORDER BY calendar_date";
-        $statement = $this->connection->prepare($query);
+}
+function show_eventsByMonth()
+{
+    $query = "SELECT calendar_id, calendar_start_date, calendar_end_date, calendar_details, 
+                     DATE_FORMAT(calendar_start_date, '%m-%d') as monthDate 
+              FROM calendar_tbl 
+              ORDER BY calendar_start_date";
+    $statement = $this->connection->prepare($query);
 
-        $eventsByMonth = [];
+    $eventsByMonth = [];
 
-
-
+    try {
+        // Execute the query
         if ($statement->execute()) {
-            $result = $statement->fetchAll();
+            // Fetch the results as an associative array
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC); 
+
+            // If there are no events, return an empty array
+            if (empty($result)) {
+                return $eventsByMonth;
+            }
+
+            // Process the results
             foreach ($result as $event) {
-                $eventDate = new DateTime($event['calendar_date']);
+                $eventDate = new DateTime($event['calendar_start_date']);
                 $monthYear = $eventDate->format('F Y');
 
                 // Initialize the month array if it doesn't exist
@@ -972,68 +1275,79 @@ function delete_event($appID)
             }
 
             // Sort the months chronologically
-            // ksort($eventsByMonth);s
+            ksort($eventsByMonth);
             return $eventsByMonth;
         } else {
-            return "No Data";
+            throw new Exception("Failed to execute the query.");
         }
+    } catch (Exception $e) {
+        // Handle any errors or exceptions
+        echo "Error: " . $e->getMessage();
+        return []; // Always return an empty array on failure
     }
-  
-    
-    function add_faculty_member($data) {
-        $name = htmlspecialchars($data['faculty_name'] ?? '', ENT_QUOTES, 'UTF-8');
-        $dept = htmlspecialchars($data['department'] ?? '', ENT_QUOTES, 'UTF-8');
-    
-        return '
-            <script>
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "Do you want to save this faculty member?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, save it!",
-                    cancelButtonText: "No, cancel!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var formData = new FormData();
-                        formData.append("type", "faculty");
-                        formData.append("faculty_name", "' . $name . '");
-                        formData.append("department", "' . $dept . '");
-                        var facultyImageInput = document.querySelector("input[name=faculty_image]");
-                        if (facultyImageInput.files.length > 0) {
-                            formData.append("faculty_image", facultyImageInput.files[0]);
-                        }
-    
-                        fetch("../admin/ajax/createData.php", {
-                            method: "POST",
-                            body: formData
-                        }).then(response => response.json())
-                          .then(result => {
-                              Swal.fire("Response", result.message, "info");
-                              if (result.success) {
-                                Swal.fire(
-                                    "Saved!",
-                                    "The faculty member has been saved.",
-                                    "success"
-                                ).then(() => {
-                                    document.location = "facultymembers.php";
-                                });
-                              } else {
-                                  Swal.fire("Error!", result.message, "error");
-                              }
-                          }).catch(error => {
-                            Swal.fire(
-                                "Error!",
-                                "There was an error saving the faculty member.",
-                                "error"
-                            );
-                          });
+}
+
+
+   function add_faculty_member($data) {
+    // Ensure faculty_name and department are treated as strings
+    $name = is_array($data['faculty_name'] ?? null) ? implode(', ', $data['faculty_name']) : ($data['faculty_name'] ?? '');
+    $dept = is_array($data['department'] ?? null) ? implode(', ', $data['department']) : ($data['department'] ?? '');
+
+    // Sanitize the values
+    $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $dept = htmlspecialchars($dept, ENT_QUOTES, 'UTF-8');
+
+    return '
+        <script>
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to save this faculty member?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, save it!",
+                cancelButtonText: "No, cancel!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var formData = new FormData();
+                    formData.append("type", "faculty");
+                    formData.append("faculty_name", "' . $name . '");
+                    formData.append("department", "' . $dept . '");
+                    var facultyImageInput = document.querySelector("input[name=faculty_image]");
+                    if (facultyImageInput.files.length > 0) {
+                        formData.append("faculty_image", facultyImageInput.files[0]);
                     }
-                });
-            </script>';
-    }
+
+                    fetch("../admin/ajax/createData.php", {
+                        method: "POST",
+                        body: formData
+                    }).then(response => response.json())
+                      .then(result => {
+                          Swal.fire("Response", result.message, "info");
+                          if (result.success) {
+                            Swal.fire(
+                                "Saved!",
+                                "The faculty member has been saved.",
+                                "success"
+                            ).then(() => {
+                                document.location = "facultymembers.php";
+                            });
+                          } else {
+                              Swal.fire("Error!", result.message, "error");
+                          }
+                      }).catch(error => {
+                        Swal.fire(
+                            "Error!",
+                            "There was an error saving the faculty member.",
+                            "error"
+                        );
+                      });
+                }
+            });
+        </script>';
+}
+
     function add_faculty_member_using_Excel() {
         return '
             <script>
@@ -1177,54 +1491,68 @@ function delete_event($appID)
     $editor_stmt->execute([':editor_id' => $editor_id]);
     $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
 
-    // Fetch the faculty member's details to be deleted
-    $faculty_stmt = $this->connection->prepare("SELECT faculty_name FROM faculty_tbl WHERE faculty_id = :appID");
-    $faculty_stmt->execute([':appID' => $appID]);
-    $faculty_details = $faculty_stmt->fetchColumn();
+  // Fetch the faculty member's details to be deleted
+$faculty_stmt = $this->connection->prepare("SELECT faculty_name FROM faculty_tbl WHERE faculty_id = :appID");
+$faculty_stmt->execute([':appID' => $appID]);
+$faculty_details = $faculty_stmt->fetchColumn();
 
-    // Prepare the deletion query
-    $query = "DELETE FROM faculty_tbl WHERE faculty_id = :appID";
-    $statement = $this->connection->prepare($query);
+// Temporarily disable foreign key checks
+$this->connection->exec("SET FOREIGN_KEY_CHECKS = 0");
 
-    // Execute the deletion
-    if ($statement->execute(['appID' => $appID])) {
-        // Log the deletion in the audit trail with the editor's name and the deleted faculty's details
-        $audit_message = "{$editor_name} deleted a faculty member:  (Name - {$faculty_details})";
+// Prepare the deletion query
+$query = "DELETE FROM faculty_tbl WHERE faculty_id = :appID";
+$statement = $this->connection->prepare($query);
 
-        // Insert audit trail
-        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-        $audit_stmt->execute([':message' => $audit_message]);
+// Execute the deletion
+if ($statement->execute(['appID' => $appID])) {
+    // Log the deletion in the audit trail with the editor's name and the deleted faculty's details
+    $audit_message = "{$editor_name} deleted a faculty member: (Name - {$faculty_details})";
 
-        // Return success message
-        return '<script>
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Member Deleted successfully"
-                }).then((result) => {
-                    document.location = "facultymembers.php"; // Redirect to the faculty members page
-                });
-            </script>';
-    } else {
-        // Return error message if deletion fails
-        return '<script>
-                Swal.fire({
-                    icon: "error",
-                    title: "Error!",
-                    text: "Failed to delete the faculty member."
-                });
-                </script>';
-    }
+    $audit_action = 'delete';  // Action indicating that something was deleted
+    
+    // Insert audit trail with action and message
+    $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+    $audit_stmt->execute([
+        ':message' => $audit_message,
+        ':actions' => $audit_action
+    ]);
+    // Re-enable foreign key checks
+    $this->connection->exec("SET FOREIGN_KEY_CHECKS = 1");
+
+    // Return success message
+    return '<script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Member Deleted successfully"
+            }).then((result) => {
+                document.location = "facultymembers.php"; // Redirect to the faculty members page
+            });
+        </script>';
+} else {
+    // Re-enable foreign key checks in case of error
+    $this->connection->exec("SET FOREIGN_KEY_CHECKS = 1");
+
+    // Return error message if deletion fails
+    return '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Failed to delete the faculty member."
+            });
+        </script>';
+}
+
 }
 
 function show_facultyheads($department_ids = null)
@@ -1463,63 +1791,78 @@ function save_org($data)
         }
     }
 
-    function delete_org($appID)
-    {
-        // First, fetch the editor's name for the audit trail
-        $editor_id = $_SESSION['id'] ?? ''; 
-        $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
-        $editor_stmt->execute([':editor_id' => $editor_id]);
-        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
-    
-        // Fetch the organization's details to be deleted
-        $org_stmt = $this->connection->prepare("SELECT org_name FROM organization_tbl WHERE org_id = :appID");
-        $org_stmt->execute([':appID' => $appID]);
-        $org_details = $org_stmt->fetchColumn();
-    
-        // Prepare the deletion query
-        $query = "DELETE FROM organization_tbl WHERE org_id = :appID";
-        $statement = $this->connection->prepare($query);
-    
-        // Execute the deletion
-        if ($statement->execute(['appID' => $appID])) {
-            // Log the deletion in the audit trail with the editor's name and the deleted organization's details
-            $audit_message = "{$editor_name} deleted an organization: (Organization Name - {$org_details})";
-    
-            // Insert audit trail
-            $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-            $audit_stmt->execute([':message' => $audit_message]);
-    
-            // Return success message
-            return '<script>
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Organization Deleted successfully"
-                    }).then((result) => {
-                        document.location = "organization.php"; // Redirect to the organization page
-                    });
-                </script>';
-        } else {
-            // Return error message if deletion fails
-            return '<script>
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: "There was an error deleting the organization."
-                    });
-                </script>';
-        }
+   function delete_org($appID)
+{
+    // First, fetch the editor's name for the audit trail
+    $editor_id = $_SESSION['id'] ?? ''; 
+    $editor_stmt = $this->connection->prepare("SELECT users_username FROM users_tbl WHERE users_id = :editor_id");
+    $editor_stmt->execute([':editor_id' => $editor_id]);
+    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+
+    // Check if the organization has user_type = 1 (admin)
+    $type_stmt = $this->connection->prepare("SELECT user_type, org_name FROM organization_tbl WHERE org_id = :appID");
+    $type_stmt->execute([':appID' => $appID]);
+    $org_info = $type_stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($org_info['user_type'] == 1) {
+        // Return error message if user_type is 1 (admin)
+        return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Admin organizations cannot be deleted."
+                });
+            </script>';
     }
+
+    // Proceed with deletion if user_type is not 1 (not admin)
+    $query = "DELETE FROM organization_tbl WHERE org_id = :appID";
+    $statement = $this->connection->prepare($query);
+
+    if ($statement->execute(['appID' => $appID])) {
+        // Log the deletion in the audit trail
+        $audit_message = "{$editor_name} deleted an organization: (Organization Name - {$org_info['org_name']})";
+        $audit_action = 'delete';  // Action indicating deletion
+
+        // Insert audit trail with action and message
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+        $audit_stmt->execute([
+            ':message' => $audit_message,
+            ':actions' => $audit_action
+        ]);
+
+        // Return success message
+        return '<script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Organization Deleted successfully"
+                }).then((result) => {
+                    document.location = "organization.php"; // Redirect to the organization page
+                });
+            </script>';
+    } else {
+        // Return error message if deletion fails
+        return '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "There was an error deleting the organization."
+                });
+            </script>';
+    }
+}
+
     
     function add_faqs($data) {
         // Escape PHP variables to be safely included in JavaScript
@@ -1686,8 +2029,14 @@ function delete_faqs($appID)
         $audit_message = "{$editor_name} deleted a FAQ: (Question - {$faq_details})";
 
         // Insert audit trail
-        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-        $audit_stmt->execute([':message' => $audit_message]);
+        $audit_action = 'delete';  // Action indicating that something was deleted
+    
+        // Insert audit trail with action and message
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+        $audit_stmt->execute([
+            ':message' => $audit_message,
+            ':actions' => $audit_action
+        ]);
 
         // Return success message
         return '<script>
@@ -2507,10 +2856,14 @@ function delete_account($appID)
         // Log the deletion in the audit trail with the editor's name and the deleted account's username
         $audit_message = "{$editor_name} deleted an account: (Username - {$account_username})";
         
-        // Insert audit trail
-        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-        $audit_stmt->execute([':message' => $audit_message]);
-
+        $audit_action = 'delete';  // Action indicating that something was deleted
+    
+    // Insert audit trail with action and message
+    $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+    $audit_stmt->execute([
+        ':message' => $audit_message,
+        ':actions' => $audit_action
+    ]);
         // Return success message
         return '<script>
                 const Toast = Swal.mixin({
@@ -2545,18 +2898,18 @@ function delete_account($appID)
 
 
 
-    function show_account()
-    {
-        $query = "SELECT * FROM users_tbl";
-        $statement = $this->connection->prepare($query);
+function show_account()
+{
+    $query = "SELECT * FROM users_tbl WHERE users_id NOT IN (1, 2)";
+    $statement = $this->connection->prepare($query);
 
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            return "No Data";
-        }
+    if ($statement->execute()) {
+        $result = $statement->fetchAll();
+        return $result;
+    } else {
+        return "No Data";
     }
+}
 
     function show_ratings()
 {
@@ -2601,9 +2954,14 @@ function delete_membersaccount($appID)
         // Log the deletion in the audit trail with the editor's name and the deleted member's name
         $audit_message = "{$editor_name} deleted a member account: (Name - {$member_name})";
         
-        // Insert audit trail
-        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-        $audit_stmt->execute([':message' => $audit_message]);
+        $audit_action = 'delete';  // Action indicating that something was deleted
+    
+        // Insert audit trail with action and message
+        $audit_stmt = $this->connection->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+        $audit_stmt->execute([
+            ':message' => $audit_message,
+            ':actions' => $audit_action
+        ]);
 
         // Return success message
         return '<script>
@@ -2635,6 +2993,104 @@ function delete_membersaccount($appID)
                 });
             </script>';
     }
+}
+public function getFacultyByDepartment($department_id)
+{
+    // Query to fetch faculty data with departments
+    $query = "
+        SELECT f.faculty_id, f.faculty_name, f.faculty_image, f.specialization, f.consultation_time, d.department_name
+        FROM faculty_tbl f
+        JOIN faculty_departments_tbl fd ON f.faculty_id = fd.faculty_id
+        JOIN department_tbl d ON fd.department_id = d.department_id
+        WHERE fd.department_id = :department_id
+    ";
+    
+    // Prepare and execute the SQL statement
+    $stmt = $this->connection->prepare($query);
+    $stmt->bindValue(':department_id', $department_id, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // Fetch all results into an associative array
+    $facultyData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Group the results by faculty_id
+    $facultyWithDepartments = [];
+    
+    foreach ($facultyData as $row) {
+        $faculty_id = $row['faculty_id'];
+        if (!isset($facultyWithDepartments[$faculty_id])) {
+            $facultyWithDepartments[$faculty_id] = [
+                'faculty_name' => $row['faculty_name'],
+                'faculty_image' => $row['faculty_image'],
+                'specialization' => $row['specialization'],
+                'consultation_time' => $row['consultation_time'],
+                'departments' => []
+            ];
+        }
+        // Add department to the faculty's departments array
+        $facultyWithDepartments[$faculty_id]['departments'][] = $row['department_name'];
+    }
+
+    return $facultyWithDepartments;
+}
+
+public function show_allit($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+
+public function show_allItHeads($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+
+public function show_allmit($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+public function show_dean($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+
+public function all_assist($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}public function all_mem(array $department_ids)
+{
+    $facultyData = [];
+
+    // Loop through each department ID and merge the faculty data
+    foreach ($department_ids as $department_id) {
+        $facultyData = array_merge($facultyData, $this->getFacultyByDepartment($department_id));
+    }
+
+    return $facultyData;
+}
+
+public function show_allMitHeads($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+
+public function show_allcs($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+
+public function show_allCsHeads($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+
+public function show_allis($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
+}
+
+public function show_allIsHeads($department_id)
+{
+    return $this->getFacultyByDepartment($department_id);
 }
 
     function show_membersaccount()
@@ -2671,249 +3127,26 @@ function delete_membersaccount($appID)
             return "Error fetching organization type."; // Handle query execution error
         }
     }
-    
-    
-    function show_department()
-    {
-        $query = "SELECT * FROM department_tbl";
+public function show_allFAQs()
+{
+    try {
+        $query = "SELECT * FROM faqs_tbl"; // Adjust the table name as per your schema
         $statement = $this->connection->prepare($query);
 
         if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
+            $faqs = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Check if there are any FAQs found
+            if (!empty($faqs)) {
+                return $faqs;
+            } else {
+                return "No FAQs found.";
+            }
         } else {
-            return "No Data";
+            return false; // Query execution failed
         }
-    }
-
-    function show_allIt()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 1
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-
-    function show_allCs()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 2
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-
-    function show_allIs()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 3
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-    function show_allMit()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 4
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-    function show_allItHeads()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 10
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-    
-    function show_allCsHeads()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 12
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-    
-    function show_allIsHeads()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 11
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-    
-    function show_allMitHeads()
-    {
-        $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 13
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-    }
-
-    function show_allDeanHeads()
-{
-    $query = "
-    SELECT faculty_tbl.*, department_tbl.department_name 
-    FROM faculty_tbl 
-    INNER JOIN department_tbl 
-    ON faculty_tbl.faculty_dept = department_tbl.department_id 
-    WHERE faculty_tbl.faculty_dept = 5
-";
-
-$statement = $this->connection->prepare($query);
-
-if ($statement->execute()) {
-    $result = $statement->fetchAll();
-    return $result;
-} else {
-    return "No Data";
-}
-}
-
-function show_alllvl2()
-{
-    $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id 
-        WHERE faculty_tbl.faculty_dept = 6
-    ";
-    
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-}
-
-function show_alllvl3()
-{
-    $query = "
-        SELECT faculty_tbl.*, department_tbl.department_name 
-        FROM faculty_tbl 
-        INNER JOIN department_tbl 
-        ON faculty_tbl.faculty_dept = department_tbl.department_id
-        WHERE faculty_tbl.faculty_dept IN (7, 8, 9)
-    ";
-
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll();
-        return $result;
-    } else {
-        return "No Data";
-    }
-}
-
-
-public function show_allFAQs() {
-    $query = "SELECT * FROM faqs_tbl";
-    $statement = $this->connection->prepare($query);
-
-    if ($statement->execute()) {
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    } else {
-        return "No Data";
+    } catch (PDOException $e) {
+        return "Database error: " . $e->getMessage();
     }
 }
 public function add_faq($question, $answer) {

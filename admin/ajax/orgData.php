@@ -33,7 +33,7 @@ if ($array) {
                     <div class="mb-3">
                         <center>
                         <h3>Current Photo</h3>
-                        <img src="../uploaded/orgUploaded/' . $orgImage . '" alt="Current Organization Image"/>
+                        <img src="../uploaded/orgUploaded/' . $orgImage . '" alt="Current Organization Image"/ class="org-thumbnail">
                         <input type="hidden" name="previous" value="' . $orgImage . '" />
                         </center>
                     </div>
@@ -52,3 +52,20 @@ if ($array) {
 echo $response;
 
 ?>
+<style>
+    .org-thumbnail {
+    width: 100px; /* Small thumbnail */
+    height: 100px; 
+    object-fit: cover; 
+    border-radius: 5px;
+}
+
+.current-photo {
+    margin-bottom: 10px;
+}
+
+.current-photo.hidden {
+    display: none; /* Hide the section if no image */
+}
+
+</style>

@@ -1,11 +1,15 @@
 <?php
 
 include "../../class/connection.php"; // Adjust the path as needed
-
-ob_start();  // Start output buffering// Enable error reporting for debugging
+// Enable error logging
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/error_log.txt'); // Log to error_log.txt
+
+// Log POST and FILES data for debugging
+error_log('POST Data: ' . print_r($_POST, true));
+error_log('FILES Data: ' . print_r($_FILES, true));
 
 // Set the error log file
 ini_set('error_log', 'error_log.php');
@@ -23,228 +27,255 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log("Received type: " . $type);
 
     try {
-        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        // Announcement Update
-        if ($_POST['type'] === 'announcement') {
-            $aid = $_POST['aid'] ?? '';
-            $details = $_POST['announcement_details'] ?? '';
-            $update = $_POST['announcement_creator'] ?? '';
-            $removedImages = $_POST['removed_images'] ?? ''; 
-              $removedImages = $_POST['removed_images'] ?? ''; // Removed images
-            $newImages = $_FILES['ann_imgs'] ?? []; // New uploaded images
-            $date = date('Y-m-d H:i:s'); // Current timestamp for updated_at
-            $replacedImages = $_POST['replaced_images'] ?? '';
+        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);/// Collect POST data
+        if ($type === 'announcement') {
+            // Extract the POST and FILES data
+            $aid = $_POST['aid'] ?? '';  // Announcement ID
+            $details = $_POST['announcement_details'] ?? '';  // New details
+            $category = $_POST['announcement_category'] ?? 'general';  // New category field with default
+            $update = $_POST['announcement_creator'] ?? '';  // User updating the announcement
+            $previousImages = $_POST['previous_image'] ?? [];  // Array of previous images
+            $removedImages = $_POST['removed_images'] ?? '';  // Images marked for deletion
+            $newImages = $_FILES['new_image']['name'] ?? [];  // New images uploaded
+            $added = $_POST['added_image'] ?? [];  // Added images uploaded
+            $date = date('Y-m-d H:i:s');
         
-            $response = [
-                'success' => true,
-                'message' => '',
-            ];
+            // Log POST and FILES data for troubleshooting
+            error_log('POST Data: ' . print_r($_POST, true));
+            error_log('FILES Data: ' . print_r($_FILES, true));
         
-            // Validate required fields
-            if (empty($aid) || empty($details) || empty($update)) {
-                $response['success'] = false;
-                $response['message'] = 'Missing required fields.';
-                echo json_encode($response);
-                error_log("Error: Missing required fields - Announcement ID: $aid\n", 3, 'error_log.txt');
-                exit;
+            // Validate category
+            $validCategories = ['academic', 'event', 'org', 'general'];
+            if (!in_array($category, $validCategories)) {
+                $category = 'general';  // Default to general if invalid category
             }
         
-            // Handle removed images
-            if (!empty($removedImages)) {
-                error_log("Removed Images: " . print_r($removedImages, true) . "\n", 3, 'error_log.txt');
+        
+            // Define arrays to keep track of replaced, kept, and added images
+            $replacedImages = [];
+            $addedImages = [];  // Array to track newly added images
+            $keptImages = $previousImages;  // Initially, keep all previous images
+        
+            // Determine which images are being replaced
+            foreach ($previousImages as $index => $prevImage) {
+                if (!empty($newImages[$index])) {  // If there is a new image at the same index
+                    $replacedImages[] = $prevImage;  // Mark old image as replaced
+                    $keptImages[$index] = $newImages[$index];  // Update the kept images with the new one
+                    $addedImages[] = $added[$index] ?? '';  // Add the new image to addedImages, ensure the index exists
+                }
             }
         
-            // Update announcement details
-            $sql = "UPDATE `announcement_tbl` 
-                    SET announcement_details = :details, 
-                        updated_at = :date, 
-                        updated_by = :update
-                    WHERE announcement_id = :aid";
-            $stmt = $connect->prepare($sql);
-            if (!$stmt->execute([
-                ':details' => $details,
-                ':date' => $date,
-                ':update' => $update,
-                ':aid' => $aid
-            ])) {
-                $response['success'] = false;
-                $response['message'] = 'Failed to update announcement: ' . implode(", ", $stmt->errorInfo());
-                echo json_encode($response);
-                error_log("Error: Failed to update announcement - " . implode(", ", $stmt->errorInfo()) . "\n", 3, 'error_log.txt');
-                exit;
+            // Log replaced, kept, and added images
+            error_log('Replaced Images: ' . print_r($replacedImages, true));
+            error_log('Kept Images (updated previous images): ' . print_r($keptImages, true));
+            error_log('Added Images: ' . print_r($addedImages, true));
+        
+            // Convert removed_images string to array
+            $removedImagesArray = array_filter(explode(',', $removedImages));
+        
+            // Log removed images array for verification
+            error_log('Removed Images Array: ' . print_r($removedImagesArray, true));
+        
+            // Directory path for uploaded images
+            $uploadTo = __DIR__ . "/../../uploaded/annUploaded/";
+            if (!file_exists($uploadTo)) {
+                mkdir($uploadTo, 0777, true);
             }
         
- 
-                    // Loop through replaced images to sanitize and format file names
-                    if (!empty($replacedImages)) {
-                        foreach ($replacedImages as $image) {
-                            // Trim and format the image name to remove any unwanted characters
-                            $image = trim($image);
-                            $image = preg_replace('/[^a-zA-Z0-9_-]+/', '', $image); // Only allow letters, numbers, hyphens, and underscores
-                    
-                            if (!empty($image)) {
-                                // Proceed with the deletion logic for sanitized image name
-                                error_log("Processed Replacement Image (sanitized): $image\n", 3, 'error_log.txt');
-                    
-                                // Delete image file from the server (ensure the path is correct)
-                                $filePath = "../uploaded/annUploaded/$image";
-                                if (file_exists($filePath)) {
-                                    unlink($filePath);
-                                    error_log("Deleted Image File: $filePath\n", 3, 'error_log.txt');
-                                } else {
-                                    error_log("Error: File not found for deletion - $filePath\n", 3, 'error_log.txt');
-                                }
-                    
-                                // Delete image record from the database
-                                $deleteStmt = $connect->prepare("DELETE FROM announcement_images WHERE image_path = :imagePath");
-                                $deleteStmt->bindValue(':imagePath', $image, PDO::PARAM_STR);
-                                if ($deleteStmt->execute()) {
-                                    error_log("Deleted Image Record from Database: $image\n", 3, 'error_log.txt');
-                                } else {
-                                    error_log("Error Deleting Image Record: " . implode(", ", $deleteStmt->errorInfo()) . "\n", 3, 'error_log.txt');
-                                }
-                            }
-                        }
-                    }
-                    
-         // Handle new images upload (Defined here within the if block)
-            if (!empty($newImages) && is_array($newImages['name'])) {
-                $uploadedFiles = [];
-                foreach ($newImages['name'] as $key => $fileName) {
-                    $fileTmp = $newImages['tmp_name'][$key];
-                    $fileSize = $newImages['size'][$key];
-                    $fileType = $newImages['type'][$key];
-        
-                    // Specify upload directory
-                    $uploadDirectory = '../../uploaded/annUploaded/';
-                    if (!is_dir($uploadDirectory)) {
-                        mkdir($uploadDirectory, 0777, true); // Create directory if it doesn't exist
-                    }
-        
-                    // Generate a unique file name
-                    $uniqueFileName = uniqid() . '-' . basename($fileName);
-                    $targetFilePath = $uploadDirectory . $uniqueFileName;
-        
-                    // Optional validation (file type, size)
-                    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                    $maxFileSize = 5 * 1024 * 1024; // 5MB
-        
-                    if (!in_array($fileType, $allowedTypes)) {
-                        error_log("Error: Invalid file type for file: $fileName\n", 3, 'error_log.txt');
-                        continue;
-                    }
-        
-                    if ($fileSize > $maxFileSize) {
-                        error_log("Error: File size exceeds the limit for file: $fileName\n", 3, 'error_log.txt');
-                        continue;
-                    }
-        
-                    // Attempt to move the uploaded file
-                    if (move_uploaded_file($fileTmp, $targetFilePath)) {
-                        $uploadedFiles[] = $uniqueFileName;
-                        error_log("File uploaded successfully: $fileName -> $targetFilePath\n", 3, 'error_log.txt');
+            // Handle image replacements: Remove old images from database and server, then upload new ones
+            foreach ($replacedImages as $oldImage) {
+                // Delete the old image from the server
+                $imagePath = $uploadTo . $oldImage;
+                if (file_exists($imagePath)) {
+                    if (unlink($imagePath)) {
+                        error_log("Successfully deleted image: " . $oldImage);
                     } else {
-                        error_log("Error: Failed to upload file: $fileName\n", 3, 'error_log.txt');
+                        error_log("Failed to delete image: " . $oldImage);
                     }
+                } else {
+                    error_log("File does not exist: " . $oldImage);
                 }
         
-                // Insert uploaded image paths into the database
-                foreach ($uploadedFiles as $uploadedFile) {
-                    $insertImageStmt = $connect->prepare("INSERT INTO announcement_images (announcement_id, image_path) VALUES (:aid, :imagePath)");
-                    if (!$insertImageStmt->execute([':aid' => $aid, ':imagePath' => $uploadedFile])) {
-                        $response['success'] = false;
-                        $response['message'] = 'Failed to upload image to the database.';
-                        echo json_encode($response);
-                        error_log("Error: Failed to upload image - $uploadedFile\n", 3, 'error_log.txt');
-                        exit;
-                    }
-                }
+                // Remove the old image entry from the database
+                $deleteImageQuery = "DELETE FROM announcement_images WHERE announcement_id = :aid AND image_path = :image";
+                $deleteImageStmt = $connect->prepare($deleteImageQuery);
+                $deleteImageStmt->execute([':aid' => $aid, ':image' => $oldImage]);
             }
         
-            // Remove deleted images
-            if (!empty($removedImages)) {
-                $removedImagesArray = explode(',', $removedImages);
-                foreach ($removedImagesArray as $image) {
-                    $image = trim($image);
-                    if (!empty($image)) {
-                        $deleteStmt = $connect->prepare("DELETE FROM announcement_images WHERE image_path = :imagePath");
-                        $deleteStmt->execute([':imagePath' => $image]);
+            // Upload and handle new images
+            if (!empty($newImages)) {
+                foreach ($newImages as $index => $fileName) {
+                    if ($_FILES['new_image']['error'][$index] === UPLOAD_ERR_OK) {
+                        $tempPath = $_FILES["new_image"]["tmp_name"][$index];
         
-                        $filePath = "C:/xampp/htdocs/ckiosk/uploaded/annUploaded/" . $image;
-                        if (file_exists($filePath)) {
-                            unlink($filePath);
+                        // Generate a random filename using random_bytes or uniqid
+                        $randomName = bin2hex(random_bytes(16)); // 16 bytes = 32 characters
+                        $extension = pathinfo($fileName, PATHINFO_EXTENSION); // Get file extension (e.g., jpg, png)
+                        $randomFileName = $randomName . '.' . $extension; // Append the extension to the random name
+        
+                        $originalPath = $uploadTo . $randomFileName; // Path with the new random filename
+        
+                        if (move_uploaded_file($tempPath, $originalPath)) {
+                            // Insert the new image into the database
+                            $image_sql = "INSERT INTO announcement_images (announcement_id, image_path) VALUES (:aid, :image)";
+                            $image_stmt = $connect->prepare($image_sql);
+                            $image_stmt->execute([':aid' => $aid, ':image' => $randomFileName]); // Store random filename in DB
+                        } else {
+                            error_log("Failed to upload new image: " . $fileName);
                         }
+                    } else {
+                        error_log("Error uploading image index {$index}: " . $_FILES['new_image']['error'][$index]);
                     }
                 }
             }
         
-            // Audit Trail
-            $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :update");
-            $creator_stmt->execute([':update' => $update]);
-            $updater_name = $creator_stmt->fetchColumn();
+            // Process and remove images from the server and database
+            if (!empty($removedImagesArray)) {
+                foreach ($removedImagesArray as $oldImage) {
+                    $imagePath = $uploadTo . $oldImage;
         
-            if (!$updater_name) {
-                $creator_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :update");
-                $creator_stmt->execute([':update' => $update]);
-                $updater_name = $creator_stmt->fetchColumn() ?: 'Unknown User';
+                    // Check if file exists before attempting to delete
+                    if (file_exists($imagePath)) {
+                        if (unlink($imagePath)) {
+                            // Successfully deleted, now remove from database
+                            $deleteImageQuery = "DELETE FROM announcement_images WHERE announcement_id = :aid AND image_path = :image";
+                            $deleteImageStmt = $connect->prepare($deleteImageQuery);
+                            $deleteImageStmt->execute([':aid' => $aid, ':image' => $oldImage]);
+                        } else {
+                            error_log("Failed to delete file: " . $oldImage);
+                        }
+                    } else {
+                        error_log("File does not exist: " . $oldImage);
+                    }
+                }
+            } else {
+                error_log("No images to remove.");
             }
         
-            $audit_message = "{$updater_name} updated an announcement: {$details}";
-            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-            $audit_stmt->execute([':message' => $audit_message]);
+            $sql = "UPDATE `announcement_tbl` 
+            SET announcement_details = :details, 
+                category = :category,
+                updated_at = :date, 
+                updated_by = :update 
+            WHERE announcement_id = :aid";
+    
+    $stmt = $connect->prepare($sql);
+    $stmt->execute([
+        ':details' => $details,
+        ':category' => $category,
+        ':date' => $date,
+        ':update' => $update,
+        ':aid' => $aid
+    ]);
+
+    // Check for errors during the announcement update
+    if ($stmt->errorCode() != '00000') {
+        $response['message'] = 'Error updating announcement: ' . implode(', ', $stmt->errorInfo());
+        echo json_encode($response);
+        exit;
+    }
+
+    // Fetch editor's name from `users_tbl` or `orgmembers_tbl`
+    $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :update");
+    $editor_stmt->execute([':update' => $update]);
+    $editor_name = $editor_stmt->fetchColumn();
+
+    if (!$editor_name) {
+        // If not found in `users_tbl`, search in `orgmembers_tbl`
+        $editor_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :update");
+        $editor_stmt->execute([':update' => $update]);
+        $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+    }
+
+    // Updated audit trail to include category change
+    $audit_message = "{$editor_name} updated announcement: Details - '{$details}', Category - '{$category}'";
+    $audit_action = 'updated';
+
+    // Insert audit log entry with both message and action
+    $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+    $audit_stmt->execute([
+        ':message' => $audit_message,
+        ':actions' => $audit_action
+    ]);
+
+    // Success response with category information
+    $response['success'] = true;
+    $response['message'] = 'Announcement updated successfully';
+    $response['category'] = $category;
+    echo json_encode($response);
+    exit;
+        }
         
-            $response['success'] = true;
-            $response['message'] = 'Announcement updated successfully.';
-            ob_end_clean(); // Clear output buffer before sending the response
+        
+  elseif ($type === 'event') {
+            $cid = $_POST['cid'] ?? '';
+            $details = $_POST['event_details'] ?? '';
+            $update = $_POST['event_editor'] ?? '';
+            $start_date = $_POST['event_start_date'] ?? '';
+            $end_date = $_POST['event_end_date'] ?? '';
+        
+            try {
+                // Update event in the database
+                $sql = "UPDATE `calendar_tbl` 
+                        SET calendar_details = :details, 
+                            calendar_start_date = :start_date,
+                            calendar_end_date = :end_date,
+                            updated_by = :update,
+                            updated_at = NOW()
+                        WHERE calendar_id = :cid";
+                
+                $stmt = $connect->prepare($sql);
+                $stmt->execute([
+                    ':details' => $details,
+                    ':start_date' => $start_date,
+                    ':end_date' => $end_date,
+                    ':update' => $update,
+                    ':cid' => $cid
+                ]);
+        
+                // Fetch editor's name, first from `users_tbl`, and if not found, from `orgmembers_tbl`
+                $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :update");
+                $editor_stmt->execute([':update' => $update]);
+                $editor_name = $editor_stmt->fetchColumn();
+        
+                if (!$editor_name) {
+                    // If not found in `users_tbl`, search in `orgmembers_tbl`
+                    $editor_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :update");
+                    $editor_stmt->execute([':update' => $update]);
+                    $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
+                }
+        
+                // Audit trail with actions
+                $audit_message = "{$editor_name} updated an event: {$details}";
+                $audit_action = 'updated';
+                
+                // Insert audit log entry with both message and action
+                $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+                $audit_stmt->execute([
+                    ':message' => $audit_message,
+                    ':actions' => $audit_action
+                ]);
+        
+                // Success response
+                $response = [
+                    'success' => true,
+                    'message' => 'Event updated successfully.'
+                ];
+        
+            } catch (Exception $e) {
+                // Error handling
+                $response = [
+                    'success' => false,
+                    'message' => 'There was an error updating the event: ' . $e->getMessage()
+                ];
+            }
+        
+            // Output the response as JSON
             echo json_encode($response);
             exit;
         }
         
-
         
-        elseif ($type === 'event') {
-            $cid = $_POST['cid'] ?? '';
-            $details = $_POST['event_details'] ?? '';
-            $update = $_POST['event_editor'] ?? '';
-            $date = $_POST['event_date'] ?? '';
-        
-            // Update event in the database
-            $sql = "UPDATE `calendar_tbl` 
-                    SET calendar_details = :details, 
-                        calendar_date = :date,
-                        updated_by = :update,
-                        updated_at = NOW()  -- Set updated_at to the current timestamp
-                    WHERE calendar_id = :cid";
-        
-            $stmt = $connect->prepare($sql);
-            $stmt->execute([
-                ':details' => $details,
-                ':date' => $date,
-                ':update' => $update,
-                ':cid' => $cid
-            ]);
-        
-            // Fetch editor's name, first from `users_tbl`, and if not found, from `orgmembers_tbl`
-            $editor_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :update");
-            $editor_stmt->execute([':update' => $update]);
-            $editor_name = $editor_stmt->fetchColumn();
-        
-            if (!$editor_name) {
-                // If not found in `users_tbl`, search in `orgmembers_tbl`
-                $editor_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :update");
-                $editor_stmt->execute([':update' => $update]);
-                $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
-            }
-        
-            // Audit trail
-            $audit_message = "{$editor_name} updated an event: {$details}";
-            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-            $audit_stmt->execute([':message' => $audit_message]);
-        
-            $response['success'] = true;
-            $response['message'] = 'Event updated successfully.';
-        }
         if ($type === 'faculty') {
             // Fetch and sanitize basic data
             $fid = isset($_POST['fid']) ? (int)$_POST['fid'] : 0;
@@ -255,7 +286,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $editor_id = isset($_POST['editor_id']) ? (int)$_POST['editor_id'] : 0;
             $addedDepartments = isset($_POST['addedDepartments']) ? json_decode($_POST['addedDepartments'], true) : [];
             $newImage = $previousImage ?: '';
-            
+            if (isset($_FILES['faculty_image']) && $_FILES['faculty_image']['error'] == 0) {
+                // Define the upload directory
+                $uploadDir = '../../uploaded/facultyUploaded/';
+        
+                // Get the image file name and extension
+                $imageName = $_FILES['faculty_image']['name'];
+                $imageTmp = $_FILES['faculty_image']['tmp_name'];
+                $imageSize = $_FILES['faculty_image']['size'];
+                $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+        
+                // Define allowed image extensions
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        
+                // Validate the image extension
+                if (!in_array($imageExtension, $allowedExtensions)) {
+                    $response['success'] = false;
+                    $response['message'] = 'Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.';
+                    echo json_encode($response);
+                    exit;
+                }
+        
+                // Generate a unique file name to avoid conflicts
+                $newImageName = uniqid('faculty_', true) . '.' . $imageExtension;
+        
+                // Check if the image already exists in the folder
+                if (file_exists($uploadDir . $newImageName)) {
+                    // If the image exists, keep the old image (or perform other logic as needed)
+                    $newImage = $newImageName;
+                } else {
+                    // Move the uploaded image to the desired folder
+                    if (move_uploaded_file($imageTmp, $uploadDir . $newImageName)) {
+                        // Set the new image path
+                        $newImage = $newImageName;
+                    } else {
+                        $response['success'] = false;
+                        $response['message'] = 'Image upload failed. Please try again.';
+                        echo json_encode($response);
+                        exit;
+                    }
+                }
+            } else {
+                // If no new image is uploaded, keep the previous image
+                $newImage = $previousImage;
+            }
+        
+            // Now continue with the database update (image field)
+            $sql = "UPDATE `faculty_tbl`
+                    SET faculty_name = :name, faculty_image = :image, specialization = :specialization, 
+                        consultation_time = :consultation_time
+                    WHERE faculty_id = :fid";
+            $stmt = $connect->prepare($sql);
+            $stmt->execute([
+                ':name' => $name,
+                ':image' => $newImage,  // Set the new image
+                ':specialization' => $specialization,
+                ':consultation_time' => $consultationTime,
+                ':fid' => $fid
+            ]);
+        
             // Check for duplicate faculty member
             $duplicate_check_sql = "SELECT COUNT(*) FROM faculty_tbl WHERE faculty_name = :name AND faculty_id != :fid";
             $duplicate_stmt = $connect->prepare($duplicate_check_sql);
@@ -335,17 +424,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             // Audit trail
             $audit_message = "{$editor_name} updated faculty member: Name - {$name}, Specialization - {$specialization}, Consultation Time - {$consultationTime}";
-            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-            $audit_stmt->execute([':message' => $audit_message]);
+            $audit_action = 'updated';
+                
+            // Insert audit log entry with both message and action
+            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+            $audit_stmt->execute([
+                ':message' => $audit_message,
+                ':actions' => $audit_action
+            ]);
         
-            // Final response
-            $response['success'] = true;
-            $response['message'] = 'Faculty member updated successfully.';
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            ob_end_clean();
+            $response = ['success' => true, 'message' => 'Faculty member updated successfully.'];
+    echo json_encode($response);
+    exit;
         }
-        
         elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';
             $orgName = $_POST['org_name'] ?? '';
@@ -418,10 +509,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         
             // Audit trail
-            $audit_message = "{$editor_name} updated organization '{$orgName}' (ID: {$orgId})";
-            $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-            $audit_stmt->execute([':message' => $audit_message]);
-        
+            $audit_action = 'updated';
+                
+                // Insert audit log entry with both message and action
+                $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+                $audit_stmt->execute([
+                    ':message' => $audit_message,
+                    ':actions' => $audit_action
+                ]);
             $response['success'] = true;
             $response['message'] = 'Organization updated successfully.';
             echo json_encode($response);
@@ -563,8 +658,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                     // Audit trail
                     $audit_message = "{$editor_name} updated member account with ID {$uid}: Username - '{$username}', Position - '{$position}'";
-                    $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message) VALUES (:message)");
-                    $audit_stmt->execute([':message' => $audit_message]);
+                    $audit_action = 'updated';
+                
+                    // Insert audit log entry with both message and action
+                    $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+                    $audit_stmt->execute([
+                        ':message' => $audit_message,
+                        ':actions' => $audit_action
+                    ]);
         
                     $response['success'] = true;
                     $response['message'] = 'Account updated successfully.';
@@ -597,8 +698,148 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['success'] = false;
         $response['message'] = 'An error occurred.';
         echo json_encode($response);
+    }}elseif ($type === 'profileup') {
+        // Retrieve and sanitize data
+        $uid = htmlspecialchars($_POST['uid'] ?? '', ENT_QUOTES, 'UTF-8');
+        $username = htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES, 'UTF-8');
+        $password = $_POST['password'] ?? ''; 
+        $name = htmlspecialchars($_POST['name'] ?? '', ENT_QUOTES, 'UTF-8');
+        $editor_id = $_SESSION['id']; // Assuming editor ID is stored in session
+    
+        try {
+            // Check if the user exists
+            $sql = "SELECT users_password, users_username, is_active FROM users_tbl WHERE users_id = :uid";
+            $stmt = $connect->prepare($sql);
+            $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            if ($stmt->rowCount() == 1) {
+                $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+                $existingPasswordHash = $userData['users_password'];
+                $existingUsername = $userData['users_username'];
+                $existingStatus = $userData['is_active'];
+                $errors = [];
+    
+                // Check if username is already taken
+                $usernameCheckSql = "SELECT COUNT(*) FROM users_tbl WHERE users_username = :username AND users_id != :uid";
+                $usernameCheckStmt = $connect->prepare($usernameCheckSql);
+                $usernameCheckStmt->bindParam(":username", $username, PDO::PARAM_STR);
+                $usernameCheckStmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+                $usernameCheckStmt->execute();
+                if ($usernameCheckStmt->fetchColumn() > 0) {
+                    echo '<script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "Username Taken",
+                            text: "The username is already in use. Please choose a different one.",
+                            timer: 5000,
+                            timerProgressBar: true
+                        });
+                    </script>';
+                    exit;
+                }
+    
+                // Validate and hash new password if provided
+                if (!empty($password)) {
+                    if (strlen($password) < 8 || strlen($password) > 16) {
+                        $errors[] = "Password must be between 8 and 16 characters long.";
+                    }
+                    if (!preg_match('/[A-Z]/', $password)) {
+                        $errors[] = "Password must contain at least one uppercase letter.";
+                    }
+                    if (!preg_match('/[0-9]/', $password)) {
+                        $errors[] = "Password must contain at least one number.";
+                    }
+                    if (!preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password)) {
+                        $errors[] = "Password must contain at least one special character.";
+                    }
+    
+                    if (!empty($errors)) {
+                        echo '<script>
+                            Swal.fire({
+                                icon: "error",
+                                title: "Validation Errors",
+                                text: "' . implode(" ", $errors) . '",
+                                timer: 5000,
+                                timerProgressBar: true
+                            });
+                        </script>';
+                        exit;
+                    }
+                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                } else {
+                    $passwordHash = $existingPasswordHash;
+                }
+    
+                // Update the profile
+                $updateSql = "UPDATE users_tbl SET users_username = :username, users_password = :password, is_active = :is_active, updated_by = :editor_id WHERE users_id = :uid";
+                $updateStmt = $connect->prepare($updateSql);
+                $updateStmt->bindParam(":username", $username, PDO::PARAM_STR);
+                $updateStmt->bindParam(":password", $passwordHash, PDO::PARAM_STR);
+                $updateStmt->bindParam(":is_active", $existingStatus, PDO::PARAM_INT);
+                $updateStmt->bindParam(":editor_id", $editor_id, PDO::PARAM_INT);
+                $updateStmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+                $updateStmt->execute();
+    
+                if ($updateStmt->rowCount() > 0) {
+                    // Audit trail - Log the update action
+                    $editor_name = $_SESSION['username']; // Assuming editor's username is stored in session
+                    $audit_message = "{$editor_name}updated their account {$uid}: Username - '{$username}', Name - '{$name}'";
+                    $audit_action = 'updated';
+    
+                    // Insert audit log entry with both message and action
+                    $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+                    $audit_stmt->execute([
+                        ':message' => $audit_message,
+                        ':actions' => $audit_action
+                    ]);
+    
+                    // Success message
+                    echo '<script>
+                        Swal.fire({
+                            icon: "success",
+                            title: "Profile Updated",
+                            text: "Your profile has been successfully updated.",
+                            timer: 5000,
+                            timerProgressBar: true
+                        });
+                    </script>';
+                } else {
+                    echo '<script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "There was an error updating your profile. Please try again.",
+                            timer: 5000,
+                            timerProgressBar: true
+                        });
+                    </script>';
+                }
+            } else {
+                echo '<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "User Not Found",
+                        text: "The user you are trying to update does not exist.",
+                        timer: 5000,
+                        timerProgressBar: true
+                    });
+                </script>';
+            }
+        } catch (Exception $e) {
+            echo '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred: ' . htmlspecialchars($e->getMessage()) . '",
+                    timer: 5000,
+                    timerProgressBar: true
+                });
+            </script>';
+        }
     }
-} else {
+    
+ else {
     $response['message'] = 'Invalid request method.';
 }
 

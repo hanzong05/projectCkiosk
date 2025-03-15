@@ -1,6 +1,20 @@
 <?php
 include_once ('assets/header.php');
 
+if (!isset($_SESSION['atype'])) {
+    // If the session is not set, redirect to the login page
+    header("Location: index.php");
+    exit;
+}
+
+$account_type = $_SESSION['atype'];
+if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
+    // Destroy the session if the account type is invalid
+    session_destroy();
+    // Redirect to the login page
+    header("Location: index.php");
+    exit;
+}
 $memberInfo  = $obj->member_account();
  
 if ($memberInfo) {
@@ -115,133 +129,7 @@ if (isset($_POST['save_profile'])) {
     </head>
 
     <body class=""><div class="wrapper ">
-    <!-- sweetalert start-->
-    <?= isset($log_msg) ? $log_msg : '' ?>
-    <!-- sweetalert end -->
-    <div class="sidebar" data-color="white" data-active-color="danger">
-        <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
-                <img src="../img/C.png" alt="" width="240">
-            </a>
-        </div>
-        <div class="sidebar-wrapper ">
-            <?php if ($account_type != '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./announcement.php">
-                            <i class="fas fa-bullhorn"></i>
-                            <p>Announcement</p>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="./schoolcalendar.php">
-                            <i class="fas fa-calendar-alt"></i>
-                            <p>School Calendar</p>
-                        </a>
-                    </li>
-                    <?php if ($account_type == '1') { ?>
-                        <li>
-                            <a href="./facultymembers.php">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                <p>Faculty Members</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./map.php">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Campus Map</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./organization.php">
-                                <i class="fas fa-users"></i>
-                                <p>Campus Organization</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./audit.php">
-                                <i class="fas fa-file-alt"></i>
-                                <p>Audit Trails</p>
-                            </a>
-                        </li>
-                    <?php } ?>
-                    <li>
-                        <a href="./faqs.php">
-                            <i class="fas fa-question-circle"></i>
-                            <p>FAQS</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-            <?php if ($account_type == '0') { ?>
-                <ul class="nav">
-                    <li>
-                        <a href="./dashboard.php">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./ratings.php">
-                            <i class="fas fa-star"></i>
-                            <p>Ratings</p>
-                        </a>
-                    </li>
-                </ul>
-            <?php } ?>
-        </div>
-    </div>
-
-    <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="javascript:;">Campus Organization </a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block"></span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="logout.php">Logout</a>
-                  <?php if ($account_type == '2') { ?>
-                    <a class="dropdown-item" href="./membersmanagement.php">Profile</a>
-                <?php } ?>
-                <?php if ($account_type == '3') { ?>
-                    <a class="dropdown-item" href="./memberprofile.php">Profile</a>
-                <?php } ?>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <?php include 'assets/includes/navbar.php'; ?>
       <!-- End Navbar -->
       <div class="content">
       <div class="container mx-auto p-6">

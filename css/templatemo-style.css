@@ -12,31 +12,29 @@ body {
 
 p {
   font-size: 15px;
-  /* color: #7a7a7a; */
-  color: #ffffff;
   line-height: 24px;
   text-align: justify;
   text-justify: inter-word;
 }
 
-.page-content {
-  width: 77.5%;
-  float: right;
+/* Content Section Container */
+.sections-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    margin-left: 250px; /* Account for sidebar width */
 }
 
 .content-section {
-  padding-top: 80px;
-  position: relative;
-  width: 100%;
-  display: inline-block;
-  height: auto;
-  left: 50%;
-  text-align: center;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  transform: translateX(-50%);
+    width: 100%;
+    min-height: 100vh;
+    padding: 80px 50px;
+    display: none; /* Hide all sections by default */
+    position: relative;
+}
+
+.content-section.active-section {
+    display: block; /* Show only active section */
 }
 
 .section-heading {
@@ -203,7 +201,6 @@ header {
 
 .sidebar-navigation nav {
   padding-top: 50px; /* Space for nav items */
-  border-top: 2px solid #ffffff;
   text-align: center;
   overflow-y: auto; /* Enable vertical scrolling */
   height: calc(100vh - 60px); /* Adjust height for the logo */
@@ -249,9 +246,15 @@ header {
   transition: color 0.3s ease-in-out;
 }
 
+.sidebar-navigation nav a:visited {
+  color: #fff;
+}
+
 .sidebar-navigation nav a:hover,
-.sidebar-navigation nav .active-section {
-  color: yellow; /* Active/hover color */
+.sidebar-navigation nav a.active-section,
+.sidebar-navigation nav a:focus {
+  color: yellow;
+  text-decoration: none;
 }
 
 /* Circle and Rect styles for effects */
@@ -538,10 +541,7 @@ header {
 }
 
 /* campusmap Style */
-
 #campusmap {
-  padding-left: 60px;
-  padding-right: 60px;
   padding-bottom: 50px;
 }
 
@@ -563,13 +563,7 @@ header {
 
 /* facultymembers , schoolcalendar Style */
 
-#facultymembers,
-#schoolcalendar,
-#announcement {
-  text-align: center;
-  /* background-color: #f4f4f4; */
-  padding: 100px 60px;
-}
+
 
 #facultymembers .section-heading,
 #schoolcalendar .section-heading,
@@ -674,8 +668,6 @@ header {
 #schoolcalendar,
 #announcement,
 #facultymembers {
-  padding-left: 60px;
-  padding-right: 60px;
   padding-bottom: 80px;
 }
 
@@ -688,8 +680,6 @@ header {
   padding: 0px;
   height: 90px;
   width: 100%;
-  /* background-color: #eee; */
-  /* border-bottom: 10px solid #45489a; */
   border-bottom: 10px solid #2e0f13;
 }
 
@@ -742,10 +732,6 @@ header {
   color: #fff;
 }
 
-.tabgroup {
-  /* background-color: #f4f4f4; */
-  padding: 20px 30px;
-}
 
 .clearfix:after {
   content: "";
@@ -905,6 +891,9 @@ header {
   letter-spacing: 0.25px;
   text-decoration: none;
   transition: all 0.3s;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #faqs button:hover {
@@ -916,10 +905,6 @@ header {
 
 #feed {
   padding-top: 0px;
-}
-
-#feed-content {
-  padding: 80px 60px;
 }
 
 #feed input {
@@ -956,14 +941,14 @@ header {
 
 #feed button {
   font-size: 13px;
-  border-radius: 0px;
+  border-radius: 10px;
   font-weight: 600;
-  color: #fff;
+  color: #ffc107;
   text-transform: capitalize;
   /* background-color: #45489a; */
   background-color: #2e0f13;
   display: inline-block;
-  height: 44px;
+  height: 50px;
   line-height: 24px;
   outline: none;
   box-shadow: none;
@@ -971,6 +956,25 @@ header {
   letter-spacing: 0.25px;
   text-decoration: none;
   transition: all 0.3s;
+}
+
+#feed button {
+    font-size: 13px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #ffc107;
+    text-transform: capitalize;
+    /* background-color: #45489a; */
+    background-color: #2e0f13;
+    display: inline-block;
+    height: 50px;
+    line-height: 24px;
+    outline: none;
+    box-shadow: none;
+    width: 100%;
+    letter-spacing: 0.25px;
+    text-decoration: none;
+    transition: all 0.3s;
 }
 
 #feed button:hover {
@@ -1044,6 +1048,10 @@ header {
     display: none;
   }
 
+  .sections-container {
+    margin-left: 0; /* Remove margin on mobile */
+  }
+
   .sidebar-navigation .logo a img {
     max-width: 80%; /* Adjust size for medium screens */
   }
@@ -1073,10 +1081,7 @@ header {
     height: 60px;
   }
 
-  .page-content {
-    width: 100%;
-  }
-
+  
   .Modern-Slider .info {
     text-align: center;
     right: 0px;
@@ -1144,21 +1149,12 @@ header {
     right: 0;
   }
 
-  #campusmap {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
   #facultymembers {
     padding-left: 15px;
     padding-right: 15px;
   }
 
-  #campusorgs {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
+ 
   #campusorgs .tabs a {
     font-size: 13px;
   }
@@ -1172,11 +1168,6 @@ header {
     display: block;
   }
 
-  #faqs-content {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
   .sidebar-navigation .logo a img {
     max-width: 60%; /* Further adjust size for very small screens */
   }
@@ -1188,4 +1179,33 @@ header {
   .sidebar-navigation .social-icons li a {
     font-size: 14px; /* Adjust social icons size */
   }
+}
+
+/* Mobile navigation specific rules */
+#mobileNavbar .nav-link {
+    color: #2e0f13 !important;
+    transition: color 0.3s ease-in-out;
+}
+
+#mobileNavbar .nav-link:visited {
+    color: #2e0f13 !important;
+}
+
+#mobileNavbar .nav-link:hover,
+#mobileNavbar .nav-link.active-section,
+#mobileNavbar .nav-link:focus {
+    color: #0056b3 !important;
+    text-decoration: none;
+}
+
+/* Remove any default browser focus styles */
+.sidebar-navigation nav a:focus,
+#mobileNavbar .nav-link:focus {
+    outline: none;
+}
+
+/* Adjust spacing for sections */
+#announcement, #schoolcalendar, #campusmap, #facultymembers, 
+#campusorgs, #faqs, #feed, #aboutus {
+    padding-top: 80px;
 }

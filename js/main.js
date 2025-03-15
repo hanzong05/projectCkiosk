@@ -63,58 +63,74 @@ jQuery(document).ready(function($) {
                 loop: false
             }
         }
-    });
+    });var scrollTimeout;
 
-    // Smooth Scroll
-    var contentSection = $('.content-section, .main-banner');
+$(window).on('scroll', function() {
+    clearTimeout(scrollTimeout);  // Clear the previous timeout
+    scrollTimeout = setTimeout(function() {
+        // Your scroll event logic goes here
+        console.log("Scrolled");
+    }, 100);  // Adjust the delay as needed
+});
+
+
+    var contentSection = $('.content-section');
     var navigation = $('nav');
+    
+    // Hide all sections initially
+    contentSection.hide().removeClass('active-section');
+    
+    // Show announcement section by default
+    $('#announcement').show().addClass('active-section');
+    $('nav a[href="#announcement"], #mobileNavbar a[href="#announcement"]').addClass('active-section');
 
-    // When a nav link is clicked, smooth scroll to the section
-    navigation.on('click', 'a', function(event){
-        event.preventDefault(); // Prevent default action
-        smoothScroll($(this.hash));
+    // When a nav link is clicked
+    $('nav a, #mobileNavbar a').on('click', function(event) {
+        event.preventDefault();
+        
+        // Get the target section
+        var target = $($(this).attr('href'));
+        
+        // Remove active class from all nav items
+        $('nav a, #mobileNavbar a').removeClass('active-section');
+        // Add active class to clicked nav item
+        $(this).addClass('active-section');
+        
+        // Hide all sections
+        contentSection.hide().removeClass('active-section');
+        // Show target section
+        target.show().addClass('active-section');
+        
+        // Close mobile menu if open
+        $('#main-nav').removeClass("open");
     });
 
-    // Update navigation on scroll
-    $(window).on('scroll', function(){
-        updateNavigation();
-    });
-    
-    // Update navigation on page load
-    updateNavigation();
-
-    // Functions
-    function updateNavigation() {
-        var scrollPos = $(window).scrollTop() + ($(window).height() / 2);
-        var activeSectionFound = false;
-    
-        contentSection.each(function() {
-            var $section = $(this);
-            var sectionTop = $section.offset().top;
-            var sectionBottom = sectionTop + $section.outerHeight();
-            var sectionId = $section.attr('id');
-            var navigationMatch = $('nav a[href="#' + sectionId + '"]');
-    
-            // Check if the section is in view
-            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                navigationMatch.addClass('active-section');
-                activeSectionFound = true;
-            } else {
-                navigationMatch.removeClass('active-section');
+    // Update navigation based on hash change
+    $(window).on('hashchange', function() {
+        var hash = window.location.hash;
+        if (hash) {
+            var target = $(hash);
+            if (target.length) {
+                contentSection.hide().removeClass('active-section');
+                target.show().addClass('active-section');
+                
+                $('nav a, #mobileNavbar a').removeClass('active-section');
+                $('nav a[href="' + hash + '"], #mobileNavbar a[href="' + hash + '"]').addClass('active-section');
             }
-        });
-    
-        // If no section is in view, remove 'active-section' from all nav items
-        if (!activeSectionFound) {
-            $('nav a').removeClass('active-section');
         }
-    }
-    
+    });
 
-    function smoothScroll(target){
-        $('body,html').animate({
-            scrollTop: target.offset().top
-        }, 800);
+    // Handle initial hash on page load
+    if (window.location.hash) {
+        var initialHash = window.location.hash;
+        var target = $(initialHash);
+        if (target.length) {
+            contentSection.hide().removeClass('active-section');
+            target.show().addClass('active-section');
+            
+            $('nav a, #mobileNavbar a').removeClass('active-section');
+            $('nav a[href="' + initialHash + '"], #mobileNavbar a[href="' + initialHash + '"]').addClass('active-section');
+        }
     }
 
     // Smooth scroll for anchor links

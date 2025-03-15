@@ -1,5 +1,5 @@
 <?php
-session_start();
-include_once ("../class/mainclass.php");
+include_once ("../class/mainClass.php");
+
 $obj = new mainClass();
 ?>

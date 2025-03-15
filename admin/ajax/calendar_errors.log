@@ -1,0 +1,5 @@
+[11-Jan-2025 06:16:23 Europe/Berlin] PHP Warning:  require_once(../class/connection.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\ckiosk\admin\ajax\excel_events.php on line 281
+[11-Jan-2025 06:16:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required '../class/connection.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\ckiosk\admin\ajax\excel_events.php:281
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\ckiosk\admin\ajax\excel_events.php on line 281

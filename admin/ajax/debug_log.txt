@@ -1,0 +1,2452 @@
+[2025-02-13 12:51:08] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-13 12:51:08] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-13 12:54:45] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-13 12:54:45] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-13 12:56:06] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-13 12:56:06] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-13 12:59:51] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-13 12:59:51] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-13 13:00:20] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => month
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-13 13:00:20] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-13 13:00:20] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => month
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-13 13:00:20] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-18 11:50:10] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-18 11:50:11] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-18 11:51:49] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-18 11:51:49] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-18 11:52:05] Request parameters
+Data: Array
+(
+    [accountType] => 4
+    [userId] => 218
+    [type] => org
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-18 11:52:05] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback
+    [params] => Array
+        (
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-18 11:52:05] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 3.4800
+            [avg_communication] => 3.9600
+            [avg_inclusivity] => 4.0800
+            [avg_leadership] => 3.9200
+            [avg_skill_dev] => 3.8400
+            [avg_impact] => 3.8400
+            [total_feedback] => 25
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [1] => 2
+                    [2] => 7
+                    [3] => 2
+                    [4] => 5
+                    [5] => 9
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 3
+                    [3] => 5
+                    [4] => 7
+                    [5] => 10
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 8
+                    [4] => 4
+                    [5] => 12
+                )
+
+            [leadership_rating] => Array
+                (
+                    [2] => 2
+                    [3] => 7
+                    [4] => 7
+                    [5] => 9
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [2] => 4
+                    [3] => 6
+                    [4] => 5
+                    [5] => 10
+                )
+
+            [impact_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 10
+                    [4] => 6
+                    [5] => 8
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-02-10
+                    [avg_rating] => 4.17
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-09
+                    [avg_rating] => 4.33
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-08
+                    [avg_rating] => 3.03
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-02-01
+                    [avg_rating] => 4.50
+                )
+
+            [4] => Array
+                (
+                    [date] => 2025-01-27
+                    [avg_rating] => 2.83
+                )
+
+            [5] => Array
+                (
+                    [date] => 2025-01-26
+                    [avg_rating] => 3.57
+                )
+
+            [6] => Array
+                (
+                    [date] => 2025-01-07
+                    [avg_rating] => 4.17
+                )
+
+            [7] => Array
+                (
+                    [date] => 2024-12-30
+                    [avg_rating] => 5.00
+                )
+
+            [8] => Array
+                (
+                    [date] => 2024-12-29
+                    [avg_rating] => 5.00
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-23 12:10:08] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-23 12:10:09] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-23 12:10:25] Request parameters
+Data: Array
+(
+    [accountType] => 4
+    [userId] => 218
+    [type] => org
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-23 12:10:25] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback
+    [params] => Array
+        (
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-23 12:10:25] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 3.4800
+            [avg_communication] => 3.9600
+            [avg_inclusivity] => 4.0800
+            [avg_leadership] => 3.9200
+            [avg_skill_dev] => 3.8400
+            [avg_impact] => 3.8400
+            [total_feedback] => 25
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [1] => 2
+                    [2] => 7
+                    [3] => 2
+                    [4] => 5
+                    [5] => 9
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 3
+                    [3] => 5
+                    [4] => 7
+                    [5] => 10
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 8
+                    [4] => 4
+                    [5] => 12
+                )
+
+            [leadership_rating] => Array
+                (
+                    [2] => 2
+                    [3] => 7
+                    [4] => 7
+                    [5] => 9
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [2] => 4
+                    [3] => 6
+                    [4] => 5
+                    [5] => 10
+                )
+
+            [impact_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 10
+                    [4] => 6
+                    [5] => 8
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-02-10
+                    [avg_rating] => 4.17
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-09
+                    [avg_rating] => 4.33
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-08
+                    [avg_rating] => 3.03
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-02-01
+                    [avg_rating] => 4.50
+                )
+
+            [4] => Array
+                (
+                    [date] => 2025-01-27
+                    [avg_rating] => 2.83
+                )
+
+            [5] => Array
+                (
+                    [date] => 2025-01-26
+                    [avg_rating] => 3.57
+                )
+
+            [6] => Array
+                (
+                    [date] => 2025-01-07
+                    [avg_rating] => 4.17
+                )
+
+            [7] => Array
+                (
+                    [date] => 2024-12-30
+                    [avg_rating] => 5.00
+                )
+
+            [8] => Array
+                (
+                    [date] => 2024-12-29
+                    [avg_rating] => 5.00
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-02-23 12:20:45] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-02-23 12:20:45] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-01 15:13:20] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-03-01 15:13:20] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-01 15:16:04] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-03-01 15:16:04] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-01 15:16:11] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-03-01 15:16:11] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-01 15:17:29] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-03-01 15:17:29] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-01 15:32:29] Request parameters
+Data: Array
+(
+    [accountType] => 4
+    [userId] => 218
+    [type] => org
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-03-01 15:32:29] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback
+    [params] => Array
+        (
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-01 15:32:29] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 3.5000
+            [avg_communication] => 4.0000
+            [avg_inclusivity] => 4.1154
+            [avg_leadership] => 3.9615
+            [avg_skill_dev] => 3.8462
+            [avg_impact] => 3.8846
+            [total_feedback] => 26
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [1] => 2
+                    [2] => 7
+                    [3] => 2
+                    [4] => 6
+                    [5] => 9
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 3
+                    [3] => 5
+                    [4] => 7
+                    [5] => 11
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 8
+                    [4] => 4
+                    [5] => 13
+                )
+
+            [leadership_rating] => Array
+                (
+                    [2] => 2
+                    [3] => 7
+                    [4] => 7
+                    [5] => 10
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [2] => 4
+                    [3] => 6
+                    [4] => 6
+                    [5] => 10
+                )
+
+            [impact_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 10
+                    [4] => 6
+                    [5] => 9
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.67
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-10
+                    [avg_rating] => 4.17
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-09
+                    [avg_rating] => 4.33
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-02-08
+                    [avg_rating] => 3.03
+                )
+
+            [4] => Array
+                (
+                    [date] => 2025-02-01
+                    [avg_rating] => 4.50
+                )
+
+            [5] => Array
+                (
+                    [date] => 2025-01-27
+                    [avg_rating] => 2.83
+                )
+
+            [6] => Array
+                (
+                    [date] => 2025-01-26
+                    [avg_rating] => 3.57
+                )
+
+            [7] => Array
+                (
+                    [date] => 2025-01-07
+                    [avg_rating] => 4.17
+                )
+
+            [8] => Array
+                (
+                    [date] => 2024-12-30
+                    [avg_rating] => 5.00
+                )
+
+            [9] => Array
+                (
+                    [date] => 2024-12-29
+                    [avg_rating] => 5.00
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-02 13:28:53] Request parameters
+Data: Array
+(
+    [accountType] => 4
+    [userId] => 218
+    [type] => org
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-03-02 13:28:53] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback
+    [params] => Array
+        (
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-02 13:28:53] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 3.5000
+            [avg_communication] => 4.0000
+            [avg_inclusivity] => 4.1154
+            [avg_leadership] => 3.9615
+            [avg_skill_dev] => 3.8462
+            [avg_impact] => 3.8846
+            [total_feedback] => 26
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [1] => 2
+                    [2] => 7
+                    [3] => 2
+                    [4] => 6
+                    [5] => 9
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 3
+                    [3] => 5
+                    [4] => 7
+                    [5] => 11
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 8
+                    [4] => 4
+                    [5] => 13
+                )
+
+            [leadership_rating] => Array
+                (
+                    [2] => 2
+                    [3] => 7
+                    [4] => 7
+                    [5] => 10
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [2] => 4
+                    [3] => 6
+                    [4] => 6
+                    [5] => 10
+                )
+
+            [impact_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 10
+                    [4] => 6
+                    [5] => 9
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.67
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-10
+                    [avg_rating] => 4.17
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-09
+                    [avg_rating] => 4.33
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-02-08
+                    [avg_rating] => 3.03
+                )
+
+            [4] => Array
+                (
+                    [date] => 2025-02-01
+                    [avg_rating] => 4.50
+                )
+
+            [5] => Array
+                (
+                    [date] => 2025-01-27
+                    [avg_rating] => 2.83
+                )
+
+            [6] => Array
+                (
+                    [date] => 2025-01-26
+                    [avg_rating] => 3.57
+                )
+
+            [7] => Array
+                (
+                    [date] => 2025-01-07
+                    [avg_rating] => 4.17
+                )
+
+            [8] => Array
+                (
+                    [date] => 2024-12-30
+                    [avg_rating] => 5.00
+                )
+
+            [9] => Array
+                (
+                    [date] => 2024-12-29
+                    [avg_rating] => 5.00
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-03-04 12:36:53] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-03-04 12:36:53] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_0_satisfaction] => 3.8000
+            [avg_1_time] => 3.4000
+            [avg_2_requirements] => 4.0000
+            [avg_3_steps] => 4.4000
+            [avg_4_information] => 4.4000
+            [total_feedback] => 5
+            [avg_cc_awareness] => 2.4
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd0_satisfaction] => Array
+                (
+                    [3] => 2
+                    [4] => 2
+                    [5] => 1
+                )
+
+            [sqd1_time] => Array
+                (
+                    [0] => 1
+                    [3] => 1
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                    [4] => 3
+                    [5] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+            [sqd4_information] => Array
+                (
+                    [4] => 3
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-01-23
+                    [avg_rating] => 4.20
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-02-13
+                    [avg_rating] => 3.60
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-02-26
+                    [avg_rating] => 4.10
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-03-01
+                    [avg_rating] => 4.00
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.4
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 60
+                    [neutral] => 20
+                    [negative] => 20
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------

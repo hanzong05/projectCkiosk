@@ -1,1991 +1,4153 @@
 <?php
-include_once ("class/mainclass.php");
-$obj = new mainClass();
-$allAnnouncement = $obj->show_announcement2();
-$allEvent = $obj->show_eventsByMonth();
-$allIt = $obj->show_allIt();
-$allCs = $obj->show_allCs();
-$allIs = $obj->show_allIs();
-$allOrg = $obj->show_org();
-$allMit = $obj->show_allMit();
+    include_once ("class/mainClass.php");
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-$allItHeads = $obj->show_allItHeads();
-$allCsHeads = $obj->show_allCsHeads();
-$allIsHeads = $obj->show_allIsHeads();
-$allMitHeads = $obj->show_allMitHeads();
-$allDean = $obj->show_allDeanHeads();
-$all2 = $obj->show_alllvl2();
-$all3 = $obj->show_alllvl3();
-$showfaqs = $obj->show_allFAQS();
+    $obj = new mainClass();
+    $allAnnouncement = $obj->show_announcement2();
+    $allIt = $obj->show_allIt(1);            // IT members or data for some purpose
+    $allItHeads = $obj->show_allItHeads(10);  // IT heads data
+    $allCs = $obj->show_allcs(2);            // CS members or data
+    $allCsHeads = $obj->show_allCsHeads(12);  // CS heads data
+    $allIs = $obj->show_allis(3);            // IS members or data
+    $allIsHeads = $obj->show_allIsHeads(11);  // IS heads data
+    $allMit = $obj->show_allmit(4);         // MIT members or data
+    $allMitHeads = $obj->show_allMitHeads(13);
+    $showfaqs = $obj->show_allFAQS();
+    $allOrg = $obj->show_org();
+    $allDean = $obj->show_dean(5);
+    $all2 = $obj->all_assist(6);
+    $all3 = $obj->all_mem([7, 8, 9]); // Fetch faculty data for departments 7, 8, and 9
+
+    $allEvent = $obj->show_eventsByMonth();
 
 
-?>
-<!DOCTYPE html>
-<html>
+    
+    ?>
+    <!DOCTYPE html>
+    <html>
 
-<head>
-    <meta charset="utf-8">
+    <head><meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Campus Kiosk</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- Tailwind CSS --><link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <!-- Bootstrap 5.3.0 (corrected version) CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/light-box.css">
-    <link rel="stylesheet" href="css/owl-carousel.css">
-    <link rel="stylesheet" href="css/templatemo-style.css">
 
-    <link rel="stylesheet" href="css/responsive.css">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/light-box.css">
+        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
 
-    <!-- Modernizr for browser feature detection -->
-    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <style>
-          .member-card {
+        <link rel="stylesheet" href="css/responsive.css">
+
+        <!-- Modernizr for browser feature detection -->
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <style>
+    
+            .fixed-top {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1030; /* Make sure the navbar stays above other content */
+    }
+
+    /* Optional: Add transitions for smooth visibility of dropdowns or collapse */
+    .navbar-collapse {
         transition: all 0.3s ease;
     }
-    .member-card:hover {
+            .navbar-collapse.collapse {
+        visibility: visible !important; /* Ensure visibility is set properly */
+        display: none !important; /* Enforce display none to hide when collapsed */
+    }
+
+    .navbar-collapse.collapse.show {
+        display: block !important; /* Enforce display block when shown */
+    }
+
+            @media (max-width: 768px) {
+    .remove-padding-sm {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    }
+
+        
+       @media (min-width: 951px) { /* Corrected max-width instead of min-width */
+        .page-content {
+    width: 77.5%;
+    float: right;
+    }
+    }
+
+    @media(max-width: 950px){.page-content {
+    width: 100%;
+    float: right;
+    }
+        
+    }
+    
+    .announcement-item {
+  max-height: max-content; /* Allow content to determine height */
+  overflow: hidden; /* Hide overflow */
+}
+
+/* Adjust the carousel container to reduce empty space */
+.carousel-container {
+  margin-bottom: 10px !important;
+  margin-top: 10px !important;
+}
+
+/* Remove excessive padding */
+.announcement-item .announcement-details {
+  padding-bottom: 10px !important;
+}
+
+/* Adjust image container to reduce height when needed */
+.carousel-item img {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* Make sure footer sticks closer to content */
+.announcement-footer {
+  margin-top: 5px !important;
+  padding-top: 0 !important;
+}
+
+/* Reduce space below content */
+.announcement-content {
+  margin-bottom: 5px !important;
+}
+    .see-more-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: block;
+  transition: color 0.2s ease;
+}
+
+.announcement-details {
+  transition: all 0.3s ease;
+}
+            .modal-content {
+                border-radius: 15px;
+                border: none;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+            .modal-title {
+                font-weight: 600;
+                margin: 0;
+            }
+
+            .progress-steps {
+                display: flex;
+                justify-content: center;
+                padding: 1.5rem 0;
+            }
+
+            .step-indicator {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                background-color: #e9ecef;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 1rem;
+                position: relative;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .step-indicator.active {
+                background-color: #6366f1;
+                color: white;
+            }
+
+            .step-indicator:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                background-color: #e9ecef;
+                right: -100%;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .emoji-rating {
+                display: flex;
+                justify-content: space-around;
+                padding: 2rem 0;
+            }
+
+            .emoji-select {
+                font-size: 2.5rem;
+                cursor: pointer;
+                transition: transform 0.2s;
+                opacity: 0.5;
+            }
+
+            .emoji-select:hover {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            .emoji-select.selected {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-label {
+                font-weight: 500;
+                color: #4b5563;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-control {
+                border-radius: 8px;
+                padding: 0.75rem;
+                border: 1px solid #e5e7eb;
+            }
+
+            .form-control:focus {
+                border-color: #6366f1;
+                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            }
+
+            .radio-group {
+                display: grid;
+                gap: 0.75rem;
+                padding: 0.5rem 0;
+            }
+
+            .radio-option {
+                display: flex;
+                align-items: center;
+                padding: 0.75rem;
+                border-radius: 8px;
+                background-color: #f8f9fa;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .radio-option:hover {
+                background-color: #e9ecef;
+            }
+
+            .radio-option input {
+                margin-right: 0.75rem;
+            }
+
+            .step {
+                display: none;
+                animation: fadeIn 0.5s ease;
+            }
+
+            .step.active {
+                display: block;
+            }
+
+            .modal-footer {
+                border-top: 1px solid #e5e7eb;
+                padding: 1.25rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 500;
+                transition: all 0.2s;
+            }
+
+            .btn-primary {
+                background-color: #6366f1;
+                border-color: #6366f1;
+            }
+
+            .btn-primary:hover {
+                background-color: #4f46e5;
+                border-color: #4f46e5;
+            }
+
+            .btn-success {
+                background-color: #10b981;
+                border-color: #10b981;
+            }
+
+            .btn-success:hover {
+                background-color: #059669;
+                border-color: #059669;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            
+            /* School Calendar */
+            .p-61 {
+                padding: 1.5rem;
+                background-color: #ffd559;
+            }
+            
+            .p-4 {
+                padding: 1.5rem !important;
+                background-color: #2e0f13;
+            }
+             
+            .items-start {
+                align-items: flex-start;
+                background-color: #6a221b;
+                padding: 1%;
+                border-radius: 10px;
+            }
+            
+            .text-gold-900 {
+                --tw-text-opacity: 1;
+                 color: #ffc107;
+            }
+            
+            .text-white-500 {
+                --tw-text-opacity: 1;
+                color: #f8f9fa;
+                font-weight: bold;
+            }
+            
+            .py-4 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    background-color: #ffffffcf;
+    border: 1px solid;
+}
+            
+            .p-6 {
+    padding: 1.5rem;
+    border: 1px solid;
+    background-color: #fbc51f6e;
+}
+            .font-semibold {
+    font-weight: 600;
+    color: #212529;
+    text-align: left;
+    font-size: 80%;
+}
+             
+        </style>
+        <style>/* Make sure the text doesn't overflow */
+    .feedback-section * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    .feedback-section {
+        min-height: 100vh;
+        padding: 2rem;
+    }
+
+    .feedback-section .feedback-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .feedback-section .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+    }
+
+    .feedback-section .header h1 {
+        font-size: 3rem;
+        color: #1f2937;
+        margin-bottom: 1rem;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .feedback-section .header p {
+        color: #4b5563;
+        font-size: 1.2rem;
+    }
+
+    .feedback-section .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .feedback-section .stat-card {
+        background: #ffe598;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s ease;
+    }
+
+    .feedback-section .stat-card:hover {
         transform: translateY(-5px);
     }
-    .member-card .card-img-top {
-        transition: all 0.5s ease;
+
+    .feedback-section .stat-icon {
+        width: 48px;
+        height: 48px;
+        background: #e0e7ff;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
     }
-    .member-card:hover .card-img-top {
-        transform: scale(1.1);
+
+    .feedback-section .stat-info h3 {
+        color: #4b5563;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
     }
-    .overlay-gradient {
-        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 100%);
+
+    .feedback-section .stat-info p {
+        color: #1f2937;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .feedback-section .main-card {
+    background: #ffe598;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 19px -1px 15px rgb(0 0 0 / 25%);
+}
+
+    .feedback-section .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .feedback-section .submit-btn {
+        background: #4f46e5;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .feedback-section .submit-btn:hover {
+        background: #4338ca;
+        transform: scale(1.05);
+    }
+    
+    .submit-btn {
+        border-radius: 0.75rem;
+    }
+
+    .feedback-section .feedback-list {
+        max-height: 500px;
+        overflow-y: auto;
+        margin-bottom: 2rem;
+    }
+
+    .feedback-section .feedback-item {
+        background: #2e0f13;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+    }
+
+    .feedback-section .feedback-item:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .feedback-section .feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    background-color: #6a221b;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+    .feedback-section .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .feedback-section .avatar {
+        width: 40px;
+        height: 40px;
+        background: #e0e7ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #4f46e5;
+    }
+
+    .feedback-section .rating {
+        color: #eab308;
+        font-size: 1.2rem;
+    }
+
+    .feedback-section .feedback-content {
+        color: #4b5563;
+        line-height: 1.6;
+    }
+
+    .feedback-section .footer {
+        border-top: 1px solid #e5e7eb;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .feedback-section .footer-stat h4 {
+        color: #4b5563;
+        margin-bottom: 0.5rem;
+    }
+
+    .feedback-section .footer-stat p {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4f46e5;
+    }
+
+    /* Scrollbar Styling */
+    .feedback-section .feedback-list::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .feedback-section .feedback-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    .feedback-section .feedback-list::-webkit-scrollbar-thumb {
+        background: #c7c7c7;
+        border-radius: 4px;
+    }
+
+    .feedback-section .feedback-list::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+
+    @media (max-width: 768px) {
+        .feedback-section .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .feedback-section .footer {
+            grid-template-columns: 1fr;
+        }
+
+        .feedback-section .header h1 {
+            font-size: 2rem;
+        }
+    }
+    </style>
+        <style>
+
+    .event-details {
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+        .section-content h3 {
+        font-family: 'Arial', sans-serif; /* Use a clean, modern font */
+        font-size: 1.75rem; /* Set the font size */
+        color: #2e0f13; /* Green color for emphasis */
+        font-weight: bold; /* Make it bold */
+        margin-top: 40px; /* Add space above */
+        margin-bottom: 10px; /* Add space below */
+        text-transform: uppercase; /* Uppercase for a more formal feel */
+        letter-spacing: 1px; /* Add slight letter spacing for readability */
+        border-bottom: 2px solid #2e0f13; /* Green border to match the theme */
+        padding-bottom: 5px; /* Add some padding below */
+    }
+
+    @media (min-width: 768px) {
+        .row-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 4 items per row on large screens */
+            gap: 20px; /* Space between items */
+        }
+        
+        
+    /* Aspect ratio box to maintain a consistent image shape */
+    .aspect-ratio-box {
+        width: 150px; /* Fixed size for uniform appearance */
+        height: 150px; /* Ensures aspect ratio */
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%; /* Start as a circle */
+        transition: border-radius 0.3s ease;
+    }
+
+
+    .aspect-ratio-box:hover {
+        border-radius: 0; /* Change to square on hover */
+    }
+
+    .aspect-ratio-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .aspect-ratio-box:hover img {
+        transform: scale(1.05); /* Slight zoom effect on hover */
+    }
+
+    /* Overlay to show on hover */
+    .card-overlay {
+        position: absolute;
+        start: 0;
+        end: 0;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
         opacity: 0;
-        transition: all 0.3s ease;
+        transition: opacity 0.3s ease;
     }
-    .member-card:hover .overlay-gradient {
-        opacity: 1;
+
+    .aspect-ratio-box:hover .card-overlay {
+        opacity: 1; /* Show overlay on hover */
     }
-    .btn-primary {
-        transition: all 0.3s ease;
+
+            .custom-alert {
+            background-color: #f0f8ff;
+            border: 1px solid #add8e6;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            color: #005f73;
+        }
     }
-    .btn-primary:active {
-        transform: scale(0.95);
-    }
-          .news-feed-container {
-            max-width: 1200px;
-            margin: 0 auto;
+    
+    .text-gold-900 {
+    --tw-text-opacity: 1;
+    color: #ffc107;
+}
+
+    /* For small screens (less than 768px), apply horizontal scrolling */
+    @media (max-width: 767px) {
+        .row-container {
+            display: flex;
+            flex-wrap: nowrap; /* Single row */
+            gap: 20px; /* Space between items */
+            overflow-x: auto; /* Enables horizontal scroll */
             padding: 20px;
         }
 
-        .profile-photo {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
+        .row-container::-webkit-scrollbar {
+            height: 8px;
         }
 
-        .announcement-item-bg {
-            background-color: #f8f9fa;
-            transition: all 0.3s ease;
-            border-left: 4px solid #0d6efd;
-        }
-
-        .announcement-item-bg:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .announcement-date {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .announcement-image {
-    width: auto; /* Make the container full width */
-    height: auto; /* Maintain the aspect ratio */
-    padding:100px;
-   
-}
-
-.announcement-image img {
-    width: 100%; /* Make the image full width */
-    height: auto; /* Maintain the aspect ratio */
-}
-
-
-        .profile-card {
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .profile-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
-
-        .profile-img {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .profile-name {
-            margin-bottom: 4px;
-            color: #2c3e50;
-        }
-
-        .profile-username {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .nav-tabs {
-            border-bottom: 2px solid #dee2e6;
-            margin-bottom: 20px;
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            color: #6c757d;
-            font-weight: 500;
-            padding: 12px 20px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #0d6efd;
-            border-bottom: 3px solid #0d6efd;
-            background: transparent;
-        }
-
-        .show-members-btn {
-            margin-left: auto;
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .show-members-btn:hover {
-            background-color: #0b5ed7;
-            transform: translateY(-1px);
-        }
-
-        #newsFeedContent {
-            min-height: 400px;
-        }
-.card {
-    background: #ffffff;
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* Aspect Ratio Box */
-.aspect-ratio-box {
-    position: relative; /* Ensure this is set for absolute positioning of the img */
-    height: 200px; /* Set a fixed height */
-    overflow: hidden; /* Hide any overflow to maintain the aspect ratio */
-}
-
-.aspect-ratio-box img {
-    /* Center horizontally */
-    width: 100%; /* Let width auto to maintain aspect ratio */
-    height: 100%; /* Fixed height */
-    object-fit: cover; /* Cover the container */
-    transition: transform 0.5s ease;
-}
-/* Hover Effects */
-.transform-hover {
-    transition: transform 0.5s ease;
-}
-
-.card:hover .transform-hover {
-    transform: scale(1.1);
-}
-
-.card:hover .card-overlay {
-    opacity: 1;
-}
-
-/* Gradient Overlay */
-.bg-gradient-dark {
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-    transition: opacity 0.3s ease;
-}
-
-/* Rounded Corners */
-.rounded-top-xl {
-    border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
-}
-
-.rounded-xl {
-    border-radius: 0.75rem;
-}
-
-/* Text Sizes */
-.text-sm {
-    font-size: 0.875rem;
-}
-
-.text-xs {
-    font-size: 0.75rem;
-}
-
-/* Backdrop Blur */
-.backdrop-blur-sm {
-    backdrop-filter: blur(4px);
-}
-
-/* Row Spacing */
-.row {
-    margin-bottom: 2rem;
-}
-
-/* Equal Height Cards */
-.row-cols-1 > * {
-    height: 100%;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-    .row-cols-lg-4 > * {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
-
-@media (max-width: 576px) {
-    .row-cols-lg-4 > * {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-}
-        .tab-navigation {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .tab-button {
-        background-color: #f1f1f1;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        margin: 0 5px;
-    }
-    .tab-button.active {
-        background-color: #ccc;
-        font-weight: bold;
-    }
-    .tab-content {
-        display: block;
-    }
-    .tab-content.active {
-        display: block;
-    }
-    .svg-container {
-        width: 100%;
-        overflow: auto;
-    }
-    .map-building {
-        cursor: pointer;
-        transition: fill 0.3s;
-    }
-    .map-building:hover {
-        fill: orange;
-    }
-        .highlight {
-            fill: yellow; /* Highlight color */
-        }
-        svg {
-            width: 100%;
-            height: auto;
+        .row-container::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
         }
         
-        /* Hover effects */
-        rect {
-            transition: fill 0.3s;
-                
-        }
-
-        rect:hover {
-            fill: #B0B0B0; /* Change color on hover */
-        }
-
-        text {
-            font-family: Arial, sans-serif;
-            
-            fill: black;
-            pointer-events: none; /* Prevent hover effects on text */
-        }
-           .faq-header h1 {
-            font-weight: bold;
-        }
-
-        .faq-header p.lead {
-            margin-bottom: 30px;
-            color: #666;
-        }
-
-        .accordion-button {
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        .accordion-body {
-            font-size: 1rem;
-        }
-
-        .faq-image {
-            text-align: center;
-            display: flex;
-            justify-content: center; /* Center the image */
-            align-items: center; /* Vertically center the image */
-            height: 90%; /* Make the column full height */
-        }
-
-        .faq-image img {
-            max-width: 80%;
-            height: auto; /* Keep aspect ratio */
-        }
-
-        .faq-toggle-icon {
-    right: 10px; /* Adjust the spacing from the right as needed */
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease; /* Smooth transition */
-}
-   .floating-card {
-    position: relative;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 10px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    margin-bottom: 20px;
-    max-width: 400px;
-    margin: 0 auto;
-    z-index: 1;
-}
-
-.floating-card:before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    width: 100px;
-    height: 15px;
-    background: rgba(0, 0, 0, 0.15);
-    filter: blur(10px);
-    border-radius: 50%;
-    transform: translateX(-50%);
-    z-index: -1;
-    transition: all 0.3s ease-in-out;
-}
-
-.floating-card:hover {
-    transform: translateY(-10px);
-}
-
-.floating-card:hover:before {
-    width: 120px;
-    height: 20px;
-    filter: blur(12px);
-    opacity: 0.8;
-}
-
-
-.text1{
-	font-size: 13px;
-    font-weight: 500;
-    color: #56575b;
-}
-.text2{
-	font-size: 13px;
-    font-weight: 500;
-    margin-left: 6px;
-    color: #56575b;
-}
-.text3{
-	font-size: 13px;
-    font-weight: 500;
-    margin-right: 4px;
-    color: #828386;
-}
-.text3o{
-	color: #00a5f4;
-
-}
-.text4{
-	font-size: 13px;
-    font-weight: 500;
-    color: #828386;
-}
-.text4i{
-	color: #00a5f4;
-}
-.text4o{
-	color: white;
-} /* Styles for the backdrop */
-       .highlight {
-    background-color: yellow !important; /* Use !important to override inline styles if needed */
     }
-    .feedback-list {
-            max-height: 300px; /* Limit height of feedback list */
-            overflow-y: auto; /* Enable scrolling if content exceeds height */
+    /* For smaller screens, make the container horizontally scrollable */
+    @media (max-width: 767px) {
+        .row-container {
+            flex-wrap: nowrap; /* Prevent wrapping on small screens */
+            overflow-x: auto;  /* Enable horizontal scrolling */
+            padding: 20px;
         }
-        .emoji-select {
-            cursor: pointer;
-            font-size: 2rem;
-            transition: transform 0.2s;
+
+        .row-container::-webkit-scrollbar {
+            height: 8px;
         }
-        .emoji-select:hover {
-            transform: scale(1.2);
+
+        .row-container::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
         }
-        .selected {
-    color: gold; /* Change color to indicate selection */
-    transform: scale(1.5); /* Scale up the selected emoji for emphasis */
-}
-.avatar {
-        width: 30px; /* Set the width */
-        height: 30px; /* Set the height */
-        object-fit: cover; /* Cover ensures the image fills the circle without distorting */
-        border-radius: 50%; /* Make it circular */
     }
 
-#backdrop {
-    position: fixed; /* Make backdrop cover the entire viewport */
-    top: 0;
-    left: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
-    display: none; /* Hidden by default */
-    z-index: 999; /* On top of other elements */
-}
-
-#profileCard {
-      display: none; /* Initially hidden */
-      position: fixed; /* Fixed position */
-      top: 50%; /* Center vertically */
-      left: 50%; /* Center horizontally */
-      transform: translate(-50%, -50%); /* Adjust position */
-      z-index: 1000; /* Ensure it appears on top */
-      background-color: white; /* Background color */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-      border-radius: 10px; /* Rounded corners */
-      overflow: hidden; /* Prevent overflow */
-      width: 300px; /* Adjust width to fit the content */
-      height: auto; /* Automatic height based on content */
-      padding: 20px; /* Padding around content */
-  }
-
-  .card {
-      width: 100%; /* Full width of the profile card */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center; /* Center items */
-      text-align: center; /* Center text */
-  }
-
-    .modal-body img {
-    /* Make the image circular */
-    border: 2px solid #f0f0f0; /* Optional: Add a border around the image */
-    object-fit: cover; /* Ensure the image covers the entire area */
-    }
-.org-chart {
-    text-align: center;
-    background-color: #f9f9f9; /* Light gray background */
-    padding: 20px;
-}
-
-.level1, .level2, .level3 {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-/* Level 1 specific styling */
-.level1 .member {
-    background-color: #2e0f13; /* Deep pink for main level */
-}
-
-/* Level 2 specific styling */
-.level2 {
-    justify-content: space-around;
-    margin-top: 50px;
-}
-
-.level2 .member {
-    background-color: #2e0f13; /* Deep indigo for secondary levels */
-}
-
-/* Level 3 specific styling */
-.level3 {
-    justify-content: center; /* Center items for responsiveness */
-    flex-wrap: wrap; /* Allow wrapping of items */
-    margin-top: 50px;
-    width: 90%;
-    margin: 0 auto;
-}
-
-/* Member ovals */
-.member {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: #2e0f13; /* Deep indigo for default */
-    padding: 10px 20px;
-    border-radius: 50px; /* Oval shape */
-    max-width: 250px; /* Set a max width */
-    height: 80px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    transition: background-color 0.3s, transform 0.2s;
-    margin: 10px; /* Add margin for spacing between items */
-    flex: 0 1 auto; /* Allow the flex item to be auto-sized */
-}
-
-/* Adjust member width for different item counts */
-.level3 .member {
-    flex: 0 1 calc(33.33% - 20px); /* 3 items per row with margin */
-}
-
-/* For 4 or fewer items, center them */
-.level3 .member:nth-last-child(-n+4) {
-    flex: 0 1 calc(50% - 20px); /* 2 items per row if 4 or fewer */
-}
-
-.level3 .member:nth-last-child(1) {
-    flex: 0 1 100%; /* 1 item should take full width */
-}
-
-/* Hover effect for ovals */
-.member:hover {
-    background-color: #1E88E5; /* Lighter blue on hover */
-    transform: scale(1.05); /* Slight scale on hover */
-}
-
-/* Image in the oval */
-.member img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Circle image */
-    object-fit: cover;
-    border: 2px solid #ffffff; /* White border for contrast */
-    margin-right: 10px;
-}
-
-/* Text inside the oval */
-.member p {
-    color: #FFD700; /* Gold text for contrast */
-    font-size: 12px; /* Smaller font size for readability */
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-}
-
-/* Active state for member */
-.button-faculty-btn.active {
-    background-color: #F06292; /* Light pink for active state */
-}
-
-/* Hover and focus effect for buttons */
-.button-faculty-btn:hover,
-.button-faculty-btn.active {
-    background-color: #F06292;
-    transform: scale(1.05);
-}
-
-.button-faculty-btn:focus {
-    outline: none;
-}
-
-.faculty-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #333;
-    margin-bottom: 10px;
-}
-
-.faculty-info {
-    padding: 15px;
-    text-align: center;
-}
-
-.faculty-info h6 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.faculty-info a {
-    font-size: 14px;
-    color: #fff;
-    display: block;
-    margin-top: 5px;
-}
-
-@media (max-width: 576px) {
-    .section-heading h1 {
-        font-size: 1.25em;
+    /* Aspect ratio box to maintain a consistent image shape */
+    .aspect-ratio-box {
+        width: 150px; /* Fixed size for uniform appearance */
+        height: 150px; /* Ensures aspect ratio */
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%; /* Start as a circle */
+        transition: border-radius 0.3s ease;
     }
 
-    .content-section {
-        padding: 10px;
+    .aspect-ratio-box:hover {
+        border-radius: 0; /* Change to square on hover */
     }
 
-    .item {
-        padding: 10px;
+    .aspect-ratio-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }.card-title {
+        display: block;  /* Ensures the title behaves as a block element */
+        font-size: 1.25rem;  /* Slightly larger font size for emphasis */
+        font-weight: 600;  /* Bold weight for more prominence */
+        color: #333;  /* Dark color for better readability */
+        line-height: 1.6em;  /* Increased line height for better text spacing */
+        white-space: normal; /* Allow line breaks */
+        word-wrap: break-word; /* Break words to fit within the container */
+        margin-bottom: 0.5rem;  /* Adds a little more space below the title */
+        padding: 0.25rem 0;  /* Small vertical padding for comfort */
+        text-align: center;  /* Center the title text */
+        letter-spacing: 0.5px;  /* Adds subtle spacing between letters for better readability */
+        overflow: hidden;  /* Ensures that the text doesn't spill out */
+        text-overflow: ellipsis;  /* Adds ellipsis if the title exceeds the container width */
+        max-width: 100%; /* Ensure the text respects the container width */
+        max-height: 4.8em; /* Adjusted to allow up to two lines */
     }
 
-    .timestamp {
-        font-size: 0.7em;
+    .card-title span {
+        display: block;  /* Display as a block element for better control */
+        color: #6c757d;  /* Light, muted color for additional text or description */
+        font-size: 0.875rem;  /* Smaller size for the secondary text */
+        text-align: center;  /* Center the secondary text as well */
+        margin-top: 1rem;  /* Adds space between title and the additional info */
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 100%; /* Ensure the card body fills the container */
+    }
+
+    .card-body .card-title {
+        flex-grow: 1; /* Allow the card title to grow and fill available space */
+    }
+
+
+    /* Optional: Adjust the card container to avoid overlapping */
+    .card {
+        word-wrap: break-word;
+    }
+
+
+    .aspect-ratio-box:hover img {
+        transform: scale(1.05); /* Slight zoom effect on hover */
+    }
+
+    /* Overlay to show on hover */
+    .card-overlay {
+        position: absolute;
+        start: 0;
+        end: 0;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .aspect-ratio-box:hover .card-overlay {
+        opacity: 1; /* Show overlay on hover */
+    }
+
+        .custom-alert i {
+            color: #005f73;
+        }
+            .conten-ann.list-group-item.bg-white.rounded-lg.shadow-sm.p-4.mb-4 {
+        --bs-bg-opacity: 1;
+        background-color: rgb(237 229 176 / 74%) !important;
+    }
+        .tab-content {
+        padding-top: 1.5rem;
+    }
+    /* Tabs Styling */
+    #feedTabs {
+        background-color: #fff;
+    }
+
+    #feedTabs .nav-link {
+        font-weight: 600;
+        color: #4B5563; /* Dark gray for the tabs */
+        background-color: transparent;
+        border: none;
+    }
+
+    #feedTabs .nav-link:hover {
+        color: #1F2937; /* Darker gray on hover */
+    }
+
+    #feedTabs .nav-link.active {
+        color: white;
+        background:linear-gradient(135deg, #6366f1, #d8d3e5);
+    
+    }
+    #newsFeedContent {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .modal-body {
+        flex: 1; /* Take up the remaining space */
+        width: 100%; /* Ensure the body spans the full width */
+        overflow: auto; /* Allow scrolling if content overflows */
+        padding: 20px; /* Optional: add padding inside the body */
+            background-color: #fff;
+    }
+
+    .announcement-item {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .announcement-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .announcement-header img {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 30px;
+    }
+
+    .announcement-header h4 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .announcement-header p {
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+
+    .announcement-content p {
+        color: #4b5563;
+    }
+
+    .announcement-content span {
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+    .btn-close {
+        color: #fff;
+        opacity: 1;
+    }
+
+    .btn-close:hover {
+        color: #e5e7eb;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .nav-tabs .nav-link.active {
+        border-bottom-color: #3b82f6;
+        color: #3b82f6;
+    }
+
+    .nav-tabs .nav-link:hover {
+        border-bottom-color: #6b7280;
+    }
+
+    .aspect-ratio-box {
+        width: 150px; /* Fixed size for uniform appearance */
+        height: 150px; /* Ensures aspect ratio */
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%; /* Start as a circle */
+        transition: border-radius 0.3s ease;
+    }
+
+    .aspect-ratio-box:hover {
+        border-radius: 0; /* Change to square on hover */
+    }
+
+    .aspect-ratio-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .aspect-ratio-box:hover img {
+        transform: scale(1.05);
+    }
+
+    .card-overlay {
+        position: absolute;
+        start: 0;
+        end: 0;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .aspect-ratio-box:hover .card-overlay {
+        opacity: 1; /* Show overlay on hover */
+    }
+
+
+    .image-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        overflow: hidden;
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column; /* Stack header, body, and footer vertically */
+        justify-content: flex-start; /* Align children at the top */
+        align-items: stretch; /* Ensure children take up the full width */
+        width: 100%;
+        height: 100%;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%; /* Ensure header spans full width */
+        padding: 10px 20px; /* Add padding to the header */
+        background-color: #2e0f13; /* Optional: Make header background transparent */
+        border-bottom: 1px solid #ddd; /* Optional: Add a border between header and body */
+    }
+
+    .modal-body {
+        flex: 1;
+        width: 100%;
+        overflow: auto;
+        padding: 20px;
+    }
+
+    .modal-footer {
+        width: 100%;
+        padding: 10px 20px; /* Optional: Add padding for the footer */
+        text-align: right; /* Optional: Align footer content to the right */
+    }
+
+
+    .modal-img {
+        max-width: 90%;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 4px;
+    }
+        
+
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        color: #fa0c0c;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .close-modal:hover {
+        color: #fef08a;
+    }
+
+    .modal-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-nav:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-prev { left: 20px; }
+    .modal-next { right: 20px; }
+
+    .carousel-item img {
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+    }
+
+    .carousel-item img:hover {
+        opacity: 0.9;
+    }
+    .page-header {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        padding: 4rem 0;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        color: white;
+    }
+    /* Announcement Container Colors and Styling */
+    .outer-announcement-container {
+        background: linear-gradient(to bottom, #fefce8, #fff);
+        border: 1px solid #fef08a;
+    }
+
+    .announcement-container {
+        background-color: #ffe38e;
+        border: 1px solid;
+        max-height: 700px; /* Adjust this value as needed */
+        overflow-y: auto;
+    }
+
+
+    /* Carousel Container Styling */
+    .carousel-container {
+        position: relative;
+        height: max-content;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0;
+        background-color: #fafafa;
+        border-radius: 0.5rem;
+    }
+
+    /* Carousel Image Styling */
+    .carousel-item {
+        width: 100%;
+        max-height: 100%;
+        height: auto;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 100%;
+        min-heigth:800px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    /* Carousel Controls */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .carousel-container {
+            height: 250px;
+        }
+        
+        .carousel-item {
+            height: 250px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .carousel-container {
+            height: 200px;
+        }
+        
+        .carousel-item {
+            height: 200px;
+        }
+    }
+
+    /* Enhanced announcement content styling */
+    .announcement-content {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .announcement-content p {
+        color: #4b5563;
+        line-height: 1.5;
+    }
+
+    /* Organization header enhanced styling */
+    .announcement-header {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+        border-bottom: 2px solid #fef08a;
+    }
+
+    .announcement-header h3 {
+        color: #854d0e;
+    }
+
+    .announcement-header p {
+        color: #92400e;
+    }
+    /* Announcement Header Styling */
+    .announcement-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem; /* Adjusted for better spacing */
+    }
+
+    /* Organization Image Styling */
+    .org-image {
+        width: 3.5rem; /* 56px */
+        height: 3.5rem; /* 56px */
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Spacing between the image and the text */
+    .announcement-header .ml-6 { /* Increased margin-left for more space */
+        margin-left: 1.5rem; /* 24px */
         text-align: left;
     }
 
-    .text-content {
-        flex-direction: column;
-        align-items: flex-start;
+    /* Text Styling */
+    .announcement-header h3 {
+        font-size: 1.125rem; /* 18px */
+        color: #333; /* Darker color for better readability */
+        font-weight: 600;
+        margin-bottom: 0.25rem; /* Small space below the name */
     }
 
-    .text-content img.avaatar {
+    .announcement-header p {
+        font-size: 0.875rem; /* 14px */
+        color: #6B7280; /* Light gray */
+        margin-top: 0.25rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .org-image {
+            width: 3rem; /* 48px */
+            height: 3rem; /* 48px */
+        }
+
+        .announcement-header h3 {
+            font-size: 1rem; /* 16px */
+        }
+
+        .announcement-header p {
+            font-size: 0.75rem; /* 12px */
+        }
+    }
+
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .page-header p {
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    /* Announcement Cards */
+    .announcement-card {
+        background: #2e0f13;
+        border-radius: 1rem;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .announcement-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header Section */
+    .card-header {
+        padding: 1.5rem;
+        border-bottom: 2px solid #f3f4f6;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .org-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content h3 {
+        margin: 0;
+        color: #333;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .header-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #777;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }.carousel-wrapper {
+        position: relative;
+        background: #2e0f13;
+        border-radius: 1rem;
+        padding: 1rem;
+    }
+
+
+
+    .carousel-control-prev, .carousel-control-next {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
         width: 40px;
         height: 40px;
-        margin: 0 0 5px 0;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0 1rem;
     }
 
-    .text-content span {
-        font-size: 0.9em;
+    /* Content Section */
+    .announcement-content {
+        padding: 1.5rem;
+        background: #fafafa;
+        border-radius: 1rem;
     }
 
-    .square img {
-        max-width: 90%;
-        margin: 5px 0;
+    .announcement-text {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
     }
-    .fclty-div {
-        flex-direction: row; /* Stack buttons vertically */
+
+    /* Truncate Text */
+    .truncate-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Read More Button */
+    .read-more-btn {
+        color: #f59e0b;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        border: none;
+        background: none;
+        padding: 0;
+        font-size: 1rem;
+    }
+
+    .read-more-btn:hover {
+        color: #d97706;
+    }
+
+    /* Footer Section */
+    .card-footer {
+        padding: 1rem 1.5rem;
+        border-top: 2px solid #f3f4f6;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
     }
 
-    .button-faculty-btn {
-        width: 20%; /* Adjust width to fit screen */
-        padding: 15px;
-        font-size: 10px; /* Smaller font for smaller screens */
+    .timestamp {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #888;
+        font-size: 0.9rem;
     }
-}
-.calendar-wrapper {
-        padding: 1.5rem;
+
+    .timestamp svg {
+        width: 16px;
+        height: 16px;
+        opacity: 0.7;
     }
-    
-    .event-section {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-        backdrop-filter: blur(10px);
-    }
-    
-    .event-section h4 {
-        color: #ffd700;
-        font-size: 1.2rem;
-        margin: 0 0 1rem 0;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-    }
-    
-    .event-grid {
-        display: grid;
-        gap: 1rem;
-    }
-    
-    .event-card {
+
+    /* Interaction Buttons */
+    .interaction-buttons {
         display: flex;
         gap: 1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
-        padding: 1rem;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
-    .event-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        background: rgba(255, 255, 255, 0.05);
+
+    .interaction-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #777;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
     }
-    
-    .event-date {
-        min-width: 100px;
+
+    .interaction-btn:hover {
+        color: #f59e0b;
+    }
+
+    /* Empty State */
+    .empty-state {
         text-align: center;
-        padding: 0.5rem;
-        background: rgba(255, 215, 0, 0.1);
-        border-radius: 6px;
-        color: #ffd700;
-    }
-    
-    .event-details {
-        flex: 1;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-    
-    .no-events {
-        text-align: center;
-        padding: 2rem;
-        color: rgba(255, 255, 255, 0.7);
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 4rem 2rem;
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-
-        @media (max-width: 768px) {
-            .section-header h1 {
-                font-size: 2rem;
-            }
-
-            .card-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .meta-info {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    @media (max-width: 640px) {
-        .event-card {
-            flex-direction: column;
-        }
-        
-        .event-date {
-            width: 100%;
-        }
+    .empty-state svg {
+        width: 64px;
+        height: 64px;
+        color: #d1d5db;
+        margin-bottom: 1.5rem;
     }
-    .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
 
-        .header h1 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .yellow-line {
-            height: 0.25rem;
-            width: 5rem;
-            background: #ffd700;
-            margin: 0 auto;
-            border-radius: 9999px;
-        }
-
-        .announcements {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-       
+    /* Media Queries */
+    @media (max-width: 768px) {
         .announcement-card {
-    margin-bottom: 15px;
-    padding: 15px;
-    border: 1px solid rgba(221, 221, 221, 0.5); /* Light gray border with transparency */
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for the cards */
-}
+            margin: 1rem;
+        }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .carousel-item img {
+            height: 300px;
         }
 
         .card-header {
-            
-            padding: 16px;
-            border-bottom: 1px solid #eee;
+            padding: 1rem;
         }
 
-        .org-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .announcement-content {
+            padding: 1rem;
+        }
+    }
+    
+        /* FAQs */
+        .collapse {
+            visibility: visible;
+        }
+        
+        /* Text inside the oval */
+.member p {
+    color: #FFD700;
+    /* Gold text for contrast */
+    font-size: 12px;
+    /* Smaller font size for readability */
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.2;
+    text-align: left;
+}
+        
+      
+/* About Us */
+.ab-title {
+    color: #ffc107;
+    padding: 1rem;
+}
+
+.ab-title-1 {
+    color: #f8f9fa;
+    padding: 1rem;
+}
+
+.ab-title-vmc {
+    color: #ffc107;
+    padding: 1rem;
+}
+.py-5 {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #fff;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.container-ab {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #4a1a1a; /* Deep maroon background */
+    border: 10px solid #f8d307; /* Gold border */
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Org Modal */
+.text-muted-white {
+    --bs-text-opacity: 1;
+    color: #000 !important;
+    font-weight: bold;
+}
+
+.text-dark-white {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important;
+}
+
+.p-4-1 {
+    padding: 1.5rem !important;
+    background-color: #ffebb1;
+}
+
+
+
+.announcement-section {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
+    padding: 3rem 1rem;
+}
+
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.section-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #fbbf24;
+    transform: skewX(-12deg);
+}
+/* Filter Container Styles */
+.filters-container {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+/* Reduce excess space between search bar and content */
+.filters-container {
+  margin-bottom: 10px !important;
+}
+
+/* Reduce top padding of the container below the search area */
+#announcement-container {
+  padding-top: 10px !important;
+}
+
+/* Fix excess margin in section headers */
+.section-heading {
+  margin-bottom: 15px !important;
+}
+
+/* Remove any excessive bottom margin from the search row */
+.filters-grid {
+  margin-bottom: 0 !important;
+}
+
+/* Adjust vertical padding on dividers if present */
+.borderYellow, .w-24.h-1.bg-yellow-400 {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+/* Input Styles */
+.filter-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #64748b;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #94a3b8;
+    box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.1);
+}
+
+/* Placeholder Styles */
+.filter-input::placeholder {
+    color: #94a3b8;
+}
+
+/* Search Input Specific Styles */
+.search-container {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.search-input {
+    padding-left: 2.5rem;
+}
+
+/* Select Dropdown Styles */
+select.filter-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+}
+
+/* Date Input Styles */
+input[type="date"].filter-input {
+    color: #64748b;
+}
+
+input[type="date"].filter-input::-webkit-calendar-picker-indicator {
+    filter: invert(60%) sepia(9%) saturate(627%) hue-rotate(176deg) brightness(91%) contrast(90%);
+}
+
+/* Clear Filters Button */
+#clear-filters {
+    height: 52px;
+    padding: 15px 10px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#clear-filters i {
+    font-size: 1px;
+    margin-right: 5px;
+}
+#clear-filters:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+}
+/* Focus State for All Inputs */
+.filter-input:focus-visible {
+    outline: none;
+    border-color: #94a3b8;
+    box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.1);
+}
+
+/* Announcement Cards */
+.announcement-container {
+    display: grid;
+    gap: 2rem;
+}
+
+.announcement-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.org-image {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.org-info h3 {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.posted-by {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Image Carousel */
+.carousel-container {
+    position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.carousel-control:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-prev {
+    left: 1rem;
+}
+
+.carousel-next {
+    right: 1rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 1rem;
+}
+
+.empty-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    color: #9ca3af;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .filters-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .carousel-item img {
+        height: 200px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.announcement-card {
+    animation: fadeIn 0.5s ease forwards;
+
+}
+
+/* Modal positioning fixes */
+.image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-img {
+    max-width: 90%;
+    max-height: 80vh;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: #fa0c0c;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.modal-prev {
+    left: 20px;
+}
+
+.modal-next {
+    right: 20px;
+}
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #2C3E50;
+            background-color: #ffffff;
         }
 
-        .org-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
+        .about-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .about-title {
+            font-size: 2rem;
+            color: #34495E;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .about-subtitle {
+            font-size: 1.2rem;
+            color: #7F8C8D;
+            margin-top: 0.5rem;
+        }
+
+        .campus-image-container {
+            margin: 2rem 0;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .campus-image {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        .org-name {
+        .content-block {
+            margin-bottom: 2rem;
+        }
+
+        .text-content {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            font-size: 1.1rem;
+        }
+
+        .leadership-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background-color: #F8F9FA;
+    border-radius: 8px;
+}
+
+.leadership-title {
+    text-align: center;
+    color: #34495E;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+/* Update the grid to show 4 columns */
+.leadership-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* Update the leader card width */
+.leader-card {
+    flex: 0 0 calc(25% - 1rem); /* This makes each card take up 25% of the space minus the gap */
+    text-align: center;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.leader-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    object-fit: cover;
+}
+
+.leader-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #34495E;
+    margin-bottom: 0.5rem;
+}
+
+.leader-title {
+    color: #7F8C8D;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+
+        .strategic-item {
+            background-color: #F7F9FA;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #34495E;
+            border-radius: 4px;
+        }
+
+        .block-title {
+            color: #34495E;
+            font-size: 1.3rem;
             font-weight: 600;
-            font-size: 1.1em;
-            color: black;
-            margin-bottom: 4px;
+            margin-bottom: 1rem;
         }
 
-        .meta-info {
-            display: flex;
-            gap: 16px;
-            color: #666;
-            font-size: 0.9em;
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
+        .value-item {
+            background-color: #F7F9FA;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .icon {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .card-content {
-            padding: 16px;
-        }
-
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .announcement-text {
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .announcement-text.truncated {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .see-more-link {
-            color: white; /* Optional: Set a color */
-            text-decoration: none; /* Removes underline */
-            cursor: pointer;
-            font-weight: 500;
+        .value-highlight {
             display: block;
-            margin-top: 8px;
+            color: #34495E;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
         }
 
-        .announcement-image {
-    width: 100%; /* Make the container full width */
-    height: auto; /* Maintain the aspect ratio */
-    overflow: hidden; /* Hide overflow */
+        @media (max-width: 768px) {
+            .campus-image-container {
+                height: 300px;
+            }
+
+            .leadership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 1200px) {
+    .leader-card {
+        flex: 0 0 calc(50% - 1rem); /* 2 cards per row on medium screens */
+    }
 }
 
-.announcement-image img {
-    width: 100%; /* Make the image full width */
-    height: auto; /* Maintain the aspect ratio */
-    display: block; /* Prevent extra space below the image */
+@media (max-width: 768px) {
+    .leader-card {
+        flex: 0 0 100%; /* 1 card per row on small screens */
+    }
 }
-.ann-container {
-    max-height: 600px; /* Maximum height for scrolling */
-    overflow-y: auto;
-    padding: 20px; /* Adds padding around content */
-    padding-right: 15px; /* Space for scrollbar */
-    background: #2e0f13;
-    border-radius: 8px; /* Smooth rounded corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
     margin-top: 20px;
+    border: 2px solid #333;
+    padding: 10px;
+    background-color: white;
 }
 
-.announcement-card p {
-    font-size: 1rem;
-    color: #555; /* Softer color for secondary text */
-    line-height: 1.5;
+.floor-table {
+    width: 100%;
+    border-collapse: collapse;
+    display: none; /* Initially hidden */
+    margin: 0 auto;
 }
 
+.floor-table td {
+    border: 1px solid #000;
+    padding: 15px;
+    text-align: center;
+    min-width: 60px;
+    font-weight: bold;
+    font-size: 14px;
+}
 
-        @media (max-width: 600px) {
-            .announcements-container {
-                padding: 12px;
-            }
+.floor-gray {
+    background-color: #e0e0e0; /* Light gray */
+    color: #000;
+}
 
-            .meta-info {
-                flex-direction: column;
-                gap: 8px;
-            }
+.floor-maroon {
+    background-color: #800000; /* Dark maroon */
+    color: white;
+    font-size: 24px !important;
+    font-weight: bold;
+}
 
-            .see-more-link {
-            order: 2;
-            display: block;
-            font-size: 0.85em; /* Adjust this value as needed for smaller text */
-            color: white; /* Optional: Set a color */
-            text-decoration: none; /* Removes underline */
-        }
+/* Show the active floor table */
+.floor-table.active {
+    display: table;
+}
 
-            .content-wrapper {
-                display: flex;
-                flex-direction: column;
-            }
+/* Add styles for highlighted cells */
+.floor-table td.highlight, 
+.floor-table td[style*="background-color: yellow"] {
+    background-color: #ffff00 !important; /* Bright yellow */
+    color: #000;
+}
 
-            .announcement-text {
-                order: 1; /* Moves text to top */
-                
-            }
+/* Dropdown and search styles */
+.dropdown {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
 
-            .announcement-image {
-                order: 3; /* Keeps image at bottom */
-                margin-top: 16px; 
-                width: auto; /* Make the container full width */
-                height: auto; /* Maintain the aspect ratio */
-                padding:0;
-            
-        }
-    
-    
-</style>
-</head>
+.search {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 200px;
+}
 
-<body>
+.search-button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+#dropdownMenu {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 120px;
+}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="img/C.png" alt="Logo" width="120"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mobileNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#announcement">ANNOUNCEMENT</a></li>
-                <li class="nav-item"><a class="nav-link" href="#schoolcalendar">SCHOOL CALENDAR</a></li>
-                <li class="nav-item"><a class="nav-link" href="#campusmap">CAMPUS MAP</a></li>
-                <li class="nav-item"><a class="nav-link" href="#facultymembers">FACULTY MEMBERS</a></li>
-                <li class="nav-item"><a class="nav-link" href="#campusorgs">CAMPUS ORGS</a></li>
-                <li class="nav-item"><a class="nav-link" href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
-                <li class="nav-item"><a class="nav-link" href="#feed">FEEDBACK</a></li>
-                <li class="nav-item"><a class="nav-link" href="#aboutus ">ABOUT US</a></li>
-            </ul>
+/* Tab styles */
+.tab-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tab-button.active {
+    background-color: #800000;
+    color: white;
+}
+
+        </style>
+        
+       
+    </head>
+
+    <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none fixed-top" style="transition: top 0.3s ease;">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mobileNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#announcement">ANNOUNCEMENT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#schoolcalendar">SCHOOL CALENDAR</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#campusmap">CAMPUS BUILDINGS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#facultymembers">FACULTY MEMBERS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#campusorgs">STUDENT ORGS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faqs">FREQUENTLY ASKED QUESTIONS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#feed">FEEDBACK</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#aboutus">ABOUT US</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-
-<!-- Desktop Sidebar Navigation -->
-<div class="sidebar-navigation d-none d-lg-block">
-    <div class="logo">
-        <a href="#"><img src="img/C.png" alt="Logo" width="240"></a>
-    </div>
-    <nav>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="#announcement">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    ANNOUNCEMENT
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#schoolcalendar">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    SCHOOL CALENDAR
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#campusmap">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    CAMPUS MAP
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#facultymembers">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    FACULTY MEMBERS
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#campusorgs">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    CAMPUS ORGS
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#faqs">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    FREQUENTLY ASKED QUESTIONS
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#feed">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    FEEDBACK
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#aboutus">
-                    <span class="rect"></span>
-                    <span class="circle"></span>
-                    ABOUT US
-                </a>
-            </li>
-        </ul>
     </nav>
-   
-</div>
-    <div class="page-content">
 
-    
-    <?php
-// Database connection (assuming you have a PDO connection)
-$dsn = 'mysql:host=localhost;dbname=ckiosk';
-$username = 'root';
-$password = '';
-$connection = new PDO($dsn, $username, $password);
 
-// Set the default timezone to Asia/Manila
+        <!-- Desktop Sidebar Navigation -->
+        <div class="sidebar-navigation d-none d-lg-block">
+            <div class="logo">
+                <a href="#"><img src="img/C.png" alt="Logo" width="240"></a>
+            </div>
+            <nav>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#announcement">
+                            ANNOUNCEMENT
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schoolcalendar">
+                            SCHOOL CALENDAR
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#campusmap">
+                            CAMPUS BUILDINGS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#facultymembers">
+                            FACULTY MEMBERS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#campusorgs">
+                            STUDENT ORGS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faqs">
+                            FREQUENTLY ASKED QUESTIONS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#feed">
+                            FEEDBACK
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#aboutus">
+                            ABOUT US
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="page-content ">
+        <?php
+include_once("class/connection.php");
 date_default_timezone_set('Asia/Manila');
 
 function getAllAnnouncements($connection) {
-    // Main announcement query to retrieve all announcements
     $query = "
-        SELECT a.*, 
-               u.users_username AS author_name, 
-               COALESCE(c.users_username, o.username, 'Unknown Creator') AS creator_name, 
-               org.org_name, 
-               org.org_image 
+          SELECT a.*, 
+            u.users_username AS author_name, 
+            COALESCE(c.users_username, o.username, 'Unknown Creator') AS creator_name, 
+            org.org_name, 
+            org.org_image,
+            a.category,  /* Add this line to select category */
+            GROUP_CONCAT(ai.image_path) AS announcement_images
         FROM announcement_tbl a 
         LEFT JOIN users_tbl u ON a.announcement_creator = u.users_id 
         LEFT JOIN users_tbl c ON a.created_by = c.users_id  
         LEFT JOIN orgmembers_tbl o ON a.created_by = o.id  
         LEFT JOIN organization_tbl org ON u.users_org = org.org_id  
+        LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
         WHERE a.is_archived = 0
+        GROUP BY a.announcement_id
+        ORDER BY a.created_at DESC
     ";
 
-    // Prepare and execute the statement
-    $statement = $connection->prepare($query);
-
-    if ($statement->execute()) {
+    try {
+        $statement = $connection->prepare($query);
+        $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        // Clean and prepare data for output
         foreach ($result as &$row) {
-            $row['org_image'] = isset($row['org_image']) && !empty($row['org_image'])
-                                ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8')
-                                : 'default_org_image.jpg'; 
+            // Format the created_at date
+            if (!empty($row['created_at'])) {
+                $timestamp = strtotime($row['created_at']);
+                if ($timestamp !== false) {
+                    $row['created_at_formatted'] = date('c', $timestamp); // ISO 8601 format
+                    $row['created_at_timestamp'] = $timestamp;
+                } else {
+                    $row['created_at_formatted'] = null;
+                    $row['created_at_timestamp'] = null;
+                }
+            }
 
-            // Sanitize creator name
-            $row['creator_name'] = htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8');
-
-            // Ensure the org_name has a default if not found
-            $row['org_name'] = isset($row['org_name']) && !empty($row['org_name'])
-                               ? htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8')
-                               : 'Unknown Organization'; 
+            // Other existing formatting
+            $row['org_image'] = !empty($row['org_image']) ? htmlspecialchars($row['org_image'], ENT_QUOTES, 'UTF-8') : 'default_org_image.jpg';
+            $row['announcement_images'] = !empty($row['announcement_images']) ? explode(',', $row['announcement_images']) : [];
+            $row['creator_name'] = !empty($row['creator_name']) ? htmlspecialchars($row['creator_name'], ENT_QUOTES, 'UTF-8') : 'Unknown Creator';
+            $row['org_name'] = !empty($row['org_name']) ? htmlspecialchars($row['org_name'], ENT_QUOTES, 'UTF-8') : 'Unknown Organization';
+            
+            // Ensure that the announcement details are preserved in HTML format
+            $row['announcement_details'] = $row['announcement_details'] ?? '';
         }
 
         return $result;
-    } else {
-        return "No Data";
+    } catch (PDOException $e) {
+        return "Error: " . $e->getMessage();
     }
 }
 
-// Get all announcements
-$allAnnouncement = getAllAnnouncements($connection);
+// Fetch all announcements
+$allAnnouncement = getAllAnnouncements($connect);
 ?>
 
-
-<!-- HTML Section -->
-<section id="announcement" class="content-section">
+<section id="announcement" class="content-section bg-gray-100 py-5 font-sans max-h-screen overflow-y-auto">
+    <!-- Announcements Heading -->
     <div class="section-heading text-center borderYellow">
-        <h1><br><em>ANNOUNCEMENT</em></h1>
-    </div>
-    <div class="ann-container">
-        
-
-        <div class="announcements" id="announcements-container">
-            <!-- Announcements will be inserted here by JavaScript -->
-        </div>
-    </div>
-</section>
-
-
-
-</section>
-<section id="schoolcalendar" class="content-section">
-    <div class="section-heading text-center borderYellow">
-        <h1><em>SCHOOL CALENDAR</em></h1>
-    </div>
-    <div class="section-content">
-    <div class="tabs-content">
-        <div class="wrapper calendar-wrapper">
-            <section class="tabgroup">
-                <ul>
-                    <?php 
-                    $today = date('Y-m-d');
-                    $todayEvents = [];
-                    $upcomingEvents = [];
-
-                    foreach ($allEvent as $month => $events) {
-                        foreach ($events as $event) {
-                            if (isset($event['calendar_date'], $event['calendar_id'], $event['calendar_details'])) {
-                                if ($event['calendar_date'] === $today) {
-                                    $todayEvents[] = $event;
-                                } elseif ($event['calendar_date'] > $today) {
-                                    $upcomingEvents[] = $event;
-                                }
-                            }
-                        }
-                    }
-
-                    if (!empty($todayEvents)) {
-                        echo '<li class="event-section">';
-                        echo '<h4>Happening Today</h4>';
-                        echo '<div class="event-grid">';
-                        
-                        foreach ($todayEvents as $event) {
-                            $date = new DateTime($event['calendar_date']);
-                            echo '<div class="event-card">';
-                            echo '<div class="event-date">';
-                            echo $date->format('M d, Y');
-                            echo '</div>';
-                            echo '<div class="event-details">';
-                            echo htmlspecialchars(strip_tags($event['calendar_details']));
-                            echo '</div>';
-                            echo '</div>';
-                        }
-                        
-                        echo '</div>';
-                        echo '</li>';
-                    }
-
-                    if (!empty($upcomingEvents)) {
-                        echo '<li class="event-section">';
-                        echo '<h4>Upcoming Events</h4>';
-                        echo '<div class="event-grid">';
-                        
-                        foreach ($upcomingEvents as $event) {
-                            $date = new DateTime($event['calendar_date']);
-                            echo '<div class="event-card">';
-                            echo '<div class="event-date">';
-                            echo $date->format('M d, Y');
-                            echo '</div>';
-                            echo '<div class="event-details">';
-                            echo htmlspecialchars(strip_tags($event['calendar_details']));
-                            echo '</div>';
-                            echo '</div>';
-                        }
-                        
-                        echo '</div>';
-                        echo '</li>';
-                    }
-
-                    if (empty($todayEvents) && empty($upcomingEvents)) {
-                        echo '<li>';
-                        echo '<div class="no-events">';
-                        echo '<h4>No Events Happening Today or Upcoming</h4>';
-                        echo '</div>';
-                        echo '</li>';
-                    }
-                    ?>
-                </ul>
-            </section>
-        </div>
-    </div>
-</div>
-</section>
-
-
-
-
-<section id="campusmap" class="content-section">
-    <div class="section-heading text-center borderYellow">
-        <h1><br><em>CAMPUS MAP</em></h1>
+        <h1><em>ANNOUNCEMENT</em></h1>
     </div>
 
-    <!-- Tab Navigation -->
-    <div class="tab-container">
-    <button class="tab-button active" onclick="openTab(event, 'ccs')">CCS</button>
-    <button class="tab-button" onclick="openTab(event, 'cit')">CIT</button>
-    <button class="tab-button" onclick="openTab(event, 'cafa')">CAFA</button>
-    </div>
-
-    <!-- Floor Map Section -->
-    <div id="ccs" class="tab-content">
-        <div id="map">
-            <div class="map section-content-map">
-                <div class="dropdown">
-                    <input type="text" id="search-input" class="search"placeholder="Enter room name">
-                    <button onclick="searchAndHighlight()" class="search-button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <select id="dropdownMenu">
-                        <option value="1" selected>1st Floor</option>
-                        <option value="2">2nd Floor</option>
-                        <option value="3">3rd Floor</option>
-                        <option value="4">4th Floor</option>
-                        <option value="5">5th Floor</option>
-                    </select>
-                </div>
-                <div class="table-container">
-                    <table class="floor-table" id="floor-1" border="1">
-                        <tbody>
-                            <tr>
-                                <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
-                                <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
-                                <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                <td id="7" class="floor-gray" colspan="2"></td>
-                            </tr>
-                            <tr>
-                                <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
-                                <td id="9" class="floor-gray" colspan="2"></td>
-                            </tr>
-                            <tr>
-                                <td class="floor-gray" colspan="2" id="10">0</td>
-                                <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
-                                <td id="12" class="floor-gray" colspan="2">2</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="13">3</td>
-                                <td id="14" class="floor-gray" colspan="2">4</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
-                                <td id="16" class="floor-gray" colspan="2">6</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
-                                <td id="18" class="floor-gray" colspan="2">8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="floor-table" id="floor-2" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
-                                <td id="20" class="floor-gray" rowspan="2">19</td>
-                                <td id="21" class="floor-gray" rowspan="2">20</td>
-                                <td id="22" class="floor-gray" rowspan="2">21</td>
-                                <td id="23" class="floor-gray" rowspan="2">22</td>
-                                <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
-                                <td id="25" class="floor-gray" colspan="2">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
-                                <td id="27" class="floor-gray" colspan="2">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="28">27</td>
-                                <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
-                                <td id="32" class="floor-gray" colspan="2">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="31">30</td>
-                                <td id="30" class="floor-gray" colspan="2">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
-                                <td id="34" class="floor-gray" colspan="2">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
-                                <td id="36" class="floor-gray" colspan="2">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="floor-table" id="floor-3" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
-                                <td id="38" rowspan="2" class="floor-gray">19</td>
-                                <td id="39" rowspan="2" class="floor-gray">20</td>
-                                <td id="40" rowspan="2" class="floor-gray">21</td>
-                                <td id="41" rowspan="2" class="floor-gray">22</td>
-                                <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
-                                <td id="43" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="45" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="46" class="floor-gray">27</td>
-                                <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="48" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="50" class="floor-gray">30</td>
-                                <td id="49" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="52" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="54" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="floor-table" id="floor-4" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
-                                <td id="56" rowspan="2" class="floor-gray">19</td>
-                                <td id="57" rowspan="2" class="floor-gray">20</td>
-                                <td id="58" rowspan="2" class="floor-gray">21</td>
-                                <td id="59" rowspan="2" class="floor-gray">22</td>
-                                <td id="60" rowspan="2" class="floor-gray">23</td>
-                                <td id="61" rowspan="2" class="floor-gray">23</td>
-                                <td id="62" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="64" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="65" class="floor-gray">27</td>
-                                <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="67" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="68" class="floor-gray">30</td>
-                                <td id="69" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="71" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="73" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="floor-table" id="floor-5" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
-                                <td id="75" rowspan="2" class="floor-gray">19</td>
-                                <td id="76" rowspan="2" class="floor-gray">20</td>
-                                <td id="77" rowspan="2" class="floor-gray">21</td>
-                                <td id="78" rowspan="2" class="floor-gray">22</td>
-                                <td id="79" rowspan="2" class="floor-gray">23</td>
-                                <td id="80" rowspan="2" class="floor-gray">23</td>
-                                <td id="81" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="83" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="84" class="floor-gray">27</td>
-                                <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="86" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="87" class="floor-gray">30</td>
-                                <td id="88" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="90" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="92" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-            <!-- SVG Map Section -->
-            <div id="cit" class="tab-content" style="display: none;">
-    <div id="map">
-        <div class="map section-content-map">
-            <div class="dropdown">
-                <input type="text" id="search"  class="search" placeholder="Enter room name">
-                <button onclick="searchElement()" class="search-button">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
-            <div class="table-container">
-                <svg id="room-svg" viewBox="0 0 985 588" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect  x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <rect  x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-5-a-b" x="167.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="stock-room" x="195" y="250" text-anchor="middle" font-size="12">
-                        STOCK
-                        <tspan dy="1.2em" dx="-44">ROOM</tspan>
-                    </text>
-                    <rect id="ctl-1-a" x="40.5" y="301.5" width="52" height="67" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-1-a-text" x="63" y="335" text-anchor="middle" font-size="12">CTL 1-A</text>
-                    <rect id="cit-3-b-rect" x="303.5" y="72.5" width="49" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-3-b-text" x="328" y="105" text-anchor="middle" font-size="12">CIT 3-B</text>
-                    <rect id="cit-5-a-b-rect" x="353.5" y="72.5" width="53" height="69" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-5-a-b-combined" x="361.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-5-a-b-text" x="406" y="250" text-anchor="middle" font-size="12">CIT 5-A & 5-B
-                        <tspan dy="1.2em" dx="-80">ELECTRICAL</tspan>
-                    </text>
-                    <rect id="etl-5" x="452.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="etl-5-text" x="497" y="250" text-anchor="middle" font-size="12">ETL 5</text>
-                    <rect id="cit-5-b-lec" x="543.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-5-b-lec-text" x="588" y="250" text-anchor="middle" font-size="12">CIT 5-B LEC</text>
-                    <rect id="bodega" x="634.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="bodega-text" x="679" y="250" text-anchor="middle" font-size="12">BODEGA</text>
-                    <rect id="library" x="725.5" y="205.5" width="89" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="library-text" x="770" y="250" text-anchor="middle" font-size="12">LIBRARY</text>
-                    <rect id="chairperson-office" x="220.5" y="136.5" width="53" height="68" fill="#D9D9D9" stroke="black"/>
-                    <text id="chairperson-office-text" x="250" y="170" text-anchor="middle" font-size="8">
-                        CHAIRPERSON
-                        <tspan dy="1.2em" dx="-44">OFFICE</tspan>
-                    </text>
-                    <rect id="d-o" x="40.5" y="369.5" width="52" height="68" fill="#D9D9D9" stroke="black"/>
-                    <text id="d-o-text" x="63" y="405" text-anchor="middle" font-size="12">D.O.</text>
-                    <rect id="cr" x="40.5" y="438.5" width="52" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cr-text" x="63" y="475" text-anchor="middle" font-size="12">CR</text>
-                    <rect id="cit-2-a" x="93.5" y="205.5" width="73" height="46" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-2-a-text" x="130" y="230" text-anchor="middle" font-size="12">CIT 2-A</text>
-                    <path id="welding" d="M274 205H361V301H274V205Z" fill="#D9D9D9"/>
-                    <text id="welding-text" x="317" y="250" text-anchor="middle" font-size="12">WELDING</text>
-                    <rect id="cit-3-a" x="220.5" y="72.5" width="82" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-3-a-text" x="261" y="105" text-anchor="middle" font-size="12">CIT 3-A</text>
-                    <rect id="cit-2-b" x="93.5" y="252.5" width="73" height="48" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-2-b-text" x="130" y="280" text-anchor="middle" font-size="12">CIT 2-B</text>
-                    <path id="pantry" d="M274 142H407V205H274V142Z" fill="#D9D9D9"/>
-                    <text id="pantry-text" x="340" y="172" text-anchor="middle" font-size="12">PANTRY</text>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M405.629 205H407V142H405.629V205Z" fill="black"/>
-                    <rect id="breaker" x="815.5" y="180.5" width="39" height="48" fill="#D9D9D9" stroke="black"/>
-                    <text id="breaker-text" x="834" y="205" text-anchor="middle" font-size="8">BREAKER</text>
-                    <rect id="ctl-6" x="855.5" y="286.5" width="89" height="94" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-6-text" x="900" y="322" text-anchor="middle" font-size="12">CTL 6</text>
-                    <rect id="ctl-6-a-b" x="855.5" y="190.5" width="89" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-6-a-b-text" x="900" y="225" text-anchor="middle" font-size="12">CTL 6-A & 6-B</text>
-                </svg>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div id="cafa" class="tab-content" style="display: none;">
-    <div id="map">
-        <div class="map section-content-map">
-            <div class="dropdown">
-                <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
-                <button onclick="searchElement2()" class="search-button" aria-label="Search">
-                    <i class="fa fa-search"></i>
-                </button>
-                <select id="dropdown" aria-label="Select floor" onchange="showFloor(this.value)">
-                    <option value="1" selected>1st Floor</option>
-                    <option value="2">2nd Floor</option>
-                    <option value="3">3rd Floor</option>
-                </select>
-            </div>
-
-            <div class="table-container">
-                <!-- Floor 1 -->
-                <!--floor 1-->
-         <svg id="room-svg-1" class="floor-svg" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-         <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="100" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
-    
-    <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
-    
-
-    
-    <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
-    
-    <rect id="s-104-rect" x="620.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-104-text" x="650" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
-    
-    <rect id="s-106-rect" x="550" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-106-text" x="585" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
-    
-    <rect id="s-102-rect" x="755" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-102-text" x="780" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
-    
-    <rect id="s-103-rect" x="680.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-103-text" x="720" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
-    
-    <rect id="s-101-rect" x="890" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-101-text" x="930" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-101</text>
-    
-    <rect id="male-cr-rect" x="820.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="860" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
-    
-    <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
-
-    <rect id="pwd-cr-base-rect" x="408.5" y="140.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
-    
-    <rect id="stairs-2-rect" x="965" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1000" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
-    
-    <mask id="path-18-inside-1_0_1" fill="white">
-        <path d="M267 140H332V206H267V140Z"/>
-    </mask>
-    
-    <path d="M267 140H332V206H267V140Z" fill="#D9D9D9"/>
-    <path d="M267 141H332V139H267V141Z" fill="#0D0D0D" mask="url(#path-18-inside-1_0_1)"/>
-    
-    <rect id="s-108-rect" x="202.5" y="206.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-108-text" x="230" y="240" font-family="Arial" font-size="12" text-anchor="middle">S-108</text>
-</svg>
-<!--floor 2-->
-<svg id="room-svg-2" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-    <rect id="s-205-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-205-text" x="600" y="182" font-family="Arial" font-size="12" fill="black">S-205</text>
-
-    <rect id="s-206-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-206-text" x="520" y="182" font-family="Arial" font-size="12" fill="black">S-206</text>
-
-    <rect id="s-201-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-201-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-201</text>
-
-    <rect id="s-204-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-204-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-204</text>
-
-    <rect id="female-cr-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-text" x="950" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-    <rect id="s-202-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-202-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-202</text>
-
-    <rect id="s-203-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-203-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-203</text>
-
-    <rect id="s-208-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-208-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">S-208</text>
-
-    <rect id="s-207-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-207-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-207</text>
-
-    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-</svg>
-<!--floor 3-->
-<svg id="room-svg-3" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect id="stairs-1" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-1-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">S-307</text>
-
-    <rect id="male-cr-2-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-2-text" x="580" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-    <rect id="female-cr-1-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-1-text" x="498" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-    <rect id="s-301-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-301-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-301</text>
-
-    <rect id="s-305-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-305-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-305</text>
-
-    <rect id="female-cr-2-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-2-text" x="950" y="182" font-family="Arial" font-size="8" fill="black">FACULTY ROOM</text>
-
-    <rect id="s-303-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-303-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-303</text>
-
-    <rect id="s-304-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-304-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-304</text>
-
-    <rect id="uapsa-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="uapsa-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">UAPSA</text>
-
-    <rect id="s-306-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-306-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-306</text>
-
-    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-</svg>
-
-
-            </div>
-        </div>
-    </div>
-    </div>
-
-</section>
-
-    
-    <section id="facultymembers" class="content-section">
-    <div class="section-heading text-center borderYellow">
-        <h1><br><em>FACULTY MEMBERS</em></h1>
-    </div>
-        <div class="section-content">
-        <div class="org-chart">
-        <div class="level1">
-                 <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-            </div>
-    
-            <div class="level2">
-                <?php foreach ($all2 as $head): ?>
-                    <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                        <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                        <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
+    <!-- Filters Container - Facebook Style -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                <!-- Search input -->
+                <div class="lg:col-span-2 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                    <input 
+                        type="text" 
+                        id="announcement-search" 
+                        class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full bg-gray-100 focus:ring-blue-500 focus:border-blue-500 focus:bg-white"
+                        placeholder="Search announcements...">
+                </div>
 
-    
-            <div class="level3">
-                     <?php foreach ($all3 as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-            </div>
-        </div>
-    
-        <div class="wrapper">
-        <!-- Department Buttons -->
-        <div class="fclty-div">
-            <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
-            <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
-        </div>
-    
-        <!-- Tab Content -->
-       <section id="first-tab-group" class="tabgroup">
-        <!-- IT Department Tab -->
-        <div id="tab1" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                <?php foreach ($allDean as $head): ?>
-                    <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?> </strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
+                <!-- Category filter -->
+                <div class="relative">
+                    <select id="category-filter" class="block w-full py-2 px-3 border border-gray-300 bg-gray-100 rounded-full focus:ring-blue-500 focus:border-blue-500 focus:bg-white appearance-none">
+                        <option value="all">All Categories</option>
+                        <option value="academic">Academic</option>
+                        <option value="event">Events</option>
+                        <option value="org">Organizations</option>
+                        <option value="general">General</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </div>
                 </div>
-    
-                <div class="level2">
-                    <?php foreach ($allItHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
+
+                <!-- Date filters -->
+                <div>
+                    <input 
+                        type="date" 
+                        id="date-from" 
+                        class="block w-full py-2 px-3 border border-gray-300 bg-gray-100 rounded-full focus:ring-blue-500 focus:border-blue-500 focus:bg-white"
+                        placeholder="From date">
                 </div>
-    
-                <!-- Faculty Members -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allIt as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
+                <div>
+                    <input 
+                        type="date" 
+                        id="date-to" 
+                        class="block w-full py-2 px-3 border border-gray-300 bg-gray-100 rounded-full focus:ring-blue-500 focus:border-blue-500 focus:bg-white"
+                        placeholder="To date">
+                </div>
+
+                <div class="lg:col-span-5 md:col-span-2">
+                    <button 
+                        id="clear-filters" 
+                        class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-full transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-times mr-2"></i> Clear Filters
+                    </button>
                 </div>
             </div>
-        </div>
-    
-        <!-- IS Department Tab -->
-        <div id="tab2" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads for IS Department -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                    <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <div class="level2">
-                    <?php foreach ($allIsHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <!-- Faculty Members for IS Department -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allIs as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    
-        <!-- CS Department Tab -->
-        <div id="tab3" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads for CS Department -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                    <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <div class="level2">
-                    <?php foreach ($allCsHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <!-- Faculty Members for CS Department -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allCs as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    
-        <!-- MIT Department Tab -->
-        <div id="tab4" class="org-chart">
-            <div class="section-content">
-                <!-- Campus Heads for MIT Department -->
-                <h3>Campus Heads</h3>
-                <div class="level1">
-                    <?php foreach ($allDean as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <div class="level2">
-                    <?php foreach ($allMitHeads as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-    
-                <!-- Faculty Members for MIT Department -->
-                <h3>Faculty Members</h3>
-                <div class="level3">
-                    <?php foreach ($allMit as $head): ?>
-                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>" 
-                             data-specialization="<?= htmlspecialchars($head['specialization']) ?>" 
-                             data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>" 
-                             data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                            <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br><?= htmlspecialchars($head['department_name']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    
-    
-    </div>
-    
-        </div>
-    </section>
-    <!-- Profile Modal -->
-    <div id="backdrop" class="backdrop" style="display: none;"></div>
-    <div id="profileCard" class="card mb-4">
-        <div class="card-body text-center">
-            <img id="profileImage" src="" alt="Profile Picture" class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3" id="profileName">Name</h5>
-            <p class="text-muted mb-1" id="profileSpecialization">Specialization: <span class="specialization-value"></span></p>
-            <p class="text-muted mb-4" id="profileConsultationTime">Consultation Time: <span class="consultation-value"></span></p>
-           
         </div>
     </div>
-    
-    
 
-        <section id="campusorgs" class="content-section bg-gray-50">
-        <div class="section-heading text-center borderYellow">
-            <h1 class="pt-16 pb-8">
-                <em class="text-4xl font-bold text-gray-800">CAMPUS ORGS</em>
-            </h1>
-            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
-        </div>
-
-        <div class="container-fluid px-4">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <?php 
-        $counter = 0; // Initialize a counter variable
-        foreach ($allOrg as $row): ?>
-            <div class="col">
-                <div class="card h-100 border-0 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                    <!-- Card Header -->
-                    <div class="card-header position-relative p-0">
-                        <a href="#" 
-                        class="d-block"
-                            data-bs-toggle="modal"
-                            data-bs-target="#newsModal"
-                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                            data-title="<?= htmlspecialchars($row['org_name']) ?>"
-                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                            data-author="<?= htmlspecialchars($row['org_name']) ?>">
-                            
-                            <!-- Card Image -->
-                            <div class="aspect-ratio-box position-relative overflow-hidden rounded-top-xl">
-                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>"
-                                    alt="<?= htmlspecialchars($row['org_name']) ?>"
-                                    class="w-100 h-100 object-fit-cover transform-hover scale-hover">
-                                
-                                <!-- Overlay -->
-                                <div class="card-overlay position-absolute start-0 end-0 bottom-0 h-100 d-flex flex-column justify-content-end p-3 bg-gradient-dark opacity-0">
-                                    <div class="text-white p-2 rounded bg-black bg-opacity-20 backdrop-blur-sm">
-                                        <span class="d-inline-block bg-warning text-dark rounded-pill px-3 py-1 text-sm fw-medium">
-                                            View Details
-                                        </span>
+    <!-- Announcements Container with max height constraint -->
+    <div id="announcement-container" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 max-h-[calc(100vh-280px)] overflow-y-auto">
+        <div class="space-y-4">
+            <?php if (empty($allAnnouncement)): ?>
+                <!-- Empty state -->
+                <div class="text-center py-8 bg-white rounded-lg shadow">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    </svg>
+                    <h3 class="mt-2 text-lg font-medium text-gray-900">No announcements</h3>
+                    <p class="mt-1 text-sm text-gray-500">Please check back later.</p>
+                </div>
+            <?php else: ?>
+                <?php foreach ($allAnnouncement as $announcement): ?>
+                    <!-- Facebook-style announcement card -->
+                    <div class="announcement-item bg-white rounded-lg shadow overflow-hidden transition-all duration-300 opacity-100" 
+                         data-category="<?= strtolower(htmlspecialchars($announcement['category'])) ?>">
+                        <div class="p-5">
+                            <!-- Header with profile image and name -->
+                            <div class="flex items-center mb-3">
+                                <img src="uploaded/orgUploaded/<?= htmlspecialchars($announcement['org_image']) ?>" 
+                                     alt="<?= htmlspecialchars($announcement['org_name']) ?>" 
+                                     class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                                <div class="ml-3">
+                                    <h3 class="font-semibold text-gray-900" data-original-text="<?= htmlspecialchars($announcement['org_name']) ?>">
+                                        <?= htmlspecialchars($announcement['org_name']) ?>
+                                    </h3>
+                                    <div class="flex items-center text-xs text-gray-500">
+                                        <span>Posted by <?= htmlspecialchars($announcement['author_name'] ?? $announcement['creator_name'] ?? 'Unknown Author') ?></span>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-                    </div>
-
-                    <!-- Card Body -->
-                    <div class="card-body p-3">
-                        <h5 class="card-title mb-2 fw-bold text-dark fs-6 text-truncate">
-                            <?= htmlspecialchars($row['org_name']) ?>
-                        </h5>
-                        <div class="d-flex align-items-center">
-                            <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
-                            <small class="text-muted text-xs">Campus Organization</small>
+                            
+                            <!-- Announcement content with Facebook-style "See more" -->
+                            <div class="announcement-details mb-3 text-gray-800" 
+                                 data-original-html="<?= htmlspecialchars(nl2br($announcement['announcement_details'])) ?>">
+                                <?= nl2br($announcement['announcement_details']) ?>
+                            </div>
+                            
+                            <!-- Images/Carousel if present -->
+                            <?php if (!empty($announcement['announcement_images'])): ?>
+                                <div class="mt-3 -mx-4">
+                                    <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
+                                               <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" 
+    data-image-index="<?php echo $index; ?>">
+    <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
+        alt="Announcement image"
+        onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
+        class="w-full h-auto object-contain"
+        style="max-height: 400px; width: auto; margin: 0 auto; display: block;">
+</div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        
+                                        <!-- Only show controls if more than one image -->
+                                        <?php if (count($announcement['announcement_images']) > 1): ?>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <!-- Footer with timestamp only -->
+                            <div class="border-t border-gray-200 mt-3 pt-2 text-xs text-gray-500">
+                                <span id="time-<?php echo $announcement['announcement_id']; ?>" 
+                                    data-created-at="<?php echo $announcement['created_at_formatted']; ?>">
+                                    <?php echo date('F j, Y', $announcement['created_at_timestamp']); ?>
+                                </span>
+                            </div>
                         </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        
+        <!-- No results message (shown when filtering returns no results) -->
+        <div id="no-results-message" class="hidden">
+            <div class="text-center py-8 bg-white rounded-lg shadow mt-4">
+                <i class="fas fa-search text-gray-400 text-4xl mb-2"></i>
+                <p class="text-lg font-medium text-gray-700">No announcements found matching your filters</p>
+                <p class="text-sm text-gray-500 mt-1">Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Modal -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden">
+    <button class="absolute top-4 right-4 text-white text-3xl">&times;</button>
+    <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <img class="modal-img max-w-5xl max-h-screen object-contain" src="" alt="Image preview">
+    <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+
+<!-- Add dynamic height adjustment -->
+<style>
+    /* Responsive heights for different screen sizes */
+    @media (max-height: 640px) {
+        #announcement-container {
+            max-height: calc(100vh - 240px);
+        }
+    }
+    
+    @media (min-height: 641px) and (max-height: 900px) {
+        #announcement-container {
+            max-height: calc(100vh - 280px);
+        }
+    }
+    
+    @media (min-height: 901px) {
+        #announcement-container {
+            max-height: calc(100vh - 320px);
+        }
+    }
+    /* Make text in input fields black */
+input[type="text"],
+input[type="search"],
+input[type="date"],
+select,
+textarea {
+    color: black !important;
+}
+
+/* Fix placeholder text color for better visibility */
+::placeholder {
+    color: #666 !important;
+    opacity: 1;
+}
+
+/* Fix any white text in your categories dropdown */
+#category-filter, 
+#category-filter option {
+    color: black !important;
+}
+</style>
+
+<script>
+// Wait for the DOM to be fully loaded
+document.addEventListener("DOMContentLoaded", function() {
+    // Get direct references to the filter elements
+    const searchInput = document.getElementById('announcement-search');
+    const categoryFilter = document.getElementById('category-filter');
+    const dateFrom = document.getElementById('date-from');
+    const dateTo = document.getElementById('date-to');
+    const clearFiltersBtn = document.getElementById('clear-filters');
+    const noResultsMessage = document.getElementById('no-results-message');
+    
+    // Log that elements were found correctly
+    console.log("Filter elements loaded:", {
+        searchInput: searchInput !== null,
+        categoryFilter: categoryFilter !== null,
+        dateFrom: dateFrom !== null,
+        dateTo: dateTo !== null,
+        clearFiltersBtn: clearFiltersBtn !== null,
+        noResultsMessage: noResultsMessage !== null
+    });
+    
+    // Main filter function
+    function filterAnnouncements() {
+        // Get filter values
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value;
+        const fromDate = dateFrom.value ? new Date(dateFrom.value) : null;
+        const toDate = dateTo.value ? new Date(dateTo.value + 'T23:59:59') : null;
+        
+        console.log("Filtering with:", { 
+            searchTerm, 
+            category: selectedCategory, 
+            fromDate: fromDate ? fromDate.toISOString() : null, 
+            toDate: toDate ? toDate.toISOString() : null 
+        });
+        
+        // Get all announcements
+        const announcements = document.querySelectorAll('.announcement-item');
+        let visibleCount = 0;
+        
+        announcements.forEach(announcement => {
+            // Extract content for filtering
+            const textContent = announcement.textContent.toLowerCase();
+            const category = announcement.getAttribute('data-category') || '';
+            
+            // Get date for date filtering
+            const timeElement = announcement.querySelector('[data-created-at]');
+            const createdAt = timeElement ? new Date(timeElement.getAttribute('data-created-at')) : null;
+            
+            // Check all filter conditions
+            let matchesSearch = !searchTerm || textContent.includes(searchTerm);
+            let matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+            let matchesDateRange = true;
+            
+            // Date range checking
+            if (createdAt && (fromDate || toDate)) {
+                if (fromDate && createdAt < fromDate) matchesDateRange = false;
+                if (toDate && createdAt > toDate) matchesDateRange = false;
+            }
+            
+            // Final visibility check
+            const isVisible = matchesSearch && matchesCategory && matchesDateRange;
+            
+            // Apply visibility with a nice transition
+            if (isVisible) {
+                announcement.style.display = '';
+                setTimeout(() => {
+                    announcement.style.opacity = '1';
+                }, 10);
+                visibleCount++;
+            } else {
+                announcement.style.opacity = '0';
+                setTimeout(() => {
+                    announcement.style.display = 'none';
+                }, 300);
+            }
+        });
+        
+        // Toggle no results message
+        if (visibleCount === 0) {
+            noResultsMessage.classList.remove('hidden');
+        } else {
+            noResultsMessage.classList.add('hidden');
+        }
+        
+        console.log(`Filter results: ${visibleCount} announcements visible`);
+        return visibleCount;
+    }
+    
+    // Clear all filters
+    function clearAllFilters() {
+        console.log("Clearing all filters");
+        
+        // Reset filter values
+        searchInput.value = '';
+        categoryFilter.value = 'all';
+        dateFrom.value = '';
+        dateTo.value = '';
+        
+        // Show all announcements
+        const announcements = document.querySelectorAll('.announcement-item');
+        announcements.forEach(announcement => {
+            announcement.style.display = '';
+            announcement.style.opacity = '1';
+        });
+        
+        // Hide no results message
+        noResultsMessage.classList.add('hidden');
+    }
+    
+    // Set up Facebook-style "See more" functionality
+    function setupSeeMoreFunctionality() {
+        const announcements = document.querySelectorAll('.announcement-details');
+        
+        announcements.forEach(function(announcement) {
+            // Get the original text content
+            const originalHTML = announcement.innerHTML;
+            const fullText = announcement.textContent.trim();
+            
+            // Only process if text is long enough to need truncation
+            if (fullText.length > 130) {
+                // Find a truncation point around 130 chars
+                let truncateAt = 130;
+                while (truncateAt > 100 && fullText[truncateAt] !== ' ') {
+                    truncateAt--;
+                }
+                
+                // Create truncated text
+                const truncatedText = fullText.substring(0, truncateAt);
+                
+                // Set up toggle functionality
+                let isExpanded = false;
+                
+                function toggleExpand() {
+                    if (isExpanded) {
+                        // Collapse - show truncated version
+                        announcement.innerHTML = truncatedText + 
+                            '... <span class="text-blue-600 font-semibold cursor-pointer hover:underline see-more-link">See more</span>';
+                    } else {
+                        // Expand - show full version
+                        announcement.innerHTML = originalHTML + 
+                            ' <span class="text-blue-600 font-semibold cursor-pointer hover:underline see-more-link">See less</span>';
+                    }
+                    
+                    // Add click event to the new link
+                    const toggleLink = announcement.querySelector('.see-more-link');
+                    if (toggleLink) {
+                        toggleLink.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            isExpanded = !isExpanded;
+                            toggleExpand();
+                        });
+                    }
+                }
+                
+                // Initial setup - truncate the text
+                announcement.innerHTML = truncatedText + 
+                    '... <span class="text-blue-600 font-semibold cursor-pointer hover:underline see-more-link">See more</span>';
+                
+                // Add initial click handler
+                const toggleLink = announcement.querySelector('.see-more-link');
+                if (toggleLink) {
+                    toggleLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        isExpanded = !isExpanded;
+                        toggleExpand();
+                    });
+                }
+            }
+        });
+    }
+    
+    // Format relative time
+    function formatRelativeTime() {
+        const timeElements = document.querySelectorAll('[id^="time-"]');
+        
+        timeElements.forEach(function(timeElement) {
+            const createdAt = timeElement.getAttribute('data-created-at');
+            
+            if (createdAt) {
+                const now = new Date();
+                const date = new Date(createdAt);
+                
+                if (isNaN(date.getTime())) {
+                    timeElement.textContent = "Invalid date";
+                    return;
+                }
+                
+                const diffInSeconds = Math.floor((now - date) / 1000);
+                const diffInMinutes = Math.floor(diffInSeconds / 60);
+                const diffInHours = Math.floor(diffInMinutes / 60);
+                const diffInDays = Math.floor(diffInHours / 24);
+                
+                if (diffInSeconds < 60) {
+                    timeElement.textContent = `${diffInSeconds} seconds ago`;
+                } else if (diffInMinutes < 60) {
+                    timeElement.textContent = `${diffInMinutes} minutes ago`;
+                } else if (diffInHours < 24) {
+                    timeElement.textContent = `${diffInHours} hours ago`;
+                } else if (diffInDays < 7) {
+                    timeElement.textContent = `${diffInDays} days ago`;
+                } else {
+                    timeElement.textContent = date.toLocaleDateString();
+                }
+            } else {
+                timeElement.textContent = "Date not available";
+            }
+        });
+    }
+    
+    // Set up image modal functionality
+    function setupImageModal() {
+        // Image modal functionality
+        window.openModal = function(img, announcementId) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = modal.querySelector('img');
+            const carousel = document.getElementById(`carousel-${announcementId}`);
+            const items = carousel.querySelectorAll('.carousel-item');
+            
+            modalImg.src = img.src;
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            
+            // Find current image index
+            let currentIndex = 0;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].querySelector('img').src === img.src) {
+                    currentIndex = i;
+                    break;
+                }
+            }
+            
+            // Previous button
+            const prevBtn = modal.querySelector('button:nth-child(2)');
+            prevBtn.onclick = function() {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                modalImg.src = items[currentIndex].querySelector('img').src;
+            };
+            
+            // Next button
+            const nextBtn = modal.querySelector('button:nth-child(4)');
+            nextBtn.onclick = function() {
+                currentIndex = (currentIndex + 1) % items.length;
+                modalImg.src = items[currentIndex].querySelector('img').src;
+            };
+            
+            // Close button
+            const closeBtn = modal.querySelector('button:first-child');
+            closeBtn.onclick = function() {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            };
+            
+            // Also close on modal background click
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }
+            };
+        };
+    }
+    
+    // Attach event listeners
+    if (searchInput) {
+        searchInput.addEventListener('input', filterAnnouncements);
+    }
+    
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', filterAnnouncements);
+    }
+    
+    if (dateFrom) {
+        dateFrom.addEventListener('change', filterAnnouncements);
+    }
+    
+    if (dateTo) {
+        dateTo.addEventListener('change', filterAnnouncements);
+    }
+    
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', clearAllFilters);
+    }
+    
+    // Set max date for date inputs to today
+    const today = new Date().toISOString().split('T')[0];
+    if (dateFrom) dateFrom.max = today;
+    if (dateTo) dateTo.max = today;
+    
+    // Initialize all functionality
+    setupSeeMoreFunctionality();
+    formatRelativeTime();
+    setupImageModal();
+    
+    // Dynamic section height calculation
+    function setAnnouncementsHeight() {
+        const windowHeight = window.innerHeight;
+        const headerOffset = 180; // Adjust based on your header size
+        const footerOffset = 40;  // Adjust based on your footer size
+        
+        const container = document.getElementById('announcement-container');
+        if (container) {
+            const availableHeight = windowHeight - headerOffset - footerOffset;
+            const minHeight = 300;
+            container.style.maxHeight = `${Math.max(availableHeight, minHeight)}px`;
+        }
+    }
+    
+    // Set initial height and update on resize
+    setAnnouncementsHeight();
+    window.addEventListener('resize', setAnnouncementsHeight);
+    
+    console.log("Announcement section fully initialized");
+});
+</script>
+<section id="schoolcalendar" class="content-section bg-gradient-to-br from-gray-50 to-gray-100 py-12">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-900 border-b-4 border-yellow-500 inline-block pb-2 drop-shadow-sm">SCHOOL CALENDAR</h1>
+            <p class="text-gray-600 mt-3 max-w-2xl mx-auto">Stay updated with all important school events and activities</p>
+    </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Calendar View (Left Side) -->
+            <div class="lg:w-2/3 bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl">
+                <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+                    <div class="flex items-center justify-between">
+                        <button id="prevMonth" class="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-chevron-left text-gray-600"></i>
+                        </button>
+                        <h2 id="currentMonth" class="text-2xl font-bold text-gray-800"></h2>
+                        <button id="nextMonth" class="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-chevron-right text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="p-6">
+                    <div class="grid grid-cols-7 mb-4">
+                        <!-- Week days header -->
+                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Sun</div>
+                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Mon</div>
+                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Tue</div>
+                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Wed</div>
+                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Thu</div>
+                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Fri</div>
+                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Sat</div>
+                </div>
+
+                    <!-- Calendar days -->
+                    <div id="calendarDays" class="grid grid-cols-7 gap-3"></div>
+                </div>
+            </div>
+
+            <!-- Events View (Right Side) -->
+            <div class="lg:w-1/3 space-y-8">
+                <!-- Today's Events -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl">
+                    <div class="px-6 py-4 bg-gradient-to-r from-emerald-50 to-emerald-100 border-b border-emerald-100">
+                        <h2 class="text-lg font-bold text-emerald-800 flex items-center">
+                            <i class="fas fa-calendar-day mr-2 text-emerald-600"></i> Today's Events
+                        </h2>
+                </div>
+                    <div class="p-6">
+                        <?php if (empty($eventsToday)): ?>
+                            <div class="text-center py-8 bg-yellow-50 rounded-lg border border-yellow-100">
+                                <i class="fas fa-calendar-times text-yellow-400 text-3xl mb-2"></i>
+                                <p class="text-sm text-yellow-800 font-medium">No events scheduled for today</p>
+                            </div>
+                        <?php else: ?>
+                            <div class="space-y-4">
+                                <?php foreach ($eventsToday as $event): ?>
+                                    <div class="group hover:bg-gray-50 rounded-lg p-4 transition-all cursor-pointer border border-gray-100 hover:border-emerald-200 hover:shadow-md">
+                                        <div class="flex gap-4">
+                                            <div class="flex-shrink-0 w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-calendar text-emerald-600 text-lg"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
+                                                    <?= date('F j, Y', strtotime($event['calendar_start_date'])); ?>
+                                                </p>
+                                                <p class="text-sm text-gray-600 mt-1 line-clamp-2 group-hover:text-gray-700">
+                                                    <?= strip_tags($event['calendar_details']); ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                
+                <!-- Upcoming Events -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-blue-100 border-b border-blue-100">
+                        <h2 class="text-lg font-bold text-blue-800 flex items-center">
+                            <i class="fas fa-calendar-week mr-2 text-blue-600"></i> Upcoming Events
+                        </h2>
+                        </div>
+                    <div class="p-6">
+                        <?php if (empty($upcomingEvents)): ?>
+                            <div class="text-center py-8 bg-yellow-50 rounded-lg border border-yellow-100">
+                                <i class="fas fa-calendar-times text-yellow-400 text-3xl mb-2"></i>
+                                <p class="text-sm text-yellow-800 font-medium">No upcoming events</p>
+                    </div>
+                        <?php else: ?>
+                            <div class="space-y-4">
+                                <?php foreach ($upcomingEvents as $event): ?>
+                                    <div class="group hover:bg-gray-50 rounded-lg p-4 transition-all cursor-pointer border border-gray-100 hover:border-blue-200 hover:shadow-md">
+                                        <div class="flex gap-4">
+                                            <div class="flex-shrink-0 w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-calendar text-blue-600 text-lg"></i>
+                        </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-gray-900 group-hover:text-blue-700 transition-colors">
+                                                    <?= date('F j, Y', strtotime($event['calendar_start_date'])); ?>
+                                                </p>
+                                                <p class="text-sm text-gray-600 mt-1 line-clamp-2 group-hover:text-gray-700">
+                                                    <?= strip_tags($event['calendar_details']); ?>
+                                                </p>
                     </div>
                 </div>
             </div>
-        
-        <?php 
-        $counter++; // Increment the counter
-        
-        // Add row div after every 4 items
-        if ($counter % 4 == 0): ?>
-            </div><div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <?php endif; ?>
-    <?php endforeach; ?>
-</div>
-
-</section>
-
-         
-
-        <section id="faqs" class="content-section">
-        <div class="section-heading text-center borderYellow">
-        <h1><br><em>FREQUENTLY ASKED QUESTIONS</em></h1>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <?php 
+    $eventsJson = json_encode($allEvent);
+    ?>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const events = <?php echo $eventsJson; ?>;
+        const calendarDays = document.getElementById('calendarDays');
+        const currentMonthElement = document.getElementById('currentMonth');
+        const prevMonthButton = document.getElementById('prevMonth');
+        const nextMonthButton = document.getElementById('nextMonth');
+        
+        let currentDate = new Date();
+
+        function renderCalendar(date) {
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            const startingDay = firstDay.getDay();
+            const monthLength = lastDay.getDate();
+
+            currentMonthElement.textContent = new Intl.DateTimeFormat('en-US', {
+                month: 'long',
+                year: 'numeric'
+            }).format(date);
+
+            calendarDays.innerHTML = '';
+
+            // Add empty cells for days before the first of the month
+            for (let i = 0; i < startingDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'aspect-square bg-gray-50 rounded-lg';
+                calendarDays.appendChild(emptyDay);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= monthLength; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'aspect-square p-1 bg-white rounded-lg border border-gray-200 relative hover:border-gray-300 transition-all hover:shadow-md';
+                
+                // Add day number
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'absolute top-1 right-2 text-sm font-medium text-gray-700';
+                dayNumber.textContent = day;
+                dayCell.appendChild(dayNumber);
+
+                const currentDateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const currentDay = new Date(currentDateStr);
+
+                // Highlight today's date
+                if (currentDateStr === new Date().toISOString().split('T')[0]) {
+                    dayCell.classList.add('bg-blue-50', 'border-blue-300', 'shadow-md');
+                    dayNumber.classList.add('text-blue-600', 'font-bold');
+                    
+                    // Add "TODAY" label
+                    const todayLabel = document.createElement('div');
+                    todayLabel.className = 'absolute top-1 left-1 bg-blue-500 text-white text-xs px-1 rounded';
+                    todayLabel.textContent = 'TODAY';
+                    dayCell.appendChild(todayLabel);
+                }
+
+                // Event container
+                const eventContainer = document.createElement('div');
+                eventContainer.className = 'mt-6 space-y-1 overflow-hidden';
+                dayCell.appendChild(eventContainer);
+
+                // Find events for this day
+                let eventCount = 0;
+            for (const monthYear in events) {
+                    events[monthYear].forEach(event => {
+                    const eventStart = new Date(event.calendar_start_date);
+                    const eventEnd = new Date(event.calendar_end_date);
+                    
+                        if (currentDay >= eventStart && currentDay <= eventEnd && eventCount < 2) {
+                            const eventDiv = document.createElement('div');
+                            eventDiv.className = 'text-xs p-1 rounded bg-blue-100 text-blue-800 truncate cursor-pointer hover:bg-blue-200 transition-colors';
+                            eventDiv.title = event.calendar_details;
+                            eventDiv.textContent = event.calendar_details.replace(/<[^>]*>/g, '');
+                            
+                            eventDiv.addEventListener('click', () => {
+                                Swal.fire({
+                                    title: 'Event Details',
+                                    html: `
+                                        <div class="text-left">
+                                            <p class="mb-2"><strong>Date:</strong> ${new Date(event.calendar_start_date).toLocaleDateString()} - ${new Date(event.calendar_end_date).toLocaleDateString()}</p>
+                                            <p>${event.calendar_details}</p>
+                                        </div>
+                                    `,
+                                    confirmButtonColor: '#3085d6'
+                                });
+                            });
+                            
+                            eventContainer.appendChild(eventDiv);
+                            eventCount++;
+                        }
+                    });
+                }
+
+                // If there are more events, show count with a badge
+                if (eventCount > 2) {
+                    const moreEventsDiv = document.createElement('div');
+                    moreEventsDiv.className = 'text-xs text-center bg-gray-200 text-gray-700 rounded-full px-2 py-0.5 mt-1 font-medium';
+                    moreEventsDiv.textContent = `+${eventCount - 2} more`;
+                    eventContainer.appendChild(moreEventsDiv);
+                }
+
+                calendarDays.appendChild(dayCell);
+            }
+        }
+
+        // Add subtle animation
+        function addHoverEffects() {
+            const dayCells = document.querySelectorAll('#calendarDays > div');
+            dayCells.forEach(cell => {
+                cell.addEventListener('mouseenter', () => {
+                    cell.classList.add('transform', 'scale-105', 'z-10');
+                });
+                cell.addEventListener('mouseleave', () => {
+                    cell.classList.remove('transform', 'scale-105', 'z-10');
+                });
+            });
+        }
+
+        // Initialize calendar
+        renderCalendar(currentDate);
+        addHoverEffects();
+
+        // Add month navigation handlers with smooth transitions
+        prevMonthButton.addEventListener('click', () => {
+            calendarDays.classList.add('opacity-0');
+            setTimeout(() => {
+                currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+                renderCalendar(currentDate);
+                addHoverEffects();
+                setTimeout(() => {
+                    calendarDays.classList.remove('opacity-0');
+                }, 50);
+            }, 150);
+        });
+
+        nextMonthButton.addEventListener('click', () => {
+            calendarDays.classList.add('opacity-0');
+            setTimeout(() => {
+                currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+                renderCalendar(currentDate);
+                addHoverEffects();
+                setTimeout(() => {
+                    calendarDays.classList.remove('opacity-0');
+                }, 50);
+            }, 150);
+        });
+
+        // Add transition effect to calendar
+        calendarDays.classList.add('transition-opacity', 'duration-150');
+    });
+    </script>
+</section>
+    
+    <section id="campusmap" class="content-section bg-light remove-padding-sm py-5">
+                <div class="section-heading text-center borderYellow">
+                    <h1><br><em>CAMPUS BUILDINGS</em></h1>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-container">
+                    <button class="tab-button active" onclick="openTab(event, 'ccs')">CCS</button>
+                    <button class="tab-button" onclick="openTab(event, 'cit')">CIT</button>
+                    <button class="tab-button" onclick="openTab(event, 'cafa')">CAFA</button>
+                </div>
+
+                <!-- Floor Map Section -->
+                <div id="ccs" class="tab-content">
+                    <div id="map">
+                        <div class="map section-content-map">
+                            <div class="dropdown">
+                               <input type="text" id="search-input" class="search" placeholder="Enter room name" style="color: black;">
+                                <button onclick="searchAndHighlight()" class="search-button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <select id="dropdownMenu">
+                                    <option value="1" selected>1st Floor</option>
+                                    <option value="2">2nd Floor</option>
+                                    <option value="3">3rd Floor</option>
+                                    <option value="4">4th Floor</option>
+                                    <option value="5">5th Floor</option>
+                                </select>
+                            </div>
+                            <div class="table-container">
+                                <table class="floor-table" id="floor-1" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
+                                            <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
+                                            <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
+                                            <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
+                                            <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
+                                            <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
+                                            <td id="7" class="floor-gray" colspan="2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
+                                            <td id="9" class="floor-gray" colspan="2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="10">0</td>
+                                            <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
+                                            <td id="12" class="floor-gray" colspan="2">2</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="13">3</td>
+                                            <td id="14" class="floor-gray" colspan="2">4</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
+                                            <td id="16" class="floor-gray" colspan="2">6</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
+                                            <td id="18" class="floor-gray" colspan="2">8</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="floor-table" id="floor-2" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
+                                            <td id="20" class="floor-gray" rowspan="2">19</td>
+                                            <td id="21" class="floor-gray" rowspan="2">20</td>
+                                            <td id="22" class="floor-gray" rowspan="2">21</td>
+                                            <td id="23" class="floor-gray" rowspan="2">22</td>
+                                            <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
+                                            <td id="25" class="floor-gray" colspan="2">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
+                                            <td id="27" class="floor-gray" colspan="2">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="28">27</td>
+                                            <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
+                                            <td id="32" class="floor-gray" colspan="2">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="31">30</td>
+                                            <td id="30" class="floor-gray" colspan="2">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
+                                            <td id="34" class="floor-gray" colspan="2">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
+                                            <td id="36" class="floor-gray" colspan="2">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="floor-table" id="floor-3" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
+                                            <td id="38" rowspan="2" class="floor-gray">19</td>
+                                            <td id="39" rowspan="2" class="floor-gray">20</td>
+                                            <td id="40" rowspan="2" class="floor-gray">21</td>
+                                            <td id="41" rowspan="2" class="floor-gray">22</td>
+                                            <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
+                                            <td id="43" colspan="2" class="floor-gray">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
+                                            <td id="45" colspan="2" class="floor-gray">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="46" class="floor-gray">27</td>
+                                            <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                            <td id="48" colspan="2" class="floor-gray">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="50" class="floor-gray">30</td>
+                                            <td id="49" colspan="2" class="floor-gray">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
+                                            <td id="52" colspan="2" class="floor-gray">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
+                                            <td id="54" colspan="2" class="floor-gray">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="floor-table" id="floor-4" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
+                                            <td id="56" rowspan="2" class="floor-gray">19</td>
+                                            <td id="57" rowspan="2" class="floor-gray">20</td>
+                                            <td id="58" rowspan="2" class="floor-gray">21</td>
+                                            <td id="59" rowspan="2" class="floor-gray">22</td>
+                                            <td id="60" rowspan="2" class="floor-gray">23</td>
+                                            <td id="61" rowspan="2" class="floor-gray">23</td>
+                                            <td id="62" colspan="2" class="floor-gray">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
+                                            <td id="64" colspan="2" class="floor-gray">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="65" class="floor-gray">27</td>
+                                            <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                            <td id="67" colspan="2" class="floor-gray">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="68" class="floor-gray">30</td>
+                                            <td id="69" colspan="2" class="floor-gray">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
+                                            <td id="71" colspan="2" class="floor-gray">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
+                                            <td id="73" colspan="2" class="floor-gray">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="floor-table" id="floor-5" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
+                                            <td id="75" rowspan="2" class="floor-gray">19</td>
+                                            <td id="76" rowspan="2" class="floor-gray">20</td>
+                                            <td id="77" rowspan="2" class="floor-gray">21</td>
+                                            <td id="78" rowspan="2" class="floor-gray">22</td>
+                                            <td id="79" rowspan="2" class="floor-gray">23</td>
+                                            <td id="80" rowspan="2" class="floor-gray">23</td>
+                                            <td id="81" colspan="2" class="floor-gray">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
+                                            <td id="83" colspan="2" class="floor-gray">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="84" class="floor-gray">27</td>
+                                            <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                            <td id="86" colspan="2" class="floor-gray">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="87" class="floor-gray">30</td>
+                                            <td id="88" colspan="2" class="floor-gray">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
+                                            <td id="90" colspan="2" class="floor-gray">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
+                                            <td id="92" colspan="2" class="floor-gray">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SVG Map Section -->
+                <div id="cit" class="tab-content" style="display: none;">
+                    <div id="map">
+                        <div class="map section-content-map">
+                            <div class="dropdown">
+                                <input type="text" id="search" class="search" placeholder="Enter room name">
+                                <button onclick="searchElement()" class="search-button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="table-container">
+                                <svg id="room-svg" viewBox="0 0 985 588" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black" />
+                                    <rect x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black" />
+                                    <rect id="cit-5-a-b" x="167.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black" />
+                                    <text id="stock-room" x="195" y="250" text-anchor="middle" font-size="12">
+                                        STOCK
+                                        <tspan dy="1.2em" dx="-44">ROOM</tspan>
+                                    </text>
+                                    <rect id="ctl-1-a" x="40.5" y="301.5" width="52" height="67" fill="#D9D9D9" stroke="black" />
+                                    <text id="ctl-1-a-text" x="63" y="335" text-anchor="middle" font-size="12">CTL 1-A</text>
+                                    <rect id="cit-3-b-rect" x="303.5" y="72.5" width="49" height="69" fill="#D9D9D9" stroke="black" />
+                                    <text id="cit-3-b-text" x="328" y="105" text-anchor="middle" font-size="12">CIT 3-B</text>
+                                    <rect id="cit-5-a-b-rect" x="353.5" y="72.5" width="53" height="69" fill="#D9D9D9" stroke="black" />
+                                    <rect id="cit-5-a-b-combined" x="361.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                    <text id="cit-5-a-b-text" x="406" y="250" text-anchor="middle" font-size="12">CIT 5-A & 5-B
+                                        <tspan dy="1.2em" dx="-80">ELECTRICAL</tspan>
+                                    </text>
+                                    <rect id="etl-5" x="452.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                    <text id="etl-5-text" x="497" y="250" text-anchor="middle" font-size="12">ETL 5</text>
+                                    <rect id="cit-5-b-lec" x="543.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                    <text id="cit-5-b-lec-text" x="588" y="250" text-anchor="middle" font-size="12">CIT 5-B LEC</text>
+                                    <rect id="bodega" x="634.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
+                                    <text id="bodega-text" x="679" y="250" text-anchor="middle" font-size="12">BODEGA</text>
+                                    <rect id="library" x="725.5" y="205.5" width="89" height="95" fill="#D9D9D9" stroke="black" />
+                                    <text id="library-text" x="770" y="250" text-anchor="middle" font-size="12">LIBRARY</text>
+                                    <rect id="chairperson-office" x="220.5" y="136.5" width="53" height="68" fill="#D9D9D9" stroke="black" />
+                                    <text id="chairperson-office-text" x="250" y="170" text-anchor="middle" font-size="8">
+                                        CHAIRPERSON
+                                        <tspan dy="1.2em" dx="-44">OFFICE</tspan>
+                                    </text>
+                                    <rect id="d-o" x="40.5" y="369.5" width="52" height="68" fill="#D9D9D9" stroke="black" />
+                                    <text id="d-o-text" x="63" y="405" text-anchor="middle" font-size="12">D.O.</text>
+                                    <rect id="cr" x="40.5" y="438.5" width="52" height="69" fill="#D9D9D9" stroke="black" />
+                                    <text id="cr-text" x="63" y="475" text-anchor="middle" font-size="12">CR</text>
+                                    <rect id="cit-2-a" x="93.5" y="205.5" width="73" height="46" fill="#D9D9D9" stroke="black" />
+                                    <text id="cit-2-a-text" x="130" y="230" text-anchor="middle" font-size="12">CIT 2-A</text>
+                                    <path id="welding" d="M274 205H361V301H274V205Z" fill="#D9D9D9" />
+                                    <text id="welding-text" x="317" y="250" text-anchor="middle" font-size="12">WELDING</text>
+                                    <rect id="cit-3-a" x="220.5" y="72.5" width="82" height="69" fill="#D9D9D9" stroke="black" />
+                                    <text id="cit-3-a-text" x="261" y="105" text-anchor="middle" font-size="12">CIT 3-A</text>
+                                    <rect id="cit-2-b" x="93.5" y="252.5" width="73" height="48" fill="#D9D9D9" stroke="black" />
+                                    <text id="cit-2-b-text" x="130" y="280" text-anchor="middle" font-size="12">CIT 2-B</text>
+                                    <path id="pantry" d="M274 142H407V205H274V142Z" fill="#D9D9D9" />
+                                    <text id="pantry-text" x="340" y="172" text-anchor="middle" font-size="12">PANTRY</text>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M405.629 205H407V142H405.629V205Z" fill="black" />
+                                    <rect id="breaker" x="815.5" y="180.5" width="39" height="48" fill="#D9D9D9" stroke="black" />
+                                    <text id="breaker-text" x="834" y="205" text-anchor="middle" font-size="8">BREAKER</text>
+                                    <rect id="ctl-6" x="855.5" y="286.5" width="89" height="94" fill="#D9D9D9" stroke="black" />
+                                    <text id="ctl-6-text" x="900" y="322" text-anchor="middle" font-size="12">CTL 6</text>
+                                    <rect id="ctl-6-a-b" x="855.5" y="190.5" width="89" height="95" fill="#D9D9D9" stroke="black" />
+                                    <text id="ctl-6-a-b-text" x="900" y="225" text-anchor="middle" font-size="12">CTL 6-A & 6-B</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cafa" class="tab-content" style="display: none;">
+                    <div id="map">
+                        <div class="map section-content-map">
+                            <div class="dropdown">
+                                <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
+                                <button onclick="searchElement2()" class="search-button" aria-label="Search">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <select id="dropdown" aria-label="Select floor" onchange="showFloor(this.value)">
+                                    <option value="1" selected>1st Floor</option>
+                                    <option value="2">2nd Floor</option>
+                                    <option value="3">3rd Floor</option>
+                                </select>
+                            </div>
+
+                            <div class="table-container">
+                                <!-- Floor 1 -->
+                                <!--floor 1-->
+                                <svg id="room-svg-1" class="floor-svg" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="100" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+
+                                    <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
+
+
+
+                                    <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
+
+                                    <rect id="s-104-rect" x="620.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-104-text" x="650" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
+
+                                    <rect id="s-106-rect" x="550" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-106-text" x="585" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
+
+                                    <rect id="s-102-rect" x="755" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-102-text" x="780" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
+
+                                    <rect id="s-103-rect" x="680.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-103-text" x="720" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
+
+                                    <rect id="s-101-rect" x="890" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-101-text" x="930" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-101</text>
+
+                                    <rect id="male-cr-rect" x="820.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="male-cr-text" x="860" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
+
+                                    <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
+
+                                    <rect id="pwd-cr-base-rect" x="408.5" y="140.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
+
+                                    <rect id="stairs-2-rect" x="965" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="stairs-2-text" x="1000" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+
+                                    <mask id="path-18-inside-1_0_1" fill="white">
+                                        <path d="M267 140H332V206H267V140Z" />
+                                    </mask>
+
+                                    <path d="M267 140H332V206H267V140Z" fill="#D9D9D9" />
+                                    <path d="M267 141H332V139H267V141Z" fill="#0D0D0D" mask="url(#path-18-inside-1_0_1)" />
+
+                                    <rect id="s-108-rect" x="202.5" y="206.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-108-text" x="230" y="240" font-family="Arial" font-size="12" text-anchor="middle">S-108</text>
+                                </svg>
+                                <!--floor 2-->
+                                <svg id="room-svg-2" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="stairs-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+
+                                    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
+
+                                    <rect id="s-205-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-205-text" x="600" y="182" font-family="Arial" font-size="12" fill="black">S-205</text>
+
+                                    <rect id="s-206-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-206-text" x="520" y="182" font-family="Arial" font-size="12" fill="black">S-206</text>
+
+                                    <rect id="s-201-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-201-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-201</text>
+
+                                    <rect id="s-204-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-204-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-204</text>
+
+                                    <rect id="female-cr-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="female-cr-text" x="950" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
+
+                                    <rect id="s-202-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-202-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-202</text>
+
+                                    <rect id="s-203-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-203-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-203</text>
+
+                                    <rect id="s-208-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-208-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">S-208</text>
+
+                                    <rect id="s-207-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-207-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-207</text>
+
+                                    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+                                </svg>
+                                <!--floor 3-->
+                                <svg id="room-svg-3" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect id="stairs-1" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="stairs-1-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+
+                                    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">S-307</text>
+
+                                    <rect id="male-cr-2-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="male-cr-2-text" x="580" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
+
+                                    <rect id="female-cr-1-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="female-cr-1-text" x="498" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
+
+                                    <rect id="s-301-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-301-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-301</text>
+
+                                    <rect id="s-305-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-305-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-305</text>
+
+                                    <rect id="female-cr-2-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="female-cr-2-text" x="950" y="182" font-family="8" fill="black">FACULTY ROOM</text>
+
+                                    <rect id="s-303-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-303-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-303</text>
+
+                                    <rect id="s-304-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-304-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-304</text>
+
+                                    <rect id="uapsa-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="uapsa-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">UAPSA</text>
+
+                                    <rect id="s-306-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="s-306-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-306</text>
+
+                                    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
+                                    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
+                                </svg>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+
+    <script>
+        // Restore your existing JavaScript functions
+        function showFloorTable(floorId) {
+            document.querySelectorAll('.floor-table').forEach(table => {
+                table.style.display = 'none';
+            });
+
+            const selectedTable = document.getElementById(`floor-${floorId}`);
+            if (selectedTable) {
+                selectedTable.style.display = 'table';
+                selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function searchAndHighlight() {
+            var input = document.getElementById('search-input').value.toLowerCase();
+            // Your existing search and highlight logic
+        }
+    </script>
+
+
+
+            <section id="campusmap" class="content-section bg-light remove-padding-sm py-5">
+                <div class="section-heading text-center borderYellow">
+                    <h1><br><em>CAMPUS BUILDINGS</em></h1>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-container">
+                    <button class="tab-button active" data-tab="ccs">CCS</button>
+                    <button class="tab-button" data-tab="cit">CIT</button>
+                    <button class="tab-button" data-tab="cafa">CAFA</button>
+                </div>
+
+                <!-- Floor Map Section -->
+                <div id="ccs" class="tab-content">
+                    <div id="map">
+                        <div class="map section-content-map">
+                            <div class="dropdown">
+                               <input type="text" id="search-input" class="search" placeholder="Enter room name" style="color: black;">
+                                <button onclick="searchAndHighlight()" class="search-button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <select id="dropdownMenu">
+                                    <option value="1" selected>1st Floor</option>
+                                    <option value="2">2nd Floor</option>
+                                    <option value="3">3rd Floor</option>
+                                    <option value="4">4th Floor</option>
+                                    <option value="5">5th Floor</option>
+                                </select>
+                            </div>
+                            <div class="table-container">
+                                <table class="floor-table" id="floor-1" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
+                                            <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
+                                            <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
+                                            <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
+                                            <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
+                                            <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
+                                            <td id="7" class="floor-gray" colspan="2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
+                                            <td id="9" class="floor-gray" colspan="2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="10">0</td>
+                                            <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
+                                            <td id="12" class="floor-gray" colspan="2">2</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="13">3</td>
+                                            <td id="14" class="floor-gray" colspan="2">4</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
+                                            <td id="16" class="floor-gray" colspan="2">6</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
+                                            <td id="18" class="floor-gray" colspan="2">8</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="floor-table" id="floor-2" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
+                                            <td id="20" class="floor-gray" rowspan="2">19</td>
+                                            <td id="21" class="floor-gray" rowspan="2">20</td>
+                                            <td id="22" class="floor-gray" rowspan="2">21</td>
+                                            <td id="23" class="floor-gray" rowspan="2">22</td>
+                                            <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
+                                            <td id="25" class="floor-gray" colspan="2">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
+                                            <td id="27" class="floor-gray" colspan="2">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="28">27</td>
+                                            <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
+                                            <td id="32" class="floor-gray" colspan="2">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="31">30</td>
+                                            <td id="30" class="floor-gray" colspan="2">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
+                                            <td id="34" class="floor-gray" colspan="2">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
+                                            <td id="36" class="floor-gray" colspan="2">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="floor-table" id="floor-3" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
+                                            <td id="38" rowspan="2" class="floor-gray">19</td>
+                                            <td id="39" rowspan="2" class="floor-gray">20</td>
+                                            <td id="40" rowspan="2" class="floor-gray">21</td>
+                                            <td id="41" rowspan="2" class="floor-gray">22</td>
+                                            <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
+                                            <td id="43" colspan="2" class="floor-gray">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
+                                            <td id="45" colspan="2" class="floor-gray">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="46" class="floor-gray">27</td>
+                                            <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                            <td id="48" colspan="2" class="floor-gray">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="50" class="floor-gray">30</td>
+                                            <td id="49" colspan="2" class="floor-gray">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
+                                            <td id="52" colspan="2" class="floor-gray">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
+                                            <td id="54" colspan="2" class="floor-gray">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="floor-table" id="floor-4" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
+                                            <td id="56" rowspan="2" class="floor-gray">19</td>
+                                            <td id="57" rowspan="2" class="floor-gray">20</td>
+                                            <td id="58" rowspan="2" class="floor-gray">21</td>
+                                            <td id="59" rowspan="2" class="floor-gray">22</td>
+                                            <td id="60" rowspan="2" class="floor-gray">23</td>
+                                            <td id="61" rowspan="2" class="floor-gray">23</td>
+                                            <td id="62" colspan="2" class="floor-gray">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
+                                            <td id="64" colspan="2" class="floor-gray">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="65" class="floor-gray">27</td>
+                                            <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                            <td id="67" colspan="2" class="floor-gray">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="68" class="floor-gray">30</td>
+                                            <td id="69" colspan="2" class="floor-gray">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
+                                            <td id="71" colspan="2" class="floor-gray">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
+                                            <td id="73" colspan="2" class="floor-gray">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="floor-table" id="floor-5" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
+                                            <td id="75" rowspan="2" class="floor-gray">19</td>
+                                            <td id="76" rowspan="2" class="floor-gray">20</td>
+                                            <td id="77" rowspan="2" class="floor-gray">21</td>
+                                            <td id="78" rowspan="2" class="floor-gray">22</td>
+                                            <td id="79" rowspan="2" class="floor-gray">23</td>
+                                            <td id="80" rowspan="2" class="floor-gray">23</td>
+                                            <td id="81" colspan="2" class="floor-gray">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
+                                            <td id="83" colspan="2" class="floor-gray">26</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="84" class="floor-gray">27</td>
+                                            <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
+                                            <td id="86" colspan="2" class="floor-gray">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="87" class="floor-gray">30</td>
+                                            <td id="88" colspan="2" class="floor-gray">31</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
+                                            <td id="90" colspan="2" class="floor-gray">33</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
+                                            <td id="92" colspan="2" class="floor-gray">35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CIT Building Floor Tables -->
+                <div id="cit" class="tab-content" style="display: none;">
+                    <div id="map">
+                        <div class="map section-content-map">
+                            <div class="dropdown">
+                                <input type="text" id="search-input-cit" class="search" placeholder="Enter room name" style="color: black;">
+                                <button onclick="searchAndHighlightCIT()" class="search-button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <select id="dropdownMenu-cit" onchange="showFloorTableForBuilding('cit', this.value)">
+                                    <option value="1" selected>1st Floor</option>
+                                    <option value="2">2nd Floor</option>
+                                    <option value="3">3rd Floor</option>
+                                    <option value="4">4th Floor</option>
+                                    <option value="5">5th Floor</option>
+                                </select>
+                            </div>
+                            <div class="table-container">
+                                <!-- CIT Floor 1 -->
+                                <table class="floor-table" id="floor-cit-1" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="cit-1" style="height: 100px;">STOCK ROOM</td>
+                                            <td id="cit-2" class="floor-gray" rowspan="2" style="width: 120px;">CTL 1-A</td>
+                                            <td id="cit-3" class="floor-gray" rowspan="2" style="width: 120px;">CIT 3-B</td>
+                                            <td id="cit-4" class="floor-gray" colspan="2" rowspan="2">CIT 5-A & 5-B</td>
+                                            <td id="cit-5" class="floor-gray" rowspan="2" style="width: 70px;">ETL 5</td>
+                                            <td id="cit-6" class="floor-gray" rowspan="2" style="width: 70px;">CIT 5-B LEC</td>
+                                            <td id="cit-7" class="floor-gray" colspan="2">BODEGA</td>
+                                        </tr>
+                                        <tr>
+                                            <td id="cit-8" class="floor-gray" colspan="2" style="height: 50px;">LIBRARY</td>
+                                            <td id="cit-9" class="floor-gray" colspan="2">CHAIRPERSON OFFICE</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="cit-10">D.O.</td>
+                                            <td id="cit-11" class="floor-maroon" colspan="6" rowspan="4">GROUND FLOOR</td>
+                                            <td id="cit-12" class="floor-gray" colspan="2">CR</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="cit-13">CIT 2-A</td>
+                                            <td id="cit-14" class="floor-gray" colspan="2">WELDING</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="cit-15" style="height: 60px;">CIT 3-A</td>
+                                            <td id="cit-16" class="floor-gray" colspan="2">PANTRY</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="cit-17" style="height: 50px;">CIT 2-B</td>
+                                            <td id="cit-18" class="floor-gray" colspan="2">BREAKER</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cafa" class="tab-content" style="display: none;">
+                    <div id="map">
+                        <div class="map section-content-map">
+                            <div class="dropdown">
+                                <input type="text" id="search-input-cafa" class="search" placeholder="Enter room name" style="color: black;">
+                                <button onclick="searchAndHighlightCAFA()" class="search-button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <select id="dropdownMenu-cafa" onchange="showFloorTableCAFA(this.value)">
+                                    <option value="1" selected>1st Floor</option>
+                                    <option value="2">2nd Floor</option>
+                                    <option value="3">3rd Floor</option>
+                                </select>
+                            </div>
+                            <div class="table-container">
+                                <table class="floor-table" id="floor-cafa-1" border="1">
+                                    <tbody>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="cafa-1" style="height: 100px;">STAIRS</td>
+                                            <td id="cafa-2" class="floor-gray" rowspan="2" style="width: 120px;">MALE CR</td>
+                                            <td id="cafa-3" class="floor-gray" rowspan="2" style="width: 120px;">FEMALE CR</td>
+                                            <td id="cafa-4" class="floor-gray" colspan="2" rowspan="2">S-104</td>
+                                            <td id="cafa-5" class="floor-gray" rowspan="2" style="width: 70px;">S-106</td>
+                                            <td id="cafa-6" class="floor-gray" rowspan="2" style="width: 70px;">S-102</td>
+                                            <td id="cafa-7" class="floor-gray" colspan="2">S-103</td>
+                                        </tr>
+                                        <tr>
+                                            <td id="cafa-8" class="floor-gray" colspan="2" style="height: 50px;">S-101</td>
+                                            <td id="cafa-9" class="floor-gray" colspan="2">MALE CR</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="floor-gray" colspan="2" id="cafa-10">S-109</td>
+                                            <td id="cafa-11" class="floor-maroon" colspan="6" rowspan="4">GROUND FLOOR</td>
+                                            <td id="cafa-12" class="floor-gray" colspan="2">PWD CR</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="floor-gray" id="cafa-13">STAIRS</td>
+                                            <td id="cafa-14" class="floor-gray" colspan="2">S-108</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="facultymembers" class="content-section bg-light py-5">
+        <div class="section-content">
+            <div class="section-heading text-center borderYellow">
+                <h1><em>FACULTY MEMBERS</em></h1>
+            </div>
+
+            <!-- Faculty Members -->
+            <div class="level1">
+                        <?php foreach ($allDean as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+            <div class="level2">
+                        <?php foreach ($all2 as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="level3">
+                        <?php foreach ($all3 as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+            <!-- Department Buttons -->
+            <div class="fclty-div">
+                <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
+                <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
+                <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
+                <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
+            </div>
+
+            <!-- IT Department Tab -->
+            <div id="tab1" class="org-chart active">
+                <div class="section-content">
+                    <h3>IT CHAIRPERSON</h3>
+                    <div class="level2">
+                        <?php foreach ($allItHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allIt as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IS Department Tab -->
+            <div id="tab2" class="org-chart">
+                <div class="section-content">
+                    <h3>IS CHAIRPERSON</h3>
+                    <div class="level2">
+                        <?php foreach ($allIsHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allIs as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CS Department Tab -->
+            <div id="tab3" class="org-chart">
+                <div class="section-content">
+                    <h3>CS CHAIRPERSON</h3>
+                    <div class="level2">
+                        <?php foreach ($allCsHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allCs as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MIT Department Tab -->
+            <div id="tab4" class="org-chart">
+                <div class="section-content">
+                    <h3>MIT CHAIRPERSON</h3>
+                    <div class="level2">
+                        <?php foreach ($allMitHeads as $head): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <h3>Faculty Members</h3>
+                    <div class="level3">
+                        <?php foreach ($allMit as $faculty): ?>
+                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
+                                    <?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Profile Modal -->
+        <div id="backdrop" class="backdrop" style="display: none;"></div>
+        <div id="profileCard" class="card mb-4">
+            <div class="card-body text-center">
+                <img id="profileImage" src="" alt="Profile Picture" class="rounded-circle img-fluid" style="width: 150px;">
+                <h5 class="my-3" id="profileName">Name</h5>
+                <p class="text-muted mb-1" id="profileSpecialization">Specialization: <span class="specialization-value"></span></p>
+                <p class="text-muted mb-4" id="profileConsultationTime">Consultation Time: <span class="consultation-value"></span></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="campusorgs" class="content-section remove-padding-sm bg-light py-5">
+        <div class="section-heading text-center borderYellow">
+            <h1 class="pt-16 pb-8">
+                <em class="text-4xl font-bold text-gray-800">Student Organization</em>
+            </h1>
+            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+        </div>
+        <div class="container-fluid px-4">
+            <!-- Row of cards with horizontal scroll on smaller screens -->
+            <div class="row-container">
+                <?php foreach ($allOrg as $row): ?>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-inline-block" style="max-width: 250px;">
+                        <div class="card h-100 border-0 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300" style="min-width: 250px;">
+                            <!-- Card Header -->
+                            <div class="card-header position-relative p-0">
+                                <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#newsModal" 
+                                data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                                data-title="<?= htmlspecialchars($row['org_name']) ?>" 
+                                data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                                data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                                data-author="<?= htmlspecialchars($row['creator_name'] ?? $row['created_by_name'] ?? $row['org_member_name'] ?? 'Unknown Author') ?>">
+                                    <!-- Card Image -->
+                                    <div class="aspect-ratio-box position-relative overflow-hidden">
+                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="object-fit-cover">
+                                        <!-- Overlay -->
+                                        <div class="card-overlay position-absolute start-0 end-0 bottom-0 h-100 d-flex flex-column justify-content-end p-3 bg-gradient-dark opacity-0">
+                                            <div class="text-white p-2 rounded bg-black bg-opacity-20 backdrop-blur-sm"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Card Body -->
+                        <div class="card-body p-3">
+                            <h5 class="card-title mb-2 fw-bold text-dark fs-6 text-center">
+                                
+                                <?php 
+                                    // Split the title into words
+                                    $words = explode(' ', $row['org_name']);
+                                    $formattedName = '';
+                                    $lineLength = 0;
+
+                                    // Loop through words, adding line breaks to avoid long lines
+                                    foreach ($words as $word) {
+                                        $formattedName .= htmlspecialchars($word) . ' ';
+                                        $lineLength += strlen($word) + 1; // Account for the space
+
+                                        // Add a line break if line exceeds a set character limit (e.g., 20 chars)
+                                        if ($lineLength >= 20) { 
+                                            $formattedName .= "\n";
+                                            $lineLength = 0;
+                                        }
+                                    }
+
+                                    echo nl2br($formattedName); // Display the formatted name with line breaks
+                                ?>
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
+                                <small class="text-muted text-xs">Student Organization</small>
+                            </div>
+                        </div>
+
+
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+ <section id="faqs" class="content-section remove-padding-sm bg-light py-5">
+        <div class="section-heading text-center borderYellow">
+            <h1><br><em>FREQUENTLY ASKED QUESTIONS</em></h1>
+        </div>
         <div class="container py-5">
             <div class="row">
                 <!-- Left Column: Illustration -->
@@ -1998,24 +4160,43 @@ $allAnnouncement = getAllAnnouncements($connection);
                 <!-- Right Column: FAQ Section -->
                 <div class="col-lg-5">
                     <div class="faq-header text-center">
-                        <h1>How can we help you?</h1>
+                      <h1 style="color: black;">How can we help you?</h1>
+
                         <p class="lead">
                             We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.
                         </p>
                     </div>
+     <!-- Search Bar -->
+                <div class="my-5">
+                    <input 
+                        type="text" 
+                        id="faqSearch" 
+                        class="w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                        placeholder="Search FAQs..."
+                        onkeyup="filterFAQs()">
+                </div>
 
                     <div class="accordion accordion-flush" id="faqsAccordion">
-                        <?php if(!empty($showfaqs)): ?>
+                        <?php if (!empty($showfaqs) && is_array($showfaqs)): ?>
                             <?php foreach ($showfaqs as $index => $faq): ?>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="heading<?php echo $index; ?>">
-                                        <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $index; ?>" aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" aria-controls="collapse<?php echo $index; ?>" style="background-color: #e7f1ff; color: #004085; position: relative;">
+                                        <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapse<?php echo $index; ?>" 
+                                                aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" 
+                                                aria-controls="collapse<?php echo $index; ?>" 
+                                                style="background-color: #e7f1ff; color: #004085; position: relative;">
                                             <?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?>
                                             <!-- Drop-down/up icon -->
                                             <i class="fas fa-chevron-down ms-auto faq-toggle-icon" style="position: absolute; right: 10px;"></i>
                                         </button>
                                     </h2>
-                                    <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" aria-labelledby="heading<?php echo $index; ?>" data-bs-parent="#faqsAccordion">
+                                    <div id="collapse<?php echo $index; ?>" 
+                                        class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" 
+                                        aria-labelledby="heading<?php echo $index; ?>" 
+                                        data-bs-parent="#faqsAccordion">
                                         <div class="accordion-body">
                                             <?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?>
                                         </div>
@@ -2023,7 +4204,7 @@ $allAnnouncement = getAllAnnouncements($connection);
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No FAQs available at the moment.</p>
+                            <p class="text-center">No FAQs available at the moment.</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -2031,1045 +4212,3261 @@ $allAnnouncement = getAllAnnouncements($connection);
         </div>
     </section>
 
-        <section id="feed" class="content-section">
-        <div class="section-heading text-center borderYellow">
-        <h1><br><em>FEED BACKS</em></h1>
-    </div>
-                <div class="container mt-5">
-                    <!-- Heading -->
-                    <h2 class="section-heading text-center mb-4">Give Us Your Feedback</h2>
-
-                    <!-- Feedback Display Section -->
-                    <div class="row d-flex justify-content-center mt-4">
-                        <div class="col-md-8 col-lg-6">
-                            <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-                                <div class="card-body p-4">
-                                    <div class="text-end mb-4 border-bottom pb-3">
-                                        <button type="button" class="btn btn-modern border" data-bs-toggle="modal" data-bs-target="#feedbackModal" style="border: 1px solid #ccc; border-radius: 5px;">
-                                            <i class="fas fa-comments me-2"></i>Add Your Feedback
-                                        </button>
-                                    </div>
-                                    <h5 class="card-title text-center mb-3">Recent Feedback</h5>
-                                    <div id="feedbackList" class="feedback-list mb-4">
-                                    </div>
-                                    <div class="total-ratings">
-                            <h6>Average Rating:</h6>
-                            <small class="text-muted" id="averageRatingText">No Ratings Yet</small>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</section>
-<section id="aboutus" class="content-section">
-    <div class="section-heading text-center borderYellow">
-    <h1><br><em>ABOUT US</em></h1>
-    </div>
-    <div class="container py-5">
-        <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
-            <div class="col-12 col-lg-6 col-xl-5">
-                <img class="img-fluid rounded" loading="lazy" src="img/about.jpg" alt="About 1">
-            </div>
-            <div class="col-12 col-lg-6 col-xl-6">
-                <div class="row justify-content-xl-center">
-                    <div class="col-12 col-xl-11">
-                        <h2 class="mb-3">Who Are We?</h2>
-                        <p class="lead fs-4 text-secondary mb-3">We help people to build incredible brands and superior products. Our perspective is to furnish outstanding captivating services.</p>
-                        <p class="mb-5">We are a fast-growing company, but we have never lost sight of our core values. We believe in collaboration, innovation, and customer satisfaction. We are always looking for new ways to improve our products and services.</p>
-                        <div class="row gy-4 gy-md-0 gx-xxl-5X">
-                            <div class="col-11 col-md-5">
-                                <div class="d-flex">
-                                    <div class="me-4 text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h2 class="h3 mb-3">Versatile Brand</h2>
-                                        <p class="text-secondary mb-0">We are crafting a digital method that subsists life across all mediums.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-11 col-md-5">
-                                <div class="d-flex">
-                                    <div class="me-3 text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
-                                            <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h2 class="h4 mb-3">Digital Agency</h2>
-                                        <p class="text-secondary mb-0">We believe in innovation by merging primary with elaborate ideas.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-</div>
-
-        <!-- <section class="footer">
-                <p>Copyright &copy; 2024.</p>
-            </section> -->
-    </div>
-    
-</div>
-<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newsModalLabel">Organization Feed</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs" id="feedTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="announcements-tab" data-bs-toggle="tab" 
-                                    data-bs-target="#announcements" type="button" role="tab" 
-                                    aria-controls="announcements" aria-selected="true">
-                                Announcements
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="members-tab" data-bs-toggle="tab" 
-                                    data-bs-target="#members" type="button" role="tab" 
-                                    aria-controls="members" aria-selected="false">
-                                Members
-                            </button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="newsFeedContent">
-                        <!-- Content will be dynamically loaded here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg"> <!-- Changed to modal-lg for consistency -->
-                        <div class="modal-content" style="color: white">
-                            <div class="modal-header">
-                                <h3 class="modal-title" id="feedbackModalLabel">Feedback Form</h3> <!-- Changed to h3 for consistency -->
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="feedbackForm" enctype="multipart/form-data">
-                                    <!-- Step 1: Emoji Rating -->
-                                    <div class="step" id="step1">
-                                        <h4>Rate Your Experience</h4>
-                                        <div class="d-flex justify-content-around my-4">
-                                            <span class="emoji-select" data-value="1">😠</span>
-                                            <span class="emoji-select" data-value="2">😞</span>
-                                            <span class="emoji-select" data-value="3">😐</span>
-                                            <span class="emoji-select" data-value="4">😊</span>
-                                            <span class="emoji-select" data-value="5">😍</span>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                                    </div>
-
-                                    <!-- Step 2: Personal Information -->
-                                    <div class="step" id="step2" style="display:none;">
-                                        <h4>Provide Your Information</h4>
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Email address (required)</label>
-                                            <input type="email" class="form-control" name="email"id="email" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Name (optional)</label>
-                                            <input type="text" class="form-control"  name="name" id="name">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="address" class="form-label">Address (optional)</label>
-                                            <input type="text" class="form-control" name="address" id="address">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Course</label><br>
-                                            <div>
-                                                <input type="radio" id="college1" name="college" value="Information Systems" required>
-                                                <label for="college1">Information Systems</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="college2" name="college" value="Information Technology">
-                                                <label for="college2">Information Technology</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="college3" name="college" value="Computer Science">
-                                                <label for="college3">Computer Science</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="college4" name="college" value="other">
-                                                <label for="college4">Other / From Other College</label>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Year (required)</label><br>
-                                            <div>
-                                                <input type="radio" id="year1" name="year" value="1" required>
-                                                <label for="year1">1st Year</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="year2" name="year" value="2">
-                                                <label for="year2">2nd Year</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="year3" name="year" value="3">
-                                                <label for="year3">3rd Year</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="year4" name="year" value="4">
-                                                <label for="year4">4th Year</label>
-                                            </div>
-                                        </div>
-
-                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                                    </div>
-
-                                    <!-- Step 3: Feedback and Image Upload -->
-                                    <div class="step" id="step3" style="display:none;">
-                                        <h4>Leave Your Feedback</h4>
-                                        <div class="mb-3">
-                                            <label for="feedback" class="form-label">Your feedback</label>
-                                            <textarea class="form-control" id="feedback" rows="3" placeholder="Tell us more about your experience"></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="image" class="form-label">Upload a Profile Image (optional)</label>
-                                            <input class="form-control" type="file" id="image">
-                                        </div>
-                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <!-- Optional footer buttons, if needed -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-    <script>
-        window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
-    </script>
-
-    <!-- Popper.js and Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-
-    <!-- Custom JS and Plugins -->
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
-    
 <script>
-const roomFloors = {
-    // Floor 1
-    "stairs": 1,
-    "men cr": 1,
-    "block 3": 1,
-    "female cr": 1,
-    "s-104": 1,
-    "s-106": 1,
-    "s-102": 1,
-    "s-103": 1,
-    "block 9": 1,
-    "male cr": 1,
-    "s-109": 1,
-    "pwd cr": 1,
-    "s-108": 1,
+    function filterFAQs() {
+        const searchInput = document.getElementById('faqSearch').value.toLowerCase();
+        const faqItems = document.querySelectorAll('.accordion-item'); // Select all FAQ items
 
-    // Floor 2
-    "stairs": 2,
-    "male cr": 2,
-    "s-205": 2,
-    "s-206": 2,
-    "s-201": 2,
-    "s-204": 2,
-    "female cr": 2,
-    "s-202": 2,
-    "s-203": 2,
-    "s-208": 2,
-    "s-207": 2,
-
-    // Floor 3
-    "stairs": 3,
-    "s-307": 3,
-    "male cr": 3,
-    "female cr": 3,
-    "s-301": 3,
-    "s-305": 3,
-    "faculty room": 3,
-    "s-303": 3,
-    "s-304": 3,
-    "uapsa": 3,
-    "s-306": 3,
-};
-
-
-
-function showFloor(floor) {
-    document.querySelectorAll('.floor-svg').forEach(svg => {
-        svg.style.display = 'none'; // Hide all floors
-    });
-    document.getElementById('room-svg-' + floor).style.display = 'block'; // Show selected floor
-}
-function searchElement2() {
-    const searchInput = document.getElementById("search2").value.toLowerCase();
-    const allSvgs = document.querySelectorAll("svg.floor-svg");
-    const dropdown = document.getElementById("dropdown"); // Get the dropdown for floors
-
-    // Clear previous highlights
-    allSvgs.forEach(svg => {
-        svg.querySelectorAll("rect").forEach(rect => {
-            rect.classList.remove("highlight");
-        });
-    });
-
-    // Reset dropdown selection
-    dropdown.value = "1"; // Default to the 1st floor or clear selection
-
-    let found = false;
-    let foundRoom = null;
-    let floorNumber = null;
-
-    // Search through all rooms
-    Object.keys(roomFloors).forEach(room => {
-        if (room.toLowerCase().includes(searchInput)) { // Ensure case-insensitive search
-            foundRoom = room; // Found the room
-            floorNumber = roomFloors[room]; // Get the associated floor
-            found = true;
-        }
-    });
-
-    if (found && floorNumber) {
-        showFloor(floorNumber); // Show the relevant floor
-
-        // Highlight the associated rectangle for the found room
-        const rectId = foundRoom.toLowerCase()+ "-rect"; // Ensure rect ID matches the format
-        const rect = document.getElementById(rectId);
-        if (rect) {
-            rect.classList.add("highlight");
-        } else {
-            console.error('Rectangle not found for ID:', rectId);
-        }
-
-        // Change the selected dropdown option
-        dropdown.value = floorNumber ; // Set dropdown to the found floor number
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Room not found',
-            text: 'Please check the room name and try again.',
+        faqItems.forEach(item => {
+            const question = item.querySelector('.accordion-button').textContent.toLowerCase();
+            const answer = item.querySelector('.accordion-body').textContent.toLowerCase();
+            
+            // Check if the search term matches either the question or the answer
+            if (question.includes(searchInput) || answer.includes(searchInput)) {
+                item.style.display = ''; // Show matching items
+            } else {
+                item.style.display = 'none'; // Hide non-matching items
+            }
         });
     }
-}
 </script>
-<script> 
-    // Add event listener to toggle the icon on click
-document.addEventListener('DOMContentLoaded', function () {
-    var accordionItems = document.querySelectorAll('.accordion-button');
-    
-    accordionItems.forEach(function (item) {
-        item.addEventListener('click', function () {
-            var icon = this.querySelector('.faq-toggle-icon');
-            if (this.classList.contains('collapsed')) {
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
-            } else {
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
+
+
+
+<section id="feed" class="feedback-section remove-padding-sm content-section bg-light py-5">   
+    <div class="section-heading text-center borderYellow">
+        <h1 class="pt-16 pb-8">
+            <em class="text-4xl font-bold text-gray-800">FEEDBACKS</em>
+        </h1>
+        <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+    </div>  
+    <br>  
+    <div class="feedback-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <h3>Organization Feedbacks</h3>
+                    <p id="total-feedback">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏢</div>
+                <div class="stat-info">
+                    <h3>Client Satisfaction</h3>
+                    <p id="average-rating">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="main-card">
+            <div class="card-header">
+                <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                    ✉️ Submit Feedback
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+        
+<section id="aboutus" class="content-section bg-light py-5">
+    <div class="section-heading text-center borderYellow">
+        <h1 class="pt-16 pb-8">
+            <em class="text-4xl font-bold text-gray-800">About Us</em>
+        </h1>
+        <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+    </div> 
+    <div class="about-container">
+        <div class="about-header">
+            <div class="about-subtitle">Tarlac State University - San Isidro Campus</div>
+        </div>
+
+        <div class="campus-image-container">
+            <img src="img/C2SVTseUoAEJp42.jpg" alt="TSU San Isidro Campus Building" class="campus-image">
+        </div>
+
+        <div class="content-block">
+            <p class="text-content">
+                Tarlac State University stands as a premier institution of higher learning in San Isidro, Tarlac. Our commitment to academic excellence, innovative research, and meaningful community service has established us as a leading educational institution in Central Luzon. We take pride in developing well-rounded graduates who are equipped to make significant contributions to society and drive positive change in their communities.
+            </p>
+        </div>
+
+        <div class="leadership-section">
+            <h2 class="leadership-title">University Leadership</h2>
+            <div class="leadership-grid">
+                <div class="leader-card">
+                    <img src="img/press.jpg" alt="TSU President" class="leader-image">
+                    <div class="leader-name">Dr. Arnold E. Velasco</div>
+                    <div class="leader-title">University President</div>
+                </div>
+                <div class="leader-card">
+                    <img src="img/v.press.jpg" alt="TSU Vice President" class="leader-image">
+                    <div class="leader-name">Dr. Grace N. David</div>
+                    <div class="leader-title">Vice President for Academic Affairs</div>
+                </div>
+                <div class="leader-card">
+                    <img src="img/vp.Ad.jpg" alt="Campus Dean" class="leader-image">
+                    <div class="leader-name">Atty. Wilmark J. Ramos</div>
+                    <div class="leader-title">Vice President for Admininstration</div>
+                </div>
+                <div class="leader-card">
+                    <img src="img/vp.res.jpg" alt="Campus Dean" class="leader-image">
+                    <div class="leader-name">Dr. Erwin P. Lacanlale</div>
+                    <div class="leader-title">Vice President for Research, Innovation and Extension</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <div class="strategic-item">
+                <div class="block-title">Our Vision</div>
+                <p>A globally competitive university recognized for excellence in sciences and emerging technologies.</p>
+            </div>
+
+            <div class="strategic-item">
+                <div class="block-title">Our Mission</div>
+                <p>TSU shall develop highly competitive and empowered human resources fostering responsive global education, future-proof research culture, inclusive and relevant extension programs, and sustainable production projects.</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <div class="block-title">Our Core Values</div>
+            <div class="values-grid">
+                <div class="value-item">
+                    <span class="value-highlight">Truth</span>
+                    in words, action and character
+                </div>
+                <div class="value-item">
+                    <span class="value-highlight">Service</span>
+                    with excellence and compassion
+                </div>
+                <div class="value-item">
+                    <span class="value-highlight">Unity</span>
+                    in diversity
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content rounded-lg border-0 shadow">
+            <!-- Modal Header -->
+            <div class="modal-header bg-white border-0 py-3 sticky-top">
+                <div class="d-flex align-items-center w-100">
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title mb-0 fw-bold text-primary" id="newsModalLabel">Organization Feed</h5>
+                    </div>
+                    <div class="ms-auto">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm rounded-pill bg-light border-0 ps-3" id="announcementSearch" placeholder="Search in this organization...">
+                            <span class="input-group-text bg-transparent border-0 ps-0">
+                                <i class="fas fa-search text-primary"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Body with Scrollable Content -->
+            <div class="modal-body p-0" style="max-height: 80vh; overflow-y: auto;">
+                <!-- Organization Cover & Profile -->
+                <div class="position-relative">
+                    <div class="bg-gradient-primary" style="height: 220px; background-size: cover; background-position: center; background-image: linear-gradient(135deg, #3498db, #2c3e50);" id="orgCoverPhoto"></div>
+                    <div class="position-relative px-4 pb-3" style="margin-top: -60px;">
+                        <div class="d-flex align-items-end">
+                            <div class="profile-picture rounded-circle border-5 border-white bg-white shadow-lg" style="width: 140px; height: 140px; overflow: hidden;">
+                                <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="w-100 h-100 object-fit-cover" alt="Organization Profile">
+                            </div>
+                            <div class="ms-4 mb-3">
+                                <h3 class="fw-bold mb-1 text-dark" id="orgName">Organization Name</h3>
+                                <p class="text-muted mb-0"><span class="badge bg-light text-primary me-2">Verified</span> Student Organization</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+              <!-- Navigation Tabs -->
+<div class="px-4 border-bottom bg-white sticky-top" style="z-index: 99;">
+    <ul class="nav nav-tabs border-0 flex-nowrap overflow-auto">
+        <li class="nav-item">
+            <button class="nav-link active px-4 py-3 fw-semibold border-0 rounded-0 position-relative" id="announcements-tab" data-bs-toggle="tab" data-bs-target="#announcements">
+                Announcements
+                <span class="position-absolute bottom-0 start-0 end-0 bg-primary" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link px-4 py-3 fw-semibold border-0 rounded-0 position-relative" id="members-tab" data-bs-toggle="tab" data-bs-target="#members">
+                Members
+                <span class="position-absolute bottom-0 start-0 end-0 bg-primary" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
+            </button>
+        </li>
+    </ul>
+</div>
+
+                <!-- Tab Content -->
+                <div class="tab-content bg-light">
+                    <!-- Announcements Tab -->
+                    <div class="tab-pane fade show active p-4" id="announcements">
+                        <div id="announcements-content" class="announcements-container">
+                            <!-- Announcement Card 1 -->
+                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
+                                <div class="card-body p-4">
+                                    <div class="d-flex mb-3">
+                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
+                                            <p class="text-muted mb-0"><small>Posted on March 12, 2025</small></p>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold text-primary">Spring Festival Registration Open!</h5>
+                                    <p class="card-text">Join us for our annual Spring Festival! This year's theme is "Bloom & Grow" featuring live music, food trucks, and interactive art installations. Register by March 20th to secure your spot.</p>
+                                    <div class="mt-3 pt-3 border-top">
+                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                            <i class="far fa-calendar-alt me-1"></i> RSVP
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
+                                            <i class="far fa-comment me-1"></i> Comment
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Announcement Card 2 -->
+                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
+                                <div class="card-body p-4">
+                                    <div class="d-flex mb-3">
+                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
+                                            <p class="text-muted mb-0"><small>Posted on March 10, 2025</small></p>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold text-primary">New Member Applications</h5>
+                                    <p class="card-text">We're now accepting applications for new members! If you're passionate about our mission and want to be part of our community, submit your application by March 25th.</p>
+                                    <div class="mt-3 pt-3 border-top">
+                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                            <i class="fas fa-file-alt me-1"></i> Apply Now
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
+                                            <i class="far fa-comment me-1"></i> Comment
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Announcement Card 3 -->
+                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
+                                <div class="card-body p-4">
+                                    <div class="d-flex mb-3">
+                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
+                                            <p class="text-muted mb-0"><small>Posted on March 8, 2025</small></p>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold text-primary">Upcoming Workshop Series</h5>
+                                    <p class="card-text">Our professional development workshop series begins next week! Topics include leadership skills, networking strategies, and industry insights from guest speakers.</p>
+                                    <div class="mt-3 pt-3 border-top">
+                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                            <i class="far fa-calendar-check me-1"></i> Register
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
+                                            <i class="far fa-comment me-1"></i> Comment
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Members Tab -->
+                    <div class="tab-pane fade p-4" id="members">
+                        <div class="row g-4">
+                            <!-- Leadership Section -->
+                            <div class="col-12 mb-2">
+                                <h5 class="text-primary fw-bold mb-3">Leadership</h5>
+                            </div>
+                            
+                            <!-- Member Card - President -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                                    <div class="card-body p-4 d-flex align-items-center">
+                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="President">
+                                        <div>
+                                            <h5 class="mb-1 fw-bold">Alex Johnson</h5>
+                                            <p class="mb-1 text-primary fw-semibold"><small>President</small></p>
+                                            <p class="mb-2 text-muted"><small>Since September 2024</small></p>
+                                            <div class="d-flex">
+                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
+                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Member Card - Vice President -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                                    <div class="card-body p-4 d-flex align-items-center">
+                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="Vice President">
+                                        <div>
+                                            <h5 class="mb-1 fw-bold">Taylor Martinez</h5>
+                                            <p class="mb-1 text-primary fw-semibold"><small>Vice President</small></p>
+                                            <p class="mb-2 text-muted"><small>Since January 2025</small></p>
+                                            <div class="d-flex">
+                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
+                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Member Card - Secretary -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                                    <div class="card-body p-4 d-flex align-items-center">
+                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="Secretary">
+                                        <div>
+                                            <h5 class="mb-1 fw-bold">Jordan Lee</h5>
+                                            <p class="mb-1 text-primary fw-semibold"><small>Secretary</small></p>
+                                            <p class="mb-2 text-muted"><small>Since October 2024</small></p>
+                                            <div class="d-flex">
+                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
+                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- General Members Section -->
+                            <div class="col-12 mt-4 mb-2">
+                                <h5 class="text-primary fw-bold mb-3">General Members</h5>
+                            </div>
+                            
+                            <!-- General Member Cards -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                                    <div class="card-body p-4 d-flex align-items-center">
+                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
+                                        <div>
+                                            <h5 class="mb-1 fw-bold">Casey Morgan</h5>
+                                            <p class="mb-1 text-muted"><small>Events Committee</small></p>
+                                            <p class="mb-2 text-muted"><small>Since November 2024</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                                    <div class="card-body p-4 d-flex align-items-center">
+                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
+                                        <div>
+                                            <h5 class="mb-1 fw-bold">Morgan Silva</h5>
+                                            <p class="mb-1 text-muted"><small>Marketing Team</small></p>
+                                            <p class="mb-2 text-muted"><small>Since December 2024</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                                    <div class="card-body p-4 d-flex align-items-center">
+                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
+                                        <div>
+                                            <h5 class="mb-1 fw-bold">Jamie Williams</h5>
+                                            <p class="mb-1 text-muted"><small>Outreach Coordinator</small></p>
+                                            <p class="mb-2 text-muted"><small>Since February 2025</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Enhanced customizations */
+:root {
+    --primary-dark: #0a66c2;
+    --light-gray: #F0F2F5;
+    --dark-text: #1c1e21;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.modal-content {
+    border-radius: 12px;
+}
+
+.form-control {
+    padding: 0.6rem 1rem;
+}
+
+.form-control-sm {
+    padding: 0.4rem 1rem;
+}
+
+.bg-light {
+    background-color: var(--light-gray) !important;
+}
+
+.nav-tabs .nav-link {
+    color: #65676B;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary);
+}
+
+.nav-tabs .nav-link span {
+    opacity: 0;
+}
+
+.nav-tabs .nav-link.active span {
+    opacity: 1;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    background-color: var(--light-gray);
+}
+
+.card {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.transition {
+    transition: all 0.3s ease;
+}
+
+.rounded-circle {
+    object-fit: cover;
+}
+
+.rounded-pill {
+    border-radius: 50px !important;
+}
+
+/* Modal body scrollbar styling */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+</style>
+    <style>
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .progress-steps::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+
+        .step-indicator {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            background: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.2);
+        }
+
+        /* Steps Content */
+        .step {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Feedback Category Cards */
+        .feedback-category-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.25rem;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-category-card.selected {
+            border-color: #0d6efd;
+            background: #f8f9ff;
+        }
+
+        .feedback-category-card.selected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-style: solid;
+            border-width: 0 2rem 2rem 0;
+            border-color: transparent #0d6efd transparent transparent;
+        }
+
+        /* Rating Groups */
+        .rating-group {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.25rem;
+            background: #fff;
+            border-radius: 8px;
+            margin: 0.75rem 0;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .rating-option {
+            text-align: center;
+            position: relative;
+        }
+
+        .rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .rating-option label {
+            display: block;
+            padding: 0.625rem 1.25rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            color: #495057;
+            border: 1px solid transparent;
+        }
+
+        .rating-option input[type="radio"]:checked + label {
+            background-color: #0d6efd;
+            color: white;
+            box-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
+        }
+
+        .rating-option:hover label {
+            background-color: #f8f9fa;
+        }
+
+        /* Question Blocks */
+        .question-block {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question-block:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Modal Styles */
+        .modal-body {
+            max-height: 75vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e0 #f8f9fa;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f8f9fa;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        /* Focus States */
+        .rating-option input[type="radio"]:focus + label {
+            outline: 2px solid rgba(13, 110, 253, 0.5);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .progress-steps {
+                gap: 1.5rem;
+                padding: 1rem;
             }
-        });
-    });
-});
 
-        // Hide Header on on scroll down
-        var didScroll;
-        var lastScrollTop = 0;
-        var delta = 5;
-        var navbarHeight = $('header').outerHeight();
-
-        $(window).scroll(function (event) {
-            didScroll = true;
-        });
-
-        setInterval(function () {
-            if (didScroll) {
-                hasScrolled();
-                didScroll = false;
-            }
-        }, 250);
-
-        function hasScrolled() {
-            var st = $(this).scrollTop();
-
-            // Make sure they scroll more than delta
-            if (Math.abs(lastScrollTop - st) <= delta)
-                return;
-
-            // If they scrolled down and are past the navbar, add class .nav-up.
-            // This is necessary so you never see what is "behind" the navbar.
-            if (st > lastScrollTop && st > navbarHeight) {
-                // Scroll Down
-                $('header').removeClass('nav-down').addClass('nav-up');
-            } else {
-                // Scroll Up
-                if (st + $(window).height() < $(document).height()) {
-                    $('header').removeClass('nav-up').addClass('nav-down');
-                }
+            .rating-group {
+                flex-direction: column;
+                gap: 0.5rem;
             }
 
-            lastScrollTop = st;
+            .rating-option label {
+                width: 100%;
+            }
         }
         
-      // Attach event listener to search button
-document.querySelector('button[onclick="searchAndHighlight()"]').addEventListener('click', searchAndHighlight);
+        #officeQuestions {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
-// Attach change event listener to dropdown
-const dropdownMenu = document.getElementById('dropdownMenu');
-dropdownMenu.addEventListener('change', function () {
-    const floorId = this.value;
-    if (floorId) {
-        fetchRoomsForFloor(floorId);
-        showFloorTable(floorId);
-    } else {
-        clearTableCells();
-    }
-});
+        /* Headers */
+        h4.text-center {
+            font-size: 1.75rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
 
-// Trigger the change event to load the default table
-dropdownMenu.dispatchEvent(new Event('change'));
+        h5 {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
 
-// Fetch and update rooms based on the selected floor
-function fetchRoomsForFloor(floorId) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'ajax/floor_data.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            try {
-                const rooms = JSON.parse(xhr.responseText);
-                console.log('Rooms Data:', rooms); // Log the rooms data
-                updateTableWithRooms(rooms);
-            } catch (e) {
-                console.error("Error parsing JSON:", e);
+        /* Form Layout */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -0.75rem;
+        }
+
+        .col-md-6, .col-12 {
+            padding: 0.75rem;
+        }
+
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        /* Form Elements */
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #2d3748;
+            background-color: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+            outline: none;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.25rem;
+            padding-right: 2.5rem;
+        }
+
+        /* Radio Groups */
+        .d-flex.gap-3 {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        #eventEvaluation .peer:checked + span {
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+    border-color: #3b82f6;
+}
+
+#eventEvaluation .peer:checked:hover + span {
+    background-color: #2563eb; /* blue-600 */
+}
+
+#eventEvaluation .peer:focus + span {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* blue-500 with opacity */
+}
+
+/* Hover effect for unselected buttons */
+#eventEvaluation span:hover {
+    background-color: #f8fafc;
+    border-color: #3b82f6;
+}
+
+/* Active/pressed state */
+#eventEvaluation span:active {
+    background-color: #dbeafe; /* blue-100 */
+}
+
+/* Disabled state if needed */
+#eventEvaluation .peer:disabled + span {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    border-color: #d1d5db;
+}
+
+/* Additional styles for the radio button groups */
+#eventEvaluation .flex.flex-wrap.gap-4 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Ensure consistent spacing between button groups */
+#eventEvaluation .mb-6 {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Style for the last button group to remove bottom border */
+#eventEvaluation .mb-6:last-child {
+    border-bottom: none;
+}
+        .form-check-input {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin: 0;
+        }
+
+        .form-check-label {
+            font-size: 1rem;
+            color: #4a5568;
+        }
+
+        /* Rating Questions */
+        .rating-question {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .rating-question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .rating-question p {
+            font-size: 1.1rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .rating-question p.text-muted {
+            font-size: 0.95rem;
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* Rating Options */
+        .rating-question .d-flex.gap-3 {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
+
+        .rating-question .form-check {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .rating-question .form-check:hover {
+            background-color: #f7fafc;
+        }
+
+        .rating-question .form-check-input {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Text Description */
+        .text-muted.mb-3 {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Citizen's Charter Section */
+        .mb-4 {
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
             }
-        } else {
-            console.error('Fetch Error:', xhr.statusText);
-        }
-    };
-    xhr.send('floor_id=' + floorId);
-}
 
-// Function to update table with room data
-function updateTableWithRooms(rooms) {
-    clearTableCells();
-    rooms.forEach(room => {
-        const cell = document.getElementById(room.room_id); // Use id for cell selection
-        if (cell) {
-            cell.textContent = room.room_name; // Assuming room_name is what you want to display
-            cell.style.backgroundColor = ''; // Reset the color
-            console.log('Updated Cell:', cell.id, room.room_name); // Log each updated cell
-        } else {
-            console.error('Cell Not Found:', room.room_id);
-        }
-    });
-}
-
-// Function to clear all table cells
-function clearTableCells() {
-    document.querySelectorAll('.floor-table td').forEach(cell => {
-        cell.textContent = ''; // Clear the cell content
-        cell.style.backgroundColor = ''; // Reset the color
-    });
-}
-
-// Function to handle search and highlight
-function searchAndHighlight() {
-    var input = document.getElementById('search-input').value.trim();
-
-    if (input === '') {
-        alert('Please enter a room name');
-        return;
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'ajax/search.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            console.log('Search Response:', xhr.responseText);
-            var data = JSON.parse(xhr.responseText);
-
-            if (data.error) {
-                console.error('PHP Error:', data.error);
-                return;
+            .rating-question .d-flex.gap-3 {
+                flex-wrap: wrap;
+                gap: 0.5rem !important;
             }
 
-            var roomIds = data.highlight || [];
-            var floorIds = data.floor || [];
-            console.log('Highlighting IDs:', roomIds);
-            console.log('Floor IDs:', floorIds);
+            .rating-question .form-check {
+                flex: 0 0 calc(33.333% - 0.5rem);
+            }
 
-            // Clear previous highlights
-            document.querySelectorAll('.highlight').forEach(cell => {
-                cell.classList.remove('highlight');
-            });
-
-            // Highlight cells based on room IDs
-            document.querySelectorAll('.floor-table td').forEach(cell => {
-                if (roomIds.includes(parseInt(cell.id))) { // Ensure IDs are compared as integers
-                    cell.classList.add('highlight');
-                }
-            });
-
-            // Trigger the dropdown change event to update table and highlight results
-            var dropdown = document.getElementById('dropdownMenu');
-            dropdown.value = floorIds[0] || dropdown.value; // Default to the first floor in the array or keep current value
-            dropdown.dispatchEvent(new Event('change')); // Trigger the change event
-
-        } else {
-            console.error('Search Error:', xhr.statusText);
+            #officeQuestions {
+                padding: 1rem;
+                margin: 1rem;
+            }
         }
-    };
-    xhr.send('query=' + encodeURIComponent(input));
+
+        @media (max-width: 480px) {
+            .rating-question .form-check {
+                flex: 0 0 calc(50% - 0.5rem);
+            }
+        }
+
+        /* Additional Enhancements */
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .required-field::after {
+            content: "*";
+            color: #e53e3e;
+            margin-left: 4px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .rating-question {
+            animation: fadeIn 0.3s ease-out;
+        }
+        /* Fix for the feedback modal footer */
+#feedbackModal .modal-content {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: 90vh;
 }
 
-// Function to show a specific floor table
-function showFloorTable(floorId) {
-    document.querySelectorAll('.floor-table').forEach(table => {
-        table.style.display = 'none'; // Hide all floor tables
-    });
-
-    const selectedTable = document.getElementById(`floor-${floorId}`);
-    if (selectedTable) {
-        selectedTable.style.display = 'table'; // Show the selected table
-        selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scroll to the table
-    }
+#feedbackModal .modal-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  max-height: calc(90vh - 150px); /* Adjust based on your header and footer heights */
 }
-document.addEventListener("DOMContentLoaded", function() {
+
+#feedbackModal .modal-footer {
+  flex: 0 0 auto;
+  padding: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+    </style>
+
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h3 class="modal-title">Share Your Feedback</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+            
+                <div class="progress-steps">
+                    <div class="step-indicator active">1</div>
+                    <div class="step-indicator">2</div>
+                    <div class="step-indicator">3</div>
+                </div> 
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="feedbackForm">
+                    <!-- Step 1: Category Selection -->
+                    <div class="step active" id="step1">
+                        <h4 class="text-center mb-4">What would you like to give feedback about?</h4>
+                        <div class="d-flex justify-content-center gap-4">
+                            <div class="card feedback-category-card" data-category="office">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Office Processes</h5>
+                                    <p class="card-text">Administrative and school-related processes</p>
+                                    <input type="radio" name="feedback_category" value="office" class="btn-check" id="officeBtn">
+                                    <label class="btn btn-outline-primary w-100" for="officeBtn">Select</label>
+                                </div>
+                            </div>
+                            <div class="card feedback-category-card" data-category="org">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Student Organizations</h5>
+                                    <p class="card-text">Feedback for student organizations</p>
+                                    <input type="radio" name="feedback_category" value="org" class="btn-check" id="orgBtn">
+                                    <label class="btn btn-outline-primary w-100" for="orgBtn">Select</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Category-Specific Questions -->
+                    <div class="step" id="step2">
+
+                    <div class="csm-intro mb-4" id="csmIntro" style="display: none;">
+    <div class="alert alert-info p-5">
+        <h4 class="alert-heading mb-3">HELP US SERVE YOU BETTER!</h4>
+        <p class="mb-3">
+            This Client Satisfaction Measurement (CSM) Tool aims to track the customer experience of TSU's clients. Your answers will help this office provide a better service. Personal information shared will be kept confidential.
+        </p>
+        
+        <p class="text-muted fst-italic mb-0">
+            Ang Client Satisfaction Measurement (CSM) Tool na ito ay magsisilbing gabayan at karanasan ng customer ng mga kliyente ng TSU. Ang iyong mga sagot ay makakatulong sa opisina na mapabuti ang serbisyo na magagamit na impormasyon na ibinahagi ay pananatilihing pribado.
+        </p>
+    </div>
+</div>
+
+                        <!-- Office Processes Questions -->
+
+
+                        <div id="officeQuestions" style="display: none;">
+                            <h4 class="text-center mb-4">Campus Office Processes Evaluation</h4>
+                            
+                            <!-- Basic Information -->
+                            <div class="form-section">
+                                <h2 class="section-title">Basic Information</h2>
+                                <div class="form-row">
+                                <div class="form-group">
+    <label class="form-label">Client Type<span class="required">*</span>
+        <div class="tagalog">Uri ng kliyente</div>
+    </label>
+    <select class="form-control" name="client_type" >
+        <option value="">Select client type...</option>
+        <option value="internal">Internal (Empleyado ng TSU)</option>
+        <option value="student">Student (Estudyante)</option>
+        <option value="business">Business (Negosyo/Negosyante)</option>
+        <option value="government">Government Agency (Ahensya ng Pamahalaan)</option>
+    </select>
+</div>
+                                    <div class="form-group">
+                                        <label class="form-label">Date<span class="required">*</span>
+                                            <div class="tagalog">Petsa</div>
+                                        </label>
+                                        <input type="date" class="form-control" name="date" >
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Age<span class="required">*</span>
+                                            <div class="tagalog">Edad</div>
+                                        </label>
+                                        <input type="number" class="form-control" name="age" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Sex<span class="required">*</span>
+                                            <div class="tagalog">Kasarian</div>
+                                        </label>
+                                        <div class="radio-group">
+                                            <label class="radio-label">
+                                                <input type="radio" name="sex" value="male" >
+                                                Male (Lalake)
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" name="sex" value="female">
+                                                Female (Babae)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Office that rendered the service(s)<span class="required">*</span>
+                                        <div class="tagalog">Opisinang nagbigay serbisyo</div>
+                                    </label>
+                                    <input type="text" class="form-control" name="office" >
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Service Availed<span class="required">*</span>
+                                        <div class="tagalog">Serbisyong naipagkaloob</div>
+                                    </label>
+                                    <input type="text" class="form-control" name="service" >
+                                </div>
+                            </div>
+
+
+                            <!-- Citizen's Charter Awareness -->
+                            <div class="form-section">
+    <h2 class="section-title">Citizen's Charter Awareness</h2>
+    
+    <!-- CC1 -->
+    <div class="form-group">
+        <p class="form-label">CC1: Which of the following best describes your awareness of a CC?<span class="required">*</span></p>
+        <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
+            <label class="radio-label">
+                <input type="radio" name="cc_awareness" value="aware_saw" >
+                1. I know what a CC is and I saw this office's CC.
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_awareness" value="aware_not_saw">
+                2. I know what a CC is but I did NOT see this office's CC.
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_awareness" value="learned">
+                3. I learned of the CC only when I saw this office's CC.
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_awareness" value="unaware">
+                4. I do not know what a CC is and I did not see one in this office.
+            </label>
+        </div>
+    </div>
+
+    <!-- CC2 -->
+    <div class="form-group">
+        <p class="form-label">CC2: If aware of CC, would you say that the CC of this office was...<span class="required">*</span></p>
+        <div class="tagalog">(Kung may kamalayan ka tungkol sa CC, sasabihin mo ba na ang CC ng opisina na ito ay...)</div>
+        <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
+            <label class="radio-label">
+                <input type="radio" name="cc_visibility" value="easy" >
+                1. Easy to see (Madaling makita)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_visibility" value="somewhat_easy">
+                2. Somewhat easy to see (Medyo madaling makita)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_visibility" value="difficult">
+                3. Difficult to see (Mahirap hanapin)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_visibility" value="not_visible">
+                4. Not visible at all (Hindi nakikita)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_visibility" value="na">
+                5. N/A (Hindi naaangkop)
+            </label>
+        </div>
+    </div>
+
+    <!-- CC3 -->
+    <div class="form-group">
+        <p class="form-label">CC3: If aware of CC (answered codes 1-3 in CC1), how much did the CC help you in your transaction?<span class="required">*</span></p>
+        <div class="tagalog">(Kung may kamalayan at nakita mo ang CC sa iyong transaksiyon?)</div>
+        <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
+            <label class="radio-label">
+                <input type="radio" name="cc_helpfulness" value="helped_very_much">
+                1. Helped very much (Nakatulong nang husto)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_helpfulness" value="somewhat_helped">
+                2. Somewhat helped (Medyo nakatulong)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_helpfulness" value="did_not_help">
+                3. Did not help (Walang naitulong)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="cc_helpfulness" value="na">
+                4. N/A (Hindi naaangkop)
+            </label>
+        </div>
+    </div>
+</div>
+
+            <!-- Service Quality Rating Section -->
+            <div class="form-section">
+                <h2 class="section-title">Service Quality Rating</h2>
+                
+                <div class="rating-scale">
+                    <div class="rating-scale-title">Rating Scale:</div>
+                    <div class="rating-scale-grid">
+                        <div>1 - Strongly Disagree</div>
+                        <div>2 - Disagree</div>
+                        <div>3 - Neither Agree nor Disagree</div>
+                        <div>4 - Agree</div>
+                        <div>5 - Strongly Agree</div>
+                        <div>N/A - Not Applicable</div>
+                    </div>
+                </div>
+
+                <div class="rating-questions">
+                    <!-- SQD0 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD0: I am satisfied with the service that I availed.<span class="required">*</span></div>
+                        <div class="tagalog">Nasiyahan ako sa serbisyo na aking natanggap sa napuntahan na opisina.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd0" value="1" >1</label>
+    <label class="radio-label"><input type="radio" name="sqd0" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd0" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd0" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd0" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd0" value="na">N/A</label>
+</div>
+                    </div>
+
+                    <!-- SQD1 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD1: I spent a reasonable amount of time for my transaction.<span class="required">*</span></div>
+                        <div class="tagalog">Makatwiran ang oras na aking ginugol para sa aking transaksyon.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd1" value="1" >1</label>
+    <label class="radio-label"><input type="radio" name="sqd1" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd1" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd1" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd1" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd1" value="na">N/A</label>
+</div>
+                    </div>
+
+                    <!-- SQD2 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD2: The office followed the transaction's requirements and steps based on the information provided in their Citizens Charter.<span class="required">*</span></div>
+                        <div class="tagalog">Tinugunan ng opisina ang aking transakyon alinsunod sa kanilang Citizen's Charter.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd2" value="1">1</label>
+    <label class="radio-label"><input type="radio" name="sqd2" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd2" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd2" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd2" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd2" value="na">N/A</label>
+</div>
+                    </div>
+
+                    <!-- SQD3 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD3: The steps (including payment) I needed to do for my transaction were easy and simple.<span class="required">*</span></div>
+                        <div class="tagalog">Ang mga hakbang (kabilang ang pagbabayad) na kailangan kong gawin para sa aking transaksyon ay madali at simple.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd3" value="1" >1</label>
+    <label class="radio-label"><input type="radio" name="sqd3" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd3" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd3" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd3" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd3" value="na">N/A</label>
+</div>
+                    </div>
+
+                    <!-- SQD4 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD4: I easily found information about my transaction from the office or its website.<span class="required">*</span></div>
+                        <div class="tagalog">Ang mga kailangang impormasyon tungkol sa aking transaksyon ay kaagad kong nakita sa opisina o sa TSU website.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd4" value="1" >1</label>
+    <label class="radio-label"><input type="radio" name="sqd4" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd4" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd4" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd4" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd4" value="na">N/A</label>
+</div>
+                    </div>
+
+                    <!-- SQD5 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD5: The amount I paid for my transaction is value for money.<span class="required">*</span></div>
+                        <div class="tagalog">Ang halagang ibinayad ay akma sa serbisyong natamo.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd5" value="1" >1</label>
+    <label class="radio-label"><input type="radio" name="sqd5" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd5" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd5" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd5" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd5" value="na">N/A</label>
+</div>
+                    </div>
+
+                    <!-- SQD6 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD6: I am confident my online transaction was secure.<span class="required">*</span></div>
+                        <div class="tagalog">Pakiramdam ko ay patas ang opisina sa lahat, o "walang palakasan", sa aking transaksyon.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd6" value="1" >1</label>
+    <label class="radio-label"><input type="radio" name="sqd6" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd6" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd6" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd6" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd6" value="na">N/A</label>
+</div>
+                    </div>
+
+                    <!-- SQD7 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD7: The Office's online support was available, and (if asked) questions online support was quick to respond.<span class="required">*</span></div>
+                        <div class="tagalog">Magalang akong trinato ng mga tauhan, at (kung sakali ako ay humingi ng tulong) alam ko na sila ay handang tumulong sa akin.</div>
+                        <div class="rating-options">
+                            <label class="radio-label"><input type="radio" name="sqd7" value="1" >1</label>
+                            <label class="radio-label"><input type="radio" name="sqd7" value="2">2</label>
+                            <label class="radio-label"><input type="radio" name="sqd7" value="3">3</label>
+                            <label class="radio-label"><input type="radio" name="sqd7" value="4">4</label>
+                            <label class="radio-label"><input type="radio" name="sqd7" value="5">5</label>
+                            <label class="radio-label"><input type="radio" name="sqd7" value="na">N/A</label>
+                        </div>
+                    </div>
+
+                    <!-- SQD8 -->
+                    <div class="rating-question">
+                        <div class="form-label">SQD8: I got what I needed from the government office, or (if denied) denial of request was sufficiently explained to me.<span class="required">*</span></div>
+                        <div class="tagalog">Nakuha ko ang kinakailangan ko mula sa tanggapan ng gobyerno, kung tinanggihan man, ito ay sapat na ipinaliwanag sa akin.</div>
+                        <div class="rating-options">
+    <label class="radio-label"><input type="radio" name="sqd8" value="1" >1</label>
+    <label class="radio-label"><input type="radio" name="sqd8" value="2">2</label>
+    <label class="radio-label"><input type="radio" name="sqd8" value="3">3</label>
+    <label class="radio-label"><input type="radio" name="sqd8" value="4">4</label>
+    <label class="radio-label"><input type="radio" name="sqd8" value="5">5</label>
+    <label class="radio-label"><input type="radio" name="sqd8" value="na">N/A</label>
+</div>
+                    </div>
+                </div>
+                            </div>
+                        </div>
+
+                          <!-- Student Organizations Questions -->
+                            <div id="orgQuestions" style="display: none;">
+                                <h4 class="text-center mb-4">Student Organization Evaluation</h4>
+                                
+                                <div class="form-group mb-4">
+                                    <label class="form-label">Select Organization</label>
+                                    <select class="form-select" name="organization">
+                                        <option value="">Choose an organization...</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="evaluateEvent" name="evaluate_event">
+                                        <label class="form-check-label" for="evaluateEvent">
+                                            I want to evaluate a specific event by this organization
+                                        </label>
+                                    </div>
+                                </div>
+                            
+                                                            <!-- Question 1: Event Quality -->
+                                <div class="question-block">
+                                    <h5>1. Event Quality</h5>
+                                    <p class="text-muted">How engaging and well-organized were the events?</p>
+                                    <div class="rating-group">
+                                        <div class="rating-option">
+                                            <input type="radio" name="event_quality" id="eq1" value="1">
+                                            <label for="eq1">1<br>Poor</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="event_quality" id="eq2" value="2">
+                                            <label for="eq2">2<br>Fair</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="event_quality" id="eq3" value="3">
+                                            <label for="eq3">3<br>Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="event_quality" id="eq4" value="4">
+                                            <label for="eq4">4<br>Very Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="event_quality" id="eq5" value="5">
+                                            <label for="eq5">5<br>Excellent</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Question 2: Communication -->
+                                <div class="question-block">
+                                    <h5>2. Communication</h5>
+                                    <p class="text-muted"><p class="text-muted">How effective was the organization in communicating event details and announcements?</p>
+                                    <div class="rating-group">
+                                        <div class="rating-option">
+                                            <input type="radio" name="org_communication" id="orgcom1" value="1">
+                                            <label for="orgcom1">1<br>Poor</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="org_communication" id="orgcom2" value="2">
+                                            <label for="orgcom2">2<br>Fair</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="org_communication" id="orgcom3" value="3">
+                                            <label for="orgcom3">3<br>Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="org_communication" id="orgcom4" value="4">
+                                            <label for="orgcom4">4<br>Very Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="org_communication" id="orgcom5" value="5">
+                                            <label for="orgcom5">5<br>Excellent</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Question 3: Inclusivity -->
+                                <div class="question-block">
+                                    <h5>3. Inclusivity</h5>
+                                    <p class="text-muted">How welcoming and inclusive was the organization to all members?</p>
+                                    <div class="rating-group">
+                                        <div class="rating-option">
+                                            <input type="radio" name="inclusivity" id="inc1" value="1">
+                                            <label for="inc1">1<br>Poor</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="inclusivity" id="inc2" value="2">
+                                            <label for="inc2">2<br>Fair</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="inclusivity" id="inc3" value="3">
+                                            <label for="inc3">3<br>Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="inclusivity" id="inc4" value="4">
+                                            <label for="inc4">4<br>Very Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="inclusivity" id="inc5" value="5">
+                                            <label for="inc5">5<br>Excellent</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Question 4: Leadership -->
+                                <div class="question-block">
+                                    <h5>4. Leadership</h5>
+                                    <p class="text-muted">How effective and approachable was the leadership team?</p>
+                                    <div class="rating-group">
+                                        <div class="rating-option">
+                                            <input type="radio" name="leadership" id="lead1" value="1">
+                                            <label for="lead1">1<br>Poor</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="leadership" id="lead2" value="2">
+                                            <label for="lead2">2<br>Fair</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="leadership" id="lead3" value="3">
+                                            <label for="lead3">3<br>Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="leadership" id="lead4" value="4">
+                                            <label for="lead4">4<br>Very Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="leadership" id="lead5" value="5">
+                                            <label for="lead5">5<br>Excellent</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Question 5: Skill Development -->
+                                <div class="question-block">
+                                    <h5>5. Skill Development</h5>
+                                    <p class="text-muted">How well did the organization provide opportunities for personal growth?</p>
+                                    <div class="rating-group">
+                                        <div class="rating-option">
+                                            <input type="radio" name="skill_dev" id="skill1" value="1">
+                                            <label for="skill1">1<br>Poor</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="skill_dev" id="skill2" value="2">
+                                            <label for="skill2">2<br>Fair</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="skill_dev" id="skill3" value="3">
+                                            <label for="skill3">3<br>Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="skill_dev" id="skill4" value="4">
+                                            <label for="skill4">4<br>Very Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="skill_dev" id="skill5" value="5">
+                                            <label for="skill5">5<br>Excellent</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Question 6: Impact -->
+                                <div class="question-block">
+                                    <h5>6. Impact</h5>
+                                    <p class="text-muted">How much did the organization positively contribute to your campus experience?</p>
+                                    <div class="rating-group">
+                                        <div class="rating-option">
+                                            <input type="radio" name="impact" id="imp1" value="1">
+                                            <label for="imp1">1<br>Poor</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="impact" id="imp2" value="2">
+                                            <label for="imp2">2<br>Fair</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="impact" id="imp3" value="3">
+                                            <label for="imp3">3<br>Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="impact" id="imp4" value="4">
+                                            <label for="imp4">4<br>Very Good</label>
+                                        </div>
+                                        <div class="rating-option">
+                                            <input type="radio" name="impact" id="imp5" value="5">
+                                            <label for="imp5">5<br>Excellent</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    <!-- Event Evaluation Section -->
+    <div id="eventEvaluation" style="display:none;"class="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
+    <h5 class="text-2xl font-semibold text-gray-800 mb-6">Event Evaluation Form</h5>
+    
+    <!-- Activity Details Section -->
+    <div class="space-y-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Activity Title</label>
+                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="activity_title">
+            </div>
+            
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Date</label>
+                <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="activity_date">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Venue</label>
+                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="venue">
+            </div>
+            
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Student Organization</label>
+                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="student_org">
+            </div>
+        </div>
+
+        <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">Position</label>
+            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="position">
+        </div>
+    </div>
+
+
+    <!-- Online Activity Ratings -->
+    <div class="mb-8">
+        <label class="block text-lg font-medium text-gray-800 mb-4">1. Online Activity Ratings</label>
+        
+        <!-- Pre-event communication -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Pre-event communication</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="communication_rating" value="excellent" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="communication_rating" value="very_satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="communication_rating" value="satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="communication_rating" value="needs_improvement" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="communication_rating" value="poor" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Video quality -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Video quality of the activity broadcast</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="video_quality" value="excellent" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="video_quality" value="very_satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="video_quality" value="satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="video_quality" value="needs_improvement" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="video_quality" value="poor" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Audio quality -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Audio quality of the activity broadcast</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="audio_quality" value="excellent" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="audio_quality" value="very_satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="audio_quality" value="satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="audio_quality" value="needs_improvement" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="audio_quality" value="poor" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resource Person Evaluation -->
+    <div class="mb-8">
+        <label class="block text-lg font-medium text-gray-800 mb-4">2. Resource Person Evaluation</label>
+        
+        <!-- Mastery -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Mastery of the subject matter</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="mastery_rating" value="excellent" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="mastery_rating" value="very_satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="mastery_rating" value="satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="mastery_rating" value="needs_improvement" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="mastery_rating" value="poor" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Time Management -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Time management</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="time_management" value="excellent" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span></label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="time_management" value="very_satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="time_management" value="satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="time_management" value="needs_improvement" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="time_management" value="poor" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Learning Methodologies -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Appropriateness of learning methodologies</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="methodologies" value="excellent" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="methodologies" value="very_satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="methodologies" value="satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="methodologies" value="needs_improvement" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="methodologies" value="poor" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Professional Conduct -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Professional conduct</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="conduct" value="excellent" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="conduct" value="very_satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="conduct" value="satisfactory" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="conduct" value="needs_improvement" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="conduct" value="poor" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Relevance Questions -->
+    <div class="mb-8">
+        <label class="block text-lg font-medium text-gray-800 mb-4">3. Activity Relevance</label>
+        
+        <!-- Topic Informativeness -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">I find the topic of the activity informative</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="topic_informative" value="strongly_agree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Agree</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="topic_informative" value="agree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Agree</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="topic_informative" value="undecided" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Undecided</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="topic_informative" value="disagree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Disagree</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="topic_informative" value="strongly_disagree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Disagree</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Activity Usefulness -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">The activity is relevant or useful</label>
+            <div class="flex flex-wrap gap-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="activity_relevance" value="strongly_agree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Agree</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="activity_relevance" value="agree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Agree</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="activity_relevance" value="undecided" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Undecided</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="activity_relevance" value="disagree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Disagree</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="activity_relevance" value="strongly_disagree" class="sr-only peer">
+                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Disagree</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments and Suggestions -->
+    <div class="mb-8">
+        <label class="block text-lg font-medium text-gray-800 mb-4">4. Comments and Suggestions</label>
+        <div class="space-y-4">
+            <label class="block text-sm font-medium text-gray-700">We highly appreciate your comments and suggestions to help us improve the activity</label>
+            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="comments_suggestions" rows="4" placeholder="Share your thoughts on how we can improve..."></textarea>
+        </div>
+    </div>
+</div>
+</div>
+
+                        <!-- Step 3: Additional Information -->
+                        <div class="step" id="step3">
+                            <h4 class="text-center mb-4">Additional Information</h4>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">What improvements would you suggest?</label>
+                                <textarea class="form-control" name="improvements" rows="4" placeholder="Share your thoughts on how we can improve..."></textarea>
+                            </div>
+
+                            <div class="row">
+                            <div class="col-md-6 mb-3">
+                            <label class="form-label">Email (Optional)</label>
+                            <input class="form-control" 
+                                name="email" 
+                                placeholder="your@email.com">
+                        </div>
+                                                        
+                        <div class="col-md-6 mb-3">
+                                    <label class="form-label">Name (Optional)</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Your Name">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                    <button type="submit" class="btn btn-success" id="submitBtn" form="feedbackForm" style="display:none;">Submit Feedback</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+ 
+    
+ 
+        </div>
+        <script>
+            window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+        </script>
+
+        <!-- Popper.js and Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+
+
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+
+        <!-- Custom JS and Plugins -->
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    // Tab functionality
     const tabButtons = document.querySelectorAll(".button-faculty-btn");
-    const tabs = document.querySelectorAll(".tabgroup > div");
+    const tabs = document.querySelectorAll(".org-chart");
 
     tabButtons.forEach(button => {
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
             const tabId = this.getAttribute("data-tab");
 
-            // Remove active class from all buttons and tabs
+            // Remove active class from all buttons and hide all tabs
             tabButtons.forEach(btn => btn.classList.remove("active"));
             tabs.forEach(tab => tab.style.display = "none");
 
-            // Add active class to the clicked button and display the associated tab
+            // Add active class to the clicked button and show the associated tab
             this.classList.add("active");
             document.getElementById(tabId).style.display = "block";
         });
     });
 
-    // By default, show the first tab and mark the first button as active
-    tabButtons[0].classList.add("active");
-    tabs[0].style.display = "block";
-});
-$(document).ready(function() {
-                    $('#newsModal').on('show.bs.modal', function (e) {
-                    
-                    var orgId = $(e.relatedTarget).data('orgid'); // Ensure this is accessing the correct element
-                    var title = $(e.relatedTarget).data('title');
-                    var imageSrc = $(e.relatedTarget).data('image');
-                    var profilePhoto = $(e.relatedTarget).data('profilephoto');
-                    var authorName = $(e.relatedTarget).data('author');
+    // Show "Tab 1" (IT Department) and mark the corresponding button as active
+    if (tabButtons.length > 0 && tabs.length > 0) {
+        tabButtons[0].classList.add("active"); // Activate the first button
+        tabs.forEach(tab => tab.style.display = "none"); // Hide all tabs
+        tabs[0].style.display = "block"; // Show the first tab
+    }
 
-                    // Check if orgId is retrieved successfully
-                    console.log("Organization ID:", orgId); // Debugging line
+    // Modal functionality
+    const profileCard = document.getElementById("profileCard");
+    const backdrop = document.getElementById("backdrop");
 
-                    // Initial fetch for announcements
-                    fetchAnnouncements(orgId, profilePhoto, authorName);
-                    fetchMembers(orgId);
-                });
+    document.querySelectorAll(".member").forEach(member => {
+        member.addEventListener("click", function () {
+            // Set profile details based on clicked member
+            document.getElementById("profileImage").src = this.getAttribute("data-image");
+            document.getElementById("profileName").textContent = this.getAttribute("data-name");
+            document.getElementById("profileSpecialization").querySelector(".specialization-value").textContent = this.getAttribute("data-specialization");
+            document.getElementById("profileConsultationTime").querySelector(".consultation-value").textContent = this.getAttribute("data-consultation");
 
-            function fetchAnnouncements(orgId, profilePhoto, authorName) {
-                $.ajax({
-                    url: 'ajax/fetch_announcement.php',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { org_id: orgId },
-                    success: function (response) {
-                        if (response.error) {
-                            $('#newsFeedContent').html('<p class="text-danger">' + response.error + '</p>');
-                            return;
-                        }
-
-                        var content = `
-                            <div class="tab-pane fade show active" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
-                                <div class="news-feed-item">
-                                    <div class="d-flex align-items-center mb-4">
-                                        <img src="${profilePhoto}" alt="Profile Photo" class="profile-photo rounded-circle me-3">
-                                        <h5 class="mb-0 me-3">${authorName}</h5>
-                                       <button type="button" class="show-members-btn" data-orgid="${orgId}" style="display:none">
-                                            Show Members    
-                                        </button>
-
-                                    </div>`;
-
-                        if (response.announcements && response.announcements.length > 0) {
-                            content += '<div class="announcement-details">';
-                            response.announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-                            response.announcements.forEach(function (announcement) {
-                                var timeAgo = formatRelativeTime(new Date(announcement.created_at));
-                                var sanitizedDetails = removeColorTags(announcement.announcement_details);
-                                var creatorName = announcement.creator_name || 'Unknown Creator';
-
-                                content += `
-                                    <div class="announcement-item-bg p-4 mb-4 rounded">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <small class="announcement-date">
-                                                <i class="bi bi-clock"></i> ${timeAgo} by ${creatorName}
-                                            </small>
-                                        </div>
-                                        <p class="mb-3">${sanitizedDetails}</p>
-                                        ${announcement.announcement_image ? 
-                                            `<img src="uploaded/annUploaded/${announcement.announcement_image}" 
-                                             class="announcement-image img-fluid">` : ''}
-                                    </div>`;
-                            });
-                            content += '</div>';
-                        } else {
-                           content += `
-                                <div class="flex flex-col items-center justify-center p-8 space-y-4 text-center bg-gray-50 rounded-lg border border-gray-100">
-                                <div class="p-4 bg-gray-100 rounded-full">
-                                    <!-- Font Awesome 'Bullhorn' icon for announcements -->
-                                    <i class="fas fa-bullhorn w-12 h-12 text-white"></i>
-                                </div>
-
-                                <div class="space-y-2">
-                                    <h3 class="text-lg font-semibold text-white">
-                                    No Announcements Found
-                                    </h3>
-                                    <p class="text-sm text-white max-w-sm">
-                                    There are currently no announcements available. Check back later for updates.
-                                    </p>
-                                </div>
-                                </div>`;
-
-                        }
-
-                        content += `</div></div>
-                            <div class="tab-pane fade" id="members" role="tabpanel" aria-labelledby="members-tab">
-                                <!-- Members content will be loaded here -->
-                            </div>`;
-
-                        $('#newsFeedContent').html(content);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('AJAX Error:', status, error);
-                        $('#newsFeedContent').html(
-                            '<p class="text-danger">An error occurred while fetching announcements. Please try again later.</p>'
-                        );
-                    }
-                });
-            }
-
-            $(document).on('click', '#members-tab', function () {
-                    var orgId = $('.show-members-btn').data('orgid'); // Use any visible element with orgId if necessary
-                    if (!orgId) {
-                        console.error("Invalid orgId in #members-tab click event:", orgId);
-                        $('#members').html('<p class="text-danger">Invalid organization ID.</p>');
-                        return;
-                    }
-                    fetchMembers(orgId);
-                });
-
-            function fetchMembers(orgId) {
-                console.log("Fetching announcements for org ID:", orgId); // Debugging line
-                $.ajax({
-                    url: 'ajax/fetch_members.php',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { org_id: orgId },
-                    success: function (response) {
-                        if (response.error) {
-                            $('#members').html('<p class="text-danger">' + response.error + '</p>');
-                            return;
-                        }
-                        var membersContent = '<div class="row g-4">';
-                        if (response.members && response.members.length > 0) {
-    response.members.forEach(function (member) {
-        membersContent += `
-            <div class="col-md-3">
-                <div class="card border-0 bg-white h-100">
-                    <div class="position-relative aspect-ratio-1x1">
-                        <img src="uploaded/orgUploaded/${member.member_img}" 
-                             alt="${member.name}" 
-                             class="w-100"
-                             style="aspect-ratio: 1/1; object-fit: cover;"
-                             onerror="this.src='path/to/default-avatar.jpg'">
-                    </div>
-                    <div class="card-body text-center p-4">
-                        <h5 class="card-title mb-1" style="font-size: 12px; font-weight: 500;">
-                            ${member.name}
-                        </h5>
-                        <p class="card-text text-primary mb-3" style="font-size: 10px;">
-                           ${member.position}
-                        </p>
-                    </div>
-                </div>
-            </div>`;
+            // Show the profile modal and backdrop
+            profileCard.style.display = "block";
+            backdrop.style.display = "block";
+        });
     });
-} else {           membersContent += `
-<div class="flex flex-col items-center justify-center p-8 space-y-4 text-center bg-gray-50 rounded-lg border border-gray-100">
-  <div class="p-4 bg-gray-100 rounded-full">
-    <!-- Font Awesome 'User X' icon -->
-    <i class="fas fa-user-slash w-12 h-12 text-white"></i>
-  </div>
 
-  <div class="space-y-2">
-    <h3 class="text-lg font-semibold text-white">
-      No Members Found
-    </h3>
-    <p class="text-sm text-gray-500 max-w-sm">
-      We couldn't find any members matching your criteria. Try adjusting your search or filters.
-    </p>
-  </div>
+    // Close the modal when clicking outside (on the backdrop)
+    backdrop.addEventListener("click", function () {
+        profileCard.style.display = "none";
+        backdrop.style.display = "none";
+    });
+});
 
-  <button class="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors">
-    Clear Filters
-  </button>
-</div>`;
+</script>
+<script>// Function to handle setting the rating (optional, if you need it for other purposes)
+document.addEventListener('DOMContentLoaded', function() {
+    // Element references
+    const feedbackForm = document.getElementById('feedbackForm');
+    const steps = document.querySelectorAll('.step');
+    const indicators = document.querySelectorAll('.step-indicator');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const organizationSelect = document.querySelector('select[name="organization"]');
+    const evaluateEventCheckbox = document.getElementById('evaluateEvent');
+    const eventEvaluation = document.getElementById('eventEvaluation');
+    let currentStep = 0;
 
 
-                        }
-
-                        membersContent += '</div>';
-                        $('#members').html(membersContent);
-                    },
-                    error: function (xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-            $('#newsFeedContent').html(
-                '<p class="text-danger">An error occurred while fetching announcements. Please try again later.</p>'
-            );
-        }
-                });
-            }
-
-            function removeColorTags(content) {
-                return content
-                    .replace(/<font[^>]*>/g, '')
-                    .replace(/<\/font>/g, '')
-                    .replace(/style="[^"]*color:[^;"]*;?"/g, '');
-            }
-
-            function formatRelativeTime(date) {
-                const now = new Date();
-                const seconds = Math.floor((now - date) / 1000);
-
-                if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+if (organizationSelect) {
+    // Fetch organizations when the page loads
+    fetch('ajax/fetch_organizations.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.organizations) {
+                // Clear existing options
+                organizationSelect.innerHTML = '<option value="">Choose an organization...</option>';
                 
-                const minutes = Math.floor(seconds / 60);
-                if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
-
-                const hours = Math.floor(minutes / 60);
-                if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
-
-                const days = Math.floor(hours / 24);
-                if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
-
-                const months = Math.floor(days / 30);
-                if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
-
-                const years = Math.floor(months / 12);
-                return years + " year" + (years > 1 ? "s" : "") + " ago";
+                // Add organizations to dropdown
+                data.organizations.forEach(org => {
+                    const option = document.createElement('option');
+                    option.value = org.org_id;
+                    option.textContent = org.org_name;
+                    organizationSelect.appendChild(option);
+                });
+            } else {
+                console.error('Error loading organizations:', data.message);
+                organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
         });
-function adjustModalPosition() {
-        var modal = document.getElementById('myModal');
+}
+    // Rating conversion maps
+    const ratingMap = {
+        'excellent': 5,
+        'very_satisfactory': 4,
+        'satisfactory': 3,
+        'needs_improvement': 2,
+        'poor': 1
+    };
 
-        if (modal) {
-            var viewportWidth = window.innerWidth;
-            var viewportHeight = window.innerHeight;
-            var modalWidth = modal.offsetWidth;
-            var modalHeight = modal.offsetHeight;
+    const agreementMap = {
+        'strongly_agree': 5,
+        'agree': 4,
+        'undecided': 3,
+        'disagree': 2,
+        'strongly_disagree': 1
+    };
 
-            // Calculate new position to center the modal within the viewport
-            var top = Math.max(10, (viewportHeight - modalHeight) / 2); // Ensure modal is at least 10px from top
-            var left = Math.max(10, (viewportWidth - modalWidth) / 2); // Ensure modal is at least 10px from left
-
-            // Apply new position to modal
-            modal.style.top = top + 'px';
-            modal.style.left = left + 'px';
-        }
+    // Helper functions
+    function convertRatingToNumber(rating) {
+        return ratingMap[rating] || null;
     }
-    $('#myModal').modal({
-    backdrop: false // Disable the backdrop
-});
-    // Adjust modal position when the page loads
-    window.addEventListener('load', adjustModalPosition);
 
-    // Adjust modal position when the window is resized
-    window.addEventListener('resize', adjustModalPosition);
+    function convertAgreementToNumber(rating) {
+        return agreementMap[rating] || null;
+    }
 
-
-    let selectedRating; // To hold the selected rating
-    let feedbackCount = 0; // To track the number of feedback submissions
-
-    // Handle emoji selection
-    document.querySelectorAll('.emoji-select').forEach(item => {
-    item.addEventListener('click', function() {
-        // Remove selected class from all emojis
-        document.querySelectorAll('.emoji-select').forEach(emoji => {
-            emoji.classList.remove('selected');
-        });
-        // Add selected class to the clicked emoji
-        this.classList.add('selected');
-        selectedRating = this; // Store the selected rating
+    // Category selection handler
+  // Modify your existing category selection handler
+document.querySelectorAll('input[name="feedback_category"]').forEach(input => {
+    input.addEventListener('change', function() {
+        const category = this.value;
+        const officeQuestions = document.getElementById('officeQuestions');
+        const orgQuestions = document.getElementById('orgQuestions');
+        const csmIntro = document.getElementById('csmIntro');
+        
+        if (category === 'office') {
+            officeQuestions.style.display = 'block';
+            orgQuestions.style.display = 'none';
+            if (eventEvaluation) eventEvaluation.style.display = 'none';
+            // Show the CSM intro for office category
+            if (csmIntro) csmIntro.style.display = 'block';
+        } else if (category === 'org') {
+            officeQuestions.style.display = 'none';
+            orgQuestions.style.display = 'block';
+            // Hide the CSM intro for org category
+            if (csmIntro) csmIntro.style.display = 'none';
+        }
     });
 });
 
-function nextStep() {
-    const currentStep = document.querySelector('.step:not([style*="display: none"])');
+    // Event evaluation checkbox handler
+    if (evaluateEventCheckbox) {
+        evaluateEventCheckbox.addEventListener('change', function() {
+            if (eventEvaluation) {
+                eventEvaluation.style.display = this.checked ? 'block' : 'none';
+            }
+        });
+    }
 
-    // Check required fields in the current step
-    if (currentStep.id === "step1") {
-        // Check if a rating is selected
-        if (!selectedRating) {
-            alert("Please select a rating before proceeding.");
-            return;
+    // Validation functions
+    function validateOfficeForm() {
+    const requiredFields = [
+        { name: 'client_type', label: 'Client Type', type: 'select' },
+        { name: 'date', label: 'Date', type: 'date' },
+        { name: 'age', label: 'Age', type: 'number' },
+        { name: 'sex', label: 'Sex', type: 'radio' },
+        { name: 'office', label: 'Office', type: 'text' },
+        { name: 'service', label: 'Service', type: 'text' },
+        { name: 'cc_awareness', label: 'CC Awareness', type: 'radio' },
+        { name: 'cc_visibility', label: 'CC Visibility', type: 'radio' },
+        { name: 'cc_helpfulness', label: 'CC Helpfulness', type: 'radio' }
+    ];
+
+    for (const field of requiredFields) {
+        const element = field.type === 'radio' 
+            ? document.querySelector(`input[name="${field.name}"]:checked`)
+            : document.querySelector(`[name="${field.name}"]`);
+            
+        const value = field.type === 'radio' 
+            ? element?.value
+            : element?.value?.trim();
+
+        if (!value) {
+            alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
+            element?.focus();
+            return false;
         }
-    } else if (currentStep.id === "step2") {
-        // Validate required fields in Step 2
-        const emailInput = document.getElementById('email').value.trim();
+    }
+
+    // Validate SQD ratings
+    for (let i = 0; i <= 8; i++) {
+        if (!document.querySelector(`input[name="sqd${i}"]:checked`)) {
+            alert(`Please provide a rating for SQD${i}`);
+            return false;
+        }
+    }
+
+    return true;
+}
+    function validateEventEvaluation() {
+    const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
+    
+    if (!evaluateEventChecked) {
+        return true; // Skip validation if event evaluation is not checked
+    }
+
+    const requiredFields = [
+        'activity_title',
+        'activity_date',
+        'venue',
+        'student_org'
+    ];
+
+    for (const fieldName of requiredFields) {
+        const field = document.querySelector(`[name="${fieldName}"]`);
+        const value = field?.value?.trim();
         
-        // Get selected college
-        const collegeInput = document.querySelector('input[name="college"]:checked');
-        const collegeValue = collegeInput ? collegeInput.value : '';
-
-        // Get selected year
-        const yearInput = document.querySelector('input[name="year"]:checked');
-        const yearValue = yearInput ? yearInput.value : '';
-
-        if (!emailInput || !collegeValue || !yearValue) {
-            alert("Please fill in all required fields before proceeding.");
-            return;
+        if (!value) {
+            alert(`Please fill in ${fieldName.replace('_', ' ')}`);
+            field?.focus();
+            return false;
         }
     }
 
-    // Proceed to the next step if all validations pass
-    if (currentStep.nextElementSibling) {
-        currentStep.style.display = 'none';
-        currentStep.nextElementSibling.style.display = 'block';
+    const ratingFields = [
+        'communication_rating',
+        'video_quality',
+        'audio_quality',
+        'mastery_rating',
+        'time_management',
+        'methodologies',
+        'conduct',
+        'topic_informative',
+        'activity_relevance'
+    ];
+
+    for (const fieldName of ratingFields) {
+        if (!document.querySelector(`input[name="${fieldName}"]:checked`)) {
+            alert(`Please provide a rating for ${fieldName.replace('_', ' ')}`);
+            return false;
+        }
     }
+
+    return true;
+}
+    // Form submission handler
+    if (feedbackForm) {
+    feedbackForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Validate current step
+        if (!validateCurrentStep()) {
+            return;
+        }
+
+        const formData = new FormData(this);
+        const feedbackCategory = formData.get('feedback_category');
+        
+        submitBtn.disabled = true;
+
+        // Process organization feedback
+        if (feedbackCategory === 'org') {
+            // Convert org ratings to numbers
+            const orgRatings = [
+                'event_quality',
+                'org_communication',
+                'inclusivity',
+                'leadership',
+                'skill_dev',
+                'impact'
+            ];
+
+            orgRatings.forEach(field => {
+                const rating = formData.get(field);
+                if (rating) {
+                    formData.set(field, parseInt(rating));
+                }
+            });
+
+            // Check if event evaluation is enabled
+            const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
+            formData.set('evaluate_event', evaluateEventChecked ? '1' : '0');
+
+            // Handle event evaluation if checked
+            if (evaluateEventChecked) {
+                // Convert ratings using rating map
+                const eventRatings = [
+                    'communication_rating',
+                    'video_quality',
+                    'audio_quality',
+                    'mastery_rating',
+                    'time_management',
+                    'methodologies',
+                    'conduct'
+                ];
+
+                eventRatings.forEach(field => {
+                    const rating = formData.get(field);
+                    if (rating) {
+                        formData.set(field, convertRatingToNumber(rating));
+                    }
+                });
+
+                // Convert agreement ratings
+                const agreementFields = [
+                    'topic_informative',
+                    'activity_relevance'
+                ];
+
+                agreementFields.forEach(field => {
+                    const rating = formData.get(field);
+                    if (rating) {
+                        formData.set(field, convertAgreementToNumber(rating));
+                    }
+                });
+
+                // Ensure all required event fields are included
+                const eventRequiredFields = [
+                    'activity_title',
+                    'activity_date',
+                    'venue',
+                    'student_org'
+                ];
+
+                eventRequiredFields.forEach(field => {
+                    const value = formData.get(field);
+                    if (!value) {
+                        console.error(`Missing required event field: ${field}`);
+                    }
+                });
+            }
+        }
+
+        // Submit form data
+        fetch('ajax/submit_feedback.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    console.error('Server response:', text);
+                    throw new Error('Server responded with an error');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('Thank you for your feedback!');
+                resetForm();
+                const modal = document.getElementById('feedbackModal');
+                if (modal && typeof bootstrap !== 'undefined') {
+                    const bsModal = bootstrap.Modal.getInstance(modal);
+                    if (bsModal) bsModal.hide();
+                }
+            } else {
+                throw new Error(data.message || 'Error submitting feedback');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while submitting your feedback. Please try again.');
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+        });
+    });
+}
+    // Step validation
+    function validateCurrentStep() {
+        if (currentStep === 0) {
+            const categorySelected = document.querySelector('input[name="feedback_category"]:checked');
+            if (!categorySelected) {
+                alert('Please select a feedback category');
+                return false;
+            }
+            return true;
+        }
+        
+        if (currentStep === 1) {
+            const category = document.querySelector('input[name="feedback_category"]:checked').value;
+            
+            if (category === 'office') {
+                return validateOfficeForm();
+            } else if (category === 'org') {
+                return validateOrgForm() && validateEventEvaluation();
+            }
+        }
+
+        return true;
+    }
+    function validateOrgForm() {
+    const requiredFields = [
+        { name: 'organization', label: 'Organization', type: 'select' },
+    ];
+
+    for (const field of requiredFields) {
+        const element = field.type === 'radio' 
+            ? document.querySelector(`input[name="${field.name}"]:checked`)
+            : document.querySelector(`[name="${field.name}"]`);
+            
+        const value = field.type === 'radio' 
+            ? element?.value
+            : element?.value?.trim();
+
+        if (!value) {
+            alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
+            element?.focus();
+            return false;
+        }
+    }
+
+    // Validate organization ratings
+    const orgRatings = [
+        'event_quality',
+        'org_communication',
+        'inclusivity',
+        'leadership',
+        'skill_dev',
+        'impact'
+    ];
+
+    for (const rating of orgRatings) {
+        if (!document.querySelector(`input[name="${rating}"]:checked`)) {
+            alert(`Please provide a rating for ${rating.replace('_', ' ')}`);
+            return false;
+        }
+    }
+
+    return true;
+}
+
+    // Navigation and step management
+    function updateSteps() {
+        steps.forEach((step, index) => {
+            step.classList.toggle('active', index === currentStep);
+            step.style.display = index === currentStep ? 'block' : 'none';
+        });
+        
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index <= currentStep);
+        });
+        
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.style.display = currentStep === steps.length - 1 ? 'none' : 'block';
+        submitBtn.style.display = currentStep === steps.length - 1 ? 'block' : 'none';
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            if (!validateCurrentStep()) {
+                return;
+            }
+            
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateSteps();
+            }
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateSteps();
+            }
+        });
+    }
+
+    // Form reset
+    function resetForm() {
+        if (feedbackForm) {
+            feedbackForm.reset();
+            currentStep = 0;
+            updateSteps();
+
+            // Reset display states
+            const displays = {
+                'officeQuestions': 'none',
+                'orgQuestions': 'none',
+                'eventEvaluation': 'none'
+            };
+
+            Object.entries(displays).forEach(([id, display]) => {
+                const element = document.getElementById(id);
+                if (element) element.style.display = display;
+            });
+        }
+    }
+
+    // Initialize on load
+    updateSteps();
+});
+function updateFeedbackCounts() {
+  fetch('ajax/get_feedback_counts.php')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('total-feedback').textContent = data.org_count || 0;
+      document.getElementById('average-rating').textContent = data.office_count || 0;
+    })
+    .catch(error => {
+      console.error('Error fetching feedback counts:', error);
+      document.getElementById('total-feedback').textContent = '0';
+      document.getElementById('average-rating').textContent = '0';
+    });
+}
+
+// Update counts initially and every 30 seconds
+document.addEventListener('DOMContentLoaded', function() {
+  updateFeedbackCounts();
+  setInterval(updateFeedbackCounts, 30000);
+});
+    </script>
+    <script>
+    var scrollTimeout;
+            $(window).scroll(function (event) {
+        clearTimeout(scrollTimeout); // Clear any previous timeout
+        scrollTimeout = setTimeout(function () {
+            hasScrolled(); // Call hasScrolled after a delay to avoid multiple triggers
+        }, 250); // Adjust delay as necessary
+    });
+
+    function hasScrolled() {
+        var st = $(this).scrollTop();
+
+        // Make sure they scroll more than delta
+        if (Math.abs(lastScrollTop - st) <= delta) return;
+
+        // If they scrolled down and are past the navbar, add class .nav-up.
+        if (st > lastScrollTop && st > navbarHeight) {
+            $('header').removeClass('nav-down').addClass('nav-up');
+        } else {
+            // If they scrolled up
+            if (st + $(window).height() < $(document).height()) {
+                $('header').removeClass('nav-up').addClass('nav-down');
+            }
+        }
+
+        lastScrollTop = st;
+    }
+
+    // Attach event listener to search button
+    document.querySelector('button[onclick="searchAndHighlight()"]').addEventListener('click', searchAndHighlight);
+
+    // Attach change event listener to dropdown
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (dropdownMenu) {
+        dropdownMenu.addEventListener('change', function () {
+            const floorId = this.value;
+            if (floorId) {
+                fetchRoomsForFloor(floorId);
+                showFloorTable(floorId);
+            } else {
+                clearTableCells();
+            }
+        });
+
+        // Trigger the change event to load the default table
+        dropdownMenu.dispatchEvent(new Event('change'));
+    }
+
+    // Fetch and update rooms based on the selected floor
+    function fetchRoomsForFloor(floorId) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'ajax/floor_data.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                try {
+                    const rooms = JSON.parse(xhr.responseText);
+                    console.log('Rooms Data:', rooms); // Log the rooms data
+                    updateTableWithRooms(rooms);
+                } catch (e) {
+                    console.error("Error parsing JSON:", e);
+                    console.error("Response Text:", xhr.responseText); // Log the raw response
+                }
+            } else {
+                console.error('Fetch Error:', xhr.statusText);
+            }
+        };
+        xhr.send('floor_id=' + floorId);
+    }
+
+
+    // Function to update table with room data
+    function updateTableWithRooms(rooms) {
+        clearTableCells();
+        rooms.forEach(room => {
+            const cell = document.getElementById(room.room_id); // Use id for cell selection
+            if (cell) {
+                cell.textContent = room.room_name; // Assuming room_name is what you want to display
+                cell.style.backgroundColor = ''; // Reset the color
+                console.log('Updated Cell:', cell.id, room.room_name); // Log each updated cell
+            } else {
+                console.error('Cell Not Found:', room.room_id);
+            }
+        });
+    }
+
+    // Function to clear all table cells
+    function clearTableCells() {
+        document.querySelectorAll('.floor-table td').forEach(cell => {
+            cell.textContent = ''; // Clear the cell content
+            cell.style.backgroundColor = ''; // Reset the color
+        });
+    }
+
+    // Function to handle search and highlight
+    function searchAndHighlight() {
+        var input = document.getElementById('search-input').value.trim();
+
+        if (input === '') {
+            alert('Please enter a room name');
+            return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'ajax/search.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('Search Response:', xhr.responseText);
+                var data = JSON.parse(xhr.responseText);
+
+                if (data.error) {
+                    console.error('PHP Error:', data.error);
+                    return;
+                }
+
+                var roomIds = data.highlight || [];
+                var floorIds = data.floor || [];
+                console.log('Highlighting IDs:', roomIds);
+                console.log('Floor IDs:', floorIds);
+
+                // Clear previous highlights
+                document.querySelectorAll('.highlight').forEach(cell => {
+                    cell.classList.remove('highlight');
+                });
+
+                // Highlight cells based on room IDs
+                document.querySelectorAll('.floor-table td').forEach(cell => {
+                    if (roomIds.includes(parseInt(cell.id))) { // Ensure IDs are compared as integers
+                        cell.classList.add('highlight');
+                    }
+                });
+
+                // Trigger the dropdown change event to update table and highlight results
+                var dropdown = document.getElementById('dropdownMenu');
+                dropdown.value = floorIds[0] || dropdown.value; // Default to the first floor in the array or keep current value
+                dropdown.dispatchEvent(new Event('change')); // Trigger the change event
+
+            } else {
+                console.error('Search Error:', xhr.statusText);
+            }
+        };
+        xhr.send('query=' + encodeURIComponent(input));
+    }
+
+    // Function to show a specific floor table
+    function showFloorTable(floorId) {
+        document.querySelectorAll('.floor-table').forEach(table => {
+            table.style.display = 'none'; // Hide all floor tables
+        });
+
+        const selectedTable = document.getElementById(`floor-${floorId}`);
+        if (selectedTable) {
+            selectedTable.style.display = 'table'; // Show the selected table
+            selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scroll to the table
+        }
+    }
+   
+$(document).ready(function () {
+        // When the modal is shown, ensure that we fetch announcements
+        let allAnnouncements = [];
+    let currentProfilePhoto = '';
+    let currentAuthorName = '';
+        $('#newsModal').on('show.bs.modal', function (e) {
+            var orgId = $(e.relatedTarget).data('orgid');
+            var title = $(e.relatedTarget).data('title');
+            var imageSrc = $(e.relatedTarget).data('image');
+            var profilePhoto = $(e.relatedTarget).data('profilephoto');
+            var authorName = $(e.relatedTarget).data('author');
+
+            console.log("Organization ID (Announcements):", orgId);
+
+            // Update organization name and profile photo in the modal
+            $('#orgName').text(title);
+            $('#orgProfilePhoto').attr('src', profilePhoto);
+            
+            // Set org_id for both tabs
+            $('#announcements-tab').data('orgid', orgId);
+            $('#members-tab').data('orgid', orgId);
+
+            // Fetch announcements if orgId is valid
+            if (orgId) {
+                fetchAnnouncements(orgId, profilePhoto, authorName);
+            } else {
+                console.error("Invalid orgId in modal");
+            }
+            clearFilters();
+        });
+
+        // When the Members tab is clicked, fetch members dynamically based on org_id
+        $('#members-tab').on('click', function () {
+            var orgId = $(this).data('orgid'); // Get orgId from members tab button
+
+            if (orgId) {
+                console.log("Fetching members for org ID:", orgId);
+                fetchMembers(orgId);
+            } else {
+                console.error("Invalid orgId for fetching members");
+                $('#members').html('<p class="text-danger">Invalid organization ID.</p>');
+            }
+        });
+        
+        function fetchAnnouncements(orgId, profilePhoto, authorName) {
+    const filters = {
+        org_id: orgId,
+        search: $('#announcementSearch').val(),
+        category: $('#categoryFilter').val(), // Ensure this is being sent
+        date_from: $('#dateFilter').val()
+    };
+
+    console.log('Sending filters to server:', filters); // Debug log
+    
+    // Store these for later use
+    currentProfilePhoto = profilePhoto;
+    currentAuthorName = authorName;
+
+    $.ajax({
+        url: 'ajax/fetch_announcement.php',
+        type: 'POST',
+        dataType: 'json',
+        data: filters,
+        success: function(response) {
+            if (response.status === 'error') {
+                $('#announcements').html(`<p class="text-danger">${response.message}</p>`);
+                return;
+            }
+            
+            allAnnouncements = response.announcements;
+            console.log('Received announcements:', allAnnouncements);
+            console.log('Applied filters:', response.filters_applied); // Debug log
+            
+            renderAnnouncementsContent(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Fetch error:', error);
+            console.error('Server response:', xhr.responseText); // Debug log
+            $('#announcements').html('<p class="text-danger">Error loading announcements</p>');
+        }
+    });
+}
+function filterAnnouncements() {
+    const searchTerm = $('#announcementSearch').val().toLowerCase().trim();
+    const dateFilter = $('#dateFilter').val();
+    const categoryFilter = $('#categoryFilter').val();
+
+    console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
+
+    const filtered = allAnnouncements.filter(announcement => {
+        // Search filter
+        const searchableText = [
+            announcement.announcement_title,
+            announcement.announcement_details,
+            announcement.creator_name,
+            announcement.author_name
+        ].filter(Boolean).join(' ').toLowerCase();
+        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+        
+        // Date filter
+        let matchesDate = true;
+        if (dateFilter) {
+            const announcementDate = new Date(announcement.created_at).toLocaleDateString();
+            const filterDate = new Date(dateFilter).toLocaleDateString();
+            matchesDate = announcementDate === filterDate;
+        }
+        
+        // Category filter
+        let matchesCategory = true;
+        if (categoryFilter && categoryFilter !== 'all') {
+            // Debug log for category matching
+            console.log('Checking announcement:', {
+                id: announcement.announcement_id,
+                title: announcement.announcement_title,
+                category: announcement.category,
+                filterCategory: categoryFilter,
+                matches: announcement.category === categoryFilter
+            });
+            
+            matchesCategory = announcement.category === categoryFilter;
+        }
+
+        const result = matchesSearch && matchesDate && matchesCategory;
+        
+        // Debug log for filter results
+        if (categoryFilter && categoryFilter !== 'all') {
+            console.log(`Announcement ${announcement.announcement_id} filter result:`, {
+                matchesSearch,
+                matchesDate,
+                matchesCategory,
+                finalResult: result
+            });
+        }
+
+        return result;
+    });
+
+    console.log('Filter results:', {
+        totalAnnouncements: allAnnouncements.length,
+        filteredCount: filtered.length,
+        appliedFilters: {
+            search: searchTerm,
+            date: dateFilter,
+            category: categoryFilter
+        }
+    });
+
+    return filtered;
 }
 
 
-    // Function to go to the previous step
-    function prevStep() {
-        const currentStep = document.querySelector('.step:not([style*="display: none"])');
-        if (currentStep.previousElementSibling) {
-            currentStep.style.display = 'none';
-            currentStep.previousElementSibling.style.display = 'block';
-        }
+
+// Event listeners
+$('#announcementSearch, #dateFilter, #categoryFilter').on('input change', function() {
+    console.log('Filter changed:', this.id);
+    const filtered = filterAnnouncements();
+    const announcementsContainer = `
+        <div class="list-group">
+            ${renderAnnouncements(filtered)}
+        </div>`;
+    $('#announcements-content').html(announcementsContainer);
+});
+
+    // Event listeners for filters
+    $('#announcementSearch').on('input', function() {
+        const filteredAnnouncements = filterAnnouncements();
+        renderAnnouncementsContent({ announcements: filteredAnnouncements });
+    });
+
+    $('#dateFilter').on('change', function() {
+        const filteredAnnouncements = filterAnnouncements();
+        renderAnnouncementsContent({ announcements: filteredAnnouncements });
+    });
+
+    $('#categoryFilter').on('change', function() {
+    const selectedCategory = $(this).val();
+    console.log('Category changed to:', selectedCategory);
+    console.log('Current announcements:', allAnnouncements);
+    
+    const filtered = filterAnnouncements();
+    console.log('Filtered announcements:', filtered);
+    
+    renderAnnouncementsContent({ announcements: filtered });
+});
+
+    // Clear filters
+    function clearFilters() {
+    console.log('Clearing filters');
+    console.log('Original announcements:', allAnnouncements);
+    
+    // Reset filter inputs
+    $('#announcementSearch').val('');
+    $('#dateFilter').val('');
+    $('#categoryFilter').val('all');
+
+    // Fetch fresh data from server
+    const orgId = $('#announcements-tab').data('orgid');
+    if (orgId) {
+        fetchAnnouncements(orgId);
+    } else {
+        // If we can't fetch new data, use existing announcements
+        renderAnnouncementsContent({ announcements: allAnnouncements });
+    }
+}
+
+// Update the click handler
+$('#clearFilters').on('click', function() {
+    clearFilters();
+});
+$('#announcementSearch, #dateFilter, #categoryFilter').on('input change', function() {
+    const filtered = filterAnnouncements();
+    renderAnnouncementsContent({ announcements: filtered });
+});
+       // Update the main success callback where announcements are initially loaded
+       function renderAnnouncementsContent(response) {
+    const announcements = response.announcements || [];
+    
+    if (announcements.length === 0) {
+        $('#announcements-content').html(renderEmptyState());
+        return;
     }
 
-    let totalScore = 0; // To accumulate the total score
-    let averageRatingText = document.getElementById('averageRatingText'); // Reference to average rating display
-// Event listener for feedback submission
-        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission
-            const feedbackInput = document.getElementById('feedback').value.trim();
-            const emailInput = document.getElementById('email').value.trim();
-            const nameInput = document.getElementById('name').value.trim();
-            const addressInput = document.getElementById('address').value.trim();
+    const content = `
+        <div class="list-group">
+            ${announcements.map(announcement => renderAnnouncementItem(announcement)).join('')}
+        </div>`;
+    
+    $('#announcements-content').html(content);
+}
 
-            // Retrieve selected college
+
+    function renderAnnouncements(announcements, profilePhoto, authorName) {
+        if (!announcements || announcements.length === 0) {
+            return renderEmptyState();
+        }
+
+        return announcements
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .map(announcement => renderAnnouncementItem(announcement, profilePhoto, authorName))
+            .join('');
+    }
+
+  function renderEmptyState() {
+    return `
+        <div class="text-center py-8">
+            <div class="custom-alert">
+                <i class="bi bi-info-circle me-2" style="font-size: 2rem;"></i>
+                <p class="h4 mb-0">No announcements available at the moment.</p>
+            </div>
+        </div>`;
+}
+
+function renderAnnouncementImages(announcement) {
+    console.log('Rendering images for announcement:', announcement);
+    console.log('Raw images:', announcement.images);
+
+    if (!announcement.images) {
+        console.log('No images found for announcement');
+        return '';
+    }
+
+    // If the images are a string (comma-separated), convert to array
+    const images = typeof announcement.images === 'string' 
+        ? announcement.images.split(',').filter(img => img.trim() !== '')
+        : Array.isArray(announcement.images) 
+            ? announcement.images
+            : [];
+
+    console.log('Processed images array:', images);
+
+    if (!images || images.length === 0) {
+        console.log('No valid images after processing');
+        return '';
+    }
+
+    // Create a carousel for multiple images
+    const carouselId = `carousel-${announcement.announcement_id}`;
+    console.log('Creating carousel with ID:', carouselId);
+
+    const carouselItems = images.map((image, index) => {
+        const imagePath = image.trim();
+        console.log(`Processing image ${index + 1}:`, imagePath);
+        return `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}" data-bs-interval="false">
+                <img src="uploaded/annUploaded/${imagePath}" 
+                     class="d-block w-100 rounded" 
+                     alt="Announcement Image ${index + 1}"
+                     style="max-height: 400px; object-fit: contain;"
+                     onerror="this.onerror=null; this.src='default-image.jpg'; console.error('Failed to load image:', this.src);">
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div id="${carouselId}" class="carousel slide mb-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                ${carouselItems}
+            </div>
+            ${images.length > 1 ? `
+                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            ` : ''}
+            ${images.length > 1 ? `
+                <ol class="carousel-indicators">
+                    ${images.map((_, index) => `
+                        <li data-bs-target="#${carouselId}" 
+                            data-bs-slide-to="${index}" 
+                            class="${index === 0 ? 'active' : ''}">
+                        </li>
+                    `).join('')}
+                </ol>
+            ` : ''}
+        </div>`;
+}
+
+function renderAnnouncementItem(announcement) {
+    const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
+    const formattedDate = formatRelativeTime(new Date(announcement.created_at));
+    const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
+
+    return `
+        <div class="list-group-item bg-white rounded-lg shadow-sm p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="d-flex align-items-center">
+                    <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : 'default-profile.jpg'}" 
+                         alt="Profile" 
+                         class="rounded-circle border border-primary" 
+                         style="width: 50px; height: 50px;">
+                    <div class="ms-3">
+                        <h5 class="mb-1">${displayName}</h5>
+                        <small class="text-muted">${announcement.org_name || 'Unknown Organization'}</small>
+                    </div>
+                </div>
+                <span class="badge ${categoryBadgeClass}">${announcement.category}</span>
+            </div>
+            <h4 class="mb-3">${announcement.announcement_title}</h4>
+            <div class="announcement-content mb-3">
+                ${announcement.announcement_details}
+            </div>
+            ${renderAnnouncementImages(announcement)}
+            <small class="text-muted">${formattedDate}</small>
+        </div>`;
+}
+
+
+    // Helper function to get badge class based on category
+    function getCategoryBadgeClass(category) {
+    const classes = {
+        'academic': 'bg-primary',
+        'event': 'bg-success',
+        'org': 'bg-info',
+        'general': 'bg-secondary'
+    };
+    return classes[category] || 'bg-secondary';
+}
+    function renderAnnouncementHeader(creatorName, profilePhoto, authorName) {
+        return `
+            <div class="d-flex align-items-center mb-4">
+                <img src="${profilePhoto || 'default-profile.jpg'}" alt="Profile Photo" class="rounded-circle border border-primary" style="width: 50px; height: 50px;">
+                <div class="ml-3">
+                    
+                    <h5 class="text-muted-white small">${authorName || 'Unknown Author'}</h5>
+                    <p class="font-weight-bold text-dark">${creatorName}</p>
+                </div>
+            </div>`;
+    }
+    function renderAnnouncementContent(sanitizedDetails, announcement) {
+    const relativeTime = formatRelativeTime(new Date(announcement.created_at)); // Apply relative time formatting
+    return `
+                <span class="text-dark-white small">${sanitizedDetails}</span>
+            <span class="text-secondary small">${relativeTime}</span> <!-- Use relative time here -->
+        </div>`;
+}
+
+    function formatRelativeTime(date) {
+        const now = new Date();
+        const seconds = Math.floor((now - date) / 1000);
+
+        if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+        
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+        const days = Math.floor(hours / 24);
+        if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+        const months = Math.floor(days / 30);
+        if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+        const years = Math.floor(months / 12);
+        return years + " year" + (years > 1 ? "s" : "") + " ago";
+    }
+
+    function renderCarousel(announcement) {
+        if (!announcement.images || announcement.images.length === 0) {
+            return '';  // If no images, return empty string
+        }
+
+        const carouselItems = announcement.images.map((image, index) => {
+            return `
+                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                    <img src="uploaded/annUploaded/${image}" class="d-block w-100 rounded-lg shadow-lg" alt="Announcement Image ${index + 1}">
+                </div>`;
+        }).join('');
+
+        return `
+            <div id="announcementCarousel-${announcement.id}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    ${carouselItems}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#announcementCarousel-${announcement.id}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#announcementCarousel-${announcement.id}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>`;
+    }
+
+   function fetchMembers(orgId) {
+    $.ajax({
+        url: 'ajax/fetch_members.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { org_id: orgId },
+        success: function (response) {
+            if (response.error) {
+                $('#members').html(`
+                    <div class="text-red-600 p-4 text-center">
+                        ${response.error}
+                    </div>`
+                );
+                return;
+            }
+            renderMembersContent(response.members);
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+            $('#members').html(`
+                <div class="text-red-600 p-4 text-center">
+                    An error occurred while fetching members. Please try again later.
+                </div>`
+            );
+        }
+    });
+}
+
+function renderMembersContent(members) {
+    let membersContent = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">';
+    
+    if (members && members.length > 0) {
+        members.forEach(function (member) {
+            membersContent += `
+                <div class="group">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
+                        <div class="relative">
+                            <div class="aspect-square">
+                                <img src="uploaded/orgUploaded/${member.member_img}" 
+                                    alt="${member.name}" 
+                                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    onerror="this.src='path/to/default-avatar.jpg'">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                                ${member.name}
+                            </h3>
+                            <p class="text-sm text-blue-600 font-medium">
+                                ${member.position}
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+        });
+    } else {
+        membersContent = `
+            <div class="flex items-center justify-center p-8 col-span-full">
+                <div class="bg-amber-50 text-amber-800 px-6 py-4 rounded-lg flex items-center gap-3">
+                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <span class="text-lg font-medium">No members found</span>
+                </div>
+            </div>`;
+    }
+
+    membersContent += '</div>';
+    $('#members').html(membersContent);
+}
+    function initializeCarousels() {
+        $('.carousel').each(function() {
+            new bootstrap.Carousel(this);
+        });
+    }   // Trigger the "Members" tab on click
+        $('#members-tab').on('click', function () {
+            // This will activate the 'members' tab when clicked
+            $('#myTabs a[href="#members"]').tab('show');
+        });
+
+        // Trigger the "Announcements" tab on click
+        $('#announcements-tab').on('click', function () {
+            // This will activate the 'announcements' tab when clicked
+            $('#myTabs a[href="#announcements"]').tab('show');
+        });
+
+                    // Remove only the color style from inline style attributes, leaving other styles and tags intact
+// Remove only the color style from inline style attributes, leaving other styles and tags intact
+function removeColorTags(content) {
+    // Remove inline color styles while keeping other styles
+    content = content.replace(/style="([^"]*?)\bcolor\s*:\s*[^;]+;?([^"]*?)"/g, (match, p1, p2) => {
+        const remainingStyles = `${p1.trim()} ${p2.trim()}`.trim();
+        return remainingStyles ? `style="${remainingStyles}"` : '';
+    });
+
+
+
+    // Apply a default color if no inline color is present
+    content = content.replace(/<p(.*?)>/gi, '<p$1 style="color: black;">');
+    content = content.replace(/<span(.*?)>/gi, '<span$1 style="color: black;">');
+
+    return content;
+}
+
+
+
+                function formatRelativeTime(date) {
+                    const now = new Date();
+                    const seconds = Math.floor((now - date) / 1000);
+
+                    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+                    
+                    const minutes = Math.floor(seconds / 60);
+                    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+                    const hours = Math.floor(minutes / 60);
+                    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+                    const days = Math.floor(hours / 24);
+                    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+                    const months = Math.floor(days / 30);
+                    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+                    const years = Math.floor(months / 12);
+                    return years + " year" + (years > 1 ? "s" : "") + " ago";
+                }
+            });
+    function adjustModalPosition() {
+            var modal = document.getElementById('myModal');
+
+            if (modal) {
+                var viewportWidth = window.innerWidth;
+                var viewportHeight = window.innerHeight;
+                var modalWidth = modal.offsetWidth;
+                var modalHeight = modal.offsetHeight;
+
+                // Calculate new position to center the modal within the viewport
+                var top = Math.max(10, (viewportHeight - modalHeight) / 2); // Ensure modal is at least 10px from top
+                var left = Math.max(10, (viewportWidth - modalWidth) / 2); // Ensure modal is at least 10px from left
+
+                // Apply new position to modal
+                modal.style.top = top + 'px';
+                modal.style.left = left + 'px';
+            }
+        }
+        $('#myModal').modal({
+        backdrop: false // Disable the backdrop
+    });
+        // Adjust modal position when the page loads
+        window.addEventListener('load', adjustModalPosition);
+
+        // Adjust modal position when the window is resized
+        window.addEventListener('resize', adjustModalPosition);
+
+
+        let selectedRating; // To hold the selected rating
+        let feedbackCount = 0; // To track the number of feedback submissions
+
+        // Handle emoji selection
+        document.querySelectorAll('.emoji-select').forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove selected class from all emojis
+            document.querySelectorAll('.emoji-select').forEach(emoji => {
+                emoji.classList.remove('selected');
+            });
+            // Add selected class to the clicked emoji
+            this.classList.add('selected');
+            selectedRating = this; // Store the selected rating
+        });
+    });
+
+// Fix modal layout issues
+function adjustModalLayout() {
+  const modal = document.getElementById('feedbackModal');
+  if (modal) {
+    const modalContent = modal.querySelector('.modal-content');
+    const modalBody = modal.querySelector('.modal-body');
+    const modalHeader = modal.querySelector('.modal-header');
+    const modalFooter = modal.querySelector('.modal-footer');
+    const progressSteps = modal.querySelector('.progress-steps');
+    
+    if (modalContent && modalBody) {
+      // Reset any inline styles that might be causing issues
+      modalContent.style.height = '';
+      modalBody.style.maxHeight = `calc(90vh - ${modalHeader.offsetHeight + modalFooter.offsetHeight + progressSteps.offsetHeight}px)`;
+    }
+  }
+}
+    function nextStep() {
+        const currentStep = document.querySelector('.step:not([style*="display: none"])');
+
+        // Check required fields in the current step
+        if (currentStep.id === "step1") {
+            // Check if a rating is selected
+            if (!selectedRating) {
+                alert("Please select a rating before proceeding.");
+                return;
+            }
+        } else if (currentStep.id === "step2") {
+            
+            // Get selected college
             const collegeInput = document.querySelector('input[name="college"]:checked');
             const collegeValue = collegeInput ? collegeInput.value : '';
 
-            // Retrieve selected year
+            // Get selected year
             const yearInput = document.querySelector('input[name="year"]:checked');
             const yearValue = yearInput ? yearInput.value : '';
 
-            const imageInput = document.getElementById('image').files[0];
+            if (!emailInput || !collegeValue || !yearValue) {
+                alert("Please fill in all required fields before proceeding.");
+                return;
+            }
+        }
 
-            if (feedbackInput && selectedRating && collegeValue && yearValue) {
-                const formData = new FormData();
-                formData.append('rating', selectedRating.getAttribute('data-value'));
-                formData.append('feedback', feedbackInput);
-                formData.append('email', emailInput);
-                formData.append('name', nameInput);
-                formData.append('address', addressInput);
-                formData.append('college', collegeValue);
-                formData.append('year', yearValue);
-                if (imageInput) {
-                    formData.append('image', imageInput);
+        // Proceed to the next step if all validations pass
+        if (currentStep.nextElementSibling) {
+            currentStep.style.display = 'none';
+            currentStep.nextElementSibling.style.display = 'block';
+        }
+    }
+
+
+        // Function to go to the previous step
+        function prevStep() {
+            const currentStep = document.querySelector('.step:not([style*="display: none"])');
+            if (currentStep.previousElementSibling) {
+                currentStep.style.display = 'none';
+                currentStep.previousElementSibling.style.display = 'block';
+            }
+        }
+
+            // Toast configuration
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
                 }
+            });
 
-                // Show loading alert
-                Swal.fire({
-                    title: 'Submitting your feedback',
-                    text: 'Please wait...',
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
+            // Load feedback when the page loads
+        
 
-                // Send data to PHP script via fetch
-                fetch('ajax/submit_feedback.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    console.log('Response:', response); // Log the response
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok: ' + response.statusText);
-                    }
-                    return response.json(); // Parse response as JSON
-                })
-                .then(data => {
-                    // Close the loading alert
-                    Swal.close();
-
-                    if (data.success) {
-                        // Show Toast notification for success
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Feedback submitted successfully!'
-                        }).then(() => {
-                            // Reload the page after showing the toast
-                            location.reload();
-                        });
-                    } else {
-                        console.error('Submission failed:', data.message);
-                        // Show Toast notification for error
-                        Toast.fire({
-                            icon: 'error',
-                            title: data.message || 'An error occurred while submitting your feedback.'
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Close the loading alert
-                    Swal.close();
-                    // Show Toast notification for unexpected error
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'An unexpected error occurred. Please try again later.'
-                    });
-                });
-
-                // Close modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
-                modal.hide();
-            } else {
-                alert('Please select a rating and provide feedback.');
-            }
-        });
-
-        // Toast configuration
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-
-        // Load feedback when the page loads
-        function loadFeedback() {
-            fetch('ajax/fetch_feedback.php') // Point to your PHP script
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    const feedbackList = document.getElementById('feedbackList');
-                    feedbackList.innerHTML = ''; // Clear existing feedback
-                    let totalScore = 0; // Initialize total score
-                    let feedbackCount = data.length; // Get feedback count
-
-            if (feedbackCount > 0) {
-                data.forEach(feedback => {
-                    const newFeedback = document.createElement('div');
-                    newFeedback.className = 'card mb-4 card-body floating-card'; // Add card styling
-                       // Use a default image if no image is uploaded
-                       const imageUrl = feedback.image; // Set your default image path here
-                    newFeedback.innerHTML = `
-                     
-                       
-                            <div class="second py-2 px-2"><span class="text1">${feedback.feedback_text}</span></div>
-
-                            <div class="d-flex justify-content-between py-1 pt-2">
-                                <div><img src="${imageUrl}" width="18"><span class="text2">${feedback.name || 'Anonymous'} (${feedback.email}</span></div>
-                            </div>
-
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Course: ${feedback.college || 'N/A'} | ${getYearWithSuffix(feedback.year) || 'N/A'}
-                                </small>
-                            </p>
-                        </div>
-                        `;
-                    feedbackList.appendChild(newFeedback);
-
-                            // Sum the ratings for average calculation
-                            totalScore += parseInt(feedback.rating);
-                        });
-
-                        // Calculate average rating
-                        const averageRating = (totalScore / feedbackCount).toFixed(2);
-                        document.getElementById('averageRatingText').textContent = `${averageRating} ${getEmojiForRating(averageRating)}`;
-                    } else {
-                        feedbackList.innerText = 'No feedback available.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error during fetch:', error);
-                });
-        }
-        function getYearWithSuffix(year) {
-        if (!year) return ''; // Handle case where year is undefined or null
-
-        const ordinalSuffix = (n) => {
-            const suffixes = ["th", "st", "nd", "rd", "th"];
-            return n % 100 >= 11 && n % 100 <= 13 ? suffixes[0] : suffixes[(n % 10) > 4 ? 0 : n % 10];
-        };
-
-        return `${year}${ordinalSuffix(year)} year`;
-        }
-        // Function to get emoji for a given rating
-        function getEmojiForRating(rating) {
-            switch (parseInt(rating)) {
-                case 1: return '😠';
-                case 2: return '😞';
-                case 3: return '😐';
-                case 4: return '😊';
-                case 5: return '😍';
-                default: return '';
-            }
-        }
-
-        // Load feedback when the page loads
-        window.onload = loadFeedback;
-
- 
     
-    document.addEventListener("DOMContentLoaded", function() {
+        
+   document.addEventListener("DOMContentLoaded", function() {
     // Tab functionality
     const tabButtons = document.querySelectorAll(".button-faculty-btn");
     const tabs = document.querySelectorAll(".tabgroup > div");
@@ -3093,216 +7490,369 @@ function nextStep() {
         tabButtons[0].classList.add("active");
         tabs[0].style.display = "block";
     }
+});
 
+        // Profile display functionality
     // Profile display functionality
- // Profile display functionality
-function updateProfileDisplay(name, specialization, consultationTime, imageUrl) {
-    document.getElementById('profileName').textContent = name;
-    document.getElementById('profileSpecialization').innerHTML = 'Specialization: <span class="specialization-value">' + specialization + '</span>';
-    document.getElementById('profileConsultationTime').innerHTML = 'Consultation Time: <span class="consultation-value">' + consultationTime + '</span>';
-    document.getElementById('profileImage').src = imageUrl;
+    function updateProfileDisplay(name, specialization, consultationTime, imageUrl) {
+        document.getElementById('profileName').textContent = name;
+        document.getElementById('profileSpecialization').innerHTML = 'Specialization: <span class="specialization-value">' + specialization + '</span>';
+        document.getElementById('profileConsultationTime').innerHTML = 'Consultation Time: <span class="consultation-value">' + consultationTime + '</span>';
+        document.getElementById('profileImage').src = imageUrl;
 
-    // Show the profile card and backdrop
-    document.getElementById('profileCard').style.display = 'flex'; // Show the profile card
-    document.getElementById('backdrop').style.display = 'block'; // Show the backdrop
-}
-
-
-    // Function to close the profile card
-    function closeProfileCard() {
-        document.getElementById('profileCard').style.display = 'none'; // Hide the profile card
-        document.getElementById('backdrop').style.display = 'none'; // Hide the backdrop
+        // Show the profile card and backdrop
+        document.getElementById('profileCard').style.display = 'flex'; // Show the profile card
+        document.getElementById('backdrop').style.display = 'block'; // Show the backdrop
     }
 
-    // Add event listener to backdrop to close the profile card on click
-    document.getElementById('backdrop').addEventListener('click', closeProfileCard);
 
-    // Add click event listeners to all member cards
-    const memberCards = document.querySelectorAll('.member');
-    memberCards.forEach(member => {
-        member.addEventListener('click', function() {
-            const name = this.getAttribute('data-name');
-            const specialization = this.getAttribute('data-specialization');
-            const consultationTime = this.getAttribute('data-consultation');
-            const imageUrl = this.getAttribute('data-image');
-
-            updateProfileDisplay(name, specialization, consultationTime, imageUrl);
-        });
-    });
-});
-
-function openTab(event, tabName) {
-    // Hide all tab contents
-  // Select all .tab-content elements only within the #campusmap section
-const campusMapTabContents = document.querySelectorAll('#campusmap .tab-content');
-campusMapTabContents.forEach(content => {
-    content.style.display = 'none';
-});
-
-    // Remove active class from all buttons
-    const tabButtons = document.querySelectorAll('.tab-button');
-    tabButtons.forEach(button => {
-        button.classList.remove('active');
-    });
-
-    // Show the clicked tab's content and add active class to the button
-    document.getElementById(tabName).style.display = 'block';
-    event.currentTarget.classList.add('active');
-}
-
-// Initial setup: show the first tab
-document.addEventListener('DOMContentLoaded', () => {
-    openTab({ currentTarget: document.querySelector('.tab-button.active') }, 'ccs');
-});
-
-    function searchElement() {
-    var searchInput = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '-');  // Replace spaces with hyphens
-    var roomSvg = document.getElementById('room-svg');  // Get the SVG
-
-    if (!roomSvg) {
-        console.error('SVG not found!');
-        return;  // Stop if the SVG is not found
-    }
-
-    var elements = roomSvg.querySelectorAll('rect, path, text');  // Get all rect, path, and text elements
-    var found = false;  // Flag to check if a match is found
-
-    // Loop through each element and check for a match
-    for (var i = 0; i < elements.length; i++) {
-        var elementId = elements[i].id.toLowerCase().replace(/-/g, '');  // Remove hyphens from the element ID for comparison
-
-        if (elementId.includes(searchInput.replace(/-/g, ''))) {  // Compare without hyphens
-            found = true;
-            elements[i].classList.add('highlight');  // Highlight the element if it matches
-        } else {
-            elements[i].classList.remove('highlight');  // Remove highlight if not a match
+        // Function to close the profile card
+        function closeProfileCard() {
+            document.getElementById('profileCard').style.display = 'none'; // Hide the profile card
+            document.getElementById('backdrop').style.display = 'none'; // Hide the backdrop
         }
+
+        // Add event listener to backdrop to close the profile card on click
+        document.getElementById('backdrop').addEventListener('click', closeProfileCard);
+
+        // Add click event listeners to all member cards
+        const memberCards = document.querySelectorAll('.member');
+        memberCards.forEach(member => {
+            member.addEventListener('click', function() {
+                const name = this.getAttribute('data-name');
+                const specialization = this.getAttribute('data-specialization');
+                const consultationTime = this.getAttribute('data-consultation');
+                const imageUrl = this.getAttribute('data-image');
+
+                updateProfileDisplay(name, specialization, consultationTime, imageUrl);
+            });
+        });
+
+    function openTab(event, tabName) {
+        // Hide all tab contents
+    // Select all .tab-content elements only within the #campusmap section
+    const campusMapTabContents = document.querySelectorAll('#campusmap .tab-content');
+    campusMapTabContents.forEach(content => {
+        content.style.display = 'none';
+    });
+
+        // Remove active class from all buttons
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => {
+            button.classList.remove('active');
+        });
+
+        // Show the clicked tab's content and add active class to the button
+        document.getElementById(tabName).style.display = 'block';
+        event.currentTarget.classList.add('active');
     }
 
-    // If no match is found, display a SweetAlert message
-    if (!found) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Room not found',
-            text: 'Please check the room name and try again.',
-        });
-    }
-} function formatTimeAgo(dateString) {
-            const created = new Date(dateString);
-            const now = new Date();
-            const diffInHours = Math.floor((now - created) / (1000 * 60 * 60));
-            
-            if (diffInHours >= 24) {
-                return created.toLocaleDateString();
-            } else if (diffInHours > 0) {
-                return `${diffInHours} hours ago`;
+    // Initial setup: show the first tab
+    document.addEventListener('DOMContentLoaded', () => {
+        openTab({ currentTarget: document.querySelector('.tab-button.active') }, 'ccs');
+    });
+
+        function searchElement() {
+        var searchInput = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '-');  // Replace spaces with hyphens
+        var roomSvg = document.getElementById('room-svg');  // Get the SVG
+
+        if (!roomSvg) {
+            console.error('SVG not found!');
+            return;  // Stop if the SVG is not found
+        }
+
+        var elements = roomSvg.querySelectorAll('rect, path, text');  // Get all rect, path, and text elements
+        var found = false;  // Flag to check if a match is found
+
+        // Loop through each element and check for a match
+        for (var i = 0; i < elements.length; i++) {
+            var elementId = elements[i].id.toLowerCase().replace(/-/g, '');  // Remove hyphens from the element ID for comparison
+
+            if (elementId.includes(searchInput.replace(/-/g, ''))) {  // Compare without hyphens
+                found = true;
+                elements[i].classList.add('highlight');  // Highlight the element if it matches
             } else {
-                const diffInMinutes = Math.floor((now - created) / (1000 * 60));
-                return diffInMinutes > 0 ? `${diffInMinutes} minutes ago` : 'just now';
+                elements[i].classList.remove('highlight');  // Remove highlight if not a match
             }
         }
 
-        function createAnnouncementCard(announcement, index) {
-    const card = document.createElement('div');
-    card.className = 'announcement-card';
-    card.style.animationDelay = `${index * 0.2}s`;
-
-    const timeIcon = `
-        <svg class="icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 6v6l4 2"/>
-        </svg>
-    `;
-
-    const userIcon = `
-        <svg class="icon" viewBox="0 0 24 24">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-        </svg>
-    `;
-
-    // Check if the details exceed 100 characters to determine if "See more..." link is needed
-    const shouldShowSeeMore = announcement.announcement_details.length > 100;
-
-    card.innerHTML = `
-        <div class="card-header">
-            <div class="org-info">
-                <img class="org-avatar" src="uploaded/orgUploaded/${announcement.org_image || '/api/placeholder/48/48'}" 
-                     alt="${announcement.org_name}" 
-                     onerror="this.src='/api/placeholder/48/48'">
-                <div>
-                    <div class="org-name">${announcement.org_name}</div>
-                    <div class="meta-info">
-                        <span class="meta-item">
-                            ${timeIcon}
-                            ${formatTimeAgo(announcement.created_at)}
-                        </span>
-                        <span class="meta-item">
-                            ${userIcon}
-                            ${announcement.creator_name}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-content">
-            <div class="content-wrapper">
-                <div class="announcement-text ${shouldShowSeeMore ? 'truncated' : ''}">
-                    ${announcement.announcement_details}
-                </div>
-                ${shouldShowSeeMore ? '<a class="see-more-link" onclick="toggleDetails(this)">See more...</a>' : ''}
-                ${announcement.announcement_image ? `
-                    <div class="announcement-image">
-                        <img src="uploaded/annUploaded/${announcement.announcement_image}" 
-                             alt="Announcement" 
-                             onerror="this.parentElement.style.display='none'">
-                    </div>
-                ` : ''}
-            </div>
-        </div>
-    `;
-
-    return card;
-}
-
-function toggleDetails(link) {
-    const textElement = link.previousElementSibling;
-    const isExpanded = !textElement.classList.contains('truncated');
-    
-    textElement.classList.toggle('truncated');
-    link.textContent = isExpanded ? 'See more...' : 'See less...';
-}
-
-// Initialize announcements with PHP data
-document.addEventListener('DOMContentLoaded', function() {
-    const announcements = <?php echo json_encode($allAnnouncement); ?>;
-    const container = document.getElementById('announcements-container');
-    
-    if (Array.isArray(announcements)) {
-        // Sort announcements by created_at date in descending order (latest first)
-        const sortedAnnouncements = announcements.sort((a, b) => {
-            return new Date(b.created_at) - new Date(a.created_at);
-        });
+        // If no match is found, display a SweetAlert message
+        if (!found) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Room not found',
+                text: 'Please check the room name and try again.',
+            });
+        }
+    } function formatTimeAgo(dateString) {
+        const created = new Date(dateString);
+        const now = new Date();
+        const diffInHours = Math.floor((now - created) / (1000 * 60 * 60));
         
-        sortedAnnouncements.forEach((announcement, index) => {
-            container.appendChild(createAnnouncementCard(announcement, index));
-        });
-    } else {
-        container.innerHTML = `
-            <div class="announcement-card">
-                <div class="card-content">
-                    <div class="announcement-text">
-                        ${announcements}
+        if (diffInHours >= 24) {
+            return created.toLocaleDateString();
+        } else if (diffInHours > 0) {
+            return `${diffInHours} hours ago`;
+        } else {
+            const diffInMinutes = Math.floor((now - created) / (1000 * 60));
+            return diffInMinutes > 0 ? `${diffInMinutes} minutes ago` : 'just now';
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('announcements-container');
+
+        // Clear the container before appending new announcements
+        container.innerHTML = '';
+
+        const announcements = <?php echo json_encode($allAnnouncement); ?>;
+
+        console.log("Announcements data:", announcements); // Log the data
+
+        if (Array.isArray(announcements)) {
+            // Sort announcements by created_at date in descending order (latest first)
+            const sortedAnnouncements = announcements.sort((a, b) => {
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
+
+            sortedAnnouncements.forEach((announcement) => {
+                console.log("Creating carousel for announcement:", announcement); // Log each announcement
+                const carousel = createCarousel(announcement.announcement_images);
+                container.appendChild(createAnnouncementDiv(announcement, carousel));
+            });
+        } else {
+            container.innerHTML = `
+                <div class="announcement-card">
+                    <div class="card-content">
+                        <div class="announcement-text">
+                            ${announcements}
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
+    });function createCarousel(images) {
+        const container = document.createElement('div');
+        container.className = 'carousel slide relative overflow-hidden';
+        container.setAttribute('data-bs-ride', 'carousel');
+        
+        // Set a unique ID for each carousel to enable navigation buttons to work
+        const carouselId = 'carousel-' + Math.floor(Math.random() * 1000); // Unique ID for each carousel
+        container.setAttribute('id', carouselId); // Assign unique ID to the container
+
+        const inner = document.createElement('div');
+        inner.className = 'carousel-inner relative w-full';
+
+        images.forEach((image, index) => {
+            const item = document.createElement('div');
+            item.className = 'carousel-item ' + (index === 0 ? 'active' : '');
+
+            const img = document.createElement('img');
+            img.src = `uploaded/annUploaded/${image}`;
+            img.className = 'd-block w-full object-cover max-h-64 rounded-lg shadow-lg'; // Fixed height with cover for cropping
+            img.style.objectFit = 'contain'; // Ensure the image is fully visible (no cropping)
+            img.style.height = '300px'; // Fixed height, adjust as necessary
+            img.alt = 'Announcement Image';
+
+            item.appendChild(img);
+            inner.appendChild(item);
+        });
+
+        // Previous Button (Black background)
+        const prevButton = document.createElement('button');
+        prevButton.className = 'carousel-control-prev absolute top-1/2 left-0 z-10 bg-black text-white p-2 rounded-full transform -translate-y-1/2';
+        prevButton.setAttribute('type', 'button');
+        prevButton.setAttribute('data-bs-target', `#${carouselId}`); // Use the unique ID
+        prevButton.setAttribute('data-bs-slide', 'prev');
+
+        const prevIcon = document.createElement('span');
+        prevIcon.className = 'carousel-control-prev-icon';
+        prevButton.appendChild(prevIcon);
+
+        // Next Button (Black background)
+        const nextButton = document.createElement('button');
+        nextButton.className = 'carousel-control-next absolute top-1/2 right-0 z-10 bg-black text-white p-2 rounded-full transform -translate-y-1/2';
+        nextButton.setAttribute('type', 'button');
+        nextButton.setAttribute('data-bs-target', `#${carouselId}`); // Use the unique ID
+        nextButton.setAttribute('data-bs-slide', 'next');
+
+        const nextIcon = document.createElement('span');
+        nextIcon.className = 'carousel-control-next-icon';
+        nextButton.appendChild(nextIcon);
+
+        // Append inner carousel and buttons
+        container.appendChild(inner);
+        container.appendChild(prevButton);
+        container.appendChild(nextButton);
+
+        // Initialize the carousel using Bootstrap's JavaScript with automatic sliding every 3 seconds
+        const bootstrapCarousel = new bootstrap.Carousel(container, {
+            interval: 3000 // Set to 2000 milliseconds (2 seconds)
+        });
+
+        return container;
     }
-});
-
-</script>
 
 
-</body>
+    function createAnnouncementDiv(announcement, carousel) {
+        const div = document.createElement('div');
+        div.className = 'announcement-item bg-white rounded-lg shadow-lg p-6 space-y-4 hover:shadow-xl transition-shadow duration-300';
 
-</html>
+        const title = document.createElement('h2');
+        title.textContent = `${announcement.org_name} - ${announcement.creator_name}`;
+        title.className = 'text-2xl font-bold text-gray-800';
+        div.appendChild(title);
+
+        const orgImage = document.createElement('img');
+        orgImage.src = `uploaded/orgUploaded/${announcement.org_image}`;
+        orgImage.alt = 'Organization Image';
+        orgImage.className = 'w-16 h-16 rounded-full object-cover';
+        div.appendChild(orgImage);
+
+        const announcementDetails = document.createElement('p');
+        announcementDetails.textContent = announcement.announcement_details;
+        announcementDetails.className = 'text-gray-600 text-sm';
+        div.appendChild(announcementDetails);
+
+        const timeAgo = document.createElement('span');
+        timeAgo.className = 'text-xs text-gray-500';
+        timeAgo.textContent = formatTimeAgo(announcement.created_at);
+        div.appendChild(timeAgo);
+
+        div.appendChild(carousel);
+
+        return div;
+    }
+
+    function toggleDetails(link) {
+        const textElement = link.previousElementSibling;
+        const isExpanded = !textElement.classList.contains('truncated');
+        
+        textElement.classList.toggle('truncated');
+        link.textContent = isExpanded ? 'See more...' : 'See less...';
+    }
+
+
+    </script>
+
+    <script>
+    // Format relative time
+    function formatRelativeTime(date) {
+        const now = new Date();
+        const seconds = Math.floor((now - date) / 1000);
+
+        if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+        
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+        const days = Math.floor(hours / 24);
+        if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+        const months = Math.floor(days / 30);
+        if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+        const years = Math.floor(months / 12);
+        return years + " year" + (years > 1 ? "s" : "") + " ago";
+    }
+
+    // Convert PHP time to JS Date object and format it
+    document.addEventListener('DOMContentLoaded', function () {
+        const announcementTimes = <?php echo json_encode(array_column($allAnnouncement, 'created_at')); ?>;
+        announcementTimes.forEach((timestamp, index) => {
+            const date = new Date(timestamp);
+            const relativeTime = formatRelativeTime(date);
+            document.getElementById(`time-<?php echo $announcement['announcement_id']; ?>`).textContent = relativeTime;
+        });
+    });
+    </script>
+    <script>
+    let currentImageSet = [];
+    let currentImageIndex = 0;
+    let currentAnnouncementId = null;
+
+    function openModal(imgElement, announcementId) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = modal.querySelector('.modal-img');
+        const carousel = document.getElementById(`carousel-${announcementId}`);
+        
+        currentImageSet = Array.from(carousel.querySelectorAll('.carousel-item img')).map(img => img.src);
+        currentAnnouncementId = announcementId;
+        currentImageIndex = parseInt(imgElement.closest('.carousel-item').dataset.imageIndex);
+        
+        modal.style.display = 'block';
+        modalImg.src = imgElement.src;
+        updateModalNavigation();
+        
+        // Disable body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('imageModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function changeImage(direction) {
+        currentImageIndex += direction;
+        if (currentImageIndex >= currentImageSet.length) currentImageIndex = 0;
+        if (currentImageIndex < 0) currentImageIndex = currentImageSet.length - 1;
+        
+        const modalImg = document.querySelector('.modal-img');
+        modalImg.src = currentImageSet[currentImageIndex];
+        
+        const carousel = document.getElementById(`carousel-${currentAnnouncementId}`);
+        if (carousel) {
+            const carouselInstance = bootstrap.Carousel.getInstance(carousel);
+            if (carouselInstance) {
+                carouselInstance.to(currentImageIndex);
+            }
+        }
+        
+        updateModalNavigation();
+    }
+
+    function updateModalNavigation() {
+        const prevBtn = document.querySelector('.modal-prev');
+        const nextBtn = document.querySelector('.modal-next');
+        
+        if (currentImageSet.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+        } else {
+            prevBtn.style.display = 'flex';
+            nextBtn.style.display = 'flex';
+        }
+    }
+
+    // Event Listeners
+    document.querySelector('.close-modal').onclick = closeModal;
+    document.querySelector('.modal-prev').onclick = () => changeImage(-1);
+    document.querySelector('.modal-next').onclick = () => changeImage(1);
+
+    document.getElementById('imageModal').onclick = function(e) {
+        if (e.target === this) closeModal();
+    };
+
+    document.addEventListener('keydown', function(e) {
+        if (document.getElementById('imageModal').style.display === 'none') return;
+        
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') changeImage(-1);
+        if (e.key === 'ArrowRight') changeImage(1);
+    });
+
+    // Toggle announcement details
+    function toggleDetails(announcementId) {
+        const textElement = document.getElementById(`text-${announcementId}`);
+        textElement.classList.toggle('truncate-text');
+        const button = textElement.nextElementSibling;
+        button.textContent = textElement.classList.contains('truncate-text') ? 'See more...' : 'See less';
+    }
+    </script>
+
+    </body>
+
+    </html> 

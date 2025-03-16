@@ -326,7 +326,7 @@
              
             .items-start {
                 align-items: flex-start;
-                background-color: #6a221b;
+                
                 padding: 1%;
                 border-radius: 10px;
             }
@@ -346,7 +346,6 @@
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
     background-color: #ffffffcf;
-    border: 1px solid;
 }
             
             .p-6 {
@@ -2290,69 +2289,91 @@ function getAllAnnouncements($connection) {
 // Fetch all announcements
 $allAnnouncement = getAllAnnouncements($connect);
 ?>
+<!-- Facebook-Style Announcements Section -->
 
-<section id="announcement" class="content-section bg-gray-100 py-5 font-sans max-h-screen overflow-y-auto">
-    <!-- Announcements Heading -->
-    <div class="section-heading text-center borderYellow">
-        <h1><em>ANNOUNCEMENT</em></h1>
+<section id="announcement" class="content-section py-4">
+<div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">ANNOUNCEMENTS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
-
-    <!-- Filters Container - Facebook Style -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-        <div class="bg-white rounded-lg shadow p-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-                <!-- Search input -->
-                <div class="lg:col-span-2 relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+  <!-- Facebook-style search and filters --><div class="mx-auto px-4 sm:px-6 lg:px-8 mb-4" style="max-width: 900px; width: 100%;">
+        <!-- Facebook-style search bar -->
+        <div class="bg-white rounded-lg shadow p-2 mb-3">
+            <div class="flex items-center">
+                <div class="relative flex-grow">
+                    <div class="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center pointer-events-none">
                         <i class="fas fa-search text-gray-400"></i>
                     </div>
                     <input 
                         type="text" 
                         id="announcement-search" 
-                        class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full bg-gray-100 focus:ring-blue-500 focus:border-blue-500 focus:bg-white"
-                        placeholder="Search announcements...">
+                        class="block w-full pl-10 pr-3 py-2 border-0 bg-gray-100 rounded-full focus:ring-0 focus:bg-white"
+                        placeholder="Search announcements">
                 </div>
-
-                <!-- Category filter -->
-                <div class="relative">
-                    <select id="category-filter" class="block w-full py-2 px-3 border border-gray-300 bg-gray-100 rounded-full focus:ring-blue-500 focus:border-blue-500 focus:bg-white appearance-none">
-                        <option value="all">All Categories</option>
-                        <option value="academic">Academic</option>
-                        <option value="event">Events</option>
-                        <option value="org">Organizations</option>
-                        <option value="general">General</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <i class="fas fa-chevron-down text-xs"></i>
-                    </div>
+                <button id="toggle-filters-btn" class="ml-2 flex items-center justify-center w-8 h-8 text-maroon hover:bg-gray-100 rounded-full">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+        </div>
+    
+    <!-- Facebook-style filters (hidden by default) -->
+    <div id="filters-container" class="bg-white rounded-lg shadow p-3 hidden">
+        <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+                <i class="fas fa-filter text-maroon mr-2"></i>
+                <h3 class="text-gray-800 font-medium text-lg">Filters</h3>
+            </div>
+            <button id="close-filters-btn" class="hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-times text-gray-500"></i>
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Category filter -->
+            <div class="relative">
+                <label for="category-filter" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select id="category-filter" class="block w-full py-2 px-3 bg-gray-100 rounded-md appearance-none">
+                    <option value="all">All Categories</option>
+                    <option value="academic">Academic</option>
+                    <option value="event">Events</option>
+                    <option value="org">Organizations</option>
+                    <option value="general">General</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" style="top: 22px;">
+                    <i class="fas fa-chevron-down text-xs"></i>
                 </div>
-
-                <!-- Date filters -->
-                <div>
-                    <input 
-                        type="date" 
-                        id="date-from" 
-                        class="block w-full py-2 px-3 border border-gray-300 bg-gray-100 rounded-full focus:ring-blue-500 focus:border-blue-500 focus:bg-white"
-                        placeholder="From date">
-                </div>
-                <div>
-                    <input 
-                        type="date" 
-                        id="date-to" 
-                        class="block w-full py-2 px-3 border border-gray-300 bg-gray-100 rounded-full focus:ring-blue-500 focus:border-blue-500 focus:bg-white"
-                        placeholder="To date">
-                </div>
-
-                <div class="lg:col-span-5 md:col-span-2">
-                    <button 
-                        id="clear-filters" 
-                        class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-full transition duration-200 flex items-center justify-center">
-                        <i class="fas fa-times mr-2"></i> Clear Filters
-                    </button>
-                </div>
+            </div>
+            
+            <!-- Date range -->
+            <div>
+                <label for="date-from" class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                <input 
+                    type="date" 
+                    id="date-from" 
+                    class="block w-full py-2 px-3 bg-gray-100 rounded-md">
+            </div>
+            
+            <div>
+                <label for="date-to" class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                <input 
+                    type="date" 
+                    id="date-to" 
+                    class="block w-full py-2 px-3 bg-gray-100 rounded-md">
+            </div>
+            
+            <!-- Clear filters button -->
+            <div class="sm:col-span-2">
+                <button 
+                    id="clear-filters" 
+                    class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-md transition duration-200 flex items-center justify-center">
+                    <i class="fas fa-times mr-2"></i> Clear Filters
+                </button>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Announcements Container with max height constraint -->
     <div id="announcement-container" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 max-h-[calc(100vh-280px)] overflow-y-auto">
@@ -2369,44 +2390,57 @@ $allAnnouncement = getAllAnnouncements($connect);
             <?php else: ?>
                 <?php foreach ($allAnnouncement as $announcement): ?>
                     <!-- Facebook-style announcement card -->
-                    <div class="announcement-item bg-white rounded-lg shadow overflow-hidden transition-all duration-300 opacity-100" 
-                         data-category="<?= strtolower(htmlspecialchars($announcement['category'])) ?>">
-                        <div class="p-5">
-                            <!-- Header with profile image and name -->
+                    <div class="announcement-item" data-category="<?= strtolower(htmlspecialchars($announcement['category'])) ?>">
+                        <div>
+                            <!-- Header with profile image and name (Facebook style) -->
                             <div class="flex items-center mb-3">
                                 <img src="uploaded/orgUploaded/<?= htmlspecialchars($announcement['org_image']) ?>" 
                                      alt="<?= htmlspecialchars($announcement['org_name']) ?>" 
-                                     class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                                     class="w-10 h-10 rounded-full object-cover">
                                 <div class="ml-3">
-                                    <h3 class="font-semibold text-gray-900" data-original-text="<?= htmlspecialchars($announcement['org_name']) ?>">
+                                    <h3 class="font-semibold" data-original-text="<?= htmlspecialchars($announcement['org_name']) ?>">
                                         <?= htmlspecialchars($announcement['org_name']) ?>
                                     </h3>
                                     <div class="flex items-center text-xs text-gray-500">
-                                        <span>Posted by <?= htmlspecialchars($announcement['author_name'] ?? $announcement['creator_name'] ?? 'Unknown Author') ?></span>
+                                        <span><?= htmlspecialchars($announcement['author_name'] ?? $announcement['creator_name'] ?? 'Unknown Author') ?></span>
+                                        <span class="mx-1">·</span>
+                                        <span id="time-<?php echo $announcement['announcement_id']; ?>" 
+                                              data-created-at="<?php echo $announcement['created_at_formatted']; ?>">
+                                            <?php echo date('F j, Y', $announcement['created_at_timestamp']); ?>
+                                        </span>
+                                        <span class="mx-1">·</span>
+                                        <span class="category-badge">
+                                            <?= htmlspecialchars($announcement['category']) ?>
+                                        </span>
                                     </div>
+                                </div>
+                                <!-- Facebook-style options menu -->
+                                <div class="ml-auto">
+                                    <button class="hover:bg-gray-100 rounded-full w-9 h-9 flex items-center justify-center">
+                                        <i class="fas fa-ellipsis-h text-gray-500"></i>
+                                    </button>
                                 </div>
                             </div>
                             
                             <!-- Announcement content with Facebook-style "See more" -->
-                            <div class="announcement-details mb-3 text-gray-800" 
+                            <div class="announcement-details mb-3" 
                                  data-original-html="<?= htmlspecialchars(nl2br($announcement['announcement_details'])) ?>">
                                 <?= nl2br($announcement['announcement_details']) ?>
                             </div>
                             
-                            <!-- Images/Carousel if present -->
+                            <!-- Facebook-style images/Carousel -->
                             <?php if (!empty($announcement['announcement_images'])): ?>
-                                <div class="mt-3 -mx-4">
+                                <div class="mt-3">
                                     <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-inner">
                                             <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
                                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" 
-    data-image-index="<?php echo $index; ?>">
-    <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
-        alt="Announcement image"
-        onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
-        class="w-full h-auto object-contain"
-        style="max-height: 400px; width: auto; margin: 0 auto; display: block;">
-</div>
+                                                   data-image-index="<?php echo $index; ?>">
+                                                   <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
+                                                       alt="Announcement image"
+                                                       onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
+                                                       class="w-full">
+                                               </div>
                                             <?php endforeach; ?>
                                         </div>
                                         
@@ -2423,13 +2457,11 @@ $allAnnouncement = getAllAnnouncements($connect);
                                 </div>
                             <?php endif; ?>
                             
-                            <!-- Footer with timestamp only -->
-                            <div class="border-t border-gray-200 mt-3 pt-2 text-xs text-gray-500">
-                                <span id="time-<?php echo $announcement['announcement_id']; ?>" 
-                                    data-created-at="<?php echo $announcement['created_at_formatted']; ?>">
-                                    <?php echo date('F j, Y', $announcement['created_at_timestamp']); ?>
-                                </span>
-                            </div>
+                            <!-- Facebook-style divider -->
+                            <div class="border-t border-gray-200 mt-3 pt-2"></div>
+                            
+                            <!-- Facebook-style action buttons -->
+                          
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -2459,48 +2491,142 @@ $allAnnouncement = getAllAnnouncements($connect);
     </button>
 </div>
 
-<!-- Add dynamic height adjustment -->
+<!-- Scoped CSS that only affects the announcement section -->
 <style>
-    /* Responsive heights for different screen sizes */
-    @media (max-height: 640px) {
-        #announcement-container {
-            max-height: calc(100vh - 240px);
-        }
-    }
-    
-    @media (min-height: 641px) and (max-height: 900px) {
-        #announcement-container {
-            max-height: calc(100vh - 280px);
-        }
-    }
-    
-    @media (min-height: 901px) {
-        #announcement-container {
-            max-height: calc(100vh - 320px);
-        }
-    }
-    /* Make text in input fields black */
-input[type="text"],
-input[type="search"],
-input[type="date"],
-select,
-textarea {
-    color: black !important;
+/* CSS Variables */
+#announcement {
+    --maroon-dark: #7A0D0D;    /* Dark maroon from top section */
+    --maroon: #C33232;          /* Medium red from second section */
+    --gold: #E9CF8B;            /* Gold/tan from third section */
+    --light-gray: #EEEEEE;      /* Light gray from bottom section */
+    --facebook-bg: #f0f2f5;
+    --facebook-text: #000000; 
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+ 
+    padding: 20px 0;
+    margin: 0 auto;
+    color: #000000; /* Set all text to black by default */
 }
 
-/* Fix placeholder text color for better visibility */
-::placeholder {
-    color: #666 !important;
-    opacity: 1;
+
+/* Section heading - Facebook style with root colors */
+#announcement .section-heading {
+    margin-bottom: 16px;
+    border-bottom: none;
 }
 
-/* Fix any white text in your categories dropdown */
-#category-filter, 
-#category-filter option {
-    color: black !important;
+#announcement .section-heading h1 {
+    color: var(--maroon);
+    font-size: 24px;
+    font-weight: 700;
+    text-align: left;
+    margin-left: 16px;
+}
+
+#announcement .section-heading h1:after {
+    display: none; /* Remove the decorative line */
+}
+
+
+/* Search container */
+#announcement .search-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    padding: 12px 16px;
+}
+
+/* Search input wrapper */
+#announcement .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Search icon */
+#announcement .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--facebook-secondary);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Facebook-style search input */
+#announcement .search-input {
+    background-color: #f0f2f5;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 12px 8px 40px;
+    font-size: 15px;
+    color: black;
+    height: 40px;
+    flex-grow: 1;
+}
+
+#announcement .search-input:focus {
+    background-color: white;
+    box-shadow: 0 0 0 2px var(--maroon);
+    outline: none;
+}
+
+/* Filter button - now positioned separately next to the search input */
+#announcement .filter-button {
+    background: none;
+    border: none;
+    color: var(--maroon);
+    cursor: pointer;
+    padding: 0 0 0 10px;
+    margin-left: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+#announcement .filter-button:hover {
+    color: var(--maroon-dark);
+    background-color: #f0f2f5;
+}
+/* Update search input styling */
+#announcement-search {
+    padding-right: 40px; /* Ensure there's enough space for the filter button */
+}
+
+#toggle-filters-btn {
+    background: none;
+    border: none;
+    color: var(--maroon);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0; /* Prevent the button from shrinking */
+}
+
+#toggle-filters-btn:hover {
+    color: var(--maroon-dark);
+    background-color: #f0f2f5;
+}
+
+/* Search input container */
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Make sure the search input takes available space */
+.search-container .relative {
+    flex-grow: 1;
 }
 </style>
-
+<!-- JavaScript for Announcements Functionality -->
 <script>
 // Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", function() {
@@ -2521,6 +2647,56 @@ document.addEventListener("DOMContentLoaded", function() {
         clearFiltersBtn: clearFiltersBtn !== null,
         noResultsMessage: noResultsMessage !== null
     });
+
+    const toggleFiltersBtn = document.getElementById('toggle-filters-btn');
+const closeFiltersBtn = document.getElementById('close-filters-btn');
+const filtersContainer = document.getElementById('filters-container');
+
+if (toggleFiltersBtn && filtersContainer) {
+    toggleFiltersBtn.addEventListener('click', function() {
+        filtersContainer.classList.toggle('hidden');
+        // Toggle icon
+        const icon = this.querySelector('i');
+        if (filtersContainer.classList.contains('hidden')) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-filter');
+        } else {
+            icon.classList.remove('fa-filter');
+            icon.classList.add('fa-times');
+        }
+    });
+}
+
+if (closeFiltersBtn && filtersContainer) {
+    closeFiltersBtn.addEventListener('click', function() {
+        filtersContainer.classList.add('hidden');
+        // Reset toggle button icon
+        const toggleIcon = toggleFiltersBtn.querySelector('i');
+        toggleIcon.classList.remove('fa-times');
+        toggleIcon.classList.add('fa-filter');
+    });
+}
+
+// Also close filters when clicking clear filters
+if (clearFiltersBtn && filtersContainer) {
+    const originalClearFunction = clearFiltersBtn.onclick;
+    clearFiltersBtn.addEventListener('click', function() {
+        // Call original function if it exists
+        if (typeof originalClearFunction === 'function') {
+            originalClearFunction();
+        }
+        
+        // Hide filter panel
+        filtersContainer.classList.add('hidden');
+        
+        // Reset toggle button icon
+        const toggleIcon = toggleFiltersBtn.querySelector('i');
+        if (toggleIcon) {
+            toggleIcon.classList.remove('fa-times');
+            toggleIcon.classList.add('fa-filter');
+        }
+    });
+}
     
     // Main filter function
     function filterAnnouncements() {
@@ -2813,141 +2989,444 @@ document.addEventListener("DOMContentLoaded", function() {
     setAnnouncementsHeight();
     window.addEventListener('resize', setAnnouncementsHeight);
     
-    console.log("Announcement section fully initialized");
+    // Facebook-style button functionality
+    function setupActionButtons() {
+        const likeButtons = document.querySelectorAll('.flex.justify-between.mt-1 button:nth-child(1)');
+        likeButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Toggle active state
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#1877f2';
+                    this.style.color = '#1877f2';
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                    this.style.color = '';
+                }
+            });
+        });
+    }
+    
+    // Initialize action buttons
+    setupActionButtons();
+    
+    console.log("Facebook-style announcement section fully initialized");
 });
 </script>
-<section id="schoolcalendar" class="content-section bg-gradient-to-br from-gray-50 to-gray-100 py-12">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-900 border-b-4 border-yellow-500 inline-block pb-2 drop-shadow-sm">SCHOOL CALENDAR</h1>
-            <p class="text-gray-600 mt-3 max-w-2xl mx-auto">Stay updated with all important school events and activities</p>
+<section id="schoolcalendar" class="content-section py-4">
+    <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-8">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">SCHOOL CALENDAR</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
+            <p class="text-gray-400">Stay updated with all important school events and activities</p>
+        </div>
 
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-6">
             <!-- Calendar View (Left Side) -->
-            <div class="lg:w-2/3 bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl">
-                <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
-                    <div class="flex items-center justify-between">
-                        <button id="prevMonth" class="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors">
-                            <i class="fas fa-chevron-left text-gray-600"></i>
-                        </button>
-                        <h2 id="currentMonth" class="text-2xl font-bold text-gray-800"></h2>
-                        <button id="nextMonth" class="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors">
-                            <i class="fas fa-chevron-right text-gray-600"></i>
-                        </button>
-                    </div>
+            <div class="lg:w-7/12 rounded-lg overflow-hidden border border-amber-700/50" style="height: auto; width: 600px; background: linear-gradient(135deg, #EAD196, #8C6239);" >
+                <div class="p-4 bg-amber-700 flex justify-between items-center " style="background: linear-gradient(135deg, #962626, #b03a3a);">
+                    <button id="prevMonth" class="flex items-center justify-center w-8 h-8 text-white hover:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <h2 id="currentMonth"  class="text-xl font-bold text-white">March 2025</h2>
+                    <button id="nextMonth" class="flex items-center justify-center w-8 h-8 text-white hover:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
                 </div>
 
                 <!-- Calendar Grid -->
-                <div class="p-6">
-                    <div class="grid grid-cols-7 mb-4">
+                <div class="bg-[#3A1616]"> <!-- Removed fixed height -->
+                    <div class="grid grid-cols-7 border-b border-gray-700">
                         <!-- Week days header -->
-                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Sun</div>
-                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Mon</div>
-                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Tue</div>
-                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Wed</div>
-                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Thu</div>
-                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Fri</div>
-                        <div class="text-center text-sm font-semibold text-gray-600 py-2">Sat</div>
-                </div>
+                        <div class="text-center text-sm font-medium text-white py-2">Sun</div>
+                        <div class="text-center text-sm font-medium text-white py-2">Mon</div>
+                        <div class="text-center text-sm font-medium text-white py-2">Tue</div>
+                        <div class="text-center text-sm font-medium text-white py-2">Wed</div>
+                        <div class="text-center text-sm font-medium text-white py-2">Thu</div>
+                        <div class="text-center text-sm font-medium text-white py-2">Fri</div>
+                        <div class="text-center text-sm font-medium text-white py-2">Sat</div>
+                    </div>
 
-                    <!-- Calendar days -->
-                    <div id="calendarDays" class="grid grid-cols-7 gap-3"></div>
+                    <!-- Calendar days - removed fixed height -->
+                    <div id="calendarDays" class="grid grid-cols-7 gap-[1px]"></div>
                 </div>
             </div>
 
             <!-- Events View (Right Side) -->
-            <div class="lg:w-1/3 space-y-8">
+            <div class="lg:w-5/12 space-y-6">
                 <!-- Today's Events -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl">
-                    <div class="px-6 py-4 bg-gradient-to-r from-emerald-50 to-emerald-100 border-b border-emerald-100">
-                        <h2 class="text-lg font-bold text-emerald-800 flex items-center">
-                            <i class="fas fa-calendar-day mr-2 text-emerald-600"></i> Today's Events
-                        </h2>
+                <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-md">
+                <div class="px-4 py-3 flex items-center" style="background: linear-gradient(135deg, #962626, #b03a3a);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="#ffffff" style="color: white;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <h2 class="text-base font-medium" style="color: white;">Today's Events</h2>
                 </div>
-                    <div class="p-6">
-                        <?php if (empty($eventsToday)): ?>
-                            <div class="text-center py-8 bg-yellow-50 rounded-lg border border-yellow-100">
-                                <i class="fas fa-calendar-times text-yellow-400 text-3xl mb-2"></i>
-                                <p class="text-sm text-yellow-800 font-medium">No events scheduled for today</p>
-                            </div>
-                        <?php else: ?>
-                            <div class="space-y-4">
-                                <?php foreach ($eventsToday as $event): ?>
-                                    <div class="group hover:bg-gray-50 rounded-lg p-4 transition-all cursor-pointer border border-gray-100 hover:border-emerald-200 hover:shadow-md">
-                                        <div class="flex gap-4">
-                                            <div class="flex-shrink-0 w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center">
-                                                <i class="fas fa-calendar text-emerald-600 text-lg"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
-                                                    <?= date('F j, Y', strtotime($event['calendar_start_date'])); ?>
-                                                </p>
-                                                <p class="text-sm text-gray-600 mt-1 line-clamp-2 group-hover:text-gray-700">
-                                                    <?= strip_tags($event['calendar_details']); ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+                    <div id="todayEvents" class="p-3 bg-white max-h-[250px] overflow-y-auto" style="background: linear-gradient(135deg, #EAD196, #8C6239);">
+                        <!-- Today's events will be populated by JavaScript -->
                     </div>
                 </div>
                 
                 <!-- Upcoming Events -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-blue-100 border-b border-blue-100">
-                        <h2 class="text-lg font-bold text-blue-800 flex items-center">
-                            <i class="fas fa-calendar-week mr-2 text-blue-600"></i> Upcoming Events
-                        </h2>
-                        </div>
-                    <div class="p-6">
-                        <?php if (empty($upcomingEvents)): ?>
-                            <div class="text-center py-8 bg-yellow-50 rounded-lg border border-yellow-100">
-                                <i class="fas fa-calendar-times text-yellow-400 text-3xl mb-2"></i>
-                                <p class="text-sm text-yellow-800 font-medium">No upcoming events</p>
-                    </div>
-                        <?php else: ?>
-                            <div class="space-y-4">
-                                <?php foreach ($upcomingEvents as $event): ?>
-                                    <div class="group hover:bg-gray-50 rounded-lg p-4 transition-all cursor-pointer border border-gray-100 hover:border-blue-200 hover:shadow-md">
-                                        <div class="flex gap-4">
-                                            <div class="flex-shrink-0 w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
-                                                <i class="fas fa-calendar text-blue-600 text-lg"></i>
-                        </div>
-                                            <div>
-                                                <p class="text-sm font-bold text-gray-900 group-hover:text-blue-700 transition-colors">
-                                                    <?= date('F j, Y', strtotime($event['calendar_start_date'])); ?>
-                                                </p>
-                                                <p class="text-sm text-gray-600 mt-1 line-clamp-2 group-hover:text-gray-700">
-                                                    <?= strip_tags($event['calendar_details']); ?>
-                                                </p>
-                    </div>
+                <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-md">
+                <div class="px-4 py-3 flex items-center" style="background: linear-gradient(135deg, #962626, #b03a3a);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="#ffffff" style="color: white;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    <h2 class="text-base font-medium" style="color: white; " >Upcoming Events</h2>
                 </div>
-            </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+                    <div id="upcomingEvents" class="p-3 bg-white max-h-[220px] overflow-y-auto" style="background: linear-gradient(135deg, #EAD196, #8C6239);">
+                        <!-- Upcoming events will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <style>
+        .event-header {
+  background: linear-gradient(135deg, #962626, #b03a3a);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
 
-    <?php 
-    $eventsJson = json_encode($allEvent);
-    ?>
+.event-header h2,
+.event-header svg {
+  color: white !important;
+}
 
+/* Explicit styling for the headers if needed */
+#todayEvents-header h2,
+#upcomingEvents-header h2 {
+  color: white !important;
+}
+
+#todayEvents-header svg,
+#upcomingEvents-header svg {
+  color: white !important;
+  stroke: white !important;
+}
+#todayEvents, #upcomingEvents {
+  max-height: 220px !important;
+  overflow-y: auto !important;
+  display: block !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(217, 119, 6, 0.5) rgba(243, 244, 246, 0.5);
+}
+
+/* Calendar cell styling */
+#calendarDays > div {
+  min-height: 70px; /* Set minimum height for calendar cells */
+  max-height: 95px; /* Limit maximum height */
+}
+
+/* Upcoming events card styling */
+#upcomingEvents .event-card {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #fffbeb, #fff);
+  border: 1px solid #fef3c7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#upcomingEvents .event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#upcomingEvents .event-date {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #92400e;
+  background-color: #fef3c7;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+#upcomingEvents .event-title {
+  font-weight: 600;
+  color: #78350f;
+  margin-bottom: 4px;
+}
+
+#upcomingEvents .event-description {
+  color: #78350f;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+/* Empty state styling */
+#upcomingEvents .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+#upcomingEvents .empty-state-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #fffbeb;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+/* Custom scrollbar for Webkit browsers */
+#upcomingEvents::-webkit-scrollbar {
+  width: 8px;
+}
+
+#upcomingEvents::-webkit-scrollbar-track {
+  background: rgba(243, 244, 246, 0.5);
+  border-radius: 4px;
+}
+
+#upcomingEvents::-webkit-scrollbar-thumb {
+  background-color: rgba(217, 119, 6, 0.5);
+  border-radius: 4px;
+}
+#todayEvents .event-card {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #fffbeb, #fff);
+  border: 1px solid #fef3c7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#todayEvents .event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#todayEvents .event-date {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #92400e;
+  background-color: #fef3c7;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+#todayEvents .event-title {
+  font-weight: 600;
+  color: #78350f;
+  margin-bottom: 4px;
+}
+
+#todayEvents .event-description {
+  color: #78350f;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+/* Empty state styling for today events */
+#todayEvents .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+#todayEvents .empty-state-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #fffbeb;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+/* Custom scrollbar for Webkit browsers */
+#todayEvents::-webkit-scrollbar {
+  width: 8px;
+}
+
+#todayEvents::-webkit-scrollbar-track {
+  background: rgba(243, 244, 246, 0.5);
+  border-radius: 4px;
+}
+
+#todayEvents::-webkit-scrollbar-thumb {
+  background-color: rgba(217, 119, 6, 0.5);
+  border-radius: 4px;
+}
+</style>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const events = <?php echo $eventsJson; ?>;
         const calendarDays = document.getElementById('calendarDays');
         const currentMonthElement = document.getElementById('currentMonth');
         const prevMonthButton = document.getElementById('prevMonth');
         const nextMonthButton = document.getElementById('nextMonth');
+        const todayEventsContainer = document.getElementById('todayEvents');
+        const upcomingEventsContainer = document.getElementById('upcomingEvents');
         
         let currentDate = new Date();
+        
+        // Define all events
+        const events = [
+            { 
+                date: new Date(2025, 2, 9), // March 9, 2025
+                title: 'Sample Event Day',
+                description: 'This is a detailed description for Sample Event Day.'
+            },
+            { 
+                date: new Date(2025, 2, 20), // March 20, 2025
+                title: 'MIDTERM EXAMS',
+                description: 'Midterm examinations begin on this day.'
+            },
+            { 
+                date: new Date(2025, 2, 21), // March 21, 2025
+                title: 'MIDTERM EXAMS',
+                description: 'Continuation of midterm examinations.'
+            },
+            { 
+                date: new Date(2025, 2, 22), // March 22, 2025
+                title: 'MIDTERM EXAMS',
+                description: 'Continuation of midterm examinations.'
+            },
+            { 
+                date: new Date(2025, 2, 23), // March 23, 2025
+                title: 'MIDTERM EXAMS',
+                description: 'Continuation of midterm examinations.'
+            },
+            { 
+                date: new Date(2025, 2, 24), // March 24, 2025
+                title: 'MIDTERM EXAMS',
+                description: 'Final day of midterm examinations.'
+            }
+        ];
+
+        // Helper to format date
+        function formatDate(date) {
+            return new Intl.DateTimeFormat('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            }).format(date);
+        }
+
+        // Helper to check if two dates are the same day
+        function isSameDay(date1, date2) {
+            return date1.getFullYear() === date2.getFullYear() &&
+                   date1.getMonth() === date2.getMonth() &&
+                   date1.getDate() === date2.getDate();
+        }
+
+        // Helper to check if a date is in the future (or today)
+        function isFutureOrToday(date) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return date >= today;
+        }
+
+        
+function displayEvents() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Filter events for today
+    const todaysEvents = events.filter(event => isSameDay(event.date, today));
+    
+    // Display today's events with matching style to upcoming events
+    if (todaysEvents.length > 0) {
+        todayEventsContainer.innerHTML = '';
+        todaysEvents.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event-card';
+            
+            // Format the date in a more readable way
+            const eventDate = formatDate(event.date);
+            const dayName = eventDate.split(',')[0]; // e.g., "Thu"
+            const restOfDate = eventDate.split(',')[1].trim(); // e.g., "Mar 20, 2025"
+            
+            eventElement.innerHTML = `
+                <div class="p-3">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="event-title">${event.title}</h3>
+                    <span class="event-date">${dayName}, ${restOfDate}</span>
+                </div>
+                <p class="event-description">${event.description}</p>
+                </div>
+            `;
+            todayEventsContainer.appendChild(eventElement);
+        });
+    } else {
+        todayEventsContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                </div>
+                <p class="text-sm text-gray-500">No events scheduled for today</p>
+            </div>
+        `;
+    }
+
+    const futureEvents = events.filter(event => isFutureOrToday(event.date) && !isSameDay(event.date, today))
+                     .sort((a, b) => a.date - b.date);
+
+    // Display upcoming events with improved styling
+    if (futureEvents.length > 0) {
+        upcomingEventsContainer.innerHTML = '';
+        futureEvents.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event-card';
+            
+            // Format the date in a more readable way
+            const eventDate = formatDate(event.date);
+            const dayName = eventDate.split(',')[0]; // e.g., "Thu"
+            const restOfDate = eventDate.split(',')[1].trim(); // e.g., "Mar 20, 2025"
+            
+            eventElement.innerHTML = `
+                <div class="p-3">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="event-title">${event.title}</h3>
+                    <span class="event-date">${dayName}, ${restOfDate}</span>
+                </div>
+                <p class="event-description">${event.description}</p>
+                </div>
+            `;
+            upcomingEventsContainer.appendChild(eventElement);
+        });
+    } else {
+        upcomingEventsContainer.innerHTML = `
+        <div class="empty-state">
+            <div class="empty-state-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            </div>
+            <p class="text-sm text-gray-500">No upcoming events</p>
+        </div>
+        `;
+    }
+}
+
 
         function renderCalendar(date) {
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -2961,142 +3440,158 @@ document.addEventListener("DOMContentLoaded", function() {
             }).format(date);
 
             calendarDays.innerHTML = '';
-
-            // Add empty cells for days before the first of the month
+            
+            // Determine if we need 5 or 6 rows for the current month
+            const totalDaysToShow = startingDay + monthLength;
+            const rowsNeeded = Math.ceil(totalDaysToShow / 7);
+            
+            // Set grid template rows based on needed rows (5 or 6)
+            calendarDays.style.gridTemplateRows = `repeat(${rowsNeeded}, minmax(70px, auto))`;
+            
+            // Days from previous month
             for (let i = 0; i < startingDay; i++) {
                 const emptyDay = document.createElement('div');
-                emptyDay.className = 'aspect-square bg-gray-50 rounded-lg';
+                emptyDay.className = 'border border-gray-800 bg-[#3A1616]';
                 calendarDays.appendChild(emptyDay);
             }
 
-            // Add days of the month
+            // Days of current month
             for (let day = 1; day <= monthLength; day++) {
+                const currentDayDate = new Date(date.getFullYear(), date.getMonth(), day);
                 const dayCell = document.createElement('div');
-                dayCell.className = 'aspect-square p-1 bg-white rounded-lg border border-gray-200 relative hover:border-gray-300 transition-all hover:shadow-md';
+                dayCell.className = 'border border-gray-700 bg-[#3A1616] relative p-2';
                 
                 // Add day number
                 const dayNumber = document.createElement('div');
-                dayNumber.className = 'absolute top-1 right-2 text-sm font-medium text-gray-700';
+                dayNumber.className = 'text-gray-300 text-sm';
                 dayNumber.textContent = day;
                 dayCell.appendChild(dayNumber);
 
-                const currentDateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const currentDay = new Date(currentDateStr);
-
-                // Highlight today's date
-                if (currentDateStr === new Date().toISOString().split('T')[0]) {
-                    dayCell.classList.add('bg-blue-50', 'border-blue-300', 'shadow-md');
-                    dayNumber.classList.add('text-blue-600', 'font-bold');
-                    
-                    // Add "TODAY" label
+                // Check if it's today
+                const today = new Date();
+                if (day === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+                    dayCell.classList.add('relative');
                     const todayLabel = document.createElement('div');
-                    todayLabel.className = 'absolute top-1 left-1 bg-blue-500 text-white text-xs px-1 rounded';
+                    todayLabel.className = 'absolute top-2 left-[30px] bg-purple-600 text-white text-xs px-2 py-0.5 rounded-sm';
                     todayLabel.textContent = 'TODAY';
                     dayCell.appendChild(todayLabel);
                 }
 
-                // Event container
-                const eventContainer = document.createElement('div');
-                eventContainer.className = 'mt-6 space-y-1 overflow-hidden';
-                dayCell.appendChild(eventContainer);
-
                 // Find events for this day
-                let eventCount = 0;
-            for (const monthYear in events) {
-                    events[monthYear].forEach(event => {
-                    const eventStart = new Date(event.calendar_start_date);
-                    const eventEnd = new Date(event.calendar_end_date);
-                    
-                        if (currentDay >= eventStart && currentDay <= eventEnd && eventCount < 2) {
-                            const eventDiv = document.createElement('div');
-                            eventDiv.className = 'text-xs p-1 rounded bg-blue-100 text-blue-800 truncate cursor-pointer hover:bg-blue-200 transition-colors';
-                            eventDiv.title = event.calendar_details;
-                            eventDiv.textContent = event.calendar_details.replace(/<[^>]*>/g, '');
-                            
-                            eventDiv.addEventListener('click', () => {
-                                Swal.fire({
-                                    title: 'Event Details',
-                                    html: `
-                                        <div class="text-left">
-                                            <p class="mb-2"><strong>Date:</strong> ${new Date(event.calendar_start_date).toLocaleDateString()} - ${new Date(event.calendar_end_date).toLocaleDateString()}</p>
-                                            <p>${event.calendar_details}</p>
-                                        </div>
-                                    `,
-                                    confirmButtonColor: '#3085d6'
-                                });
-                            });
-                            
-                            eventContainer.appendChild(eventDiv);
-                            eventCount++;
-                        }
-                    });
-                }
+                const dayEvents = events.filter(event => 
+                    event.date.getFullYear() === currentDayDate.getFullYear() &&
+                    event.date.getMonth() === currentDayDate.getMonth() &&
+                    event.date.getDate() === day
+                );
 
-                // If there are more events, show count with a badge
-                if (eventCount > 2) {
-                    const moreEventsDiv = document.createElement('div');
-                    moreEventsDiv.className = 'text-xs text-center bg-gray-200 text-gray-700 rounded-full px-2 py-0.5 mt-1 font-medium';
-                    moreEventsDiv.textContent = `+${eventCount - 2} more`;
-                    eventContainer.appendChild(moreEventsDiv);
-                }
+                // Add events to the day cell
+                dayEvents.forEach((event, index) => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = `mt-${index === 0 ? '6' : '2'} text-xs p-1 rounded bg-gray-600 text-white truncate`;
+                    eventDiv.textContent = event.title;
+                    dayCell.appendChild(eventDiv);
+                    
+                    // Make day cell clickable to view events
+                    dayCell.style.cursor = 'pointer';
+                    dayCell.addEventListener('click', () => {
+                        // Update the displayed events when clicking on a day with events
+                        const clickedDate = new Date(date.getFullYear(), date.getMonth(), day);
+                        showEventDetails(clickedDate);
+                    });
+                });
 
                 calendarDays.appendChild(dayCell);
             }
+
+            // Fill in only the current row with days from next month
+            const currentCellCount = startingDay + monthLength;
+            const cellsInLastRow = currentCellCount % 7;
+            let emptyCellsToAdd = 0;
+            
+            if (cellsInLastRow > 0) {
+                emptyCellsToAdd = 7 - cellsInLastRow;
+            }
+            
+            for (let i = 0; i < emptyCellsToAdd; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'border border-gray-800 bg-[#3A1616]';
+                calendarDays.appendChild(emptyDay);
+            }
+            
+            // Add a class to the calendar container to adjust its height
+            const calendarContainer = calendarDays.parentElement;
+            if (rowsNeeded === 5) {
+                calendarContainer.style.height = '420px'; // Shorter for 5 rows
+            } else {
+                calendarContainer.style.height = '500px'; // Taller for 6 rows
+            }
         }
 
-        // Add subtle animation
-        function addHoverEffects() {
-            const dayCells = document.querySelectorAll('#calendarDays > div');
-            dayCells.forEach(cell => {
-                cell.addEventListener('mouseenter', () => {
-                    cell.classList.add('transform', 'scale-105', 'z-10');
-                });
-                cell.addEventListener('mouseleave', () => {
-                    cell.classList.remove('transform', 'scale-105', 'z-10');
-                });
-            });
-        }
-
-        // Initialize calendar
+        // Show event details for a specific date
+        function showEventDetails(date) {
+    const eventsForDay = events.filter(event => isSameDay(event.date, date));
+    
+    const container = document.getElementById('todayEvents');
+    container.innerHTML = '';
+    
+    if (eventsForDay.length > 0) {
+        eventsForDay.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event-card';
+            
+            // Format the date in a more readable way
+            const eventDate = formatDate(event.date);
+            const dayName = eventDate.split(',')[0]; // e.g., "Thu" 
+            const restOfDate = eventDate.split(',')[1].trim(); // e.g., "Mar 20, 2025"
+            
+            eventElement.innerHTML = `
+                <div class="p-3">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="event-title">${event.title}</h3>
+                    <span class="event-date">${dayName}, ${restOfDate}</span>
+                </div>
+                <p class="event-description">${event.description}</p>
+                </div>
+            `;
+            container.appendChild(eventElement);
+        });
+    } else {
+        container.innerHTML = `
+        <div class="empty-state">
+            <div class="empty-state-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            </div>
+            <p class="text-sm text-gray-500">No events scheduled for ${formatDate(date).split(',')[0]}</p>
+        </div>
+        `;
+    }
+}
+        // Initialize calendar and events
         renderCalendar(currentDate);
-        addHoverEffects();
+        displayEvents();
 
-        // Add month navigation handlers with smooth transitions
+        // Add month navigation handlers
         prevMonthButton.addEventListener('click', () => {
-            calendarDays.classList.add('opacity-0');
-            setTimeout(() => {
-                currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
-                renderCalendar(currentDate);
-                addHoverEffects();
-                setTimeout(() => {
-                    calendarDays.classList.remove('opacity-0');
-                }, 50);
-            }, 150);
+            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+            renderCalendar(currentDate);
         });
 
         nextMonthButton.addEventListener('click', () => {
-            calendarDays.classList.add('opacity-0');
-            setTimeout(() => {
-                currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
-                renderCalendar(currentDate);
-                addHoverEffects();
-                setTimeout(() => {
-                    calendarDays.classList.remove('opacity-0');
-                }, 50);
-            }, 150);
+            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+            renderCalendar(currentDate);
         });
-
-        // Add transition effect to calendar
-        calendarDays.classList.add('transition-opacity', 'duration-150');
     });
     </script>
 </section>
-    
-    <section id="campusmap" class="content-section bg-light remove-padding-sm py-5">
-                <div class="section-heading text-center borderYellow">
-                    <h1><br><em>CAMPUS BUILDINGS</em></h1>
-                </div>
-
+    <section id="campusmap"  class="content-section py-4">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">CAMPUS BUILDINGS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
                 <!-- Tab Navigation -->
                 <div class="tab-container">
                     <button class="tab-button active" onclick="openTab(event, 'ccs')">CCS</button>
@@ -3561,10 +4056,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
             <section id="campusmap" class="content-section bg-light remove-padding-sm py-5">
-                <div class="section-heading text-center borderYellow">
-                    <h1><br><em>CAMPUS BUILDINGS</em></h1>
-                </div>
-
+            <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">CAMPUS BUILDINGS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
                 <!-- Tab Navigation -->
                 <div class="tab-container">
                     <button class="tab-button active" data-tab="ccs">CCS</button>
@@ -3875,11 +4372,14 @@ document.addEventListener("DOMContentLoaded", function() {
             </section>
 
 
-            <section id="facultymembers" class="content-section bg-light py-5">
+            <section id="facultymembers"  class="content-section py-4">
         <div class="section-content">
-            <div class="section-heading text-center borderYellow">
-                <h1><em>FACULTY MEMBERS</em></h1>
-            </div>
+        <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">FACULTY MEMBERS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
 
             <!-- Faculty Members -->
             <div class="level1">
@@ -4071,15 +4571,46 @@ document.addEventListener("DOMContentLoaded", function() {
                 <p class="text-muted mb-4" id="profileConsultationTime">Consultation Time: <span class="consultation-value"></span></p>
             </div>
         </div>
+
+        <style>
+            .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.rounded-circle {
+  width: 150px !important;
+  height: 150px !important;
+  object-fit: cover;
+  border-radius: 50% !important;
+  margin: 0 auto;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#profileName {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+.text-muted {
+  text-align: center;
+}
+        </style>
     </section>
 
-    <section id="campusorgs" class="content-section remove-padding-sm bg-light py-5">
-        <div class="section-heading text-center borderYellow">
-            <h1 class="pt-16 pb-8">
-                <em class="text-4xl font-bold text-gray-800">Student Organization</em>
-            </h1>
-            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
-        </div>
+    <section id="campusorgs"  class="content-section py-4">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">STUDENT ORGANIZATIONS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
         <div class="container-fluid px-4">
             <!-- Row of cards with horizontal scroll on smaller screens -->
             <div class="row-container">
@@ -4142,76 +4673,250 @@ document.addEventListener("DOMContentLoaded", function() {
                 <?php endforeach; ?>
             </div>
         </div>
+        <style>.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.rounded-circle {
+  width: 150px !important;
+  height: 150px !important;
+  object-fit: cover;
+  border-radius: 50% !important;
+  margin: 0 auto;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#profileName {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+.text-muted {
+  text-align: center;
+}</style>
     </section>
 
- <section id="faqs" class="content-section remove-padding-sm bg-light py-5">
-        <div class="section-heading text-center borderYellow">
-            <h1><br><em>FREQUENTLY ASKED QUESTIONS</em></h1>
-        </div>
-        <div class="container py-5">
-            <div class="row">
-                <!-- Left Column: Illustration -->
-                <div class="col-lg-6">
-                    <div class="faq-image">
-                        <img src="img/faq-img-1.png" alt="Illustration" class="img-fluid">
-                    </div>
-                </div>
-
-                <!-- Right Column: FAQ Section -->
-                <div class="col-lg-5">
-                    <div class="faq-header text-center">
-                      <h1 style="color: black;">How can we help you?</h1>
-
-                        <p class="lead">
-                            We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.
-                        </p>
-                    </div>
-     <!-- Search Bar -->
-                <div class="my-5">
-                    <input 
-                        type="text" 
+    <section id="faqs" class="content-section py-4">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">FREQUENTLY ASKED QUESTIONS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
+    <div class="container-fluid mt-4">
+        <!-- Full-width FAQ Section -->
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden mx-auto" style="max-width: 900px;">
+            <!-- Search Header -->
+            <div class="p-4 text-white" style="background: linear-gradient(to right, #7D0A0A, #C83E3E);">
+                <h2 class="fs-4 fw-bold mb-1">How can we help you?</h2>
+                <p class="text-sm opacity-80 mb-3">
+                    Search our FAQ for answers to commonly asked questions
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="position-relative">
+                    <input
+                        type="text"
                         id="faqSearch" 
-                        class="w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
                         placeholder="Search FAQs..."
-                        onkeyup="filterFAQs()">
+                        class="form-control form-control-lg py-2 ps-5 rounded-pill"
+                        style="background-color: white; color: #333;"
+                        onkeyup="filterFAQs()"
+                    >
+                    <i class="fas fa-search position-absolute" style="left: 15px; top: 50%; transform: translateY(-50%); color: #7D0A0A;"></i>
+                    <button class="btn position-absolute end-0 top-50 translate-middle-y me-2 rounded-circle text-muted border-0" onclick="clearSearch()" style="display: none;" id="clearSearchBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-
-                    <div class="accordion accordion-flush" id="faqsAccordion">
-                        <?php if (!empty($showfaqs) && is_array($showfaqs)): ?>
-                            <?php foreach ($showfaqs as $index => $faq): ?>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="heading<?php echo $index; ?>">
-                                        <button class="accordion-button <?php echo $index == 0 ? '' : 'collapsed'; ?>" 
-                                                type="button" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#collapse<?php echo $index; ?>" 
-                                                aria-expanded="<?php echo $index == 0 ? 'true' : 'false'; ?>" 
-                                                aria-controls="collapse<?php echo $index; ?>" 
-                                                style="background-color: #e7f1ff; color: #004085; position: relative;">
-                                            <?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?>
-                                            <!-- Drop-down/up icon -->
-                                            <i class="fas fa-chevron-down ms-auto faq-toggle-icon" style="position: absolute; right: 10px;"></i>
-                                        </button>
-                                    </h2>
-                                    <div id="collapse<?php echo $index; ?>" 
-                                        class="accordion-collapse collapse <?php echo $index == 0 ? 'show' : ''; ?>" 
-                                        aria-labelledby="heading<?php echo $index; ?>" 
-                                        data-bs-parent="#faqsAccordion">
-                                        <div class="accordion-body">
-                                            <?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?>
+            </div>
+            
+            <!-- FAQ Accordion -->
+            <div class="p-3" style="max-height: 600px; overflow-y: auto;">
+                <div class="accordion" id="faqsAccordion">
+                    <?php if (!empty($showfaqs) && is_array($showfaqs)): ?>
+                        <?php foreach ($showfaqs as $index => $faq): ?>
+                            <div class="accordion-item mb-3 border rounded-lg shadow-sm overflow-hidden">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button <?php echo $index === 0 ? '' : 'collapsed'; ?> p-3" 
+                                        type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#collapse<?php echo $index; ?>" 
+                                        aria-expanded="<?php echo $index === 0 ? 'true' : 'false'; ?>"
+                                        aria-controls="collapse<?php echo $index; ?>">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-3" style="width: 4px; height: 18px; background-color: #E3C47D; border-radius: 2px;"></div>
+                                            <span><?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?></span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index === 0 ? 'show' : ''; ?>" data-bs-parent="#faqsAccordion">
+                                    <div class="accordion-body p-3" style="background-color: #f9f9f9;">
+                                        <div class="ps-4 border-start border-2" style="border-color: #C83E3E;">
+                                            <p><?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?></p>
                                         </div>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p class="text-center">No FAQs available at the moment.</p>
-                        <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <!-- No FAQs found message -->
+                        <div class="text-center py-5">
+                            <div class="mx-auto mb-3" style="width: 60px; height: 60px; background-color: #fff8e8; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-question" style="font-size: 24px; color: #7D0A0A;"></i>
+                            </div>
+                            <h3 class="fs-5 fw-medium mb-2" style="color: #7D0A0A;">No FAQs available</h3>
+                            <p class="text-muted">
+                                Please check back later for updates.
+                            </p>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <!-- No Results Message (for search) -->
+                    <div id="noResults" class="py-4 text-center" style="display: none;">
+                        <div class="mx-auto mb-3" style="width: 60px; height: 60px; background-color: #fff8e8; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-search" style="font-size: 24px; color: #7D0A0A;"></i>
+                        </div>
+                        <h3 class="fs-5 fw-medium mb-2" style="color: #7D0A0A;">No matching questions found</h3>
+                        <p class="text-muted">
+                            Try different keywords or browse all FAQs
+                        </p>
+                        <button 
+                            onclick="clearSearch()"
+                            class="mt-2 px-4 py-2 text-white rounded-pill" 
+                            style="background-color: #7D0A0A; border: none;"
+                        >
+                            Clear Search
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener for search input
+            const searchInput = document.getElementById('faqSearch');
+            const clearButton = document.getElementById('clearSearchBtn');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    // Show clear button when text is entered
+                    if (clearButton) {
+                        clearButton.style.display = this.value.length > 0 ? 'block' : 'none';
+                    }
+                    
+                    // Filter FAQs based on search input
+                    filterFAQs();
+                });
+            }
+        });
+        
+        function filterFAQs() {
+            const searchTerm = document.getElementById('faqSearch')?.value.toLowerCase() || '';
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            let foundItems = 0;
+            
+            accordionItems.forEach(item => {
+                const questionText = item.querySelector('.accordion-button span')?.textContent.toLowerCase() || '';
+                const answerText = item.querySelector('.accordion-body')?.textContent.toLowerCase() || '';
+                
+                if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    foundItems++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show or hide the "no results" message
+            const noResultsElement = document.getElementById('noResults');
+            
+            if (noResultsElement) {
+                if (foundItems === 0 && searchTerm.length > 0) {
+                    noResultsElement.style.display = 'block';
+                } else {
+                    noResultsElement.style.display = 'none';
+                }
+            }
+        }
+        
+        function clearSearch() {
+            const searchInput = document.getElementById('faqSearch');
+            if (searchInput) {
+                searchInput.value = '';
+                filterFAQs();
+                
+                const clearButton = document.getElementById('clearSearchBtn');
+                if (clearButton) {
+                    clearButton.style.display = 'none';
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar for FAQ Container */
+        .accordion {
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f9f9f9;
+        }
+        
+        .accordion::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .accordion::-webkit-scrollbar-track {
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .accordion::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 10px;
+        }
+        
+        /* Animations and transitions */
+        .accordion-item {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Button styling */
+        .accordion-button:not(.collapsed) {
+            background-color: #f8f8f8 !important;
+            color: #7D0A0A !important;
+            box-shadow: none !important;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(125, 10, 10, 0.1);
+        }
+        
+        /* Text color for maroon */
+        .text-maroon {
+            color: #7D0A0A;
+        }
+        
+        /* Custom button hover effect */
+        button.rounded-pill:hover {
+            background-color: #C83E3E !important;
+            transition: background-color 0.2s ease;
+        }
+    </style>
+</section>
 <script>
     function filterFAQs() {
         const searchInput = document.getElementById('faqSearch').value.toLowerCase();
@@ -4231,122 +4936,1033 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 </script>
 
+<?php
+// Add these functions to your mainClass.php if they don't already exist
 
+/*
+class mainClass {
+    // ... existing methods ...
+    
+    // Count organization feedbacks
+    public function countOrganizationFeedbacks() {
+        try {
+            $query = "SELECT COUNT(*) AS count FROM feedback_tbl WHERE feedback_category = 'org'";
+            $stmt = $this->dbcon->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'];
+        } catch (PDOException $e) {
+            error_log("Error counting organization feedbacks: " . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    // Count office feedbacks
+    public function countOfficeFeedbacks() {
+        try {
+            $query = "SELECT COUNT(*) AS count FROM feedback_tbl WHERE feedback_category = 'office'";
+            $stmt = $this->dbcon->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'];
+        } catch (PDOException $e) {
+            error_log("Error counting office feedbacks: " . $e->getMessage());
+            return 0;
+        }
+    }
+}
+*/
+?>
 
-<section id="feed" class="feedback-section remove-padding-sm content-section bg-light py-5">   
-    <div class="section-heading text-center borderYellow">
-        <h1 class="pt-16 pb-8">
-            <em class="text-4xl font-bold text-gray-800">FEEDBACKS</em>
+<section id="feed"  class="content-section py-4">
+<div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">FEEDBACKS</span>
         </h1>
-        <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
-    </div>  
-    <br>  
-    <div class="feedback-container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">👥</div>
-                <div class="stat-info">
-                    <h3>Organization Feedbacks</h3>
-                    <p id="total-feedback">0</p>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                <!-- Animated Stats Cards -->
+                <div class="row mb-5 g-5">
+                    <!-- Organization Feedbacks Card -->
+                    <div class="col-md-5">
+    <div class="stat-card h-100">
+        <div class="stat-card-inner">
+            <div class="stat-icon-container">
+                <div class="stat-icon">
+                    <i class="fas fa-comments"></i>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">🏢</div>
-                <div class="stat-info">
-                    <h3>Client Satisfaction</h3>
-                    <p id="average-rating">0</p>
+            <div class="stat-content">
+                <h3>Organization Feedbacks</h3>
+                <div class="counter-wrapper">
+                    <span id="org-feedback-count" class="counter">
+                        <?php 
+                            // Direct database query instead of using $obj
+                            include_once("path/to/connection.php"); // Adjust path as needed
+                            $orgQuery = "SELECT COUNT(*) FROM org_feedback";
+                            $orgCount = $connect->query($orgQuery)->fetchColumn() ?? 0;
+                            echo $orgCount;
+                        ?>
+                    </span>
+                    <span class="counter-suffix">+</span>
                 </div>
+                <p class="stat-description">Insights collected from our community</p>
             </div>
+            <div class="stat-backdrop"></div>
         </div>
-        <div class="main-card">
-            <div class="card-header">
-                <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#feedbackModal">
-                    ✉️ Submit Feedback
-                </button>
+    </div>
+</div>
+
+<!-- Office Feedbacks Card -->
+<div class="col-md-5">
+    <div class="stat-card h-100">
+        <div class="stat-card-inner">
+            <div class="stat-icon-container alt">
+                <div class="stat-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+            </div>
+            <div class="stat-content">
+                <h3>Office Feedbacks</h3>
+                <div class="counter-wrapper">
+                    <span id="office-feedback-count" class="counter">
+                        <?php 
+                            // Direct database query instead of using $obj
+                            // No need to include connection.php again if it's already included above
+                            $officeQuery = "SELECT COUNT(*) FROM office_feedback";
+                            $officeCount = $connect->query($officeQuery)->fetchColumn() ?? 0;
+                            echo $officeCount;
+                        ?>
+                    </span>
+                    <span class="counter-suffix">+</span>
+                </div>
+                <p class="stat-description">Campus service evaluations submitted</p>
+            </div>
+            <div class="stat-backdrop alt"></div>
+        </div>
+    </div>
+</div>
+                
+                <!-- Feedback Submission Card -->
+                <div class="feedback-card mb-5">
+                    <div class="card-decoration-1"></div>
+                    <div class="card-decoration-2"></div>
+                    
+                    <div class="feedback-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <h2 class="feedback-card-title">Share Your Experience</h2>
+                                <p class="feedback-card-text">
+                                    Your feedback is invaluable to us. Help us improve our services by sharing your thoughts, suggestions, and experiences.
+                                </p>
+                                <ul class="feedback-benefits">
+                                    <li><i class="fas fa-check-circle"></i> Help improve campus services</li>
+                                    <li><i class="fas fa-check-circle"></i> Shape future programs</li>
+                                    <li><i class="fas fa-check-circle"></i> Enhance student experience</li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-5 text-lg-end text-center mt-4 mt-lg-0">
+                                <button class="submit-feedback-btn" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                                    <span class="btn-text">Submit Feedback</span>
+                                    <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    <style>
+        /* Premium Design Styles */
+        
+        /* Typography & General */
+        #feed {
+            font-family: 'Poppins', 'Segoe UI', 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Section Header */
+        .gradient-text {
+            background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .animated-bar {
+            height: 4px;
+            width: 380px;
+            background: linear-gradient(to right, #E3C47D, #7D0A0A);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animated-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes shine {
+            100% {
+                left: 100%;
+            }
+        }
+        
+        /* Stats Cards */
+        .stat-card {
+            perspective: 1000px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: white;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card-inner {
+            padding: 2.5rem 2rem;
+            position: relative;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .stat-backdrop {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(125, 10, 10, 0.05));
+            z-index: -1;
+            clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-backdrop.alt {
+            background: linear-gradient(135deg, transparent, rgba(227, 196, 125, 0.15));
+        }
+        
+        .stat-card:hover .stat-backdrop {
+            width: 70%;
+        }
+        
+        .stat-icon-container {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            background-color: rgba(125, 10, 10, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(125, 10, 10, 0.15);
+        }
+        
+        .stat-icon-container.alt {
+            background-color: rgba(227, 196, 125, 0.2);
+            box-shadow: 0 8px 25px rgba(227, 196, 125, 0.25);
+        }
+        
+        .stat-icon {
+            color: #7D0A0A;
+            font-size: 1.75rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-icon-container.alt .stat-icon {
+            color: #E3C47D;
+        }
+        
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1);
+        }
+        
+        .stat-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .counter-wrapper {
+            display: flex;
+            align-items: baseline;
+        }
+        
+        .counter {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #7D0A0A;
+            line-height: 1;
+        }
+        
+        .stat-icon-container.alt + .stat-content .counter {
+            color: #E3C47D;
+        }
+        
+        .counter-suffix {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #7D0A0A;
+            margin-left: 4px;
+        }
+        
+        .stat-icon-container.alt + .stat-content .counter-suffix {
+            color: #E3C47D;
+        }
+        
+        .stat-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 0.75rem;
+        }
+        
+        /* Feedback Submission Card */
+        .feedback-card {
+            position: relative;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .feedback-card:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-decoration-1 {
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(125, 10, 10, 0.1), rgba(125, 10, 10, 0.05));
+            top: -100px;
+            left: -100px;
+            z-index: 0;
+        }
+        
+        .card-decoration-2 {
+            position: absolute;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(227, 196, 125, 0.15), rgba(227, 196, 125, 0.05));
+            bottom: -50px;
+            right: -50px;
+            z-index: 0;
+        }
+        
+        .feedback-card-content {
+            position: relative;
+            z-index: 1;
+            padding: 2.5rem;
+        }
+        
+        .feedback-card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feedback-card-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #7D0A0A, #C83E3E);
+            border-radius: 3px;
+        }
+        
+        .feedback-card-text {
+            color: #6c757d;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+        
+        .feedback-benefits {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+        }
+        
+        .feedback-benefits li {
+            color: #495057;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feedback-benefits li i {
+            color: #7D0A0A;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .submit-feedback-btn {
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+            color: white;
+            font-weight: 600;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(125, 10, 10, 0.15);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .submit-feedback-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #C83E3E, #7D0A0A);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .submit-feedback-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(125, 10, 10, 0.2);
+        }
+        
+        .submit-feedback-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-feedback-btn:hover .btn-icon {
+            transform: rotate(15deg);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .submit-feedback-btn {
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stat-card-inner {
+                padding: 2rem 1.5rem;
+            }
+            
+            .feedback-card-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .counter {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Counter Animation
+            function animateCounter(element, target, duration = 2000) {
+                // Parse the target value (initial HTML content)
+                target = parseInt(element.textContent.trim()) || 0;
+                
+                let start = 0;
+                const increment = target / (duration / 16);
+                const timer = setInterval(() => {
+                    start += increment;
+                    element.textContent = Math.floor(Math.min(start, target));
+                    
+                    if (start >= target) clearInterval(timer);
+                }, 16);
+            }
+            
+            // Initialize counters with real data
+            const orgFeedbackCount = document.getElementById('org-feedback-count');
+            const officeFeedbackCount = document.getElementById('office-feedback-count');
+            
+            // Start animations when elements are in viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.id === 'org-feedback-count') {
+                            animateCounter(orgFeedbackCount);
+                        } else if (entry.target.id === 'office-feedback-count') {
+                            animateCounter(officeFeedbackCount);
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            if (orgFeedbackCount) observer.observe(orgFeedbackCount);
+            if (officeFeedbackCount) observer.observe(officeFeedbackCount);
+        });
+    </script>
 </section>
 
-        
-<section id="aboutus" class="content-section bg-light py-5">
-    <div class="section-heading text-center borderYellow">
-        <h1 class="pt-16 pb-8">
-            <em class="text-4xl font-bold text-gray-800">About Us</em>
+<section id="aboutus"  class="content-section py-4">
+<div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">ABOUT US</span>
         </h1>
-        <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
-    </div> 
-    <div class="about-container">
-        <div class="about-header">
-            <div class="about-subtitle">Tarlac State University - San Isidro Campus</div>
-        </div>
-
-        <div class="campus-image-container">
-            <img src="img/C2SVTseUoAEJp42.jpg" alt="TSU San Isidro Campus Building" class="campus-image">
-        </div>
-
-        <div class="content-block">
-            <p class="text-content">
-                Tarlac State University stands as a premier institution of higher learning in San Isidro, Tarlac. Our commitment to academic excellence, innovative research, and meaningful community service has established us as a leading educational institution in Central Luzon. We take pride in developing well-rounded graduates who are equipped to make significant contributions to society and drive positive change in their communities.
-            </p>
-        </div>
-
-        <div class="leadership-section">
-            <h2 class="leadership-title">University Leadership</h2>
-            <div class="leadership-grid">
-                <div class="leader-card">
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
+    
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- University Info Card -->
+                <div class="about-card mb-5">
+                    <div class="card-decoration-1"></div>
+                    <div class="card-decoration-2"></div>
+                    
+                    <div class="about-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5 mb-4 mb-lg-0">
+                                <div class="campus-image-wrapper">
+                                    <img src="img/C2SVTseUoAEJp42.jpg" alt="TSU San Isidro Campus Building" class="campus-image">
+                                    <div class="image-overlay"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="about-subtitle">Tarlac State University - San Isidro Campus</div>
+                                <p class="about-description">
+                                    Tarlac State University stands as a premier institution of higher learning in San Isidro, Tarlac. Our commitment to academic excellence, innovative research, and meaningful community service has established us as a leading educational institution in Central Luzon. We take pride in developing well-rounded graduates who are equipped to make significant contributions to society and drive positive change in their communities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Strategic Directions Cards -->
+                <div class="row mb-5 g-4">
+                    <!-- Vision Card -->
+                    <div class="col-md-4">
+                        <div class="strategy-card h-100">
+                            <div class="strategy-card-inner">
+                                <div class="strategy-icon-container">
+                                    <div class="strategy-icon">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                </div>
+                                <div class="strategy-content">
+                                    <h3>Our Vision</h3>
+                                    <p class="strategy-description">
+                                        A globally competitive university recognized for excellence in sciences and emerging technologies.
+                                    </p>
+                                </div>
+                                <div class="strategy-backdrop"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mission Card -->
+                    <div class="col-md-4">
+                        <div class="strategy-card h-100">
+                            <div class="strategy-card-inner">
+                                <div class="strategy-icon-container alt">
+                                    <div class="strategy-icon">
+                                        <i class="fas fa-flag"></i>
+                                    </div>
+                                </div>
+                                <div class="strategy-content">
+                                    <h3>Our Mission</h3>
+                                    <p class="strategy-description">
+                                        TSU shall develop highly competitive and empowered human resources fostering responsive global education, future-proof research culture, inclusive and relevant extension programs, and sustainable production projects.
+                                    </p>
+                                </div>
+                                <div class="strategy-backdrop alt"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Values Card -->
+                    <div class="col-md-4">
+                        <div class="strategy-card h-100">
+                            <div class="strategy-card-inner">
+                                <div class="strategy-icon-container values">
+                                    <div class="strategy-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                </div>
+                                <div class="strategy-content">
+                                    <h3>Our Core Values</h3>
+                                    <ul class="values-list">
+                                        <li><span>Truth</span> in words, action and character</li>
+                                        <li><span>Service</span> with excellence and compassion</li>
+                                        <li><span>Unity</span> in diversity</li>
+                                    </ul>
+                                </div>
+                                <div class="strategy-backdrop values"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leadership Section -->
+             <!-- Leadership Section with Tiny Cards -->
+<div class="leadership-section mb-6">
+    <h2 class="leadership-heading">University Leadership</h2>
+    <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    
+    <div class="row row-cols-4 row-cols-md-3 g-1"> <!-- Reduced gap to g-2 (very small gap) -->
+        <div class="col">
+            <div class="leader-card">
+                <div class="leader-image-container">
                     <img src="img/press.jpg" alt="TSU President" class="leader-image">
-                    <div class="leader-name">Dr. Arnold E. Velasco</div>
-                    <div class="leader-title">University President</div>
+                    <div class="leader-overlay"></div>
                 </div>
-                <div class="leader-card">
+                <div class="leader-info">
+                    <h4 class="leader-name">Dr. Arnold E. Velasco</h4>
+                    <p class="leader-title">University President</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="leader-card">
+                <div class="leader-image-container">
                     <img src="img/v.press.jpg" alt="TSU Vice President" class="leader-image">
-                    <div class="leader-name">Dr. Grace N. David</div>
-                    <div class="leader-title">Vice President for Academic Affairs</div>
+                    <div class="leader-overlay"></div>
                 </div>
-                <div class="leader-card">
+                <div class="leader-info">
+                    <h4 class="leader-name">Dr. Grace N. David</h4>
+                    <p class="leader-title">VP for Academic Affairs</p> <!-- Shortened title -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="leader-card">
+                <div class="leader-image-container">
                     <img src="img/vp.Ad.jpg" alt="Campus Dean" class="leader-image">
-                    <div class="leader-name">Atty. Wilmark J. Ramos</div>
-                    <div class="leader-title">Vice President for Admininstration</div>
+                    <div class="leader-overlay"></div>
                 </div>
-                <div class="leader-card">
+                <div class="leader-info">
+                    <h4 class="leader-name">Atty. Wilmark J. Ramos</h4>
+                    <p class="leader-title">VP for Administration</p> <!-- Shortened title -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="leader-card">
+                <div class="leader-image-container">
                     <img src="img/vp.res.jpg" alt="Campus Dean" class="leader-image">
-                    <div class="leader-name">Dr. Erwin P. Lacanlale</div>
-                    <div class="leader-title">Vice President for Research, Innovation and Extension</div>
+                    <div class="leader-overlay"></div>
+                </div>
+                <div class="leader-info">
+                    <h4 class="leader-name">Dr. Erwin P. Lacanlale</h4>
+                    <p class="leader-title">VP for Research & Extension</p> <!-- Shortened title -->
                 </div>
             </div>
         </div>
-
-        <div class="content-block">
-            <div class="strategic-item">
-                <div class="block-title">Our Vision</div>
-                <p>A globally competitive university recognized for excellence in sciences and emerging technologies.</p>
-            </div>
-
-            <div class="strategic-item">
-                <div class="block-title">Our Mission</div>
-                <p>TSU shall develop highly competitive and empowered human resources fostering responsive global education, future-proof research culture, inclusive and relevant extension programs, and sustainable production projects.</p>
-            </div>
-        </div>
-
-        <div class="content-block">
-            <div class="block-title">Our Core Values</div>
-            <div class="values-grid">
-                <div class="value-item">
-                    <span class="value-highlight">Truth</span>
-                    in words, action and character
-                </div>
-                <div class="value-item">
-                    <span class="value-highlight">Service</span>
-                    with excellence and compassion
-                </div>
-                <div class="value-item">
-                    <span class="value-highlight">Unity</span>
-                    in diversity
+    </div>
+</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    
+    <style>
+        /* Premium Design Styles for About Us Section */
+        
+        /* Typography & General */
+        #aboutus {
+            font-family: 'Poppins', 'Segoe UI', 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Section Header */
+        .gradient-text {
+            background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        
+       
+        @keyframes shine {
+            100% {
+                left: 100%;
+            }
+        }
+        
+        /* About Card */
+        .about-card {
+            position: relative;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .about-card:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-decoration-1 {
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(125, 10, 10, 0.1), rgba(125, 10, 10, 0.05));
+            top: -100px;
+            left: -100px;
+            z-index: 0;
+        }
+        
+        .card-decoration-2 {
+            position: absolute;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(227, 196, 125, 0.15), rgba(227, 196, 125, 0.05));
+            bottom: -50px;
+            right: -50px;
+            z-index: 0;
+        }
+        
+        .about-card-content {
+            position: relative;
+            z-index: 1;
+            padding: 2.5rem;
+        }
+        
+        .campus-image-wrapper {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .campus-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(125, 10, 10, 0.4), transparent);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .campus-image-wrapper:hover .campus-image {
+            transform: scale(1.05);
+        }
+        
+        .campus-image-wrapper:hover .image-overlay {
+            opacity: 0.3;
+        }
+        
+        .about-subtitle {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #7D0A0A;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .about-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #7D0A0A, #E3C47D);
+            border-radius: 3px;
+        }
+        
+        .about-description {
+            color: #6c757d;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        /* Strategy Cards */
+        .strategy-card {
+            perspective: 1000px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: white;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .strategy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .strategy-card-inner {
+            padding: 2.5rem 2rem;
+            position: relative;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .strategy-backdrop {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(125, 10, 10, 0.05));
+            z-index: -1;
+            clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .strategy-backdrop.alt {
+            background: linear-gradient(135deg, transparent, rgba(227, 196, 125, 0.15));
+        }
+        
+        .strategy-backdrop.values {
+            background: linear-gradient(135deg, transparent, rgba(0, 128, 128, 0.08));
+        }
+        
+        .strategy-card:hover .strategy-backdrop {
+            width: 70%;
+        }
+        
+        .strategy-icon-container {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            background-color: rgba(125, 10, 10, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(125, 10, 10, 0.15);
+        }
+        
+        .strategy-icon-container.alt {
+            background-color: rgba(227, 196, 125, 0.2);
+            box-shadow: 0 8px 25px rgba(227, 196, 125, 0.25);
+        }
+        
+        .strategy-icon-container.values {
+            background-color: rgba(0, 128, 128, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 128, 128, 0.2);
+        }
+        
+        .strategy-icon {
+            color: #7D0A0A;
+            font-size: 1.75rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .strategy-icon-container.alt .strategy-icon {
+            color: #E3C47D;
+        }
+        
+        .strategy-icon-container.values .strategy-icon {
+            color: #008080;
+        }
+        
+        .strategy-card:hover .strategy-icon {
+            transform: scale(1.1);
+        }
+        
+        .strategy-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .strategy-description {
+            color: #6c757d;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .values-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .values-list li {
+            margin-bottom: 0.75rem;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+        
+        .values-list li span {
+            font-weight: 700;
+            color: #008080;
+        }
+        
+        /* Leadership Section */
+        .leadership-section {
+            padding: 3rem 0 1rem;
+        }
+        
+        .leadership-heading {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+       /* Even Smaller Leadership Cards */
+.leader-card {
+    background-color: white;
+    border-radius: 8px; /* Smaller radius */
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04); /* More subtle shadow */
+    transition: all 0.3s ease;
+}
+
+.leader-card:hover {
+    transform: translateY(-3px); /* Minimal hover lift */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.leader-image-container {
+    position: relative;
+    overflow: hidden;
+    height: 150px; /* Significantly reduced from original 260px */
+}
+
+.leader-info {
+    padding: 0.75rem; /* Further reduced padding */
+    text-align: center;
+}
+
+.leader-name {
+    margin: 0 0 0.2rem; /* Minimal margin */
+    font-size: 0.85rem; /* Much smaller font */
+    font-weight: 600;
+    color: #343a40;
+}
+
+.leader-title {
+    margin: 0;
+    font-size: 0.7rem; /* Very small font */
+    color: #7D0A0A;
+    font-weight: 500;
+    line-height: 1.2; /* Tighter line height */
+}
+
+/* Update responsive breakpoints */
+@media (max-width: 992px) {
+    .leader-image-container {
+        height: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .leader-image-container {
+        height: 160px; /* Slightly taller on mobile for better proportions */
+    }
+}
+
+/* For extra small devices */
+@media (max-width: 576px) {
+    .leader-image-container {
+        height: 130px;
+    }
+}
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .leadership-section {
+                padding: 2rem 0 1rem;
+            }
+            
+            .leader-image-container {
+                height: 220px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-card-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .strategy-card-inner {
+                padding: 2rem 1.5rem;
+            }
+            
+            .leader-image-container {
+                height: 240px;
+            }
+            
+            .about-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</section>
 
 </div>
 <!-- Modal -->
@@ -4375,7 +5991,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="modal-body p-0" style="max-height: 80vh; overflow-y: auto;">
                 <!-- Organization Cover & Profile -->
                 <div class="position-relative">
-                    <div class="bg-gradient-primary" style="height: 220px; background-size: cover; background-position: center; background-image: linear-gradient(135deg, #3498db, #2c3e50);" id="orgCoverPhoto"></div>
+                    
                     <div class="position-relative px-4 pb-3" style="margin-top: -60px;">
                         <div class="d-flex align-items-end">
                             <div class="profile-picture rounded-circle border-5 border-white bg-white shadow-lg" style="width: 140px; height: 140px; overflow: hidden;">
@@ -4601,9 +6217,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <style>
 /* Enhanced customizations */
 :root {
-    --primary-dark: #0a66c2;
-    --light-gray: #F0F2F5;
-    --dark-text: #1c1e21;
+    --maroon-dark: #7A0D0D;   /* Dark maroon from top section */
+    --maroon: #C33232;        /* Medium red from second section */
+    --gold: #E9CF8B;          /* Gold/tan from third section */
+    --light-gray: #EEEEEE;    /* Light gray from bottom section */
+    --facebook-bg: #f0f2f5;
+    --facebook-text: #1c1e21;
+    --facebook-secondary: #65676b;
 }
 
 .bg-gradient-primary {
@@ -6098,6 +7718,33 @@ document.addEventListener("DOMContentLoaded", function() {
     
  
         </div>
+
+        <div class="page-loader">
+  <div class="loader-content">
+    <div class="loader-spinner"></div>
+    <div class="loader-text" style="margin-top: 15px; font-family: 'Arial', sans-serif; font-weight: bold; color: #7D0A0A;">
+      Loading Campus Kiosk...
+    </div>
+  </div>
+</div>
+
+<!-- Script to handle page loader -->
+<script>
+  window.addEventListener('load', function() {
+    // When the page is fully loaded, wait a bit and then fade out the loader
+    setTimeout(function() {
+      const loader = document.querySelector('.page-loader');
+      if (loader) {
+        loader.classList.add('loaded');
+        
+        // Remove the loader after animation completes
+        setTimeout(function() {
+          loader.style.display = 'none';
+        }, 500);
+      }
+    }, 500); // Display loader for at least 500ms
+  });
+</script>
         <script>
             window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
         </script>
@@ -6611,13 +8258,19 @@ function updateFeedbackCounts() {
   fetch('ajax/get_feedback_counts.php')
     .then(response => response.json())
     .then(data => {
-      document.getElementById('total-feedback').textContent = data.org_count || 0;
-      document.getElementById('average-rating').textContent = data.office_count || 0;
+      if (data.success) {
+        // Update with the correct element IDs from your HTML
+        document.getElementById('org-feedback-count').textContent = data.org_count || 0;
+        document.getElementById('office-feedback-count').textContent = data.office_count || 0;
+      } else {
+        console.error('Error in feedback response:', data.error);
+      }
     })
     .catch(error => {
       console.error('Error fetching feedback counts:', error);
-      document.getElementById('total-feedback').textContent = '0';
-      document.getElementById('average-rating').textContent = '0';
+      // Update with fallback values if fetch fails
+      document.getElementById('org-feedback-count').textContent = '0';
+      document.getElementById('office-feedback-count').textContent = '0';
     });
 }
 
@@ -7851,6 +9504,492 @@ function adjustModalLayout() {
         const button = textElement.nextElementSibling;
         button.textContent = textElement.classList.contains('truncate-text') ? 'See more...' : 'See less';
     }
+
+    
+// Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Modify the existing nav-link click handlers
+  const navLinks = document.querySelectorAll('.nav-link, .navbar-nav .nav-link');
+  
+  navLinks.forEach(link => {
+    // First remove any existing handlers to prevent duplicates
+    const oldClone = link.cloneNode(true);
+    link.parentNode.replaceChild(oldClone, link);
+    
+    // Add our improved click handler
+    oldClone.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Get the target section id from the href attribute
+      const targetId = this.getAttribute('href');
+      
+      // Only proceed if it's a section link
+      if (targetId && targetId.startsWith('#') && targetId.length > 1) {
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          // Add animation class to the clicked link
+          this.classList.add('nav-link-clicked');
+          
+          // Remove the class after animation completes
+          setTimeout(() => {
+            this.classList.remove('nav-link-clicked');
+          }, 500);
+          
+          // Smooth scroll to the target section
+          window.scrollTo({
+            top: targetSection.offsetTop - 70, // Adjust for fixed headers
+            behavior: 'smooth'
+          });
+          
+          // Update the browser history so back/forward navigation works
+          history.pushState(null, null, targetId);
+          
+          // THIS IS THE KEY ADDITION - Reinitialize the target section's animations
+          setTimeout(() => {
+            // Reset the section to initial state
+            targetSection.style.opacity = '0';
+            targetSection.style.transform = 'translateY(30px)';
+            
+            // Force a reflow
+            void targetSection.offsetWidth;
+            
+            // Trigger reanimation
+            targetSection.style.opacity = '1';
+            targetSection.style.transform = 'translateY(0)';
+            
+            // Reset and reinitialize child elements
+            const animatableElements = targetSection.querySelectorAll('.section-heading, h3, .card, .member, .announcement-item, .floor-table, .stat-card, .strategy-card');
+            
+            animatableElements.forEach((element, index) => {
+              // Reset to initial state
+              element.style.opacity = '0';
+              element.style.transform = 'translateY(20px)';
+              
+              // Force a reflow
+              void element.offsetWidth;
+              
+              // Retrigger animation with staggered timing
+              setTimeout(() => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+              }, 100 + (index * 50));
+            });
+            
+            // Reinitialize specific section animations based on the target
+            switch(targetId) {
+              case '#announcements':
+                initializeAnnouncementItems();
+                break;
+              case '#schoolcalendar':
+                initializeCalendarSection();
+                break;
+              case '#campusmap':
+                initializeCampusMapSection();
+                break;
+              case '#facultymembers':
+                initializeFacultySection();
+                break;
+              case '#campusorgs':
+                initializeCampusOrgsSection();
+                break;
+              case '#faqs':
+                initializeFAQsSection();
+                break;
+              case '#feed':
+                initializeFeedbackSection();
+                break;
+              case '#aboutus':
+                initializeAboutSection();
+                break;
+            }
+          }, 600);
+        }
+      }
+    });
+  });
+  
+  // Simple re-initialization functions for each section
+  function initializeAnnouncementItems() {
+    const items = document.querySelectorAll('.announcement-item');
+    items.forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(30px)';
+      
+      setTimeout(() => {
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }, 100 + (index * 150));
+    });
+  }
+  
+  function initializeCalendarSection() {
+    const calendarView = document.querySelector('[id^="calendarDays"]');
+    if (calendarView) {
+      calendarView.style.opacity = '0';
+      calendarView.style.transform = 'scale(0.95)';
+      
+      setTimeout(() => {
+        calendarView.style.opacity = '1';
+        calendarView.style.transform = 'scale(1)';
+        
+        const dayCells = calendarView.querySelectorAll('div');
+        dayCells.forEach((cell, index) => {
+          cell.style.opacity = '0';
+          cell.style.transform = 'scale(0.8)';
+          
+          setTimeout(() => {
+            cell.style.opacity = '1';
+            cell.style.transform = 'scale(1)';
+          }, 300 + (index * 20));
+        });
+      }, 300);
+    }
+  }
+  
+  function initializeCampusMapSection() {
+    const mapContainer = document.querySelector('#campusmap .table-container');
+    if (mapContainer) {
+      mapContainer.style.opacity = '0';
+      mapContainer.style.transform = 'scale(0.95)';
+      
+      setTimeout(() => {
+        mapContainer.style.opacity = '1';
+        mapContainer.style.transform = 'scale(1)';
+        
+        const cells = document.querySelectorAll('.floor-table td');
+        cells.forEach((cell, index) => {
+          cell.style.opacity = '0';
+          cell.style.transform = 'scale(0.9)';
+          
+          setTimeout(() => {
+            cell.style.opacity = '1';
+            cell.style.transform = 'scale(1)';
+          }, 500 + (index * 10));
+        });
+      }, 300);
+    }
+  }
+  
+  function initializeFacultySection() {
+    const members = document.querySelectorAll('.member');
+    members.forEach((member, index) => {
+      member.style.opacity = '0';
+      member.style.transform = 'scale(0.8)';
+      
+      setTimeout(() => {
+        member.style.opacity = '1';
+        member.style.transform = 'scale(1)';
+      }, 300 + (index * 50));
+    });
+  }
+  
+  function initializeCampusOrgsSection() {
+    const cards = document.querySelectorAll('#campusorgs .card');
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 300 + (index * 50));
+    });
+  }
+  
+  function initializeFAQsSection() {
+    const items = document.querySelectorAll('#faqs .accordion-item');
+    items.forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }, 300 + (index * 100));
+    });
+  }
+  
+  function initializeFeedbackSection() {
+    const cards = document.querySelectorAll('#feed .stat-card, #feed .feedback-card');
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = index < cards.length - 1 ? 'translateY(40px)' : 'scale(0.95)';
+      
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = index < cards.length - 1 ? 'translateY(0)' : 'scale(1)';
+      }, 300 + (index * 150));
+    });
+  }
+  
+  function initializeAboutSection() {
+    const elements = document.querySelectorAll('#aboutus .about-card, #aboutus .strategy-card');
+    elements.forEach((element, index) => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(30px)';
+      
+      setTimeout(() => {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }, 300 + (index * 150));
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Select all navigation links (both sidebar and mobile nav)
+  const navLinks = document.querySelectorAll('.sidebar-navigation .nav-link, .navbar-nav .nav-link');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Get the target section id from the href attribute
+      const targetId = this.getAttribute('href');
+      
+      // Only proceed if it's a section link
+      if (targetId && targetId.startsWith('#') && targetId.length > 1) {
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          // Add visual feedback to the clicked link
+          this.classList.add('nav-link-active');
+          setTimeout(() => {
+            this.classList.remove('nav-link-active');
+          }, 500);
+          
+          // Smooth scroll to the target section
+          window.scrollTo({
+            top: targetSection.offsetTop - 70, // Adjust for fixed headers
+            behavior: 'smooth'
+          });
+          
+          // Update the browser history for proper back/forward navigation
+          history.pushState(null, null, targetId);
+          
+          // Reset and reinitialize the section's animations
+          reinitializeSectionAnimations(targetId, targetSection);
+        }
+      }
+    });
+  });
+  
+  // Main function to reinitialize section animations
+  function reinitializeSectionAnimations(targetId, section) {
+    // First, trigger a subtle "refresh" animation on the entire section
+    section.style.opacity = '0.8';
+    section.style.transform = 'translateY(10px)';
+    
+    // Force a reflow to ensure the animation is applied
+    void section.offsetWidth;
+    
+    // Restore original state with a smooth transition
+    setTimeout(() => {
+      section.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      section.style.opacity = '1';
+      section.style.transform = 'translateY(0)';
+      
+      // Call the specific section initializer based on the section ID
+      switch(targetId) {
+        case '#announcement':
+          animateAnnouncementItems();
+          break;
+        case '#schoolcalendar':
+          animateCalendarElements();
+          break;
+        case '#campusmap':
+          animateMapElements();
+          break;
+        case '#facultymembers':
+          animateFacultyMembers();
+          break;
+        case '#campusorgs':
+          animateOrganizationCards();
+          break;
+        case '#faqs':
+          animateFAQItems();
+          break;
+        case '#feed':
+          animateFeedbackElements();
+          break;
+        case '#aboutus':
+          animateAboutElements();
+          break;
+      }
+    }, 50);
+
+    // Reset the transition after animation completes
+    setTimeout(() => {
+      section.style.transition = '';
+    }, 500);
+  }
+  
+  // Section-specific animation functions
+  function animateAnnouncementItems() {
+    const announcements = document.querySelectorAll('#announcement .announcement-item');
+    staggeredAnimation(announcements, 'fadeInUp', 100);
+  }
+  
+  function animateCalendarElements() {
+    const calendar = document.querySelector('#schoolcalendar .lg\\:w-7\\/12');
+    const events = document.querySelectorAll('#schoolcalendar .event-card');
+    
+    if (calendar) {
+      applyAnimation(calendar, 'fadeIn');
+    }
+    
+    staggeredAnimation(events, 'fadeInRight', 150);
+  }
+  
+  function animateMapElements() {
+    const mapContainer = document.querySelector('#campusmap .table-container');
+    const floorCells = document.querySelectorAll('#campusmap .floor-table:not([style*="display: none"]) td');
+    
+    if (mapContainer) {
+      applyAnimation(mapContainer, 'fadeIn');
+    }
+    
+    staggeredAnimation(floorCells, 'fadeIn', 20, 0.5);
+  }
+  
+  function animateFacultyMembers() {
+    const members = document.querySelectorAll('#facultymembers .member');
+    staggeredAnimation(members, 'zoomIn', 80);
+  }
+  
+  function animateOrganizationCards() {
+    const cards = document.querySelectorAll('#campusorgs .card');
+    staggeredAnimation(cards, 'fadeInUp', 80);
+  }
+  
+  function animateFAQItems() {
+    const faqItems = document.querySelectorAll('#faqs .accordion-item');
+    staggeredAnimation(faqItems, 'fadeInUp', 120);
+  }
+  
+  function animateFeedbackElements() {
+    const statCards = document.querySelectorAll('#feed .stat-card');
+    const feedbackCard = document.querySelector('#feed .feedback-card');
+    
+    staggeredAnimation(statCards, 'fadeInUp', 200);
+    
+    if (feedbackCard) {
+      setTimeout(() => {
+        applyAnimation(feedbackCard, 'fadeInUp');
+      }, statCards.length * 200);
+    }
+  }
+  
+  function animateAboutElements() {
+    const aboutCard = document.querySelector('#aboutus .about-card');
+    const strategyCards = document.querySelectorAll('#aboutus .strategy-card');
+    const leaderCards = document.querySelectorAll('#aboutus .leader-card');
+    
+    if (aboutCard) {
+      applyAnimation(aboutCard, 'fadeIn');
+    }
+    
+    setTimeout(() => {
+      staggeredAnimation(strategyCards, 'fadeInUp', 150);
+    }, 400);
+    
+    setTimeout(() => {
+      staggeredAnimation(leaderCards, 'zoomIn', 100);
+    }, 400 + (strategyCards.length * 150));
+  }
+  
+  // Helper animation functions
+  function applyAnimation(element, animationType) {
+    if (!element) return;
+    
+    // Reset element to initial state
+    element.style.opacity = '0';
+    
+    // Set transform based on animation type
+    switch(animationType) {
+      case 'fadeIn':
+        element.style.transform = 'scale(0.95)';
+        break;
+      case 'fadeInUp':
+        element.style.transform = 'translateY(30px)';
+        break;
+      case 'fadeInRight':
+        element.style.transform = 'translateX(30px)';
+        break;
+      case 'zoomIn':
+        element.style.transform = 'scale(0.8)';
+        break;
+    }
+    
+    // Force reflow
+    void element.offsetWidth;
+    
+    // Apply transition
+    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    
+    // Animate to final state
+    element.style.opacity = '1';
+    element.style.transform = 'translateY(0) translateX(0) scale(1)';
+    
+    // Clean up transitions after animation completes
+    setTimeout(() => {
+      element.style.transition = '';
+    }, 600);
+  }
+  
+  function staggeredAnimation(elements, animationType, delay, startOpacity = 0) {
+    if (!elements || elements.length === 0) return;
+    
+    elements.forEach((element, index) => {
+      // Reset element
+      element.style.opacity = startOpacity.toString();
+      
+      // Apply different transform based on animation type
+      switch(animationType) {
+        case 'fadeIn':
+          element.style.transform = 'scale(0.95)';
+          break;
+        case 'fadeInUp':
+          element.style.transform = 'translateY(30px)';
+          break;
+        case 'fadeInRight':
+          element.style.transform = 'translateX(30px)';
+          break;
+        case 'zoomIn':
+          element.style.transform = 'scale(0.8)';
+          break;
+      }
+      
+      // Apply animation with delay
+      setTimeout(() => {
+        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0) translateX(0) scale(1)';
+        
+        // Clean up transition property
+        setTimeout(() => {
+          element.style.transition = '';
+        }, 500);
+      }, index * delay);
+    });
+  }
+  
+  // Add CSS for the active link animation
+  const style = document.createElement('style');
+  style.textContent = `
+    .nav-link-active {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  `;
+  document.head.appendChild(style);
+});
     </script>
 
     </body>

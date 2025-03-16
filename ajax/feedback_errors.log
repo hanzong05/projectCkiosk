@@ -1,0 +1,38 @@
+[2025-03-16 03:43:07] ERROR: Missing required event field: comments_suggestions
+File: C:\xampp\htdocs\ckiosk\ajax\submit_Feedback.php (Line: 151)
+POST Data (sanitized):
+{
+    "feedback_category": "org",
+    "client_type": "",
+    "date": "",
+    "age": "",
+    "office": "",
+    "service": "",
+    "organization": "4",
+    "evaluate_event": "1",
+    "event_quality": "2",
+    "org_communication": "3",
+    "inclusivity": "4",
+    "leadership": "3",
+    "skill_dev": "3",
+    "impact": "3",
+    "activity_title": "dawdwa",
+    "activity_date": "2025-03-06",
+    "venue": "dwad",
+    "student_org": "dwad",
+    "position": "dwad",
+    "communication_rating": "5",
+    "video_quality": "4",
+    "audio_quality": "3",
+    "mastery_rating": "3",
+    "time_management": "4",
+    "methodologies": "3",
+    "conduct": "2",
+    "topic_informative": "2",
+    "activity_relevance": "3",
+    "comments_suggestions": "",
+    "improvements": "dwdwa",
+    "email": "",
+    "name": ""
+}
+--------------------------------------------------------------------------------

@@ -4174,3 +4174,2025 @@
 [2025-03-15 08:37:16] No problematic announcements found.
 [2025-03-15 08:37:16] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
 [2025-03-15 08:37:16] API Request completed
+[2025-03-16 01:38:40] API Request started - org_id: 2
+[2025-03-16 01:38:40] Database connection established successfully
+[2025-03-16 01:38:40] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 01:38:40] Checking database schema
+[2025-03-16 01:38:40] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 01:38:40] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 01:38:40] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 01:38:40] Query executed, found 1 announcements
+[2025-03-16 01:38:40] Processing announcement ID: 3, Title: sample
+[2025-03-16 01:38:40] Using creator_name for author: The_Browser
+[2025-03-16 01:38:40] Using existing category: general
+[2025-03-16 01:38:40] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 01:38:40] No problematic announcements found.
+[2025-03-16 01:38:40] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 01:38:40] API Request completed
+[2025-03-16 01:38:40] API Request started - org_id: 2
+[2025-03-16 01:38:40] Database connection established successfully
+[2025-03-16 01:38:40] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 01:38:40] Checking database schema
+[2025-03-16 01:38:40] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 01:38:40] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 01:38:40] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 01:38:40] Query executed, found 1 announcements
+[2025-03-16 01:38:40] Processing announcement ID: 3, Title: sample
+[2025-03-16 01:38:40] Using creator_name for author: The_Browser
+[2025-03-16 01:38:40] Using existing category: general
+[2025-03-16 01:38:40] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 01:38:40] No problematic announcements found.
+[2025-03-16 01:38:40] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 01:38:40] API Request completed
+[2025-03-16 02:24:32] API Request started - org_id: 2
+[2025-03-16 02:24:32] Database connection established successfully
+[2025-03-16 02:24:32] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:24:32] Checking database schema
+[2025-03-16 02:24:32] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:24:32] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:24:32] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:24:32] Query executed, found 1 announcements
+[2025-03-16 02:24:32] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:24:32] Using creator_name for author: The_Browser
+[2025-03-16 02:24:32] Using existing category: general
+[2025-03-16 02:24:32] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:24:32] No problematic announcements found.
+[2025-03-16 02:24:32] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:24:32] API Request completed
+[2025-03-16 02:24:32] API Request started - org_id: 2
+[2025-03-16 02:24:32] Database connection established successfully
+[2025-03-16 02:24:32] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:24:32] Checking database schema
+[2025-03-16 02:24:32] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:24:32] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:24:32] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:24:32] Query executed, found 1 announcements
+[2025-03-16 02:24:32] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:24:32] Using creator_name for author: The_Browser
+[2025-03-16 02:24:32] Using existing category: general
+[2025-03-16 02:24:32] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:24:32] No problematic announcements found.
+[2025-03-16 02:24:32] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:24:32] API Request completed
+[2025-03-16 02:39:50] API Request started - org_id: 3
+[2025-03-16 02:39:50] Database connection established successfully
+[2025-03-16 02:39:50] Parameters: org_id=3, search='', category='', date_from='', date_to=''
+[2025-03-16 02:39:50] Checking database schema
+[2025-03-16 02:39:50] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:39:50] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:39:50] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '3' OR u_created_by.users_org = '3')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:39:50] Query executed, found 0 announcements
+[2025-03-16 02:39:50] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 02:39:50] No problematic announcements found.
+[2025-03-16 02:39:50] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 02:39:50] API Request completed
+[2025-03-16 02:39:50] API Request started - org_id: 3
+[2025-03-16 02:39:50] Database connection established successfully
+[2025-03-16 02:39:50] Parameters: org_id=3, search='', category='', date_from='', date_to=''
+[2025-03-16 02:39:50] Checking database schema
+[2025-03-16 02:39:50] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:39:50] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:39:50] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '3' OR u_created_by.users_org = '3')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:39:50] Query executed, found 0 announcements
+[2025-03-16 02:39:50] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 02:39:50] No problematic announcements found.
+[2025-03-16 02:39:50] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 02:39:50] API Request completed
+[2025-03-16 02:40:01] API Request started - org_id: 2
+[2025-03-16 02:40:01] Database connection established successfully
+[2025-03-16 02:40:01] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:40:01] Checking database schema
+[2025-03-16 02:40:01] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:40:01] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:40:01] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:40:01] Query executed, found 1 announcements
+[2025-03-16 02:40:01] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:40:01] Using creator_name for author: The_Browser
+[2025-03-16 02:40:01] Using existing category: general
+[2025-03-16 02:40:01] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:40:01] No problematic announcements found.
+[2025-03-16 02:40:01] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:40:01] API Request completed
+[2025-03-16 02:40:01] API Request started - org_id: 2
+[2025-03-16 02:40:01] Database connection established successfully
+[2025-03-16 02:40:01] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:40:01] Checking database schema
+[2025-03-16 02:40:01] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:40:01] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:40:01] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:40:01] Query executed, found 1 announcements
+[2025-03-16 02:40:01] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:40:01] Using creator_name for author: The_Browser
+[2025-03-16 02:40:01] Using existing category: general
+[2025-03-16 02:40:01] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:40:01] No problematic announcements found.
+[2025-03-16 02:40:01] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:40:01] API Request completed
+[2025-03-16 02:40:13] API Request started - org_id: 2
+[2025-03-16 02:40:13] Database connection established successfully
+[2025-03-16 02:40:13] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:40:13] Checking database schema
+[2025-03-16 02:40:13] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:40:13] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:40:13] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:40:13] Query executed, found 1 announcements
+[2025-03-16 02:40:13] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:40:13] Using creator_name for author: The_Browser
+[2025-03-16 02:40:13] Using existing category: general
+[2025-03-16 02:40:13] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:40:13] No problematic announcements found.
+[2025-03-16 02:40:13] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:40:13] API Request completed
+[2025-03-16 02:40:13] API Request started - org_id: 2
+[2025-03-16 02:40:13] Database connection established successfully
+[2025-03-16 02:40:13] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:40:13] Checking database schema
+[2025-03-16 02:40:13] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:40:13] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:40:13] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:40:13] Query executed, found 1 announcements
+[2025-03-16 02:40:13] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:40:13] Using creator_name for author: The_Browser
+[2025-03-16 02:40:13] Using existing category: general
+[2025-03-16 02:40:13] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:40:13] No problematic announcements found.
+[2025-03-16 02:40:13] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:40:13] API Request completed
+[2025-03-16 02:46:52] API Request started - org_id: 3
+[2025-03-16 02:46:52] Database connection established successfully
+[2025-03-16 02:46:52] Parameters: org_id=3, search='', category='', date_from='', date_to=''
+[2025-03-16 02:46:52] Checking database schema
+[2025-03-16 02:46:52] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:46:52] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:46:52] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '3' OR u_created_by.users_org = '3')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:46:52] Query executed, found 0 announcements
+[2025-03-16 02:46:52] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 02:46:52] No problematic announcements found.
+[2025-03-16 02:46:52] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 02:46:52] API Request completed
+[2025-03-16 02:46:52] API Request started - org_id: 3
+[2025-03-16 02:46:52] Database connection established successfully
+[2025-03-16 02:46:52] Parameters: org_id=3, search='', category='', date_from='', date_to=''
+[2025-03-16 02:46:52] Checking database schema
+[2025-03-16 02:46:52] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:46:52] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:46:52] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '3' OR u_created_by.users_org = '3')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:46:52] Query executed, found 0 announcements
+[2025-03-16 02:46:52] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 02:46:52] No problematic announcements found.
+[2025-03-16 02:46:52] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 02:46:52] API Request completed
+[2025-03-16 02:46:57] API Request started - org_id: 2
+[2025-03-16 02:46:57] Database connection established successfully
+[2025-03-16 02:46:57] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:46:57] Checking database schema
+[2025-03-16 02:46:57] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:46:57] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:46:57] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:46:57] Query executed, found 1 announcements
+[2025-03-16 02:46:57] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:46:57] Using creator_name for author: The_Browser
+[2025-03-16 02:46:57] Using existing category: general
+[2025-03-16 02:46:57] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:46:57] No problematic announcements found.
+[2025-03-16 02:46:57] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:46:57] API Request completed
+[2025-03-16 02:46:57] API Request started - org_id: 2
+[2025-03-16 02:46:57] Database connection established successfully
+[2025-03-16 02:46:57] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 02:46:57] Checking database schema
+[2025-03-16 02:46:57] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 02:46:57] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 02:46:57] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 02:46:57] Query executed, found 1 announcements
+[2025-03-16 02:46:57] Processing announcement ID: 3, Title: sample
+[2025-03-16 02:46:57] Using creator_name for author: The_Browser
+[2025-03-16 02:46:57] Using existing category: general
+[2025-03-16 02:46:57] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 02:46:57] No problematic announcements found.
+[2025-03-16 02:46:57] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 02:46:57] API Request completed
+[2025-03-16 03:29:09] API Request started - org_id: 2
+[2025-03-16 03:29:09] Database connection established successfully
+[2025-03-16 03:29:09] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 03:29:09] Checking database schema
+[2025-03-16 03:29:09] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 03:29:09] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 03:29:09] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 03:29:09] Query executed, found 1 announcements
+[2025-03-16 03:29:09] Processing announcement ID: 3, Title: sample
+[2025-03-16 03:29:09] Using creator_name for author: The_Browser
+[2025-03-16 03:29:09] Using existing category: general
+[2025-03-16 03:29:09] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 03:29:09] No problematic announcements found.
+[2025-03-16 03:29:09] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 03:29:09] API Request completed
+[2025-03-16 03:29:09] API Request started - org_id: 2
+[2025-03-16 03:29:09] Database connection established successfully
+[2025-03-16 03:29:09] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 03:29:09] Checking database schema
+[2025-03-16 03:29:09] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 03:29:09] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 03:29:09] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 03:29:09] Query executed, found 1 announcements
+[2025-03-16 03:29:09] Processing announcement ID: 3, Title: sample
+[2025-03-16 03:29:09] Using creator_name for author: The_Browser
+[2025-03-16 03:29:09] Using existing category: general
+[2025-03-16 03:29:09] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 03:29:09] No problematic announcements found.
+[2025-03-16 03:29:09] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 03:29:09] API Request completed
+[2025-03-16 04:26:10] API Request started - org_id: 2
+[2025-03-16 04:26:10] Database connection established successfully
+[2025-03-16 04:26:10] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:26:10] Checking database schema
+[2025-03-16 04:26:10] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:26:10] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:26:10] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:26:10] Query executed, found 1 announcements
+[2025-03-16 04:26:10] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:26:10] Using creator_name for author: The_Browser
+[2025-03-16 04:26:10] Using existing category: general
+[2025-03-16 04:26:10] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:26:10] No problematic announcements found.
+[2025-03-16 04:26:10] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:26:10] API Request completed
+[2025-03-16 04:26:10] API Request started - org_id: 2
+[2025-03-16 04:26:10] Database connection established successfully
+[2025-03-16 04:26:10] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:26:10] Checking database schema
+[2025-03-16 04:26:10] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:26:10] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:26:10] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:26:10] Query executed, found 1 announcements
+[2025-03-16 04:26:10] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:26:10] Using creator_name for author: The_Browser
+[2025-03-16 04:26:10] Using existing category: general
+[2025-03-16 04:26:10] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:26:10] No problematic announcements found.
+[2025-03-16 04:26:10] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:26:10] API Request completed
+[2025-03-16 04:34:59] API Request started - org_id: 9
+[2025-03-16 04:34:59] Database connection established successfully
+[2025-03-16 04:34:59] Parameters: org_id=9, search='', category='', date_from='', date_to=''
+[2025-03-16 04:34:59] Checking database schema
+[2025-03-16 04:34:59] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:34:59] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:34:59] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '9' OR u_created_by.users_org = '9')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:34:59] Query executed, found 0 announcements
+[2025-03-16 04:34:59] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 04:34:59] No problematic announcements found.
+[2025-03-16 04:34:59] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 04:34:59] API Request completed
+[2025-03-16 04:34:59] API Request started - org_id: 9
+[2025-03-16 04:34:59] Database connection established successfully
+[2025-03-16 04:34:59] Parameters: org_id=9, search='', category='', date_from='', date_to=''
+[2025-03-16 04:34:59] Checking database schema
+[2025-03-16 04:34:59] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:34:59] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:34:59] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '9' OR u_created_by.users_org = '9')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:34:59] Query executed, found 0 announcements
+[2025-03-16 04:34:59] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 04:34:59] No problematic announcements found.
+[2025-03-16 04:34:59] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 04:34:59] API Request completed
+[2025-03-16 04:35:11] API Request started - org_id: 2
+[2025-03-16 04:35:11] Database connection established successfully
+[2025-03-16 04:35:11] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:35:11] Checking database schema
+[2025-03-16 04:35:11] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:35:11] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:35:11] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:35:11] Query executed, found 1 announcements
+[2025-03-16 04:35:11] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:35:11] Using creator_name for author: The_Browser
+[2025-03-16 04:35:11] Using existing category: general
+[2025-03-16 04:35:11] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:35:11] No problematic announcements found.
+[2025-03-16 04:35:11] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:35:11] API Request completed
+[2025-03-16 04:35:11] API Request started - org_id: 2
+[2025-03-16 04:35:11] Database connection established successfully
+[2025-03-16 04:35:11] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:35:11] Checking database schema
+[2025-03-16 04:35:11] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:35:11] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:35:11] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:35:11] Query executed, found 1 announcements
+[2025-03-16 04:35:11] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:35:11] Using creator_name for author: The_Browser
+[2025-03-16 04:35:11] Using existing category: general
+[2025-03-16 04:35:11] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:35:11] No problematic announcements found.
+[2025-03-16 04:35:11] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:35:11] API Request completed
+[2025-03-16 04:37:39] API Request started - org_id: 2
+[2025-03-16 04:37:39] Database connection established successfully
+[2025-03-16 04:37:39] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:37:39] Checking database schema
+[2025-03-16 04:37:39] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:37:39] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:37:39] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:37:39] Query executed, found 1 announcements
+[2025-03-16 04:37:39] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:37:39] Using creator_name for author: The_Browser
+[2025-03-16 04:37:39] Using existing category: general
+[2025-03-16 04:37:39] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:37:39] No problematic announcements found.
+[2025-03-16 04:37:39] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:37:39] API Request completed
+[2025-03-16 04:37:39] API Request started - org_id: 2
+[2025-03-16 04:37:39] Database connection established successfully
+[2025-03-16 04:37:39] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:37:39] Checking database schema
+[2025-03-16 04:37:39] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:37:39] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:37:39] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:37:39] Query executed, found 1 announcements
+[2025-03-16 04:37:39] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:37:39] Using creator_name for author: The_Browser
+[2025-03-16 04:37:39] Using existing category: general
+[2025-03-16 04:37:39] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:37:39] No problematic announcements found.
+[2025-03-16 04:37:39] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:37:39] API Request completed
+[2025-03-16 04:38:10] API Request started - org_id: 2
+[2025-03-16 04:38:10] Database connection established successfully
+[2025-03-16 04:38:10] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:38:10] Checking database schema
+[2025-03-16 04:38:10] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:38:10] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:38:10] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:38:10] Query executed, found 1 announcements
+[2025-03-16 04:38:10] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:38:10] Using creator_name for author: The_Browser
+[2025-03-16 04:38:10] Using existing category: general
+[2025-03-16 04:38:10] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:38:10] No problematic announcements found.
+[2025-03-16 04:38:10] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:38:10] API Request completed
+[2025-03-16 04:38:10] API Request started - org_id: 2
+[2025-03-16 04:38:10] Database connection established successfully
+[2025-03-16 04:38:10] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:38:10] Checking database schema
+[2025-03-16 04:38:10] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:38:10] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:38:10] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:38:10] Query executed, found 1 announcements
+[2025-03-16 04:38:10] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:38:10] Using creator_name for author: The_Browser
+[2025-03-16 04:38:10] Using existing category: general
+[2025-03-16 04:38:10] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:38:10] No problematic announcements found.
+[2025-03-16 04:38:10] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:38:10] API Request completed
+[2025-03-16 04:40:05] API Request started - org_id: 2
+[2025-03-16 04:40:05] Database connection established successfully
+[2025-03-16 04:40:05] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:40:05] Checking database schema
+[2025-03-16 04:40:05] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:40:05] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:40:05] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:40:05] Query executed, found 1 announcements
+[2025-03-16 04:40:05] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:40:05] Using creator_name for author: The_Browser
+[2025-03-16 04:40:05] Using existing category: general
+[2025-03-16 04:40:05] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:40:05] No problematic announcements found.
+[2025-03-16 04:40:05] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:40:05] API Request completed
+[2025-03-16 04:40:05] API Request started - org_id: 2
+[2025-03-16 04:40:05] Database connection established successfully
+[2025-03-16 04:40:05] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:40:05] Checking database schema
+[2025-03-16 04:40:05] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:40:05] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:40:05] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:40:05] Query executed, found 1 announcements
+[2025-03-16 04:40:05] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:40:05] Using creator_name for author: The_Browser
+[2025-03-16 04:40:05] Using existing category: general
+[2025-03-16 04:40:05] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:40:05] No problematic announcements found.
+[2025-03-16 04:40:05] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:40:05] API Request completed
+[2025-03-16 04:40:44] API Request started - org_id: 2
+[2025-03-16 04:40:44] Database connection established successfully
+[2025-03-16 04:40:44] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:40:44] Checking database schema
+[2025-03-16 04:40:44] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:40:44] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:40:44] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:40:44] Query executed, found 1 announcements
+[2025-03-16 04:40:44] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:40:44] Using creator_name for author: The_Browser
+[2025-03-16 04:40:44] Using existing category: general
+[2025-03-16 04:40:44] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:40:44] No problematic announcements found.
+[2025-03-16 04:40:44] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:40:44] API Request completed
+[2025-03-16 04:40:44] API Request started - org_id: 2
+[2025-03-16 04:40:44] Database connection established successfully
+[2025-03-16 04:40:44] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 04:40:44] Checking database schema
+[2025-03-16 04:40:44] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:40:44] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:40:44] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:40:44] Query executed, found 1 announcements
+[2025-03-16 04:40:44] Processing announcement ID: 3, Title: sample
+[2025-03-16 04:40:44] Using creator_name for author: The_Browser
+[2025-03-16 04:40:44] Using existing category: general
+[2025-03-16 04:40:44] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 04:40:44] No problematic announcements found.
+[2025-03-16 04:40:44] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 04:40:44] API Request completed
+[2025-03-16 04:42:13] API Request started - org_id: 6
+[2025-03-16 04:42:13] Database connection established successfully
+[2025-03-16 04:42:13] Parameters: org_id=6, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:13] Checking database schema
+[2025-03-16 04:42:13] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:13] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:13] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '6' OR u_created_by.users_org = '6')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:13] Query executed, found 2 announcements
+[2025-03-16 04:42:13] Processing announcement ID: 4, Title: Trivia of the Day
+[2025-03-16 04:42:13] Using creator_name for author: admin
+[2025-03-16 04:42:13] Using existing category: general
+[2025-03-16 04:42:13] Processing announcement ID: 2, Title: TSU Foundation Week & CCS Week! 
+[2025-03-16 04:42:13] Using creator_name for author: admin
+[2025-03-16 04:42:13] Using existing category: general
+[2025-03-16 04:42:13] Processing complete. Total announcements: 2, Unknown authors: 0
+[2025-03-16 04:42:13] No problematic announcements found.
+[2025-03-16 04:42:13] Response prepared. Total announcements: 2, Processed: 2, Unknown authors: 0
+[2025-03-16 04:42:13] API Request completed
+[2025-03-16 04:42:13] API Request started - org_id: 6
+[2025-03-16 04:42:13] Database connection established successfully
+[2025-03-16 04:42:13] Parameters: org_id=6, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:13] Checking database schema
+[2025-03-16 04:42:13] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:13] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:13] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '6' OR u_created_by.users_org = '6')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:13] Query executed, found 2 announcements
+[2025-03-16 04:42:13] Processing announcement ID: 4, Title: Trivia of the Day
+[2025-03-16 04:42:13] Using creator_name for author: admin
+[2025-03-16 04:42:13] Using existing category: general
+[2025-03-16 04:42:13] Processing announcement ID: 2, Title: TSU Foundation Week & CCS Week! 
+[2025-03-16 04:42:13] Using creator_name for author: admin
+[2025-03-16 04:42:13] Using existing category: general
+[2025-03-16 04:42:13] Processing complete. Total announcements: 2, Unknown authors: 0
+[2025-03-16 04:42:13] No problematic announcements found.
+[2025-03-16 04:42:13] Response prepared. Total announcements: 2, Processed: 2, Unknown authors: 0
+[2025-03-16 04:42:13] API Request completed
+[2025-03-16 04:42:43] API Request started - org_id: 4
+[2025-03-16 04:42:43] Database connection established successfully
+[2025-03-16 04:42:43] Parameters: org_id=4, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:43] Checking database schema
+[2025-03-16 04:42:43] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:43] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:43] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '4' OR u_created_by.users_org = '4')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:43] Query executed, found 0 announcements
+[2025-03-16 04:42:43] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 04:42:43] No problematic announcements found.
+[2025-03-16 04:42:43] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 04:42:43] API Request completed
+[2025-03-16 04:42:43] API Request started - org_id: 4
+[2025-03-16 04:42:43] Database connection established successfully
+[2025-03-16 04:42:43] Parameters: org_id=4, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:43] Checking database schema
+[2025-03-16 04:42:43] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:43] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:43] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '4' OR u_created_by.users_org = '4')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:43] Query executed, found 0 announcements
+[2025-03-16 04:42:43] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 04:42:43] No problematic announcements found.
+[2025-03-16 04:42:43] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 04:42:43] API Request completed
+[2025-03-16 04:42:45] API Request started - org_id: 5
+[2025-03-16 04:42:45] Database connection established successfully
+[2025-03-16 04:42:45] Parameters: org_id=5, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:45] Checking database schema
+[2025-03-16 04:42:45] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:45] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:45] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '5' OR u_created_by.users_org = '5')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:45] Query executed, found 0 announcements
+[2025-03-16 04:42:45] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 04:42:45] No problematic announcements found.
+[2025-03-16 04:42:45] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 04:42:45] API Request completed
+[2025-03-16 04:42:45] API Request started - org_id: 5
+[2025-03-16 04:42:45] Database connection established successfully
+[2025-03-16 04:42:45] Parameters: org_id=5, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:45] Checking database schema
+[2025-03-16 04:42:45] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:45] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:45] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '5' OR u_created_by.users_org = '5')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:45] Query executed, found 0 announcements
+[2025-03-16 04:42:45] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-03-16 04:42:45] No problematic announcements found.
+[2025-03-16 04:42:45] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-03-16 04:42:45] API Request completed
+[2025-03-16 04:42:46] API Request started - org_id: 6
+[2025-03-16 04:42:46] Database connection established successfully
+[2025-03-16 04:42:46] Parameters: org_id=6, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:46] Checking database schema
+[2025-03-16 04:42:46] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:46] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:46] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '6' OR u_created_by.users_org = '6')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:46] Query executed, found 2 announcements
+[2025-03-16 04:42:46] Processing announcement ID: 4, Title: Trivia of the Day
+[2025-03-16 04:42:46] Using creator_name for author: admin
+[2025-03-16 04:42:46] Using existing category: general
+[2025-03-16 04:42:46] Processing announcement ID: 2, Title: TSU Foundation Week & CCS Week! 
+[2025-03-16 04:42:46] Using creator_name for author: admin
+[2025-03-16 04:42:46] Using existing category: general
+[2025-03-16 04:42:46] Processing complete. Total announcements: 2, Unknown authors: 0
+[2025-03-16 04:42:46] No problematic announcements found.
+[2025-03-16 04:42:46] Response prepared. Total announcements: 2, Processed: 2, Unknown authors: 0
+[2025-03-16 04:42:46] API Request completed
+[2025-03-16 04:42:46] API Request started - org_id: 6
+[2025-03-16 04:42:46] Database connection established successfully
+[2025-03-16 04:42:46] Parameters: org_id=6, search='', category='', date_from='', date_to=''
+[2025-03-16 04:42:46] Checking database schema
+[2025-03-16 04:42:46] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 04:42:46] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 04:42:46] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '6' OR u_created_by.users_org = '6')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 04:42:46] Query executed, found 2 announcements
+[2025-03-16 04:42:46] Processing announcement ID: 4, Title: Trivia of the Day
+[2025-03-16 04:42:46] Using creator_name for author: admin
+[2025-03-16 04:42:46] Using existing category: general
+[2025-03-16 04:42:46] Processing announcement ID: 2, Title: TSU Foundation Week & CCS Week! 
+[2025-03-16 04:42:46] Using creator_name for author: admin
+[2025-03-16 04:42:46] Using existing category: general
+[2025-03-16 04:42:46] Processing complete. Total announcements: 2, Unknown authors: 0
+[2025-03-16 04:42:46] No problematic announcements found.
+[2025-03-16 04:42:46] Response prepared. Total announcements: 2, Processed: 2, Unknown authors: 0
+[2025-03-16 04:42:46] API Request completed
+[2025-03-16 06:41:30] API Request started - org_id: 2
+[2025-03-16 06:41:30] Database connection established successfully
+[2025-03-16 06:41:30] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 06:41:30] Checking database schema
+[2025-03-16 06:41:30] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 06:41:30] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 06:41:30] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 06:41:30] Query executed, found 1 announcements
+[2025-03-16 06:41:30] Processing announcement ID: 3, Title: sample
+[2025-03-16 06:41:30] Using creator_name for author: The_Browser
+[2025-03-16 06:41:30] Using existing category: general
+[2025-03-16 06:41:30] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 06:41:30] No problematic announcements found.
+[2025-03-16 06:41:30] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 06:41:30] API Request completed
+[2025-03-16 06:41:30] API Request started - org_id: 2
+[2025-03-16 06:41:30] Database connection established successfully
+[2025-03-16 06:41:30] Parameters: org_id=2, search='', category='', date_from='', date_to=''
+[2025-03-16 06:41:30] Checking database schema
+[2025-03-16 06:41:30] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-03-16 06:41:30] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-03-16 06:41:30] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-03-16 06:41:30] Query executed, found 1 announcements
+[2025-03-16 06:41:30] Processing announcement ID: 3, Title: sample
+[2025-03-16 06:41:30] Using creator_name for author: The_Browser
+[2025-03-16 06:41:30] Using existing category: general
+[2025-03-16 06:41:30] Processing complete. Total announcements: 1, Unknown authors: 0
+[2025-03-16 06:41:30] No problematic announcements found.
+[2025-03-16 06:41:30] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
+[2025-03-16 06:41:30] API Request completed

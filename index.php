@@ -26,6 +26,7 @@
     
     ?>
     <!DOCTYPE html>
+
     <html>
 
     <head><meta charset="utf-8">
@@ -62,17 +63,13 @@
 
         <!-- Modernizr for browser feature detection -->
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <style>
-    
-            .fixed-top {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1030; /* Make sure the navbar stays above other content */
+ <style>
+    @media (min-width: 951px) { /* Corrected max-width instead of min-width */
+        .page-content {
+    width: 77.5%;
+    float: right;
     }
-
-    /* Optional: Add transitions for smooth visibility of dropdowns or collapse */
-    .navbar-collapse {
+}   .navbar-collapse {
         transition: all 0.3s ease;
     }
             .navbar-collapse.collapse {
@@ -89,2066 +86,8 @@
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-
-    }
-
-        
-       @media (min-width: 951px) { /* Corrected max-width instead of min-width */
-        .page-content {
-    width: 77.5%;
-    float: right;
-    }
-    }
-
-    @media(max-width: 950px){.page-content {
-    width: 100%;
-    float: right;
-    }
-        
-    }
-    
-    .announcement-item {
-  max-height: max-content; /* Allow content to determine height */
-  overflow: hidden; /* Hide overflow */
-}
-
-/* Adjust the carousel container to reduce empty space */
-.carousel-container {
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
-}
-
-/* Remove excessive padding */
-.announcement-item .announcement-details {
-  padding-bottom: 10px !important;
-}
-
-/* Adjust image container to reduce height when needed */
-.carousel-item img {
-  max-height: 300px;
-  object-fit: contain;
-}
-
-/* Make sure footer sticks closer to content */
-.announcement-footer {
-  margin-top: 5px !important;
-  padding-top: 0 !important;
-}
-
-/* Reduce space below content */
-.announcement-content {
-  margin-bottom: 5px !important;
-}
-    .see-more-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: block;
-  transition: color 0.2s ease;
-}
-
-.announcement-details {
-  transition: all 0.3s ease;
-}
-            .modal-content {
-                border-radius: 15px;
-                border: none;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             }
-
-            .modal-title {
-                font-weight: 600;
-                margin: 0;
-            }
-
-            .progress-steps {
-                display: flex;
-                justify-content: center;
-                padding: 1.5rem 0;
-            }
-
-            .step-indicator {
-                width: 35px;
-                height: 35px;
-                border-radius: 50%;
-                background-color: #e9ecef;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 1rem;
-                position: relative;
-                font-weight: 600;
-                transition: all 0.3s ease;
-            }
-
-            .step-indicator.active {
-                background-color: #6366f1;
-                color: white;
-            }
-
-            .step-indicator:not(:last-child)::after {
-                content: '';
-                position: absolute;
-                width: 100%;
-                height: 3px;
-                background-color: #e9ecef;
-                right: -100%;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-
-            .emoji-rating {
-                display: flex;
-                justify-content: space-around;
-                padding: 2rem 0;
-            }
-
-            .emoji-select {
-                font-size: 2.5rem;
-                cursor: pointer;
-                transition: transform 0.2s;
-                opacity: 0.5;
-            }
-
-            .emoji-select:hover {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-
-            .emoji-select.selected {
-                opacity: 1;
-                transform: scale(1.1);
-            }
-
-            .form-group {
-                margin-bottom: 1.5rem;
-            }
-
-            .form-label {
-                font-weight: 500;
-                color: #4b5563;
-                margin-bottom: 0.5rem;
-            }
-
-            .form-control {
-                border-radius: 8px;
-                padding: 0.75rem;
-                border: 1px solid #e5e7eb;
-            }
-
-            .form-control:focus {
-                border-color: #6366f1;
-                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-            }
-
-            .radio-group {
-                display: grid;
-                gap: 0.75rem;
-                padding: 0.5rem 0;
-            }
-
-            .radio-option {
-                display: flex;
-                align-items: center;
-                padding: 0.75rem;
-                border-radius: 8px;
-                background-color: #f8f9fa;
-                cursor: pointer;
-                transition: all 0.2s;
-            }
-
-            .radio-option:hover {
-                background-color: #e9ecef;
-            }
-
-            .radio-option input {
-                margin-right: 0.75rem;
-            }
-
-            .step {
-                display: none;
-                animation: fadeIn 0.5s ease;
-            }
-
-            .step.active {
-                display: block;
-            }
-
-            .modal-footer {
-                border-top: 1px solid #e5e7eb;
-                padding: 1.25rem;
-            }
-
-            .btn {
-                padding: 0.75rem 1.5rem;
-                border-radius: 8px;
-                font-weight: 500;
-                transition: all 0.2s;
-            }
-
-            .btn-primary {
-                background-color: #6366f1;
-                border-color: #6366f1;
-            }
-
-            .btn-primary:hover {
-                background-color: #4f46e5;
-                border-color: #4f46e5;
-            }
-
-            .btn-success {
-                background-color: #10b981;
-                border-color: #10b981;
-            }
-
-            .btn-success:hover {
-                background-color: #059669;
-                border-color: #059669;
-            }
-
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            
-            
-            /* School Calendar */
-            .p-61 {
-                padding: 1.5rem;
-                background-color: #ffd559;
-            }
-            
-            .p-4 {
-                padding: 1.5rem !important;
-                background-color: #2e0f13;
-            }
-             
-            .items-start {
-                align-items: flex-start;
-                
-                padding: 1%;
-                border-radius: 10px;
-            }
-            
-            .text-gold-900 {
-                --tw-text-opacity: 1;
-                 color: #ffc107;
-            }
-            
-            .text-white-500 {
-                --tw-text-opacity: 1;
-                color: #f8f9fa;
-                font-weight: bold;
-            }
-            
-            .py-4 {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
-    background-color: #ffffffcf;
-}
-            
-            .p-6 {
-    padding: 1.5rem;
-    border: 1px solid;
-    background-color: #fbc51f6e;
-}
-            .font-semibold {
-    font-weight: 600;
-    color: #212529;
-    text-align: left;
-    font-size: 80%;
-}
-             
-        </style>
-        <style>/* Make sure the text doesn't overflow */
-    .feedback-section * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-
-    .feedback-section {
-        min-height: 100vh;
-        padding: 2rem;
-    }
-
-    .feedback-section .feedback-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .feedback-section .header {
-        text-align: center;
-        margin-bottom: 3rem;
-        padding: 2rem;
-    }
-
-    .feedback-section .header h1 {
-        font-size: 3rem;
-        color: #1f2937;
-        margin-bottom: 1rem;
-        animation: fadeIn 0.8s ease-out;
-    }
-
-    .feedback-section .header p {
-        color: #4b5563;
-        font-size: 1.2rem;
-    }
-
-    .feedback-section .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .feedback-section .stat-card {
-        background: #ffe598;
-        padding: 1.5rem;
-        border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        display: flex;
-        align-items: center;
-        transition: transform 0.2s ease;
-    }
-
-    .feedback-section .stat-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .feedback-section .stat-icon {
-        width: 48px;
-        height: 48px;
-        background: #e0e7ff;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1rem;
-    }
-
-    .feedback-section .stat-info h3 {
-        color: #4b5563;
-        font-size: 0.9rem;
-        margin-bottom: 0.25rem;
-    }
-
-    .feedback-section .stat-info p {
-        color: #1f2937;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .feedback-section .main-card {
-    background: #ffe598;
-    border-radius: 1.5rem;
-    padding: 2rem;
-    box-shadow: 19px -1px 15px rgb(0 0 0 / 25%);
-}
-
-    .feedback-section .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-
-    .feedback-section .submit-btn {
-        background: #4f46e5;
-        color: white;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 0.75rem;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .feedback-section .submit-btn:hover {
-        background: #4338ca;
-        transform: scale(1.05);
-    }
-    
-    .submit-btn {
-        border-radius: 0.75rem;
-    }
-
-    .feedback-section .feedback-list {
-        max-height: 500px;
-        overflow-y: auto;
-        margin-bottom: 2rem;
-    }
-
-    .feedback-section .feedback-item {
-        background: #2e0f13;
-        padding: 1.5rem;
-        border-radius: 1rem;
-        margin-bottom: 1rem;
-        transition: all 0.2s ease;
-    }
-
-    .feedback-section .feedback-item:hover {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-
-    .feedback-section .feedback-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    background-color: #6a221b;
-    padding: 1rem;
-    border-radius: 10px;
-}
-
-    .feedback-section .user-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .feedback-section .avatar {
-        width: 40px;
-        height: 40px;
-        background: #e0e7ff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: #4f46e5;
-    }
-
-    .feedback-section .rating {
-        color: #eab308;
-        font-size: 1.2rem;
-    }
-
-    .feedback-section .feedback-content {
-        color: #4b5563;
-        line-height: 1.6;
-    }
-
-    .feedback-section .footer {
-        border-top: 1px solid #e5e7eb;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-        text-align: center;
-    }
-
-    .feedback-section .footer-stat h4 {
-        color: #4b5563;
-        margin-bottom: 0.5rem;
-    }
-
-    .feedback-section .footer-stat p {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #4f46e5;
-    }
-
-    /* Scrollbar Styling */
-    .feedback-section .feedback-list::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .feedback-section .feedback-list::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-    }
-
-    .feedback-section .feedback-list::-webkit-scrollbar-thumb {
-        background: #c7c7c7;
-        border-radius: 4px;
-    }
-
-    .feedback-section .feedback-list::-webkit-scrollbar-thumb:hover {
-        background: #a8a8a8;
-    }
-
-    @media (max-width: 768px) {
-        .feedback-section .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .feedback-section .footer {
-            grid-template-columns: 1fr;
-        }
-
-        .feedback-section .header h1 {
-            font-size: 2rem;
-        }
-    }
-    </style>
-        <style>
-
-    .event-details {
-        word-wrap: break-word;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-        .section-content h3 {
-        font-family: 'Arial', sans-serif; /* Use a clean, modern font */
-        font-size: 1.75rem; /* Set the font size */
-        color: #2e0f13; /* Green color for emphasis */
-        font-weight: bold; /* Make it bold */
-        margin-top: 40px; /* Add space above */
-        margin-bottom: 10px; /* Add space below */
-        text-transform: uppercase; /* Uppercase for a more formal feel */
-        letter-spacing: 1px; /* Add slight letter spacing for readability */
-        border-bottom: 2px solid #2e0f13; /* Green border to match the theme */
-        padding-bottom: 5px; /* Add some padding below */
-    }
-
-    @media (min-width: 768px) {
-        .row-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 4 items per row on large screens */
-            gap: 20px; /* Space between items */
-        }
-        
-        
-    /* Aspect ratio box to maintain a consistent image shape */
-    .aspect-ratio-box {
-        width: 150px; /* Fixed size for uniform appearance */
-        height: 150px; /* Ensures aspect ratio */
-        position: relative;
-        overflow: hidden;
-        border-radius: 50%; /* Start as a circle */
-        transition: border-radius 0.3s ease;
-    }
-
-
-    .aspect-ratio-box:hover {
-        border-radius: 0; /* Change to square on hover */
-    }
-
-    .aspect-ratio-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .aspect-ratio-box:hover img {
-        transform: scale(1.05); /* Slight zoom effect on hover */
-    }
-
-    /* Overlay to show on hover */
-    .card-overlay {
-        position: absolute;
-        start: 0;
-        end: 0;
-        bottom: 0;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .aspect-ratio-box:hover .card-overlay {
-        opacity: 1; /* Show overlay on hover */
-    }
-
-            .custom-alert {
-            background-color: #f0f8ff;
-            border: 1px solid #add8e6;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            color: #005f73;
-        }
-    }
-    
-    .text-gold-900 {
-    --tw-text-opacity: 1;
-    color: #ffc107;
-}
-
-    /* For small screens (less than 768px), apply horizontal scrolling */
-    @media (max-width: 767px) {
-        .row-container {
-            display: flex;
-            flex-wrap: nowrap; /* Single row */
-            gap: 20px; /* Space between items */
-            overflow-x: auto; /* Enables horizontal scroll */
-            padding: 20px;
-        }
-
-        .row-container::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .row-container::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 4px;
-        }
-        
-    }
-    /* For smaller screens, make the container horizontally scrollable */
-    @media (max-width: 767px) {
-        .row-container {
-            flex-wrap: nowrap; /* Prevent wrapping on small screens */
-            overflow-x: auto;  /* Enable horizontal scrolling */
-            padding: 20px;
-        }
-
-        .row-container::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .row-container::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 4px;
-        }
-    }
-
-    /* Aspect ratio box to maintain a consistent image shape */
-    .aspect-ratio-box {
-        width: 150px; /* Fixed size for uniform appearance */
-        height: 150px; /* Ensures aspect ratio */
-        position: relative;
-        overflow: hidden;
-        border-radius: 50%; /* Start as a circle */
-        transition: border-radius 0.3s ease;
-    }
-
-    .aspect-ratio-box:hover {
-        border-radius: 0; /* Change to square on hover */
-    }
-
-    .aspect-ratio-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }.card-title {
-        display: block;  /* Ensures the title behaves as a block element */
-        font-size: 1.25rem;  /* Slightly larger font size for emphasis */
-        font-weight: 600;  /* Bold weight for more prominence */
-        color: #333;  /* Dark color for better readability */
-        line-height: 1.6em;  /* Increased line height for better text spacing */
-        white-space: normal; /* Allow line breaks */
-        word-wrap: break-word; /* Break words to fit within the container */
-        margin-bottom: 0.5rem;  /* Adds a little more space below the title */
-        padding: 0.25rem 0;  /* Small vertical padding for comfort */
-        text-align: center;  /* Center the title text */
-        letter-spacing: 0.5px;  /* Adds subtle spacing between letters for better readability */
-        overflow: hidden;  /* Ensures that the text doesn't spill out */
-        text-overflow: ellipsis;  /* Adds ellipsis if the title exceeds the container width */
-        max-width: 100%; /* Ensure the text respects the container width */
-        max-height: 4.8em; /* Adjusted to allow up to two lines */
-    }
-
-    .card-title span {
-        display: block;  /* Display as a block element for better control */
-        color: #6c757d;  /* Light, muted color for additional text or description */
-        font-size: 0.875rem;  /* Smaller size for the secondary text */
-        text-align: center;  /* Center the secondary text as well */
-        margin-top: 1rem;  /* Adds space between title and the additional info */
-    }
-
-    .card-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        height: 100%; /* Ensure the card body fills the container */
-    }
-
-    .card-body .card-title {
-        flex-grow: 1; /* Allow the card title to grow and fill available space */
-    }
-
-
-    /* Optional: Adjust the card container to avoid overlapping */
-    .card {
-        word-wrap: break-word;
-    }
-
-
-    .aspect-ratio-box:hover img {
-        transform: scale(1.05); /* Slight zoom effect on hover */
-    }
-
-    /* Overlay to show on hover */
-    .card-overlay {
-        position: absolute;
-        start: 0;
-        end: 0;
-        bottom: 0;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .aspect-ratio-box:hover .card-overlay {
-        opacity: 1; /* Show overlay on hover */
-    }
-
-        .custom-alert i {
-            color: #005f73;
-        }
-            .conten-ann.list-group-item.bg-white.rounded-lg.shadow-sm.p-4.mb-4 {
-        --bs-bg-opacity: 1;
-        background-color: rgb(237 229 176 / 74%) !important;
-    }
-        .tab-content {
-        padding-top: 1.5rem;
-    }
-    /* Tabs Styling */
-    #feedTabs {
-        background-color: #fff;
-    }
-
-    #feedTabs .nav-link {
-        font-weight: 600;
-        color: #4B5563; /* Dark gray for the tabs */
-        background-color: transparent;
-        border: none;
-    }
-
-    #feedTabs .nav-link:hover {
-        color: #1F2937; /* Darker gray on hover */
-    }
-
-    #feedTabs .nav-link.active {
-        color: white;
-        background:linear-gradient(135deg, #6366f1, #d8d3e5);
-    
-    }
-    #newsFeedContent {
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .modal-body {
-        flex: 1; /* Take up the remaining space */
-        width: 100%; /* Ensure the body spans the full width */
-        overflow: auto; /* Allow scrolling if content overflows */
-        padding: 20px; /* Optional: add padding inside the body */
-            background-color: #fff;
-    }
-
-    .announcement-item {
-        background-color: #fff;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .announcement-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .announcement-header img {
-        width: 5rem;
-        height: 5rem;
-        border-radius: 30px;
-    }
-
-    .announcement-header h4 {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #4b5563;
-    }
-
-    .announcement-header p {
-        font-size: 0.875rem;
-        color: #6b7280;
-    }
-
-    .announcement-content p {
-        color: #4b5563;
-    }
-
-    .announcement-content span {
-        font-size: 0.875rem;
-        color: #6b7280;
-    }
-    .btn-close {
-        color: #fff;
-        opacity: 1;
-    }
-
-    .btn-close:hover {
-        color: #e5e7eb;
-    }
-
-    .nav-tabs .nav-link {
-        border: none;
-        border-bottom: 2px solid transparent;
-        padding: 0.75rem 1.5rem;
-    }
-
-    .nav-tabs .nav-link.active {
-        border-bottom-color: #3b82f6;
-        color: #3b82f6;
-    }
-
-    .nav-tabs .nav-link:hover {
-        border-bottom-color: #6b7280;
-    }
-
-    .aspect-ratio-box {
-        width: 150px; /* Fixed size for uniform appearance */
-        height: 150px; /* Ensures aspect ratio */
-        position: relative;
-        overflow: hidden;
-        border-radius: 50%; /* Start as a circle */
-        transition: border-radius 0.3s ease;
-    }
-
-    .aspect-ratio-box:hover {
-        border-radius: 0; /* Change to square on hover */
-    }
-
-    .aspect-ratio-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .aspect-ratio-box:hover img {
-        transform: scale(1.05);
-    }
-
-    .card-overlay {
-        position: absolute;
-        start: 0;
-        end: 0;
-        bottom: 0;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .aspect-ratio-box:hover .card-overlay {
-        opacity: 1; /* Show overlay on hover */
-    }
-
-
-    .image-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        z-index: 1000;
-        overflow: hidden;
-    }
-
-    .modal-content {
-        display: flex;
-        flex-direction: column; /* Stack header, body, and footer vertically */
-        justify-content: flex-start; /* Align children at the top */
-        align-items: stretch; /* Ensure children take up the full width */
-        width: 100%;
-        height: 100%;
-    }
-
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%; /* Ensure header spans full width */
-        padding: 10px 20px; /* Add padding to the header */
-        background-color: #2e0f13; /* Optional: Make header background transparent */
-        border-bottom: 1px solid #ddd; /* Optional: Add a border between header and body */
-    }
-
-    .modal-body {
-        flex: 1;
-        width: 100%;
-        overflow: auto;
-        padding: 20px;
-    }
-
-    .modal-footer {
-        width: 100%;
-        padding: 10px 20px; /* Optional: Add padding for the footer */
-        text-align: right; /* Optional: Align footer content to the right */
-    }
-
-
-    .modal-img {
-        max-width: 90%;
-        max-height: 90vh;
-        object-fit: contain;
-        border-radius: 4px;
-    }
-        
-
-    .close-modal {
-        position: absolute;
-        top: 15px;
-        right: 25px;
-        color: #fa0c0c;
-        font-size: 40px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 1001;
-    }
-
-    .close-modal:hover {
-        color: #fef08a;
-    }
-
-    .modal-nav {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 16px;
-        color: white;
-        font-weight: bold;
-        font-size: 24px;
-        cursor: pointer;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.3s ease;
-    }
-
-    .modal-nav:hover {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-
-    .modal-prev { left: 20px; }
-    .modal-next { right: 20px; }
-
-    .carousel-item img {
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-    }
-
-    .carousel-item img:hover {
-        opacity: 0.9;
-    }
-    .page-header {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        padding: 4rem 0;
-        margin-bottom: 3rem;
-        position: relative;
-        overflow: hidden;
-        text-align: center;
-        color: white;
-    }
-    /* Announcement Container Colors and Styling */
-    .outer-announcement-container {
-        background: linear-gradient(to bottom, #fefce8, #fff);
-        border: 1px solid #fef08a;
-    }
-
-    .announcement-container {
-        background-color: #ffe38e;
-        border: 1px solid;
-        max-height: 700px; /* Adjust this value as needed */
-        overflow-y: auto;
-    }
-
-
-    /* Carousel Container Styling */
-    .carousel-container {
-        position: relative;
-        height: max-content;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        margin: 1rem 0;
-        background-color: #fafafa;
-        border-radius: 0.5rem;
-    }
-
-    /* Carousel Image Styling */
-    .carousel-item {
-        width: 100%;
-        max-height: 100%;
-        height: auto;
-    }
-
-    .carousel-item img {
-        width: 100%;
-        height: 100%;
-        min-heigth:800px;
-        object-fit: cover;
-        border-radius: 0.5rem;
-    }
-
-    /* Carousel Controls */
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 40px;
-        height: 40px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    .carousel-control-prev:hover,
-    .carousel-control-next:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        width: 20px;
-        height: 20px;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .carousel-container {
-            height: 250px;
-        }
-        
-        .carousel-item {
-            height: 250px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .carousel-container {
-            height: 200px;
-        }
-        
-        .carousel-item {
-            height: 200px;
-        }
-    }
-
-    /* Enhanced announcement content styling */
-    .announcement-content {
-        background-color: white;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .announcement-content p {
-        color: #4b5563;
-        line-height: 1.5;
-    }
-
-    /* Organization header enhanced styling */
-    .announcement-header {
-        background-color: white;
-        padding: 1rem;
-        border-radius: 0.5rem 0.5rem 0 0;
-        border-bottom: 2px solid #fef08a;
-    }
-
-    .announcement-header h3 {
-        color: #854d0e;
-    }
-
-    .announcement-header p {
-        color: #92400e;
-    }
-    /* Announcement Header Styling */
-    .announcement-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1.5rem; /* Adjusted for better spacing */
-    }
-
-    /* Organization Image Styling */
-    .org-image {
-        width: 3.5rem; /* 56px */
-        height: 3.5rem; /* 56px */
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Spacing between the image and the text */
-    .announcement-header .ml-6 { /* Increased margin-left for more space */
-        margin-left: 1.5rem; /* 24px */
-        text-align: left;
-    }
-
-    /* Text Styling */
-    .announcement-header h3 {
-        font-size: 1.125rem; /* 18px */
-        color: #333; /* Darker color for better readability */
-        font-weight: 600;
-        margin-bottom: 0.25rem; /* Small space below the name */
-    }
-
-    .announcement-header p {
-        font-size: 0.875rem; /* 14px */
-        color: #6B7280; /* Light gray */
-        margin-top: 0.25rem;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-        .org-image {
-            width: 3rem; /* 48px */
-            height: 3rem; /* 48px */
-        }
-
-        .announcement-header h3 {
-            font-size: 1rem; /* 16px */
-        }
-
-        .announcement-header p {
-            font-size: 0.75rem; /* 12px */
-        }
-    }
-
-
-    .page-header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .page-header p {
-        font-size: 1rem;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.75);
-    }
-
-    /* Announcement Cards */
-    .announcement-card {
-        background: #2e0f13;
-        border-radius: 1rem;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        margin-bottom: 2rem;
-        overflow: hidden;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .announcement-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Header Section */
-    .card-header {
-        padding: 1.5rem;
-        border-bottom: 2px solid #f3f4f6;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .org-avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .header-content h3 {
-        margin: 0;
-        color: #333;
-        font-weight: 600;
-        font-size: 1.2rem;
-    }
-
-    .header-meta {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #777;
-        font-size: 0.9rem;
-        margin-top: 0.25rem;
-    }.carousel-wrapper {
-        position: relative;
-        background: #2e0f13;
-        border-radius: 1rem;
-        padding: 1rem;
-    }
-
-
-
-    .carousel-control-prev, .carousel-control-next {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        top: 50%;
-        transform: translateY(-50%);
-        margin: 0 1rem;
-    }
-
-    /* Content Section */
-    .announcement-content {
-        padding: 1.5rem;
-        background: #fafafa;
-        border-radius: 1rem;
-    }
-
-    .announcement-text {
-        color: #555;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        font-size: 1rem;
-    }
-
-    /* Truncate Text */
-    .truncate-text {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    /* Read More Button */
-    .read-more-btn {
-        color: #f59e0b;
-        font-weight: 600;
-        cursor: pointer;
-        transition: color 0.3s ease;
-        border: none;
-        background: none;
-        padding: 0;
-        font-size: 1rem;
-    }
-
-    .read-more-btn:hover {
-        color: #d97706;
-    }
-
-    /* Footer Section */
-    .card-footer {
-        padding: 1rem 1.5rem;
-        border-top: 2px solid #f3f4f6;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .timestamp {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #888;
-        font-size: 0.9rem;
-    }
-
-    .timestamp svg {
-        width: 16px;
-        height: 16px;
-        opacity: 0.7;
-    }
-
-    /* Interaction Buttons */
-    .interaction-buttons {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .interaction-btn {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #777;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .interaction-btn:hover {
-        color: #f59e0b;
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
-        background: #fff;
-        border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .empty-state svg {
-        width: 64px;
-        height: 64px;
-        color: #d1d5db;
-        margin-bottom: 1.5rem;
-    }
-
-    /* Media Queries */
-    @media (max-width: 768px) {
-        .announcement-card {
-            margin: 1rem;
-        }
-
-        .carousel-item img {
-            height: 300px;
-        }
-
-        .card-header {
-            padding: 1rem;
-        }
-
-        .announcement-content {
-            padding: 1rem;
-        }
-    }
-    
-        /* FAQs */
-        .collapse {
-            visibility: visible;
-        }
-        
-        /* Text inside the oval */
-.member p {
-    color: #FFD700;
-    /* Gold text for contrast */
-    font-size: 12px;
-    /* Smaller font size for readability */
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-    text-align: left;
-}
-        
-      
-/* About Us */
-.ab-title {
-    color: #ffc107;
-    padding: 1rem;
-}
-
-.ab-title-1 {
-    color: #f8f9fa;
-    padding: 1rem;
-}
-
-.ab-title-vmc {
-    color: #ffc107;
-    padding: 1rem;
-}
-.py-5 {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    color: #fff;
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
-
-.container-ab {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #4a1a1a; /* Deep maroon background */
-    border: 10px solid #f8d307; /* Gold border */
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-/* Org Modal */
-.text-muted-white {
-    --bs-text-opacity: 1;
-    color: #000 !important;
-    font-weight: bold;
-}
-
-.text-dark-white {
-    --bs-text-opacity: 1;
-    color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important;
-}
-
-.p-4-1 {
-    padding: 1.5rem !important;
-    background-color: #ffebb1;
-}
-
-
-
-.announcement-section {
-    min-height: 100vh;
-    background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
-    padding: 3rem 1rem;
-}
-
-.section-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Header Styles */
-.section-heading {
-    text-align: center;
-    margin-bottom: 3rem;
-    position: relative;
-}
-
-.section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #1f2937;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 0.5rem;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: #fbbf24;
-    transform: skewX(-12deg);
-}
-/* Filter Container Styles */
-.filters-container {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-/* Reduce excess space between search bar and content */
-.filters-container {
-  margin-bottom: 10px !important;
-}
-
-/* Reduce top padding of the container below the search area */
-#announcement-container {
-  padding-top: 10px !important;
-}
-
-/* Fix excess margin in section headers */
-.section-heading {
-  margin-bottom: 15px !important;
-}
-
-/* Remove any excessive bottom margin from the search row */
-.filters-grid {
-  margin-bottom: 0 !important;
-}
-
-/* Adjust vertical padding on dividers if present */
-.borderYellow, .w-24.h-1.bg-yellow-400 {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
-}
-.filters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 1rem;
-}
-
-/* Input Styles */
-.filter-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    color: #64748b;
-    background-color: #fff;
-    transition: all 0.2s ease;
-}
-
-.filter-input:focus {
-    outline: none;
-    border-color: #94a3b8;
-    box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.1);
-}
-
-/* Placeholder Styles */
-.filter-input::placeholder {
-    color: #94a3b8;
-}
-
-/* Search Input Specific Styles */
-.search-container {
-    position: relative;
-}
-
-.search-icon {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-}
-
-.search-input {
-    padding-left: 2.5rem;
-}
-
-/* Select Dropdown Styles */
-select.filter-input {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1rem;
-    padding-right: 2.5rem;
-}
-
-/* Date Input Styles */
-input[type="date"].filter-input {
-    color: #64748b;
-}
-
-input[type="date"].filter-input::-webkit-calendar-picker-indicator {
-    filter: invert(60%) sepia(9%) saturate(627%) hue-rotate(176deg) brightness(91%) contrast(90%);
-}
-
-/* Clear Filters Button */
-#clear-filters {
-    height: 52px;
-    padding: 15px 10px;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#clear-filters i {
-    font-size: 1px;
-    margin-right: 5px;
-}
-#clear-filters:hover {
-    background-color: #f1f5f9;
-    border-color: #cbd5e1;
-}
-/* Focus State for All Inputs */
-.filter-input:focus-visible {
-    outline: none;
-    border-color: #94a3b8;
-    box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.1);
-}
-
-/* Announcement Cards */
-.announcement-container {
-    display: grid;
-    gap: 2rem;
-}
-
-.announcement-card {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 1rem;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.announcement-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.org-image {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.org-info h3 {
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 0.25rem;
-}
-
-.posted-by {
-    font-size: 0.875rem;
-    color: #6b7280;
-}
-
-.card-body {
-    padding: 1.5rem;
-}
-
-/* Image Carousel */
-.carousel-container {
-    position: relative;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    margin: 1rem 0;
-}
-
-.carousel-item img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-}
-
-.carousel-control {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.carousel-control:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
-
-.carousel-prev {
-    left: 1rem;
-}
-
-.carousel-next {
-    right: 1rem;
-}
-
-/* Empty State */
-.empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: white;
-    border-radius: 1rem;
-}
-
-.empty-icon {
-    width: 4rem;
-    height: 4rem;
-    margin: 0 auto 1rem;
-    color: #9ca3af;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .section-title {
-        font-size: 2rem;
-    }
-    
-    .filters-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .card-header {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .carousel-item img {
-        height: 200px;
-    }
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.announcement-card {
-    animation: fadeIn 0.5s ease forwards;
-
-}
-
-/* Modal positioning fixes */
-.image-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 9999;
-    overflow: hidden;
-}
-
-.modal-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-img {
-    max-width: 90%;
-    max-height: 80vh;
-    margin: 0 auto;
-    display: block;
-    object-fit: contain;
-}
-
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    color: #fa0c0c;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 10000;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-}
-
-.modal-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 16px;
-    color: white;
-    font-weight: bold;
-    font-size: 24px;
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-}
-
-.modal-prev {
-    left: 20px;
-}
-
-.modal-next {
-    right: 20px;
-}
-</style>
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .about-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2.5rem;
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #2C3E50;
-            background-color: #ffffff;
-        }
-
-        .about-header {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .about-title {
-            font-size: 2rem;
-            color: #34495E;
-            margin: 0;
-            font-weight: 600;
-        }
-
-        .about-subtitle {
-            font-size: 1.2rem;
-            color: #7F8C8D;
-            margin-top: 0.5rem;
-        }
-
-        .campus-image-container {
-            margin: 2rem 0;
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .campus-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .content-block {
-            margin-bottom: 2rem;
-        }
-
-        .text-content {
-            margin-bottom: 1.5rem;
-            text-align: justify;
-            font-size: 1.1rem;
-        }
-
-        .leadership-section {
-    margin: 3rem 0;
-    padding: 2rem;
-    background-color: #F8F9FA;
-    border-radius: 8px;
-}
-
-.leadership-title {
-    text-align: center;
-    color: #34495E;
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-    font-weight: 600;
-}
-
-/* Update the grid to show 4 columns */
-.leadership-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-/* Update the leader card width */
-.leader-card {
-    flex: 0 0 calc(25% - 1rem); /* This makes each card take up 25% of the space minus the gap */
-    text-align: center;
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.leader-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 0 auto 1rem;
-    object-fit: cover;
-}
-
-.leader-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #34495E;
-    margin-bottom: 0.5rem;
-}
-
-.leader-title {
-    color: #7F8C8D;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-
-        .strategic-item {
-            background-color: #F7F9FA;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #34495E;
-            border-radius: 4px;
-        }
-
-        .block-title {
-            color: #34495E;
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .value-item {
-            background-color: #F7F9FA;
-            padding: 1.5rem;
-            text-align: center;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .value-highlight {
-            display: block;
-            color: #34495E;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .campus-image-container {
-                height: 300px;
-            }
-
-            .leadership-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 1200px) {
-    .leader-card {
-        flex: 0 0 calc(50% - 1rem); /* 2 cards per row on medium screens */
-    }
-}
-
-@media (max-width: 768px) {
-    .leader-card {
-        flex: 0 0 100%; /* 1 card per row on small screens */
-    }
-}
-
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-    margin-top: 20px;
-    border: 2px solid #333;
-    padding: 10px;
-    background-color: white;
-}
-
-.floor-table {
-    width: 100%;
-    border-collapse: collapse;
-    display: none; /* Initially hidden */
-    margin: 0 auto;
-}
-
-.floor-table td {
-    border: 1px solid #000;
-    padding: 15px;
-    text-align: center;
-    min-width: 60px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.floor-gray {
-    background-color: #e0e0e0; /* Light gray */
-    color: #000;
-}
-
-.floor-maroon {
-    background-color: #800000; /* Dark maroon */
-    color: white;
-    font-size: 24px !important;
-    font-weight: bold;
-}
-
-/* Show the active floor table */
-.floor-table.active {
-    display: table;
-}
-
-/* Add styles for highlighted cells */
-.floor-table td.highlight, 
-.floor-table td[style*="background-color: yellow"] {
-    background-color: #ffff00 !important; /* Bright yellow */
-    color: #000;
-}
-
-/* Dropdown and search styles */
-.dropdown {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
-.search {
-    padding: 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    min-width: 200px;
-}
-
-.search-button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#dropdownMenu {
-    padding: 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    min-width: 120px;
-}
-
-/* Tab styles */
-.tab-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.tab-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #e0e0e0;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.tab-button.active {
-    background-color: #800000;
-    color: white;
-}
-
-        </style>
+ </style>
         
        
     </head>
@@ -2218,11 +157,11 @@ input[type="date"].filter-input::-webkit-calendar-picker-indicator {
                             FEEDBACK
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#aboutus">
-                            ABOUT US
-                        </a>
-                    </li>
+                      <li class="nav-item">
+                <a class="nav-link" href="#aboutus">
+                    ABOUT US
+                </a>
+            </li>
                 </ul>
             </nav>
 
@@ -2290,15 +229,16 @@ function getAllAnnouncements($connection) {
 $allAnnouncement = getAllAnnouncements($connect);
 ?>
 <!-- Facebook-Style Announcements Section -->
-
 <section id="announcement" class="content-section py-4">
-<div class="section-heading text-center mb-5">
+    <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
             <span class="gradient-text">ANNOUNCEMENTS</span>
         </h1>
         <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
-  <!-- Facebook-style search and filters --><div class="mx-auto px-4 sm:px-6 lg:px-8 mb-4" style="max-width: 900px; width: 100%;">
+    
+    <!-- Facebook-style search and filters -->
+    <div class="mx-auto px-4 sm:px-6 lg:px-8 mb-4" style="max-width: 900px; width: 100%;">
         <!-- Facebook-style search bar -->
         <div class="bg-white rounded-lg shadow p-2 mb-3">
             <div class="flex items-center">
@@ -2318,62 +258,62 @@ $allAnnouncement = getAllAnnouncements($connect);
             </div>
         </div>
     
-    <!-- Facebook-style filters (hidden by default) -->
-    <div id="filters-container" class="bg-white rounded-lg shadow p-3 hidden">
-        <div class="flex items-center justify-between mb-2">
-            <div class="flex items-center">
-                <i class="fas fa-filter text-maroon mr-2"></i>
-                <h3 class="text-gray-800 font-medium text-lg">Filters</h3>
-            </div>
-            <button id="close-filters-btn" class="hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center">
-                <i class="fas fa-times text-gray-500"></i>
-            </button>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <!-- Category filter -->
-            <div class="relative">
-                <label for="category-filter" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select id="category-filter" class="block w-full py-2 px-3 bg-gray-100 rounded-md appearance-none">
-                    <option value="all">All Categories</option>
-                    <option value="academic">Academic</option>
-                    <option value="event">Events</option>
-                    <option value="org">Organizations</option>
-                    <option value="general">General</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" style="top: 22px;">
-                    <i class="fas fa-chevron-down text-xs"></i>
+        <!-- Facebook-style filters (hidden by default) -->
+        <div id="filters-container" class="bg-white rounded-lg shadow p-3 hidden">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center">
+                    <i class="fas fa-filter text-maroon mr-2"></i>
+                    <h3 class="text-gray-800 font-medium text-lg">Filters</h3>
                 </div>
-            </div>
-            
-            <!-- Date range -->
-            <div>
-                <label for="date-from" class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
-                <input 
-                    type="date" 
-                    id="date-from" 
-                    class="block w-full py-2 px-3 bg-gray-100 rounded-md">
-            </div>
-            
-            <div>
-                <label for="date-to" class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
-                <input 
-                    type="date" 
-                    id="date-to" 
-                    class="block w-full py-2 px-3 bg-gray-100 rounded-md">
-            </div>
-            
-            <!-- Clear filters button -->
-            <div class="sm:col-span-2">
-                <button 
-                    id="clear-filters" 
-                    class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-md transition duration-200 flex items-center justify-center">
-                    <i class="fas fa-times mr-2"></i> Clear Filters
+                <button id="close-filters-btn" class="hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center">
+                    <i class="fas fa-times text-gray-500"></i>
                 </button>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Category filter -->
+                <div class="relative">
+                    <label for="category-filter" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="category-filter" class="block w-full py-2 px-3 bg-gray-100 rounded-md appearance-none">
+                        <option value="all">All Categories</option>
+                        <option value="academic">Academic</option>
+                        <option value="event">Events</option>
+                        <option value="org">Organizations</option>
+                        <option value="general">General</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" style="top: 22px;">
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+                
+                <!-- Date range -->
+                <div>
+                    <label for="date-from" class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                    <input 
+                        type="date" 
+                        id="date-from" 
+                        class="block w-full py-2 px-3 bg-gray-100 rounded-md">
+                </div>
+                
+                <div>
+                    <label for="date-to" class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                    <input 
+                        type="date" 
+                        id="date-to" 
+                        class="block w-full py-2 px-3 bg-gray-100 rounded-md">
+                </div>
+                
+                <!-- Clear filters button -->
+                <div class="sm:col-span-2">
+                    <button 
+                        id="clear-filters" 
+                        class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-md transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-times mr-2"></i> Clear Filters
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Announcements Container with max height constraint -->
     <div id="announcement-container" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 max-h-[calc(100vh-280px)] overflow-y-auto">
@@ -2390,17 +330,17 @@ $allAnnouncement = getAllAnnouncements($connect);
             <?php else: ?>
                 <?php foreach ($allAnnouncement as $announcement): ?>
                     <!-- Facebook-style announcement card -->
-                    <div class="announcement-item" data-category="<?= strtolower(htmlspecialchars($announcement['category'])) ?>">
-                        <div>
+                    <div class="announcement-item bg-white rounded-lg shadow overflow-hidden" data-category="<?= strtolower(htmlspecialchars($announcement['category'])) ?>">
+                        <div class="p-4">
                             <!-- Header with profile image and name (Facebook style) -->
                             <div class="flex items-center mb-3">
                                 <img src="uploaded/orgUploaded/<?= htmlspecialchars($announcement['org_image']) ?>" 
                                      alt="<?= htmlspecialchars($announcement['org_name']) ?>" 
                                      class="w-10 h-10 rounded-full object-cover">
                                 <div class="ml-3">
-                                    <h3 class="font-semibold" data-original-text="<?= htmlspecialchars($announcement['org_name']) ?>">
+                                    <h6 class="font-semibold text-primary text-lg tracking-wide mb-1 capitalize hover:text-primary-dark transition-colors duration-200" data-original-text="<?= htmlspecialchars($announcement['org_name']) ?>">
                                         <?= htmlspecialchars($announcement['org_name']) ?>
-                                    </h3>
+                                    </h6>
                                     <div class="flex items-center text-xs text-gray-500">
                                         <span><?= htmlspecialchars($announcement['author_name'] ?? $announcement['creator_name'] ?? 'Unknown Author') ?></span>
                                         <span class="mx-1">·</span>
@@ -2428,34 +368,37 @@ $allAnnouncement = getAllAnnouncements($connect);
                                 <?= nl2br($announcement['announcement_details']) ?>
                             </div>
                             
-                            <!-- Facebook-style images/Carousel -->
-                            <?php if (!empty($announcement['announcement_images'])): ?>
-                                <div class="mt-3">
-                                    <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
-                                               <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" 
-                                                   data-image-index="<?php echo $index; ?>">
-                                                   <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
-                                                       alt="Announcement image"
-                                                       onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
-                                                       class="w-full">
-                                               </div>
-                                            <?php endforeach; ?>
-                                        </div>
-                                        
-                                        <!-- Only show controls if more than one image -->
-                                        <?php if (count($announcement['announcement_images']) > 1): ?>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            </button>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
+                            <!-- Facebook-style images/Carousel with FIXED HEIGHT -->
+                          <!-- PHP implementation for announcement carousel with partial image display -->
+<?php if (!empty($announcement['announcement_images'])): ?>
+    <div class="mt-3">
+        <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide announcement-carousel" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
+                    <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" 
+                         data-image-index="<?php echo $index; ?>">
+                        <div class="fixed-height-image-container">
+                            <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
+                                 alt="Announcement image"
+                                 onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
+                                 class="announcement-image">
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <!-- Carousel controls with improved styling -->
+            <?php if (count($announcement['announcement_images']) > 1): ?>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>
                             
                             <!-- Facebook-style divider -->
                             <div class="border-t border-gray-200 mt-3 pt-2"></div>
@@ -2508,6 +451,37 @@ $allAnnouncement = getAllAnnouncements($connect);
     color: #000000; /* Set all text to black by default */
 }
 
+/* Typography styles for the organization name */
+.text-primary {
+    color: #C33232;
+}
+
+.text-primary-dark:hover {
+    color: #7A0D0D;
+}
+
+.text-lg {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.5;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.tracking-wide {
+    letter-spacing: 0.025em;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.transition-colors {
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+}
 
 /* Section heading - Facebook style with root colors */
 #announcement .section-heading {
@@ -2527,6 +501,64 @@ $allAnnouncement = getAllAnnouncements($connect);
     display: none; /* Remove the decorative line */
 }
 
+/* Fixed height image container styling */
+.fixed-height-image-container {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.announcement-image {
+    max-width: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.announcement-image:hover {
+    transform: scale(1.02);
+}
+
+/* Styling for carousel controls */
+.announcement-carousel .carousel-control-prev,
+.announcement-carousel .carousel-control-next {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+}
+
+.announcement-carousel .carousel-control-prev {
+    left: 10px;
+}
+
+.announcement-carousel .carousel-control-next {
+    right: 10px;
+}
+
+.announcement-carousel .carousel-control-prev:hover,
+.announcement-carousel .carousel-control-next:hover {
+    opacity: 1;
+}
+
+.announcement-carousel .carousel-control-prev-icon,
+.announcement-carousel .carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Make sure the carousel item takes up the full container */
+.carousel-item {
+    width: 100%;
+}
 
 /* Search container */
 #announcement .search-container {
@@ -2595,6 +627,7 @@ $allAnnouncement = getAllAnnouncements($connect);
     color: var(--maroon-dark);
     background-color: #f0f2f5;
 }
+
 /* Update search input styling */
 #announcement-search {
     padding-right: 40px; /* Ensure there's enough space for the filter button */
@@ -2625,7 +658,37 @@ $allAnnouncement = getAllAnnouncements($connect);
 .search-container .relative {
     flex-grow: 1;
 }
+
+/* Announcements card styling */
+.announcement-item {
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+/* Category badge styling */
+.category-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    background-color: #f0f2f5;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* "See more" link styling */
+.see-more-link {
+    color: #1877f2;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.see-more-link:hover {
+    text-decoration: underline;
+}
+
+
 </style>
+
 <!-- JavaScript for Announcements Functionality -->
 <script>
 // Wait for the DOM to be fully loaded
@@ -2638,65 +701,53 @@ document.addEventListener("DOMContentLoaded", function() {
     const clearFiltersBtn = document.getElementById('clear-filters');
     const noResultsMessage = document.getElementById('no-results-message');
     
-    // Log that elements were found correctly
-    console.log("Filter elements loaded:", {
-        searchInput: searchInput !== null,
-        categoryFilter: categoryFilter !== null,
-        dateFrom: dateFrom !== null,
-        dateTo: dateTo !== null,
-        clearFiltersBtn: clearFiltersBtn !== null,
-        noResultsMessage: noResultsMessage !== null
-    });
-
+    // Toggle filters functionality
     const toggleFiltersBtn = document.getElementById('toggle-filters-btn');
-const closeFiltersBtn = document.getElementById('close-filters-btn');
-const filtersContainer = document.getElementById('filters-container');
+    const closeFiltersBtn = document.getElementById('close-filters-btn');
+    const filtersContainer = document.getElementById('filters-container');
 
-if (toggleFiltersBtn && filtersContainer) {
-    toggleFiltersBtn.addEventListener('click', function() {
-        filtersContainer.classList.toggle('hidden');
-        // Toggle icon
-        const icon = this.querySelector('i');
-        if (filtersContainer.classList.contains('hidden')) {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-filter');
-        } else {
-            icon.classList.remove('fa-filter');
-            icon.classList.add('fa-times');
-        }
-    });
-}
+    if (toggleFiltersBtn && filtersContainer) {
+        toggleFiltersBtn.addEventListener('click', function() {
+            filtersContainer.classList.toggle('hidden');
+            // Toggle icon
+            const icon = this.querySelector('i');
+            if (filtersContainer.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-filter');
+            } else {
+                icon.classList.remove('fa-filter');
+                icon.classList.add('fa-times');
+            }
+        });
+    }
 
-if (closeFiltersBtn && filtersContainer) {
-    closeFiltersBtn.addEventListener('click', function() {
-        filtersContainer.classList.add('hidden');
-        // Reset toggle button icon
-        const toggleIcon = toggleFiltersBtn.querySelector('i');
-        toggleIcon.classList.remove('fa-times');
-        toggleIcon.classList.add('fa-filter');
-    });
-}
-
-// Also close filters when clicking clear filters
-if (clearFiltersBtn && filtersContainer) {
-    const originalClearFunction = clearFiltersBtn.onclick;
-    clearFiltersBtn.addEventListener('click', function() {
-        // Call original function if it exists
-        if (typeof originalClearFunction === 'function') {
-            originalClearFunction();
-        }
-        
-        // Hide filter panel
-        filtersContainer.classList.add('hidden');
-        
-        // Reset toggle button icon
-        const toggleIcon = toggleFiltersBtn.querySelector('i');
-        if (toggleIcon) {
+    if (closeFiltersBtn && filtersContainer) {
+        closeFiltersBtn.addEventListener('click', function() {
+            filtersContainer.classList.add('hidden');
+            // Reset toggle button icon
+            const toggleIcon = toggleFiltersBtn.querySelector('i');
             toggleIcon.classList.remove('fa-times');
             toggleIcon.classList.add('fa-filter');
-        }
-    });
-}
+        });
+    }
+
+    // Also close filters when clicking clear filters
+    if (clearFiltersBtn && filtersContainer) {
+        clearFiltersBtn.addEventListener('click', function() {
+            // Hide filter panel
+            filtersContainer.classList.add('hidden');
+            
+            // Reset toggle button icon
+            const toggleIcon = toggleFiltersBtn.querySelector('i');
+            if (toggleIcon) {
+                toggleIcon.classList.remove('fa-times');
+                toggleIcon.classList.add('fa-filter');
+            }
+            
+            // Clear all filters
+            clearAllFilters();
+        });
+    }
     
     // Main filter function
     function filterAnnouncements() {
@@ -2705,13 +756,6 @@ if (clearFiltersBtn && filtersContainer) {
         const selectedCategory = categoryFilter.value;
         const fromDate = dateFrom.value ? new Date(dateFrom.value) : null;
         const toDate = dateTo.value ? new Date(dateTo.value + 'T23:59:59') : null;
-        
-        console.log("Filtering with:", { 
-            searchTerm, 
-            category: selectedCategory, 
-            fromDate: fromDate ? fromDate.toISOString() : null, 
-            toDate: toDate ? toDate.toISOString() : null 
-        });
         
         // Get all announcements
         const announcements = document.querySelectorAll('.announcement-item');
@@ -2762,19 +806,16 @@ if (clearFiltersBtn && filtersContainer) {
             noResultsMessage.classList.add('hidden');
         }
         
-        console.log(`Filter results: ${visibleCount} announcements visible`);
         return visibleCount;
     }
     
     // Clear all filters
     function clearAllFilters() {
-        console.log("Clearing all filters");
-        
         // Reset filter values
-        searchInput.value = '';
-        categoryFilter.value = 'all';
-        dateFrom.value = '';
-        dateTo.value = '';
+        if (searchInput) searchInput.value = '';
+        if (categoryFilter) categoryFilter.value = 'all';
+        if (dateFrom) dateFrom.value = '';
+        if (dateTo) dateTo.value = '';
         
         // Show all announcements
         const announcements = document.querySelectorAll('.announcement-item');
@@ -2784,7 +825,9 @@ if (clearFiltersBtn && filtersContainer) {
         });
         
         // Hide no results message
-        noResultsMessage.classList.add('hidden');
+        if (noResultsMessage) {
+            noResultsMessage.classList.add('hidden');
+        }
     }
     
     // Set up Facebook-style "See more" functionality
@@ -2957,10 +1000,6 @@ if (clearFiltersBtn && filtersContainer) {
         dateTo.addEventListener('change', filterAnnouncements);
     }
     
-    if (clearFiltersBtn) {
-        clearFiltersBtn.addEventListener('click', clearAllFilters);
-    }
-    
     // Set max date for date inputs to today
     const today = new Date().toISOString().split('T')[0];
     if (dateFrom) dateFrom.max = today;
@@ -2989,32 +1028,7 @@ if (clearFiltersBtn && filtersContainer) {
     setAnnouncementsHeight();
     window.addEventListener('resize', setAnnouncementsHeight);
     
-    // Facebook-style button functionality
-    function setupActionButtons() {
-        const likeButtons = document.querySelectorAll('.flex.justify-between.mt-1 button:nth-child(1)');
-        likeButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                // Toggle active state
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    icon.style.color = '#1877f2';
-                    this.style.color = '#1877f2';
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    icon.style.color = '';
-                    this.style.color = '';
-                }
-            });
-        });
-    }
-    
-    // Initialize action buttons
-    setupActionButtons();
-    
-    console.log("Facebook-style announcement section fully initialized");
+    console.log("Facebook-style announcement section fully initialized with fixed height images");
 });
 </script>
 <section id="schoolcalendar" class="content-section py-4">
@@ -4604,42 +2618,43 @@ function displayEvents() {
         </style>
     </section>
 
-    <section id="campusorgs"  class="content-section py-4">
+    <section id="campusorgs" class="content-section py-4">
     <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
             <span class="gradient-text">STUDENT ORGANIZATIONS</span>
         </h1>
         <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
-        <div class="container-fluid px-4">
-            <!-- Row of cards with horizontal scroll on smaller screens -->
-            <div class="row-container">
-                <?php foreach ($allOrg as $row): ?>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-inline-block" style="max-width: 250px;">
-                        <div class="card h-100 border-0 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300" style="min-width: 250px;">
-                            <!-- Card Header -->
-                            <div class="card-header position-relative p-0">
-                                <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#newsModal" 
-                                data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                                data-title="<?= htmlspecialchars($row['org_name']) ?>" 
-                                data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
-                                data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
-                                data-author="<?= htmlspecialchars($row['creator_name'] ?? $row['created_by_name'] ?? $row['org_member_name'] ?? 'Unknown Author') ?>">
-                                    <!-- Card Image -->
-                                    <div class="aspect-ratio-box position-relative overflow-hidden">
-                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="object-fit-cover">
-                                        <!-- Overlay -->
-                                        <div class="card-overlay position-absolute start-0 end-0 bottom-0 h-100 d-flex flex-column justify-content-end p-3 bg-gradient-dark opacity-0">
-                                            <div class="text-white p-2 rounded bg-black bg-opacity-20 backdrop-blur-sm"></div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- Card Body -->
-                        <div class="card-body p-3">
-                            <h5 class="card-title mb-2 fw-bold text-dark fs-6 text-center">
+    <div class="container-fluid px-4">
+        <!-- Row of cards with grid layout -->
+        <div class="row-container">
+            <?php foreach ($allOrg as $row): ?>
+                <div class="org-card-wrapper">
+                    <div class="org-card">
+                        <!-- Card Header -->
+                        <div class="card-image-container">
+                            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#newsModal" 
+                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                            data-title="<?= htmlspecialchars($row['org_name']) ?>" 
+                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                            data-author="<?= htmlspecialchars($row['creator_name'] ?? $row['created_by_name'] ?? $row['org_member_name'] ?? 'Unknown Author') ?>">
+                                <!-- Normal state (circle) -->
+                                <div class="circle-image">
+                                    <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
+                                </div>
                                 
+                                <!-- Hover state (box) -->
+                                <div class="box-image">
+                                    <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
+                                    <div class="overlay"></div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="org-card-body">
+                            <h5 class="org-card-title">
                                 <?php 
                                     // Split the title into words
                                     $words = explode(' ', $row['org_name']);
@@ -4661,49 +2676,181 @@ function displayEvents() {
                                     echo nl2br($formattedName); // Display the formatted name with line breaks
                                 ?>
                             </h5>
-                            <div class="d-flex align-items-center">
+                            <div class="org-indicator d-flex align-items-center">
                                 <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
                                 <small class="text-muted text-xs">Student Organization</small>
                             </div>
                         </div>
-
-
-                        </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-        <style>.card-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
+    </div>
+</section>
+
+<style>
+  /* Grid Layout */
+.row-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+    padding: 0 1rem;
 }
 
-.rounded-circle {
-  width: 150px !important;
-  height: 150px !important;
-  object-fit: cover;
-  border-radius: 50% !important;
-  margin: 0 auto;
-  display: block;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Card Wrapper */
+.org-card-wrapper {
+    width: 100%;
 }
 
-#profileName {
-  margin-top: 1rem;
-  text-align: center;
-  font-weight: 600;
-  color: #333;
+/* Card Styling */
+.org-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; 
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+    background-color: white;
 }
 
-.text-muted {
-  text-align: center;
-}</style>
-    </section>
+/* Card Image Container */
+.card-image-container {
+    position: relative;
+    padding: 1rem;
+}
 
-    <section id="faqs" class="content-section py-4">
+/* Circle Image (default) */
+.circle-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+}
+
+.org-card:hover .circle-image {
+    display: none;
+}
+
+/* Box Image (hover) */
+.box-image {
+    position: relative;
+    width: 80%; /* Reduced from 100% to 80% */
+    padding-top: 60%; /* Reduced from 75% to 60% */
+    overflow: hidden;
+    border-radius: 0.75rem;
+    display: none;
+    margin: 0 auto; /* Center the smaller box */
+}
+
+.org-card:hover .box-image {
+    display: block;
+}
+
+/* Common image styling - UPDATED FOR PROPER FITTING */
+.org-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Changed from cover to contain */
+}
+
+/* For circle images specifically */
+.circle-image .org-image {
+    object-fit: contain; /* Ensures the image fits within the circle without cropping */
+}
+
+/* For box images on hover */
+.box-image .org-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the image fits within the box without cropping */
+}
+
+/* Overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%);
+}
+
+/* Card Body */
+.org-card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+}
+
+.org-card-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    word-break: break-word;
+    line-height: 1.4;
+    color: #333;
+}
+
+/* Indicator styling */
+.indicator {
+    display: inline-block;
+    width: 3px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
+
+/* Ensure modal works properly */
+.modal {
+    z-index: 1050;
+}
+
+/* Fix modal backdrop z-index */
+.modal-backdrop {
+    z-index: 1040;
+}
+
+/* Control modal image size - UPDATED FOR PROPER FITTING */
+.modal-body img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain; /* Ensures image fits without cropping */
+    margin: 0 auto;
+    display: block;
+}
+
+/* Adjust profile image in modal */
+.modal .rounded-circle {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: contain; /* Changed from cover to contain */
+    border-radius: 50% !important;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .row-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+}
+</style>
+<section id="faqs" class="content-section py-4">
     <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
             <span class="gradient-text">FREQUENTLY ASKED QUESTIONS</span>
@@ -4800,8 +2947,137 @@ function displayEvents() {
         </div>
     </div>
     
+    <style>
+        /* Custom Scrollbar for FAQ Container */
+        .accordion {
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f9f9f9;
+        }
+        
+        .accordion::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .accordion::-webkit-scrollbar-track {
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .accordion::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 10px;
+        }
+        
+        /* Animations and transitions */
+        .accordion-item {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Button styling */
+        .accordion-button:not(.collapsed) {
+            background-color: #f8f8f8 !important;
+            color: #7D0A0A !important;
+            box-shadow: none !important;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(125, 10, 10, 0.1);
+        }
+        
+        /* Text color for maroon */
+        .text-maroon {
+            color: #7D0A0A;
+        }
+        
+        /* Custom button hover effect */
+        button.rounded-pill:hover {
+            background-color: #C83E3E !important;
+            transition: background-color 0.2s ease;
+        }
+    </style>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Step 1: Check if we should save FAQs to localStorage
+            const faqContainer = document.getElementById('faqsAccordion');
+            const faqItems = faqContainer?.querySelectorAll('.accordion-item');
+            
+            // If we have FAQs on the page, save them to localStorage
+            if (faqItems && faqItems.length > 0) {
+                const faqs = [];
+                
+                faqItems.forEach((item, index) => {
+                    const question = item.querySelector('.accordion-button span')?.textContent.trim() || '';
+                    const answer = item.querySelector('.accordion-body p')?.textContent.trim() || '';
+                    
+                    if (question && answer) {
+                        faqs.push({
+                            question: question,
+                            answer: answer
+                        });
+                    }
+                });
+                
+                // Save FAQs to localStorage
+                if (faqs.length > 0) {
+                    localStorage.setItem('faqs', JSON.stringify(faqs));
+                    console.log('Saved FAQs:', faqs.length);
+                }
+            }
+            
+            // Step 2: Check if we need to restore FAQs
+            // If we have no FAQ items but have cached FAQs
+            const noFaqMessage = faqContainer?.querySelector('.text-center.py-5');
+            
+            if (((!faqItems || faqItems.length === 0) || noFaqMessage) && localStorage.getItem('faqs')) {
+                try {
+                    const faqs = JSON.parse(localStorage.getItem('faqs'));
+                    
+                    // Clear container
+                    if (faqContainer) {
+                        faqContainer.innerHTML = '';
+                        
+                        // Rebuild FAQs
+                        faqs.forEach((faq, index) => {
+                            faqContainer.innerHTML += `
+                                <div class="accordion-item mb-3 border rounded-lg shadow-sm overflow-hidden">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'} p-3" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse${index}" 
+                                            aria-expanded="${index === 0 ? 'true' : 'false'}"
+                                            aria-controls="collapse${index}">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3" style="width: 4px; height: 18px; background-color: #E3C47D; border-radius: 2px;"></div>
+                                                <span>${faq.question}</span>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#faqsAccordion">
+                                        <div class="accordion-body p-3" style="background-color: #f9f9f9;">
+                                            <div class="ps-4 border-start border-2" style="border-color: #C83E3E;">
+                                                <p>${faq.answer}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        console.log('Restored FAQs:', faqs.length);
+                    }
+                } catch (error) {
+                    console.error('Error restoring FAQs:', error);
+                }
+            }
+            
             // Add event listener for search input
             const searchInput = document.getElementById('faqSearch');
             const clearButton = document.getElementById('clearSearchBtn');
@@ -4861,119 +3137,7 @@ function displayEvents() {
             }
         }
     </script>
-    
-    <style>
-        /* Custom Scrollbar for FAQ Container */
-        .accordion {
-            scrollbar-width: thin;
-            scrollbar-color: #ccc #f9f9f9;
-        }
-        
-        .accordion::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .accordion::-webkit-scrollbar-track {
-            background: #f9f9f9;
-            border-radius: 10px;
-        }
-        
-        .accordion::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 10px;
-        }
-        
-        /* Animations and transitions */
-        .accordion-item {
-            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-        }
-        
-        .accordion-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
-        }
-        
-        /* Button styling */
-        .accordion-button:not(.collapsed) {
-            background-color: #f8f8f8 !important;
-            color: #7D0A0A !important;
-            box-shadow: none !important;
-        }
-        
-        .accordion-button:focus {
-            box-shadow: none;
-            border-color: rgba(125, 10, 10, 0.1);
-        }
-        
-        /* Text color for maroon */
-        .text-maroon {
-            color: #7D0A0A;
-        }
-        
-        /* Custom button hover effect */
-        button.rounded-pill:hover {
-            background-color: #C83E3E !important;
-            transition: background-color 0.2s ease;
-        }
-    </style>
 </section>
-<script>
-    function filterFAQs() {
-        const searchInput = document.getElementById('faqSearch').value.toLowerCase();
-        const faqItems = document.querySelectorAll('.accordion-item'); // Select all FAQ items
-
-        faqItems.forEach(item => {
-            const question = item.querySelector('.accordion-button').textContent.toLowerCase();
-            const answer = item.querySelector('.accordion-body').textContent.toLowerCase();
-            
-            // Check if the search term matches either the question or the answer
-            if (question.includes(searchInput) || answer.includes(searchInput)) {
-                item.style.display = ''; // Show matching items
-            } else {
-                item.style.display = 'none'; // Hide non-matching items
-            }
-        });
-    }
-</script>
-
-<?php
-// Add these functions to your mainClass.php if they don't already exist
-
-/*
-class mainClass {
-    // ... existing methods ...
-    
-    // Count organization feedbacks
-    public function countOrganizationFeedbacks() {
-        try {
-            $query = "SELECT COUNT(*) AS count FROM feedback_tbl WHERE feedback_category = 'org'";
-            $stmt = $this->dbcon->prepare($query);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result['count'];
-        } catch (PDOException $e) {
-            error_log("Error counting organization feedbacks: " . $e->getMessage());
-            return 0;
-        }
-    }
-    
-    // Count office feedbacks
-    public function countOfficeFeedbacks() {
-        try {
-            $query = "SELECT COUNT(*) AS count FROM feedback_tbl WHERE feedback_category = 'office'";
-            $stmt = $this->dbcon->prepare($query);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result['count'];
-        } catch (PDOException $e) {
-            error_log("Error counting office feedbacks: " . $e->getMessage());
-            return 0;
-        }
-    }
-}
-*/
-?>
-
 <section id="feed"  class="content-section py-4">
 <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
@@ -5965,8 +4129,7 @@ class mainClass {
 </section>
 
 </div>
-<!-- Modal -->
-<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+<!-- Modal --><div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content rounded-lg border-0 shadow">
             <!-- Modal Header -->
@@ -5974,7 +4137,7 @@ class mainClass {
                 <div class="d-flex align-items-center w-100">
                     <div class="d-flex align-items-center">
                         <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h5 class="modal-title mb-0 fw-bold text-primary" id="newsModalLabel">Organization Feed</h5>
+                        <h5 class="modal-title mb-0 fw-bold" id="newsModalLabel" style="color:white;">Organization Feed</h5>
                     </div>
                     <div class="ms-auto">
                         <div class="input-group">
@@ -5991,41 +4154,50 @@ class mainClass {
             <div class="modal-body p-0" style="max-height: 80vh; overflow-y: auto;">
                 <!-- Organization Cover & Profile -->
                 <div class="position-relative">
+                    <div class="org-cover-photo position-relative">
+                        <img src="img/C2SVTseUoAEJp42.jpg" id="orgCoverPhoto" class="w-100 object-fit-cover" style="height: 200px;" alt="Organization Cover">
+                    </div>
                     
-                    <div class="position-relative px-4 pb-3" style="margin-top: -60px;">
-                        <div class="d-flex align-items-end">
-                            <div class="profile-picture rounded-circle border-5 border-white bg-white shadow-lg" style="width: 140px; height: 140px; overflow: hidden;">
+                    <!-- Profile layout with profile pic on far left -->
+                    <div class="position-relative" style="margin-top: 20px;">
+                        <!-- Profile section with picture on far left -->
+                        <div class="d-flex align-items-center">
+                            <!-- Profile Picture on far left -->
+                            <div class="profile-picture rounded-circle border-4 border-white bg-white shadow-sm" style="width: 120px; height: 120px; overflow: hidden; position: relative; margin-left: 20px; margin-right: 15px; margin-top: -30px;">
                                 <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="w-100 h-100 object-fit-cover" alt="Organization Profile">
                             </div>
-                            <div class="ms-4 mb-3">
-                                <h3 class="fw-bold mb-1 text-dark" id="orgName">Organization Name</h3>
-                                <p class="text-muted mb-0"><span class="badge bg-light text-primary me-2">Verified</span> Student Organization</p>
+                            
+                            <!-- Organization Info positioned to the right of profile pic -->
+                            <div style="margin-left: 10px;">
+                                <h3 class="fw-bold mb-1 text-dark" id="orgName" style="font-size: 1.8rem;">The Browser</h3>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-light text-danger me-2 rounded-pill px-2 py-1" style="font-size: 0.8rem;">Verified</span>
+                                    <span class="text-muted" style="font-size: 0.9rem;">Student Organization</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Navigation Tabs -->
-              <!-- Navigation Tabs -->
-<div class="px-4 border-bottom bg-white sticky-top" style="z-index: 99;">
-    <ul class="nav nav-tabs border-0 flex-nowrap overflow-auto">
-        <li class="nav-item">
-            <button class="nav-link active px-4 py-3 fw-semibold border-0 rounded-0 position-relative" id="announcements-tab" data-bs-toggle="tab" data-bs-target="#announcements">
-                Announcements
-                <span class="position-absolute bottom-0 start-0 end-0 bg-primary" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
-            </button>
-        </li>
-        <li class="nav-item">
-            <button class="nav-link px-4 py-3 fw-semibold border-0 rounded-0 position-relative" id="members-tab" data-bs-toggle="tab" data-bs-target="#members">
-                Members
-                <span class="position-absolute bottom-0 start-0 end-0 bg-primary" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
-            </button>
-        </li>
-    </ul>
-</div>
-
-                <!-- Tab Content -->
-                <div class="tab-content bg-light">
+                <div class="px-4 border-bottom bg-white" style="margin-top: 15px;">
+                    <ul class="nav nav-tabs border-0 flex-nowrap overflow-auto">
+                        <li class="nav-item">
+                            <button class="nav-link active px-4 py-3 fw-semibold border-0 rounded-0 position-relative text-danger" id="announcements-tab" data-bs-toggle="tab" data-bs-target="#announcements">
+                                Announcements
+                                <span class="position-absolute bottom-0 start-0 end-0 bg-danger" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link px-4 py-3 fw-semibold border-0 rounded-0 position-relative" id="members-tab" data-bs-toggle="tab" data-bs-target="#members">
+                                Members
+                                <span class="position-absolute bottom-0 start-0 end-0 bg-danger" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+   <!-- Tab Content -->
+   <div class="tab-content bg-light">
                     <!-- Announcements Tab -->
                     <div class="tab-pane fade show active p-4" id="announcements">
                         <div id="announcements-content" class="announcements-container">
@@ -6217,17 +4389,20 @@ class mainClass {
 <style>
 /* Enhanced customizations */
 :root {
-    --maroon-dark: #7A0D0D;   /* Dark maroon from top section */
-    --maroon: #C33232;        /* Medium red from second section */
-    --gold: #E9CF8B;          /* Gold/tan from third section */
-    --light-gray: #EEEEEE;    /* Light gray from bottom section */
-    --facebook-bg: #f0f2f5;
-    --facebook-text: #1c1e21;
-    --facebook-secondary: #65676b;
+    --maroon-dark: #7A0D0D;
+    --maroon: #C33232;
+    --primary: #C33232;
+    --primary-dark: #7A0D0D;
+    --gold: #E9CF8B;
+    --light-gray: #EEEEEE;
 }
 
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #3498db, #2c3e50);
+.text-danger {
+    color: var(--primary) !important;
+}
+
+.bg-danger {
+    background-color: var(--primary) !important;
 }
 
 .text-primary {
@@ -6259,22 +4434,6 @@ class mainClass {
     color: white;
 }
 
-.modal-content {
-    border-radius: 12px;
-}
-
-.form-control {
-    padding: 0.6rem 1rem;
-}
-
-.form-control-sm {
-    padding: 0.4rem 1rem;
-}
-
-.bg-light {
-    background-color: var(--light-gray) !important;
-}
-
 .nav-tabs .nav-link {
     color: #65676B;
     font-weight: 600;
@@ -6293,8 +4452,12 @@ class mainClass {
     opacity: 1;
 }
 
-.nav-tabs .nav-link:hover:not(.active) {
-    background-color: var(--light-gray);
+.modal-content {
+    border-radius: 12px;
+}
+
+.rounded-circle {
+    object-fit: cover;
 }
 
 .card {
@@ -6311,15 +4474,10 @@ class mainClass {
     transition: all 0.3s ease;
 }
 
-.rounded-circle {
-    object-fit: cover;
-}
-
 .rounded-pill {
     border-radius: 50px !important;
 }
 
-/* Modal body scrollbar styling */
 .modal-body::-webkit-scrollbar {
     width: 8px;
 }

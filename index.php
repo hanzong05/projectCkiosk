@@ -227,8 +227,7 @@ function getAllAnnouncements($connection) {
 
 // Fetch all announcements
 $allAnnouncement = getAllAnnouncements($connect);
-?>
-<!-- Facebook-Style Announcements Section -->
+?><!-- Facebook-Style Announcements Section -->
 <section id="announcement" class="content-section py-4">
     <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
@@ -369,36 +368,35 @@ $allAnnouncement = getAllAnnouncements($connect);
                             </div>
                             
                             <!-- Facebook-style images/Carousel with FIXED HEIGHT -->
-                          <!-- PHP implementation for announcement carousel with partial image display -->
-<?php if (!empty($announcement['announcement_images'])): ?>
-    <div class="mt-3">
-        <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide announcement-carousel" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
-                    <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" 
-                         data-image-index="<?php echo $index; ?>">
-                        <div class="fixed-height-image-container">
-                            <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
-                                 alt="Announcement image"
-                                 onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
-                                 class="announcement-image">
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            
-            <!-- Carousel controls with improved styling -->
-            <?php if (count($announcement['announcement_images']) > 1): ?>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </button>
-            <?php endif; ?>
-        </div>
-    </div>
-<?php endif; ?>
+                            <?php if (!empty($announcement['announcement_images'])): ?>
+                                <div class="mt-3">
+                                    <div id="carousel-<?php echo $announcement['announcement_id']; ?>" class="carousel slide announcement-carousel" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <?php foreach ($announcement['announcement_images'] as $index => $image): ?>
+                                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                                     data-image-index="<?php echo $index; ?>">
+                                                    <div class="fixed-height-image-container">
+                                                        <img src="uploaded/annUploaded/<?php echo htmlspecialchars($image); ?>" 
+                                                             alt="Announcement image"
+                                                             onclick="openModal(this, <?php echo $announcement['announcement_id']; ?>)"
+                                                             class="announcement-image">
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        
+                                        <!-- Carousel controls with improved styling -->
+                                        <?php if (count($announcement['announcement_images']) > 1): ?>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?php echo $announcement['announcement_id']; ?>" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             
                             <!-- Facebook-style divider -->
                             <div class="border-t border-gray-200 mt-3 pt-2"></div>
@@ -422,14 +420,14 @@ $allAnnouncement = getAllAnnouncements($connect);
     </div>
 </section>
 
-<!-- Image Modal -->
-<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden">
-    <button class="absolute top-4 right-4 text-white text-3xl">&times;</button>
-    <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl">
+<!-- Image Modal - UPDATED VERSION with properly positioned controls -->
+<div id="imageModal" class="hidden">
+    <button id="close-modal-btn" class="modal-close">&times;</button>
+    <button id="prev-image-btn" class="modal-prev">
         <i class="fas fa-chevron-left"></i>
     </button>
-    <img class="modal-img max-w-5xl max-h-screen object-contain" src="" alt="Image preview">
-    <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl">
+    <img class="modal-img" src="" alt="Image preview">
+    <button id="next-image-btn" class="modal-next">
         <i class="fas fa-chevron-right"></i>
     </button>
 </div>
@@ -501,6 +499,23 @@ $allAnnouncement = getAllAnnouncements($connect);
     display: none; /* Remove the decorative line */
 }
 
+/* Gradient text for the heading */
+.gradient-text {
+    background: linear-gradient(45deg, var(--maroon-dark), var(--maroon));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+/* Animated bar for the heading */
+.animated-bar {
+    height: 4px;
+    width: 80px;
+    background: linear-gradient(to right, var(--maroon-dark), var(--maroon));
+    border-radius: 2px;
+}
+
 /* Fixed height image container styling */
 .fixed-height-image-container {
     height: 300px;
@@ -511,6 +526,7 @@ $allAnnouncement = getAllAnnouncements($connect);
     background-color: #f8f9fa;
     overflow: hidden;
     border-radius: 8px;
+    position: relative; /* Added for proper carousel control positioning */
 }
 
 .announcement-image {
@@ -524,7 +540,13 @@ $allAnnouncement = getAllAnnouncements($connect);
     transform: scale(1.02);
 }
 
-/* Styling for carousel controls */
+/* Carousel container */
+.announcement-carousel {
+    position: relative;
+    width: 100%;
+}
+
+/* Styling for carousel controls - FIXED VERSION */
 .announcement-carousel .carousel-control-prev,
 .announcement-carousel .carousel-control-next {
     width: 40px;
@@ -534,6 +556,11 @@ $allAnnouncement = getAllAnnouncements($connect);
     top: 50%;
     transform: translateY(-50%);
     opacity: 0.7;
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .announcement-carousel .carousel-control-prev {
@@ -547,17 +574,20 @@ $allAnnouncement = getAllAnnouncements($connect);
 .announcement-carousel .carousel-control-prev:hover,
 .announcement-carousel .carousel-control-next:hover {
     opacity: 1;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .announcement-carousel .carousel-control-prev-icon,
 .announcement-carousel .carousel-control-next-icon {
     width: 20px;
     height: 20px;
+    background-size: 100%;
 }
 
-/* Make sure the carousel item takes up the full container */
+/* Make sure the carousel item takes up the full container and positions correctly */
 .carousel-item {
     width: 100%;
+    position: relative;
 }
 
 /* Search container */
@@ -582,7 +612,7 @@ $allAnnouncement = getAllAnnouncements($connect);
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--facebook-secondary);
+    color: #65676B;
     pointer-events: none;
     z-index: 1;
 }
@@ -605,7 +635,7 @@ $allAnnouncement = getAllAnnouncements($connect);
     outline: none;
 }
 
-/* Filter button - now positioned separately next to the search input */
+/* Filter button styling */
 #announcement .filter-button {
     background: none;
     border: none;
@@ -633,6 +663,7 @@ $allAnnouncement = getAllAnnouncements($connect);
     padding-right: 40px; /* Ensure there's enough space for the filter button */
 }
 
+/* Toggle filters button */
 #toggle-filters-btn {
     background: none;
     border: none;
@@ -661,8 +692,16 @@ $allAnnouncement = getAllAnnouncements($connect);
 
 /* Announcements card styling */
 .announcement-item {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.2s ease;
     opacity: 1;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.announcement-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Category badge styling */
@@ -686,7 +725,264 @@ $allAnnouncement = getAllAnnouncements($connect);
     text-decoration: underline;
 }
 
+/* Filter container styling */
+#filters-container {
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
 
+/* Styling for form elements in filters */
+#filters-container select,
+#filters-container input[type="date"] {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+#filters-container select:focus,
+#filters-container input[type="date"]:focus {
+    border-color: var(--maroon);
+    box-shadow: 0 0 0 1px rgba(195, 50, 50, 0.2);
+}
+
+/* Clear filters button */
+#clear-filters {
+    transition: all 0.2s;
+}
+
+#clear-filters:hover {
+    background-color: #e2e2e2;
+}
+
+/* No results message styling */
+#no-results-message {
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+#no-results-message.hidden {
+    opacity: 0;
+    display: none;
+}
+
+/* Image Modal Styling - FIXED VERSION */
+#imageModal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+#imageModal.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Close button styling */
+#close-modal-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+/* Previous button styling */
+#prev-image-btn {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+/* Next button styling */
+#next-image-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+#imageModal button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Modal image styling */
+.modal-img {
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .fixed-height-image-container {
+        height: 200px;
+    }
+    
+    #announcement .section-heading h1 {
+        font-size: 20px;
+    }
+    
+    .announcement-carousel .carousel-control-prev,
+    .announcement-carousel .carousel-control-next {
+        width: 32px;
+        height: 32px;
+    }
+    
+    #prev-image-btn,
+    #next-image-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .modal-img {
+        max-width: 90vw;
+    }
+}
+
+/* Tailwind-like utility classes used in the HTML */
+.bg-white {
+    background-color: white;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.p-2, .p-3, .p-4 {
+    padding: 0.5rem;
+    padding: 0.75rem;
+    padding: 1rem;
+}
+
+.mb-2, .mb-3, .mb-4, .mb-5 {
+    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.py-4, .py-8 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.relative {
+    position: relative;
+}
+
+/* Fixes for specific elements */
+#announcement-container {
+    scroll-behavior: smooth;
+    padding-right: 4px; /* Prevents horizontal scrollbar */
+}
+
+.announcement-details {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
 </style>
 
 <!-- JavaScript for Announcements Functionality -->
@@ -930,57 +1226,102 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     
-    // Set up image modal functionality
+    // Set up image modal functionality - UPDATED VERSION with proper positioning
     function setupImageModal() {
-        // Image modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImg = modal.querySelector('.modal-img');
+        const closeBtn = document.getElementById('close-modal-btn');
+        const prevBtn = document.getElementById('prev-image-btn');
+        const nextBtn = document.getElementById('next-image-btn');
+        
+        // Keep track of the current carousel and image index
+        let currentCarouselId = null;
+        let currentImageIndex = 0;
+        let totalImages = 0;
+        let imageItems = [];
+        
+        // Function to open the modal
         window.openModal = function(img, announcementId) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = modal.querySelector('img');
-            const carousel = document.getElementById(`carousel-${announcementId}`);
-            const items = carousel.querySelectorAll('.carousel-item');
-            
+            // Set the image src
             modalImg.src = img.src;
-            modal.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
+            
+            // Get the carousel and its items
+            const carousel = document.getElementById(`carousel-${announcementId}`);
+            currentCarouselId = announcementId;
+            imageItems = carousel.querySelectorAll('.carousel-item');
+            totalImages = imageItems.length;
             
             // Find current image index
-            let currentIndex = 0;
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].querySelector('img').src === img.src) {
-                    currentIndex = i;
+            for (let i = 0; i < imageItems.length; i++) {
+                if (imageItems[i].querySelector('img').src === img.src) {
+                    currentImageIndex = i;
                     break;
                 }
             }
             
-            // Previous button
-            const prevBtn = modal.querySelector('button:nth-child(2)');
-            prevBtn.onclick = function() {
-                currentIndex = (currentIndex - 1 + items.length) % items.length;
-                modalImg.src = items[currentIndex].querySelector('img').src;
-            };
+            // Show the modal
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
             
-            // Next button
-            const nextBtn = modal.querySelector('button:nth-child(4)');
-            nextBtn.onclick = function() {
-                currentIndex = (currentIndex + 1) % items.length;
-                modalImg.src = items[currentIndex].querySelector('img').src;
-            };
-            
-            // Close button
-            const closeBtn = modal.querySelector('button:first-child');
-            closeBtn.onclick = function() {
+            // Update button visibility
+            updateNavigationButtons();
+        };
+        
+        // Update button visibility based on current index
+        function updateNavigationButtons() {
+            // Only show navigation buttons if there are multiple images
+            if (totalImages <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            }
+        }
+        
+        // Navigate to previous image
+        prevBtn.addEventListener('click', function() {
+            if (totalImages > 1) {
+                currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+                modalImg.src = imageItems[currentImageIndex].querySelector('img').src;
+            }
+        });
+        
+        // Navigate to next image
+        nextBtn.addEventListener('click', function() {
+            if (totalImages > 1) {
+                currentImageIndex = (currentImageIndex + 1) % totalImages;
+                modalImg.src = imageItems[currentImageIndex].querySelector('img').src;
+            }
+        });
+        
+        // Close modal when clicking the close button
+        closeBtn.addEventListener('click', function() {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        });
+        
+        // Also close when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
                 modal.classList.add('hidden');
                 document.body.classList.remove('overflow-hidden');
-            };
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (modal.classList.contains('hidden')) return;
             
-            // Also close on modal background click
-            modal.onclick = function(e) {
-                if (e.target === modal) {
-                    modal.classList.add('hidden');
-                    document.body.classList.remove('overflow-hidden');
-                }
-            };
-        };
+            if (e.key === 'Escape') {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            } else if (e.key === 'ArrowLeft') {
+                prevBtn.click();
+            } else if (e.key === 'ArrowRight') {
+                nextBtn.click();
+            }
+        });
     }
     
     // Attach event listeners
@@ -1028,7 +1369,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setAnnouncementsHeight();
     window.addEventListener('resize', setAnnouncementsHeight);
     
-    console.log("Facebook-style announcement section fully initialized with fixed height images");
+    console.log("Facebook-style announcement section fully initialized with fixed carousel and modal controls");
 });
 </script>
 <section id="schoolcalendar" class="content-section py-4">
@@ -1040,7 +1381,6 @@ document.addEventListener("DOMContentLoaded", function() {
         </h1>
         <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
-            <p class="text-gray-400">Stay updated with all important school events and activities</p>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-6">
@@ -2386,237 +2726,562 @@ function displayEvents() {
             </section>
 
 
-            <section id="facultymembers"  class="content-section py-4">
-        <div class="section-content">
+            <section id="facultymembers" class="content-section py-4">
+    <div class="section-content">
         <div class="section-heading text-center mb-5">
-        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
-            <span class="gradient-text">FACULTY MEMBERS</span>
-        </h1>
-        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+            <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+                <span class="gradient-text">FACULTY MEMBERS</span>
+            </h1>
+            <div class="animated-bar mx-auto mt-2 mb-3"></div>
+        </div>
+
+        <!-- Faculty Members -->
+        <div class="level1">
+            <?php foreach ($allDean as $head): ?>
+                <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                    data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                    data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                    data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                    <div class="member-info">
+                        <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                        <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="level2">
+            <?php foreach ($all2 as $head): ?>
+                <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                    data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                    data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                    data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                    <div class="member-info">
+                        <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                        <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="level3">
+            <?php foreach ($all3 as $head): ?>
+                <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                    data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                    data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                    data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                    <div class="member-info">
+                        <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                        <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Department Buttons -->
+        <div class="fclty-div">
+            <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
+            <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
+            <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
+            <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
+        </div>
+
+        <!-- IT Department Tab -->
+        <div id="tab1" class="org-chart active">
+            <div class="section-content">
+                <h3>IT CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allItHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allIt as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- IS Department Tab -->
+        <div id="tab2" class="org-chart">
+            <div class="section-content">
+                <h3>IS CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allIsHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allIs as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- CS Department Tab -->
+        <div id="tab3" class="org-chart">
+            <div class="section-content">
+                <h3>CS CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allCsHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allCs as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIT Department Tab -->
+        <div id="tab4" class="org-chart">
+            <div class="section-content">
+                <h3>MIT CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allMitHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allMit as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
     </div>
 
-            <!-- Faculty Members -->
-            <div class="level1">
-                        <?php foreach ($allDean as $head): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $head['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-            <div class="level2">
-                        <?php foreach ($all2 as $head): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $head['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="level3">
-                        <?php foreach ($all3 as $head): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $head['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+    <!-- Profile Modal -->
 
-            <!-- Department Buttons -->
-            <div class="fclty-div">
-                <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
-                <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
-                <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
-                <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
-            </div>
 
-            <!-- IT Department Tab -->
-            <div id="tab1" class="org-chart active">
-                <div class="section-content">
-                    <h3>IT CHAIRPERSON</h3>
-                    <div class="level2">
-                        <?php foreach ($allItHeads as $head): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $head['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+    <style>
+        /* Faculty Section Variables */
+        #facultymembers {
+            --maroon-dark: #3C1518;
+            --maroon: #C33232;
+            --gold: #E9CF8B;
+            --light-gray: #EEEEEE;
+            padding: 30px 0;
+        }
 
-                    <h3>Faculty Members</h3>
-                    <div class="level3">
-                        <?php foreach ($allIt as $faculty): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
-                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $faculty['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
+        /* Gradient text for the heading */
+        .gradient-text {
+            background: linear-gradient(45deg, var(--maroon-dark), var(--maroon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
 
-            <!-- IS Department Tab -->
-            <div id="tab2" class="org-chart">
-                <div class="section-content">
-                    <h3>IS CHAIRPERSON</h3>
-                    <div class="level2">
-                        <?php foreach ($allIsHeads as $head): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $head['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+        /* Animated bar for the heading */
+        .animated-bar {
+            height: 4px;
+            width: 80px;
+            background: linear-gradient(to right, var(--maroon-dark), var(--maroon));
+            border-radius: 2px;
+        }
 
-                    <h3>Faculty Members</h3>
-                    <div class="level3">
-                        <?php foreach ($allIs as $faculty): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
-                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $faculty['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
+        /* Faculty Member Card Styling */
+        #facultymembers .member {
+            background-color: #3C1518;
+            color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 350px;
+            min-height: 90px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
 
-            <!-- CS Department Tab -->
-            <div id="tab3" class="org-chart">
-                <div class="section-content">
-                    <h3>CS CHAIRPERSON</h3>
-                    <div class="level2">
-                        <?php foreach ($allCsHeads as $head): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $head['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+        #facultymembers .member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
 
-                    <h3>Faculty Members</h3>
-                    <div class="level3">
-                        <?php foreach ($allCs as $faculty): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
-                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $faculty['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
+        #facultymembers .member img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
 
-            <!-- MIT Department Tab -->
-            <div id="tab4" class="org-chart">
-                <div class="section-content">
-                    <h3>MIT CHAIRPERSON</h3>
-                    <div class="level2">
-                        <?php foreach ($allMitHeads as $head): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
-                                <p><strong><?= htmlspecialchars($head['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $head['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+        #facultymembers .member-info {
+            flex: 1;
+            overflow: hidden;
+        }
 
-                    <h3>Faculty Members</h3>
-                    <div class="level3">
-                        <?php foreach ($allMit as $faculty): ?>
-                            <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
-                                data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
-                                data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
-                                data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
-                                <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
-                                <p><strong><?= htmlspecialchars($faculty['faculty_name']) ?></strong><br>
-                                    <?= implode(", ", $faculty['departments']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
+        #facultymembers .member-name {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #fff;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-        </div>
+        #facultymembers .member-department {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.3;
+            color: rgba(255, 255, 255, 0.85);
+            white-space: normal;
+            overflow: hidden;
+        }
 
-        <!-- Profile Modal -->
-        <div id="backdrop" class="backdrop" style="display: none;"></div>
-        <div id="profileCard" class="card mb-4">
-            <div class="card-body text-center">
-                <img id="profileImage" src="" alt="Profile Picture" class="rounded-circle img-fluid" style="width: 150px;">
-                <h5 class="my-3" id="profileName">Name</h5>
-                <p class="text-muted mb-1" id="profileSpecialization">Specialization: <span class="specialization-value"></span></p>
-                <p class="text-muted mb-4" id="profileConsultationTime">Consultation Time: <span class="consultation-value"></span></p>
-            </div>
-        </div>
+        /* Department button styling */
+        .fclty-div {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+        }
 
-        <style>
-            .card-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
+        .button-faculty-btn {
+            padding: 10px 20px;
+            background-color: #3C1518;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
 
-.rounded-circle {
-  width: 150px !important;
-  height: 150px !important;
-  object-fit: cover;
-  border-radius: 50% !important;
-  margin: 0 auto;
-  display: block;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+        .button-faculty-btn:hover {
+            background-color: #701c24;
+        }
 
-#profileName {
-  margin-top: 1rem;
-  text-align: center;
-  font-weight: 600;
-  color: #333;
-}
+        .button-faculty-btn.active {
+            background-color: #C33232;
+        }
 
-.text-muted {
-  text-align: center;
-}
-        </style>
-    </section>
+        /* Section headings */
+        #facultymembers h3 {
+            color: #3C1518;
+            margin: 30px 0 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* Layout for faculty members */
+        .level1, .level2, .level3 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Style for org-chart sections */
+        .org-chart {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .org-chart.active {
+            display: block;
+        }
+
+        /* Backdrop styling */
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Card styling */
+        .card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            width: 90%;
+            max-width: 400px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .rounded-circle {
+            width: 150px !important;
+            height: 150px !important;
+            object-fit: cover;
+            border-radius: 50% !important;
+            margin: 0 auto 1rem;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 3px solid #C33232;
+        }
+
+        #profileName {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3C1518;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .specialization-value,
+        .consultation-value {
+            font-weight: 600;
+            color: #3C1518;
+        }
+
+        /* Close button for modal */
+        .card-body::after {
+            content: "×";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #C33232;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Animation for modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card.show, .backdrop.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #facultymembers .member {
+                max-width: 100%;
+            }
+            
+            .fclty-div {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .button-faculty-btn {
+                width: 80%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.button-faculty-btn');
+            const tabContents = document.querySelectorAll('.org-chart');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Profile modal functionality
+            const members = document.querySelectorAll('.member');
+            const profileCard = document.getElementById('profileCard');
+            const backdrop = document.getElementById('backdrop');
+            const profileImage = document.getElementById('profileImage');
+            const profileName = document.getElementById('profileName');
+            const specializationValue = document.querySelector('.specialization-value');
+            const consultationValue = document.querySelector('.consultation-value');
+            
+            members.forEach(member => {
+                member.addEventListener('click', function() {
+                    // Set profile data
+                    profileImage.src = this.getAttribute('data-image');
+                    profileName.textContent = this.getAttribute('data-name');
+                    specializationValue.textContent = this.getAttribute('data-specialization');
+                    consultationValue.textContent = this.getAttribute('data-consultation');
+                    
+                    // Show modal
+                    profileCard.style.display = 'block';
+                    backdrop.style.display = 'block';
+                    
+                    // Add animation classes
+                    profileCard.classList.add('show');
+                    backdrop.classList.add('show');
+                    
+                    // Prevent body scrolling
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Close modal when clicking backdrop
+            backdrop.addEventListener('click', closeModal);
+            
+            // Close modal when clicking the X (added in CSS as ::after)
+            document.querySelector('.card-body').addEventListener('click', function(e) {
+                // Calculate if the click is on the pseudo-element (close button)
+                const rect = this.getBoundingClientRect();
+                const isInCloseButtonArea = 
+                    e.clientX > rect.right - 40 && 
+                    e.clientX < rect.right && 
+                    e.clientY > rect.top && 
+                    e.clientY < rect.top + 40;
+                    
+                if (isInCloseButtonArea) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal function
+            function closeModal() {
+                profileCard.classList.remove('show');
+                backdrop.classList.remove('show');
+                
+                // Allow slight delay for animation
+                setTimeout(() => {
+                    profileCard.style.display = 'none';
+                    backdrop.style.display = 'none';
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+            
+            // Close modal with escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && profileCard.style.display === 'block') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</section>
 
     <section id="campusorgs" class="content-section py-4">
     <div class="section-heading text-center mb-5">
@@ -3611,9 +4276,8 @@ function displayEvents() {
         });
     </script>
 </section>
-
-<section id="aboutus"  class="content-section py-4">
-<div class="section-heading text-center mb-5">
+<section id="aboutus" class="content-section py-4">
+    <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
             <span class="gradient-text">ABOUT US</span>
         </h1>
@@ -3711,80 +4375,69 @@ function displayEvents() {
                     </div>
                 </div>
                 
-                <!-- Leadership Section -->
-             <!-- Leadership Section with Tiny Cards -->
-<div class="leadership-section mb-6">
-    <h2 class="leadership-heading">University Leadership</h2>
-    <div class="animated-bar mx-auto mt-2 mb-3"></div>
-    
-    <div class="row row-cols-4 row-cols-md-3 g-1"> <!-- Reduced gap to g-2 (very small gap) -->
-        <div class="col">
-            <div class="leader-card">
-                <div class="leader-image-container">
-                    <img src="img/press.jpg" alt="TSU President" class="leader-image">
-                    <div class="leader-overlay"></div>
-                </div>
-                <div class="leader-info">
-                    <h4 class="leader-name">Dr. Arnold E. Velasco</h4>
-                    <p class="leader-title">University President</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col">
-            <div class="leader-card">
-                <div class="leader-image-container">
-                    <img src="img/v.press.jpg" alt="TSU Vice President" class="leader-image">
-                    <div class="leader-overlay"></div>
-                </div>
-                <div class="leader-info">
-                    <h4 class="leader-name">Dr. Grace N. David</h4>
-                    <p class="leader-title">VP for Academic Affairs</p> <!-- Shortened title -->
-                </div>
-            </div>
-        </div>
-        
-        <div class="col">
-            <div class="leader-card">
-                <div class="leader-image-container">
-                    <img src="img/vp.Ad.jpg" alt="Campus Dean" class="leader-image">
-                    <div class="leader-overlay"></div>
-                </div>
-                <div class="leader-info">
-                    <h4 class="leader-name">Atty. Wilmark J. Ramos</h4>
-                    <p class="leader-title">VP for Administration</p> <!-- Shortened title -->
-                </div>
-            </div>
-        </div>
-        
-        <div class="col">
-            <div class="leader-card">
-                <div class="leader-image-container">
-                    <img src="img/vp.res.jpg" alt="Campus Dean" class="leader-image">
-                    <div class="leader-overlay"></div>
-                </div>
-                <div class="leader-info">
-                    <h4 class="leader-name">Dr. Erwin P. Lacanlale</h4>
-                    <p class="leader-title">VP for Research & Extension</p> <!-- Shortened title -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <!-- Leadership Section with Single Row -->
+                <div class="leadership-section mb-5">
+                    <h2 class="leadership-heading">University Leadership</h2>
+                    <div class="animated-bar mx-auto mt-2 mb-4"></div>
+                    
+                    <div class="leadership-row">
+                        <div class="leader-card">
+                            <div class="leader-image-container">
+                                <img src="img/press.jpg" alt="TSU President" class="leader-image">
+                                <div class="leader-overlay"></div>
+                            </div>
+                            <div class="leader-info">
+                                <h4 class="leader-name">Dr. Arnold E. Velasco</h4>
+                                <p class="leader-title">University President</p>
+                            </div>
+                        </div>
+                        
+                        <div class="leader-card">
+                            <div class="leader-image-container">
+                                <img src="img/v.press.jpg" alt="TSU Vice President" class="leader-image">
+                                <div class="leader-overlay"></div>
+                            </div>
+                            <div class="leader-info">
+                                <h4 class="leader-name">Dr. Grace N. David</h4>
+                                <p class="leader-title">VP for Academic Affairs</p>
+                            </div>
+                        </div>
+                        
+                        <div class="leader-card">
+                            <div class="leader-image-container">
+                                <img src="img/vp.Ad.jpg" alt="VP for Administration" class="leader-image">
+                                <div class="leader-overlay"></div>
+                            </div>
+                            <div class="leader-info">
+                                <h4 class="leader-name">Atty. Wilmark J. Ramos</h4>
+                                <p class="leader-title">VP for Administration</p>
+                            </div>
+                        </div>
+                        
+                        <div class="leader-card">
+                            <div class="leader-image-container">
+                                <img src="img/vp.res.jpg" alt="VP for Research & Extension" class="leader-image">
+                                <div class="leader-overlay"></div>
+                            </div>
+                            <div class="leader-info">
+                                <h4 class="leader-name">Dr. Erwin P. Lacanlale</h4>
+                                <p class="leader-title">VP for Research & Extension</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <style>
-        /* Premium Design Styles for About Us Section */
-        
         /* Typography & General */
         #aboutus {
             font-family: 'Poppins', 'Segoe UI', 'Arial', sans-serif;
             background: linear-gradient(to bottom, #f8f9fa, #ffffff);
             position: relative;
             overflow: hidden;
+            padding-bottom: 3rem;
         }
         
         /* Animated Section Header */
@@ -3796,7 +4449,14 @@ function displayEvents() {
             letter-spacing: 1px;
         }
         
-       
+        .animated-bar {
+            height: 4px;
+            width: 80px;
+            background: linear-gradient(to right, #7D0A0A, #E3C47D);
+            border-radius: 2px;
+            position: relative;
+        }
+        
         @keyframes shine {
             100% {
                 left: 100%;
@@ -3913,6 +4573,9 @@ function displayEvents() {
             background: white;
             transform-style: preserve-3d;
             transition: all 0.5s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .strategy-card:hover {
@@ -3995,6 +4658,10 @@ function displayEvents() {
             transform: scale(1.1);
         }
         
+        .strategy-content {
+            flex: 1 1 auto;
+        }
+        
         .strategy-content h3 {
             font-size: 1.25rem;
             font-weight: 600;
@@ -4018,6 +4685,16 @@ function displayEvents() {
             margin-bottom: 0.75rem;
             color: #6c757d;
             font-size: 0.95rem;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+        
+        .values-list li:before {
+            content: "•";
+            color: #008080;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
         }
         
         .values-list li span {
@@ -4025,9 +4702,10 @@ function displayEvents() {
             color: #008080;
         }
         
-        /* Leadership Section */
+        /* Leadership Section in a Single Row */
         .leadership-section {
-            padding: 3rem 0 1rem;
+            padding: 2rem 0;
+            margin-top: 1rem;
         }
         
         .leadership-heading {
@@ -4038,98 +4716,160 @@ function displayEvents() {
             margin-bottom: 1rem;
         }
         
-       /* Even Smaller Leadership Cards */
-.leader-card {
-    background-color: white;
-    border-radius: 8px; /* Smaller radius */
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04); /* More subtle shadow */
-    transition: all 0.3s ease;
-}
-
-.leader-card:hover {
-    transform: translateY(-3px); /* Minimal hover lift */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-}
-
-.leader-image-container {
-    position: relative;
-    overflow: hidden;
-    height: 150px; /* Significantly reduced from original 260px */
-}
-
-.leader-info {
-    padding: 0.75rem; /* Further reduced padding */
-    text-align: center;
-}
-
-.leader-name {
-    margin: 0 0 0.2rem; /* Minimal margin */
-    font-size: 0.85rem; /* Much smaller font */
-    font-weight: 600;
-    color: #343a40;
-}
-
-.leader-title {
-    margin: 0;
-    font-size: 0.7rem; /* Very small font */
-    color: #7D0A0A;
-    font-weight: 500;
-    line-height: 1.2; /* Tighter line height */
-}
-
-/* Update responsive breakpoints */
-@media (max-width: 992px) {
-    .leader-image-container {
-        height: 140px;
-    }
-}
-
-@media (max-width: 768px) {
-    .leader-image-container {
-        height: 160px; /* Slightly taller on mobile for better proportions */
-    }
-}
-
-/* For extra small devices */
-@media (max-width: 576px) {
-    .leader-image-container {
-        height: 130px;
-    }
-}
+        .leadership-row {
+            display: flex;
+            flex-wrap: nowrap; /* No wrapping */
+            justify-content: space-between; /* Equal spacing */
+            align-items: flex-start;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .leader-card {
+            flex: 1; /* Equal width */
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center; /* Center all content */
+        }
+        
+        .leader-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .leader-image-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 100%; /* Maintain aspect ratio (1:1) */
+        }
+        
+        .leader-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .leader-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(125, 10, 10, 0.4), transparent);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .leader-card:hover .leader-image {
+            transform: scale(1.05);
+        }
+        
+        .leader-card:hover .leader-overlay {
+            opacity: 0.5;
+        }
+        
+        .leader-info {
+            padding: 1rem;
+            text-align: center !important;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .leader-name {
+            margin: 0 0 0.25rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #343a40;
+            text-align: center !important;
+            width: 100%;
+            display: block;
+        }
+        
+        .leader-title {
+            margin: 0;
+            font-size: 0.8rem;
+            color: #7D0A0A;
+            text-align: center !important;
+            width: 100%;
+            display: block;
+        }
+        
+        /* Direct fix for title alignment */
+        .vp-title,
+        .university-president {
+            text-align: center !important;
+            width: 100% !important;
+            display: block !important;
+            margin: 0 auto !important;
+        }
+        
         /* Responsive Adjustments */
         @media (max-width: 992px) {
-            .leadership-section {
-                padding: 2rem 0 1rem;
+            .about-card-content {
+                padding: 1.5rem;
             }
             
-            .leader-image-container {
-                height: 220px;
+            .strategy-card-inner {
+                padding: 1.5rem;
+            }
+            
+            .leadership-row {
+                gap: 10px;
             }
         }
         
         @media (max-width: 768px) {
-            .about-card-content {
-                padding: 2rem 1.5rem;
-            }
-            
-            .strategy-card-inner {
-                padding: 2rem 1.5rem;
-            }
-            
-            .leader-image-container {
-                height: 240px;
-            }
-            
             .about-subtitle {
                 font-size: 1.25rem;
+            }
+            
+            .leader-name {
+                font-size: 0.85rem;
+            }
+            
+            .leader-title {
+                font-size: 0.75rem;
+            }
+            
+            .leader-info {
+                padding: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .leadership-row {
+                gap: 8px;
+            }
+            
+            .leader-info {
+                padding: 0.5rem;
+            }
+            
+            .leader-name {
+                font-size: 0.75rem;
+            }
+            
+            .leader-title {
+                font-size: 0.7rem;
             }
         }
     </style>
 </section>
 
 </div>
-<!-- Modal --><div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+<!-- Modal -->
+ 
+<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content rounded-lg border-0 shadow">
             <!-- Modal Header -->
@@ -4139,15 +4879,36 @@ function displayEvents() {
                         <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
                         <h5 class="modal-title mb-0 fw-bold" id="newsModalLabel" style="color:white;">Organization Feed</h5>
                     </div>
-                    <div class="ms-auto">
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-sm rounded-pill bg-light border-0 ps-3" id="announcementSearch" placeholder="Search in this organization...">
-                            <span class="input-group-text bg-transparent border-0 ps-0">
-                                <i class="fas fa-search text-primary"></i>
-                            </span>
-                        </div>
-                    </div>
+                    <div class="ms-auto"> 
+  <div class="input-group"> 
+    <input type="text" class="form-control rounded-pill bg-white border-0" id="announcementSearch" placeholder="Search in this organization..."> 
+    <button class="btn btn-sm rounded-pill ms-2 border-0 bg-transparent" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false"> 
+      <i class="fas fa-filter"></i> 
+    </button> 
+    <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="filterDropdown"> 
+      <li><h6 class="dropdown-header">Date</h6></li> 
+      <li><a class="dropdown-item date-filter" href="#" data-value="">Any Date</a></li> 
+      <li><a class="dropdown-item date-filter" href="#" data-value="today">Today</a></li> 
+      <li><a class="dropdown-item date-filter" href="#" data-value="week">This Week</a></li> 
+      <li><a class="dropdown-item date-filter" href="#" data-value="month">This Month</a></li> 
+      <li><hr class="dropdown-divider"></li> 
+      <li><h6 class="dropdown-header">Category</h6></li> 
+      <li><a class="dropdown-item category-filter" href="#" data-value="all">All Categories</a></li> 
+      <li><a class="dropdown-item category-filter" href="#" data-value="announcement">Announcements</a></li> 
+      <li><a class="dropdown-item category-filter" href="#" data-value="event">Events</a></li> 
+      <li><a class="dropdown-item category-filter" href="#" data-value="news">News</a></li> 
+      <li><hr class="dropdown-divider"></li> 
+      <li><a class="dropdown-item" href="#" id="clearFilters"> 
+        <i class="fas fa-times me-1"></i> Clear All Filters 
+      </a></li> 
+    </ul> 
+  </div> 
+  <input type="hidden" id="dateFilter" value=""> 
+  <input type="hidden" id="categoryFilter" value="all"> 
+</div>
                 </div>
+
+                
             </div>
 
             <!-- Modal Body with Scrollable Content -->
@@ -4181,7 +4942,7 @@ function displayEvents() {
 
                 <!-- Navigation Tabs -->
                 <div class="px-4 border-bottom bg-white" style="margin-top: 15px;">
-                    <ul class="nav nav-tabs border-0 flex-nowrap overflow-auto">
+                    <ul class="nav nav-tabs border-0 flex-nowrap ">
                         <li class="nav-item">
                             <button class="nav-link active px-4 py-3 fw-semibold border-0 rounded-0 position-relative text-danger" id="announcements-tab" data-bs-toggle="tab" data-bs-target="#announcements">
                                 Announcements
@@ -4495,6 +5256,15 @@ function displayEvents() {
     background: #a8a8a8;
 }
 </style>
+<div id="backdrop" class="backdrop"></div>
+    <div id="profileCard" class="card">
+        <div class="card-body">
+            <img id="profileImage" src="" alt="Profile Picture" class="rounded-circle">
+            <h5 id="profileName">Name</h5>
+            <p class="text-muted" id="profileSpecialization">Specialization: <span class="specialization-value"></span></p>
+            <p class="text-muted" id="profileConsultationTime">Consultation Time: <span class="consultation-value"></span></p>
+        </div>
+    </div>
     <style>
         /* Progress Steps */
         .progress-steps {
@@ -6598,385 +7368,390 @@ document.addEventListener('DOMContentLoaded', function() {
     }
    
 $(document).ready(function () {
-        // When the modal is shown, ensure that we fetch announcements
-        let allAnnouncements = [];
+    // Global variables to store state
+    let allAnnouncements = [];
     let currentProfilePhoto = '';
     let currentAuthorName = '';
-        $('#newsModal').on('show.bs.modal', function (e) {
-            var orgId = $(e.relatedTarget).data('orgid');
-            var title = $(e.relatedTarget).data('title');
-            var imageSrc = $(e.relatedTarget).data('image');
-            var profilePhoto = $(e.relatedTarget).data('profilephoto');
-            var authorName = $(e.relatedTarget).data('author');
+    
+    // When the modal is shown, ensure that we fetch announcements
+    $('#newsModal').on('show.bs.modal', function (e) {
+        var orgId = $(e.relatedTarget).data('orgid');
+        var title = $(e.relatedTarget).data('title');
+        var imageSrc = $(e.relatedTarget).data('image');
+        var profilePhoto = $(e.relatedTarget).data('profilephoto');
+        var authorName = $(e.relatedTarget).data('author');
 
-            console.log("Organization ID (Announcements):", orgId);
+        console.log("Organization ID (Announcements):", orgId);
 
-            // Update organization name and profile photo in the modal
-            $('#orgName').text(title);
-            $('#orgProfilePhoto').attr('src', profilePhoto);
-            
-            // Set org_id for both tabs
-            $('#announcements-tab').data('orgid', orgId);
-            $('#members-tab').data('orgid', orgId);
+        // Update organization name and profile photo in the modal
+        $('#orgName').text(title);
+        $('#orgProfilePhoto').attr('src', profilePhoto);
+        
+        // Set org_id for both tabs
+        $('#announcements-tab').data('orgid', orgId);
+        $('#members-tab').data('orgid', orgId);
 
-            // Fetch announcements if orgId is valid
-            if (orgId) {
-                fetchAnnouncements(orgId, profilePhoto, authorName);
-            } else {
-                console.error("Invalid orgId in modal");
+        // Fetch announcements if orgId is valid
+        if (orgId) {
+            fetchAnnouncements(orgId, profilePhoto, authorName);
+        } else {
+            console.error("Invalid orgId in modal");
+        }
+        
+        // Clear filters when modal is opened
+        resetFiltersUI();
+    });
+
+    // When the Members tab is clicked, fetch members dynamically based on org_id
+    $('#members-tab').on('click', function () {
+        var orgId = $(this).data('orgid'); // Get orgId from members tab button
+
+        if (orgId) {
+            console.log("Fetching members for org ID:", orgId);
+            fetchMembers(orgId);
+        } else {
+            console.error("Invalid orgId for fetching members");
+            $('#members').html('<p class="text-danger">Invalid organization ID.</p>');
+        }
+    });
+    
+    // Fetch announcements from server
+    function fetchAnnouncements(orgId, profilePhoto, authorName) {
+        const filters = {
+            org_id: orgId,
+            search: $('#announcementSearch').val(),
+            category: $('#categoryFilter').val(),
+            date_from: $('#dateFilter').val()
+        };
+
+        console.log('Sending filters to server:', filters);
+        
+        // Store these for later use
+        currentProfilePhoto = profilePhoto;
+        currentAuthorName = authorName;
+
+        $.ajax({
+            url: 'ajax/fetch_announcement.php',
+            type: 'POST',
+            dataType: 'json',
+            data: filters,
+            success: function(response) {
+                if (response.status === 'error') {
+                    $('#announcements-content').html(`<p class="text-danger">${response.message}</p>`);
+                    return;
+                }
+                
+                allAnnouncements = response.announcements;
+                console.log('Received announcements:', allAnnouncements);
+                console.log('Applied filters:', response.filters_applied);
+                
+                renderAnnouncementsContent({ announcements: allAnnouncements });
+            },
+            error: function(xhr, status, error) {
+                console.error('Fetch error:', error);
+                console.error('Server response:', xhr.responseText);
+                $('#announcements-content').html('<p class="text-danger">Error loading announcements</p>');
             }
-            clearFilters();
+        });
+    }
+    
+    // Fetch members function
+    function fetchMembers(orgId) {
+        // Implement your members fetching logic here
+        console.log("Fetching members for organization ID:", orgId);
+        // Example AJAX call - update with your actual endpoint
+        $.ajax({
+            url: 'ajax/fetch_members.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { org_id: orgId },
+            success: function(response) {
+                // Process member data
+                console.log("Member data received:", response);
+                // Render members tab content
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching members:", error);
+                $('#members').html('<p class="text-danger">Error loading members</p>');
+            }
+        });
+    }
+    
+    // Main filtering function
+    function filterAnnouncements() {
+        const searchTerm = $('#announcementSearch').val().toLowerCase().trim();
+        const dateFilter = $('#dateFilter').val();
+        const categoryFilter = $('#categoryFilter').val();
+
+        console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
+
+        // Make sure allAnnouncements is defined and accessible
+        if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
+            console.error('allAnnouncements is not defined or not an array');
+            return [];
+        }
+
+        const filtered = allAnnouncements.filter(announcement => {
+            // Search filter - make sure all properties exist before accessing them
+            const searchableText = [
+                announcement.announcement_title || '',
+                announcement.announcement_details || '',
+                announcement.creator_name || '',
+                announcement.author_name || ''
+            ].join(' ').toLowerCase();
+            
+            const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+            
+            // Date filter - improved date handling
+            let matchesDate = true;
+            if (dateFilter) {
+                if (dateFilter === 'today') {
+                    // Today filter
+                    const today = new Date();
+                    const announcementDate = new Date(announcement.created_at);
+                    matchesDate = 
+                        announcementDate.getDate() === today.getDate() &&
+                        announcementDate.getMonth() === today.getMonth() &&
+                        announcementDate.getFullYear() === today.getFullYear();
+                } 
+                else if (dateFilter === 'week') {
+                    // This week filter
+                    const today = new Date();
+                    const oneWeekAgo = new Date();
+                    oneWeekAgo.setDate(today.getDate() - 7);
+                    const announcementDate = new Date(announcement.created_at);
+                    matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
+                }
+                else if (dateFilter === 'month') {
+                    // This month filter
+                    const today = new Date();
+                    const oneMonthAgo = new Date();
+                    oneMonthAgo.setMonth(today.getMonth() - 1);
+                    const announcementDate = new Date(announcement.created_at);
+                    matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
+                }
+                else {
+                    // Specific date
+                    const announcementDate = new Date(announcement.created_at);
+                    const filterDate = new Date(dateFilter);
+                    matchesDate = 
+                        announcementDate.getDate() === filterDate.getDate() &&
+                        announcementDate.getMonth() === filterDate.getMonth() &&
+                        announcementDate.getFullYear() === filterDate.getFullYear();
+                }
+            }
+            
+            // Category filter
+            let matchesCategory = true;
+            if (categoryFilter && categoryFilter !== 'all') {
+                // Make sure to handle null or undefined category
+                const announcementCategory = (announcement.category || '').toLowerCase();
+                const filterCategoryLower = categoryFilter.toLowerCase();
+                
+                matchesCategory = announcementCategory === filterCategoryLower;
+                
+                // Debug log for category matching
+                console.log('Checking announcement category:', {
+                    id: announcement.announcement_id,
+                    title: announcement.announcement_title,
+                    category: announcementCategory,
+                    filterCategory: filterCategoryLower,
+                    matches: announcementCategory === filterCategoryLower
+                });
+            }
+
+            const result = matchesSearch && matchesDate && matchesCategory;
+            
+            return result;
         });
 
-        // When the Members tab is clicked, fetch members dynamically based on org_id
-        $('#members-tab').on('click', function () {
-            var orgId = $(this).data('orgid'); // Get orgId from members tab button
-
-            if (orgId) {
-                console.log("Fetching members for org ID:", orgId);
-                fetchMembers(orgId);
-            } else {
-                console.error("Invalid orgId for fetching members");
-                $('#members').html('<p class="text-danger">Invalid organization ID.</p>');
+        console.log('Filter results:', {
+            totalAnnouncements: allAnnouncements.length,
+            filteredCount: filtered.length,
+            appliedFilters: {
+                search: searchTerm,
+                date: dateFilter,
+                category: categoryFilter
             }
         });
-        
-        function fetchAnnouncements(orgId, profilePhoto, authorName) {
-    const filters = {
-        org_id: orgId,
-        search: $('#announcementSearch').val(),
-        category: $('#categoryFilter').val(), // Ensure this is being sent
-        date_from: $('#dateFilter').val()
-    };
 
-    console.log('Sending filters to server:', filters); // Debug log
+        return filtered;
+    }
     
-    // Store these for later use
-    currentProfilePhoto = profilePhoto;
-    currentAuthorName = authorName;
-
-    $.ajax({
-        url: 'ajax/fetch_announcement.php',
-        type: 'POST',
-        dataType: 'json',
-        data: filters,
-        success: function(response) {
-            if (response.status === 'error') {
-                $('#announcements').html(`<p class="text-danger">${response.message}</p>`);
-                return;
-            }
-            
-            allAnnouncements = response.announcements;
-            console.log('Received announcements:', allAnnouncements);
-            console.log('Applied filters:', response.filters_applied); // Debug log
-            
-            renderAnnouncementsContent(response);
-        },
-        error: function(xhr, status, error) {
-            console.error('Fetch error:', error);
-            console.error('Server response:', xhr.responseText); // Debug log
-            $('#announcements').html('<p class="text-danger">Error loading announcements</p>');
-        }
-    });
-}
-function filterAnnouncements() {
-    const searchTerm = $('#announcementSearch').val().toLowerCase().trim();
-    const dateFilter = $('#dateFilter').val();
-    const categoryFilter = $('#categoryFilter').val();
-
-    console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
-
-    const filtered = allAnnouncements.filter(announcement => {
-        // Search filter
-        const searchableText = [
-            announcement.announcement_title,
-            announcement.announcement_details,
-            announcement.creator_name,
-            announcement.author_name
-        ].filter(Boolean).join(' ').toLowerCase();
-        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+    // Reset filters UI function
+    function resetFiltersUI() {
+        // Reset input fields
+        $('#announcementSearch').val('');
+        $('#dateFilter').val('');
+        $('#categoryFilter').val('all');
         
-        // Date filter
-        let matchesDate = true;
-        if (dateFilter) {
-            const announcementDate = new Date(announcement.created_at).toLocaleDateString();
-            const filterDate = new Date(dateFilter).toLocaleDateString();
-            matchesDate = announcementDate === filterDate;
-        }
-        
-        // Category filter
-        let matchesCategory = true;
-        if (categoryFilter && categoryFilter !== 'all') {
-            // Debug log for category matching
-            console.log('Checking announcement:', {
-                id: announcement.announcement_id,
-                title: announcement.announcement_title,
-                category: announcement.category,
-                filterCategory: categoryFilter,
-                matches: announcement.category === categoryFilter
-            });
-            
-            matchesCategory = announcement.category === categoryFilter;
-        }
-
-        const result = matchesSearch && matchesDate && matchesCategory;
-        
-        // Debug log for filter results
-        if (categoryFilter && categoryFilter !== 'all') {
-            console.log(`Announcement ${announcement.announcement_id} filter result:`, {
-                matchesSearch,
-                matchesDate,
-                matchesCategory,
-                finalResult: result
-            });
-        }
-
-        return result;
-    });
-
-    console.log('Filter results:', {
-        totalAnnouncements: allAnnouncements.length,
-        filteredCount: filtered.length,
-        appliedFilters: {
-            search: searchTerm,
-            date: dateFilter,
-            category: categoryFilter
-        }
-    });
-
-    return filtered;
-}
-
-
-
-// Event listeners
-$('#announcementSearch, #dateFilter, #categoryFilter').on('input change', function() {
-    console.log('Filter changed:', this.id);
-    const filtered = filterAnnouncements();
-    const announcementsContainer = `
-        <div class="list-group">
-            ${renderAnnouncements(filtered)}
-        </div>`;
-    $('#announcements-content').html(announcementsContainer);
-});
-
-    // Event listeners for filters
-    $('#announcementSearch').on('input', function() {
-        const filteredAnnouncements = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filteredAnnouncements });
-    });
-
-    $('#dateFilter').on('change', function() {
-        const filteredAnnouncements = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filteredAnnouncements });
-    });
-
-    $('#categoryFilter').on('change', function() {
-    const selectedCategory = $(this).val();
-    console.log('Category changed to:', selectedCategory);
-    console.log('Current announcements:', allAnnouncements);
+        // Reset active classes on filter dropdowns
+        $('.date-filter, .category-filter').removeClass('active');
+        $('.date-filter[data-value=""], .category-filter[data-value="all"]').addClass('active');
+    }
     
-    const filtered = filterAnnouncements();
-    console.log('Filtered announcements:', filtered);
-    
-    renderAnnouncementsContent({ announcements: filtered });
-});
-
-    // Clear filters
+    // Clear filters function
     function clearFilters() {
-    console.log('Clearing filters');
-    console.log('Original announcements:', allAnnouncements);
-    
-    // Reset filter inputs
-    $('#announcementSearch').val('');
-    $('#dateFilter').val('');
-    $('#categoryFilter').val('all');
-
-    // Fetch fresh data from server
-    const orgId = $('#announcements-tab').data('orgid');
-    if (orgId) {
-        fetchAnnouncements(orgId);
-    } else {
-        // If we can't fetch new data, use existing announcements
-        renderAnnouncementsContent({ announcements: allAnnouncements });
+        console.log('Clearing filters');
+        
+        // Reset UI
+        resetFiltersUI();
+        
+        // Fetch fresh data from server
+        const orgId = $('#announcements-tab').data('orgid');
+        if (orgId) {
+            fetchAnnouncements(orgId, currentProfilePhoto, currentAuthorName);
+        } else {
+            // If we can't fetch new data, use existing announcements
+            renderAnnouncementsContent({ announcements: allAnnouncements });
+        }
     }
-}
-
-// Update the click handler
-$('#clearFilters').on('click', function() {
-    clearFilters();
-});
-$('#announcementSearch, #dateFilter, #categoryFilter').on('input change', function() {
-    const filtered = filterAnnouncements();
-    renderAnnouncementsContent({ announcements: filtered });
-});
-       // Update the main success callback where announcements are initially loaded
-       function renderAnnouncementsContent(response) {
-    const announcements = response.announcements || [];
     
-    if (announcements.length === 0) {
-        $('#announcements-content').html(renderEmptyState());
-        return;
-    }
-
-    const content = `
-        <div class="list-group">
-            ${announcements.map(announcement => renderAnnouncementItem(announcement)).join('')}
-        </div>`;
-    
-    $('#announcements-content').html(content);
-}
-
-
-    function renderAnnouncements(announcements, profilePhoto, authorName) {
-        if (!announcements || announcements.length === 0) {
-            return renderEmptyState();
+    // Render announcements content
+    function renderAnnouncementsContent(response) {
+        const announcements = response.announcements || [];
+        
+        if (announcements.length === 0) {
+            $('#announcements-content').html(renderEmptyState());
+            return;
         }
 
-        return announcements
-            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-            .map(announcement => renderAnnouncementItem(announcement, profilePhoto, authorName))
-            .join('');
+        const content = `
+            <div class="list-group">
+                ${announcements.map(announcement => renderAnnouncementItem(announcement)).join('')}
+            </div>`;
+        
+        $('#announcements-content').html(content);
     }
-
-  function renderEmptyState() {
-    return `
-        <div class="text-center py-8">
-            <div class="custom-alert">
-                <i class="bi bi-info-circle me-2" style="font-size: 2rem;"></i>
-                <p class="h4 mb-0">No announcements available at the moment.</p>
-            </div>
-        </div>`;
-}
-
-function renderAnnouncementImages(announcement) {
-    console.log('Rendering images for announcement:', announcement);
-    console.log('Raw images:', announcement.images);
-
-    if (!announcement.images) {
-        console.log('No images found for announcement');
-        return '';
-    }
-
-    // If the images are a string (comma-separated), convert to array
-    const images = typeof announcement.images === 'string' 
-        ? announcement.images.split(',').filter(img => img.trim() !== '')
-        : Array.isArray(announcement.images) 
-            ? announcement.images
-            : [];
-
-    console.log('Processed images array:', images);
-
-    if (!images || images.length === 0) {
-        console.log('No valid images after processing');
-        return '';
-    }
-
-    // Create a carousel for multiple images
-    const carouselId = `carousel-${announcement.announcement_id}`;
-    console.log('Creating carousel with ID:', carouselId);
-
-    const carouselItems = images.map((image, index) => {
-        const imagePath = image.trim();
-        console.log(`Processing image ${index + 1}:`, imagePath);
+    
+    // Render empty state
+    function renderEmptyState() {
         return `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}" data-bs-interval="false">
-                <img src="uploaded/annUploaded/${imagePath}" 
-                     class="d-block w-100 rounded" 
-                     alt="Announcement Image ${index + 1}"
-                     style="max-height: 400px; object-fit: contain;"
-                     onerror="this.onerror=null; this.src='default-image.jpg'; console.error('Failed to load image:', this.src);">
-            </div>
-        `;
-    }).join('');
-
-    return `
-        <div id="${carouselId}" class="carousel slide mb-3" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                ${carouselItems}
-            </div>
-            ${images.length > 1 ? `
-                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            ` : ''}
-            ${images.length > 1 ? `
-                <ol class="carousel-indicators">
-                    ${images.map((_, index) => `
-                        <li data-bs-target="#${carouselId}" 
-                            data-bs-slide-to="${index}" 
-                            class="${index === 0 ? 'active' : ''}">
-                        </li>
-                    `).join('')}
-                </ol>
-            ` : ''}
-        </div>`;
-}
-
-function renderAnnouncementItem(announcement) {
-    const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
-    const formattedDate = formatRelativeTime(new Date(announcement.created_at));
-    const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
-
-    return `
-        <div class="list-group-item bg-white rounded-lg shadow-sm p-4 mb-4">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-                <div class="d-flex align-items-center">
-                    <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : 'default-profile.jpg'}" 
-                         alt="Profile" 
-                         class="rounded-circle border border-primary" 
-                         style="width: 50px; height: 50px;">
-                    <div class="ms-3">
-                        <h5 class="mb-1">${displayName}</h5>
-                        <small class="text-muted">${announcement.org_name || 'Unknown Organization'}</small>
-                    </div>
-                </div>
-                <span class="badge ${categoryBadgeClass}">${announcement.category}</span>
-            </div>
-            <h4 class="mb-3">${announcement.announcement_title}</h4>
-            <div class="announcement-content mb-3">
-                ${announcement.announcement_details}
-            </div>
-            ${renderAnnouncementImages(announcement)}
-            <small class="text-muted">${formattedDate}</small>
-        </div>`;
-}
-
-
-    // Helper function to get badge class based on category
-    function getCategoryBadgeClass(category) {
-    const classes = {
-        'academic': 'bg-primary',
-        'event': 'bg-success',
-        'org': 'bg-info',
-        'general': 'bg-secondary'
-    };
-    return classes[category] || 'bg-secondary';
-}
-    function renderAnnouncementHeader(creatorName, profilePhoto, authorName) {
-        return `
-            <div class="d-flex align-items-center mb-4">
-                <img src="${profilePhoto || 'default-profile.jpg'}" alt="Profile Photo" class="rounded-circle border border-primary" style="width: 50px; height: 50px;">
-                <div class="ml-3">
-                    
-                    <h5 class="text-muted-white small">${authorName || 'Unknown Author'}</h5>
-                    <p class="font-weight-bold text-dark">${creatorName}</p>
+            <div class="text-center py-8">
+                <div class="custom-alert">
+                    <i class="bi bi-info-circle me-2" style="font-size: 2rem;"></i>
+                    <p class="h4 mb-0">No announcements available at the moment.</p>
                 </div>
             </div>`;
     }
-    function renderAnnouncementContent(sanitizedDetails, announcement) {
-    const relativeTime = formatRelativeTime(new Date(announcement.created_at)); // Apply relative time formatting
-    return `
-                <span class="text-dark-white small">${sanitizedDetails}</span>
-            <span class="text-secondary small">${relativeTime}</span> <!-- Use relative time here -->
-        </div>`;
-}
+    
+    // Render announcement item
+    function renderAnnouncementItem(announcement) {
+        const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
+        const formattedDate = formatRelativeTime(new Date(announcement.created_at));
+        const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
 
+        return `
+            <div class="list-group-item bg-white rounded-lg shadow-sm p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="d-flex align-items-center">
+                        <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : 'default-profile.jpg'}" 
+                            alt="Profile" 
+                            class="rounded-circle border border-primary" 
+                            style="width: 50px; height: 50px;">
+                        <div class="ms-3">
+                            <h5 class="mb-1">${displayName}</h5>
+                            <small class="text-muted">${announcement.org_name || 'Unknown Organization'}</small>
+                        </div>
+                    </div>
+                    <span class="badge ${categoryBadgeClass}">${announcement.category}</span>
+                </div>
+                <h4 class="mb-3">${announcement.announcement_title}</h4>
+                <div class="announcement-content mb-3">
+                    ${announcement.announcement_details}
+                </div>
+                ${renderAnnouncementImages(announcement)}
+                <small class="text-muted">${formattedDate}</small>
+            </div>`;
+    }
+    
+    // Render announcement images
+    function renderAnnouncementImages(announcement) {
+        console.log('Rendering images for announcement:', announcement);
+        console.log('Raw images:', announcement.images);
+
+        if (!announcement.images) {
+            console.log('No images found for announcement');
+            return '';
+        }
+
+        // If the images are a string (comma-separated), convert to array
+        const images = typeof announcement.images === 'string' 
+            ? announcement.images.split(',').filter(img => img.trim() !== '')
+            : Array.isArray(announcement.images) 
+                ? announcement.images
+                : [];
+
+        console.log('Processed images array:', images);
+
+        if (!images || images.length === 0) {
+            console.log('No valid images after processing');
+            return '';
+        }
+
+        // Create a carousel for multiple images
+        const carouselId = `carousel-${announcement.announcement_id}`;
+        console.log('Creating carousel with ID:', carouselId);
+
+        const carouselItems = images.map((image, index) => {
+            const imagePath = image.trim();
+            console.log(`Processing image ${index + 1}:`, imagePath);
+            return `
+                <div class="carousel-item ${index === 0 ? 'active' : ''}" data-bs-interval="false">
+                    <img src="uploaded/annUploaded/${imagePath}" 
+                        class="d-block w-100 rounded" 
+                        alt="Announcement Image ${index + 1}"
+                        style="max-height: 400px; object-fit: contain;"
+                        onerror="this.onerror=null; this.src='default-image.jpg'; console.error('Failed to load image:', this.src);">
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div id="${carouselId}" class="carousel slide mb-3" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    ${carouselItems}
+                </div>
+                ${images.length > 1 ? `
+                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                ` : ''}
+                ${images.length > 1 ? `
+                    <ol class="carousel-indicators">
+                        ${images.map((_, index) => `
+                            <li data-bs-target="#${carouselId}" 
+                                data-bs-slide-to="${index}" 
+                                class="${index === 0 ? 'active' : ''}">
+                            </li>
+                        `).join('')}
+                    </ol>
+                ` : ''}
+            </div>`;
+    }
+    
+    // Helper function to get badge class based on category
+    function getCategoryBadgeClass(category) {
+        if (!category) return 'bg-secondary';
+        
+        const categoryLower = category.toLowerCase();
+        const classes = {
+            'academic': 'bg-primary',
+            'event': 'bg-success',
+            'announcement': 'bg-info',
+            'news': 'bg-warning',
+            'org': 'bg-info',
+            'general': 'bg-secondary'
+        };
+        return classes[categoryLower] || 'bg-secondary';
+    }
+    
+    // Format relative time function
     function formatRelativeTime(date) {
         const now = new Date();
         const seconds = Math.floor((now - date) / 1000);
@@ -6998,35 +7773,59 @@ function renderAnnouncementItem(announcement) {
         const years = Math.floor(months / 12);
         return years + " year" + (years > 1 ? "s" : "") + " ago";
     }
-
-    function renderCarousel(announcement) {
-        if (!announcement.images || announcement.images.length === 0) {
-            return '';  // If no images, return empty string
-        }
-
-        const carouselItems = announcement.images.map((image, index) => {
-            return `
-                <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                    <img src="uploaded/annUploaded/${image}" class="d-block w-100 rounded-lg shadow-lg" alt="Announcement Image ${index + 1}">
-                </div>`;
-        }).join('');
-
-        return `
-            <div id="announcementCarousel-${announcement.id}" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    ${carouselItems}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#announcementCarousel-${announcement.id}" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#announcementCarousel-${announcement.id}" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>`;
-    }
-
+    
+    // EVENT LISTENERS
+    // ---------------
+    
+    // Search input event listener
+    $('#announcementSearch').on('input', function() {
+        console.log('Search input changed:', $(this).val());
+        const filtered = filterAnnouncements();
+        renderAnnouncementsContent({ announcements: filtered });
+    });
+    
+    // Date filter dropdown items
+    $('.date-filter').on('click', function(e) {
+        e.preventDefault();
+        const value = $(this).data('value');
+        console.log('Date filter clicked:', value);
+        
+        // Update hidden input value
+        $('#dateFilter').val(value);
+        
+        // Update UI to show selected filter
+        $('.date-filter').removeClass('active');
+        $(this).addClass('active');
+        
+        // Apply filters
+        const filtered = filterAnnouncements();
+        renderAnnouncementsContent({ announcements: filtered });
+    });
+    
+    // Category filter dropdown items
+    $('.category-filter').on('click', function(e) {
+        e.preventDefault();
+        const value = $(this).data('value');
+        console.log('Category filter clicked:', value);
+        
+        // Update hidden input value
+        $('#categoryFilter').val(value);
+        
+        // Update UI to show selected filter
+        $('.category-filter').removeClass('active');
+        $(this).addClass('active');
+        
+        // Apply filters
+        const filtered = filterAnnouncements();
+        renderAnnouncementsContent({ announcements: filtered });
+    });
+    
+    // Clear filters button
+    $('#clearFilters').on('click', function(e) {
+        e.preventDefault();
+        console.log('Clear filters clicked');
+        clearFilters();
+    });
    function fetchMembers(orgId) {
     $.ajax({
         url: 'ajax/fetch_members.php',
@@ -7054,50 +7853,49 @@ function renderAnnouncementItem(announcement) {
         }
     });
 }
-
 function renderMembersContent(members) {
-    let membersContent = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">';
-    
-    if (members && members.length > 0) {
-        members.forEach(function (member) {
-            membersContent += `
-                <div class="group">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
-                        <div class="relative">
-                            <div class="aspect-square">
-                                <img src="uploaded/orgUploaded/${member.member_img}" 
-                                    alt="${member.name}" 
-                                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                    onerror="this.src='path/to/default-avatar.jpg'">
+            let membersContent = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">';
+            
+            if (members && members.length > 0) {
+                members.forEach(function (member) {
+                    membersContent += `
+                        <div class="group">
+                            <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
+                                <div class="relative">
+                                    <div class="aspect-square" style="height: 250px;">
+                                        <img src="uploaded/orgUploaded/${member.member_img}" 
+                                            alt="${member.name}" 
+                                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                            onerror="this.src='path/to/default-avatar.jpg'">
+                                    </div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                                <div class="p-6 text-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                                        ${member.name}
+                                    </h3>
+                                    <p class="text-sm text-blue-600 font-medium">
+                                        ${member.position}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>`;
+                });
+            } else {
+                membersContent = `
+                    <div class="flex items-center justify-center p-8 col-span-full">
+                        <div class="bg-amber-50 text-amber-800 px-6 py-4 rounded-lg flex items-center gap-3">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <span class="text-lg font-medium">No members found</span>
                         </div>
-                        <div class="p-6 text-center">
-                            <h3 class="text-lg font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">
-                                ${member.name}
-                            </h3>
-                            <p class="text-sm text-blue-600 font-medium">
-                                ${member.position}
-                            </p>
-                        </div>
-                    </div>
-                </div>`;
-        });
-    } else {
-        membersContent = `
-            <div class="flex items-center justify-center p-8 col-span-full">
-                <div class="bg-amber-50 text-amber-800 px-6 py-4 rounded-lg flex items-center gap-3">
-                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <span class="text-lg font-medium">No members found</span>
-                </div>
-            </div>`;
-    }
+                    </div>`;
+            }
 
-    membersContent += '</div>';
-    $('#members').html(membersContent);
-}
+            membersContent += '</div>';
+            $('#members').html(membersContent);
+        }
     function initializeCarousels() {
         $('.carousel').each(function() {
             new bootstrap.Carousel(this);

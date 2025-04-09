@@ -29,7 +29,7 @@
 
     <html>
 
-    <head><meta charset="utf-8">
+    <head><meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Campus Kiosk</title>
     <meta name="description" content="">
@@ -729,6 +729,9 @@ $allAnnouncement = getAllAnnouncements($connect);
 #filters-container {
     margin-bottom: 16px;
     transition: all 0.3s ease;
+}
+.collapse {
+    visibility: visible;
 }
 
 /* Styling for form elements in filters */
@@ -3096,7 +3099,7 @@ function displayEvents() {
         }
 
         /* Card styling */
-        .card {
+        .custom-card {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -3107,7 +3110,6 @@ function displayEvents() {
             z-index: 1001;
             width: 90%;
             max-width: 400px;
-            display: none;
             overflow: hidden;
         }
 
@@ -3152,7 +3154,7 @@ function displayEvents() {
 
         /* Close button for modal */
         .card-body::after {
-            content: "×";
+             content: "x"
             position: absolute;
             top: 10px;
             right: 15px;

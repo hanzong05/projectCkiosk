@@ -63,7 +63,7 @@ try {
         // First get the user's organization (using aid instead of id to match session variable)
         $org_query = "SELECT users_org FROM users_tbl WHERE users_id = :user_id";
         $org_stmt = $connect->prepare($org_query);
-        $org_stmt->execute([':user_id' => $_SESSION['aid']]); // Using 'aid' instead of 'id'
+        $org_stmt->execute([':user_id' => $_SESSION['aid'] ?? $_SESSION['id']]); // Using 'aid' with fallback to 'id'
         $org_row = $org_stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($org_row) {
@@ -367,6 +367,24 @@ try {
             font-size: 24px;
             font-weight: bold;
             color: #4A90E2;
+        }
+        
+        .metric-update {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
         }
     </style>
 </head>
@@ -673,7 +691,7 @@ if ($account_type == '0' || $account_type == '2' || $account_type == '3' || $acc
                                 <div id="org-communication-rating" class="metric-value text-2xl text-center mt-2">0.0</div>
                             </div>
                             <div class="metric-card bg-white rounded-lg p-4 shadow">
-                                <h3 class="text-lg font-semibold text-center">Inclusivity</h3>
+                               <h3 class="text-lg font-semibold text-center">Inclusivity</h3>
                                 <div id="inclusivity-rating" class="metric-value text-2xl text-center mt-2">0.0</div>
                             </div>
                             <div class="metric-card bg-white rounded-lg p-4 shadow">
@@ -818,8 +836,11 @@ if ($account_type == '0' || $account_type == '2' || $account_type == '3' || $acc
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
   <script src="assets/demo/demo.js"></script>
-  <script> var aid = <?php echo json_encode($aid); ?>; // Use json_encode to safely handle the value
-    console.log("The value of aid is:", aid);</script>
+  <script>
+    // Make sure we define aid with a fallback to null
+    var aid = <?php echo isset($_SESSION['aid']) ? json_encode($_SESSION['aid']) : 'null'; ?>;
+    console.log("The value of aid is:", aid);
+  </script>
  
       
  <script>
@@ -1154,10 +1175,22 @@ function initializeOrgTrendChart() {
 // Data refresh functions
 function refreshData(type = 'office') {
     const timeFilter = document.getElementById('timeFilter')?.value || 'all';
-    const url = `ajax/get_feedback_data.php?type=${type}&time=${timeFilter}&_=${new Date().getTime()}`;
+    const orgFilter = document.getElementById('orgFilter')?.value || 'all';  
+    
+    // Add orgFilter parameter if it exists
+    let url = `ajax/get_feedback_data.php?type=${type}&time=${timeFilter}`;
+    if (type === 'org' && orgFilter) {
+        url += `&org=${orgFilter}`;
+    }
+    url += `&_=${new Date().getTime()}`;  // Prevent caching
     
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (type === 'office') {
                 // Update metrics
@@ -1176,8 +1209,36 @@ function refreshData(type = 'office') {
         })
         .catch(error => {
             console.error('Error fetching data:', error);
+            showErrorMessage('Failed to load data. Please try again later.');
         });
 }
+
+// Function to refresh event evaluation data
+function refreshEventEvalData() {
+    const timeFilter = document.getElementById('evalTimeFilter')?.value || 'all';
+    const orgFilter = document.getElementById('evalOrgFilter')?.value || 'all';
+    
+    updateLoadingState(true);
+    
+    fetch(`ajax/get_event_eval_data.php?time=${timeFilter}&org=${orgFilter}&_=${new Date().getTime()}`)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Event evaluation data:', data);
+            updateEventEvalMetrics(data);
+            updateEventEvalCharts(data);
+        })
+        .catch(error => {
+            console.error('Error fetching event evaluation data:', error);
+            showErrorMessage('Failed to load event evaluation data');
+        })
+        .finally(() => {
+            updateLoadingState(false);
+        });
+}
+
 // Update functions
 function updateOfficeData(data) {
     if (!data || !data.metrics) {
@@ -1262,22 +1323,38 @@ function updateOrgData(data) {
 
     console.log('Updating organization data:', data);
 
-    // Update metrics
-    Object.entries(orgMetrics).forEach(([key, label]) => {
-        const elementId = `${key}-rating`;
-        const value = data.metrics[`avg_${key}`];
-        updateMetricValue(elementId, value);
+    // Update metric cards
+    const metricMappings = {
+        'avg_event_quality': 'event-quality-rating',
+        'avg_communication': 'org-communication-rating',
+        'avg_inclusivity': 'inclusivity-rating',
+        'avg_leadership': 'leadership-rating',
+        'avg_skill_dev': 'skill-dev-rating',
+        'avg_impact': 'impact-rating'
+    };
+
+    Object.entries(metricMappings).forEach(([dataKey, elementId]) => {
+        const value = data.metrics[dataKey];
+        if (typeof value !== 'undefined') {
+            updateMetricValue(elementId, value);
+        }
     });
 
-    // Update charts
+    // Update distribution chart if data exists
     if (data.distributions) {
         updateOrgDistributionChart(data.distributions);
+    } else {
+        console.warn('No distribution data available for organization chart update');
     }
     
+    // Update trend chart if data exists
     if (data.trend) {
         updateOrgTrendChart(data.trend);
+    } else {
+        console.warn('No trend data available for organization chart update');
     }
 }
+
 function updateOrgDistributionChart(distributions) {
     if (!orgDistChart) {
         console.warn('Organization distribution chart not initialized');
@@ -1338,46 +1415,6 @@ function updateOrgTrendChart(trend) {
     orgTrendChart.update();
 }
 
-// Enhance error handling for data updates
-function updateOrgData(data) {
-    if (!data || !data.metrics) {
-        console.error('Invalid organization data format:', data);
-        return;
-    }
-
-    console.log('Updating organization data:', data);
-
-    // Update metric cards
-    const metricMappings = {
-        'avg_event_quality': 'event-quality-rating',
-        'avg_communication': 'org-communication-rating',
-        'avg_inclusivity': 'inclusivity-rating',
-        'avg_leadership': 'leadership-rating',
-        'avg_skill_dev': 'skill-dev-rating',
-        'avg_impact': 'impact-rating'
-    };
-
-    Object.entries(metricMappings).forEach(([dataKey, elementId]) => {
-        const value = data.metrics[dataKey];
-        if (typeof value !== 'undefined') {
-            updateMetricValue(elementId, value);
-        }
-    });
-
-    // Update distribution chart if data exists
-    if (data.distributions) {
-        updateOrgDistributionChart(data.distributions);
-    } else {
-        console.warn('No distribution data available for organization chart update');
-    }
-    
-    // Update trend chart if data exists
-    if (data.trend) {
-        updateOrgTrendChart(data.trend);
-    } else {
-        console.warn('No trend data available for organization chart update');
-    }
-}
 function updateCCMetrics(metrics) {
     // Update the metric values in the cards
     ['cc_awareness', 'cc_visibility', 'cc_helpfulness'].forEach(key => {
@@ -1406,6 +1443,53 @@ function updateCCMetrics(metrics) {
         ];
         
         ccMetricsChart.update();
+    }
+}
+
+function updateEventEvalMetrics(data) {
+    if (!data || !data.metrics) return;
+
+    const metricsMapping = {
+        'participant-rating': data.metrics.participant_rating,
+        'video-quality-rating': data.metrics.video_quality,
+        'audio-quality-rating': data.metrics.audio_quality,
+        'overall-impact-rating': data.metrics.overall_impact
+    };
+
+    Object.entries(metricsMapping).forEach(([elementId, value]) => {
+        updateMetricValue(elementId, value);
+    });
+}
+
+function updateEventEvalCharts(data) {
+    console.log('Updating charts with data:', data);
+    
+    // Performance metrics chart update
+    if (perfMetricsChart && data.performance_metrics) {
+        console.log('Updating performance metrics chart with:', data.performance_metrics);
+        
+        const perfData = [
+            data.performance_metrics.content_quality || 0,
+            data.performance_metrics.engagement || 0,
+            data.performance_metrics.time_management || 0,
+            data.performance_metrics.activity_relevance || 0
+        ];
+        
+        console.log('Performance data array:', perfData);
+        
+        perfMetricsChart.data.datasets[0].data = perfData;
+        perfMetricsChart.update();
+    }
+    
+    if (methodologyChart && data.methodology_metrics) {
+        methodologyChart.data.datasets[0].data = [
+            data.methodology_metrics.clarity || 0,
+            data.methodology_metrics.engagement || 0,
+            data.methodology_metrics.interactivity || 0,
+            data.methodology_metrics.resources || 0,
+            data.methodology_metrics.time_management || 0
+        ];
+        methodologyChart.update();
     }
 }
 
@@ -1439,7 +1523,7 @@ function showErrorMessage(message) {
     errorDiv.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4';
     errorDiv.textContent = message;
     
-    const container = document.querySelector('.dashboard-container');
+    const container = document.querySelector('.dashboard-container') || document.querySelector('.container');
     if (container) {
         const existingError = container.querySelector('.error-message');
         if (existingError) {
@@ -1448,6 +1532,20 @@ function showErrorMessage(message) {
         container.prepend(errorDiv);
         setTimeout(() => errorDiv.remove(), 5000);
     }
+}
+
+function updateLoadingState(isLoading) {
+    const loadingIndicator = document.getElementById('eval-loading-indicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = isLoading ? 'flex' : 'none';
+    }
+
+    ['evalTimeFilter', 'evalOrgFilter'].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.disabled = isLoading;
+        }
+    });
 }
 
 // Tab system
@@ -1569,114 +1667,6 @@ function initializeMethodologyChart() {
         }
     });
 }
-
-function refreshEventEvalData() {
-    const timeFilter = document.getElementById('evalTimeFilter')?.value || 'all';
-    const orgFilter = document.getElementById('evalOrgFilter')?.value || 'all';
-    
-    updateLoadingState(true);
-    
-    fetch(`ajax/get_event_eval_data.php?time=${timeFilter}&org=${orgFilter}&_=${new Date().getTime()}`)
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            console.log('Event evaluation data:', data);
-            updateEventEvalMetrics(data);
-            updateEventEvalCharts(data);
-        })
-        .catch(error => {
-            console.error('Error fetching event evaluation data:', error);
-            showErrorMessage('Failed to load event evaluation data');
-        })
-        .finally(() => {
-            updateLoadingState(false);
-        });
-}
-
-function updateEventEvalMetrics(data) {
-    if (!data || !data.metrics) return;
-
-    const metricsMapping = {
-        'participant-rating': data.metrics.participant_rating,
-        'video-quality-rating': data.metrics.video_quality,
-        'audio-quality-rating': data.metrics.audio_quality,
-        'overall-impact-rating': data.metrics.overall_impact
-    };
-
-    Object.entries(metricsMapping).forEach(([elementId, value]) => {
-        updateMetricValue(elementId, value);
-    });
-}
-
-function updateEventEvalCharts(data) {
-    if (!data) return;
-
-    if (perfMetricsChart && data.performance_metrics) {
-        perfMetricsChart.data.datasets[0].data = [
-            data.performance_metrics.content_quality || 0,
-            data.performance_metrics.engagement || 0,
-            data.performance_metrics.time_management || 0,
-            data.performance_metrics.activity_relevance || 0
-        ];
-        perfMetricsChart.update();
-    }
-
-    if (methodologyChart && data.methodology_metrics) {
-        methodologyChart.data.datasets[0].data = [
-            data.methodology_metrics.clarity || 0,
-            data.methodology_metrics.engagement || 0,
-            data.methodology_metrics.interactivity || 0,
-            data.methodology_metrics.resources || 0,
-            data.methodology_metrics.time_management || 0
-        ];
-        methodologyChart.update();
-    }
-}
-
-function updateLoadingState(isLoading) {
-    const loadingIndicator = document.getElementById('eval-loading-indicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = isLoading ? 'flex' : 'none';
-    }
-
-    ['evalTimeFilter', 'evalOrgFilter'].forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.disabled = isLoading;
-        }
-    });
-}
-
-// Add necessary CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-    .metric-update {
-        animation: pulse 0.5s ease-in-out;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-
-    .chart-container {
-        position: relative;
-        height: 300px;
-        width: 100%;
-    }
-
-    .loading-indicator {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000;
-    }
-`;
-document.head.appendChild(style);
 </script>
 </body>
 

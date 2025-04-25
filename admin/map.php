@@ -32,102 +32,120 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+<!-- Replace your current Tailwind link with this -->
+<link href="https://unpkg.com/tailwindcss@^3/dist/tailwind.min.css" rel="stylesheet">
   <link href="assets/css/css.css" rel="stylesheet" />
   <style>
-    
-    .tab-navigation {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .tab-button {
-        background-color: #f1f1f1;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        margin: 0 5px;
-    }
-    .tab-button.active {
-        background-color: #ccc;
-        font-weight: bold;
-    }
-    .tab-content {
-        display: block;
-    }
-    .tab-content.active {
-        display: block;
-    }
-    .svg-container {
-        width: 100%;
-        overflow: auto;
-    }
-    .map-building {
-        cursor: pointer;
-        transition: fill 0.3s;
-    }
-    .map-building:hover {
-        fill: orange;
-    }
-        .highlight {
-            fill: yellow; /* Highlight color */
-        }
-        svg {
-            width: 100%;
-            height: auto;
-        }
-        
-        /* Hover effects */
-        rect {
-            transition: fill 0.3s;
-                
-        }
-
-        rect:hover {
-            fill: #B0B0B0; /* Change color on hover */
-        }
-
-        text {
-            font-family: Arial, sans-serif;
-            
-            fill: black;
-            pointer-events: none; /* Prevent hover effects on text */
-        }
-    .highlight {
-    background-color: #2e0f13 !important;
-    }
-    .editable-cell {
-    border: 1px solid #ddd;
-    padding: 5px;
-    cursor: pointer; /* Change cursor to indicate that it's editable */
+/* Enhanced customizations */
+:root {
+    --maroon-dark: #7A0D0D;
+    --maroon: #C33232;
+    --primary: #C33232;
+    --primary-dark: #7A0D0D;
+    --gold: #E9CF8B;
+    --light-gray: #EEEEEE;
 }
 
-.editable-cell[contenteditable="true"] {
-    background-color: #f9f9f9; /* Highlight background for edit mode */
-    color: #333; /* Set the font color for the cell when editing */
-    font-weight: bold; /* Optional: make the font bold while editing */
-}
-.table-container {
-    width: 100%;
-    overflow-x: auto;
+.text-danger {
+    color: var(--primary) !important;
 }
 
-.table-container {
-    width: 100%; /* Full width of the parent */
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-    display: flex; /* Enable flex properties for centering */
-    justify-content: center; /* Center the SVG */
+.bg-danger {
+    background-color: var(--primary) !important;
 }
 
-#room-svg, #room-svg-1,#room-svg-2,#room-svg-3   {
-    height: 100%; /* Maintain the aspect ratio */
-    min-height:450px;
-    max-height:auto;
+.text-primary {
+    color: var(--primary) !important;
 }
 
+.bg-primary {
+    background-color: var(--primary) !important;
+}
 
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.nav-tabs .nav-link {
+    color: #65676B;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary);
+}
+
+.nav-tabs .nav-link span {
+    opacity: 0;
+}
+
+.nav-tabs .nav-link.active span {
+    opacity: 1;
+}
+
+.modal-content {
+    border-radius: 12px;
+}
+
+.rounded-circle {
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.transition {
+    transition: all 0.3s ease;
+}
+
+.rounded-pill {
+    border-radius: 50px !important;
+}
+
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
 </style>
 </head>
 
@@ -135,435 +153,1151 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
 <?php include 'assets/includes/navbar.php'; ?>
       <!-- End Navbar -->
         <div class="content">
-          <section id="campusmap" class="content-section">
-          <!-- Tab Navigation -->
-    <div class="tab-container">
-    <button class="tab-button active" onclick="openTab(event, 'ccs')">CCS</button>
-    <button class="tab-button" onclick="openTab(event, 'cit')">CIT</button>
-    <button class="tab-button" onclick="openTab(event, 'cafa')">CAFA</button>
+        <section id="campusmap" class="content-section py-4">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">CAMPUS BUILDINGS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
+    
+    <style>
+/* Isolated styles for campus map section that won't be affected by Bootstrap */
+#campusmap {
+    --primary-color: #3b82f6;
+    --hover-color: #4B5563; /* Dark gray for hover color */
+    --light-gray: #f3f4f6;
+    --gray-hover: #e5e7eb;
+}
 
-    <!-- Floor Map Section -->
-    <div id="ccs" class="tab-content">
-        <div id="map">
-            <div class="map ">
-                <div class="dropdown"> 
-                    <input type="text" id="search-input" class="search" placeholder="Enter room name">
-                    <button onclick="searchAndHighlight()" class="search-button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <select id="dropdownMenu">
-                        <option value="1" selected>1st Floor</option>
-                        <option value="2">2nd Floor</option>
-                        <option value="3">3rd Floor</option>
-                        <option value="4">4th Floor</option>
-                        <option value="5">5th Floor</option>
-                    </select>
-                </div>
-                <div class="table-container">
-                    <table table class="floor-table fixed-table"  id="floor-1" border="1">
-                        <tbody>
-                            <tr>
-                                <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
-                                <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
-                                <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                <td id="7" class="floor-gray" colspan="2"></td>
-                            </tr>
-                            <tr>
-                                <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
-                                <td id="9" class="floor-gray" colspan="2"></td>
-                            </tr>
-                            <tr>
-                                <td class="floor-gray" colspan="2" id="10">0</td>
-                                <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
-                                <td id="12" class="floor-gray" colspan="2">2</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="13">3</td>
-                                <td id="14" class="floor-gray" colspan="2">4</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
-                                <td id="16" class="floor-gray" colspan="2">6</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
-                                <td id="18" class="floor-gray" colspan="2">8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="floor-table" id="floor-2" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
-                                <td id="20" class="floor-gray" rowspan="2">19</td>
-                                <td id="21" class="floor-gray" rowspan="2">20</td>
-                                <td id="22" class="floor-gray" rowspan="2">21</td>
-                                <td id="23" class="floor-gray" rowspan="2">22</td>
-                                <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
-                                <td id="25" class="floor-gray" colspan="2">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
-                                <td id="27" class="floor-gray" colspan="2">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="28">27</td>
-                                <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
-                                <td id="32" class="floor-gray" colspan="2">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="floor-gray" id="31">30</td>
-                                <td id="30" class="floor-gray" colspan="2">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
-                                <td id="34" class="floor-gray" colspan="2">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
-                                <td id="36" class="floor-gray" colspan="2">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
+/* Force the building buttons to display correctly */
+#campusmap .building-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+}
 
-                    <table class="floor-table" id="floor-3" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
-                                <td id="38" rowspan="2" class="floor-gray">19</td>
-                                <td id="39" rowspan="2" class="floor-gray">20</td>
-                                <td id="40" rowspan="2" class="floor-gray">21</td>
-                                <td id="41" rowspan="2" class="floor-gray">22</td>
-                                <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
-                                <td id="43" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="45" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="46" class="floor-gray">27</td>
-                                <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="48" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="50" class="floor-gray">30</td>
-                                <td id="49" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="52" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="54" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
+#campusmap .building-btn.bg-blue-600,
+#campusmap .tab-btn.bg-blue-600 {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
 
-                    <table class="floor-table" id="floor-4" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
-                                <td id="56" rowspan="2" class="floor-gray">19</td>
-                                <td id="57" rowspan="2" class="floor-gray">20</td>
-                                <td id="58" rowspan="2" class="floor-gray">21</td>
-                                <td id="59" rowspan="2" class="floor-gray">22</td>
-                                <td id="60" rowspan="2" class="floor-gray">23</td>
-                                <td id="61" rowspan="2" class="floor-gray">23</td>
-                                <td id="62" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="64" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="65" class="floor-gray">27</td>
-                                <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="67" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="68" class="floor-gray">30</td>
-                                <td id="69" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="71" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="73" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
+#campusmap .building-btn.bg-gray-100,
+#campusmap .tab-btn.bg-gray-100 {
+    background-color: var(--light-gray) !important;
+    color: #333 !important;
+}
 
-                    <table class="floor-table" id="floor-5" border="1">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
-                                <td id="75" rowspan="2" class="floor-gray">19</td>
-                                <td id="76" rowspan="2" class="floor-gray">20</td>
-                                <td id="77" rowspan="2" class="floor-gray">21</td>
-                                <td id="78" rowspan="2" class="floor-gray">22</td>
-                                <td id="79" rowspan="2" class="floor-gray">23</td>
-                                <td id="80" rowspan="2" class="floor-gray">23</td>
-                                <td id="81" colspan="2" class="floor-gray">24</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
-                                <td id="83" colspan="2" class="floor-gray">26</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="84" class="floor-gray">27</td>
-                                <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                <td id="86" colspan="2" class="floor-gray">29</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="87" class="floor-gray">30</td>
-                                <td id="88" colspan="2" class="floor-gray">31</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
-                                <td id="90" colspan="2" class="floor-gray">33</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
-                                <td id="92" colspan="2" class="floor-gray">35</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+#campusmap .building-btn.hover\:bg-gray-200:hover,
+#campusmap .tab-btn.hover\:bg-gray-200:hover {
+    background-color: var(--gray-hover) !important;
+}
+
+/* Make sure SVGs and containers display properly */
+#campusmap .floor-plan {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+#campusmap .floor-plan.block {
+    display: block !important;
+}
+
+#campusmap .floor-plan.hidden {
+    display: none !important;
+}
+
+#campusmap .building-container {
+    display: none;
+}
+
+#campusmap .building-container.block {
+    display: block !important;
+}
+
+#campusmap .building-container.hidden {
+    display: none !important;
+}
+
+/* SVG element styles */
+#campusmap svg {
+    width: 100%;
+    height: auto;
+    max-width: 1520px;
+    margin: 0 auto;
+}
+
+#campusmap .cursor-pointer {
+    cursor: pointer !important;
+}
+
+#campusmap .hover\:fill-blue-200:hover {
+    fill: var(--hover-color) !important;
+}
+
+/* Layout utilities */
+#campusmap .flex {
+    display: flex !important;
+}
+
+#campusmap .mb-6 {
+    margin-bottom: 1.5rem !important;
+}
+
+#campusmap .w-full {
+    width: 100% !important;
+}
+
+#campusmap .h-auto {
+    height: auto !important;
+}
+
+#campusmap .rounded-lg {
+    border-radius: 0.5rem !important;
+}
+
+#campusmap .shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+#campusmap .overflow-hidden {
+    overflow: hidden !important;
+}
+
+#campusmap .p-6 {
+    padding: 1.5rem !important;
+}
+</style>
+    <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
+            <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-building="ccs">CCS Building</button>
+            <button onclick="showBuilding('cit')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cit">CIT Building</button>
+            <button onclick="showBuilding('cafa')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cafa">CAFA Building</button>
         </div>
-    </div>
 
-            <!-- SVG Map Section -->
-            <div id="cit" class="tab-content" style="display: none; " >
-    <div id="map">
-        <div class="map">
-            <div class="dropdown">
-                <input type="text" id="search" class="search" placeholder="Enter room name">
-                <button onclick="searchElement()" class="search-button">
-                    <i class="fa fa-search"></i>
-                </button>
+        <!-- Buildings Container -->
+        <div id="ccs-building" class="building-container block">
+            <!-- Floor Navigation Tabs for CCS -->
+            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
+                <button onclick="showFloor('ccs', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
+                <button onclick="showFloor('ccs', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
+                <button onclick="showFloor('ccs', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
+                <button onclick="showFloor('ccs', 4)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="4">Floor 4</button>
+                <button onclick="showFloor('ccs', 5)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="5">Floor 5</button>
             </div>
-            <div class="table-container " >
-                <svg id="room-svg" viewBox="0 0 985 588" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect id="stock-room" x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-3-b" x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-5-a-b" x="167.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="stock-text" x="195" y="250" text-anchor="middle" font-size="12">
-                        STOCK
-                        <tspan dy="1.2em" dx="-44">ROOM</tspan>
-                    </text>
-                    <rect id="ctl-1-a" x="40.5" y="301.5" width="52" height="67" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-1-a-text" x="63" y="335" text-anchor="middle" font-size="12">CTL 1-A</text>
-                    <rect id="cit-3-b-rect" x="303.5" y="72.5" width="49" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-3-b-text" x="328" y="105" text-anchor="middle" font-size="12">CIT 3-B</text>
-                    <rect id="cit-5-a-b-rect" x="353.5" y="72.5" width="53" height="69" fill="#D9D9D9" stroke="black"/>
-                    <rect id="cit-5-a-b-combined" x="361.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-5-a-b-text" x="406" y="250" text-anchor="middle" font-size="12">CIT 5-A & 5-B
-                        <tspan dy="1.2em" dx="-80">ELECTRICAL</tspan>
-                    </text>
-                    <rect id="etl-5" x="452.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="etl-5-text" x="497" y="250" text-anchor="middle" font-size="12">ETL 5</text>
-                    <rect id="cit-5-b-lec" x="543.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-5-b-lec-text" x="588" y="250" text-anchor="middle" font-size="12">CIT 5-B LEC</text>
-                    <rect id="bodega" x="634.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="bodega-text" x="679" y="250" text-anchor="middle" font-size="12">BODEGA</text>
-                    <rect id="library" x="725.5" y="205.5" width="89" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="library-text" x="770" y="250" text-anchor="middle" font-size="12">LIBRARY</text>
-                    <rect id="chairperson-office" x="220.5" y="136.5" width="53" height="68" fill="#D9D9D9" stroke="black"/>
-                    <text id="chairperson-office-text" x="250" y="170" text-anchor="middle" font-size="8">
-                        CHAIRPERSON
-                        <tspan dy="1.2em" dx="-44">OFFICE</tspan>
-                    </text>
-                    <rect id="d-o" x="40.5" y="369.5" width="52" height="68" fill="#D9D9D9" stroke="black"/>
-                    <text id="d-o-text" x="63" y="405" text-anchor="middle" font-size="12">D.O.</text>
-                    <rect id="cr" x="40.5" y="438.5" width="52" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cr-text" x="63" y="475" text-anchor="middle" font-size="12">CR</text>
-                    <rect id="cit-2-a" x="93.5" y="205.5" width="73" height="46" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-2-a-text" x="130" y="230" text-anchor="middle" font-size="12">CIT 2-A</text>
-                    <path id="welding" d="M274 205H361V301H274V205Z" fill="#D9D9D9"/>
-                    <text id="welding-text" x="317" y="250" text-anchor="middle" font-size="12">WELDING</text>
-                    <rect id="cit-3-a" x="220.5" y="72.5" width="82" height="69" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-3-a-text" x="261" y="105" text-anchor="middle" font-size="12">CIT 3-A</text>
-                    <rect id="cit-2-b" x="93.5" y="252.5" width="73" height="48" fill="#D9D9D9" stroke="black"/>
-                    <text id="cit-2-b-text" x="130" y="280" text-anchor="middle" font-size="12">CIT 2-B</text>
-                    <path id="pantry" d="M274 142H407V205H274V142Z" fill="#D9D9D9"/>
-                    <text id="pantry-text" x="340" y="172" text-anchor="middle" font-size="12">PANTRY</text>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M405.629 205H407V142H405.629V205Z" fill="black"/>
-                    <rect id="breaker" x="815.5" y="180.5" width="39" height="48" fill="#D9D9D9" stroke="black"/>
-                    <text id="breaker-text" x="834" y="205" text-anchor="middle" font-size="8">BREAKER</text>
-                    <rect id="ctl-6" x="855.5" y="286.5" width="89" height="94" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-6-text" x="900" y="322" text-anchor="middle" font-size="12">CTL 6</text>
-                    <rect id="ctl-6-a-b" x="855.5" y="190.5" width="89" height="95" fill="#D9D9D9" stroke="black"/>
-                    <text id="ctl-6-a-b-text" x="900" y="225" text-anchor="middle" font-size="12">CTL 6-A & 6-B</text>
+
+            <!-- CCS Floor Plans -->
+           <!-- CCS Floor 1 (Ground Floor) -->
+<div id="ccs-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+    <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+        <!-- Ground Floor Layout -->
+        <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+        
+        <!-- Left Side -->
+        <rect id="CCS-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+        <rect id="CCS-F1-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="253" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="804.5" width="288" height="126" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="931.5" width="288" height="132" fill="#D9D9D9" stroke="black"/>
+        
+        <!-- Center -->
+        <rect id="CCS-F1-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B8" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="161" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B9" class="cursor-pointer hover:fill-blue-200" x="491.5" y="40.5" width="162" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B10" class="cursor-pointer hover:fill-blue-200" x="654.5" y="40.5" width="297" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B11" class="cursor-pointer hover:fill-blue-200" x="952.5" y="40.5" width="121" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1074.5" y="40.5" width="116" height="254" fill="#D9D9D9" stroke="black"/>
+        
+        <!-- Right Side -->
+        <rect id="CCS-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+        <rect id="CCS-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="253" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="804.5" width="288" height="126" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="931.5" width="288" height="132" fill="#D9D9D9" stroke="black"/>
+
+        <!-- Floor Label -->
+    </svg>
+</div>
+
+            <div id="ccs-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 2nd Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Left Side -->
+                    <rect id="CCS-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F2-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Center Area with 4 blocks -->
+                    <rect id="CCS-F2-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="252" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F2-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F2-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                </svg>
+            </div>
+
+            <div id="ccs-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 3rd Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Use the same layout as Floor 2 but with different IDs -->
+                    <rect id="CCS-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F3-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Center Area -->
+                    <rect id="CCS-F3-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="252" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F3-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F3-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                </svg>
+            </div>
+
+            <div id="ccs-floor-4" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 4th Floor Layout - Updated with your specific SVG -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Left Side -->
+                    <rect id="CCS-F4-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F4-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Center Area with 5 blocks -->
+                    <rect id="CCS-F4-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F4-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F4-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                </svg>
+            </div>
+
+            <div id="ccs-floor-5" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 5th Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using similar layout with different IDs -->
+                    <rect id="CCS-F5-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F5-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <rect id="CCS-F5-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="861" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B8" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <rect id="CCS-F5-B9" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F5-B10" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B11" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="509" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B12" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
                 </svg>
             </div>
         </div>
-    </div>
-    </div>
-    <div id="cafa" class="tab-content" style="display: none;">
-    <div id="map">
-        <div class="map">
-            <div class="dropdown">
-                <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
-                <button onclick="searchElement2()" class="search-button" aria-label="Search">
-                    <i class="fa fa-search"></i>
-                </button>
-                <select id="dropdown" aria-label="Select floor" onchange="showFloor(this.value)">
-                    <option value="1" selected>1st Floor</option>
-                    <option value="2">2nd Floor</option>
-                    <option value="3">3rd Floor</option>
-                </select>
-            </div>
 
-            <div class="table-container">
-                <!-- Floor 1 -->
-                <!--floor 1-->
-         <svg id="room-svg-1" class="floor-svg" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-         <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="100" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
-    
-    <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MEN CR</text>
-    
-
-    
-    <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
-    
-    <rect id="s-104-rect" x="698.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-104-text" x="736" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
-    
-    <rect id="s-106-rect" x="622.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-106-text" x="660" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
-    
-    <rect id="s-102-rect" x="850.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-102-text" x="888" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
-    
-    <rect id="s-103-rect" x="774.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-103-text" x="812" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
-    
-    <rect id="block-9-rect" x="999.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="block-9-text" x="1037" y="190" font-family="Arial" font-size="12" text-anchor="middle">Block 9</text>
-    
-    <rect id="male-cr-rect" x="923.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="961" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
-    
-    <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
-
-    <rect id="pwd-cr-base-rect" x="408.5" y="140.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
-    
-    <rect id="stairs-2-rect" x="1075.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1107" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
-    
-    <mask id="path-18-inside-1_0_1" fill="white">
-        <path d="M267 140H332V206H267V140Z"/>
-    </mask>
-    
-    <path d="M267 140H332V206H267V140Z" fill="#D9D9D9"/>
-    <path d="M267 141H332V139H267V141Z" fill="#0D0D0D" mask="url(#path-18-inside-1_0_1)"/>
-    
-    <rect id="s-108-rect" x="202.5" y="206.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-108-text" x="230" y="240" font-family="Arial" font-size="12" text-anchor="middle">S-108</text>
-</svg>
-<!--floor 2-->
-<svg id="room-svg-2" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-    <rect id="s-205-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-205-text" x="600" y="182" font-family="Arial" font-size="12" fill="black">S-205</text>
-
-    <rect id="s-206-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-206-text" x="520" y="182" font-family="Arial" font-size="12" fill="black">S-206</text>
-
-    <rect id="s-201-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-201-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-201</text>
-
-    <rect id="s-204-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-204-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-204</text>
-
-    <rect id="female-cr-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-text" x="950" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-    <rect id="s-202-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-202-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-202</text>
-
-    <rect id="s-203-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-203-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-203</text>
-
-    <rect id="s-208-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-208-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">S-208</text>
-
-    <rect id="s-207-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-207-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-207</text>
-
-    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-</svg>
-<!--floor 3-->
-<svg id="room-svg-3" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect id="stairs-1" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-1-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">S-307</text>
-
-    <rect id="male-cr-2-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="male-cr-2-text" x="580" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-    <rect id="female-cr-1-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-1-text" x="498" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-    <rect id="s-301-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-301-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-301</text>
-
-    <rect id="s-305-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-305-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-305</text>
-
-    <rect id="female-cr-2-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="female-cr-2-text" x="950" y="182" font-family="Arial" font-size="8" fill="black">FACULTY ROOM</text>
-
-    <rect id="s-303-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-303-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-303</text>
-
-    <rect id="s-304-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-304-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-304</text>
-
-    <rect id="uapsa-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="uapsa-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">UAPSA</text>
-
-    <rect id="s-306-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="s-306-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-306</text>
-
-    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D"/>
-    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-</svg>
-
-
+        <div id="cit-building" class="building-container hidden">
+            <!-- Modified: Only showing Floor 1 for CIT -->
+            <div id="cit-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+                <svg width="1521" height="1104" viewBox="0 0 1521 1104" class="w-full h-auto">
+                    <!-- CIT Floor 1 Layout using the provided SVG -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Rooms -->
+                    <rect id="CIT-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="902.5" width="99" height="161" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="740.5" width="99" height="161" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="573.5" width="99" height="166" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B4" class="cursor-pointer hover:fill-blue-200" x="355.5" y="40.5" width="127" height="166" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="357.5" width="99" height="215" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B6" class="cursor-pointer hover:fill-blue-200" x="256.5" y="357.5" width="98" height="215" fill="#D9D9D9" stroke="black"/>
+                    <path id="CIT-F1-B7" class="cursor-pointer hover:fill-blue-200" d="M559.5 40.5V206.5H483.5V40.5H559.5Z" fill="#D9D9D9" stroke="black"/>
+                    <path id="CIT-F1-B8" class="cursor-pointer hover:fill-blue-200" d="M644.5 40.5V206.5H560.5V40.5H644.5Z" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B9" class="cursor-pointer hover:fill-blue-200" x="355.5" y="357.5" width="98" height="215" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B10" class="cursor-pointer hover:fill-blue-200" x="453.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B11" class="cursor-pointer hover:fill-blue-200" x="590.5" y="356.5" width="139" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B12" class="cursor-pointer hover:fill-blue-200" x="728.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B13" class="cursor-pointer hover:fill-blue-200" x="865.5" y="356.5" width="135" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B14" class="cursor-pointer hover:fill-blue-200" x="999.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1342.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B16" class="cursor-pointer hover:fill-blue-200" x="1342.5" y="572.5" width="138" height="213" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B17" class="cursor-pointer hover:fill-blue-200" x="1136.5" y="356.5" width="139" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B18" class="cursor-pointer hover:fill-blue-200" x="355.5" y="207.5" width="98" height="149" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B19" class="cursor-pointer hover:fill-blue-200" x="1275.5" y="300.5" width="67" height="77" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B20" class="cursor-pointer hover:fill-blue-200" x="454.5" y="207.5" width="190" height="149" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B21" class="cursor-pointer hover:fill-blue-200" x="140.5" y="357.5" width="115" height="108" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B22" class="cursor-pointer hover:fill-blue-200" x="140.5" y="466.5" width="115" height="106" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                </svg>
             </div>
         </div>
-    </div>
-    </div>
 
-        </section>
+        <div id="cafa-building" class="building-container hidden">
+            <!-- Floor Navigation Tabs for CAFA -->
+            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
+                <button onclick="showFloor('cafa', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
+                <button onclick="showFloor('cafa', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
+                <button onclick="showFloor('cafa', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
+            </div>
+            
+            <!-- CAFA Floor 1 Layout from paste-11.txt -->
+            <div id="cafa-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using the SVG layout from paste-11.txt -->
+                    <rect id="CAFA-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="126" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="95" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B3" class="cursor-pointer hover:fill-blue-200" x="211.5" y="454.5" width="103" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B4" class="cursor-pointer hover:fill-blue-200" x="315.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B5" class="cursor-pointer hover:fill-blue-200" x="417.5" y="454.5" width="97" height="83" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B6" class="cursor-pointer hover:fill-blue-200" x="417.5" y="538.5" width="97" height="68" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B7" class="cursor-pointer hover:fill-blue-200" x="515.5" y="454.5" width="104" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B8" class="cursor-pointer hover:fill-blue-200" x="615.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B9" class="cursor-pointer hover:fill-blue-200" x="715.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B10" class="cursor-pointer hover:fill-blue-200" x="821.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B11" class="cursor-pointer hover:fill-blue-200" x="923.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1026.5" y="454.5" width="102" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1126.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1228.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1334.5" y="454.5" width="145" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B16" class="cursor-pointer hover:fill-blue-200" x="115.5" y="564.5" width="95" height="86" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    
+                    <!-- Floor Label -->
+                </svg>
+            </div>
+            
+            <!-- CAFA Floor 2 Layout from paste-12.txt -->
+            <div id="cafa-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using the SVG layout from paste-12.txt -->
+                    <rect id="CAFA-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="135" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="200" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="454.5" width="104" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="454.5" width="147" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="454.5" width="105" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="454.5" width="101" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B8" class="cursor-pointer hover:fill-blue-200" x="885.5" y="454.5" width="150" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B9" class="cursor-pointer hover:fill-blue-200" x="1033.5" y="454.5" width="131" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B11" class="cursor-pointer hover:fill-blue-200" x="1272.5" y="454.5" width="102" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B12" class="cursor-pointer hover:fill-blue-200" x="1375.5" y="454.5" width="104" height="95" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    
+                    <!-- Floor Label -->
+                </svg>
+            </div>
+            
+            <!-- CAFA Floor 3 Layout from paste-13.txt -->
+            <div id="cafa-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using the SVG layout from paste-13.txt -->
+                    <rect id="CAFA-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="455.5" width="74" height="134" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="455.5" width="200" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="455.5" width="147" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="455.5" width="106" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="455.5" width="102" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B8" class="cursor-pointer hover:fill-blue-200" x="886.5" y="455.5" width="149" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B9" class="cursor-pointer hover:fill-blue-200" x="1032.5" y="455.5" width="132" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B11" class="cursor-pointer hover:fill-blue-200" x="1271.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B12" class="cursor-pointer hover:fill-blue-200" x="1376.5" y="455.5" width="103" height="94" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    
+                    <!-- Floor Label -->
+                </svg>
+            </div>
+        </div>
+        <script>
+// Room data cache - will store fetched data to avoid multiple API calls
+let roomDataCache = null;
+
+// Function to show the selected building
+function showBuilding(buildingId) {
+    console.log("Showing building:", buildingId);
+    
+    // Hide all building containers
+    document.querySelectorAll('.building-container').forEach(container => {
+        container.classList.add('hidden');
+        container.classList.remove('block');
+    });
+    
+    // Show the selected building container
+    const selectedBuilding = document.getElementById(`${buildingId}-building`);
+    if (selectedBuilding) {
+        selectedBuilding.classList.remove('hidden');
+        selectedBuilding.classList.add('block');
+    } else {
+        console.error(`Building element not found: ${buildingId}-building`);
+    }
+    
+    // Update building tab styling
+    document.querySelectorAll('.building-btn').forEach(btn => {
+        if (btn.getAttribute('data-building') === buildingId) {
+            btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+            btn.classList.add('bg-blue-600', 'text-white');
+        } else {
+            btn.classList.remove('bg-blue-600', 'text-white');
+            btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+        }
+    });
+    
+    // For CIT we only show floor 1
+    if (buildingId === 'cit') {
+        // Show the first floor
+        showFloor('cit', 1);
+    } else if (buildingId === 'ccs') {
+        showFloor('ccs', 1);
+    } else if (buildingId === 'cafa') {
+        showFloor('cafa', 1);
+    }
+}
+
+// Function to show the selected floor for a specific building
+function showFloor(buildingId, floorNumber) {
+    console.log("Showing floor:", buildingId, floorNumber);
+    
+    // Hide all floor plans for this building
+    document.querySelectorAll(`#${buildingId}-building .floor-plan`).forEach(plan => {
+        plan.classList.add('hidden');
+        plan.classList.remove('block');
+    });
+    
+    // Show the selected floor plan
+    const selectedFloor = document.getElementById(`${buildingId}-floor-${floorNumber}`);
+    if (selectedFloor) {
+        selectedFloor.classList.remove('hidden');
+        selectedFloor.classList.add('block');
+    } else {
+        console.error(`Floor element not found: ${buildingId}-floor-${floorNumber}`);
+    }
+    
+    // Update floor tab styling (only for the active building)
+    document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
+        if (parseInt(btn.getAttribute('data-floor')) === floorNumber) {
+            btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+            btn.classList.add('bg-blue-600', 'text-white');
+        } else {
+            btn.classList.remove('bg-blue-600', 'text-white');
+            btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+        }
+    });
+    
+    // Add room labels to the visible floor
+    addRoomLabelsToFloor(buildingId, floorNumber);
+}
+
+// Function to fetch room data from the database - only fetch once
+async function fetchRoomData() {
+    // If we already have the data cached, return it immediately
+    if (roomDataCache) {
+        return roomDataCache;
+    }
+    
+    try {
+        // Make the fetch request to your API
+        const response = await fetch('./ajax/fetch_rooms.php');
+        
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log("Room data fetched successfully:", data);
+        
+        // Cache the data for future use
+        roomDataCache = data;
+        return data;
+    } catch (error) {
+        console.error('Error fetching room data:', error);
+        // Return mock data for demo purposes
+        return getMockRoomData();
+    }
+}
+
+// Function to provide mock room data when API call fails
+function getMockRoomData() {
+    // This is a mock function that returns sample data
+    const mockData = {};
+    
+    // Generate mock room names for CCS Building
+    for (let floor = 1; floor <= 5; floor++) {
+        for (let room = 1; room <= 18; room++) {
+            const roomId = `CCS-F${floor}-B${room}`;
+            mockData[roomId] = {
+                id: roomId,
+                name: `Room ${floor}${room.toString().padStart(2, '0')}`,
+                description: `Sample room on floor ${floor}`
+            };
+        }
+    }
+    
+    // Generate mock room names for CIT Building
+    for (let room = 1; room <= 22; room++) {
+        const roomId = `CIT-F1-B${room}`;
+        mockData[roomId] = {
+            id: roomId,
+            name: `Lab ${room.toString().padStart(2, '0')}`,
+            description: `CIT Lab room`
+        };
+    }
+    
+    // Generate mock room names for CAFA Building
+    for (let floor = 1; floor <= 3; floor++) {
+        for (let room = 1; room <= 16; room++) {
+            const roomId = `CAFA-F${floor}-B${room}`;
+            mockData[roomId] = {
+                id: roomId,
+                name: `Studio ${floor}${room.toString().padStart(2, '0')}`,
+                description: `CAFA studio on floor ${floor}`
+            };
+        }
+    }
+    
+    console.log("Using mock room data:", mockData);
+    return mockData;
+}
+
+// Function to add room labels specifically to a floor
+async function addRoomLabelsToFloor(buildingId, floorNumber) {
+    try {
+        // First fetch room data from database (or use cache)
+        const roomData = await fetchRoomData();
+        
+        if (!roomData || Object.keys(roomData).length === 0) {
+            console.error("No room data received from database.");
+            return;
+        }
+        
+        // Get the SVG element for this specific floor
+        const floorElement = document.getElementById(`${buildingId}-floor-${floorNumber}`);
+        if (!floorElement) {
+            console.error(`Floor element not found: ${buildingId}-floor-${floorNumber}`);
+            return;
+        }
+        
+        const svg = floorElement.querySelector('svg');
+        if (!svg) {
+            console.error(`SVG not found in floor: ${buildingId}-floor-${floorNumber}`);
+            return;
+        }
+        
+        console.log(`Adding labels to ${buildingId} floor ${floorNumber}`);
+        
+        // First, remove any existing labels to avoid duplicates
+        const existingLabels = svg.querySelectorAll('text.room-label');
+        existingLabels.forEach(label => label.remove());
+        
+        // Get all room elements in this SVG
+        const roomElements = svg.querySelectorAll(`[id^="${buildingId.toUpperCase()}-F${floorNumber}-"]`);
+        console.log(`Found ${roomElements.length} room elements in ${buildingId} floor ${floorNumber}`);
+        
+        // Add labels to each room
+        roomElements.forEach(room => {
+            const roomId = room.id;
+            
+            // Check if we have data for this room
+            if (roomData[roomId]) {
+                const rect = room.getBBox();
+                
+                // Create text element
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                
+                // Set text position
+                text.setAttribute('x', rect.x + rect.width / 2);
+                text.setAttribute('y', rect.y + rect.height / 2);
+                
+                // Set text style
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('dominant-baseline', 'middle');
+                text.setAttribute('font-family', 'Arial, sans-serif');
+                text.setAttribute('font-size', '14px');
+                text.setAttribute('font-weight', 'bold');
+                text.setAttribute('fill', '#333333');
+                text.setAttribute('pointer-events', 'none');
+                text.setAttribute('class', 'room-label'); // Add class for easy selection
+                text.setAttribute('data-room-id', roomId); // Add data attribute for identification
+                
+                // Set room name from database
+                text.textContent = roomData[roomId].name;
+                
+                // Add text element to SVG
+                svg.appendChild(text);
+                
+                console.log(`Added label "${text.textContent}" to room ${roomId}`);
+            } else {
+                console.warn(`No data found for room ${roomId}`);
+            }
+        });
+    } catch (error) {
+        console.error("Error adding room labels:", error);
+    }
+}
+
+async function showRoomDetails(roomId) {
+    try {
+        // Fetch room data
+        const roomData = await fetchRoomData();
+        
+        // Get the specific room details
+        const room = roomData[roomId];
+        
+        if (!room) {
+            Swal.fire({
+                title: "Error!",
+                text: "Room details not found.",
+                icon: "error"
+            });
+            return;
+        }
+
+        // Populate view mode
+        document.getElementById('viewRoomId').textContent = roomId;
+        document.getElementById('viewRoomName').textContent = room.name || 'N/A';
+        document.getElementById('viewRoomDescription').textContent = room.description || 'No description available';
+
+        // Populate edit mode inputs
+        document.getElementById('editRoomId').value = roomId;
+        document.getElementById('editRoomName').value = room.name || '';
+        document.getElementById('editRoomDescription').value = room.description || '';
+
+        // Show the modal
+        $('#roomDetailsModal').modal('show');
+
+        // Ensure view mode is active
+        switchToViewMode();
+    } catch (error) {
+        console.error('Error fetching room details:', error);
+        Swal.fire({
+            title: "Error!",
+            text: "Failed to load room details.",
+            icon: "error"
+        });
+    }
+}
+
+// Switch to edit mode
+function switchToEditMode() {
+    // Hide view mode
+    document.getElementById('roomViewMode').style.display = 'none';
+    
+    // Show edit mode
+    document.getElementById('roomEditMode').style.display = 'block';
+    
+    // Toggle buttons
+    document.getElementById('switchToEditBtn').style.display = 'none';
+    document.getElementById('cancelEditBtn').style.display = 'inline-block';
+    document.getElementById('saveRoomBtn').style.display = 'inline-block';
+    
+    // Update modal title
+    document.getElementById('roomDetailsModalTitle').textContent = 'Edit Room Details';
+}
+
+// Switch back to view mode
+function switchToViewMode() {
+    // Show view mode
+    document.getElementById('roomViewMode').style.display = 'block';
+    
+    // Hide edit mode
+    document.getElementById('roomEditMode').style.display = 'none';
+    
+    // Toggle buttons
+    document.getElementById('switchToEditBtn').style.display = 'inline-block';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+    document.getElementById('saveRoomBtn').style.display = 'none';
+    
+    // Update modal title
+    document.getElementById('roomDetailsModalTitle').textContent = 'Room Details';
+}
+
+// Function to save room details
+function saveRoomDetails() {
+    // Get form values
+    const roomId = document.getElementById('editRoomId').value;
+    const roomName = document.getElementById('editRoomName').value;
+    const roomDescription = document.getElementById('editRoomDescription').value;
+
+    // Show SweetAlert confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to save these room details?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, save it!",
+        cancelButtonText: "No, cancel!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Create form data
+            const formData = new FormData();
+            formData.append('room_id', roomId);
+            formData.append('room_name', roomName);
+            formData.append('room_description', roomDescription);
+
+            // Send AJAX request
+            fetch('./ajax/update_room.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Raw Response Data:", data);
+
+                try {
+                    const result = JSON.parse(data);
+                    console.log("Parsed JSON Data:", result);
+
+                    if (result.success) {
+                        // Update view mode with new details
+                        document.getElementById('viewRoomName').textContent = roomName;
+                        document.getElementById('viewRoomDescription').textContent = roomDescription;
+
+                        // Switch back to view mode
+                        switchToViewMode();
+                        
+                        Swal.fire({
+                            title: "Success!",
+                            text: result.message,
+                            icon: "success"
+                        }).then(() => {
+                            // Update room labels and cache
+                            updateRoomLabel(roomId, roomName);
+                            
+                            // Update cached room data if exists
+                            if (roomDataCache && roomDataCache[roomId]) {
+                                roomDataCache[roomId].name = roomName;
+                                roomDataCache[roomId].description = roomDescription;
+                            }
+                        });
+                    } else {
+                        // Show error notification
+                        Swal.fire({
+                            title: "Error!",
+                            text: result.message,
+                            icon: "error"
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                    Swal.fire({
+                        title: "Error!",
+                        text: "An error occurred while processing the response.",
+                        icon: "error"
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Fetch Error:", error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "An error occurred while saving room details.",
+                    icon: "error"
+                });
+            });
+        }
+    });
+}
+
+// Modify setupRoomClicks to use new showRoomDetails function
+function setupRoomClicks() {
+    // Get all room elements in all SVGs
+    const roomElements = document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
+    
+    // Add click handler to each room
+    roomElements.forEach(room => {
+        room.addEventListener('click', function() {
+            const roomId = this.id;
+            showRoomDetails(roomId);
+        });
+    });
+}
+// Function to save room details
+async function saveRoomDetails() {
+    const roomId = document.getElementById('editRoomId').value;
+    const roomName = document.getElementById('editRoomName').value;
+    const roomDescription = document.getElementById('editRoomDescription').value;
+
+    try {
+        const response = await fetch('./ajax/update_room.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `room_id=${encodeURIComponent(roomId)}&room_name=${encodeURIComponent(roomName)}&room_description=${encodeURIComponent(roomDescription)}`
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update room details');
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Update room labels on the page
+            updateRoomLabel(roomId, roomName);
+            
+            // Update cached room data if exists
+            if (roomDataCache && roomDataCache[roomId]) {
+                roomDataCache[roomId].name = roomName;
+                roomDataCache[roomId].description = roomDescription;
+            }
+            
+            // Hide the modal using Bootstrap's modal method
+            $('#roomEditModal').modal('hide');
+
+            // Show a success notification using Bootstrap's toast or notify
+            $.notify({
+                message: 'Room details updated successfully!'
+            },{
+                type: 'success',
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+        } else {
+            throw new Error(result.message || 'Failed to update room details');
+        }
+    } catch (error) {
+        console.error('Error updating room:', error);
+        
+        // Show error notification
+        $.notify({
+            message: 'Failed to update room details. Please try again.'
+        },{
+            type: 'danger',
+            placement: {
+                from: "top",
+                align: "right"
+            }
+        });
+    }
+}
+
+// Function to update room label in the SVG
+function updateRoomLabel(roomId, newName) {
+    // Find all SVGs in the document
+    const svgs = document.querySelectorAll('svg');
+    
+    svgs.forEach(svg => {
+        // Find the room element with the specific ID
+        const roomElement = svg.querySelector(`[id="${roomId}"]`);
+        
+        if (roomElement) {
+            // Find or create the room label
+            let roomLabel = svg.querySelector(`text.room-label[data-room-id="${roomId}"]`);
+            
+            if (!roomLabel) {
+                // If label doesn't exist, create it
+                const rect = roomElement.getBBox();
+                roomLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                roomLabel.setAttribute('x', rect.x + rect.width / 2);
+                roomLabel.setAttribute('y', rect.y + rect.height / 2);
+                roomLabel.setAttribute('text-anchor', 'middle');
+                roomLabel.setAttribute('dominant-baseline', 'middle');
+                roomLabel.setAttribute('font-family', 'Arial, sans-serif');
+                roomLabel.setAttribute('font-size', '14px');
+                roomLabel.setAttribute('font-weight', 'bold');
+                roomLabel.setAttribute('fill', '#333333');
+                roomLabel.setAttribute('pointer-events', 'none');
+                roomLabel.setAttribute('class', 'room-label');
+                roomLabel.setAttribute('data-room-id', roomId);
+                
+                svg.appendChild(roomLabel);
+            }
+            
+            // Update label text
+            roomLabel.textContent = newName;
+        }
+    });
+}
+
+// Wait for page to load, then initialize everything
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Campus map initializing...");
+    
+    // Setup room clicks for all rooms
+    setupRoomClicks();
+    
+    // Setup event listeners for modal using jQuery
+    $('#saveRoomBtn').on('click', saveRoomDetails);
+    
+    // Show CCS building by default
+    showBuilding('ccs');
+});// Function to save room details
+function saveRoomDetails() {
+    // Get form values
+    const roomId = document.getElementById('editRoomId').value;
+    const roomName = document.getElementById('editRoomName').value;
+    const roomDescription = document.getElementById('editRoomDescription').value;
+
+    // Show SweetAlert confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to save these room details?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, save it!",
+        cancelButtonText: "No, cancel!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Create form data
+            const formData = new FormData();
+            formData.append('room_id', roomId);
+            formData.append('room_name', roomName);
+            formData.append('room_description', roomDescription);
+
+            // Send AJAX request
+            fetch('./ajax/update_room.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Raw Response Data:", data);
+
+                try {
+                    const result = JSON.parse(data);
+                    console.log("Parsed JSON Data:", result);
+
+                    if (result.success) {
+                        // Successful update
+                        $('#roomEditModal').modal('hide');
+                        
+                        Swal.fire({
+                            title: "Success!",
+                            text: result.message,
+                            icon: "success"
+                        }).then(() => {
+                            // Update room labels and cache
+                            updateRoomLabel(roomId, roomName);
+                            
+                            // Update cached room data if exists
+                            if (roomDataCache && roomDataCache[roomId]) {
+                                roomDataCache[roomId].name = roomName;
+                                roomDataCache[roomId].description = roomDescription;
+                            }
+                        });
+                    } else {
+                        // Show error notification
+                        Swal.fire({
+                            title: "Error!",
+                            text: result.message,
+                            icon: "error"
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                    Swal.fire({
+                        title: "Error!",
+                        text: "An error occurred while processing the response.",
+                        icon: "error"
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Fetch Error:", error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "An error occurred while saving room details.",
+                    icon: "error"
+                });
+            });
+        }
+    });
+}
+
+</script>
+</section>
+<!-- Room Edit Modal with Bootstrap Styling -->
+<!-- Room Details Modal with Bootstrap Styling -->
+<style>
+#roomDetailsModal .modal-header {
+  background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+  color: white;
+  padding: 15px;
+  border-bottom: none;
+}
+
+#roomDetailsModal .modal-body {
+  padding: 25px;
+  max-height: 75vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f8f9fa;
+}
+
+#roomDetailsModal .modal-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  background: linear-gradient(135deg, #962626, #b03a3a);
+  padding: 15px;
+}
+
+#roomDetailsModal .modal-footer .btn {
+  margin-left: 10px;
+}
+</style>
+
+<!-- Room Details Modal with Updated Design -->
+<div class="modal fade" id="roomDetailsModal" tabindex="-1" role="dialog" aria-labelledby="roomDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="roomDetailsModalTitle">Room Details</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- View Mode -->
+        <div id="roomViewMode">
+          <div class="form-group">
+            <label class="font-weight-bold">Room ID</label>
+            <p id="viewRoomId" class="form-control-plaintext"></p>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Room Name</label>
+            <p id="viewRoomName" class="form-control-plaintext"></p>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Room Description</label>
+            <p id="viewRoomDescription" class="form-control-plaintext text-muted"></p>
+          </div>
+        </div>
+
+        <!-- Edit Mode (Initially Hidden) -->
+        <div id="roomEditMode" style="display:none;">
+          <input type="hidden" id="editRoomId" name="room_id">
+                    
+          <div class="form-group">
+            <label for="editRoomName" class="font-weight-bold">Room Name</label>
+            <input type="text" id="editRoomName" name="room_name" class="form-control" placeholder="Enter room name">
+          </div>
+                    
+          <div class="form-group">
+            <label for="editRoomDescription" class="font-weight-bold">Room Description</label>
+            <textarea id="editRoomDescription" name="room_description" class="form-control" rows="4" placeholder="Enter room description"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+        <div>
+          <!-- Edit Button (Only in View Mode) -->
+          <button type="button" class="btn btn-light" id="switchToEditBtn" onclick="switchToEditMode()">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <!-- Cancel Button (Only in Edit Mode) -->
+          <button type="button" class="btn btn-secondary" id="cancelEditBtn" onclick="switchToViewMode()" style="display:none;">
+            Cancel
+          </button>
+          <!-- Save Button (Only in Edit Mode) -->
+          <button type="button" class="btn btn-danger" id="saveRoomBtn" onclick="saveRoomDetails()" style="display:none;">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
     </div>    
 </div>
-  <!--   Core JS Files   -->
+<style>
+#roomDetailsModal .modal-header {
+  background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+  color: white;
+  padding: 15px;
+  border-bottom: none;
+}
+
+#roomDetailsModal .modal-body {
+  padding: 25px;
+  max-height: 75vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f8f9fa;
+}
+
+#roomDetailsModal .modal-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  background: linear-gradient(135deg, #962626, #b03a3a);
+  padding: 15px;
+}
+
+#roomDetailsModal .modal-footer .btn {
+  margin-left: 10px;
+}
+</style>
+  <!--   Core JS Files   --><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
@@ -581,342 +1315,7 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
   <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
    
-<script>
-const roomFloors = {
-    // Floor 1
-    "stairs": 1,
-    "men cr": 1,
-    "block 3": 1,
-    "female cr": 1,
-    "s-104": 1,
-    "s-106": 1,
-    "s-102": 1,
-    "s-103": 1,
-    "block 9": 1,
-    "male cr": 1,
-    "s-109": 1,
-    "pwd cr": 1,
-    "s-108": 1,
 
-    // Floor 2
-    "stairs": 2,
-    "male cr": 2,
-    "s-205": 2,
-    "s-206": 2,
-    "s-201": 2,
-    "s-204": 2,
-    "female cr": 2,
-    "s-202": 2,
-    "s-203": 2,
-    "s-208": 2,
-    "s-207": 2,
-
-    // Floor 3
-    "stairs": 3,
-    "s-307": 3,
-    "male cr": 3,
-    "female cr": 3,
-    "s-301": 3,
-    "s-305": 3,
-    "faculty room": 3,
-    "s-303": 3,
-    "s-304": 3,
-    "uapsa": 3,
-    "s-306": 3,
-};
-
-
-
-function showFloor(floor) {
-    document.querySelectorAll('.floor-svg').forEach(svg => {
-        svg.style.display = 'none'; // Hide all floors
-    });
-    document.getElementById('room-svg-' + floor).style.display = 'block'; // Show selected floor
-}
-function searchElement2() {
-    const searchInput = document.getElementById("search2").value.toLowerCase();
-    const allSvgs = document.querySelectorAll("svg.floor-svg");
-    const dropdown = document.getElementById("dropdown"); // Get the dropdown for floors
-
-    // Clear previous highlights
-    allSvgs.forEach(svg => {
-        svg.querySelectorAll("rect").forEach(rect => {
-            rect.classList.remove("highlight");
-        });
-    });
-
-    // Reset dropdown selection
-    dropdown.value = "1"; // Default to the 1st floor or clear selection
-
-    let found = false;
-    let foundRoom = null;
-    let floorNumber = null;
-
-    // Search through all rooms
-    Object.keys(roomFloors).forEach(room => {
-        if (room.toLowerCase().includes(searchInput)) { // Ensure case-insensitive search
-            foundRoom = room; // Found the room
-            floorNumber = roomFloors[room]; // Get the associated floor
-            found = true;
-        }
-    });
-
-    if (found && floorNumber) {
-        showFloor(floorNumber); // Show the relevant floor
-
-        // Highlight the associated rectangle for the found room
-        const rectId = foundRoom.toLowerCase()+ "-rect"; // Ensure rect ID matches the format
-        const rect = document.getElementById(rectId);
-        if (rect) {
-            rect.classList.add("highlight");
-        } else {
-            console.error('Rectangle not found for ID:', rectId);
-        }
-
-        // Change the selected dropdown option
-        dropdown.value = floorNumber ; // Set dropdown to the found floor number
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Room not found',
-            text: 'Please check the room name and try again.',
-        });
-    }
-}
-</script>
-  <script>
-    $(document).ready(function () {
-      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-      demo.initChartsPages();
-    });
-
-     // Attach event listener to search button
-document.querySelector('button[onclick="searchAndHighlight()"]').addEventListener('click', searchAndHighlight);
-
-// Attach change event listener to dropdown
-const dropdownMenu = document.getElementById('dropdownMenu');
-dropdownMenu.addEventListener('change', function () {
-    const floorId = this.value;
-    if (floorId) {
-        fetchRoomsForFloor(floorId);
-        showFloorTable(floorId);
-    } else {
-        clearTableCells();
-    }
-});
-
-// Trigger the change event to load the default table
-dropdownMenu.dispatchEvent(new Event('change'));
-
-// Fetch and update rooms based on the selected floor
-function fetchRoomsForFloor(floorId) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '../ajax/floor_data.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            try {
-                const rooms = JSON.parse(xhr.responseText);
-                console.log('Rooms Data:', rooms); // Log the rooms data
-                updateTableWithRooms(rooms);
-            } catch (e) {
-                console.error("Error parsing JSON:", e);
-            }
-        } else {
-            console.error('Fetch Error:', xhr.statusText);
-        }
-    };
-    xhr.send('floor_id=' + floorId);
-}
-
-// Function to update table with room data
-function updateTableWithRooms(rooms) {
-    clearTableCells();
-    rooms.forEach(room => {
-        const cell = document.getElementById(room.room_id); 
-        if (cell) {
-            cell.textContent = room.room_name; 
-            cell.style.backgroundColor = ''; 
-            console.log('Updated Cell:', cell.id, room.room_name);
-        } else {
-            console.error('Cell Not Found:', room.room_id);
-        }
-    });
-}
-
-// Function to clear all table cells
-function clearTableCells() {
-    document.querySelectorAll('.floor-table td').forEach(cell => {
-        cell.textContent = ''; 
-        cell.style.backgroundColor = ''; 
-    });
-}
-
-// Function to handle search and highlight
-function searchAndHighlight() {
-    var input = document.getElementById('search-input').value.trim();
-
-    if (input === '') {
-        alert('Please enter a room name');
-        return;
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../ajax/search.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            console.log('Search Response:', xhr.responseText);
-            var data = JSON.parse(xhr.responseText);
-
-            if (data.error) {
-                console.error('PHP Error:', data.error);
-                return;
-            }
-
-            var roomIds = data.highlight || [];
-            var floorIds = data.floor || [];
-            console.log('Highlighting IDs:', roomIds);
-            console.log('Floor IDs:', floorIds);
-
-            // Clear previous highlights
-            document.querySelectorAll('.highlight').forEach(cell => {
-                cell.classList.remove('highlight');
-            });
-
-            // Highlight cells based on room IDs
-            document.querySelectorAll('.floor-table td').forEach(cell => {
-                if (roomIds.includes(parseInt(cell.id))) { 
-                    cell.classList.add('highlight');
-                }
-            });
-
-            // Trigger the dropdown change event to update table and highlight results
-            var dropdown = document.getElementById('dropdownMenu');
-            dropdown.value = floorIds[0] || dropdown.value; 
-            dropdown.dispatchEvent(new Event('change')); 
-
-        } else {
-            console.error('Search Error:', xhr.statusText);
-        }
-    };
-    xhr.send('query=' + encodeURIComponent(input));
-}
-
-// Function to show a specific floor table
-function showFloorTable(floorId) {
-    document.querySelectorAll('.floor-table').forEach(table => {
-        table.style.display = 'none'; 
-    });
-
-    const selectedTable = document.getElementById(`floor-${floorId}`);
-    if (selectedTable) {
-        selectedTable.style.display = 'table'; // Show the selected table
-        selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
-    }
-}
-document.addEventListener('DOMContentLoaded', function () {
-    function makeCellEditable(event) {
-        let cell = event.target;
-        if (cell.isContentEditable) {
-            cell.contentEditable = 'false';
-            cell.classList.remove('editable-cell');
-
-            // Get updated data
-            const roomId = cell.id;
-            const roomName = cell.innerText.trim();
-
-            // Send updated data to the server
-            fetch('ajax/update_cell.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams({
-                    'id': roomId,
-                    'name': roomName,
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Update successful');
-                } else {
-                    console.error('Update failed:', data.message || data.error);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        } else {
-            cell.contentEditable = 'true';
-            cell.classList.add('editable-cell');
-            cell.focus();
-        }
-    }
-
-    document.querySelectorAll('.editable-cell').forEach(cell => {
-        cell.addEventListener('dblclick', makeCellEditable);
-    });
-});
-
-
-function openTab(event, tabName) {
-    // Hide all tab contents
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(content => {
-        content.style.display = 'none';
-    });
-
-    // Remove active class from all buttons
-    const tabButtons = document.querySelectorAll('.tab-button');
-    tabButtons.forEach(button => {
-        button.classList.remove('active');
-    });
-
-    // Show the clicked tab's content and add active class to the button
-    document.getElementById(tabName).style.display = 'block';
-    event.currentTarget.classList.add('active');
-}
-
-// Initial setup: show the first tab
-document.addEventListener('DOMContentLoaded', () => {
-    openTab({ currentTarget: document.querySelector('.tab-button.active') }, 'ccs');
-});
-
-    function searchElement() {
-    var searchInput = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '-');  // Replace spaces with hyphens
-    var roomSvg = document.getElementById('room-svg');  // Get the SVG
-
-    if (!roomSvg) {
-        console.error('SVG not found!');
-        return;  // Stop if the SVG is not found
-    }
-
-    var elements = roomSvg.querySelectorAll('rect, path, text');  // Get all rect, path, and text elements
-    var found = false;  // Flag to check if a match is found
-
-    // Loop through each element and check for a match
-    for (var i = 0; i < elements.length; i++) {
-        var elementId = elements[i].id.toLowerCase().replace(/-/g, '');  // Remove hyphens from the element ID for comparison
-
-        if (elementId.includes(searchInput.replace(/-/g, ''))) {  // Compare without hyphens
-            found = true;
-            elements[i].classList.add('highlight');  // Highlight the element if it matches
-        } else {
-            elements[i].classList.remove('highlight');  // Remove highlight if not a match
-        }
-    }
-
-    // If no match is found, display a SweetAlert message
-    if (!found) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Room not found',
-            text: 'Please check the room name and try again.',
-        });
-    }
-}
-
-  </script>
 </body>
 
 </html>

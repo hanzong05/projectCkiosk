@@ -2001,7 +2001,6 @@ function displayEvents() {
         <rect id="CCS-F1-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="931.5" width="288" height="132" fill="#D9D9D9" stroke="black"/>
 
         <!-- Floor Label -->
-        <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">GROUND FLOOR</text>
     </svg>
 </div>
 
@@ -2035,7 +2034,6 @@ function displayEvents() {
                     <rect id="CCS-F2-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 2</text>
                 </svg>
             </div>
 
@@ -2069,7 +2067,6 @@ function displayEvents() {
                     <rect id="CCS-F3-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 3</text>
                 </svg>
             </div>
 
@@ -2103,7 +2100,6 @@ function displayEvents() {
                     <rect id="CCS-F4-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 4</text>
                 </svg>
             </div>
 
@@ -2130,7 +2126,6 @@ function displayEvents() {
                     <rect id="CCS-F5-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 5</text>
                 </svg>
             </div>
         </div>
@@ -2167,7 +2162,6 @@ function displayEvents() {
                     <rect id="CIT-F1-B22" class="cursor-pointer hover:fill-blue-200" x="140.5" y="466.5" width="115" height="106" fill="#D9D9D9" stroke="black"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CIT FLOOR 1</text>
                 </svg>
             </div>
         </div>
@@ -2204,7 +2198,6 @@ function displayEvents() {
                     <rect id="CAFA-F1-B16" class="cursor-pointer hover:fill-blue-200" x="115.5" y="564.5" width="95" height="86" fill="#D9D9D9" stroke="#0A0A0A"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CAFA FLOOR 1</text>
                 </svg>
             </div>
             
@@ -2228,7 +2221,6 @@ function displayEvents() {
                     <rect id="CAFA-F2-B12" class="cursor-pointer hover:fill-blue-200" x="1375.5" y="454.5" width="104" height="95" fill="#D9D9D9" stroke="#0A0A0A"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CAFA FLOOR 2</text>
                 </svg>
             </div>
             
@@ -2252,218 +2244,314 @@ function displayEvents() {
                     <rect id="CAFA-F3-B12" class="cursor-pointer hover:fill-blue-200" x="1376.5" y="455.5" width="103" height="94" fill="#D9D9D9" stroke="#0A0A0A"/>
                     
                     <!-- Floor Label -->
-                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CAFA FLOOR 3</text>
                 </svg>
             </div>
         </div>
-    <script>
-        // Function to show the selected building
-        function showBuilding(buildingId) {
-            // Hide all building containers
-            document.querySelectorAll('.building-container').forEach(container => {
-                container.classList.add('hidden');
-            });
-            
-            // Show the selected building container
-            document.getElementById(`${buildingId}-building`).classList.remove('hidden');
-            
-            // Update building tab styling
-            document.querySelectorAll('.building-btn').forEach(btn => {
-                if (btn.getAttribute('data-building') === buildingId) {
-                    btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-                    btn.classList.add('bg-blue-600', 'text-white');
-                } else {
-                    btn.classList.remove('bg-blue-600', 'text-white');
-                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-                }
-            });
-            
-            // For CIT we only show floor 1
-            if (buildingId === 'cit') {
-                // Hide floor navigation for CIT
-                document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
-                    btn.classList.add('hidden');
-                });
-            }
-            
-            // Show first floor by default for each building
-            if (buildingId === 'ccs') {
-                showFloor('ccs', 1);
-            } else if (buildingId === 'cafa') {
-                showFloor('cafa', 1);
-            }
-        }
-
-        // Function to show the selected floor for a specific building
-        function showFloor(buildingId, floorNumber) {
-            // Hide all floor plans for this building
-            document.querySelectorAll(`#${buildingId}-building .floor-plan`).forEach(plan => {
-                plan.classList.add('hidden');
-            });
-            
-            // Show the selected floor plan
-            document.getElementById(`${buildingId}-floor-${floorNumber}`).classList.remove('hidden');
-            
-            // Update floor tab styling (only for the active building)
-            document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
-                if (parseInt(btn.getAttribute('data-floor')) === floorNumber) {
-                    btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-                    btn.classList.add('bg-blue-600', 'text-white');
-                } else {
-                    btn.classList.remove('bg-blue-600', 'text-white');
-                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-                }
-            });
-        }
-
-        // Make sure this is properly connecting to your database endpoint
-async function fetchRoomData() {
-    try {
-        // Check the path to your endpoint - this might be the issue
-        const response = await fetch('./ajax/fetch_rooms.php');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching room data:', error);
-        // Return an empty object as fallback
-        return {}; 
-    }
-}
-
-// Make sure this function is correctly creating text elements
-function addTextElementsToRooms() {
-    // Select all room elements by their ID patterns
-    document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]').forEach(room => {
-        const roomId = room.id;
-        const rect = room.getBBox(); // Get the bounding box
+        <script>
+    // Function to show the selected building
+    function showBuilding(buildingId) {
+        // Hide all building containers
+        document.querySelectorAll('.building-container').forEach(container => {
+            container.classList.add('hidden');
+        });
         
-        // Create text element
-        const textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        textElement.id = `text-${roomId}`;
+        // Show the selected building container
+        document.getElementById(`${buildingId}-building`).classList.remove('hidden');
         
-        // Position text in center of room
-        textElement.setAttribute('x', rect.x + rect.width / 2);
-        textElement.setAttribute('y', rect.y + rect.height / 2);
-        textElement.setAttribute('font-family', 'Arial');
-        textElement.setAttribute('font-size', '12'); // Adjust size as needed
-        textElement.setAttribute('text-anchor', 'middle');
-        textElement.setAttribute('fill', '#333');
-        textElement.textContent = 'Loading...'; // Placeholder text
-        
-        // Add text element to SVG (append after the room rectangle)
-        room.parentNode.insertBefore(textElement, room.nextSibling);
-    });
-}
-
-// Make sure the population function is working
-sync function populateRoomNames() {
-    // Get room data from server
-    const roomData = await fetchRoomData();
-    console.log("Room data received:", roomData); // Debug log
-    
-    // Loop through all the room data keys
-    for (const roomId in roomData) {
-        // Find the corresponding SVG room element and text element
-        const roomElement = document.getElementById(roomId);
-        const textElement = document.getElementById(`text-${roomId}`);
-        
-        if (roomElement) {
-            console.log(`Found room element for ${roomId}`);
-            
-            // If the text element doesn't exist yet, create it
-            if (!textElement) {
-                const rect = roomElement.getBBox(); // Get room dimensions
-                const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                textNode.id = `text-${roomId}`;
-                textNode.setAttribute('x', rect.x + rect.width / 2);
-                textNode.setAttribute('y', rect.y + rect.height / 2);
-                textNode.setAttribute('font-family', 'Arial');
-                textNode.setAttribute('font-size', '12');
-                textNode.setAttribute('text-anchor', 'middle');
-                textNode.setAttribute('fill', '#333');
-                textNode.textContent = roomData[roomId].name;
-                
-                // Add text element to SVG after the room element
-                roomElement.parentNode.insertBefore(textNode, roomElement.nextSibling);
-                console.log(`Created text element for ${roomId}: ${roomData[roomId].name}`);
+        // Update building tab styling
+        document.querySelectorAll('.building-btn').forEach(btn => {
+            if (btn.getAttribute('data-building') === buildingId) {
+                btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+                btn.classList.add('bg-blue-600', 'text-white');
             } else {
-                // Update existing text element
-                textElement.textContent = roomData[roomId].name;
-                console.log(`Updated text element for ${roomId}: ${roomData[roomId].name}`);
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
             }
-        } else {
-            console.warn(`No SVG element found for room ${roomId}`);
+        });
+        
+        // For CIT we only show floor 1
+        if (buildingId === 'cit') {
+            // Hide floor navigation for CIT
+            document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
+                btn.classList.add('hidden');
+            });
+        }
+        
+        // Show first floor by default for each building
+        if (buildingId === 'ccs') {
+            showFloor('ccs', 1);
+        } else if (buildingId === 'cafa') {
+            showFloor('cafa', 1);
         }
     }
-}// Function to add room labels directly to the SVG
-function addRoomLabels() {
-  // Get all room rectangles (rect elements with IDs)
-  const roomElements = document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
-  
-  console.log(`Found ${roomElements.length} room elements`);
-  
-  // Process each room element
-  roomElements.forEach(room => {
-    // Get the room ID
-    const roomId = room.id;
+
+    // Function to show the selected floor for a specific building
+    function showFloor(buildingId, floorNumber) {
+        // Hide all floor plans for this building
+        document.querySelectorAll(`#${buildingId}-building .floor-plan`).forEach(plan => {
+            plan.classList.add('hidden');
+        });
+        
+        // Show the selected floor plan
+        document.getElementById(`${buildingId}-floor-${floorNumber}`).classList.remove('hidden');
+        
+        // Update floor tab styling (only for the active building)
+        document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
+            if (parseInt(btn.getAttribute('data-floor')) === floorNumber) {
+                btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+                btn.classList.add('bg-blue-600', 'text-white');
+            } else {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+            }
+        });
+    }
+
+    // Function to fetch room data from the database
+    async function fetchRoomData() {
+        try {
+            // Make the fetch request to your API
+            const response = await fetch('./ajax/fetch_rooms.php');
+            
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log("Room data fetched successfully:", data);
+            return data;
+        } catch (error) {
+            console.error('Error fetching room data:', error);
+            return {}; // Return empty object on error
+        }
+    }
+
+    async function addRoomLabels() {
+    try {
+        // First fetch room data from database
+        const roomData = await fetchRoomData();
+        
+        if (Object.keys(roomData).length === 0) {
+            console.error("No room data received from database.");
+            return;
+        }
+        
+        // Process each SVG in the document
+        const svgElements = document.querySelectorAll('svg');
+        
+        svgElements.forEach(svg => {
+            // Remove any existing previously added labels
+            svg.querySelectorAll('text.room-label').forEach(label => label.remove());
+            
+            // Get all room elements in this SVG
+            const roomElements = svg.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
+            
+            // Add labels to each room
+            roomElements.forEach(room => {
+                const roomId = room.id;
+                
+                // Check if we have data for this room
+                if (roomData[roomId]) {
+                    const rect = room.getBBox();
+                    
+                    // Create text element
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    
+                    // Add a class to identify these labels for easy removal
+                    text.classList.add('room-label');
+                    
+                    // Set text position
+                    text.setAttribute('x', rect.x + rect.width / 2);
+                    text.setAttribute('y', rect.y + rect.height / 2);
+                    
+                    // Set text style
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('dominant-baseline', 'middle');
+                    text.setAttribute('font-family', 'Arial, sans-serif');
+                    text.setAttribute('font-size', '12px');
+                    text.setAttribute('font-weight', 'bold');
+                    text.setAttribute('fill', '#333333');
+                    text.setAttribute('pointer-events', 'none');
+                    
+                    // Set room name from database
+                    text.textContent = roomData[roomId].name;
+                    
+                    // Add text element to SVG
+                    room.parentNode.appendChild(text);
+                }
+            });
+        });
+    } catch (error) {
+        console.error("Error adding room labels:", error);
+    }
+}
+    // Add click handlers for rooms to show information
+    function setupRoomClicks() {
+        // Get all room elements 
+        const roomElements = document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
+        
+        // Add click handler to each room
+        roomElements.forEach(room => {
+            room.addEventListener('click', async function() {
+                const roomId = this.id;
+                
+                try {
+                    // Fetch room data
+                    const roomData = await fetchRoomData();
+                    
+                    if (roomData && roomData[roomId]) {
+                        // Populate modal with room details
+                        document.getElementById('viewRoomId').textContent = roomId;
+                        document.getElementById('viewRoomName').textContent = roomData[roomId].name || 'N/A';
+                        document.getElementById('viewRoomDescription').textContent = roomData[roomId].description || 'No description available';
+                        
+                        // Show the modal
+                        new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
+                    } else {
+                        // Fallback if no data found
+                        document.getElementById('viewRoomId').textContent = roomId;
+                        document.getElementById('viewRoomName').textContent = 'Room Details Unavailable';
+                        document.getElementById('viewRoomDescription').textContent = 'No additional information found.';
+                   
+                        // Show the modal
+                        new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
+                    }
+                } catch (error) {
+                    console.error("Error fetching room details:", error);
+                    
+                    // Show error in modal
+                    document.getElementById('viewRoomId').textContent = roomId;
+                    document.getElementById('viewRoomName').textContent = 'Error Fetching Details';
+                    document.getElementById('viewRoomDescription').textContent = 'Unable to retrieve room information at this time.';
+
+                    // Show the modal
+                    new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
+                }
+            });
+        });
+    }
+   // Wait for page to load, then initialize everything
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Campus map initializing...");
     
-    // Get the bounding box of the room rectangle
-    const rect = room.getBBox();
-    
-    // Create a text element for the room label
-    const textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    
-    // Position the text in the center of the room
-    textElement.setAttribute('x', rect.x + rect.width / 2);
-    textElement.setAttribute('y', rect.y + rect.height / 2);
-    
-    // Style the text for readability
-    textElement.setAttribute('font-family', 'Arial, sans-serif');
-    textElement.setAttribute('font-size', '14px');
-    textElement.setAttribute('font-weight', 'bold');
-    textElement.setAttribute('text-anchor', 'middle');
-    textElement.setAttribute('dominant-baseline', 'middle');
-    textElement.setAttribute('fill', 'white');
-    
-    // Extract room number from ID (e.g., "CCS-F1-B10" -> "B10")
-    let roomNumber = roomId.split('-').pop();
-    
-    // If it's a non-numeric value, display it as is
-    if (isNaN(roomNumber.replace('B', ''))) {
-      roomNumber = "ROOM";
+    // Function to ensure labels are added after tab/floor changes
+    function ensureLabels() {
+        console.log("Ensuring room labels are added...");
+        addRoomLabels();
     }
     
-    // Set the room text
-    textElement.textContent = roomNumber;
+    // Modify existing showBuilding and showFloor functions to call ensureLabels
+    const originalShowBuilding = window.showBuilding;
+    window.showBuilding = function(buildingId) {
+        originalShowBuilding(buildingId);
+        ensureLabels();
+    };
+
+    const originalShowFloor = window.showFloor;
+    window.showFloor = function(buildingId, floorNumber) {
+        originalShowFloor(buildingId, floorNumber);
+        ensureLabels();
+    };
     
-    // Add the text element to the SVG
-    room.parentNode.appendChild(textElement);
-  });
+    // Add room labels
+    addRoomLabels();
+    
+    // Setup room clicks
+    setupRoomClicks();
+    
+    // Show CCS building by default
+    showBuilding('ccs');
+});
   
-  console.log("Room labels added");
+</script>
+<style>
+
+/* Enhanced Room Details Modal Styling */
+#roomDetailsModal .modal-content {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
 }
 
-// Call the function when the SVG is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // If the SVG is already in the DOM
-  setTimeout(addRoomLabels, 500); // Short delay to ensure SVG is rendered
-});
+#roomDetailsModal .modal-header {
+    background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+    color: white;
+    padding: 15px;
+    border-bottom: none;
+}
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', async function() {
-    // First add text elements to all rooms
-    addTextElementsToRooms();
-    
-    // Then populate with actual room names
-    await populateRoomNames();
-    
-    console.log("Room text elements initialized");
-});
-    </script>
+#roomDetailsModal .modal-header h5 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0;
+}
 
+#roomDetailsModal .modal-header .btn-close {
+    background: none;
+    filter: invert(1) brightness(100);
+    opacity: 1;
+}
+
+#roomDetailsModal .modal-header .btn-close:hover {
+    opacity: 0.8;
+}
+
+#roomDetailsModal .modal-body {
+    padding: 25px;
+}
+
+#roomDetailsModal .form-label {
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+#roomDetailsModal .form-control-plaintext {
+    font-size: 1rem;
+    color: #2c3e50;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+#roomDetailsModal .form-control-plaintext:last-child {
+    border-bottom: none;
+}
+
+#roomDetailsModal .modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+#roomDetailsModal .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+#roomDetailsModal .btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    #roomDetailsModal .modal-dialog {
+        margin: 1.75rem 0.5rem;
+        max-width: calc(100% - 1rem);
+    }
+}
+
+/* Subtle animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+#roomDetailsModal .modal-content {
+    animation: fadeIn 0.3s ease-out;
+}
+    </style>
 </section>
             <section id="facultymembers" class="content-section py-4">
     <div class="section-content">
@@ -4606,7 +4694,33 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 </div>
 <!-- Modal -->
- 
+<div class="modal fade" id="roomDetailsModal" tabindex="-1" aria-labelledby="roomDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="roomDetailsModalLabel" style="color:white;">Room Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="fw-bold">Room ID</label>
+                        <p id="viewRoomId" class="form-control-plaintext"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="fw-bold">Room Name</label>
+                        <p id="viewRoomName" class="form-control-plaintext"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="fw-bold">Room Description</label>
+                        <p id="viewRoomDescription" class="form-control-plaintext text-muted"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content rounded-lg border-0 shadow">

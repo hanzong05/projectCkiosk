@@ -2316,10 +2316,11 @@ function displayEvents() {
             });
         }
 
-        async function fetchRoomData() {
+        // Make sure this is properly connecting to your database endpoint
+async function fetchRoomData() {
     try {
-        // Replace with your actual API endpoint
-        const response = await fetch('/ajax/fetch_rooms.php');
+        // Check the path to your endpoint - this might be the issue
+        const response = await fetch('./ajax/fetch_rooms.php');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -2327,97 +2328,139 @@ function displayEvents() {
         return data;
     } catch (error) {
         console.error('Error fetching room data:', error);
-        return {}; // Return empty object in case of error
+        // Return an empty object as fallback
+        return {}; 
     }
 }
 
-// Function to add text elements to all room boxes
+// Make sure this function is correctly creating text elements
 function addTextElementsToRooms() {
-    // Get all room rectangles by their IDs
+    // Select all room elements by their ID patterns
     document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]').forEach(room => {
         const roomId = room.id;
-        
-        // Get the bounding rectangle
-        const rect = room.getBBox();
+        const rect = room.getBBox(); // Get the bounding box
         
         // Create text element
         const textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textElement.id = `text-${roomId}`;
         
-        // Position text in the center of the room
+        // Position text in center of room
         textElement.setAttribute('x', rect.x + rect.width / 2);
         textElement.setAttribute('y', rect.y + rect.height / 2);
         textElement.setAttribute('font-family', 'Arial');
-        
-        // Adjust font size based on room size
-        const fontSize = Math.min(16, Math.max(10, Math.floor(rect.width / 15)));
-        textElement.setAttribute('font-size', fontSize);
-        
+        textElement.setAttribute('font-size', '12'); // Adjust size as needed
         textElement.setAttribute('text-anchor', 'middle');
         textElement.setAttribute('fill', '#333');
-        textElement.textContent = 'Loading...';
+        textElement.textContent = 'Loading...'; // Placeholder text
         
         // Add text element to SVG (append after the room rectangle)
         room.parentNode.insertBefore(textElement, room.nextSibling);
     });
 }
 
-// Function to populate room names from database
-async function populateRoomNames() {
-    // Fetch room data from your database
+// Make sure the population function is working
+sync function populateRoomNames() {
+    // Get room data from server
     const roomData = await fetchRoomData();
+    console.log("Room data received:", roomData); // Debug log
     
-    // Update all text elements with room names
-    document.querySelectorAll('[id^="text-CCS-"], [id^="text-CIT-"], [id^="text-CAFA-"]').forEach(textElement => {
-        // Extract the room ID from the text element ID
-        const roomId = textElement.id.replace('text-', '');
+    // Loop through all the room data keys
+    for (const roomId in roomData) {
+        // Find the corresponding SVG room element and text element
+        const roomElement = document.getElementById(roomId);
+        const textElement = document.getElementById(`text-${roomId}`);
         
-        // Check if we have data for this room
-        if (roomData[roomId]) {
-            // Set the room name from the database
-            textElement.textContent = roomData[roomId].name || 'Unnamed Room';
+        if (roomElement) {
+            console.log(`Found room element for ${roomId}`);
+            
+            // If the text element doesn't exist yet, create it
+            if (!textElement) {
+                const rect = roomElement.getBBox(); // Get room dimensions
+                const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                textNode.id = `text-${roomId}`;
+                textNode.setAttribute('x', rect.x + rect.width / 2);
+                textNode.setAttribute('y', rect.y + rect.height / 2);
+                textNode.setAttribute('font-family', 'Arial');
+                textNode.setAttribute('font-size', '12');
+                textNode.setAttribute('text-anchor', 'middle');
+                textNode.setAttribute('fill', '#333');
+                textNode.textContent = roomData[roomId].name;
+                
+                // Add text element to SVG after the room element
+                roomElement.parentNode.insertBefore(textNode, roomElement.nextSibling);
+                console.log(`Created text element for ${roomId}: ${roomData[roomId].name}`);
+            } else {
+                // Update existing text element
+                textElement.textContent = roomData[roomId].name;
+                console.log(`Updated text element for ${roomId}: ${roomData[roomId].name}`);
+            }
         } else {
-            // If no data found, show a placeholder
-            textElement.textContent = 'Room ' + roomId.split('-').pop();
+            console.warn(`No SVG element found for room ${roomId}`);
         }
-    });
-}
-
-// Function to handle room click and show details
-function handleRoomClick(roomId, roomData) {
-    if (roomData && roomData[roomId]) {
-        // Create a simple popup with room information
-        const roomInfo = roomData[roomId];
-        alert(`Room ID: ${roomId}\nRoom Name: ${roomInfo.name || 'Unnamed'}\nFloor ID: ${roomInfo.floor_id || 'Unknown'}`);
-    } else {
-        alert(`Room ID: ${roomId}\nNo additional information available.`);
     }
+}// Function to add room labels directly to the SVG
+function addRoomLabels() {
+  // Get all room rectangles (rect elements with IDs)
+  const roomElements = document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
+  
+  console.log(`Found ${roomElements.length} room elements`);
+  
+  // Process each room element
+  roomElements.forEach(room => {
+    // Get the room ID
+    const roomId = room.id;
+    
+    // Get the bounding box of the room rectangle
+    const rect = room.getBBox();
+    
+    // Create a text element for the room label
+    const textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    
+    // Position the text in the center of the room
+    textElement.setAttribute('x', rect.x + rect.width / 2);
+    textElement.setAttribute('y', rect.y + rect.height / 2);
+    
+    // Style the text for readability
+    textElement.setAttribute('font-family', 'Arial, sans-serif');
+    textElement.setAttribute('font-size', '14px');
+    textElement.setAttribute('font-weight', 'bold');
+    textElement.setAttribute('text-anchor', 'middle');
+    textElement.setAttribute('dominant-baseline', 'middle');
+    textElement.setAttribute('fill', 'white');
+    
+    // Extract room number from ID (e.g., "CCS-F1-B10" -> "B10")
+    let roomNumber = roomId.split('-').pop();
+    
+    // If it's a non-numeric value, display it as is
+    if (isNaN(roomNumber.replace('B', ''))) {
+      roomNumber = "ROOM";
+    }
+    
+    // Set the room text
+    textElement.textContent = roomNumber;
+    
+    // Add the text element to the SVG
+    room.parentNode.appendChild(textElement);
+  });
+  
+  console.log("Room labels added");
 }
 
-// Initialize the map with room names on document ready
+// Call the function when the SVG is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // If the SVG is already in the DOM
+  setTimeout(addRoomLabels, 500); // Short delay to ensure SVG is rendered
+});
+
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', async function() {
-    // Set default building to CCS when page loads
-    showBuilding('ccs');
-    
     // First add text elements to all rooms
     addTextElementsToRooms();
     
     // Then populate with actual room names
     await populateRoomNames();
     
-    // Get room data for click handlers
-    const roomData = await fetchRoomData();
-    
-    // Add click event listeners to room blocks
-    document.querySelectorAll('.cursor-pointer').forEach(room => {
-        room.addEventListener('click', function() {
-            const roomId = this.id;
-            console.log(`Room ${roomId} clicked`);
-            
-            // Show room details from database
-            handleRoomClick(roomId, roomData);
-        });
-    });
+    console.log("Room text elements initialized");
 });
     </script>
 
@@ -6932,135 +6975,6 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScrollTop = st;
     }
 
-    // Attach event listener to search button
-    document.querySelector('button[onclick="searchAndHighlight()"]').addEventListener('click', searchAndHighlight);
-
-    // Attach change event listener to dropdown
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    if (dropdownMenu) {
-        dropdownMenu.addEventListener('change', function () {
-            const floorId = this.value;
-            if (floorId) {
-                fetchRoomsForFloor(floorId);
-                showFloorTable(floorId);
-            } else {
-                clearTableCells();
-            }
-        });
-
-        // Trigger the change event to load the default table
-        dropdownMenu.dispatchEvent(new Event('change'));
-    }
-
-    // Fetch and update rooms based on the selected floor
-    function fetchRoomsForFloor(floorId) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'ajax/floor_data.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                try {
-                    const rooms = JSON.parse(xhr.responseText);
-                    console.log('Rooms Data:', rooms); // Log the rooms data
-                    updateTableWithRooms(rooms);
-                } catch (e) {
-                    console.error("Error parsing JSON:", e);
-                    console.error("Response Text:", xhr.responseText); // Log the raw response
-                }
-            } else {
-                console.error('Fetch Error:', xhr.statusText);
-            }
-        };
-        xhr.send('floor_id=' + floorId);
-    }
-
-
-    // Function to update table with room data
-    function updateTableWithRooms(rooms) {
-        clearTableCells();
-        rooms.forEach(room => {
-            const cell = document.getElementById(room.room_id); // Use id for cell selection
-            if (cell) {
-                cell.textContent = room.room_name; // Assuming room_name is what you want to display
-                cell.style.backgroundColor = ''; // Reset the color
-                console.log('Updated Cell:', cell.id, room.room_name); // Log each updated cell
-            } else {
-                console.error('Cell Not Found:', room.room_id);
-            }
-        });
-    }
-
-    // Function to clear all table cells
-    function clearTableCells() {
-        document.querySelectorAll('.floor-table td').forEach(cell => {
-            cell.textContent = ''; // Clear the cell content
-            cell.style.backgroundColor = ''; // Reset the color
-        });
-    }
-
-    // Function to handle search and highlight
-    function searchAndHighlight() {
-        var input = document.getElementById('search-input').value.trim();
-
-        if (input === '') {
-            alert('Please enter a room name');
-            return;
-        }
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'ajax/search.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log('Search Response:', xhr.responseText);
-                var data = JSON.parse(xhr.responseText);
-
-                if (data.error) {
-                    console.error('PHP Error:', data.error);
-                    return;
-                }
-
-                var roomIds = data.highlight || [];
-                var floorIds = data.floor || [];
-                console.log('Highlighting IDs:', roomIds);
-                console.log('Floor IDs:', floorIds);
-
-                // Clear previous highlights
-                document.querySelectorAll('.highlight').forEach(cell => {
-                    cell.classList.remove('highlight');
-                });
-
-                // Highlight cells based on room IDs
-                document.querySelectorAll('.floor-table td').forEach(cell => {
-                    if (roomIds.includes(parseInt(cell.id))) { // Ensure IDs are compared as integers
-                        cell.classList.add('highlight');
-                    }
-                });
-
-                // Trigger the dropdown change event to update table and highlight results
-                var dropdown = document.getElementById('dropdownMenu');
-                dropdown.value = floorIds[0] || dropdown.value; // Default to the first floor in the array or keep current value
-                dropdown.dispatchEvent(new Event('change')); // Trigger the change event
-
-            } else {
-                console.error('Search Error:', xhr.statusText);
-            }
-        };
-        xhr.send('query=' + encodeURIComponent(input));
-    }
-
-    // Function to show a specific floor table
-    function showFloorTable(floorId) {
-        document.querySelectorAll('.floor-table').forEach(table => {
-            table.style.display = 'none'; // Hide all floor tables
-        });
-
-        const selectedTable = document.getElementById(`floor-${floorId}`);
-        if (selectedTable) {
-            selectedTable.style.display = 'table'; // Show the selected table
-            selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scroll to the table
-        }
-    }
    
 $(document).ready(function () {
     // Global variables to store state

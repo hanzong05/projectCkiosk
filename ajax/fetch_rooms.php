@@ -5,7 +5,7 @@
 header('Content-Type: application/json');
 
 // Include your database connection file
-include_once '../connection.php'; // Adjust path as needed
+include_once '../class/connection.php'; // Adjust path as needed
 
 try {
     // SQL query to get all rooms and their details

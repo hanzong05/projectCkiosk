@@ -1941,794 +1941,487 @@ function displayEvents() {
         });
     });
     </script>
+
 </section>
-    <section id="campusmap"  class="content-section py-4">
+<section id="campusmap" class="content-section py-4">
     <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
             <span class="gradient-text">CAMPUS BUILDINGS</span>
         </h1>
         <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
-                <!-- Tab Navigation -->
-                <div class="tab-container">
-                    <button class="tab-button active" onclick="openTab(event, 'ccs')">CCS</button>
-                    <button class="tab-button" onclick="openTab(event, 'cit')">CIT</button>
-                    <button class="tab-button" onclick="openTab(event, 'cafa')">CAFA</button>
-                </div>
+    
+    
+    <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
+            <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-building="ccs">CCS Building</button>
+            <button onclick="showBuilding('cit')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cit">CIT Building</button>
+            <button onclick="showBuilding('cafa')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cafa">CAFA Building</button>
+        </div>
 
-                <!-- Floor Map Section -->
-                <div id="ccs" class="tab-content">
-                    <div id="map">
-                        <div class="map section-content-map">
-                            <div class="dropdown">
-                               <input type="text" id="search-input" class="search" placeholder="Enter room name" style="color: black;">
-                                <button onclick="searchAndHighlight()" class="search-button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <select id="dropdownMenu">
-                                    <option value="1" selected>1st Floor</option>
-                                    <option value="2">2nd Floor</option>
-                                    <option value="3">3rd Floor</option>
-                                    <option value="4">4th Floor</option>
-                                    <option value="5">5th Floor</option>
-                                </select>
-                            </div>
-                            <div class="table-container">
-                                <table class="floor-table" id="floor-1" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
-                                            <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                            <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                            <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
-                                            <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                            <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                            <td id="7" class="floor-gray" colspan="2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
-                                            <td id="9" class="floor-gray" colspan="2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="10">0</td>
-                                            <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
-                                            <td id="12" class="floor-gray" colspan="2">2</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="13">3</td>
-                                            <td id="14" class="floor-gray" colspan="2">4</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
-                                            <td id="16" class="floor-gray" colspan="2">6</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
-                                            <td id="18" class="floor-gray" colspan="2">8</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <table class="floor-table" id="floor-2" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
-                                            <td id="20" class="floor-gray" rowspan="2">19</td>
-                                            <td id="21" class="floor-gray" rowspan="2">20</td>
-                                            <td id="22" class="floor-gray" rowspan="2">21</td>
-                                            <td id="23" class="floor-gray" rowspan="2">22</td>
-                                            <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
-                                            <td id="25" class="floor-gray" colspan="2">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
-                                            <td id="27" class="floor-gray" colspan="2">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="28">27</td>
-                                            <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
-                                            <td id="32" class="floor-gray" colspan="2">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="31">30</td>
-                                            <td id="30" class="floor-gray" colspan="2">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
-                                            <td id="34" class="floor-gray" colspan="2">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
-                                            <td id="36" class="floor-gray" colspan="2">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+        <!-- Buildings Container -->
+        <div id="ccs-building" class="building-container block">
+            <!-- Floor Navigation Tabs for CCS -->
+            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
+                <button onclick="showFloor('ccs', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
+                <button onclick="showFloor('ccs', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
+                <button onclick="showFloor('ccs', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
+                <button onclick="showFloor('ccs', 4)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="4">Floor 4</button>
+                <button onclick="showFloor('ccs', 5)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="5">Floor 5</button>
+            </div>
 
-                                <table class="floor-table" id="floor-3" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
-                                            <td id="38" rowspan="2" class="floor-gray">19</td>
-                                            <td id="39" rowspan="2" class="floor-gray">20</td>
-                                            <td id="40" rowspan="2" class="floor-gray">21</td>
-                                            <td id="41" rowspan="2" class="floor-gray">22</td>
-                                            <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
-                                            <td id="43" colspan="2" class="floor-gray">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
-                                            <td id="45" colspan="2" class="floor-gray">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="46" class="floor-gray">27</td>
-                                            <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                            <td id="48" colspan="2" class="floor-gray">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="50" class="floor-gray">30</td>
-                                            <td id="49" colspan="2" class="floor-gray">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
-                                            <td id="52" colspan="2" class="floor-gray">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
-                                            <td id="54" colspan="2" class="floor-gray">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+            <!-- CCS Floor Plans -->
+           <!-- CCS Floor 1 (Ground Floor) -->
+<div id="ccs-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+    <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+        <!-- Ground Floor Layout -->
+        <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+        
+        <!-- Left Side -->
+        <rect id="CCS-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+        <rect id="CCS-F1-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="253" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="804.5" width="288" height="126" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="931.5" width="288" height="132" fill="#D9D9D9" stroke="black"/>
+        
+        <!-- Center -->
+        <rect id="CCS-F1-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B8" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="161" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B9" class="cursor-pointer hover:fill-blue-200" x="491.5" y="40.5" width="162" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B10" class="cursor-pointer hover:fill-blue-200" x="654.5" y="40.5" width="297" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B11" class="cursor-pointer hover:fill-blue-200" x="952.5" y="40.5" width="121" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1074.5" y="40.5" width="116" height="254" fill="#D9D9D9" stroke="black"/>
+        
+        <!-- Right Side -->
+        <rect id="CCS-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+        <rect id="CCS-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="253" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="804.5" width="288" height="126" fill="#D9D9D9" stroke="black"/>
+        <rect id="CCS-F1-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="931.5" width="288" height="132" fill="#D9D9D9" stroke="black"/>
 
-                                <table class="floor-table" id="floor-4" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
-                                            <td id="56" rowspan="2" class="floor-gray">19</td>
-                                            <td id="57" rowspan="2" class="floor-gray">20</td>
-                                            <td id="58" rowspan="2" class="floor-gray">21</td>
-                                            <td id="59" rowspan="2" class="floor-gray">22</td>
-                                            <td id="60" rowspan="2" class="floor-gray">23</td>
-                                            <td id="61" rowspan="2" class="floor-gray">23</td>
-                                            <td id="62" colspan="2" class="floor-gray">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
-                                            <td id="64" colspan="2" class="floor-gray">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="65" class="floor-gray">27</td>
-                                            <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                            <td id="67" colspan="2" class="floor-gray">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="68" class="floor-gray">30</td>
-                                            <td id="69" colspan="2" class="floor-gray">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
-                                            <td id="71" colspan="2" class="floor-gray">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
-                                            <td id="73" colspan="2" class="floor-gray">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+        <!-- Floor Label -->
+        <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">GROUND FLOOR</text>
+    </svg>
+</div>
 
-                                <table class="floor-table" id="floor-5" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
-                                            <td id="75" rowspan="2" class="floor-gray">19</td>
-                                            <td id="76" rowspan="2" class="floor-gray">20</td>
-                                            <td id="77" rowspan="2" class="floor-gray">21</td>
-                                            <td id="78" rowspan="2" class="floor-gray">22</td>
-                                            <td id="79" rowspan="2" class="floor-gray">23</td>
-                                            <td id="80" rowspan="2" class="floor-gray">23</td>
-                                            <td id="81" colspan="2" class="floor-gray">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
-                                            <td id="83" colspan="2" class="floor-gray">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="84" class="floor-gray">27</td>
-                                            <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                            <td id="86" colspan="2" class="floor-gray">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="87" class="floor-gray">30</td>
-                                            <td id="88" colspan="2" class="floor-gray">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
-                                            <td id="90" colspan="2" class="floor-gray">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
-                                            <td id="92" colspan="2" class="floor-gray">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="ccs-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 2nd Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Left Side -->
+                    <rect id="CCS-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F2-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Center Area with 4 blocks -->
+                    <rect id="CCS-F2-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="252" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F2-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F2-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 2</text>
+                </svg>
+            </div>
 
-                <!-- SVG Map Section -->
-                <div id="cit" class="tab-content" style="display: none;">
-                    <div id="map">
-                        <div class="map section-content-map">
-                            <div class="dropdown">
-                                <input type="text" id="search" class="search" placeholder="Enter room name">
-                                <button onclick="searchElement()" class="search-button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                            <div class="table-container">
-                                <svg id="room-svg" viewBox="0 0 985 588" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="40.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black" />
-                                    <rect x="220.5" y="205.5" width="53" height="95" fill="#D9D9D9" stroke="black" />
-                                    <rect id="cit-5-a-b" x="167.5" y="205.5" width="52" height="95" fill="#D9D9D9" stroke="black" />
-                                    <text id="stock-room" x="195" y="250" text-anchor="middle" font-size="12">
-                                        STOCK
-                                        <tspan dy="1.2em" dx="-44">ROOM</tspan>
-                                    </text>
-                                    <rect id="ctl-1-a" x="40.5" y="301.5" width="52" height="67" fill="#D9D9D9" stroke="black" />
-                                    <text id="ctl-1-a-text" x="63" y="335" text-anchor="middle" font-size="12">CTL 1-A</text>
-                                    <rect id="cit-3-b-rect" x="303.5" y="72.5" width="49" height="69" fill="#D9D9D9" stroke="black" />
-                                    <text id="cit-3-b-text" x="328" y="105" text-anchor="middle" font-size="12">CIT 3-B</text>
-                                    <rect id="cit-5-a-b-rect" x="353.5" y="72.5" width="53" height="69" fill="#D9D9D9" stroke="black" />
-                                    <rect id="cit-5-a-b-combined" x="361.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
-                                    <text id="cit-5-a-b-text" x="406" y="250" text-anchor="middle" font-size="12">CIT 5-A & 5-B
-                                        <tspan dy="1.2em" dx="-80">ELECTRICAL</tspan>
-                                    </text>
-                                    <rect id="etl-5" x="452.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
-                                    <text id="etl-5-text" x="497" y="250" text-anchor="middle" font-size="12">ETL 5</text>
-                                    <rect id="cit-5-b-lec" x="543.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
-                                    <text id="cit-5-b-lec-text" x="588" y="250" text-anchor="middle" font-size="12">CIT 5-B LEC</text>
-                                    <rect id="bodega" x="634.5" y="205.5" width="90" height="95" fill="#D9D9D9" stroke="black" />
-                                    <text id="bodega-text" x="679" y="250" text-anchor="middle" font-size="12">BODEGA</text>
-                                    <rect id="library" x="725.5" y="205.5" width="89" height="95" fill="#D9D9D9" stroke="black" />
-                                    <text id="library-text" x="770" y="250" text-anchor="middle" font-size="12">LIBRARY</text>
-                                    <rect id="chairperson-office" x="220.5" y="136.5" width="53" height="68" fill="#D9D9D9" stroke="black" />
-                                    <text id="chairperson-office-text" x="250" y="170" text-anchor="middle" font-size="8">
-                                        CHAIRPERSON
-                                        <tspan dy="1.2em" dx="-44">OFFICE</tspan>
-                                    </text>
-                                    <rect id="d-o" x="40.5" y="369.5" width="52" height="68" fill="#D9D9D9" stroke="black" />
-                                    <text id="d-o-text" x="63" y="405" text-anchor="middle" font-size="12">D.O.</text>
-                                    <rect id="cr" x="40.5" y="438.5" width="52" height="69" fill="#D9D9D9" stroke="black" />
-                                    <text id="cr-text" x="63" y="475" text-anchor="middle" font-size="12">CR</text>
-                                    <rect id="cit-2-a" x="93.5" y="205.5" width="73" height="46" fill="#D9D9D9" stroke="black" />
-                                    <text id="cit-2-a-text" x="130" y="230" text-anchor="middle" font-size="12">CIT 2-A</text>
-                                    <path id="welding" d="M274 205H361V301H274V205Z" fill="#D9D9D9" />
-                                    <text id="welding-text" x="317" y="250" text-anchor="middle" font-size="12">WELDING</text>
-                                    <rect id="cit-3-a" x="220.5" y="72.5" width="82" height="69" fill="#D9D9D9" stroke="black" />
-                                    <text id="cit-3-a-text" x="261" y="105" text-anchor="middle" font-size="12">CIT 3-A</text>
-                                    <rect id="cit-2-b" x="93.5" y="252.5" width="73" height="48" fill="#D9D9D9" stroke="black" />
-                                    <text id="cit-2-b-text" x="130" y="280" text-anchor="middle" font-size="12">CIT 2-B</text>
-                                    <path id="pantry" d="M274 142H407V205H274V142Z" fill="#D9D9D9" />
-                                    <text id="pantry-text" x="340" y="172" text-anchor="middle" font-size="12">PANTRY</text>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M405.629 205H407V142H405.629V205Z" fill="black" />
-                                    <rect id="breaker" x="815.5" y="180.5" width="39" height="48" fill="#D9D9D9" stroke="black" />
-                                    <text id="breaker-text" x="834" y="205" text-anchor="middle" font-size="8">BREAKER</text>
-                                    <rect id="ctl-6" x="855.5" y="286.5" width="89" height="94" fill="#D9D9D9" stroke="black" />
-                                    <text id="ctl-6-text" x="900" y="322" text-anchor="middle" font-size="12">CTL 6</text>
-                                    <rect id="ctl-6-a-b" x="855.5" y="190.5" width="89" height="95" fill="#D9D9D9" stroke="black" />
-                                    <text id="ctl-6-a-b-text" x="900" y="225" text-anchor="middle" font-size="12">CTL 6-A & 6-B</text>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="cafa" class="tab-content" style="display: none;">
-                    <div id="map">
-                        <div class="map section-content-map">
-                            <div class="dropdown">
-                                <input type="text" id="search2" class="search" placeholder="Enter room name" aria-label="Search for a room">
-                                <button onclick="searchElement2()" class="search-button" aria-label="Search">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <select id="dropdown" aria-label="Select floor" onchange="showFloor(this.value)">
-                                    <option value="1" selected>1st Floor</option>
-                                    <option value="2">2nd Floor</option>
-                                    <option value="3">3rd Floor</option>
-                                </select>
-                            </div>
+            <div id="ccs-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 3rd Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Use the same layout as Floor 2 but with different IDs -->
+                    <rect id="CCS-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F3-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Center Area -->
+                    <rect id="CCS-F3-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="252" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F3-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F3-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 3</text>
+                </svg>
+            </div>
 
-                            <div class="table-container">
-                                <!-- Floor 1 -->
-                                <!--floor 1-->
-                                <svg id="room-svg-1" class="floor-svg" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="100" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="stairs-text" x="171" y="190" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
+            <div id="ccs-floor-4" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 4th Floor Layout - Updated with your specific SVG -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Left Side -->
+                    <rect id="CCS-F4-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F4-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Center Area with 5 blocks -->
+                    <rect id="CCS-F4-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F4-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F4-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F4-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 4</text>
+                </svg>
+            </div>
 
-                                    <rect id="men-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="men-cr-text" x="370" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
+            <div id="ccs-floor-5" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 5th Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using similar layout with different IDs -->
+                    <rect id="CCS-F5-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F5-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <rect id="CCS-F5-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="861" height="254" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B8" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    
+                    <rect id="CCS-F5-B9" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
+                    <rect id="CCS-F5-B10" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B11" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="509" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B12" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CCS FLOOR 5</text>
+                </svg>
+            </div>
+        </div>
 
+        <div id="cit-building" class="building-container hidden">
+            <!-- Modified: Only showing Floor 1 for CIT -->
+            <div id="cit-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+                <svg width="1521" height="1104" viewBox="0 0 1521 1104" class="w-full h-auto">
+                    <!-- CIT Floor 1 Layout using the provided SVG -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Rooms -->
+                    <rect id="CIT-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="902.5" width="99" height="161" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="740.5" width="99" height="161" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="573.5" width="99" height="166" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B4" class="cursor-pointer hover:fill-blue-200" x="355.5" y="40.5" width="127" height="166" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="357.5" width="99" height="215" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B6" class="cursor-pointer hover:fill-blue-200" x="256.5" y="357.5" width="98" height="215" fill="#D9D9D9" stroke="black"/>
+                    <path id="CIT-F1-B7" class="cursor-pointer hover:fill-blue-200" d="M559.5 40.5V206.5H483.5V40.5H559.5Z" fill="#D9D9D9" stroke="black"/>
+                    <path id="CIT-F1-B8" class="cursor-pointer hover:fill-blue-200" d="M644.5 40.5V206.5H560.5V40.5H644.5Z" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B9" class="cursor-pointer hover:fill-blue-200" x="355.5" y="357.5" width="98" height="215" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B10" class="cursor-pointer hover:fill-blue-200" x="453.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B11" class="cursor-pointer hover:fill-blue-200" x="590.5" y="356.5" width="139" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B12" class="cursor-pointer hover:fill-blue-200" x="728.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B13" class="cursor-pointer hover:fill-blue-200" x="865.5" y="356.5" width="135" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B14" class="cursor-pointer hover:fill-blue-200" x="999.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1342.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B16" class="cursor-pointer hover:fill-blue-200" x="1342.5" y="572.5" width="138" height="213" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B17" class="cursor-pointer hover:fill-blue-200" x="1136.5" y="356.5" width="139" height="217" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B18" class="cursor-pointer hover:fill-blue-200" x="355.5" y="207.5" width="98" height="149" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B19" class="cursor-pointer hover:fill-blue-200" x="1275.5" y="300.5" width="67" height="77" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B20" class="cursor-pointer hover:fill-blue-200" x="454.5" y="207.5" width="190" height="149" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B21" class="cursor-pointer hover:fill-blue-200" x="140.5" y="357.5" width="115" height="108" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CIT-F1-B22" class="cursor-pointer hover:fill-blue-200" x="140.5" y="466.5" width="115" height="106" fill="#D9D9D9" stroke="black"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CIT FLOOR 1</text>
+                </svg>
+            </div>
+        </div>
 
-
-                                    <rect id="female-cr-rect" x="473.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="female-cr-text" x="511" y="190" font-family="Arial" font-size="12" text-anchor="middle">FEMALE CR</text>
-
-                                    <rect id="s-104-rect" x="620.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-104-text" x="650" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-104</text>
-
-                                    <rect id="s-106-rect" x="550" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-106-text" x="585" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-106</text>
-
-                                    <rect id="s-102-rect" x="755" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-102-text" x="780" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-102</text>
-
-                                    <rect id="s-103-rect" x="680.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-103-text" x="720" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-103</text>
-
-                                    <rect id="s-101-rect" x="890" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-101-text" x="930" y="190" font-family="Arial" font-size="12" text-anchor="middle">S-101</text>
-
-                                    <rect id="male-cr-rect" x="820.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="male-cr-text" x="860" y="190" font-family="Arial" font-size="12" text-anchor="middle">MALE CR</text>
-
-                                    <rect id="s-109-rect" x="202.5" y="140.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-109-text" x="230" y="170" font-family="Arial" font-size="12" text-anchor="middle">S-109</text>
-
-                                    <rect id="pwd-cr-base-rect" x="408.5" y="140.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <rect id="pwd-cr-rect" x="408.5" y="193.5" width="64" height="53" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="pwd-cr-text" x="440" y="220" font-family="Arial" font-size="12" text-anchor="middle">PWD CR</text>
-
-                                    <rect id="stairs-2-rect" x="965" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="stairs-2-text" x="1000" y="170" font-family="Arial" font-size="12" text-anchor="middle">STAIRS</text>
-
-                                    <mask id="path-18-inside-1_0_1" fill="white">
-                                        <path d="M267 140H332V206H267V140Z" />
-                                    </mask>
-
-                                    <path d="M267 140H332V206H267V140Z" fill="#D9D9D9" />
-                                    <path d="M267 141H332V139H267V141Z" fill="#0D0D0D" mask="url(#path-18-inside-1_0_1)" />
-
-                                    <rect id="s-108-rect" x="202.5" y="206.5" width="64" height="65" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-108-text" x="230" y="240" font-family="Arial" font-size="12" text-anchor="middle">S-108</text>
-                                </svg>
-                                <!--floor 2-->
-                                <svg id="room-svg-2" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect id="stairs-rect" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="stairs-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-                                    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-                                    <rect id="s-205-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-205-text" x="600" y="182" font-family="Arial" font-size="12" fill="black">S-205</text>
-
-                                    <rect id="s-206-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-206-text" x="520" y="182" font-family="Arial" font-size="12" fill="black">S-206</text>
-
-                                    <rect id="s-201-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-201-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-201</text>
-
-                                    <rect id="s-204-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-204-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-204</text>
-
-                                    <rect id="female-cr-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="female-cr-text" x="950" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-                                    <rect id="s-202-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-202-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-202</text>
-
-                                    <rect id="s-203-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-203-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-203</text>
-
-                                    <rect id="s-208-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-208-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">S-208</text>
-
-                                    <rect id="s-207-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-207-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-207</text>
-
-                                    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-                                </svg>
-                                <!--floor 3-->
-                                <svg id="room-svg-3" class="floor-svg" style="display:none;" width="1367" height="472" viewBox="0 0 1367 472" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect id="stairs-1" x="140.5" y="140.5" width="61" height="84" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="stairs-1-text" x="150" y="182" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-
-                                    <rect id="male-cr-rect" x="332.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="male-cr-text" x="340" y="182" font-family="Arial" font-size="12" fill="black">S-307</text>
-
-                                    <rect id="male-cr-2-rect" x="570.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="male-cr-2-text" x="580" y="182" font-family="Arial" font-size="12" fill="black">MALE CR</text>
-
-                                    <rect id="female-cr-1-rect" x="494.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="female-cr-1-text" x="498" y="182" font-family="Arial" font-size="12" fill="black">FEMALE CR</text>
-
-                                    <rect id="s-301-rect" x="1022.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-301-text" x="1050" y="182" font-family="Arial" font-size="12" fill="black">S-301</text>
-
-                                    <rect id="s-305-rect" x="643.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-305-text" x="673" y="182" font-family="Arial" font-size="12" fill="black">S-305</text>
-
-                                    <rect id="female-cr-2-rect" x="946.5" y="140.5" width="75" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="female-cr-2-text" x="950" y="182" font-family="8" fill="black">FACULTY ROOM</text>
-
-                                    <rect id="s-303-rect" x="831.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-303-text" x="860" y="182" font-family="Arial" font-size="12" fill="black">S-303</text>
-
-                                    <rect id="s-304-rect" x="716.5" y="140.5" width="114" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-304-text" x="745" y="182" font-family="Arial" font-size="12" fill="black">S-304</text>
-
-                                    <rect id="uapsa-rect" x="202.5" y="140.5" width="130" height="107" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="uapsa-text" x="244" y="200" font-family="Arial" font-size="12" fill="black">UAPSA</text>
-
-                                    <rect id="s-306-rect" x="408.5" y="140.5" width="85" height="106" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="s-306-text" x="435" y="182" font-family="Arial" font-size="12" fill="black">S-306</text>
-
-                                    <rect id="stairs-2-rect" x="1098.5" y="140.5" width="64" height="54" fill="#D9D9D9" stroke="#0D0D0D" />
-                                    <text id="stairs-2-text" x="1106" y="165" font-family="Arial" font-size="12" fill="black">STAIRS</text>
-                                </svg>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
-
-
+        <div id="cafa-building" class="building-container hidden">
+            <!-- Floor Navigation Tabs for CAFA -->
+            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
+                <button onclick="showFloor('cafa', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
+                <button onclick="showFloor('cafa', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
+                <button onclick="showFloor('cafa', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
+            </div>
+            
+            <!-- CAFA Floor 1 Layout from paste-11.txt -->
+            <div id="cafa-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using the SVG layout from paste-11.txt -->
+                    <rect id="CAFA-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="126" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="95" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B3" class="cursor-pointer hover:fill-blue-200" x="211.5" y="454.5" width="103" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B4" class="cursor-pointer hover:fill-blue-200" x="315.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B5" class="cursor-pointer hover:fill-blue-200" x="417.5" y="454.5" width="97" height="83" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B6" class="cursor-pointer hover:fill-blue-200" x="417.5" y="538.5" width="97" height="68" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B7" class="cursor-pointer hover:fill-blue-200" x="515.5" y="454.5" width="104" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B8" class="cursor-pointer hover:fill-blue-200" x="615.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B9" class="cursor-pointer hover:fill-blue-200" x="715.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B10" class="cursor-pointer hover:fill-blue-200" x="821.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B11" class="cursor-pointer hover:fill-blue-200" x="923.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1026.5" y="454.5" width="102" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1126.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1228.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1334.5" y="454.5" width="145" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F1-B16" class="cursor-pointer hover:fill-blue-200" x="115.5" y="564.5" width="95" height="86" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CAFA FLOOR 1</text>
+                </svg>
+            </div>
+            
+            <!-- CAFA Floor 2 Layout from paste-12.txt -->
+            <div id="cafa-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using the SVG layout from paste-12.txt -->
+                    <rect id="CAFA-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="135" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="200" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="454.5" width="104" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="454.5" width="147" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="454.5" width="105" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="454.5" width="101" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B8" class="cursor-pointer hover:fill-blue-200" x="885.5" y="454.5" width="150" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B9" class="cursor-pointer hover:fill-blue-200" x="1033.5" y="454.5" width="131" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B11" class="cursor-pointer hover:fill-blue-200" x="1272.5" y="454.5" width="102" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F2-B12" class="cursor-pointer hover:fill-blue-200" x="1375.5" y="454.5" width="104" height="95" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CAFA FLOOR 2</text>
+                </svg>
+            </div>
+            
+            <!-- CAFA Floor 3 Layout from paste-13.txt -->
+            <div id="cafa-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    
+                    <!-- Using the SVG layout from paste-13.txt -->
+                    <rect id="CAFA-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="455.5" width="74" height="134" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="455.5" width="200" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="455.5" width="147" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="455.5" width="106" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="455.5" width="102" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B8" class="cursor-pointer hover:fill-blue-200" x="886.5" y="455.5" width="149" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B9" class="cursor-pointer hover:fill-blue-200" x="1032.5" y="455.5" width="132" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B11" class="cursor-pointer hover:fill-blue-200" x="1271.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    <rect id="CAFA-F3-B12" class="cursor-pointer hover:fill-blue-200" x="1376.5" y="455.5" width="103" height="94" fill="#D9D9D9" stroke="#0A0A0A"/>
+                    
+                    <!-- Floor Label -->
+                    <text x="760" y="679" font-family="Arial" font-size="36" text-anchor="middle" font-weight="bold" fill="#333">CAFA FLOOR 3</text>
+                </svg>
+            </div>
+        </div>
     <script>
-        // Restore your existing JavaScript functions
-        function showFloorTable(floorId) {
-            document.querySelectorAll('.floor-table').forEach(table => {
-                table.style.display = 'none';
+        // Function to show the selected building
+        function showBuilding(buildingId) {
+            // Hide all building containers
+            document.querySelectorAll('.building-container').forEach(container => {
+                container.classList.add('hidden');
             });
-
-            const selectedTable = document.getElementById(`floor-${floorId}`);
-            if (selectedTable) {
-                selectedTable.style.display = 'table';
-                selectedTable.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Show the selected building container
+            document.getElementById(`${buildingId}-building`).classList.remove('hidden');
+            
+            // Update building tab styling
+            document.querySelectorAll('.building-btn').forEach(btn => {
+                if (btn.getAttribute('data-building') === buildingId) {
+                    btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+                    btn.classList.add('bg-blue-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white');
+                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+                }
+            });
+            
+            // For CIT we only show floor 1
+            if (buildingId === 'cit') {
+                // Hide floor navigation for CIT
+                document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
+                    btn.classList.add('hidden');
+                });
+            }
+            
+            // Show first floor by default for each building
+            if (buildingId === 'ccs') {
+                showFloor('ccs', 1);
+            } else if (buildingId === 'cafa') {
+                showFloor('cafa', 1);
             }
         }
 
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+        // Function to show the selected floor for a specific building
+        function showFloor(buildingId, floorNumber) {
+            // Hide all floor plans for this building
+            document.querySelectorAll(`#${buildingId}-building .floor-plan`).forEach(plan => {
+                plan.classList.add('hidden');
+            });
+            
+            // Show the selected floor plan
+            document.getElementById(`${buildingId}-floor-${floorNumber}`).classList.remove('hidden');
+            
+            // Update floor tab styling (only for the active building)
+            document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
+                if (parseInt(btn.getAttribute('data-floor')) === floorNumber) {
+                    btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+                    btn.classList.add('bg-blue-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white');
+                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+                }
+            });
         }
 
-        function searchAndHighlight() {
-            var input = document.getElementById('search-input').value.toLowerCase();
-            // Your existing search and highlight logic
+        async function fetchRoomData() {
+    try {
+        // Replace with your actual API endpoint
+        const response = await fetch('/ajax/fetch_rooms.php');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching room data:', error);
+        return {}; // Return empty object in case of error
+    }
+}
+
+// Function to add text elements to all room boxes
+function addTextElementsToRooms() {
+    // Get all room rectangles by their IDs
+    document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]').forEach(room => {
+        const roomId = room.id;
+        
+        // Get the bounding rectangle
+        const rect = room.getBBox();
+        
+        // Create text element
+        const textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textElement.id = `text-${roomId}`;
+        
+        // Position text in the center of the room
+        textElement.setAttribute('x', rect.x + rect.width / 2);
+        textElement.setAttribute('y', rect.y + rect.height / 2);
+        textElement.setAttribute('font-family', 'Arial');
+        
+        // Adjust font size based on room size
+        const fontSize = Math.min(16, Math.max(10, Math.floor(rect.width / 15)));
+        textElement.setAttribute('font-size', fontSize);
+        
+        textElement.setAttribute('text-anchor', 'middle');
+        textElement.setAttribute('fill', '#333');
+        textElement.textContent = 'Loading...';
+        
+        // Add text element to SVG (append after the room rectangle)
+        room.parentNode.insertBefore(textElement, room.nextSibling);
+    });
+}
+
+// Function to populate room names from database
+async function populateRoomNames() {
+    // Fetch room data from your database
+    const roomData = await fetchRoomData();
+    
+    // Update all text elements with room names
+    document.querySelectorAll('[id^="text-CCS-"], [id^="text-CIT-"], [id^="text-CAFA-"]').forEach(textElement => {
+        // Extract the room ID from the text element ID
+        const roomId = textElement.id.replace('text-', '');
+        
+        // Check if we have data for this room
+        if (roomData[roomId]) {
+            // Set the room name from the database
+            textElement.textContent = roomData[roomId].name || 'Unnamed Room';
+        } else {
+            // If no data found, show a placeholder
+            textElement.textContent = 'Room ' + roomId.split('-').pop();
+        }
+    });
+}
+
+// Function to handle room click and show details
+function handleRoomClick(roomId, roomData) {
+    if (roomData && roomData[roomId]) {
+        // Create a simple popup with room information
+        const roomInfo = roomData[roomId];
+        alert(`Room ID: ${roomId}\nRoom Name: ${roomInfo.name || 'Unnamed'}\nFloor ID: ${roomInfo.floor_id || 'Unknown'}`);
+    } else {
+        alert(`Room ID: ${roomId}\nNo additional information available.`);
+    }
+}
+
+// Initialize the map with room names on document ready
+document.addEventListener('DOMContentLoaded', async function() {
+    // Set default building to CCS when page loads
+    showBuilding('ccs');
+    
+    // First add text elements to all rooms
+    addTextElementsToRooms();
+    
+    // Then populate with actual room names
+    await populateRoomNames();
+    
+    // Get room data for click handlers
+    const roomData = await fetchRoomData();
+    
+    // Add click event listeners to room blocks
+    document.querySelectorAll('.cursor-pointer').forEach(room => {
+        room.addEventListener('click', function() {
+            const roomId = this.id;
+            console.log(`Room ${roomId} clicked`);
+            
+            // Show room details from database
+            handleRoomClick(roomId, roomData);
+        });
+    });
+});
     </script>
 
-
-
-            <section id="campusmap" class="content-section bg-light remove-padding-sm py-5">
-            <div class="section-heading text-center mb-5">
-        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
-            <span class="gradient-text">CAMPUS BUILDINGS</span>
-        </h1>
-        <div class="animated-bar mx-auto mt-2 mb-3"></div>
-    </div>
-                <!-- Tab Navigation -->
-                <div class="tab-container">
-                    <button class="tab-button active" data-tab="ccs">CCS</button>
-                    <button class="tab-button" data-tab="cit">CIT</button>
-                    <button class="tab-button" data-tab="cafa">CAFA</button>
-                </div>
-
-                <!-- Floor Map Section -->
-                <div id="ccs" class="tab-content">
-                    <div id="map">
-                        <div class="map section-content-map">
-                            <div class="dropdown">
-                               <input type="text" id="search-input" class="search" placeholder="Enter room name" style="color: black;">
-                                <button onclick="searchAndHighlight()" class="search-button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <select id="dropdownMenu">
-                                    <option value="1" selected>1st Floor</option>
-                                    <option value="2">2nd Floor</option>
-                                    <option value="3">3rd Floor</option>
-                                    <option value="4">4th Floor</option>
-                                    <option value="5">5th Floor</option>
-                                </select>
-                            </div>
-                            <div class="table-container">
-                                <table class="floor-table" id="floor-1" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="1" style="height: 100px;"></td>
-                                            <td id="2" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                            <td id="3" class="floor-gray" rowspan="2" style="width: 120px;"></td>
-                                            <td id="4" class="floor-gray" colspan="2" rowspan="2"></td>
-                                            <td id="5" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                            <td id="6" class="floor-gray" rowspan="2" style="width: 70px;"></td>
-                                            <td id="7" class="floor-gray" colspan="2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="8" class="floor-gray" colspan="2" style="height: 50px;"></td>
-                                            <td id="9" class="floor-gray" colspan="2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="10">0</td>
-                                            <td id="11" class="floor-maroon" colspan="6" rowspan="4">1</td>
-                                            <td id="12" class="floor-gray" colspan="2">2</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="13">3</td>
-                                            <td id="14" class="floor-gray" colspan="2">4</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="15" style="height: 60px;">5</td>
-                                            <td id="16" class="floor-gray" colspan="2">6</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="17" style="height: 50px;">7</td>
-                                            <td id="18" class="floor-gray" colspan="2">8</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <table class="floor-table" id="floor-2" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="19" style="height: 100px;">18</td>
-                                            <td id="20" class="floor-gray" rowspan="2">19</td>
-                                            <td id="21" class="floor-gray" rowspan="2">20</td>
-                                            <td id="22" class="floor-gray" rowspan="2">21</td>
-                                            <td id="23" class="floor-gray" rowspan="2">22</td>
-                                            <td id="24" class="floor-gray" colspan="2" rowspan="2">23</td>
-                                            <td id="25" class="floor-gray" colspan="2">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="26" style="height: 50px;">25</td>
-                                            <td id="27" class="floor-gray" colspan="2">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="28">27</td>
-                                            <td id="29" class="floor-maroon" colspan="6" rowspan="4">138</td>
-                                            <td id="32" class="floor-gray" colspan="2">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="31">30</td>
-                                            <td id="30" class="floor-gray" colspan="2">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="33" class="floor-gray" style="height: 60px;">32</td>
-                                            <td id="34" class="floor-gray" colspan="2">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="35" class="floor-gray" style="height: 50px;">34</td>
-                                            <td id="36" class="floor-gray" colspan="2">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <table class="floor-table" id="floor-3" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" id="37" class="floor-gray" style="height: 100px;">18</td>
-                                            <td id="38" rowspan="2" class="floor-gray">19</td>
-                                            <td id="39" rowspan="2" class="floor-gray">20</td>
-                                            <td id="40" rowspan="2" class="floor-gray">21</td>
-                                            <td id="41" rowspan="2" class="floor-gray">22</td>
-                                            <td id="42" colspan="2" rowspan="2" class="floor-gray">23</td>
-                                            <td id="43" colspan="2" class="floor-gray">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="44" style="height: 50px;" class="floor-gray">25</td>
-                                            <td id="45" colspan="2" class="floor-gray">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="46" class="floor-gray">27</td>
-                                            <td id="47" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                            <td id="48" colspan="2" class="floor-gray">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="50" class="floor-gray">30</td>
-                                            <td id="49" colspan="2" class="floor-gray">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="51" style="height: 60px;" class="floor-gray">32</td>
-                                            <td id="52" colspan="2" class="floor-gray">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="53" style="height: 50px;" class="floor-gray">34</td>
-                                            <td id="54" colspan="2" class="floor-gray">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <table class="floor-table" id="floor-4" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" id="55" style="height: 100px;" class="floor-gray">18</td>
-                                            <td id="56" rowspan="2" class="floor-gray">19</td>
-                                            <td id="57" rowspan="2" class="floor-gray">20</td>
-                                            <td id="58" rowspan="2" class="floor-gray">21</td>
-                                            <td id="59" rowspan="2" class="floor-gray">22</td>
-                                            <td id="60" rowspan="2" class="floor-gray">23</td>
-                                            <td id="61" rowspan="2" class="floor-gray">23</td>
-                                            <td id="62" colspan="2" class="floor-gray">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="63" style="height: 50px;" class="floor-gray">25</td>
-                                            <td id="64" colspan="2" class="floor-gray">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="65" class="floor-gray">27</td>
-                                            <td id="66" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                            <td id="67" colspan="2" class="floor-gray">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="68" class="floor-gray">30</td>
-                                            <td id="69" colspan="2" class="floor-gray">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="70" style="height: 60px;" class="floor-gray">32</td>
-                                            <td id="71" colspan="2" class="floor-gray">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="72" style="height: 50px;" class="floor-gray">34</td>
-                                            <td id="73" colspan="2" class="floor-gray">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <table class="floor-table" id="floor-5" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" id="74" style="height: 100px;" class="floor-gray">18</td>
-                                            <td id="75" rowspan="2" class="floor-gray">19</td>
-                                            <td id="76" rowspan="2" class="floor-gray">20</td>
-                                            <td id="77" rowspan="2" class="floor-gray">21</td>
-                                            <td id="78" rowspan="2" class="floor-gray">22</td>
-                                            <td id="79" rowspan="2" class="floor-gray">23</td>
-                                            <td id="80" rowspan="2" class="floor-gray">23</td>
-                                            <td id="81" colspan="2" class="floor-gray">24</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="82" style="height: 50px;" class="floor-gray">25</td>
-                                            <td id="83" colspan="2" class="floor-gray">26</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="84" class="floor-gray">27</td>
-                                            <td id="85" colspan="6" rowspan="4" class="floor-maroon">138</td>
-                                            <td id="86" colspan="2" class="floor-gray">29</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="87" class="floor-gray">30</td>
-                                            <td id="88" colspan="2" class="floor-gray">31</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="89" style="height: 60px;" class="floor-gray">32</td>
-                                            <td id="90" colspan="2" class="floor-gray">33</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="91" style="height: 50px;" class="floor-gray">34</td>
-                                            <td id="92" colspan="2" class="floor-gray">35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CIT Building Floor Tables -->
-                <div id="cit" class="tab-content" style="display: none;">
-                    <div id="map">
-                        <div class="map section-content-map">
-                            <div class="dropdown">
-                                <input type="text" id="search-input-cit" class="search" placeholder="Enter room name" style="color: black;">
-                                <button onclick="searchAndHighlightCIT()" class="search-button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <select id="dropdownMenu-cit" onchange="showFloorTableForBuilding('cit', this.value)">
-                                    <option value="1" selected>1st Floor</option>
-                                    <option value="2">2nd Floor</option>
-                                    <option value="3">3rd Floor</option>
-                                    <option value="4">4th Floor</option>
-                                    <option value="5">5th Floor</option>
-                                </select>
-                            </div>
-                            <div class="table-container">
-                                <!-- CIT Floor 1 -->
-                                <table class="floor-table" id="floor-cit-1" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="cit-1" style="height: 100px;">STOCK ROOM</td>
-                                            <td id="cit-2" class="floor-gray" rowspan="2" style="width: 120px;">CTL 1-A</td>
-                                            <td id="cit-3" class="floor-gray" rowspan="2" style="width: 120px;">CIT 3-B</td>
-                                            <td id="cit-4" class="floor-gray" colspan="2" rowspan="2">CIT 5-A & 5-B</td>
-                                            <td id="cit-5" class="floor-gray" rowspan="2" style="width: 70px;">ETL 5</td>
-                                            <td id="cit-6" class="floor-gray" rowspan="2" style="width: 70px;">CIT 5-B LEC</td>
-                                            <td id="cit-7" class="floor-gray" colspan="2">BODEGA</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="cit-8" class="floor-gray" colspan="2" style="height: 50px;">LIBRARY</td>
-                                            <td id="cit-9" class="floor-gray" colspan="2">CHAIRPERSON OFFICE</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="cit-10">D.O.</td>
-                                            <td id="cit-11" class="floor-maroon" colspan="6" rowspan="4">GROUND FLOOR</td>
-                                            <td id="cit-12" class="floor-gray" colspan="2">CR</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="cit-13">CIT 2-A</td>
-                                            <td id="cit-14" class="floor-gray" colspan="2">WELDING</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="cit-15" style="height: 60px;">CIT 3-A</td>
-                                            <td id="cit-16" class="floor-gray" colspan="2">PANTRY</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="cit-17" style="height: 50px;">CIT 2-B</td>
-                                            <td id="cit-18" class="floor-gray" colspan="2">BREAKER</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="cafa" class="tab-content" style="display: none;">
-                    <div id="map">
-                        <div class="map section-content-map">
-                            <div class="dropdown">
-                                <input type="text" id="search-input-cafa" class="search" placeholder="Enter room name" style="color: black;">
-                                <button onclick="searchAndHighlightCAFA()" class="search-button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <select id="dropdownMenu-cafa" onchange="showFloorTableCAFA(this.value)">
-                                    <option value="1" selected>1st Floor</option>
-                                    <option value="2">2nd Floor</option>
-                                    <option value="3">3rd Floor</option>
-                                </select>
-                            </div>
-                            <div class="table-container">
-                                <table class="floor-table" id="floor-cafa-1" border="1">
-                                    <tbody>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="cafa-1" style="height: 100px;">STAIRS</td>
-                                            <td id="cafa-2" class="floor-gray" rowspan="2" style="width: 120px;">MALE CR</td>
-                                            <td id="cafa-3" class="floor-gray" rowspan="2" style="width: 120px;">FEMALE CR</td>
-                                            <td id="cafa-4" class="floor-gray" colspan="2" rowspan="2">S-104</td>
-                                            <td id="cafa-5" class="floor-gray" rowspan="2" style="width: 70px;">S-106</td>
-                                            <td id="cafa-6" class="floor-gray" rowspan="2" style="width: 70px;">S-102</td>
-                                            <td id="cafa-7" class="floor-gray" colspan="2">S-103</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="cafa-8" class="floor-gray" colspan="2" style="height: 50px;">S-101</td>
-                                            <td id="cafa-9" class="floor-gray" colspan="2">MALE CR</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="floor-gray" colspan="2" id="cafa-10">S-109</td>
-                                            <td id="cafa-11" class="floor-maroon" colspan="6" rowspan="4">GROUND FLOOR</td>
-                                            <td id="cafa-12" class="floor-gray" colspan="2">PWD CR</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="floor-gray" id="cafa-13">STAIRS</td>
-                                            <td id="cafa-14" class="floor-gray" colspan="2">S-108</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
+</section>
             <section id="facultymembers" class="content-section py-4">
     <div class="section-content">
         <div class="section-heading text-center mb-5">

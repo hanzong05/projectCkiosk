@@ -2450,3 +2450,543 @@ Data: Array
 )
 
 --------------------------------------------------
+[2025-04-18 06:01:10] Request parameters
+Data: Array
+(
+    [accountType] => 3
+    [userId] => 20
+    [type] => org
+    [timeFilter] => all
+    [orgId] => 2
+)
+
+--------------------------------------------------
+[2025-04-18 06:01:10] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback WHERE org_id IN (
+                SELECT org_type 
+                FROM orgmembers_tbl 
+                WHERE id = :member_id 
+                AND is_active = 1
+            )
+    [params] => Array
+        (
+            [:member_id] => 20
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:01:10] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 4.0000
+            [avg_communication] => 4.0000
+            [avg_inclusivity] => 4.0000
+            [avg_leadership] => 4.6667
+            [avg_skill_dev] => 4.6667
+            [avg_impact] => 4.3333
+            [total_feedback] => 3
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [leadership_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [impact_rating] => Array
+                (
+                    [3] => 1
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-04-10
+                    [avg_rating] => 5.00
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-04-09
+                    [avg_rating] => 5.00
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-03-18
+                    [avg_rating] => 2.83
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:06:12] Request parameters
+Data: Array
+(
+    [accountType] => 3
+    [userId] => 20
+    [type] => org
+    [timeFilter] => all
+    [orgId] => 2
+)
+
+--------------------------------------------------
+[2025-04-18 06:06:12] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback WHERE org_id IN (
+                SELECT org_type 
+                FROM orgmembers_tbl 
+                WHERE id = :member_id 
+                AND is_active = 1
+            )
+    [params] => Array
+        (
+            [:member_id] => 20
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:06:12] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 4.0000
+            [avg_communication] => 4.0000
+            [avg_inclusivity] => 4.0000
+            [avg_leadership] => 4.6667
+            [avg_skill_dev] => 4.6667
+            [avg_impact] => 4.3333
+            [total_feedback] => 3
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [leadership_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [impact_rating] => Array
+                (
+                    [3] => 1
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-04-10
+                    [avg_rating] => 5.00
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-04-09
+                    [avg_rating] => 5.00
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-03-18
+                    [avg_rating] => 2.83
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:08:43] Request parameters
+Data: Array
+(
+    [accountType] => 3
+    [userId] => 20
+    [type] => org
+    [timeFilter] => all
+    [orgId] => 2
+)
+
+--------------------------------------------------
+[2025-04-18 06:08:43] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback WHERE org_id IN (
+                SELECT org_type 
+                FROM orgmembers_tbl 
+                WHERE id = :member_id 
+                AND is_active = 1
+            )
+    [params] => Array
+        (
+            [:member_id] => 20
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:08:43] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 4.0000
+            [avg_communication] => 4.0000
+            [avg_inclusivity] => 4.0000
+            [avg_leadership] => 4.6667
+            [avg_skill_dev] => 4.6667
+            [avg_impact] => 4.3333
+            [total_feedback] => 3
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [leadership_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [impact_rating] => Array
+                (
+                    [3] => 1
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-04-10
+                    [avg_rating] => 5.00
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-04-09
+                    [avg_rating] => 5.00
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-03-18
+                    [avg_rating] => 2.83
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:34:37] Request parameters
+Data: Array
+(
+    [accountType] => 3
+    [userId] => 20
+    [type] => org
+    [timeFilter] => all
+    [orgId] => 2
+)
+
+--------------------------------------------------
+[2025-04-18 06:34:37] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback WHERE org_id IN (
+                SELECT org_type 
+                FROM orgmembers_tbl 
+                WHERE id = :member_id 
+                AND is_active = 1
+            )
+    [params] => Array
+        (
+            [:member_id] => 20
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:34:37] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 4.0000
+            [avg_communication] => 4.0000
+            [avg_inclusivity] => 4.0000
+            [avg_leadership] => 4.6667
+            [avg_skill_dev] => 4.6667
+            [avg_impact] => 4.3333
+            [total_feedback] => 3
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [leadership_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [impact_rating] => Array
+                (
+                    [3] => 1
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-04-10
+                    [avg_rating] => 5.00
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-04-09
+                    [avg_rating] => 5.00
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-03-18
+                    [avg_rating] => 2.83
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:37:51] Request parameters
+Data: Array
+(
+    [accountType] => 3
+    [userId] => 20
+    [type] => org
+    [timeFilter] => all
+    [orgId] => 2
+)
+
+--------------------------------------------------
+[2025-04-18 06:37:51] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback WHERE org_id IN (
+                SELECT org_type 
+                FROM orgmembers_tbl 
+                WHERE id = :member_id 
+                AND is_active = 1
+            )
+    [params] => Array
+        (
+            [:member_id] => 20
+        )
+
+)
+
+--------------------------------------------------
+[2025-04-18 06:37:51] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 4.0000
+            [avg_communication] => 4.0000
+            [avg_inclusivity] => 4.0000
+            [avg_leadership] => 4.6667
+            [avg_skill_dev] => 4.6667
+            [avg_impact] => 4.3333
+            [total_feedback] => 3
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 1
+                    [5] => 2
+                )
+
+            [leadership_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [4] => 1
+                    [5] => 2
+                )
+
+            [impact_rating] => Array
+                (
+                    [3] => 1
+                    [5] => 2
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-04-10
+                    [avg_rating] => 5.00
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-04-09
+                    [avg_rating] => 5.00
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-03-18
+                    [avg_rating] => 2.83
+                )
+
+        )
+
+)
+
+--------------------------------------------------

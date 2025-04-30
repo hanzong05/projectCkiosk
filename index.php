@@ -40,7 +40,7 @@
     <!-- Tailwind CSS --><link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
 
     <!-- Tailwind CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
 
 
     <!-- Bootstrap 5.3.0 (corrected version) CSS -->
@@ -2713,6 +2713,1555 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     </style>
 </section>
+            <section id="facultymembers" class="content-section py-4">
+    <div class="section-content">
+        <div class="section-heading text-center mb-5">
+            <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+                <span class="gradient-text">FACULTY MEMBERS</span>
+            </h1>
+            <div class="animated-bar mx-auto mt-2 mb-3"></div>
+        </div>
+
+        <!-- Faculty Members -->
+        <div class="level1">
+            <?php foreach ($allDean as $head): ?>
+                <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                    data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                    data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                    data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                    <div class="member-info">
+                        <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                        <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="level2">
+            <?php foreach ($all2 as $head): ?>
+                <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                    data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                    data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                    data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                    <div class="member-info">
+                        <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                        <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="level3">
+            <?php foreach ($all3 as $head): ?>
+                <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                    data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                    data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                    data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                    <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                    <div class="member-info">
+                        <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                        <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Department Buttons -->
+        <div class="fclty-div">
+            <button type="button" class="button-faculty-btn active" data-tab="tab1">IT Department</button>
+            <button type="button" class="button-faculty-btn" data-tab="tab2">IS Department</button>
+            <button type="button" class="button-faculty-btn" data-tab="tab3">CS Department</button>
+            <button type="button" class="button-faculty-btn" data-tab="tab4">MIT</button>
+        </div>
+
+        <!-- IT Department Tab -->
+        <div id="tab1" class="org-chart active">
+            <div class="section-content">
+                <h3>IT CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allItHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allIt as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- IS Department Tab -->
+        <div id="tab2" class="org-chart">
+            <div class="section-content">
+                <h3>IS CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allIsHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allIs as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- CS Department Tab -->
+        <div id="tab3" class="org-chart">
+            <div class="section-content">
+                <h3>CS CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allCsHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allCs as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIT Department Tab -->
+        <div id="tab4" class="org-chart">
+            <div class="section-content">
+                <h3>MIT CHAIRPERSON</h3>
+                <div class="level2">
+                    <?php foreach ($allMitHeads as $head): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($head['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($head['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($head['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($head['faculty_image']) ?>" alt="Dean">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($head['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $head['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3>Faculty Members</h3>
+                <div class="level3">
+                    <?php foreach ($allMit as $faculty): ?>
+                        <div class="member" data-name="<?= htmlspecialchars($faculty['faculty_name']) ?>"
+                            data-specialization="<?= htmlspecialchars($faculty['specialization']) ?>"
+                            data-consultation="<?= htmlspecialchars($faculty['consultation_time']) ?>"
+                            data-image="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>">
+                            <img src="uploaded/facultyUploaded/<?= htmlspecialchars($faculty['faculty_image']) ?>" alt="Faculty Member">
+                            <div class="member-info">
+                                <p class="member-name"><?= htmlspecialchars($faculty['faculty_name']) ?></p>
+                                <p class="member-department"><?= implode(", ", $faculty['departments']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+
+
+    <style>
+        /* Faculty Section Variables */
+        #facultymembers {
+            --maroon-dark: #3C1518;
+            --maroon: #C33232;
+            --gold: #E9CF8B;
+            --light-gray: #EEEEEE;
+            padding: 30px 0;
+        }
+
+        /* Gradient text for the heading */
+        .gradient-text {
+            background: linear-gradient(45deg, var(--maroon-dark), var(--maroon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        /* Animated bar for the heading */
+        .animated-bar {
+            height: 4px;
+            width: 80px;
+            background: linear-gradient(to right, var(--maroon-dark), var(--maroon));
+            border-radius: 2px;
+        }
+
+        /* Faculty Member Card Styling */
+        #facultymembers .member {
+            background-color: #3C1518;
+            color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 350px;
+            min-height: 90px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #facultymembers .member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        #facultymembers .member img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
+
+        #facultymembers .member-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        #facultymembers .member-name {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #fff;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #facultymembers .member-department {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.3;
+            color: rgba(255, 255, 255, 0.85);
+            white-space: normal;
+            overflow: hidden;
+        }
+
+        /* Department button styling */
+        .fclty-div {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .button-faculty-btn {
+            padding: 10px 20px;
+            background-color: #3C1518;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .button-faculty-btn:hover {
+            background-color: #701c24;
+        }
+
+        .button-faculty-btn.active {
+            background-color: #C33232;
+        }
+
+        /* Section headings */
+        #facultymembers h3 {
+            color: #3C1518;
+            margin: 30px 0 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* Layout for faculty members */
+        .level1, .level2, .level3 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Style for org-chart sections */
+        .org-chart {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .org-chart.active {
+            display: block;
+        }
+
+        /* Backdrop styling */
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Card styling */
+        .custom-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            width: 90%;
+            max-width: 400px;
+            overflow: hidden;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .rounded-circle {
+            width: 150px !important;
+            height: 150px !important;
+            object-fit: cover;
+            border-radius: 50% !important;
+            margin: 0 auto 1rem;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 3px solid #C33232;
+        }
+
+        #profileName {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3C1518;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .specialization-value,
+        .consultation-value {
+            font-weight: 600;
+            color: #3C1518;
+        }
+
+        /* Close button for modal */
+        .card-body::after {
+             content: "x"
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #C33232;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Animation for modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card.show, .backdrop.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #facultymembers .member {
+                max-width: 100%;
+            }
+            
+            .fclty-div {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .button-faculty-btn {
+                width: 80%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.button-faculty-btn');
+            const tabContents = document.querySelectorAll('.org-chart');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Profile modal functionality
+            const members = document.querySelectorAll('.member');
+            const profileCard = document.getElementById('profileCard');
+            const backdrop = document.getElementById('backdrop');
+            const profileImage = document.getElementById('profileImage');
+            const profileName = document.getElementById('profileName');
+            const specializationValue = document.querySelector('.specialization-value');
+            const consultationValue = document.querySelector('.consultation-value');
+            
+            members.forEach(member => {
+                member.addEventListener('click', function() {
+                    // Set profile data
+                    profileImage.src = this.getAttribute('data-image');
+                    profileName.textContent = this.getAttribute('data-name');
+                    specializationValue.textContent = this.getAttribute('data-specialization');
+                    consultationValue.textContent = this.getAttribute('data-consultation');
+                    
+                    // Show modal
+                    profileCard.style.display = 'block';
+                    backdrop.style.display = 'block';
+                    
+                    // Add animation classes
+                    profileCard.classList.add('show');
+                    backdrop.classList.add('show');
+                    
+                    // Prevent body scrolling
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Close modal when clicking backdrop
+            backdrop.addEventListener('click', closeModal);
+            
+            // Close modal when clicking the X (added in CSS as ::after)
+            document.querySelector('.card-body').addEventListener('click', function(e) {
+                // Calculate if the click is on the pseudo-element (close button)
+                const rect = this.getBoundingClientRect();
+                const isInCloseButtonArea = 
+                    e.clientX > rect.right - 40 && 
+                    e.clientX < rect.right && 
+                    e.clientY > rect.top && 
+                    e.clientY < rect.top + 40;
+                    
+                if (isInCloseButtonArea) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal function
+            function closeModal() {
+                profileCard.classList.remove('show');
+                backdrop.classList.remove('show');
+                
+                // Allow slight delay for animation
+                setTimeout(() => {
+                    profileCard.style.display = 'none';
+                    backdrop.style.display = 'none';
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+            
+            // Close modal with escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && profileCard.style.display === 'block') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</section>
+
+    <section id="campusorgs" class="content-section py-4">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">STUDENT ORGANIZATIONS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
+    <div class="container-fluid px-4">
+        <!-- Row of cards with grid layout -->
+        <div class="row-container">
+            <?php foreach ($allOrg as $row): ?>
+                <div class="org-card-wrapper">
+                    <div class="org-card">
+                        <!-- Card Header -->
+                        <div class="card-image-container">
+                            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#newsModal" 
+                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                            data-title="<?= htmlspecialchars($row['org_name']) ?>" 
+                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                            data-author="<?= htmlspecialchars($row['creator_name'] ?? $row['created_by_name'] ?? $row['org_member_name'] ?? 'Unknown Author') ?>">
+                                <!-- Normal state (circle) -->
+                                <div class="circle-image">
+                                    <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
+                                </div>
+                                
+                                <!-- Hover state (box) -->
+                                <div class="box-image">
+                                    <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
+                                    <div class="overlay"></div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="org-card-body">
+                            <h5 class="org-card-title">
+                                <?php 
+                                    // Split the title into words
+                                    $words = explode(' ', $row['org_name']);
+                                    $formattedName = '';
+                                    $lineLength = 0;
+
+                                    // Loop through words, adding line breaks to avoid long lines
+                                    foreach ($words as $word) {
+                                        $formattedName .= htmlspecialchars($word) . ' ';
+                                        $lineLength += strlen($word) + 1; // Account for the space
+
+                                        // Add a line break if line exceeds a set character limit (e.g., 20 chars)
+                                        if ($lineLength >= 20) { 
+                                            $formattedName .= "\n";
+                                            $lineLength = 0;
+                                        }
+                                    }
+
+                                    echo nl2br($formattedName); // Display the formatted name with line breaks
+                                ?>
+                            </h5>
+                            <div class="org-indicator d-flex align-items-center">
+                                <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
+                                <small class="text-muted text-xs">Student Organization</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<style>
+  /* Grid Layout */
+.row-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+/* Card Wrapper */
+.org-card-wrapper {
+    width: 100%;
+}
+
+/* Card Styling */
+.org-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; 
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+    background-color: white;
+}
+
+/* Card Image Container */
+.card-image-container {
+    position: relative;
+    padding: 1rem;
+}
+
+/* Circle Image (default) */
+.circle-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+}
+
+.org-card:hover .circle-image {
+    display: none;
+}
+
+/* Box Image (hover) */
+.box-image {
+    position: relative;
+    width: 80%; /* Reduced from 100% to 80% */
+    padding-top: 60%; /* Reduced from 75% to 60% */
+    overflow: hidden;
+    border-radius: 0.75rem;
+    display: none;
+    margin: 0 auto; /* Center the smaller box */
+}
+
+.org-card:hover .box-image {
+    display: block;
+}
+
+/* Common image styling - UPDATED FOR PROPER FITTING */
+.org-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Changed from cover to contain */
+}
+
+/* For circle images specifically */
+.circle-image .org-image {
+    object-fit: contain; /* Ensures the image fits within the circle without cropping */
+}
+
+/* For box images on hover */
+.box-image .org-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the image fits within the box without cropping */
+}
+
+/* Overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%);
+}
+
+/* Card Body */
+.org-card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+}
+
+.org-card-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    word-break: break-word;
+    line-height: 1.4;
+    color: #333;
+}
+
+/* Indicator styling */
+.indicator {
+    display: inline-block;
+    width: 3px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
+
+/* Ensure modal works properly */
+.modal {
+    z-index: 1050;
+}
+
+/* Fix modal backdrop z-index */
+.modal-backdrop {
+    z-index: 1040;
+}
+
+/* Control modal image size - UPDATED FOR PROPER FITTING */
+.modal-body img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain; /* Ensures image fits without cropping */
+    margin: 0 auto;
+    display: block;
+}
+
+/* Adjust profile image in modal */
+.modal .rounded-circle {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: contain; /* Changed from cover to contain */
+    border-radius: 50% !important;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .row-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+}
+</style>
+<section id="faqs" class="content-section py-4">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">FREQUENTLY ASKED QUESTIONS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
+    <div class="container-fluid mt-4">
+        <!-- Full-width FAQ Section -->
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden mx-auto" style="max-width: 900px;">
+            <!-- Search Header -->
+            <div class="p-4 text-white" style="background: linear-gradient(to right, #7D0A0A, #C83E3E);">
+                <h2 class="fs-4 fw-bold mb-1">How can we help you?</h2>
+                <p class="text-sm opacity-80 mb-3">
+                    Search our FAQ for answers to commonly asked questions
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="position-relative">
+                    <input
+                        type="text"
+                        id="faqSearch" 
+                        placeholder="Search FAQs..."
+                        class="form-control form-control-lg py-2 ps-5 rounded-pill"
+                        style="background-color: white; color: #333;"
+                        onkeyup="filterFAQs()"
+                    >
+                    <i class="fas fa-search position-absolute" style="left: 15px; top: 50%; transform: translateY(-50%); color: #7D0A0A;"></i>
+                    <button class="btn position-absolute end-0 top-50 translate-middle-y me-2 rounded-circle text-muted border-0" onclick="clearSearch()" style="display: none;" id="clearSearchBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- FAQ Accordion -->
+            <div class="p-3" style="max-height: 600px; overflow-y: auto;">
+                <div class="accordion" id="faqsAccordion">
+                    <?php if (!empty($showfaqs) && is_array($showfaqs)): ?>
+                        <?php foreach ($showfaqs as $index => $faq): ?>
+                            <div class="accordion-item mb-3 border rounded-lg shadow-sm overflow-hidden">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button <?php echo $index === 0 ? '' : 'collapsed'; ?> p-3" 
+                                        type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#collapse<?php echo $index; ?>" 
+                                        aria-expanded="<?php echo $index === 0 ? 'true' : 'false'; ?>"
+                                        aria-controls="collapse<?php echo $index; ?>">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-3" style="width: 4px; height: 18px; background-color: #E3C47D; border-radius: 2px;"></div>
+                                            <span><?php echo htmlspecialchars(strip_tags($faq['faqs_question'])); ?></span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapse<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index === 0 ? 'show' : ''; ?>" data-bs-parent="#faqsAccordion">
+                                    <div class="accordion-body p-3" style="background-color: #f9f9f9;">
+                                        <div class="ps-4 border-start border-2" style="border-color: #C83E3E;">
+                                            <p><?php echo nl2br(htmlspecialchars(strip_tags($faq['faqs_answer']))); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <!-- No FAQs found message -->
+                        <div class="text-center py-5">
+                            <div class="mx-auto mb-3" style="width: 60px; height: 60px; background-color: #fff8e8; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-question" style="font-size: 24px; color: #7D0A0A;"></i>
+                            </div>
+                            <h3 class="fs-5 fw-medium mb-2" style="color: #7D0A0A;">No FAQs available</h3>
+                            <p class="text-muted">
+                                Please check back later for updates.
+                            </p>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <!-- No Results Message (for search) -->
+                    <div id="noResults" class="py-4 text-center" style="display: none;">
+                        <div class="mx-auto mb-3" style="width: 60px; height: 60px; background-color: #fff8e8; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-search" style="font-size: 24px; color: #7D0A0A;"></i>
+                        </div>
+                        <h3 class="fs-5 fw-medium mb-2" style="color: #7D0A0A;">No matching questions found</h3>
+                        <p class="text-muted">
+                            Try different keywords or browse all FAQs
+                        </p>
+                        <button 
+                            onclick="clearSearch()"
+                            class="mt-2 px-4 py-2 text-white rounded-pill" 
+                            style="background-color: #7D0A0A; border: none;"
+                        >
+                            Clear Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* Custom Scrollbar for FAQ Container */
+        .accordion {
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f9f9f9;
+        }
+        
+        .accordion::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .accordion::-webkit-scrollbar-track {
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .accordion::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 10px;
+        }
+        
+        /* Animations and transitions */
+        .accordion-item {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Button styling */
+        .accordion-button:not(.collapsed) {
+            background-color: #f8f8f8 !important;
+            color: #7D0A0A !important;
+            box-shadow: none !important;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(125, 10, 10, 0.1);
+        }
+        
+        /* Text color for maroon */
+        .text-maroon {
+            color: #7D0A0A;
+        }
+        
+        /* Custom button hover effect */
+        button.rounded-pill:hover {
+            background-color: #C83E3E !important;
+            transition: background-color 0.2s ease;
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Step 1: Check if we should save FAQs to localStorage
+            const faqContainer = document.getElementById('faqsAccordion');
+            const faqItems = faqContainer?.querySelectorAll('.accordion-item');
+            
+            // If we have FAQs on the page, save them to localStorage
+            if (faqItems && faqItems.length > 0) {
+                const faqs = [];
+                
+                faqItems.forEach((item, index) => {
+                    const question = item.querySelector('.accordion-button span')?.textContent.trim() || '';
+                    const answer = item.querySelector('.accordion-body p')?.textContent.trim() || '';
+                    
+                    if (question && answer) {
+                        faqs.push({
+                            question: question,
+                            answer: answer
+                        });
+                    }
+                });
+                
+                // Save FAQs to localStorage
+                if (faqs.length > 0) {
+                    localStorage.setItem('faqs', JSON.stringify(faqs));
+                    console.log('Saved FAQs:', faqs.length);
+                }
+            }
+            
+            // Step 2: Check if we need to restore FAQs
+            // If we have no FAQ items but have cached FAQs
+            const noFaqMessage = faqContainer?.querySelector('.text-center.py-5');
+            
+            if (((!faqItems || faqItems.length === 0) || noFaqMessage) && localStorage.getItem('faqs')) {
+                try {
+                    const faqs = JSON.parse(localStorage.getItem('faqs'));
+                    
+                    // Clear container
+                    if (faqContainer) {
+                        faqContainer.innerHTML = '';
+                        
+                        // Rebuild FAQs
+                        faqs.forEach((faq, index) => {
+                            faqContainer.innerHTML += `
+                                <div class="accordion-item mb-3 border rounded-lg shadow-sm overflow-hidden">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'} p-3" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse${index}" 
+                                            aria-expanded="${index === 0 ? 'true' : 'false'}"
+                                            aria-controls="collapse${index}">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3" style="width: 4px; height: 18px; background-color: #E3C47D; border-radius: 2px;"></div>
+                                                <span>${faq.question}</span>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#faqsAccordion">
+                                        <div class="accordion-body p-3" style="background-color: #f9f9f9;">
+                                            <div class="ps-4 border-start border-2" style="border-color: #C83E3E;">
+                                                <p>${faq.answer}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        console.log('Restored FAQs:', faqs.length);
+                    }
+                } catch (error) {
+                    console.error('Error restoring FAQs:', error);
+                }
+            }
+            
+            // Add event listener for search input
+            const searchInput = document.getElementById('faqSearch');
+            const clearButton = document.getElementById('clearSearchBtn');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    // Show clear button when text is entered
+                    if (clearButton) {
+                        clearButton.style.display = this.value.length > 0 ? 'block' : 'none';
+                    }
+                    
+                    // Filter FAQs based on search input
+                    filterFAQs();
+                });
+            }
+        });
+        
+        function filterFAQs() {
+            const searchTerm = document.getElementById('faqSearch')?.value.toLowerCase() || '';
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            let foundItems = 0;
+            
+            accordionItems.forEach(item => {
+                const questionText = item.querySelector('.accordion-button span')?.textContent.toLowerCase() || '';
+                const answerText = item.querySelector('.accordion-body')?.textContent.toLowerCase() || '';
+                
+                if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    foundItems++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show or hide the "no results" message
+            const noResultsElement = document.getElementById('noResults');
+            
+            if (noResultsElement) {
+                if (foundItems === 0 && searchTerm.length > 0) {
+                    noResultsElement.style.display = 'block';
+                } else {
+                    noResultsElement.style.display = 'none';
+                }
+            }
+        }
+        
+        function clearSearch() {
+            const searchInput = document.getElementById('faqSearch');
+            if (searchInput) {
+                searchInput.value = '';
+                filterFAQs();
+                
+                const clearButton = document.getElementById('clearSearchBtn');
+                if (clearButton) {
+                    clearButton.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</section>
+<section id="feed"  class="content-section py-4">
+<div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">FEEDBACKS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                <!-- Animated Stats Cards -->
+                <div class="row mb-5 g-5">
+                    <!-- Organization Feedbacks Card -->
+                    <div class="col-md-5">
+    <div class="stat-card h-100">
+        <div class="stat-card-inner">
+            <div class="stat-icon-container">
+                <div class="stat-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+            </div>
+            <div class="stat-content">
+                <h3>Organization Feedbacks</h3>
+                <div class="counter-wrapper">
+                    <span id="org-feedback-count" class="counter">
+                        <?php 
+                            // Direct database query instead of using $obj
+                            include_once("path/to/connection.php"); // Adjust path as needed
+                            $orgQuery = "SELECT COUNT(*) FROM org_feedback";
+                            $orgCount = $connect->query($orgQuery)->fetchColumn() ?? 0;
+                            echo $orgCount;
+                        ?>
+                    </span>
+                    <span class="counter-suffix">+</span>
+                </div>
+                <p class="stat-description">Insights collected from our community</p>
+            </div>
+            <div class="stat-backdrop"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Office Feedbacks Card -->
+<div class="col-md-5">
+    <div class="stat-card h-100">
+        <div class="stat-card-inner">
+            <div class="stat-icon-container alt">
+                <div class="stat-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+            </div>
+            <div class="stat-content">
+                <h3>Office Feedbacks</h3>
+                <div class="counter-wrapper">
+                    <span id="office-feedback-count" class="counter">
+                        <?php 
+                            // Direct database query instead of using $obj
+                            // No need to include connection.php again if it's already included above
+                            $officeQuery = "SELECT COUNT(*) FROM office_feedback";
+                            $officeCount = $connect->query($officeQuery)->fetchColumn() ?? 0;
+                            echo $officeCount;
+                        ?>
+                    </span>
+                    <span class="counter-suffix">+</span>
+                </div>
+                <p class="stat-description">Campus service evaluations submitted</p>
+            </div>
+            <div class="stat-backdrop alt"></div>
+        </div>
+    </div>
+</div>
+                
+                <!-- Feedback Submission Card -->
+                <div class="feedback-card mb-5">
+                    <div class="card-decoration-1"></div>
+                    <div class="card-decoration-2"></div>
+                    
+                    <div class="feedback-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <h2 class="feedback-card-title">Share Your Experience</h2>
+                                <p class="feedback-card-text">
+                                    Your feedback is invaluable to us. Help us improve our services by sharing your thoughts, suggestions, and experiences.
+                                </p>
+                                <ul class="feedback-benefits">
+                                    <li><i class="fas fa-check-circle"></i> Help improve campus services</li>
+                                    <li><i class="fas fa-check-circle"></i> Shape future programs</li>
+                                    <li><i class="fas fa-check-circle"></i> Enhance student experience</li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-5 text-lg-end text-center mt-4 mt-lg-0">
+                                <button class="submit-feedback-btn" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                                    <span class="btn-text">Submit Feedback</span>
+                                    <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* Premium Design Styles */
+        
+        /* Typography & General */
+        #feed {
+            font-family: 'Poppins', 'Segoe UI', 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Section Header */
+        .gradient-text {
+            background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .animated-bar {
+            height: 4px;
+            width: 380px;
+            background: linear-gradient(to right, #E3C47D, #7D0A0A);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animated-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes shine {
+            100% {
+                left: 100%;
+            }
+        }
+        
+        /* Stats Cards */
+        .stat-card {
+            perspective: 1000px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: white;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card-inner {
+            padding: 2.5rem 2rem;
+            position: relative;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .stat-backdrop {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(125, 10, 10, 0.05));
+            z-index: -1;
+            clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-backdrop.alt {
+            background: linear-gradient(135deg, transparent, rgba(227, 196, 125, 0.15));
+        }
+        
+        .stat-card:hover .stat-backdrop {
+            width: 70%;
+        }
+        
+        .stat-icon-container {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            background-color: rgba(125, 10, 10, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(125, 10, 10, 0.15);
+        }
+        
+        .stat-icon-container.alt {
+            background-color: rgba(227, 196, 125, 0.2);
+            box-shadow: 0 8px 25px rgba(227, 196, 125, 0.25);
+        }
+        
+        .stat-icon {
+            color: #7D0A0A;
+            font-size: 1.75rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-icon-container.alt .stat-icon {
+            color: #E3C47D;
+        }
+        
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1);
+        }
+        
+        .stat-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .counter-wrapper {
+            display: flex;
+            align-items: baseline;
+        }
+        
+        .counter {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #7D0A0A;
+            line-height: 1;
+        }
+        
+        .stat-icon-container.alt + .stat-content .counter {
+            color: #E3C47D;
+        }
+        
+        .counter-suffix {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #7D0A0A;
+            margin-left: 4px;
+        }
+        
+        .stat-icon-container.alt + .stat-content .counter-suffix {
+            color: #E3C47D;
+        }
+        
+        .stat-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 0.75rem;
+        }
+        
+        /* Feedback Submission Card */
+        .feedback-card {
+            position: relative;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .feedback-card:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-decoration-1 {
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(125, 10, 10, 0.1), rgba(125, 10, 10, 0.05));
+            top: -100px;
+            left: -100px;
+            z-index: 0;
+        }
+        
+        .card-decoration-2 {
+            position: absolute;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(227, 196, 125, 0.15), rgba(227, 196, 125, 0.05));
+            bottom: -50px;
+            right: -50px;
+            z-index: 0;
+        }
+        
+        .feedback-card-content {
+            position: relative;
+            z-index: 1;
+            padding: 2.5rem;
+        }
+        
+        .feedback-card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feedback-card-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #7D0A0A, #C83E3E);
+            border-radius: 3px;
+        }
+        
+        .feedback-card-text {
+            color: #6c757d;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+        
+        .feedback-benefits {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+        }
+        
+        .feedback-benefits li {
+            color: #495057;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feedback-benefits li i {
+            color: #7D0A0A;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .submit-feedback-btn {
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #7D0A0A, #C83E3E);
+            color: white;
+            font-weight: 600;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(125, 10, 10, 0.15);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .submit-feedback-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #C83E3E, #7D0A0A);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .submit-feedback-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(125, 10, 10, 0.2);
+        }
+        
+        .submit-feedback-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-feedback-btn:hover .btn-icon {
+            transform: rotate(15deg);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .submit-feedback-btn {
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stat-card-inner {
+                padding: 2rem 1.5rem;
+            }
+            
+            .feedback-card-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .counter {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Counter Animation
+            function animateCounter(element, target, duration = 2000) {
+                // Parse the target value (initial HTML content)
+                target = parseInt(element.textContent.trim()) || 0;
+                
+                let start = 0;
+                const increment = target / (duration / 16);
+                const timer = setInterval(() => {
+                    start += increment;
+                    element.textContent = Math.floor(Math.min(start, target));
+                    
+                    if (start >= target) clearInterval(timer);
+                }, 16);
+            }
+            
+            // Initialize counters with real data
+            const orgFeedbackCount = document.getElementById('org-feedback-count');
+            const officeFeedbackCount = document.getElementById('office-feedback-count');
+            
+            // Start animations when elements are in viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.id === 'org-feedback-count') {
+                            animateCounter(orgFeedbackCount);
+                        } else if (entry.target.id === 'office-feedback-count') {
+                            animateCounter(officeFeedbackCount);
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            if (orgFeedbackCount) observer.observe(orgFeedbackCount);
+            if (officeFeedbackCount) observer.observe(officeFeedbackCount);
+        });
+    </script>
+</section>
 <section id="aboutus" class="content-section py-4">
     <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
@@ -3332,276 +4881,111 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
     </div>
-<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content rounded-lg border-0 shadow">
-            <!-- Modal Header -->
-            <div class="modal-header bg-white border-0 py-3 sticky-top">
-                <div class="d-flex align-items-center w-100">
-                    <div class="d-flex align-items-center">
-                        <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h5 class="modal-title mb-0 fw-bold" id="newsModalLabel" style="color:white;">Organization Feed</h5>
+<!-- Organization Fullscreen Popup -->
+<div id="newsPopup" class="org-fullscreen-popup">
+    <div class="org-popup-content">
+        <!-- Header -->
+        <div class="org-popup-header">
+            <div class="org-popup-header-content">
+                <button type="button" class="org-popup-close-btn" onclick="closeOrgPopup()">&times;</button>
+                <h5 class="org-popup-title" id="newsPopupLabel">Organization Feed</h5>
+            </div>
+            <div class="org-popup-search"> 
+                <div class="org-search-container"> 
+                    <input type="text" class="org-search-input" id="announcementSearch" placeholder="Search in this organization..."> 
+                    <button class="org-filter-btn" id="filterDropdown" onclick="toggleOrgFilterMenu()"> 
+                        <i class="fas fa-filter"></i> 
+                    </button> 
+                    <div class="org-filter-menu" id="orgFilterMenu">
+                        <h6 class="org-filter-header">Date</h6>
+                        <a class="org-filter-item date-filter" href="#" data-value="">Any Date</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="today">Today</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="week">This Week</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="month">This Month</a>
+                        <hr class="org-filter-divider">
+                        <h6 class="org-filter-header">Category</h6>
+                        <a class="org-filter-item category-filter" href="#" data-value="all">All Categories</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="announcement">Announcements</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="event">Events</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="news">News</a>
+                        <hr class="org-filter-divider">
+                        <a class="org-filter-item" href="#" id="clearFilters"> 
+                            <i class="fas fa-times"></i> Clear All Filters 
+                        </a>
                     </div>
-                    <div class="ms-auto"> 
-  <div class="input-group"> 
-    <input type="text" class="form-control rounded-pill bg-white border-0" id="announcementSearch" placeholder="Search in this organization..."> 
-    <button class="btn btn-sm rounded-pill ms-2 border-0 bg-transparent" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false"> 
-      <i class="fas fa-filter"></i> 
-    </button> 
-    <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="filterDropdown"> 
-      <li><h6 class="dropdown-header">Date</h6></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="">Any Date</a></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="today">Today</a></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="week">This Week</a></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="month">This Month</a></li> 
-      <li><hr class="dropdown-divider"></li> 
-      <li><h6 class="dropdown-header">Category</h6></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="all">All Categories</a></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="announcement">Announcements</a></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="event">Events</a></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="news">News</a></li> 
-      <li><hr class="dropdown-divider"></li> 
-      <li><a class="dropdown-item" href="#" id="clearFilters"> 
-        <i class="fas fa-times me-1"></i> Clear All Filters 
-      </a></li> 
-    </ul> 
-  </div> 
-  <input type="hidden" id="dateFilter" value=""> 
-  <input type="hidden" id="categoryFilter" value="all"> 
-</div>
-                </div>
+                </div> 
+                <input type="hidden" id="dateFilter" value=""> 
+                <input type="hidden" id="categoryFilter" value="all"> 
+            </div>
+        </div>
 
+        <!-- Body with Scrollable Content -->
+        <div class="org-popup-body">
+            <!-- Organization Cover & Profile -->
+            <div class="org-profile-header">
+                <div class="org-cover-photo">
+                    <img src="img/C2SVTseUoAEJp42.jpg" id="orgCoverPhoto" class="org-cover-img" alt="Organization Cover">
+                </div>
                 
+                <!-- Profile layout with profile pic on far left -->
+                <div class="org-profile-container">
+                    <!-- Profile section with picture on far left -->
+                    <div class="org-profile-section">
+                        <!-- Profile Picture on far left -->
+                        <div class="org-profile-picture" id="orgProfilePicContainer">
+                            <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="org-profile-img" alt="Organization Profile">
+                        </div>
+                        
+                        <!-- Organization Info positioned to the right of profile pic -->
+                        <div class="org-info">
+                            <h3 class="org-name" id="orgName">The Browser</h3>
+                            <div class="org-badges">
+                                <span class="org-badge org-verified">Verified</span>
+                                <span class="org-type">Student Organization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Modal Body with Scrollable Content -->
-            <div class="modal-body p-0" style="max-height: 80vh; overflow-y: auto;">
-                <!-- Organization Cover & Profile -->
-                <div class="position-relative">
-                    <div class="org-cover-photo position-relative">
-                        <img src="img/C2SVTseUoAEJp42.jpg" id="orgCoverPhoto" class="w-100 object-fit-cover" style="height: 200px;" alt="Organization Cover">
-                    </div>
-                    
-                    <!-- Profile layout with profile pic on far left -->
-                    <div class="position-relative" style="margin-top: 20px;">
-                        <!-- Profile section with picture on far left -->
-                        <div class="d-flex align-items-center">
-                            <!-- Profile Picture on far left -->
-                            <div class="profile-picture rounded-circle border-4 border-white bg-white shadow-sm" style="width: 120px; height: 120px; overflow: hidden; position: relative; margin-left: 20px; margin-right: 15px; margin-top: -30px;">
-                                <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="w-100 h-100 object-fit-cover" alt="Organization Profile">
-                            </div>
-                            
-                            <!-- Organization Info positioned to the right of profile pic -->
-                            <div style="margin-left: 10px;">
-                                <h3 class="fw-bold mb-1 text-dark" id="orgName" style="font-size: 1.8rem;">The Browser</h3>
-                                <div class="d-flex align-items-center">
-                                    <span class="badge bg-light text-danger me-2 rounded-pill px-2 py-1" style="font-size: 0.8rem;">Verified</span>
-                                    <span class="text-muted" style="font-size: 0.9rem;">Student Organization</span>
-                                </div>
-                            </div>
+            <!-- Navigation Tabs -->
+            <div class="org-tabs-container">
+                <ul class="org-tabs">
+                    <li class="org-tab-item">
+                        <button class="org-tab active" id="announcements-tab" data-tab="announcements">
+                            Announcements
+                            <span class="org-tab-indicator"></span>
+                        </button>
+                    </li>
+                    <li class="org-tab-item">
+                        <button class="org-tab" id="members-tab" data-tab="members">
+                            Members
+                            <span class="org-tab-indicator"></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="org-tab-content">
+                <!-- Announcements Tab -->
+                <div class="org-tab-pane active" id="announcements">
+                    <div id="announcements-content" class="announcements-container">
+                        <!-- Announcements will be loaded here via AJAX -->
+                        <div class="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>Loading announcements...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Navigation Tabs -->
-                <div class="px-4 border-bottom bg-white" style="margin-top: 15px;">
-                    <ul class="nav nav-tabs border-0 flex-nowrap ">
-                        <li class="nav-item">
-                            <button class="nav-link active px-4 py-3 fw-semibold border-0 rounded-0 position-relative text-danger" id="announcements-tab" data-bs-toggle="tab" data-bs-target="#announcements">
-                                Announcements
-                                <span class="position-absolute bottom-0 start-0 end-0 bg-danger" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
-                            </button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link px-4 py-3 fw-semibold border-0 rounded-0 position-relative" id="members-tab" data-bs-toggle="tab" data-bs-target="#members">
-                                Members
-                                <span class="position-absolute bottom-0 start-0 end-0 bg-danger" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-   <!-- Tab Content -->
-   <div class="tab-content bg-light">
-                    <!-- Announcements Tab -->
-                    <div class="tab-pane fade show active p-4" id="announcements">
-                        <div id="announcements-content" class="announcements-container">
-                            <!-- Announcement Card 1 -->
-                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
-                                <div class="card-body p-4">
-                                    <div class="d-flex mb-3">
-                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
-                                        <div>
-                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
-                                            <p class="text-muted mb-0"><small>Posted on March 12, 2025</small></p>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-title fw-bold text-primary">Spring Festival Registration Open!</h5>
-                                    <p class="card-text">Join us for our annual Spring Festival! This year's theme is "Bloom & Grow" featuring live music, food trucks, and interactive art installations. Register by March 20th to secure your spot.</p>
-                                    <div class="mt-3 pt-3 border-top">
-                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                                            <i class="far fa-calendar-alt me-1"></i> RSVP
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
-                                            <i class="far fa-comment me-1"></i> Comment
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Announcement Card 2 -->
-                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
-                                <div class="card-body p-4">
-                                    <div class="d-flex mb-3">
-                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
-                                        <div>
-                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
-                                            <p class="text-muted mb-0"><small>Posted on March 10, 2025</small></p>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-title fw-bold text-primary">New Member Applications</h5>
-                                    <p class="card-text">We're now accepting applications for new members! If you're passionate about our mission and want to be part of our community, submit your application by March 25th.</p>
-                                    <div class="mt-3 pt-3 border-top">
-                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                                            <i class="fas fa-file-alt me-1"></i> Apply Now
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
-                                            <i class="far fa-comment me-1"></i> Comment
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Announcement Card 3 -->
-                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
-                                <div class="card-body p-4">
-                                    <div class="d-flex mb-3">
-                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
-                                        <div>
-                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
-                                            <p class="text-muted mb-0"><small>Posted on March 8, 2025</small></p>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-title fw-bold text-primary">Upcoming Workshop Series</h5>
-                                    <p class="card-text">Our professional development workshop series begins next week! Topics include leadership skills, networking strategies, and industry insights from guest speakers.</p>
-                                    <div class="mt-3 pt-3 border-top">
-                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                                            <i class="far fa-calendar-check me-1"></i> Register
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
-                                            <i class="far fa-comment me-1"></i> Comment
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Members Tab -->
-                    <div class="tab-pane fade p-4" id="members">
-                        <div class="row g-4">
-                            <!-- Leadership Section -->
-                            <div class="col-12 mb-2">
-                                <h5 class="text-primary fw-bold mb-3">Leadership</h5>
-                            </div>
-                            
-                            <!-- Member Card - President -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="President">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Alex Johnson</h5>
-                                            <p class="mb-1 text-primary fw-semibold"><small>President</small></p>
-                                            <p class="mb-2 text-muted"><small>Since September 2024</small></p>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Member Card - Vice President -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="Vice President">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Taylor Martinez</h5>
-                                            <p class="mb-1 text-primary fw-semibold"><small>Vice President</small></p>
-                                            <p class="mb-2 text-muted"><small>Since January 2025</small></p>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Member Card - Secretary -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="Secretary">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Jordan Lee</h5>
-                                            <p class="mb-1 text-primary fw-semibold"><small>Secretary</small></p>
-                                            <p class="mb-2 text-muted"><small>Since October 2024</small></p>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- General Members Section -->
-                            <div class="col-12 mt-4 mb-2">
-                                <h5 class="text-primary fw-bold mb-3">General Members</h5>
-                            </div>
-                            
-                            <!-- General Member Cards -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Casey Morgan</h5>
-                                            <p class="mb-1 text-muted"><small>Events Committee</small></p>
-                                            <p class="mb-2 text-muted"><small>Since November 2024</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Morgan Silva</h5>
-                                            <p class="mb-1 text-muted"><small>Marketing Team</small></p>
-                                            <p class="mb-2 text-muted"><small>Since December 2024</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Jamie Williams</h5>
-                                            <p class="mb-1 text-muted"><small>Outreach Coordinator</small></p>
-                                            <p class="mb-2 text-muted"><small>Since February 2025</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- Members Tab -->
+                <div class="org-tab-pane" id="members">
+                    <div id="members-content" class="members-container">
+                        <!-- Members will be loaded here via AJAX -->
+                        <div class="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>Loading members...</p>
                         </div>
                     </div>
                 </div>
@@ -3609,6 +4993,611 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
+
+<style>
+/* Organization Popup Styles */
+.org-fullscreen-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.org-fullscreen-popup.active {
+    display: block;
+}
+
+.org-popup-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+/* Header Styles */
+.org-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 101;
+}
+
+.org-popup-header-content {
+    display: flex;
+    align-items: center;
+}
+
+.org-popup-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1rem;
+    color: #555;
+    padding: 0 10px;
+    transition: color 0.2s;
+}
+
+.org-popup-close-btn:hover {
+    color: #f00;
+}
+
+.org-popup-title {
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+/* Search and Filter */
+.org-popup-search {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 400px;
+}
+
+.org-search-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.org-search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: 1px solid #eee;
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.org-filter-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.org-filter-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.org-filter-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    margin-top: 5px;
+    padding: 0.5rem 0;
+}
+
+.org-filter-menu.active {
+    display: block;
+}
+
+.org-filter-header {
+    font-size: 0.8rem;
+    color: #666;
+    padding: 0.5rem 1rem;
+    margin: 0;
+}
+
+.org-filter-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.org-filter-item:hover {
+    background-color: #f8f9fa;
+}
+
+.org-filter-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid #eee;
+}
+
+/* Body Styles */
+.org-popup-body {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+/* Organization Header */
+.org-profile-header {
+    position: relative;
+}
+
+.org-cover-photo {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.org-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.org-profile-container {
+    position: relative;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.org-profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.org-profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: -30px;
+    margin-right: 15px;
+}
+
+.org-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.org-info {
+    margin-left: 10px;
+}
+
+.org-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.org-badges {
+    display: flex;
+    align-items: center;
+}
+
+.org-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.org-verified {
+    background-color: #f8f9fa;
+    color: #dc3545;
+}
+
+.org-type {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Tabs Navigation */
+.org-tabs-container {
+    padding: 0 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.org-tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.org-tab-item {
+    margin-right: 10px;
+}
+
+.org-tab {
+    background: none;
+    border: none;
+    padding: 15px 20px;
+    position: relative;
+    font-weight: 600;
+    color: #6c757d;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.org-tab.active {
+    color: #dc3545;
+}
+
+.org-tab-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+.org-tab.active .org-tab-indicator {
+    background-color: #dc3545;
+}
+
+/* Tab Content */
+.org-tab-content {
+    background-color: #f8f9fa;
+    min-height: 500px;
+}
+
+.org-tab-pane {
+    display: none;
+    padding: 20px;
+}
+
+.org-tab-pane.active {
+    display: block;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #dc3545;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Announcements */
+.announcements-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.announcement-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.announcement-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.announcement-body {
+    padding: 20px;
+}
+
+.announcement-header {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.announcement-author-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.announcement-author-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+    font-size: 1rem;
+}
+
+.announcement-date {
+    color: #6c757d;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.announcement-title {
+    font-weight: bold;
+    color: #0d6efd;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.announcement-text {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.announcement-actions {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+}
+
+.announcement-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+.announcement-primary-btn {
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+}
+
+.announcement-primary-btn:hover {
+    background-color: #f0f7ff;
+}
+
+.announcement-secondary-btn {
+    color: #6c757d;
+    background-color: #f8f9fa;
+}
+
+.announcement-secondary-btn:hover {
+    background-color: #e9ecef;
+}
+
+.announcement-btn i {
+    margin-right: 5px;
+}
+
+/* Members */
+.members-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.members-section-header {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.members-section-title {
+    color: #0d6efd;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.member-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.member-info {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.member-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.member-image.leadership {
+    border: 3px solid #0d6efd;
+    padding: 3px;
+}
+
+.member-details {
+    flex: 1;
+}
+
+.member-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.member-role {
+    color: #0d6efd;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.member-committee {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.member-since {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.member-social {
+    display: flex;
+}
+
+.member-social-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    text-decoration: none;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+}
+
+.member-social-btn:hover {
+    background-color: #e9ecef;
+}
+
+/* Error state */
+.error-message {
+    text-align: center;
+    padding: 30px;
+    color: #dc3545;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #dee2e6;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .members-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .org-profile-picture {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .org-name {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .members-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .org-profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .org-profile-picture {
+        margin: -50px auto 15px;
+    }
+    
+    .org-info {
+        margin-left: 0;
+    }
+    
+    .org-badges {
+        justify-content: center;
+    }
+    
+    .announcement-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .announcement-author-img {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+</style>
+
 
 <style>
 /* Enhanced customizations */
@@ -5699,621 +7688,821 @@ document.addEventListener('DOMContentLoaded', function() {
 
         lastScrollTop = st;
     }
+// Store current organization ID
+let currentOrgId = null;
+let allAnnouncements = [];
+let currentProfilePhoto = '';
+let currentAuthorName = '';
 
-   
-$(document).ready(function () {
-    // Global variables to store state
-    let allAnnouncements = [];
-    let currentProfilePhoto = '';
-    let currentAuthorName = '';
+// Open popup from card
+function openOrgPopup(orgId, title, image, profilePhoto, author) {
+    // Validate organizationID
+    if (!orgId || orgId === 'undefined' || orgId === 'null') {
+        console.error('Invalid organization ID:', orgId);
+        alert('Error: Invalid organization ID. Please try again or contact the administrator.');
+        return; // Exit the function to prevent further processing
+    }
     
-    // When the modal is shown, ensure that we fetch announcements
-    $('#newsModal').on('show.bs.modal', function (e) {
-        var orgId = $(e.relatedTarget).data('orgid');
-        var title = $(e.relatedTarget).data('title');
-        var imageSrc = $(e.relatedTarget).data('image');
-        var profilePhoto = $(e.relatedTarget).data('profilephoto');
-        var authorName = $(e.relatedTarget).data('author');
-
-        console.log("Organization ID (Announcements):", orgId);
-
-        // Update organization name and profile photo in the modal
-        $('#orgName').text(title);
-        $('#orgProfilePhoto').attr('src', profilePhoto);
-        
-        // Set org_id for both tabs
-        $('#announcements-tab').data('orgid', orgId);
-        $('#members-tab').data('orgid', orgId);
-
-        // Fetch announcements if orgId is valid
-        if (orgId) {
-            fetchAnnouncements(orgId, profilePhoto, authorName);
-        } else {
-            console.error("Invalid orgId in modal");
-        }
-        
-        // Clear filters when modal is opened
-        resetFiltersUI();
-    });
-
-    // When the Members tab is clicked, fetch members dynamically based on org_id
-    $('#members-tab').on('click', function () {
-        var orgId = $(this).data('orgid'); // Get orgId from members tab button
-
-        if (orgId) {
-            console.log("Fetching members for org ID:", orgId);
-            fetchMembers(orgId);
-        } else {
-            console.error("Invalid orgId for fetching members");
-            $('#members').html('<p class="text-danger">Invalid organization ID.</p>');
-        }
+    console.log('Opening popup for organization:', {
+        orgId: orgId,
+        title: title,
+        profilePhoto: profilePhoto,
+        author: author
     });
     
-    // Fetch announcements from server
-    function fetchAnnouncements(orgId, profilePhoto, authorName) {
-        const filters = {
-            org_id: orgId,
-            search: $('#announcementSearch').val(),
-            category: $('#categoryFilter').val(),
-            date_from: $('#dateFilter').val()
-        };
-
-        console.log('Sending filters to server:', filters);
-        
-        // Store these for later use
-        currentProfilePhoto = profilePhoto;
-        currentAuthorName = authorName;
-
-        $.ajax({
-            url: 'ajax/fetch_announcement.php',
-            type: 'POST',
-            dataType: 'json',
-            data: filters,
-            success: function(response) {
-                if (response.status === 'error') {
-                    $('#announcements-content').html(`<p class="text-danger">${response.message}</p>`);
-                    return;
-                }
-                
-                allAnnouncements = response.announcements;
-                console.log('Received announcements:', allAnnouncements);
-                console.log('Applied filters:', response.filters_applied);
-                
-                renderAnnouncementsContent({ announcements: allAnnouncements });
-            },
-            error: function(xhr, status, error) {
-                console.error('Fetch error:', error);
-                console.error('Server response:', xhr.responseText);
-                $('#announcements-content').html('<p class="text-danger">Error loading announcements</p>');
-            }
-        });
+    // Set current org ID
+    currentOrgId = orgId;
+    
+    // Set basic info
+    document.getElementById('orgName').textContent = title || 'Organization';
+    
+    // Handle profile photo safely
+    if (profilePhoto && profilePhoto !== 'undefined' && profilePhoto !== 'null') {
+        document.getElementById('orgProfilePhoto').src = profilePhoto;
+    } else {
+        // Use a default image if profile photo is invalid
+        document.getElementById('orgProfilePhoto').src = '/api/placeholder/400/400';
     }
     
-    // Fetch members function
-    function fetchMembers(orgId) {
-        // Implement your members fetching logic here
-        console.log("Fetching members for organization ID:", orgId);
-        // Example AJAX call - update with your actual endpoint
-        $.ajax({
-            url: 'ajax/fetch_members.php',
-            type: 'POST',
-            dataType: 'json',
-            data: { org_id: orgId },
-            success: function(response) {
-                // Process member data
-                console.log("Member data received:", response);
-                // Render members tab content
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching members:", error);
-                $('#members').html('<p class="text-danger">Error loading members</p>');
-            }
-        });
-    }
+    // Store for later use
+    currentProfilePhoto = profilePhoto;
+    currentAuthorName = author;
     
-    // Main filtering function
-    function filterAnnouncements() {
-        const searchTerm = $('#announcementSearch').val().toLowerCase().trim();
-        const dateFilter = $('#dateFilter').val();
-        const categoryFilter = $('#categoryFilter').val();
-
-        console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
-
-        // Make sure allAnnouncements is defined and accessible
-        if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
-            console.error('allAnnouncements is not defined or not an array');
-            return [];
-        }
-
-        const filtered = allAnnouncements.filter(announcement => {
-            // Search filter - make sure all properties exist before accessing them
-            const searchableText = [
-                announcement.announcement_title || '',
-                announcement.announcement_details || '',
-                announcement.creator_name || '',
-                announcement.author_name || ''
-            ].join(' ').toLowerCase();
-            
-            const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
-            
-            // Date filter - improved date handling
-            let matchesDate = true;
-            if (dateFilter) {
-                if (dateFilter === 'today') {
-                    // Today filter
-                    const today = new Date();
-                    const announcementDate = new Date(announcement.created_at);
-                    matchesDate = 
-                        announcementDate.getDate() === today.getDate() &&
-                        announcementDate.getMonth() === today.getMonth() &&
-                        announcementDate.getFullYear() === today.getFullYear();
-                } 
-                else if (dateFilter === 'week') {
-                    // This week filter
-                    const today = new Date();
-                    const oneWeekAgo = new Date();
-                    oneWeekAgo.setDate(today.getDate() - 7);
-                    const announcementDate = new Date(announcement.created_at);
-                    matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
-                }
-                else if (dateFilter === 'month') {
-                    // This month filter
-                    const today = new Date();
-                    const oneMonthAgo = new Date();
-                    oneMonthAgo.setMonth(today.getMonth() - 1);
-                    const announcementDate = new Date(announcement.created_at);
-                    matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
-                }
-                else {
-                    // Specific date
-                    const announcementDate = new Date(announcement.created_at);
-                    const filterDate = new Date(dateFilter);
-                    matchesDate = 
-                        announcementDate.getDate() === filterDate.getDate() &&
-                        announcementDate.getMonth() === filterDate.getMonth() &&
-                        announcementDate.getFullYear() === filterDate.getFullYear();
-                }
-            }
-            
-            // Category filter
-            let matchesCategory = true;
-            if (categoryFilter && categoryFilter !== 'all') {
-                // Make sure to handle null or undefined category
-                const announcementCategory = (announcement.category || '').toLowerCase();
-                const filterCategoryLower = categoryFilter.toLowerCase();
-                
-                matchesCategory = announcementCategory === filterCategoryLower;
-                
-                // Debug log for category matching
-                console.log('Checking announcement category:', {
-                    id: announcement.announcement_id,
-                    title: announcement.announcement_title,
-                    category: announcementCategory,
-                    filterCategory: filterCategoryLower,
-                    matches: announcementCategory === filterCategoryLower
-                });
-            }
-
-            const result = matchesSearch && matchesDate && matchesCategory;
-            
-            return result;
-        });
-
-        console.log('Filter results:', {
-            totalAnnouncements: allAnnouncements.length,
-            filteredCount: filtered.length,
-            appliedFilters: {
-                search: searchTerm,
-                date: dateFilter,
-                category: categoryFilter
-            }
-        });
-
-        return filtered;
-    }
-    
-    // Reset filters UI function
-    function resetFiltersUI() {
-        // Reset input fields
-        $('#announcementSearch').val('');
-        $('#dateFilter').val('');
-        $('#categoryFilter').val('all');
-        
-        // Reset active classes on filter dropdowns
-        $('.date-filter, .category-filter').removeClass('active');
-        $('.date-filter[data-value=""], .category-filter[data-value="all"]').addClass('active');
-    }
-    
-    // Clear filters function
-    function clearFilters() {
-        console.log('Clearing filters');
-        
-        // Reset UI
-        resetFiltersUI();
-        
-        // Fetch fresh data from server
-        const orgId = $('#announcements-tab').data('orgid');
-        if (orgId) {
-            fetchAnnouncements(orgId, currentProfilePhoto, currentAuthorName);
+    // Reset tabs
+    document.querySelectorAll('.org-tab').forEach(tab => {
+        if (tab.id === 'announcements-tab') {
+            tab.classList.add('active');
         } else {
-            // If we can't fetch new data, use existing announcements
-            renderAnnouncementsContent({ announcements: allAnnouncements });
+            tab.classList.remove('active');
         }
+    });
+    
+    document.querySelectorAll('.org-tab-pane').forEach(pane => {
+        if (pane.id === 'announcements') {
+            pane.classList.add('active');
+        } else {
+            pane.classList.remove('active');
+        }
+    });
+    
+    // Set org_id for both tabs (to match your existing code)
+    document.getElementById('announcements-tab').setAttribute('data-orgid', orgId);
+    document.getElementById('members-tab').setAttribute('data-orgid', orgId);
+    
+    // Show popup
+    document.getElementById('newsPopup').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent body scrolling
+    
+    // Reset filters
+    resetFiltersUI();
+    
+    // Load announcements
+    fetchAnnouncements(orgId);
+}
+
+// Close popup
+function closeOrgPopup() {
+    document.getElementById('newsPopup').classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scrolling
+    currentOrgId = null;
+}
+
+// Toggle filter menu
+function toggleOrgFilterMenu() {
+    document.getElementById('orgFilterMenu').classList.toggle('active');
+}
+
+// Fetch announcements - Using your existing AJAX endpoint
+function fetchAnnouncements(orgId) {
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    // Show loading state
+    announcementsContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading announcements...</p>
+        </div>
+    `;
+    
+    // Get filter values
+    const searchText = document.getElementById('announcementSearch').value;
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    
+    // Prepare filters object to match your existing code
+    const filters = {
+        org_id: orgId,
+        search: searchText,
+        category: categoryFilter
+    };
+    
+    // Handle date filtering based on your existing code
+    if (dateFilter === 'today') {
+        const today = new Date().toISOString().split('T')[0];
+        filters.date_from = today;
+        filters.date_to = today;
+    } else if (dateFilter === 'week') {
+        const today = new Date();
+        const weekStart = new Date();
+        weekStart.setDate(today.getDate() - 7);
+        filters.date_from = weekStart.toISOString().split('T')[0];
+    } else if (dateFilter === 'month') {
+        const today = new Date();
+        const monthStart = new Date();
+        monthStart.setMonth(today.getMonth() - 1);
+        filters.date_from = monthStart.toISOString().split('T')[0];
+    } else if (dateFilter) {
+        // Any specific date value
+        filters.date_from = dateFilter;
     }
     
-    // Render announcements content
-    function renderAnnouncementsContent(response) {
-        const announcements = response.announcements || [];
-        
-        if (announcements.length === 0) {
-            $('#announcements-content').html(renderEmptyState());
-            return;
-        }
-
-        const content = `
-            <div class="list-group">
-                ${announcements.map(announcement => renderAnnouncementItem(announcement)).join('')}
-            </div>`;
-        
-        $('#announcements-content').html(content);
-    }
+    console.log('Fetching announcements with filters:', filters);
     
-    // Render empty state
-    function renderEmptyState() {
-        return `
-            <div class="text-center py-8">
-                <div class="custom-alert">
-                    <i class="bi bi-info-circle me-2" style="font-size: 2rem;"></i>
-                    <p class="h4 mb-0">No announcements available at the moment.</p>
-                </div>
-            </div>`;
-    }
-    
-    // Render announcement item
-    function renderAnnouncementItem(announcement) {
-        const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
-        const formattedDate = formatRelativeTime(new Date(announcement.created_at));
-        const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
-
-        return `
-            <div class="list-group-item bg-white rounded-lg shadow-sm p-4 mb-4">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <div class="d-flex align-items-center">
-                        <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : 'default-profile.jpg'}" 
-                            alt="Profile" 
-                            class="rounded-circle border border-primary" 
-                            style="width: 50px; height: 50px;">
-                        <div class="ms-3">
-                            <h5 class="mb-1">${displayName}</h5>
-                            <small class="text-muted">${announcement.org_name || 'Unknown Organization'}</small>
-                        </div>
-                    </div>
-                    <span class="badge ${categoryBadgeClass}">${announcement.category}</span>
-                </div>
-                <h4 class="mb-3">${announcement.announcement_title}</h4>
-                <div class="announcement-content mb-3">
-                    ${announcement.announcement_details}
-                </div>
-                ${renderAnnouncementImages(announcement)}
-                <small class="text-muted">${formattedDate}</small>
-            </div>`;
-    }
-    
-    // Render announcement images
-    function renderAnnouncementImages(announcement) {
-        console.log('Rendering images for announcement:', announcement);
-        console.log('Raw images:', announcement.images);
-
-        if (!announcement.images) {
-            console.log('No images found for announcement');
-            return '';
-        }
-
-        // If the images are a string (comma-separated), convert to array
-        const images = typeof announcement.images === 'string' 
-            ? announcement.images.split(',').filter(img => img.trim() !== '')
-            : Array.isArray(announcement.images) 
-                ? announcement.images
-                : [];
-
-        console.log('Processed images array:', images);
-
-        if (!images || images.length === 0) {
-            console.log('No valid images after processing');
-            return '';
-        }
-
-        // Create a carousel for multiple images
-        const carouselId = `carousel-${announcement.announcement_id}`;
-        console.log('Creating carousel with ID:', carouselId);
-
-        const carouselItems = images.map((image, index) => {
-            const imagePath = image.trim();
-            console.log(`Processing image ${index + 1}:`, imagePath);
-            return `
-                <div class="carousel-item ${index === 0 ? 'active' : ''}" data-bs-interval="false">
-                    <img src="uploaded/annUploaded/${imagePath}" 
-                        class="d-block w-100 rounded" 
-                        alt="Announcement Image ${index + 1}"
-                        style="max-height: 400px; object-fit: contain;"
-                        onerror="this.onerror=null; this.src='default-image.jpg'; console.error('Failed to load image:', this.src);">
+    // Using fetch instead of $.ajax but maintaining compatibility
+    fetch('ajax/fetch_announcement.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(filters)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            announcementsContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
                 </div>
             `;
-        }).join('');
+            return;
+        }
+        
+        // Store announcements in global variable (like your existing code)
+        allAnnouncements = data.announcements || [];
+        
+        console.log('Received announcements:', allAnnouncements);
+        console.log('Applied filters:', data.filters_applied);
+        
+        // Render announcements
+        renderAnnouncementsContent({ announcements: allAnnouncements });
+    })
+    .catch(error => {
+        console.error('Error fetching announcements:', error);
+        announcementsContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load announcements. Please try again later.</p>
+            </div>
+        `;
+    });
+}
 
-        return `
-            <div id="${carouselId}" class="carousel slide mb-3" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    ${carouselItems}
+// Fetch members - Using your existing AJAX endpoint
+function fetchMembers(orgId) {
+    const membersContainer = document.getElementById('members-content');
+    
+    // Check if we've already loaded members
+    if (membersContainer.querySelector('.members-grid')) {
+        return; // Already loaded
+    }
+    
+    // Show loading state
+    membersContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading members...</p>
+        </div>
+    `;
+    
+    console.log('Fetching members for org ID:', orgId);
+    
+    // Using fetch instead of $.ajax but maintaining compatibility
+    fetch('ajax/fetch_members.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ org_id: orgId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            membersContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
                 </div>
-                ${images.length > 1 ? `
-                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                ` : ''}
-                ${images.length > 1 ? `
-                    <ol class="carousel-indicators">
-                        ${images.map((_, index) => `
-                            <li data-bs-target="#${carouselId}" 
-                                data-bs-slide-to="${index}" 
-                                class="${index === 0 ? 'active' : ''}">
-                            </li>
-                        `).join('')}
-                    </ol>
-                ` : ''}
-            </div>`;
-    }
-    
-    // Helper function to get badge class based on category
-    function getCategoryBadgeClass(category) {
-        if (!category) return 'bg-secondary';
+            `;
+            return;
+        }
         
-        const categoryLower = category.toLowerCase();
-        const classes = {
-            'academic': 'bg-primary',
-            'event': 'bg-success',
-            'announcement': 'bg-info',
-            'news': 'bg-warning',
-            'org': 'bg-info',
-            'general': 'bg-secondary'
-        };
-        return classes[categoryLower] || 'bg-secondary';
-    }
-    
-    // Format relative time function
-    function formatRelativeTime(date) {
-        const now = new Date();
-        const seconds = Math.floor((now - date) / 1000);
+        console.log('Received members data:', data);
+        renderMembersContent(data.members);
+    })
+    .catch(error => {
+        console.error('Error fetching members:', error);
+        membersContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load members. Please try again later.</p>
+            </div>
+        `;
+    });
+}
 
-        if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+// Filter announcements locally
+function filterAnnouncements() {
+    const searchTerm = document.getElementById('announcementSearch').value.toLowerCase().trim();
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+
+    console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
+
+    // Make sure allAnnouncements is defined and accessible
+    if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
+        console.error('allAnnouncements is not defined or not an array');
+        return [];
+    }
+
+    const filtered = allAnnouncements.filter(announcement => {
+        // Search filter - make sure all properties exist before accessing them
+        const searchableText = [
+            announcement.announcement_title || '',
+            announcement.announcement_details || '',
+            announcement.creator_name || '',
+            announcement.author_name || ''
+        ].join(' ').toLowerCase();
         
-        const minutes = Math.floor(seconds / 60);
-        if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+        
+        // Date filter - improved date handling
+        let matchesDate = true;
+        if (dateFilter) {
+            if (dateFilter === 'today') {
+                // Today filter
+                const today = new Date();
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = 
+                    announcementDate.getDate() === today.getDate() &&
+                    announcementDate.getMonth() === today.getMonth() &&
+                    announcementDate.getFullYear() === today.getFullYear();
+            } 
+            else if (dateFilter === 'week') {
+                // This week filter
+                const today = new Date();
+                const oneWeekAgo = new Date();
+                oneWeekAgo.setDate(today.getDate() - 7);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
+            }
+            else if (dateFilter === 'month') {
+                // This month filter
+                const today = new Date();
+                const oneMonthAgo = new Date();
+                oneMonthAgo.setMonth(today.getMonth() - 1);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
+            }
+            else {
+                // Specific date
+                const announcementDate = new Date(announcement.created_at);
+                const filterDate = new Date(dateFilter);
+                matchesDate = 
+                    announcementDate.getDate() === filterDate.getDate() &&
+                    announcementDate.getMonth() === filterDate.getMonth() &&
+                    announcementDate.getFullYear() === filterDate.getFullYear();
+            }
+        }
+        
+        // Category filter
+        let matchesCategory = true;
+        if (categoryFilter && categoryFilter !== 'all') {
+            // Make sure to handle null or undefined category
+            const announcementCategory = (announcement.category || '').toLowerCase();
+            const filterCategoryLower = categoryFilter.toLowerCase();
+            
+            matchesCategory = announcementCategory === filterCategoryLower;
+            
+            // Debug log for category matching
+            console.log('Checking announcement category:', {
+                id: announcement.announcement_id,
+                title: announcement.announcement_title,
+                category: announcementCategory,
+                filterCategory: filterCategoryLower,
+                matches: announcementCategory === filterCategoryLower
+            });
+        }
 
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+        const result = matchesSearch && matchesDate && matchesCategory;
+        
+        return result;
+    });
 
-        const days = Math.floor(hours / 24);
-        if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+    console.log('Filter results:', {
+        totalAnnouncements: allAnnouncements.length,
+        filteredCount: filtered.length,
+        appliedFilters: {
+            search: searchTerm,
+            date: dateFilter,
+            category: categoryFilter
+        }
+    });
 
-        const months = Math.floor(days / 30);
-        if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+    return filtered;
+}
 
-        const years = Math.floor(months / 12);
-        return years + " year" + (years > 1 ? "s" : "") + " ago";
-    }
+// Reset filters UI
+function resetFiltersUI() {
+    // Reset input fields
+    document.getElementById('announcementSearch').value = '';
+    document.getElementById('dateFilter').value = '';
+    document.getElementById('categoryFilter').value = 'all';
     
-    // EVENT LISTENERS
-    // ---------------
-    
-    // Search input event listener
-    $('#announcementSearch').on('input', function() {
-        console.log('Search input changed:', $(this).val());
-        const filtered = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filtered });
+    // Reset active classes on filter dropdowns
+    document.querySelectorAll('.date-filter, .category-filter').forEach(el => {
+        el.classList.remove('active');
     });
     
+    document.querySelector('.date-filter[data-value=""]').classList.add('active');
+    document.querySelector('.category-filter[data-value="all"]').classList.add('active');
+}
+
+// Clear filters
+function clearFilters() {
+    console.log('Clearing filters');
+    
+    // Reset UI
+    resetFiltersUI();
+    
+    // Apply filters or fetch fresh data
+    if (currentOrgId) {
+        if (allAnnouncements.length > 0) {
+            // If we have announcements, just rerender them all
+            renderAnnouncementsContent({ announcements: allAnnouncements });
+        } else {
+            // Otherwise fetch fresh data
+            fetchAnnouncements(currentOrgId);
+        }
+    }
+}
+
+// Add this function to initialize Bootstrap carousels
+function initializeCarousels() {
+  document.querySelectorAll('.announcement-carousel').forEach(carousel => {
+    // Check if carousel is already initialized to avoid duplicates
+    if (!carousel.classList.contains('carousel-initialized')) {
+      try {
+        // Create new Bootstrap carousel instance
+        new bootstrap.Carousel(carousel);
+        // Mark as initialized
+        carousel.classList.add('carousel-initialized');
+        console.log('Carousel initialized:', carousel.id);
+      } catch (error) {
+        console.error('Error initializing carousel:', error, carousel.id);
+      }
+    }
+  });
+}
+
+// Modify the renderAnnouncementsContent function
+function renderAnnouncementsContent(response) {
+    const announcements = response.announcements || [];
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    if (announcements.length === 0) {
+        announcementsContainer.innerHTML = renderEmptyState();
+        return;
+    }
+
+    let html = '<div class="announcements-container">';
+    
+    announcements.forEach(announcement => {
+        html += renderAnnouncementItem(announcement);
+    });
+    
+    html += '</div>';
+    
+    announcementsContainer.innerHTML = html;
+    
+    // Initialize carousels after adding them to the DOM
+    setTimeout(() => {
+        initializeCarousels();
+    }, 100); // Short delay to ensure DOM is fully updated
+}
+
+// Add event listener to initialize carousels
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing organization popup system...');
+    
+    // Add other existing event listeners...
+    
+    // Initialize any carousels that might already be in the DOM
+    initializeCarousels();
+    
+    // Add event listener for Bootstrap's shown.bs.modal event to handle carousels in modals
+    document.addEventListener('shown.bs.modal', function() {
+        console.log('Modal shown, initializing carousels inside modal');
+        initializeCarousels();
+    });
+});
+// Render empty state
+function renderEmptyState() {
+    return `
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="far fa-comment-alt"></i>
+            </div>
+            <h5>No Announcements</h5>
+            <p>There are no announcements for this organization yet.</p>
+        </div>
+    `;
+}
+
+// Render announcement item
+function renderAnnouncementItem(announcement) {
+    const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
+    const formattedDate = formatRelativeTime(new Date(announcement.created_at));
+    const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
+
+    return `
+        <div class="announcement-card" data-announcement-id="${announcement.announcement_id}">
+            <div class="announcement-body">
+                <div class="announcement-header">
+                    <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : '/api/placeholder/50/50'}" 
+                         class="announcement-author-img" alt="${displayName}">
+                    <div class="announcement-author-info">
+                        <h6 class="announcement-author-name">${displayName}</h6>
+                        <p class="announcement-date">Posted ${formattedDate}</p>
+                    </div>
+                    <span class="category-badge ${categoryBadgeClass}">${announcement.category || 'General'}</span>
+                </div>
+                <h5 class="announcement-title">${announcement.announcement_title}</h5>
+                <div class="announcement-text">${announcement.announcement_details}</div>
+                ${renderAnnouncementImages(announcement)}
+            </div>
+        </div>
+    `;
+}
+
+// Render announcement images
+function renderAnnouncementImages(announcement) {
+    if (!announcement.images || announcement.images.length === 0) {
+        return '';
+    }
+
+    // If the images are a string (comma-separated), convert to array
+    const images = typeof announcement.images === 'string' 
+        ? announcement.images.split(',').filter(img => img.trim() !== '')
+        : Array.isArray(announcement.images) 
+            ? announcement.images
+            : [];
+
+    if (images.length === 0) {
+        return '';
+    }
+
+    // For a single image
+    if (images.length === 1) {
+        return `
+            <div class="announcement-image">
+                <img src="uploaded/annUploaded/${images[0].trim()}" 
+                     alt="Announcement Image"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }
+
+    // For multiple images, create a carousel
+    const carouselId = `carousel-${announcement.announcement_id}`;
+    
+    const carouselItems = images.map((image, index) => {
+        const imagePath = image.trim();
+        return `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="uploaded/annUploaded/${imagePath}" 
+                     alt="Announcement Image ${index + 1}"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div id="${carouselId}" class="announcement-carousel carousel slide">
+            <div class="carousel-inner">
+                ${carouselItems}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+}
+
+// Render members content
+function renderMembersContent(members) {
+    const membersContainer = document.getElementById('members-content');
+    
+    if (!members || members.length === 0) {
+        membersContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h5>No Members</h5>
+                <p>This organization doesn't have any registered members yet.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Leadership and general members
+    const leadership = members.filter(member => 
+        member.position && ['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    const generalMembers = members.filter(member => 
+        !member.position || !['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    let html = '';
+    
+    // Leadership section
+    if (leadership.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">Leadership</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        leadership.forEach(leader => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${leader.member_img ? 'uploaded/orgUploaded/' + leader.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image leadership" alt="${leader.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${leader.name}</h5>
+                            <p class="member-role">${leader.position}</p>
+                            <p class="member-since">Since ${formatDate(leader.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    // General members
+    if (generalMembers.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">General Members</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        generalMembers.forEach(member => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${member.member_img ? 'uploaded/orgUploaded/' + member.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image" alt="${member.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${member.name}</h5>
+                            ${member.committee ? `<p class="member-committee">${member.committee}</p>` : ''}
+                            <p class="member-since">Since ${formatDate(member.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    membersContainer.innerHTML = html;
+}
+
+// Helper function to get badge class based on category
+function getCategoryBadgeClass(category) {
+    if (!category) return 'category-general';
+    
+    const categoryLower = (category || '').toLowerCase();
+    const classes = {
+        'academic': 'category-academic',
+        'event': 'category-event',
+        'announcement': 'category-announcement',
+        'news': 'category-news',
+        'org': 'category-org',
+        'general': 'category-general'
+    };
+    return classes[categoryLower] || 'category-general';
+}
+
+// Format relative time function
+function formatRelativeTime(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+
+    if (isNaN(seconds)) return 'recently';
+    
+    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+    const years = Math.floor(months / 12);
+    return years + " year" + (years > 1 ? "s" : "") + " ago";
+}
+
+// Format date helper
+function formatDate(dateString) {
+    if (!dateString) return 'Unknown date';
+    
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+        return dateString; // Return the original string if date is invalid
+    }
+    
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Initialize event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing organization popup system...');
+    
+    // Click event for all tabs
+    const tabs = document.querySelectorAll('.org-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Hide all tab panes
+            const tabPanes = document.querySelectorAll('.org-tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Show the corresponding tab pane
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Load members data if members tab is clicked
+            if (tabId === 'members' && currentOrgId) {
+                fetchMembers(currentOrgId);
+            }
+        });
+    });
+    
+    // Close filter menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const filterMenu = document.getElementById('orgFilterMenu');
+        const filterBtn = document.getElementById('filterDropdown');
+        
+        if (filterMenu && filterBtn) {
+            if (filterMenu.classList.contains('active') && 
+                !filterMenu.contains(event.target) && 
+                event.target !== filterBtn) {
+                filterMenu.classList.remove('active');
+            }
+        }
+    });
+    
+    // Search input event listener
+    const searchInput = document.getElementById('announcementSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+        });
+    }
+    
     // Date filter dropdown items
-    $('.date-filter').on('click', function(e) {
-        e.preventDefault();
-        const value = $(this).data('value');
-        console.log('Date filter clicked:', value);
-        
-        // Update hidden input value
-        $('#dateFilter').val(value);
-        
-        // Update UI to show selected filter
-        $('.date-filter').removeClass('active');
-        $(this).addClass('active');
-        
-        // Apply filters
-        const filtered = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filtered });
+    const dateFilters = document.querySelectorAll('.date-filter');
+    dateFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('dateFilter').value = value;
+            
+            // Update UI to show selected filter
+            dateFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
     });
     
     // Category filter dropdown items
-    $('.category-filter').on('click', function(e) {
-        e.preventDefault();
-        const value = $(this).data('value');
-        console.log('Category filter clicked:', value);
-        
-        // Update hidden input value
-        $('#categoryFilter').val(value);
-        
-        // Update UI to show selected filter
-        $('.category-filter').removeClass('active');
-        $(this).addClass('active');
-        
-        // Apply filters
-        const filtered = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filtered });
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    categoryFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('categoryFilter').value = value;
+            
+            // Update UI to show selected filter
+            categoryFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
     });
     
     // Clear filters button
-    $('#clearFilters').on('click', function(e) {
-        e.preventDefault();
-        console.log('Clear filters clicked');
-        clearFilters();
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            clearFilters();
+            toggleOrgFilterMenu();
+        });
+    }
+    
+    // Update card click event handlers
+    updateCardClickHandlers();
+    
+    // Add event listeners to close popup when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeOrgPopup();
+        }
     });
-   function fetchMembers(orgId) {
-    $.ajax({
-        url: 'ajax/fetch_members.php',
-        type: 'POST',
-        dataType: 'json',
-        data: { org_id: orgId },
-        success: function (response) {
-            if (response.error) {
-                $('#members').html(`
-                    <div class="text-red-600 p-4 text-center">
-                        ${response.error}
-                    </div>`
-                );
+});
+
+// Update card click handlers
+function updateCardClickHandlers() {
+    const orgCards = document.querySelectorAll('.card-image-container a');
+    console.log('Found', orgCards.length, 'organization cards');
+    
+    orgCards.forEach((card, index) => {
+        // Remove existing event listeners if any
+        const oldCard = card.cloneNode(true);
+        card.parentNode.replaceChild(oldCard, card);
+        
+        // Add new event listener
+        oldCard.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const orgId = this.getAttribute('data-orgid');
+            const title = this.getAttribute('data-title');
+            const image = this.getAttribute('data-image');
+            const profilePhoto = this.getAttribute('data-profilephoto');
+            const author = this.getAttribute('data-author');
+            
+            console.log(`Clicked card ${index + 1} with org ID:`, orgId);
+            
+            // Check if org ID is valid before opening popup
+            if (!orgId || orgId === 'undefined' || orgId === 'null') {
+                console.error('Invalid organization ID from clicked card:', orgId);
+                alert('Error: This organization has an invalid ID. Please try another or contact the administrator.');
                 return;
             }
-            renderMembersContent(response.members);
-        },
-        error: function (xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-            $('#members').html(`
-                <div class="text-red-600 p-4 text-center">
-                    An error occurred while fetching members. Please try again later.
-                </div>`
-            );
-        }
-    });
-}
-function renderMembersContent(members) {
-            let membersContent = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">';
             
-            if (members && members.length > 0) {
-                members.forEach(function (member) {
-                    membersContent += `
-                        <div class="group">
-                            <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
-                                <div class="relative">
-                                    <div class="aspect-square" style="height: 250px;">
-                                        <img src="uploaded/orgUploaded/${member.member_img}" 
-                                            alt="${member.name}" 
-                                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                            onerror="this.src='path/to/default-avatar.jpg'">
-                                    </div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-                                <div class="p-6 text-center">
-                                    <h3 class="text-lg font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">
-                                        ${member.name}
-                                    </h3>
-                                    <p class="text-sm text-blue-600 font-medium">
-                                        ${member.position}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>`;
-                });
-            } else {
-                membersContent = `
-                    <div class="flex items-center justify-center p-8 col-span-full">
-                        <div class="bg-amber-50 text-amber-800 px-6 py-4 rounded-lg flex items-center gap-3">
-                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                            <span class="text-lg font-medium">No members found</span>
-                        </div>
-                    </div>`;
-            }
-
-            membersContent += '</div>';
-            $('#members').html(membersContent);
-        }
-    function initializeCarousels() {
-        $('.carousel').each(function() {
-            new bootstrap.Carousel(this);
+            // Open our custom popup instead of Bootstrap modal
+            openOrgPopup(orgId, title, image, profilePhoto, author);
         });
-    }   // Trigger the "Members" tab on click
-        $('#members-tab').on('click', function () {
-            // This will activate the 'members' tab when clicked
-            $('#myTabs a[href="#members"]').tab('show');
-        });
-
-        // Trigger the "Announcements" tab on click
-        $('#announcements-tab').on('click', function () {
-            // This will activate the 'announcements' tab when clicked
-            $('#myTabs a[href="#announcements"]').tab('show');
-        });
-
-                    // Remove only the color style from inline style attributes, leaving other styles and tags intact
-// Remove only the color style from inline style attributes, leaving other styles and tags intact
-function removeColorTags(content) {
-    // Remove inline color styles while keeping other styles
-    content = content.replace(/style="([^"]*?)\bcolor\s*:\s*[^;]+;?([^"]*?)"/g, (match, p1, p2) => {
-        const remainingStyles = `${p1.trim()} ${p2.trim()}`.trim();
-        return remainingStyles ? `style="${remainingStyles}"` : '';
     });
-
-
-
-    // Apply a default color if no inline color is present
-    content = content.replace(/<p(.*?)>/gi, '<p$1 style="color: black;">');
-    content = content.replace(/<span(.*?)>/gi, '<span$1 style="color: black;">');
-
-    return content;
 }
-
-
-
-                function formatRelativeTime(date) {
-                    const now = new Date();
-                    const seconds = Math.floor((now - date) / 1000);
-
-                    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
-                    
-                    const minutes = Math.floor(seconds / 60);
-                    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
-
-                    const hours = Math.floor(minutes / 60);
-                    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
-
-                    const days = Math.floor(hours / 24);
-                    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
-
-                    const months = Math.floor(days / 30);
-                    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
-
-                    const years = Math.floor(months / 12);
-                    return years + " year" + (years > 1 ? "s" : "") + " ago";
-                }
-            });
-    function adjustModalPosition() {
-            var modal = document.getElementById('myModal');
-
-            if (modal) {
-                var viewportWidth = window.innerWidth;
-                var viewportHeight = window.innerHeight;
-                var modalWidth = modal.offsetWidth;
-                var modalHeight = modal.offsetHeight;
-
-                // Calculate new position to center the modal within the viewport
-                var top = Math.max(10, (viewportHeight - modalHeight) / 2); // Ensure modal is at least 10px from top
-                var left = Math.max(10, (viewportWidth - modalWidth) / 2); // Ensure modal is at least 10px from left
-
-                // Apply new position to modal
-                modal.style.top = top + 'px';
-                modal.style.left = left + 'px';
-            }
-        }
-        $('#myModal').modal({
-        backdrop: false // Disable the backdrop
-    });
-        // Adjust modal position when the page loads
-        window.addEventListener('load', adjustModalPosition);
-
-        // Adjust modal position when the window is resized
-        window.addEventListener('resize', adjustModalPosition);
 
 
         let selectedRating; // To hold the selected rating
@@ -6492,7 +8681,43 @@ function adjustModalLayout() {
     }
 
     // Initial setup: show the first tab
-    function formatTimeAgo(dateString) {
+    document.addEventListener('DOMContentLoaded', () => {
+        openTab({ currentTarget: document.querySelector('.tab-button.active') }, 'ccs');
+    });
+
+        function searchElement() {
+        var searchInput = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '-');  // Replace spaces with hyphens
+        var roomSvg = document.getElementById('room-svg');  // Get the SVG
+
+        if (!roomSvg) {
+            console.error('SVG not found!');
+            return;  // Stop if the SVG is not found
+        }
+
+        var elements = roomSvg.querySelectorAll('rect, path, text');  // Get all rect, path, and text elements
+        var found = false;  // Flag to check if a match is found
+
+        // Loop through each element and check for a match
+        for (var i = 0; i < elements.length; i++) {
+            var elementId = elements[i].id.toLowerCase().replace(/-/g, '');  // Remove hyphens from the element ID for comparison
+
+            if (elementId.includes(searchInput.replace(/-/g, ''))) {  // Compare without hyphens
+                found = true;
+                elements[i].classList.add('highlight');  // Highlight the element if it matches
+            } else {
+                elements[i].classList.remove('highlight');  // Remove highlight if not a match
+            }
+        }
+
+        // If no match is found, display a SweetAlert message
+        if (!found) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Room not found',
+                text: 'Please check the room name and try again.',
+            });
+        }
+    } function formatTimeAgo(dateString) {
         const created = new Date(dateString);
         const now = new Date();
         const diffInHours = Math.floor((now - created) / (1000 * 60 * 60));

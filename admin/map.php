@@ -217,6 +217,112 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
 #campusmap .p-6 {
     padding: 1.5rem !important;
 }
+
+#roomDetailsModal {
+  z-index: 1050 !important; /* Ensure modal appears above other content */
+}
+
+/* Center the modal properly */
+#roomDetailsModal .modal-dialog {
+  display: flex !important;
+  align-items: center !important;
+  min-height: calc(100% - 3.5rem) !important;
+  margin: 1.75rem auto !important;
+  max-width: 500px !important;
+}
+
+/* Fix modal content styling */
+#roomDetailsModal .modal-content {
+  width: 100% !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+  position: relative !important;
+}
+
+/* Fix modal header styling */
+#roomDetailsModal .modal-header {
+  background: linear-gradient(135deg, #7D0A0A, #C83E3E) !important;
+  color: white !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  padding: 1rem 1.5rem !important;
+  border-bottom: none !important;
+}
+
+/* Fix close button styling */
+#roomDetailsModal .close {
+  color: white !important;
+  opacity: 0.8 !important;
+  text-shadow: none !important;
+  font-size: 1.5rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#roomDetailsModal .close:hover {
+  opacity: 1 !important;
+}
+
+/* Fix modal body styling */
+#roomDetailsModal .modal-body {
+  padding: 1.5rem !important;
+  max-height: 60vh !important;
+  overflow-y: auto !important;
+}
+
+/* Fix modal footer styling */
+#roomDetailsModal .modal-footer {
+  background: linear-gradient(135deg, #962626, #b03a3a) !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  padding: 1rem !important;
+  justify-content: space-between !important;
+}
+
+#roomDetailsModal .modal-footer .btn {
+  margin-left: 0.5rem !important;
+  border-radius: 0.25rem !important;
+}
+
+/* Fix form controls styling */
+#roomDetailsModal .form-control-plaintext {
+  padding: 0.5rem 0 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1rem !important;
+  border-bottom: 1px solid #e9ecef !important;
+}
+
+#roomDetailsModal .form-group {
+  margin-bottom: 1rem !important;
+}
+
+/* Make sure the modal backdrop works properly */
+.modal-backdrop {
+  z-index: 1040 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5 !important;
+}
+
+/* Fix Bootstrap modal display issue */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out !important;
+  transform: translate(0, -50px) !important;
+}
+
+.modal.show .modal-dialog {
+  transform: none !important;
+}
+
+/* Additional fix for modal display on mobile */
+@media (max-width: 576px) {
+  #roomDetailsModal .modal-dialog {
+    margin: 1rem !important;
+  }
+}
 </style>
     <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
             <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-building="ccs">CCS Building</button>

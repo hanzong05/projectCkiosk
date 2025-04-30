@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate required fields
     if (empty($room_id)) {
         $response['message'] = 'Room ID is required';
-        http_response_code(400);
+        header('Content-Type: application/json');
         echo json_encode($response);
         exit;
     }
@@ -42,22 +42,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $response['success'] = true;
                 $response['message'] = 'Room details updated successfully';
             } else {
-                $response['message'] = 'No changes made. Room not found or details are the same.';
+                // Check if the room exists
+                $checkStmt = $connect->prepare("SELECT COUNT(*) FROM rooms WHERE room_id = :room_id");
+                $checkStmt->bindParam(':room_id', $room_id, PDO::PARAM_STR);
+                $checkStmt->execute();
+                
+                if ($checkStmt->fetchColumn() > 0) {
+                    $response['success'] = true;
+                    $response['message'] = 'No changes made. Details remain the same.';
+                } else {
+                    $response['message'] = 'Room not found in database.';
+                }
             }
         } else {
             $response['message'] = 'Database error: ' . implode(': ', $stmt->errorInfo());
-            http_response_code(500);
         }
     } catch (PDOException $e) {
         $response['message'] = 'Error: ' . $e->getMessage();
-        http_response_code(500);
         
         // Log the full error details
-        error_log('Room update error: ' . $e->getMessage() . "\n", 3, __DIR__ . '/error_log.txt');
+        error_log('Room update error: ' . $e->getMessage(), 0);
     }
 } else {
     // Method not allowed
-    http_response_code(405);
     $response['message'] = 'Method Not Allowed';
 }
 

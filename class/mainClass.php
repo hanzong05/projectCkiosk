@@ -19,7 +19,7 @@ class mainClass
             echo "Connection failed: " . $e->getMessage();
         }
     }
-    public function getConnection()
+  public function getConnection()
     {
         return $this->connection;
     }
@@ -1800,11 +1800,11 @@ function save_org($data)
     $editor_name = $editor_stmt->fetchColumn() ?: 'Unknown User';
 
     // Check if the organization has user_type = 1 (admin)
-    $type_stmt = $this->connection->prepare("SELECT user_type, org_name FROM organization_tbl WHERE org_id = :appID");
+    $type_stmt = $this->connection->prepare("SELECT users_type, org_name FROM organization_tbl WHERE org_id = :appID");
     $type_stmt->execute([':appID' => $appID]);
     $org_info = $type_stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($org_info['user_type'] == 1) {
+    if ($org_info['users_type'] == 1) {
         // Return error message if user_type is 1 (admin)
         return '<script>
                 Swal.fire({

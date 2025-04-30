@@ -9,7 +9,8 @@ include_once '../../class/connection.php'; // Adjust path as needed
 
 try {
     // SQL query to get all rooms and their details
-    $stmt = $connect->prepare("SELECT room_id, floor_id, room_name FROM rooms");
+    // Added room_description to include all available data
+    $stmt = $connect->prepare("SELECT room_id, floor_id, room_name, room_description FROM rooms");
     $stmt->execute();
     
     // Fetch all rooms as associative array
@@ -18,19 +19,30 @@ try {
     // Create formatted response
     $response = [];
     
-    foreach ($rooms as $room) {
-        $response[$room['room_id']] = [
-            'name' => $room['room_name'],
-            'floor_id' => $room['floor_id']
-        ];
+    if (count($rooms) > 0) {
+        foreach ($rooms as $room) {
+            $response[$room['room_id']] = [
+                'id' => $room['room_id'],
+                'name' => $room['room_name'] ?? 'Unnamed Room',
+                'floor_id' => $room['floor_id'],
+                'description' => $room['room_description'] ?? ''
+            ];
+        }
+        
+        // Return the JSON response
+        echo json_encode($response);
+    } else {
+        // No rooms found
+        echo json_encode([]);
     }
     
-    // Return the JSON response
-    echo json_encode($response);
-    
 } catch(PDOException $e) {
-    // Return error message
-    $error = ['error' => 'Database query failed: ' . $e->getMessage()];
+    // Log error for server-side debugging
+    error_log("Database error in rooms.php: " . $e->getMessage(), 0);
+    
+    // Return error message - with limited details for security
+    http_response_code(500);
+    $error = ['error' => 'Database query failed. Please contact administrator.'];
     echo json_encode($error);
 }
 

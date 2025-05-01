@@ -36,3 +36,77 @@ POST Data (sanitized):
     "name": ""
 }
 --------------------------------------------------------------------------------
+[2025-05-01 04:27:57] ERROR: Missing required event field: comments_suggestions
+File: C:\xampp\htdocs\projectCkiosk\ajax\submit_feedback.php (Line: 151)
+POST Data (sanitized):
+{
+    "feedback_category": "org",
+    "client_type": "",
+    "date": "2025-05-01",
+    "age": "",
+    "office": "",
+    "service": "",
+    "organization": "5",
+    "evaluate_event": "1",
+    "event_quality": "1",
+    "org_communication": "3",
+    "inclusivity": "2",
+    "leadership": "3",
+    "skill_dev": "4",
+    "impact": "3",
+    "activity_title": "dawdaw",
+    "activity_date": "2025-05-01",
+    "venue": "dawd",
+    "position": "awdawdwa",
+    "student_org": "5",
+    "communication_rating": "3",
+    "video_quality": "4",
+    "audio_quality": "2",
+    "mastery_rating": "3",
+    "time_management": "4",
+    "methodologies": "3",
+    "conduct": "3",
+    "topic_informative": "3",
+    "activity_relevance": "2",
+    "improvements": "dawdawd",
+    "email": "",
+    "name": ""
+}
+--------------------------------------------------------------------------------
+[2025-05-01 04:32:49] ERROR: Missing required event field: comments_suggestions
+File: C:\xampp\htdocs\projectCkiosk\ajax\submit_feedback.php (Line: 151)
+POST Data (sanitized):
+{
+    "feedback_category": "org",
+    "client_type": "",
+    "date": "2025-05-01",
+    "age": "",
+    "office": "",
+    "service": "",
+    "organization": "5",
+    "evaluate_event": "1",
+    "event_quality": "1",
+    "org_communication": "3",
+    "inclusivity": "2",
+    "leadership": "3",
+    "skill_dev": "4",
+    "impact": "3",
+    "activity_title": "dawdaw",
+    "activity_date": "2025-05-01",
+    "venue": "dawd",
+    "position": "awdawdwa",
+    "student_org": "5",
+    "communication_rating": "3",
+    "video_quality": "4",
+    "audio_quality": "2",
+    "mastery_rating": "3",
+    "time_management": "4",
+    "methodologies": "3",
+    "conduct": "3",
+    "topic_informative": "3",
+    "activity_relevance": "2",
+    "improvements": "dawdawd",
+    "email": "",
+    "name": ""
+}
+--------------------------------------------------------------------------------

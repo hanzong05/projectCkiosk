@@ -36,10 +36,11 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <!-- Replace your current Tailwind link with this -->
-<link href="https://unpkg.com/tailwindcss@^3/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
   <link href="assets/css/css.css" rel="stylesheet" />
   <style>
 /* Enhanced customizations */
+
 :root {
     --maroon-dark: #7A0D0D;
     --maroon: #C33232;
@@ -276,22 +277,69 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
     padding: 1.5rem !important;
 }
 </style>
-    <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
-            <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-building="ccs">CCS Building</button>
-            <button onclick="showBuilding('cit')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cit">CIT Building</button>
-            <button onclick="showBuilding('cafa')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cafa">CAFA Building</button>
+<div class="flex mb-4 gap-2">
+            <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="ccs">CCS Building</button>
+            <button onclick="showBuilding('cit')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="cit">CIT Building</button>
+            <button onclick="showBuilding('cafa')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="cafa">CAFA Building</button>
         </div>
+        
+        <!-- Search Bar and Floor Dropdown Side by Side -->
 
-        <!-- Buildings Container -->
-        <div id="ccs-building" class="building-container block">
-            <!-- Floor Navigation Tabs for CCS -->
-            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
-                <button onclick="showFloor('ccs', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
-                <button onclick="showFloor('ccs', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
-                <button onclick="showFloor('ccs', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
-                <button onclick="showFloor('ccs', 4)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="4">Floor 4</button>
-                <button onclick="showFloor('ccs', 5)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="5">Floor 5</button>
-            </div>
+<div class="flex gap-2 mb-6">
+    <!-- Redesigned Search Bar -->
+    <div class="relative flex-grow">
+        <input 
+            id="roomSearch" 
+            type="text" 
+            class="w-full px-3 py-2 pl-8 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+            placeholder="Search for a room..."
+        >
+        <!-- Inline SVG Search Icon -->
+        <svg 
+            class="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+        </svg>
+    </div>
+    
+    <!-- Redesigned Floor Dropdown -->
+    <div class="relative w-40">
+        <select 
+            id="floorSelect" 
+            class="w-full appearance-none px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        >
+            <option value="1">Floor 1</option>
+            <option value="2">Floor 2</option>
+            <option value="3">Floor 3</option>
+            <option value="4">Floor 4</option>
+            <option value="5">Floor 5</option>
+        </select>
+        <!-- Inline SVG Dropdown Icon -->
+        <svg 
+            class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M19 9l-7 7-7-7"
+            ></path>
+        </svg>
+    </div>
+</div>
 
             <!-- CCS Floor Plans -->
            <!-- CCS Floor 1 (Ground Floor) -->

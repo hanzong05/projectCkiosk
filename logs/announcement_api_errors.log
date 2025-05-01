@@ -15062,3 +15062,165 @@
 [2025-03-21 06:56:35] No problematic announcements found.
 [2025-03-21 06:56:35] Response prepared. Total announcements: 1, Processed: 1, Unknown authors: 0
 [2025-03-21 06:56:35] API Request completed
+[2025-04-29 06:14:34] API Request started - org_id: not set
+[2025-04-29 06:14:34] Database connection established successfully
+[2025-04-29 06:14:34] Parameters: org_id=0, search='', category='', date_from='', date_to=''
+[2025-04-29 06:14:34] Checking database schema
+[2025-04-29 06:14:34] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-04-29 06:14:34] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-04-29 06:14:34] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '0' OR u_created_by.users_org = '0')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-04-29 06:14:34] Query executed, found 0 announcements
+[2025-04-29 06:14:34] Processing complete. Total announcements: 0, Unknown authors: 0
+[2025-04-29 06:14:34] No problematic announcements found.
+[2025-04-29 06:14:34] Response prepared. Total announcements: 0, Processed: 0, Unknown authors: 0
+[2025-04-29 06:14:34] API Request completed
+[2025-04-29 06:35:23] API Request started - org_id: 2
+[2025-04-29 06:35:23] Database connection established successfully
+[2025-04-29 06:35:23] Parameters: org_id=2, search='', category='all', date_from='', date_to=''
+[2025-04-29 06:35:23] Checking database schema
+[2025-04-29 06:35:23] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-04-29 06:35:23] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-04-29 06:35:23] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-04-29 06:35:23] Query executed, found 3 announcements
+[2025-04-29 06:35:23] Processing announcement ID: 13, Title: ð—¡ð—˜ð—ªð—¦ | CCS leader wins Most Outstanding Award at Singaporean youth camp
+[2025-04-29 06:35:23] Using creator_name for author: The_Browser
+[2025-04-29 06:35:23] Using existing category: academic
+[2025-04-29 06:35:23] Processing announcement ID: 12, Title: Computer Science students
+[2025-04-29 06:35:23] Using creator_name for author: The_Browser
+[2025-04-29 06:35:23] Using existing category: academic
+[2025-04-29 06:35:23] Processing announcement ID: 10, Title: ð—¦ð—£ð—¢ð—¥ð—§ð—¦: CCS Pride on display as TSU Arnis Team strikes 18 Golds
+[2025-04-29 06:35:23] Using creator_name for author: The_Browser
+[2025-04-29 06:35:23] Using existing category: event
+[2025-04-29 06:35:23] Processing complete. Total announcements: 3, Unknown authors: 0
+[2025-04-29 06:35:23] No problematic announcements found.
+[2025-04-29 06:35:23] Response prepared. Total announcements: 3, Processed: 3, Unknown authors: 0
+[2025-04-29 06:35:23] API Request completed
+[2025-04-29 06:37:00] API Request started - org_id: 2
+[2025-04-29 06:37:00] Database connection established successfully
+[2025-04-29 06:37:00] Parameters: org_id=2, search='', category='all', date_from='', date_to=''
+[2025-04-29 06:37:00] Checking database schema
+[2025-04-29 06:37:00] orgmembers_tbl columns: id, name, username, position, org_type, password, users_type, member_img, is_active, last_active, session_id
+[2025-04-29 06:37:00] Base query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = :orgId OR u_created_by.users_org = :orgId)
+    GROUP BY a.announcement_id
+    
+[2025-04-29 06:37:00] Final query: 
+    SELECT 
+        a.*,
+        u_creator.users_username AS creator_name,
+        u_created_by.users_username AS created_by_name,
+        om.username AS org_member_name,
+        o.org_name,
+        o.org_image,
+        GROUP_CONCAT(ai.image_path) AS announcement_images
+    FROM announcement_tbl a 
+    LEFT JOIN users_tbl u_creator ON a.announcement_creator = u_creator.users_id
+    LEFT JOIN users_tbl u_created_by ON a.created_by = u_created_by.users_id
+    LEFT JOIN orgmembers_tbl om ON a.created_by = om.id
+    LEFT JOIN organization_tbl o ON u_creator.users_org = o.org_id
+    LEFT JOIN announcement_images ai ON a.announcement_id = ai.announcement_id
+    WHERE a.is_archived = 0
+    AND (u_creator.users_org = '2' OR u_created_by.users_org = '2')
+    GROUP BY a.announcement_id
+     ORDER BY a.created_at DESC
+[2025-04-29 06:37:00] Query executed, found 3 announcements
+[2025-04-29 06:37:00] Processing announcement ID: 13, Title: ð—¡ð—˜ð—ªð—¦ | CCS leader wins Most Outstanding Award at Singaporean youth camp
+[2025-04-29 06:37:00] Using creator_name for author: The_Browser
+[2025-04-29 06:37:00] Using existing category: academic
+[2025-04-29 06:37:00] Processing announcement ID: 12, Title: Computer Science students
+[2025-04-29 06:37:00] Using creator_name for author: The_Browser
+[2025-04-29 06:37:00] Using existing category: academic
+[2025-04-29 06:37:00] Processing announcement ID: 10, Title: ð—¦ð—£ð—¢ð—¥ð—§ð—¦: CCS Pride on display as TSU Arnis Team strikes 18 Golds
+[2025-04-29 06:37:00] Using creator_name for author: The_Browser
+[2025-04-29 06:37:00] Using existing category: event
+[2025-04-29 06:37:00] Processing complete. Total announcements: 3, Unknown authors: 0
+[2025-04-29 06:37:00] No problematic announcements found.
+[2025-04-29 06:37:00] Response prepared. Total announcements: 3, Processed: 3, Unknown authors: 0
+[2025-04-29 06:37:00] API Request completed

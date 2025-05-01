@@ -1943,392 +1943,472 @@ function displayEvents() {
     </script>
 
 </section>
-<section id="campusmap" class="content-section py-4">
-    <div class="section-heading text-center mb-5">
-        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
-            <span class="gradient-text">CAMPUS BUILDINGS</span>
-        </h1>
-        <div class="animated-bar mx-auto mt-2 mb-3"></div>
-    </div>
-    
-    
-    <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
-            <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-building="ccs">CCS Building</button>
-            <button onclick="showBuilding('cit')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cit">CIT Building</button>
-            <button onclick="showBuilding('cafa')" class="building-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-building="cafa">CAFA Building</button>
+<section id="campusmap" class="content-section py-6 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <!-- Section Heading -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                CAMPUS BUILDINGS
+            </h1>
+            <p class="text-gray-600">Navigate through our campus buildings and explore the facilities with our interactive map.</p>
+        </div>
+        
+        <!-- Building Selection Tabs - Simple Design Matching Screenshot -->
+        <div class="flex mb-4 gap-2">
+            <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="ccs">CCS Building</button>
+            <button onclick="showBuilding('cit')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="cit">CIT Building</button>
+            <button onclick="showBuilding('cafa')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="cafa">CAFA Building</button>
+        </div>
+        
+        <!-- Search Bar and Floor Dropdown Side by Side -->
+        <div class="flex gap-2 mb-6">
+            <!-- Search Bar (left) -->
+            <div class="relative flex-grow">
+                <input id="roomSearch" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-red-800 focus:border-red-800" placeholder="Search for a room...">
+                <!-- Search Icon Button -->
+                <button onclick="searchRooms()" class="absolute right-0 top-0 h-full px-3 bg-gray-200 hover:bg-gray-300 border-l border-gray-300 rounded-r-md transition-colors">
+                    <svg class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Floor Dropdown (right) with dropdown icon -->
+            <div class="relative w-64">
+                <select id="floorSelect" class="w-full appearance-none px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-red-800 focus:border-red-800">
+                    <option value="1">Floor 1</option>
+                    <option value="2">Floor 2</option>
+                    <option value="3">Floor 3</option>
+                    <option value="4">Floor 4</option>
+                    <option value="5">Floor 5</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-600 bg-gray-200 border-l border-gray-300 h-full rounded-r-md">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
         </div>
 
         <!-- Buildings Container -->
         <div id="ccs-building" class="building-container block">
-            <!-- Floor Navigation Tabs for CCS -->
-            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
-                <button onclick="showFloor('ccs', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
-                <button onclick="showFloor('ccs', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
-                <button onclick="showFloor('ccs', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
-                <button onclick="showFloor('ccs', 4)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="4">Floor 4</button>
-                <button onclick="showFloor('ccs', 5)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="5">Floor 5</button>
+            <!-- CCS Floor Plans -->
+            <div id="ccs-floor-1" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 block">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CCS Building - Ground Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 1</span>
+                </div>
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- Ground Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
+                    
+                    <!-- Left Side -->
+                    <rect id="CCS-F1-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="550.5" width="288" height="253" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="804.5" width="288" height="126" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="931.5" width="288" height="132" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    
+                    <!-- Center -->
+                    <rect id="CCS-F1-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="295.5" width="861" height="768" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="40.5" width="161" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="491.5" y="40.5" width="162" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="654.5" y="40.5" width="297" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="952.5" y="40.5" width="121" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1074.5" y="40.5" width="116" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F1-B13" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B14" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B15" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B16" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="550.5" width="288" height="253" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B17" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="804.5" width="288" height="126" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F1-B18" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="931.5" width="288" height="132" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                </svg>
             </div>
 
-            <!-- CCS Floor Plans -->
-           <!-- CCS Floor 1 (Ground Floor) -->
-<div id="ccs-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
-    <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-        <!-- Ground Floor Layout -->
-        <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
-        
-        <!-- Left Side -->
-        <rect id="CCS-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-        <rect id="CCS-F1-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="253" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="804.5" width="288" height="126" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="931.5" width="288" height="132" fill="#D9D9D9" stroke="black"/>
-        
-        <!-- Center -->
-        <rect id="CCS-F1-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B8" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="161" height="254" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B9" class="cursor-pointer hover:fill-blue-200" x="491.5" y="40.5" width="162" height="254" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B10" class="cursor-pointer hover:fill-blue-200" x="654.5" y="40.5" width="297" height="254" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B11" class="cursor-pointer hover:fill-blue-200" x="952.5" y="40.5" width="121" height="254" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1074.5" y="40.5" width="116" height="254" fill="#D9D9D9" stroke="black"/>
-        
-        <!-- Right Side -->
-        <rect id="CCS-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-        <rect id="CCS-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="253" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="804.5" width="288" height="126" fill="#D9D9D9" stroke="black"/>
-        <rect id="CCS-F1-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="931.5" width="288" height="132" fill="#D9D9D9" stroke="black"/>
-
-        <!-- Floor Label -->
-    </svg>
-</div>
-
-            <div id="ccs-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+            <div id="ccs-floor-2" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CCS Building - Second Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 2</span>
+                </div>
                 <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
                     <!-- 2nd Floor Layout -->
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
                     
                     <!-- Left Side -->
-                    <rect id="CCS-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F2-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="550.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                     
                     <!-- Center Area with 4 blocks -->
-                    <rect id="CCS-F2-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="252" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F2-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="40.5" width="139" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="469.5" y="40.5" width="139" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="609.5" y="40.5" width="141" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="751.5" y="40.5" width="140" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="892.5" y="40.5" width="298" height="252" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="295.5" width="861" height="768" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                     
                     <!-- Right Side -->
-                    <rect id="CCS-F2-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F2-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F2-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
-                    
-                    <!-- Floor Label -->
+                    <rect id="CCS-F2-B13" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B14" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B15" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B16" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="550.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B17" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F2-B18" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                 </svg>
             </div>
 
-            <div id="ccs-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+            <div id="ccs-floor-3" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CCS Building - Third Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 3</span>
+                </div>
                 <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
                     <!-- 3rd Floor Layout -->
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
-                    
-                    <!-- Use the same layout as Floor 2 but with different IDs -->
-                    <rect id="CCS-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F3-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
-                    
-                    <!-- Center Area -->
-                    <rect id="CCS-F3-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="252" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
-                    
-                    <!-- Right Side -->
-                    <rect id="CCS-F3-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F3-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F3-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
-                    
-                    <!-- Floor Label -->
-                </svg>
-            </div>
-
-            <div id="ccs-floor-4" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
-                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-                    <!-- 4th Floor Layout - Updated with your specific SVG -->
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
                     
                     <!-- Left Side -->
-                    <rect id="CCS-F4-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F4-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F3-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="550.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                     
-                    <!-- Center Area with 5 blocks -->
-                    <rect id="CCS-F4-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B8" class="cursor-pointer hover:fill-blue-200" x="469.5" y="40.5" width="139" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B9" class="cursor-pointer hover:fill-blue-200" x="609.5" y="40.5" width="141" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B10" class="cursor-pointer hover:fill-blue-200" x="751.5" y="40.5" width="140" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B11" class="cursor-pointer hover:fill-blue-200" x="892.5" y="40.5" width="298" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B12" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    <!-- Center Area -->
+                    <rect id="CCS-F3-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="40.5" width="139" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="469.5" y="40.5" width="139" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="609.5" y="40.5" width="141" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="751.5" y="40.5" width="140" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="892.5" y="40.5" width="298" height="252" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="295.5" width="861" height="768" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                     
                     <!-- Right Side -->
-                    <rect id="CCS-F4-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F4-B14" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B15" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B16" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B17" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F4-B18" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
-                    
-                    <!-- Floor Label -->
+                    <rect id="CCS-F3-B13" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B14" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B15" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B16" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="550.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B17" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F3-B18" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                 </svg>
             </div>
 
-            <div id="ccs-floor-5" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+            <div id="ccs-floor-4" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CCS Building - Fourth Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 4</span>
+                </div>
+                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+                    <!-- 4th Floor Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
+                    
+                    <!-- Left Side -->
+                    <rect id="CCS-F4-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="550.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    
+                    <!-- Center Area with 5 blocks -->
+                    <rect id="CCS-F4-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="40.5" width="139" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="469.5" y="40.5" width="139" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="609.5" y="40.5" width="141" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="751.5" y="40.5" width="140" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="892.5" y="40.5" width="298" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="295.5" width="861" height="768" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    
+                    <!-- Right Side -->
+                    <rect id="CCS-F4-B13" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B14" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B15" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B16" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="550.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B17" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F4-B18" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                </svg>
+            </div>
+
+            <div id="ccs-floor-5" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CCS Building - Fifth Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 5</span>
+                </div>
                 <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
                     <!-- 5th Floor Layout -->
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
                     
-                    <!-- Using similar layout with different IDs -->
-                    <rect id="CCS-F5-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F5-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="295.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B4" class="cursor-pointer hover:fill-blue-200" x="40.5" y="550.5" width="288" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B6" class="cursor-pointer hover:fill-blue-200" x="40.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
+                    <!-- Left Side -->
+                    <rect id="CCS-F5-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="295.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="550.5" width="288" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                     
-                    <rect id="CCS-F5-B7" class="cursor-pointer hover:fill-blue-200" x="329.5" y="40.5" width="861" height="254" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B8" class="cursor-pointer hover:fill-blue-200" x="329.5" y="295.5" width="861" height="768" fill="#D9D9D9" stroke="black"/>
+                    <rect id="CCS-F5-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="40.5" width="861" height="254" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="329.5" y="295.5" width="861" height="768" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                     
-                    <rect id="CCS-F5-B9" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="40.5" width="288" height="160" fill="#D8D8D8" stroke="#101010"/>
-                    <rect id="CCS-F5-B10" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="201.5" width="288" height="93" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B11" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="295.5" width="288" height="509" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B12" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="805.5" width="288" height="124" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CCS-F5-B13" class="cursor-pointer hover:fill-blue-200" x="1191.5" y="930.5" width="288" height="133" fill="#D9D9D9" stroke="black"/>
-                    
-                    <!-- Floor Label -->
+                    <rect id="CCS-F5-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="40.5" width="288" height="160" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="201.5" width="288" height="93" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="295.5" width="288" height="509" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="805.5" width="288" height="124" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CCS-F5-B13" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1191.5" y="930.5" width="288" height="133" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                 </svg>
             </div>
         </div>
 
+        <!-- CIT Building Container -->
         <div id="cit-building" class="building-container hidden">
-            <!-- Modified: Only showing Floor 1 for CIT -->
-            <div id="cit-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+            <div id="cit-floor-1" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 block">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CIT Building - Ground Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 1</span>
+                </div>
                 <svg width="1521" height="1104" viewBox="0 0 1521 1104" class="w-full h-auto">
-                    <!-- CIT Floor 1 Layout using the provided SVG -->
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    <!-- CIT Floor 1 Layout -->
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
                     
-                    <!-- Rooms -->
-                    <rect id="CIT-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="902.5" width="99" height="161" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B2" class="cursor-pointer hover:fill-blue-200" x="40.5" y="740.5" width="99" height="161" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B3" class="cursor-pointer hover:fill-blue-200" x="40.5" y="573.5" width="99" height="166" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B4" class="cursor-pointer hover:fill-blue-200" x="355.5" y="40.5" width="127" height="166" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B5" class="cursor-pointer hover:fill-blue-200" x="40.5" y="357.5" width="99" height="215" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B6" class="cursor-pointer hover:fill-blue-200" x="256.5" y="357.5" width="98" height="215" fill="#D9D9D9" stroke="black"/>
-                    <path id="CIT-F1-B7" class="cursor-pointer hover:fill-blue-200" d="M559.5 40.5V206.5H483.5V40.5H559.5Z" fill="#D9D9D9" stroke="black"/>
-                    <path id="CIT-F1-B8" class="cursor-pointer hover:fill-blue-200" d="M644.5 40.5V206.5H560.5V40.5H644.5Z" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B9" class="cursor-pointer hover:fill-blue-200" x="355.5" y="357.5" width="98" height="215" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B10" class="cursor-pointer hover:fill-blue-200" x="453.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B11" class="cursor-pointer hover:fill-blue-200" x="590.5" y="356.5" width="139" height="217" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B12" class="cursor-pointer hover:fill-blue-200" x="728.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B13" class="cursor-pointer hover:fill-blue-200" x="865.5" y="356.5" width="135" height="217" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B14" class="cursor-pointer hover:fill-blue-200" x="999.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1342.5" y="356.5" width="138" height="217" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B16" class="cursor-pointer hover:fill-blue-200" x="1342.5" y="572.5" width="138" height="213" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B17" class="cursor-pointer hover:fill-blue-200" x="1136.5" y="356.5" width="139" height="217" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B18" class="cursor-pointer hover:fill-blue-200" x="355.5" y="207.5" width="98" height="149" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B19" class="cursor-pointer hover:fill-blue-200" x="1275.5" y="300.5" width="67" height="77" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B20" class="cursor-pointer hover:fill-blue-200" x="454.5" y="207.5" width="190" height="149" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B21" class="cursor-pointer hover:fill-blue-200" x="140.5" y="357.5" width="115" height="108" fill="#D9D9D9" stroke="black"/>
-                    <rect id="CIT-F1-B22" class="cursor-pointer hover:fill-blue-200" x="140.5" y="466.5" width="115" height="106" fill="#D9D9D9" stroke="black"/>
-                    
-                    <!-- Floor Label -->
+                    <!-- Rooms with enhanced styling -->
+                    <rect id="CIT-F1-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="902.5" width="99" height="161" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="740.5" width="99" height="161" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="573.5" width="99" height="166" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="355.5" y="40.5" width="127" height="166" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="357.5" width="99" height="215" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="256.5" y="357.5" width="98" height="215" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <path id="CIT-F1-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" d="M559.5 40.5V206.5H483.5V40.5H559.5Z" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <path id="CIT-F1-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" d="M644.5 40.5V206.5H560.5V40.5H644.5Z" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="355.5" y="357.5" width="98" height="215" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="453.5" y="356.5" width="138" height="217" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="590.5" y="356.5" width="139" height="217" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="728.5" y="356.5" width="138" height="217" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B13" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="865.5" y="356.5" width="135" height="217" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B14" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="999.5" y="356.5" width="138" height="217" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B15" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1342.5" y="356.5" width="138" height="217" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B16" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1342.5" y="572.5" width="138" height="213" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B17" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1136.5" y="356.5" width="139" height="217" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B18" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="355.5" y="207.5" width="98" height="149" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B19" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1275.5" y="300.5" width="67" height="77" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B20" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="454.5" y="207.5" width="190" height="149" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B21" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="140.5" y="357.5" width="115" height="108" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CIT-F1-B22" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="140.5" y="466.5" width="115" height="106" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                 </svg>
             </div>
         </div>
 
-        <div id="cafa-building" class="building-container hidden">
-            <!-- Floor Navigation Tabs for CAFA -->
-            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
-                <button onclick="showFloor('cafa', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
-                <button onclick="showFloor('cafa', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
-                <button onclick="showFloor('cafa', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
-            </div>
-            
-            <!-- CAFA Floor 1 Layout from paste-11.txt -->
-            <div id="cafa-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+        <!-- CAFA Building Container -->
+        <div id="cafa-building" class="building-container hidden">            
+            <!-- CAFA Floor 1 -->
+            <div id="cafa-floor-1" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 block">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CAFA Building - Ground Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 1</span>
+                </div>
                 <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
                     
-                    <!-- Using the SVG layout from paste-11.txt -->
-                    <rect id="CAFA-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="126" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="95" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B3" class="cursor-pointer hover:fill-blue-200" x="211.5" y="454.5" width="103" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B4" class="cursor-pointer hover:fill-blue-200" x="315.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B5" class="cursor-pointer hover:fill-blue-200" x="417.5" y="454.5" width="97" height="83" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B6" class="cursor-pointer hover:fill-blue-200" x="417.5" y="538.5" width="97" height="68" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B7" class="cursor-pointer hover:fill-blue-200" x="515.5" y="454.5" width="104" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B8" class="cursor-pointer hover:fill-blue-200" x="615.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B9" class="cursor-pointer hover:fill-blue-200" x="715.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B10" class="cursor-pointer hover:fill-blue-200" x="821.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B11" class="cursor-pointer hover:fill-blue-200" x="923.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1026.5" y="454.5" width="102" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1126.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1228.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1334.5" y="454.5" width="145" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B16" class="cursor-pointer hover:fill-blue-200" x="115.5" y="564.5" width="95" height="86" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    
-                    <!-- Floor Label -->
+                    <!-- Rooms with enhanced styling -->
+                    <rect id="CAFA-F1-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="454.5" width="74" height="126" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="115.5" y="454.5" width="95" height="109" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="211.5" y="454.5" width="103" height="109" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="315.5" y="454.5" width="101" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="417.5" y="454.5" width="97" height="83" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="417.5" y="538.5" width="97" height="68" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="515.5" y="454.5" width="104" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="615.5" y="454.5" width="105" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="715.5" y="454.5" width="105" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="821.5" y="454.5" width="101" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="923.5" y="454.5" width="105" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1026.5" y="454.5" width="102" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B13" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1126.5" y="454.5" width="101" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B14" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1228.5" y="454.5" width="105" height="152" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B15" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1334.5" y="454.5" width="145" height="109" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F1-B16" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="115.5" y="564.5" width="95" height="86" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                 </svg>
             </div>
             
-            <!-- CAFA Floor 2 Layout from paste-12.txt -->
-            <div id="cafa-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+            <!-- CAFA Floor 2 -->
+            <div id="cafa-floor-2" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CAFA Building - Second Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 2</span>
+                </div>
                 <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
                     
-                    <!-- Using the SVG layout from paste-12.txt -->
-                    <rect id="CAFA-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="135" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="200" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="454.5" width="104" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="454.5" width="147" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="454.5" width="105" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="454.5" width="101" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B8" class="cursor-pointer hover:fill-blue-200" x="885.5" y="454.5" width="150" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B9" class="cursor-pointer hover:fill-blue-200" x="1033.5" y="454.5" width="131" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B11" class="cursor-pointer hover:fill-blue-200" x="1272.5" y="454.5" width="102" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B12" class="cursor-pointer hover:fill-blue-200" x="1375.5" y="454.5" width="104" height="95" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    
-                    <!-- Floor Label -->
+                    <!-- Rooms with enhanced styling -->
+                    <rect id="CAFA-F2-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="454.5" width="74" height="135" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="115.5" y="454.5" width="200" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="316.5" y="454.5" width="104" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="421.5" y="454.5" width="147" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="570.5" y="454.5" width="105" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="676.5" y="454.5" width="106" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="783.5" y="454.5" width="101" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="885.5" y="454.5" width="150" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1033.5" y="454.5" width="131" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1165.5" y="454.5" width="106" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1272.5" y="454.5" width="102" height="163" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F2-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1375.5" y="454.5" width="104" height="95" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                 </svg>
             </div>
             
-            <!-- CAFA Floor 3 Layout from paste-13.txt -->
-            <div id="cafa-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+            <!-- CAFA Floor 3 -->
+            <div id="cafa-floor-3" class="floor-plan bg-white p-4 rounded-lg border border-gray-200 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">CAFA Building - Third Floor</h3>
+                    <span class="px-3 py-1 bg-red-800 text-white text-sm font-medium rounded-full">Floor 3</span>
+                </div>
                 <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
+                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#EAEAEA"/>
                     
-                    <!-- Using the SVG layout from paste-13.txt -->
-                    <rect id="CAFA-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="455.5" width="74" height="134" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="455.5" width="200" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="455.5" width="147" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="455.5" width="106" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="455.5" width="102" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B8" class="cursor-pointer hover:fill-blue-200" x="886.5" y="455.5" width="149" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B9" class="cursor-pointer hover:fill-blue-200" x="1032.5" y="455.5" width="132" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B11" class="cursor-pointer hover:fill-blue-200" x="1271.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B12" class="cursor-pointer hover:fill-blue-200" x="1376.5" y="455.5" width="103" height="94" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    
-                    <!-- Floor Label -->
+                    <!-- Rooms with enhanced styling -->
+                    <rect id="CAFA-F3-B1" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="40.5" y="455.5" width="74" height="134" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B2" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="115.5" y="455.5" width="200" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B3" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="316.5" y="455.5" width="104" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B4" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="421.5" y="455.5" width="147" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B5" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="570.5" y="455.5" width="105" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B6" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="676.5" y="455.5" width="106" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B7" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="783.5" y="455.5" width="102" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B8" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="886.5" y="455.5" width="149" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B9" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1032.5" y="455.5" width="132" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B10" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1165.5" y="455.5" width="105" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B11" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1271.5" y="455.5" width="104" height="162" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
+                    <rect id="CAFA-F3-B12" class="cursor-pointer hover:fill-red-100 transition-colors duration-300" x="1376.5" y="455.5" width="103" height="94" fill="#E0E0E0" stroke="#333333" stroke-width="1.5"/>
                 </svg>
             </div>
         </div>
-        <script>
-    // Function to show the selected building
-    function showBuilding(buildingId) {
-        // Hide all building containers
-        document.querySelectorAll('.building-container').forEach(container => {
-            container.classList.add('hidden');
-        });
         
-        // Show the selected building container
-        document.getElementById(`${buildingId}-building`).classList.remove('hidden');
-        
-        // Update building tab styling
-        document.querySelectorAll('.building-btn').forEach(btn => {
-            if (btn.getAttribute('data-building') === buildingId) {
-                btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-                btn.classList.add('bg-blue-600', 'text-white');
-            } else {
-                btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-            }
-        });
-        
-        // For CIT we only show floor 1
-        if (buildingId === 'cit') {
-            // Hide floor navigation for CIT
-            document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
-                btn.classList.add('hidden');
-            });
+        <!-- Room Details Modal -->
+        <div class="modal fade" id="roomDetailsModal" tabindex="-1" aria-labelledby="roomDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-md overflow-hidden border-0">
+                    <div class="modal-header bg-red-800 text-white p-4">
+                        <h5 class="modal-title text-lg font-bold" id="roomDetailsModalLabel">Room Details</h5>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">✕</button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Room ID</label>
+                                <p id="viewRoomId" class="text-base font-semibold text-gray-800">CCS-F1-B1</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Room Name</label>
+                                <p id="viewRoomName" class="text-base font-semibold text-gray-800">Computer Laboratory</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Description</label>
+                                <p id="viewRoomDescription" class="text-gray-700">This is a computer laboratory equipped with desktop computers for student use.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-gray-50 p-3">
+                        <button type="button" class="px-4 py-2 bg-gray-500 text-white font-medium rounded-md" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+   // Function to show the selected building
+function showBuilding(buildingId) {
+    // Hide all building containers
+    document.querySelectorAll('.building-container').forEach(container => {
+        container.classList.add('hidden');
+    });
+    
+    // Show the selected building container
+    document.getElementById(`${buildingId}-building`).classList.remove('hidden');
+    
+    // Update building tab styling
+    document.querySelectorAll('.building-btn').forEach(btn => {
+        if (btn.getAttribute('data-building') === buildingId) {
+            btn.classList.remove('bg-gray-200', 'hover:bg-gray-300', 'text-gray-700');
+            btn.classList.add('bg-red-800', 'text-white');
+        } else {
+            btn.classList.remove('bg-red-800', 'text-white');
+            btn.classList.add('bg-gray-200', 'hover:bg-gray-300', 'text-gray-700');
         }
-        
-        // Show first floor by default for each building
-        if (buildingId === 'ccs') {
-            showFloor('ccs', 1);
-        } else if (buildingId === 'cafa') {
-            showFloor('cafa', 1);
+    });
+    
+    // Update floor options based on building
+    updateFloorOptions(buildingId);
+    
+    // Show floor 1 by default
+    showFloor(buildingId, 1);
+    
+    // Reset floor dropdown
+    document.getElementById('floorSelect').value = '1';
+    
+    // Clear search
+    document.getElementById('roomSearch').value = '';
+    clearHighlights();
+    
+    // Add room labels after changing building
+    setTimeout(addRoomLabels, 100);
+}
+
+// Function to update floor dropdown options based on building
+function updateFloorOptions(buildingId) {
+    const floorSelect = document.getElementById('floorSelect');
+    floorSelect.innerHTML = ''; // Clear existing options
+    
+    // Add appropriate floor options based on building
+    if (buildingId === 'ccs') {
+        for (let i = 1; i <= 5; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `Floor ${i}`;
+            floorSelect.appendChild(option);
+        }
+    } else if (buildingId === 'cit') {
+        // CIT has only one floor in this example
+        const option = document.createElement('option');
+        option.value = 1;
+        option.textContent = 'Floor 1';
+        floorSelect.appendChild(option);
+    } else if (buildingId === 'cafa') {
+        // CAFA has 3 floors
+        for (let i = 1; i <= 3; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `Floor ${i}`;
+            floorSelect.appendChild(option);
         }
     }
+}
 
-    // Function to show the selected floor for a specific building
-    function showFloor(buildingId, floorNumber) {
-        // Hide all floor plans for this building
-        document.querySelectorAll(`#${buildingId}-building .floor-plan`).forEach(plan => {
-            plan.classList.add('hidden');
-        });
-        
-        // Show the selected floor plan
-        document.getElementById(`${buildingId}-floor-${floorNumber}`).classList.remove('hidden');
-        
-        // Update floor tab styling (only for the active building)
-        document.querySelectorAll(`#${buildingId}-building .tab-btn`).forEach(btn => {
-            if (parseInt(btn.getAttribute('data-floor')) === floorNumber) {
-                btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-                btn.classList.add('bg-blue-600', 'text-white');
-            } else {
-                btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-            }
-        });
+// Function to show the selected floor
+function showFloor(buildingId, floorNumber) {
+    // Hide all floor plans for this building
+    document.querySelectorAll(`#${buildingId}-building .floor-plan`).forEach(plan => {
+        plan.classList.add('hidden');
+    });
+    
+    // Show the selected floor plan
+    const floorPlan = document.getElementById(`${buildingId}-floor-${floorNumber}`);
+    if (floorPlan) {
+        floorPlan.classList.remove('hidden');
+    } else {
+        console.log(`Floor ${floorNumber} not found for ${buildingId}`);
     }
+    
+    // Clear highlights
+    clearHighlights();
+    
+    // Add room labels after changing floor
+    setTimeout(addRoomLabels, 100);
+}
 
-    // Function to fetch room data from the database
-    async function fetchRoomData() {
-        try {
-            // Make the fetch request to your API
-            const response = await fetch('./ajax/fetch_rooms.php');
-            
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            console.log("Room data fetched successfully:", data);
-            return data;
-        } catch (error) {
-            console.error('Error fetching room data:', error);
-            return {}; // Return empty object on error
-        }
-    }
-
-    async function addRoomLabels() {
+// Function to add room labels to all SVG rooms
+async function addRoomLabels() {
     try {
-        // First fetch room data from database
+        // Fetch room data from your database
         const roomData = await fetchRoomData();
         
         if (Object.keys(roomData).length === 0) {
@@ -2340,44 +2420,40 @@ function displayEvents() {
         const svgElements = document.querySelectorAll('svg');
         
         svgElements.forEach(svg => {
-            // Remove any existing previously added labels
-            svg.querySelectorAll('text.room-label').forEach(label => label.remove());
-            
             // Get all room elements in this SVG
-            const roomElements = svg.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
+            const roomElements = svg.querySelectorAll('.cursor-pointer');
+            
+            // Remove any existing labels first to avoid duplicates
+            svg.querySelectorAll('text.room-label').forEach(label => label.remove());
             
             // Add labels to each room
             roomElements.forEach(room => {
                 const roomId = room.id;
+                if (!roomId) return;
                 
                 // Check if we have data for this room
                 if (roomData[roomId]) {
+                    // Get the bounding box of the room
                     const rect = room.getBBox();
                     
-                    // Create text element
+                    // Create text element for the label
                     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    
-                    // Add a class to identify these labels for easy removal
-                    text.classList.add('room-label');
-                    
-                    // Set text position
                     text.setAttribute('x', rect.x + rect.width / 2);
                     text.setAttribute('y', rect.y + rect.height / 2);
-                    
-                    // Set text style
                     text.setAttribute('text-anchor', 'middle');
                     text.setAttribute('dominant-baseline', 'middle');
                     text.setAttribute('font-family', 'Arial, sans-serif');
-                    text.setAttribute('font-size', '12px');
+                    text.setAttribute('font-size', '14px');
                     text.setAttribute('font-weight', 'bold');
                     text.setAttribute('fill', '#333333');
-                    text.setAttribute('pointer-events', 'none');
+                    text.setAttribute('class', 'room-label');
+                    text.setAttribute('pointer-events', 'none'); // So it doesn't interfere with clicks
                     
-                    // Set room name from database
-                    text.textContent = roomData[roomId].name;
+                    // Set the room name from database
+                    text.textContent = roomData[roomId].name || '';
                     
-                    // Add text element to SVG
-                    room.parentNode.appendChild(text);
+                    // Add the text element to the SVG
+                    svg.appendChild(text);
                 }
             });
         });
@@ -2385,172 +2461,256 @@ function displayEvents() {
         console.error("Error adding room labels:", error);
     }
 }
-    // Add click handlers for rooms to show information
-    function setupRoomClicks() {
-        // Get all room elements 
-        const roomElements = document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
-        
-        // Add click handler to each room
-        roomElements.forEach(room => {
-            room.addEventListener('click', async function() {
-                const roomId = this.id;
-                
-                try {
-                    // Fetch room data
-                    const roomData = await fetchRoomData();
-                    
-                    if (roomData && roomData[roomId]) {
-                        // Populate modal with room details
-                        document.getElementById('viewRoomId').textContent = roomId;
-                        document.getElementById('viewRoomName').textContent = roomData[roomId].name || 'N/A';
-                        document.getElementById('viewRoomDescription').textContent = roomData[roomId].description || 'No description available';
-                        
-                        // Show the modal
-                        new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
-                    } else {
-                        // Fallback if no data found
-                        document.getElementById('viewRoomId').textContent = roomId;
-                        document.getElementById('viewRoomName').textContent = 'Room Details Unavailable';
-                        document.getElementById('viewRoomDescription').textContent = 'No additional information found.';
-                   
-                        // Show the modal
-                        new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
-                    }
-                } catch (error) {
-                    console.error("Error fetching room details:", error);
-                    
-                    // Show error in modal
-                    document.getElementById('viewRoomId').textContent = roomId;
-                    document.getElementById('viewRoomName').textContent = 'Error Fetching Details';
-                    document.getElementById('viewRoomDescription').textContent = 'Unable to retrieve room information at this time.';
 
+// Function to search for rooms
+// Function to search for rooms
+function searchRooms() {
+    const searchTerm = document.getElementById('roomSearch').value.trim().toLowerCase();
+    
+    // If search term is empty, clear highlights and return
+    if (!searchTerm) {
+        clearHighlights();
+        return;
+    }
+    
+    // Get the active building
+    const activeBuilding = document.querySelector('.building-container:not(.hidden)');
+    if (!activeBuilding) return;
+    
+    // Get the active building ID
+    const buildingId = activeBuilding.id.split('-')[0];
+    
+    // Get the active floor
+    const activeFloor = activeBuilding.querySelector('.floor-plan:not(.hidden)');
+    if (!activeFloor) return;
+    
+    // Get all room elements in the active floor
+    const roomElements = activeFloor.querySelectorAll('.cursor-pointer');
+    
+    // Clear previous highlights
+    clearHighlights();
+    
+    // Flag to track if any matches were found
+    let matchFound = false;
+    
+    // Highlight matching rooms
+    roomElements.forEach(room => {
+        const roomId = room.id ? room.id.toLowerCase() : '';
+        
+        // Check if there's visible text within the room element (like a room label)
+        const roomText = room.textContent ? room.textContent.toLowerCase() : '';
+        // Also check for any text elements that might be labels for this room
+        const roomLabels = activeFloor.querySelectorAll(`text[x="${room.getAttribute('x')}"][y="${room.getAttribute('y')}"]`);
+        let labelText = '';
+        roomLabels.forEach(label => {
+            labelText += ' ' + (label.textContent || '').toLowerCase();
+        });
+        
+        // Check if the search term is in the room ID, room text, or any label text
+        if (roomId.includes(searchTerm) || roomText.includes(searchTerm) || labelText.includes(searchTerm)) {
+            room.classList.add('room-highlight');
+            matchFound = true;
+            
+            // Scroll element into view
+            room.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+    
+    // If no room IDs matched, try searching for visible text in the SVG
+    if (!matchFound) {
+        // Look for text elements containing the search term
+        const textElements = activeFloor.querySelectorAll('text');
+        textElements.forEach(text => {
+            const content = text.textContent.toLowerCase();
+            if (content.includes(searchTerm)) {
+                // Find the closest room element
+                const x = parseFloat(text.getAttribute('x'));
+                const y = parseFloat(text.getAttribute('y'));
+                
+                // Find the room that contains this point
+                roomElements.forEach(room => {
+                    const bbox = room.getBBox();
+                    if (x >= bbox.x && x <= bbox.x + bbox.width &&
+                        y >= bbox.y && y <= bbox.y + bbox.height) {
+                        room.classList.add('room-highlight');
+                        matchFound = true;
+                        
+                        // Scroll element into view
+                        room.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            }
+        });
+    }
+    
+    // Show notification if no matches found
+    if (!matchFound && searchTerm) {
+        alert(`No rooms matching "${searchTerm}" found on the current floor.`);
+    }
+}
+
+// Function to clear all highlights
+function clearHighlights() {
+    document.querySelectorAll('.room-highlight').forEach(el => {
+        el.classList.remove('room-highlight');
+    });
+}
+
+// Function to fetch room data from the database
+// Function to fetch room data from the database
+async function fetchRoomData() {
+    try {
+        // Make the fetch request to your API
+        const response = await fetch('./ajax/fetch_rooms.php');
+        
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log("Room data fetched successfully:", data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching room data:', error);
+        return {}; // Return empty object on error
+    }
+}
+// Function to set up room clicks
+// Function to set up room clicks
+function setupRoomClicks() {
+    // Get all room elements 
+    const roomElements = document.querySelectorAll('.cursor-pointer');
+    
+    // Add click handler to each room
+    roomElements.forEach(room => {
+        room.addEventListener('click', async function() {
+            const roomId = this.id || 'Unknown';
+            
+            try {
+                // Fetch room data from your database
+                const roomData = await fetchRoomData();
+                
+                if (roomData && roomData[roomId]) {
+                    // Populate modal with room details
+                    document.getElementById('viewRoomId').textContent = roomId;
+                    document.getElementById('viewRoomName').textContent = roomData[roomId].name || 'N/A';
+                    document.getElementById('viewRoomDescription').textContent = roomData[roomId].description || 'No description available';
+                    
+                    // Show the modal
+                    new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
+                } else {
+                    // Fallback if no data found
+                    document.getElementById('viewRoomId').textContent = roomId;
+                    document.getElementById('viewRoomName').textContent = 'Room Details Unavailable';
+                    document.getElementById('viewRoomDescription').textContent = 'No additional information found.';
+               
                     // Show the modal
                     new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
                 }
-            });
+            } catch (error) {
+                console.error("Error fetching room details:", error);
+                
+                // Show error in modal
+                document.getElementById('viewRoomId').textContent = roomId;
+                document.getElementById('viewRoomName').textContent = 'Error Fetching Details';
+                document.getElementById('viewRoomDescription').textContent = 'Unable to retrieve room information at this time.';
+
+                // Show the modal
+                new bootstrap.Modal(document.getElementById('roomDetailsModal')).show();
+            }
+        });
+    });
+}
+// Wait for page to load, then initialize everything
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up floor dropdown
+    const floorSelect = document.getElementById('floorSelect');
+    
+    if (floorSelect) {
+        floorSelect.addEventListener('change', function() {
+            const activeBuilding = document.querySelector('.building-container:not(.hidden)');
+            if (!activeBuilding) return;
+            
+            const buildingId = activeBuilding.id.split('-')[0];
+            const floorNumber = parseInt(this.value);
+            
+            showFloor(buildingId, floorNumber);
         });
     }
-   // Wait for page to load, then initialize everything
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Campus map initializing...");
     
-    // Function to ensure labels are added after tab/floor changes
-    function ensureLabels() {
-        console.log("Ensuring room labels are added...");
-        addRoomLabels();
+    // Set up search functionality
+    const searchInput = document.getElementById('roomSearch');
+    const searchButton = document.querySelector('button[onclick="searchRooms()"]');
+    
+    if (searchInput) {
+        // Search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchRooms();
+            }
+        });
     }
     
-    // Modify existing showBuilding and showFloor functions to call ensureLabels
-    const originalShowBuilding = window.showBuilding;
-    window.showBuilding = function(buildingId) {
-        originalShowBuilding(buildingId);
-        ensureLabels();
-    };
-
-    const originalShowFloor = window.showFloor;
-    window.showFloor = function(buildingId, floorNumber) {
-        originalShowFloor(buildingId, floorNumber);
-        ensureLabels();
-    };
+    if (searchButton) {
+        searchButton.addEventListener('click', searchRooms);
+    }
     
-    // Add room labels
-    addRoomLabels();
-    
-    // Setup room clicks
+    // Set up room clicks
     setupRoomClicks();
     
     // Show CCS building by default
+    updateFloorOptions('ccs');
     showBuilding('ccs');
+    
+    // Add room labels after initial load
+    setTimeout(addRoomLabels, 100);
 });
-  
-</script>
-<style>
-
-/* Enhanced Room Details Modal Styling */
-#roomDetailsModal .modal-content {
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background: linear-gradient(135deg, #f8f9fa, #ffffff);
-}
-
-#roomDetailsModal .modal-header {
-    background: linear-gradient(135deg, #7D0A0A, #C83E3E);
-    color: white;
-    padding: 15px;
-    border-bottom: none;
-}
-
-#roomDetailsModal .modal-header h5 {
-    color: white;
-    font-weight: 600;
-    margin-bottom: 0;
-}
-
-#roomDetailsModal .modal-header .btn-close {
-    background: none;
-    filter: invert(1) brightness(100);
-    opacity: 1;
-}
-
-#roomDetailsModal .modal-header .btn-close:hover {
-    opacity: 0.8;
-}
-
-#roomDetailsModal .modal-body {
-    padding: 25px;
-}
-
-#roomDetailsModal .form-label {
-    font-weight: 600;
-    color: #6c757d;
-    margin-bottom: 5px;
-}
-
-#roomDetailsModal .form-control-plaintext {
-    font-size: 1rem;
-    color: #2c3e50;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e9ecef;
-}
-
-#roomDetailsModal .form-control-plaintext:last-child {
-    border-bottom: none;
-}
-
-#roomDetailsModal .modal-footer {
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-}
-
-#roomDetailsModal .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-    transition: all 0.3s ease;
-}
-
-#roomDetailsModal .btn-secondary:hover {
-    background-color: #5a6268;
-    transform: translateY(-2px);
-}
-
-/* Responsive adjustments */
-@media (max-width: 576px) {
-    #roomDetailsModal .modal-dialog {
-        margin: 1.75rem 0.5rem;
-        max-width: calc(100% - 1rem);
+    </script>
+    <style>
+    /* Room highlight effect */
+    .room-highlight {
+        fill: #fca5a5 !important; /* Light red highlight */
+        stroke: #b91c1c !important; /* Darker red outline */
+        stroke-width: 2px !important; /* Thicker outline */
+        filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.5));
+        animation: pulse-highlight 1.5s infinite;
     }
-}
 
-/* Subtle animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
+    /* Pulse animation for highlighted rooms */
+    @keyframes pulse-highlight {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; }
+        100% { opacity: 0.7; }
+    }
 
-#roomDetailsModal .modal-content {
-    animation: fadeIn 0.3s ease-out;
-}
+    /* Enhanced transitions */
+    .cursor-pointer {
+        transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
+    }
+    
+    /* Building and floor container transitions */
+    .building-container, .floor-plan {
+        transition: opacity 0.2s ease;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #991b1b;
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #7f1d1d;
+    }
     </style>
 </section>
             <section id="facultymembers" class="content-section py-4">
@@ -3628,8 +3788,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     </script>
-</section>
-<section id="feed"  class="content-section py-4">
+</section><section id="feed" class="content-section py-4">
 <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
             <span class="gradient-text">FEEDBACKS</span>
@@ -3720,7 +3879,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </ul>
                             </div>
                             <div class="col-lg-5 text-lg-end text-center mt-4 mt-lg-0">
-                                <button class="submit-feedback-btn" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                                <!-- UPDATED: Changed from Bootstrap modal trigger to custom fullscreen function -->
+                                <button class="submit-feedback-btn" onclick="openFullscreenFeedback(); return false;">
                                     <span class="btn-text">Submit Feedback</span>
                                     <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
                                 </button>
@@ -3731,7 +3891,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
     </div>
-    
     <style>
         /* Premium Design Styles */
         
@@ -4721,276 +4880,111 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
     </div>
-<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content rounded-lg border-0 shadow">
-            <!-- Modal Header -->
-            <div class="modal-header bg-white border-0 py-3 sticky-top">
-                <div class="d-flex align-items-center w-100">
-                    <div class="d-flex align-items-center">
-                        <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h5 class="modal-title mb-0 fw-bold" id="newsModalLabel" style="color:white;">Organization Feed</h5>
+<!-- Organization Fullscreen Popup -->
+<div id="newsPopup" class="org-fullscreen-popup">
+    <div class="org-popup-content">
+        <!-- Header -->
+        <div class="org-popup-header">
+            <div class="org-popup-header-content">
+                <button type="button" class="org-popup-close-btn" onclick="closeOrgPopup()">&times;</button>
+                <h5 class="org-popup-title" id="newsPopupLabel">Organization Feed</h5>
+            </div>
+            <div class="org-popup-search"> 
+                <div class="org-search-container"> 
+                    <input type="text" class="org-search-input" id="announcementSearch" placeholder="Search in this organization..."> 
+                    <button class="org-filter-btn" id="filterDropdown" onclick="toggleOrgFilterMenu()"> 
+                        <i class="fas fa-filter"></i> 
+                    </button> 
+                    <div class="org-filter-menu" id="orgFilterMenu">
+                        <h6 class="org-filter-header">Date</h6>
+                        <a class="org-filter-item date-filter" href="#" data-value="">Any Date</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="today">Today</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="week">This Week</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="month">This Month</a>
+                        <hr class="org-filter-divider">
+                        <h6 class="org-filter-header">Category</h6>
+                        <a class="org-filter-item category-filter" href="#" data-value="all">All Categories</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="announcement">Announcements</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="event">Events</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="news">News</a>
+                        <hr class="org-filter-divider">
+                        <a class="org-filter-item" href="#" id="clearFilters"> 
+                            <i class="fas fa-times"></i> Clear All Filters 
+                        </a>
                     </div>
-                    <div class="ms-auto"> 
-  <div class="input-group"> 
-    <input type="text" class="form-control rounded-pill bg-white border-0" id="announcementSearch" placeholder="Search in this organization..."> 
-    <button class="btn btn-sm rounded-pill ms-2 border-0 bg-transparent" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false"> 
-      <i class="fas fa-filter"></i> 
-    </button> 
-    <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="filterDropdown"> 
-      <li><h6 class="dropdown-header">Date</h6></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="">Any Date</a></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="today">Today</a></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="week">This Week</a></li> 
-      <li><a class="dropdown-item date-filter" href="#" data-value="month">This Month</a></li> 
-      <li><hr class="dropdown-divider"></li> 
-      <li><h6 class="dropdown-header">Category</h6></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="all">All Categories</a></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="announcement">Announcements</a></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="event">Events</a></li> 
-      <li><a class="dropdown-item category-filter" href="#" data-value="news">News</a></li> 
-      <li><hr class="dropdown-divider"></li> 
-      <li><a class="dropdown-item" href="#" id="clearFilters"> 
-        <i class="fas fa-times me-1"></i> Clear All Filters 
-      </a></li> 
-    </ul> 
-  </div> 
-  <input type="hidden" id="dateFilter" value=""> 
-  <input type="hidden" id="categoryFilter" value="all"> 
-</div>
-                </div>
+                </div> 
+                <input type="hidden" id="dateFilter" value=""> 
+                <input type="hidden" id="categoryFilter" value="all"> 
+            </div>
+        </div>
 
+        <!-- Body with Scrollable Content -->
+        <div class="org-popup-body">
+            <!-- Organization Cover & Profile -->
+            <div class="org-profile-header">
+                <div class="org-cover-photo">
+                    <img src="img/C2SVTseUoAEJp42.jpg" id="orgCoverPhoto" class="org-cover-img" alt="Organization Cover">
+                </div>
                 
+                <!-- Profile layout with profile pic on far left -->
+                <div class="org-profile-container">
+                    <!-- Profile section with picture on far left -->
+                    <div class="org-profile-section">
+                        <!-- Profile Picture on far left -->
+                        <div class="org-profile-picture" id="orgProfilePicContainer">
+                            <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="org-profile-img" alt="Organization Profile">
+                        </div>
+                        
+                        <!-- Organization Info positioned to the right of profile pic -->
+                        <div class="org-info">
+                            <h3 class="org-name" id="orgName">The Browser</h3>
+                            <div class="org-badges">
+                                <span class="org-badge org-verified">Verified</span>
+                                <span class="org-type">Student Organization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Modal Body with Scrollable Content -->
-            <div class="modal-body p-0" style="max-height: 80vh; overflow-y: auto;">
-                <!-- Organization Cover & Profile -->
-                <div class="position-relative">
-                    <div class="org-cover-photo position-relative">
-                        <img src="img/C2SVTseUoAEJp42.jpg" id="orgCoverPhoto" class="w-100 object-fit-cover" style="height: 200px;" alt="Organization Cover">
-                    </div>
-                    
-                    <!-- Profile layout with profile pic on far left -->
-                    <div class="position-relative" style="margin-top: 20px;">
-                        <!-- Profile section with picture on far left -->
-                        <div class="d-flex align-items-center">
-                            <!-- Profile Picture on far left -->
-                            <div class="profile-picture rounded-circle border-4 border-white bg-white shadow-sm" style="width: 120px; height: 120px; overflow: hidden; position: relative; margin-left: 20px; margin-right: 15px; margin-top: -30px;">
-                                <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="w-100 h-100 object-fit-cover" alt="Organization Profile">
-                            </div>
-                            
-                            <!-- Organization Info positioned to the right of profile pic -->
-                            <div style="margin-left: 10px;">
-                                <h3 class="fw-bold mb-1 text-dark" id="orgName" style="font-size: 1.8rem;">The Browser</h3>
-                                <div class="d-flex align-items-center">
-                                    <span class="badge bg-light text-danger me-2 rounded-pill px-2 py-1" style="font-size: 0.8rem;">Verified</span>
-                                    <span class="text-muted" style="font-size: 0.9rem;">Student Organization</span>
-                                </div>
-                            </div>
+            <!-- Navigation Tabs -->
+            <div class="org-tabs-container">
+                <ul class="org-tabs">
+                    <li class="org-tab-item">
+                        <button class="org-tab active" id="announcements-tab" data-tab="announcements">
+                            Announcements
+                            <span class="org-tab-indicator"></span>
+                        </button>
+                    </li>
+                    <li class="org-tab-item">
+                        <button class="org-tab" id="members-tab" data-tab="members">
+                            Members
+                            <span class="org-tab-indicator"></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="org-tab-content">
+                <!-- Announcements Tab -->
+                <div class="org-tab-pane active" id="announcements">
+                    <div id="announcements-content" class="announcements-container">
+                        <!-- Announcements will be loaded here via AJAX -->
+                        <div class="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>Loading announcements...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Navigation Tabs -->
-                <div class="px-4 border-bottom bg-white" style="margin-top: 15px;">
-                    <ul class="nav nav-tabs border-0 flex-nowrap ">
-                        <li class="nav-item">
-                            <button class="nav-link active px-4 py-3 fw-semibold border-0 rounded-0 position-relative text-danger" id="announcements-tab" data-bs-toggle="tab" data-bs-target="#announcements">
-                                Announcements
-                                <span class="position-absolute bottom-0 start-0 end-0 bg-danger" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
-                            </button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link px-4 py-3 fw-semibold border-0 rounded-0 position-relative" id="members-tab" data-bs-toggle="tab" data-bs-target="#members">
-                                Members
-                                <span class="position-absolute bottom-0 start-0 end-0 bg-danger" style="height: 3px; border-radius: 3px 3px 0 0;"></span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-   <!-- Tab Content -->
-   <div class="tab-content bg-light">
-                    <!-- Announcements Tab -->
-                    <div class="tab-pane fade show active p-4" id="announcements">
-                        <div id="announcements-content" class="announcements-container">
-                            <!-- Announcement Card 1 -->
-                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
-                                <div class="card-body p-4">
-                                    <div class="d-flex mb-3">
-                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
-                                        <div>
-                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
-                                            <p class="text-muted mb-0"><small>Posted on March 12, 2025</small></p>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-title fw-bold text-primary">Spring Festival Registration Open!</h5>
-                                    <p class="card-text">Join us for our annual Spring Festival! This year's theme is "Bloom & Grow" featuring live music, food trucks, and interactive art installations. Register by March 20th to secure your spot.</p>
-                                    <div class="mt-3 pt-3 border-top">
-                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                                            <i class="far fa-calendar-alt me-1"></i> RSVP
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
-                                            <i class="far fa-comment me-1"></i> Comment
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Announcement Card 2 -->
-                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
-                                <div class="card-body p-4">
-                                    <div class="d-flex mb-3">
-                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
-                                        <div>
-                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
-                                            <p class="text-muted mb-0"><small>Posted on March 10, 2025</small></p>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-title fw-bold text-primary">New Member Applications</h5>
-                                    <p class="card-text">We're now accepting applications for new members! If you're passionate about our mission and want to be part of our community, submit your application by March 25th.</p>
-                                    <div class="mt-3 pt-3 border-top">
-                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                                            <i class="fas fa-file-alt me-1"></i> Apply Now
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
-                                            <i class="far fa-comment me-1"></i> Comment
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Announcement Card 3 -->
-                            <div class="card mb-3 border-0 shadow-sm hover-shadow transition">
-                                <div class="card-body p-4">
-                                    <div class="d-flex mb-3">
-                                        <img src="/api/placeholder/50/50" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="Admin">
-                                        <div>
-                                            <h6 class="mb-0 fw-bold">Admin Name</h6>
-                                            <p class="text-muted mb-0"><small>Posted on March 8, 2025</small></p>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-title fw-bold text-primary">Upcoming Workshop Series</h5>
-                                    <p class="card-text">Our professional development workshop series begins next week! Topics include leadership skills, networking strategies, and industry insights from guest speakers.</p>
-                                    <div class="mt-3 pt-3 border-top">
-                                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                                            <i class="far fa-calendar-check me-1"></i> Register
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-light rounded-pill ms-2 px-3">
-                                            <i class="far fa-comment me-1"></i> Comment
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Members Tab -->
-                    <div class="tab-pane fade p-4" id="members">
-                        <div class="row g-4">
-                            <!-- Leadership Section -->
-                            <div class="col-12 mb-2">
-                                <h5 class="text-primary fw-bold mb-3">Leadership</h5>
-                            </div>
-                            
-                            <!-- Member Card - President -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="President">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Alex Johnson</h5>
-                                            <p class="mb-1 text-primary fw-semibold"><small>President</small></p>
-                                            <p class="mb-2 text-muted"><small>Since September 2024</small></p>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Member Card - Vice President -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="Vice President">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Taylor Martinez</h5>
-                                            <p class="mb-1 text-primary fw-semibold"><small>Vice President</small></p>
-                                            <p class="mb-2 text-muted"><small>Since January 2025</small></p>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Member Card - Secretary -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3 border border-3 border-primary p-1" style="width: 80px; height: 80px;" alt="Secretary">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Jordan Lee</h5>
-                                            <p class="mb-1 text-primary fw-semibold"><small>Secretary</small></p>
-                                            <p class="mb-2 text-muted"><small>Since October 2024</small></p>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle me-1"><i class="fab fa-linkedin"></i></a>
-                                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="fas fa-envelope"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- General Members Section -->
-                            <div class="col-12 mt-4 mb-2">
-                                <h5 class="text-primary fw-bold mb-3">General Members</h5>
-                            </div>
-                            
-                            <!-- General Member Cards -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Casey Morgan</h5>
-                                            <p class="mb-1 text-muted"><small>Events Committee</small></p>
-                                            <p class="mb-2 text-muted"><small>Since November 2024</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Morgan Silva</h5>
-                                            <p class="mb-1 text-muted"><small>Marketing Team</small></p>
-                                            <p class="mb-2 text-muted"><small>Since December 2024</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                                    <div class="card-body p-4 d-flex align-items-center">
-                                        <img src="/api/placeholder/80/80" class="rounded-circle me-3" style="width: 80px; height: 80px;" alt="Member">
-                                        <div>
-                                            <h5 class="mb-1 fw-bold">Jamie Williams</h5>
-                                            <p class="mb-1 text-muted"><small>Outreach Coordinator</small></p>
-                                            <p class="mb-2 text-muted"><small>Since February 2025</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- Members Tab -->
+                <div class="org-tab-pane" id="members">
+                    <div id="members-content" class="members-container">
+                        <!-- Members will be loaded here via AJAX -->
+                        <div class="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>Loading members...</p>
                         </div>
                     </div>
                 </div>
@@ -4998,6 +4992,611 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
+
+<style>
+/* Organization Popup Styles */
+.org-fullscreen-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.org-fullscreen-popup.active {
+    display: block;
+}
+
+.org-popup-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+/* Header Styles */
+.org-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 101;
+}
+
+.org-popup-header-content {
+    display: flex;
+    align-items: center;
+}
+
+.org-popup-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1rem;
+    color: #555;
+    padding: 0 10px;
+    transition: color 0.2s;
+}
+
+.org-popup-close-btn:hover {
+    color: #f00;
+}
+
+.org-popup-title {
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+/* Search and Filter */
+.org-popup-search {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 400px;
+}
+
+.org-search-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.org-search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: 1px solid #eee;
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.org-filter-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.org-filter-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.org-filter-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    margin-top: 5px;
+    padding: 0.5rem 0;
+}
+
+.org-filter-menu.active {
+    display: block;
+}
+
+.org-filter-header {
+    font-size: 0.8rem;
+    color: #666;
+    padding: 0.5rem 1rem;
+    margin: 0;
+}
+
+.org-filter-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.org-filter-item:hover {
+    background-color: #f8f9fa;
+}
+
+.org-filter-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid #eee;
+}
+
+/* Body Styles */
+.org-popup-body {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+/* Organization Header */
+.org-profile-header {
+    position: relative;
+}
+
+.org-cover-photo {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.org-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.org-profile-container {
+    position: relative;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.org-profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.org-profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: -30px;
+    margin-right: 15px;
+}
+
+.org-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.org-info {
+    margin-left: 10px;
+}
+
+.org-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.org-badges {
+    display: flex;
+    align-items: center;
+}
+
+.org-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.org-verified {
+    background-color: #f8f9fa;
+    color: #dc3545;
+}
+
+.org-type {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Tabs Navigation */
+.org-tabs-container {
+    padding: 0 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.org-tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.org-tab-item {
+    margin-right: 10px;
+}
+
+.org-tab {
+    background: none;
+    border: none;
+    padding: 15px 20px;
+    position: relative;
+    font-weight: 600;
+    color: #6c757d;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.org-tab.active {
+    color: #dc3545;
+}
+
+.org-tab-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+.org-tab.active .org-tab-indicator {
+    background-color: #dc3545;
+}
+
+/* Tab Content */
+.org-tab-content {
+    background-color: #f8f9fa;
+    min-height: 500px;
+}
+
+.org-tab-pane {
+    display: none;
+    padding: 20px;
+}
+
+.org-tab-pane.active {
+    display: block;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #dc3545;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Announcements */
+.announcements-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.announcement-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.announcement-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.announcement-body {
+    padding: 20px;
+}
+
+.announcement-header {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.announcement-author-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.announcement-author-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+    font-size: 1rem;
+}
+
+.announcement-date {
+    color: #6c757d;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.announcement-title {
+    font-weight: bold;
+    color: #0d6efd;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.announcement-text {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.announcement-actions {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+}
+
+.announcement-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+.announcement-primary-btn {
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+}
+
+.announcement-primary-btn:hover {
+    background-color: #f0f7ff;
+}
+
+.announcement-secondary-btn {
+    color: #6c757d;
+    background-color: #f8f9fa;
+}
+
+.announcement-secondary-btn:hover {
+    background-color: #e9ecef;
+}
+
+.announcement-btn i {
+    margin-right: 5px;
+}
+
+/* Members */
+.members-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.members-section-header {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.members-section-title {
+    color: #0d6efd;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.member-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.member-info {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.member-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.member-image.leadership {
+    border: 3px solid #0d6efd;
+    padding: 3px;
+}
+
+.member-details {
+    flex: 1;
+}
+
+.member-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.member-role {
+    color: #0d6efd;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.member-committee {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.member-since {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.member-social {
+    display: flex;
+}
+
+.member-social-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    text-decoration: none;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+}
+
+.member-social-btn:hover {
+    background-color: #e9ecef;
+}
+
+/* Error state */
+.error-message {
+    text-align: center;
+    padding: 30px;
+    color: #dc3545;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #dee2e6;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .members-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .org-profile-picture {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .org-name {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .members-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .org-profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .org-profile-picture {
+        margin: -50px auto 15px;
+    }
+    
+    .org-info {
+        margin-left: 0;
+    }
+    
+    .org-badges {
+        justify-content: center;
+    }
+    
+    .announcement-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .announcement-author-img {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+</style>
+
 
 <style>
 /* Enhanced customizations */
@@ -5613,552 +6212,878 @@ document.addEventListener('DOMContentLoaded', function() {
   border-top: 1px solid #dee2e6;
 }
     </style>
+<style>
+/* Custom Fullscreen Feedback Container */
+.custom-feedback-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 10000;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-<div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h3 class="modal-title">Share Your Feedback</h3>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-            
-                <div class="progress-steps">
-                    <div class="step-indicator active">1</div>
-                    <div class="step-indicator">2</div>
-                    <div class="step-indicator">3</div>
-                </div> 
+.custom-feedback-container.active {
+    opacity: 1;
+}
 
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <form id="feedbackForm">
-                    <!-- Step 1: Category Selection -->
-                    <div class="step active" id="step1">
-                        <h4 class="text-center mb-4">What would you like to give feedback about?</h4>
-                        <div class="d-flex justify-content-center gap-4">
-                            <div class="card feedback-category-card" data-category="office">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Office Processes</h5>
-                                    <p class="card-text">Administrative and school-related processes</p>
-                                    <input type="radio" name="feedback_category" value="office" class="btn-check" id="officeBtn">
-                                    <label class="btn btn-outline-primary w-100" for="officeBtn">Select</label>
-                                </div>
-                            </div>
-                            <div class="card feedback-category-card" data-category="org">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Student Organizations</h5>
-                                    <p class="card-text">Feedback for student organizations</p>
-                                    <input type="radio" name="feedback_category" value="org" class="btn-check" id="orgBtn">
-                                    <label class="btn btn-outline-primary w-100" for="orgBtn">Select</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+.custom-feedback-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
 
-                    <!-- Step 2: Category-Specific Questions -->
-                    <div class="step" id="step2">
+.custom-feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #0d6efd;
+    color: white;
+}
 
-                    <div class="csm-intro mb-4" id="csmIntro" style="display: none;">
-    <div class="alert alert-info p-5">
-        <h4 class="alert-heading mb-3">HELP US SERVE YOU BETTER!</h4>
-        <p class="mb-3">
-            This Client Satisfaction Measurement (CSM) Tool aims to track the customer experience of TSU's clients. Your answers will help this office provide a better service. Personal information shared will be kept confidential.
-        </p>
-        
-        <p class="text-muted fst-italic mb-0">
-            Ang Client Satisfaction Measurement (CSM) Tool na ito ay magsisilbing gabayan at karanasan ng customer ng mga kliyente ng TSU. Ang iyong mga sagot ay makakatulong sa opisina na mapabuti ang serbisyo na magagamit na impormasyon na ibinahagi ay pananatilihing pribado.
-        </p>
-    </div>
-</div>
+.custom-feedback-title {
+    margin: 0;
+    font-size: 1.5rem;
+}
 
-                        <!-- Office Processes Questions -->
+.custom-close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
 
+.custom-feedback-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
 
-                        <div id="officeQuestions" style="display: none;">
-                            <h4 class="text-center mb-4">Campus Office Processes Evaluation</h4>
-                            
-                            <!-- Basic Information -->
-                            <div class="form-section">
-                                <h2 class="section-title">Basic Information</h2>
-                                <div class="form-row">
-                                <div class="form-group">
-    <label class="form-label">Client Type<span class="required">*</span>
-        <div class="tagalog">Uri ng kliyente</div>
-    </label>
-    <select class="form-control" name="client_type" >
-        <option value="">Select client type...</option>
-        <option value="internal">Internal (Empleyado ng TSU)</option>
-        <option value="student">Student (Estudyante)</option>
-        <option value="business">Business (Negosyo/Negosyante)</option>
-        <option value="government">Government Agency (Ahensya ng Pamahalaan)</option>
-    </select>
-</div>
-                                    <div class="form-group">
-                                        <label class="form-label">Date<span class="required">*</span>
-                                            <div class="tagalog">Petsa</div>
-                                        </label>
-                                        <input type="date" class="form-control" name="date" >
-                                    </div>
-                                </div>
+.custom-feedback-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
 
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label class="form-label">Age<span class="required">*</span>
-                                            <div class="tagalog">Edad</div>
-                                        </label>
-                                        <input type="number" class="form-control" name="age" >
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Sex<span class="required">*</span>
-                                            <div class="tagalog">Kasarian</div>
-                                        </label>
-                                        <div class="radio-group">
-                                            <label class="radio-label">
-                                                <input type="radio" name="sex" value="male" >
-                                                Male (Lalake)
-                                            </label>
-                                            <label class="radio-label">
-                                                <input type="radio" name="sex" value="female">
-                                                Female (Babae)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+/* Progress steps */
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    background-color: rgba(13, 110, 253, 0.1);
+    padding: 0.75rem 0;
+}
 
-                                <div class="form-group">
-                                    <label class="form-label">Office that rendered the service(s)<span class="required">*</span>
-                                        <div class="tagalog">Opisinang nagbigay serbisyo</div>
-                                    </label>
-                                    <input type="text" class="form-control" name="office" >
-                                </div>
+.step-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
 
-                                <div class="form-group">
-                                    <label class="form-label">Service Availed<span class="required">*</span>
-                                        <div class="tagalog">Serbisyong naipagkaloob</div>
-                                    </label>
-                                    <input type="text" class="form-control" name="service" >
-                                </div>
-                            </div>
+.step-indicator.active {
+    background-color: #0d6efd;
+    color: white;
+}
 
+/* Step container */
+.step {
+    display: none;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 1rem;
+}
 
-                            <!-- Citizen's Charter Awareness -->
-                            <div class="form-section">
-    <h2 class="section-title">Citizen's Charter Awareness</h2>
+.step.active {
+    display: block;
+}
+
+/* Category card */
+.feedback-category-card {
+    width: 280px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #dee2e6;
+}
+
+.feedback-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Form styling improvements */
+.form-section {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    color: #0d6efd;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 1.5rem;
+}
+
+.tagalog {
+    font-style: italic;
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.required {
+    color: #dc3545;
+    margin-left: 0.25rem;
+}
+
+/* Rating styles */
+.rating-scale {
+    background-color: #e9ecef;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1.5rem;
+}
+
+.rating-scale-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.rating-scale-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.rating-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rating-question {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid #dee2e6;
+}
+
+.rating-options {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Question block styling */
+.question-block {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.question-block h5 {
+    margin-bottom: 0.5rem;
+    color: #212529;
+}
+
+.question-block .text-muted {
+    margin-bottom: 1rem;
+}
+
+.rating-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.rating-option {
+    flex: 1;
+    min-width: 70px;
+    text-align: center;
+}
+
+.rating-option input {
+    display: none;
+}
+
+.rating-option label {
+    cursor: pointer;
+    display: block;
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+}
+
+.rating-option input:checked + label {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+}
+
+/* Event evaluation styling */
+#eventEvaluation {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Body scrolling control */
+body.feedback-open {
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
     
-    <!-- CC1 -->
-    <div class="form-group">
-        <p class="form-label">CC1: Which of the following best describes your awareness of a CC?<span class="required">*</span></p>
-        <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
-            <label class="radio-label">
-                <input type="radio" name="cc_awareness" value="aware_saw" >
-                1. I know what a CC is and I saw this office's CC.
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_awareness" value="aware_not_saw">
-                2. I know what a CC is but I did NOT see this office's CC.
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_awareness" value="learned">
-                3. I learned of the CC only when I saw this office's CC.
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_awareness" value="unaware">
-                4. I do not know what a CC is and I did not see one in this office.
-            </label>
+    .d-flex.justify-content-center.gap-4 {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .feedback-category-card {
+        width: 100%;
+        max-width: 280px;
+        margin-bottom: 1rem;
+    }
+    
+    .rating-options {
+        justify-content: flex-start;
+    }
+    
+    .custom-feedback-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .custom-feedback-footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    .step {
+        padding: 0.5rem;
+    }
+    
+    .custom-feedback-body {
+        padding: 1rem 0.5rem;
+    }
+    
+    .form-section {
+        padding: 1rem;
+    }
+    
+    .rating-question {
+        padding: 0.75rem;
+    }
+}
+</style>
+
+<!-- Custom Fullscreen Feedback Container -->
+<div id="customFeedbackContainer" class="custom-feedback-container">
+    <div class="custom-feedback-content">
+        <div class="custom-feedback-header bg-primary text-white">
+            <h3 class="custom-feedback-title">Share Your Feedback</h3>
+            <button type="button" class="custom-close-btn" onclick="closeFullscreenFeedback()">&times;</button>
         </div>
-    </div>
+    
+        <div class="progress-steps">
+            <div class="step-indicator active">1</div>
+            <div class="step-indicator">2</div>
+            <div class="step-indicator">3</div>
+        </div> 
 
-    <!-- CC2 -->
-    <div class="form-group">
-        <p class="form-label">CC2: If aware of CC, would you say that the CC of this office was...<span class="required">*</span></p>
-        <div class="tagalog">(Kung may kamalayan ka tungkol sa CC, sasabihin mo ba na ang CC ng opisina na ito ay...)</div>
-        <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
-            <label class="radio-label">
-                <input type="radio" name="cc_visibility" value="easy" >
-                1. Easy to see (Madaling makita)
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_visibility" value="somewhat_easy">
-                2. Somewhat easy to see (Medyo madaling makita)
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_visibility" value="difficult">
-                3. Difficult to see (Mahirap hanapin)
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_visibility" value="not_visible">
-                4. Not visible at all (Hindi nakikita)
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_visibility" value="na">
-                5. N/A (Hindi naaangkop)
-            </label>
-        </div>
-    </div>
-
-    <!-- CC3 -->
-    <div class="form-group">
-        <p class="form-label">CC3: If aware of CC (answered codes 1-3 in CC1), how much did the CC help you in your transaction?<span class="required">*</span></p>
-        <div class="tagalog">(Kung may kamalayan at nakita mo ang CC sa iyong transaksiyon?)</div>
-        <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
-            <label class="radio-label">
-                <input type="radio" name="cc_helpfulness" value="helped_very_much">
-                1. Helped very much (Nakatulong nang husto)
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_helpfulness" value="somewhat_helped">
-                2. Somewhat helped (Medyo nakatulong)
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_helpfulness" value="did_not_help">
-                3. Did not help (Walang naitulong)
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="cc_helpfulness" value="na">
-                4. N/A (Hindi naaangkop)
-            </label>
-        </div>
-    </div>
-</div>
-
-            <!-- Service Quality Rating Section -->
-            <div class="form-section">
-                <h2 class="section-title">Service Quality Rating</h2>
-                
-                <div class="rating-scale">
-                    <div class="rating-scale-title">Rating Scale:</div>
-                    <div class="rating-scale-grid">
-                        <div>1 - Strongly Disagree</div>
-                        <div>2 - Disagree</div>
-                        <div>3 - Neither Agree nor Disagree</div>
-                        <div>4 - Agree</div>
-                        <div>5 - Strongly Agree</div>
-                        <div>N/A - Not Applicable</div>
-                    </div>
-                </div>
-
-                <div class="rating-questions">
-                    <!-- SQD0 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD0: I am satisfied with the service that I availed.<span class="required">*</span></div>
-                        <div class="tagalog">Nasiyahan ako sa serbisyo na aking natanggap sa napuntahan na opisina.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd0" value="1" >1</label>
-    <label class="radio-label"><input type="radio" name="sqd0" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd0" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd0" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd0" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd0" value="na">N/A</label>
-</div>
-                    </div>
-
-                    <!-- SQD1 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD1: I spent a reasonable amount of time for my transaction.<span class="required">*</span></div>
-                        <div class="tagalog">Makatwiran ang oras na aking ginugol para sa aking transaksyon.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd1" value="1" >1</label>
-    <label class="radio-label"><input type="radio" name="sqd1" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd1" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd1" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd1" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd1" value="na">N/A</label>
-</div>
-                    </div>
-
-                    <!-- SQD2 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD2: The office followed the transaction's requirements and steps based on the information provided in their Citizens Charter.<span class="required">*</span></div>
-                        <div class="tagalog">Tinugunan ng opisina ang aking transakyon alinsunod sa kanilang Citizen's Charter.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd2" value="1">1</label>
-    <label class="radio-label"><input type="radio" name="sqd2" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd2" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd2" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd2" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd2" value="na">N/A</label>
-</div>
-                    </div>
-
-                    <!-- SQD3 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD3: The steps (including payment) I needed to do for my transaction were easy and simple.<span class="required">*</span></div>
-                        <div class="tagalog">Ang mga hakbang (kabilang ang pagbabayad) na kailangan kong gawin para sa aking transaksyon ay madali at simple.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd3" value="1" >1</label>
-    <label class="radio-label"><input type="radio" name="sqd3" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd3" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd3" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd3" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd3" value="na">N/A</label>
-</div>
-                    </div>
-
-                    <!-- SQD4 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD4: I easily found information about my transaction from the office or its website.<span class="required">*</span></div>
-                        <div class="tagalog">Ang mga kailangang impormasyon tungkol sa aking transaksyon ay kaagad kong nakita sa opisina o sa TSU website.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd4" value="1" >1</label>
-    <label class="radio-label"><input type="radio" name="sqd4" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd4" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd4" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd4" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd4" value="na">N/A</label>
-</div>
-                    </div>
-
-                    <!-- SQD5 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD5: The amount I paid for my transaction is value for money.<span class="required">*</span></div>
-                        <div class="tagalog">Ang halagang ibinayad ay akma sa serbisyong natamo.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd5" value="1" >1</label>
-    <label class="radio-label"><input type="radio" name="sqd5" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd5" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd5" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd5" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd5" value="na">N/A</label>
-</div>
-                    </div>
-
-                    <!-- SQD6 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD6: I am confident my online transaction was secure.<span class="required">*</span></div>
-                        <div class="tagalog">Pakiramdam ko ay patas ang opisina sa lahat, o "walang palakasan", sa aking transaksyon.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd6" value="1" >1</label>
-    <label class="radio-label"><input type="radio" name="sqd6" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd6" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd6" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd6" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd6" value="na">N/A</label>
-</div>
-                    </div>
-
-                    <!-- SQD7 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD7: The Office's online support was available, and (if asked) questions online support was quick to respond.<span class="required">*</span></div>
-                        <div class="tagalog">Magalang akong trinato ng mga tauhan, at (kung sakali ako ay humingi ng tulong) alam ko na sila ay handang tumulong sa akin.</div>
-                        <div class="rating-options">
-                            <label class="radio-label"><input type="radio" name="sqd7" value="1" >1</label>
-                            <label class="radio-label"><input type="radio" name="sqd7" value="2">2</label>
-                            <label class="radio-label"><input type="radio" name="sqd7" value="3">3</label>
-                            <label class="radio-label"><input type="radio" name="sqd7" value="4">4</label>
-                            <label class="radio-label"><input type="radio" name="sqd7" value="5">5</label>
-                            <label class="radio-label"><input type="radio" name="sqd7" value="na">N/A</label>
-                        </div>
-                    </div>
-
-                    <!-- SQD8 -->
-                    <div class="rating-question">
-                        <div class="form-label">SQD8: I got what I needed from the government office, or (if denied) denial of request was sufficiently explained to me.<span class="required">*</span></div>
-                        <div class="tagalog">Nakuha ko ang kinakailangan ko mula sa tanggapan ng gobyerno, kung tinanggihan man, ito ay sapat na ipinaliwanag sa akin.</div>
-                        <div class="rating-options">
-    <label class="radio-label"><input type="radio" name="sqd8" value="1" >1</label>
-    <label class="radio-label"><input type="radio" name="sqd8" value="2">2</label>
-    <label class="radio-label"><input type="radio" name="sqd8" value="3">3</label>
-    <label class="radio-label"><input type="radio" name="sqd8" value="4">4</label>
-    <label class="radio-label"><input type="radio" name="sqd8" value="5">5</label>
-    <label class="radio-label"><input type="radio" name="sqd8" value="na">N/A</label>
-</div>
-                    </div>
-                </div>
+        <!-- Feedback Body -->
+        <div class="custom-feedback-body">
+            <form id="feedbackForm">
+                <!-- Step 1: Category Selection -->
+                <div class="step active" id="step1">
+                    <h4 class="text-center mb-4">What would you like to give feedback about?</h4>
+                    <div class="d-flex justify-content-center gap-4">
+                        <div class="card feedback-category-card" data-category="office">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Office Processes</h5>
+                                <p class="card-text">Administrative and school-related processes</p>
+                                <input type="radio" name="feedback_category" value="office" class="btn-check" id="officeBtn">
+                                <label class="btn btn-outline-primary w-100" for="officeBtn">Select</label>
                             </div>
                         </div>
+                        <div class="card feedback-category-card" data-category="org">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Student Organizations</h5>
+                                <p class="card-text">Feedback for student organizations</p>
+                                <input type="radio" name="feedback_category" value="org" class="btn-check" id="orgBtn">
+                                <label class="btn btn-outline-primary w-100" for="orgBtn">Select</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                          <!-- Student Organizations Questions -->
-                            <div id="orgQuestions" style="display: none;">
-                                <h4 class="text-center mb-4">Student Organization Evaluation</h4>
-                                
-                                <div class="form-group mb-4">
-                                    <label class="form-label">Select Organization</label>
-                                    <select class="form-select" name="organization">
-                                        <option value="">Choose an organization...</option>
-                                    </select>
+                <!-- Step 2: Category-Specific Questions -->
+                <div class="step" id="step2">
+                    <div class="csm-intro mb-4" id="csmIntro" style="display: none;">
+                        <div class="alert alert-info p-5">
+                            <h4 class="alert-heading mb-3">HELP US SERVE YOU BETTER!</h4>
+                            <p class="mb-3">
+                                This Client Satisfaction Measurement (CSM) Tool aims to track the customer experience of TSU's clients. Your answers will help this office provide a better service. Personal information shared will be kept confidential.
+                            </p>
+                            
+                            <p class="text-muted fst-italic mb-0">
+                                Ang Client Satisfaction Measurement (CSM) Tool na ito ay magsisilbing gabayan at karanasan ng customer ng mga kliyente ng TSU. Ang iyong mga sagot ay makakatulong sa opisina na mapabuti ang serbisyo na magagamit na impormasyon na ibinahagi ay pananatilihing pribado.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Office Processes Questions -->
+                    <div id="officeQuestions" style="display: none;">
+                        <h4 class="text-center mb-4">Campus Office Processes Evaluation</h4>
+                        
+                        <!-- Basic Information -->
+                        <div class="form-section">
+                            <h2 class="section-title">Basic Information</h2>
+                            <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Client Type<span class="required">*</span>
+                                    <div class="tagalog">Uri ng kliyente</div>
+                                </label>
+                                <select class="form-control" name="client_type" >
+                                    <option value="">Select client type...</option>
+                                    <option value="internal">Internal (Empleyado ng TSU)</option>
+                                    <option value="student">Student (Estudyante)</option>
+                                    <option value="business">Business (Negosyo/Negosyante)</option>
+                                    <option value="government">Government Agency (Ahensya ng Pamahalaan)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                    <label class="form-label">Date<span class="required">*</span>
+                                        <div class="tagalog">Petsa</div>
+                                    </label>
+                                    <input type="hidden" name="date" id="current-date">
+                                    <div class="form-control" id="date-display"></div>
                                 </div>
+                            </div>
 
-                                <div class="form-group mb-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="evaluateEvent" name="evaluate_event">
-                                        <label class="form-check-label" for="evaluateEvent">
-                                            I want to evaluate a specific event by this organization
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Age<span class="required">*</span>
+                                        <div class="tagalog">Edad</div>
+                                    </label>
+                                    <input type="number" class="form-control" name="age" >
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Sex<span class="required">*</span>
+                                        <div class="tagalog">Kasarian</div>
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" name="sex" value="male" >
+                                            Male (Lalake)
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="sex" value="female">
+                                            Female (Babae)
                                         </label>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Office that rendered the service(s)<span class="required">*</span>
+                                    <div class="tagalog">Opisinang nagbigay serbisyo</div>
+                                </label>
+                                <input type="text" class="form-control" name="office" >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Service Availed<span class="required">*</span>
+                                    <div class="tagalog">Serbisyong naipagkaloob</div>
+                                </label>
+                                <input type="text" class="form-control" name="service" >
+                            </div>
+                        </div>
+
+
+                        <!-- Citizen's Charter Awareness -->
+                        <div class="form-section">
+                            <h2 class="section-title">Citizen's Charter Awareness</h2>
                             
-                                                            <!-- Question 1: Event Quality -->
-                                <div class="question-block">
-                                    <h5>1. Event Quality</h5>
-                                    <p class="text-muted">How engaging and well-organized were the events?</p>
-                                    <div class="rating-group">
-                                        <div class="rating-option">
-                                            <input type="radio" name="event_quality" id="eq1" value="1">
-                                            <label for="eq1">1<br>Poor</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="event_quality" id="eq2" value="2">
-                                            <label for="eq2">2<br>Fair</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="event_quality" id="eq3" value="3">
-                                            <label for="eq3">3<br>Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="event_quality" id="eq4" value="4">
-                                            <label for="eq4">4<br>Very Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="event_quality" id="eq5" value="5">
-                                            <label for="eq5">5<br>Excellent</label>
-                                        </div>
+                            <!-- CC1 -->
+                            <div class="form-group">
+                                <p class="form-label">CC1: Which of the following best describes your awareness of a CC?<span class="required">*</span></p>
+                                <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_awareness" value="aware_saw" >
+                                        1. I know what a CC is and I saw this office's CC.
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_awareness" value="aware_not_saw">
+                                        2. I know what a CC is but I did NOT see this office's CC.
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_awareness" value="learned">
+                                        3. I learned of the CC only when I saw this office's CC.
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_awareness" value="unaware">
+                                        4. I do not know what a CC is and I did not see one in this office.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- CC2 -->
+                            <div class="form-group">
+                                <p class="form-label">CC2: If aware of CC, would you say that the CC of this office was...<span class="required">*</span></p>
+                                <div class="tagalog">(Kung may kamalayan ka tungkol sa CC, sasabihin mo ba na ang CC ng opisina na ito ay...)</div>
+                                <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_visibility" value="easy" >
+                                        1. Easy to see (Madaling makita)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_visibility" value="somewhat_easy">
+                                        2. Somewhat easy to see (Medyo madaling makita)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_visibility" value="difficult">
+                                        3. Difficult to see (Mahirap hanapin)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_visibility" value="not_visible">
+                                        4. Not visible at all (Hindi nakikita)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_visibility" value="na">
+                                        5. N/A (Hindi naaangkop)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- CC3 -->
+                            <div class="form-group">
+                                <p class="form-label">CC3: If aware of CC (answered codes 1-3 in CC1), how much did the CC help you in your transaction?<span class="required">*</span></p>
+                                <div class="tagalog">(Kung may kamalayan at nakita mo ang CC sa iyong transaksiyon?)</div>
+                                <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_helpfulness" value="helped_very_much">
+                                        1. Helped very much (Nakatulong nang husto)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_helpfulness" value="somewhat_helped">
+                                        2. Somewhat helped (Medyo nakatulong)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_helpfulness" value="did_not_help">
+                                        3. Did not help (Walang naitulong)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="cc_helpfulness" value="na">
+                                        4. N/A (Hindi naaangkop)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Quality Rating Section -->
+                        <div class="form-section">
+                            <h2 class="section-title">Service Quality Rating</h2>
+                            
+                            <div class="rating-scale">
+                                <div class="rating-scale-title">Rating Scale:</div>
+                                <div class="rating-scale-grid">
+                                    <div>1 - Strongly Disagree</div>
+                                    <div>2 - Disagree</div>
+                                    <div>3 - Neither Agree nor Disagree</div>
+                                    <div>4 - Agree</div>
+                                    <div>5 - Strongly Agree</div>
+                                    <div>N/A - Not Applicable</div>
+                                </div>
+                            </div>
+
+                            <div class="rating-questions">
+                                <!-- SQD0 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD0: I am satisfied with the service that I availed.<span class="required">*</span></div>
+                                    <div class="tagalog">Nasiyahan ako sa serbisyo na aking natanggap sa napuntahan na opisina.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd0" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd0" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd0" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd0" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd0" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd0" value="na">N/A</label>
                                     </div>
                                 </div>
 
-                                <!-- Question 2: Communication -->
-                                <div class="question-block">
-                                    <h5>2. Communication</h5>
-                                    <p class="text-muted"><p class="text-muted">How effective was the organization in communicating event details and announcements?</p>
-                                    <div class="rating-group">
-                                        <div class="rating-option">
-                                            <input type="radio" name="org_communication" id="orgcom1" value="1">
-                                            <label for="orgcom1">1<br>Poor</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="org_communication" id="orgcom2" value="2">
-                                            <label for="orgcom2">2<br>Fair</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="org_communication" id="orgcom3" value="3">
-                                            <label for="orgcom3">3<br>Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="org_communication" id="orgcom4" value="4">
-                                            <label for="orgcom4">4<br>Very Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="org_communication" id="orgcom5" value="5">
-                                            <label for="orgcom5">5<br>Excellent</label>
-                                        </div>
+                                <!-- SQD1 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD1: I spent a reasonable amount of time for my transaction.<span class="required">*</span></div>
+                                    <div class="tagalog">Makatwiran ang oras na aking ginugol para sa aking transaksyon.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd1" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd1" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd1" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd1" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd1" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd1" value="na">N/A</label>
                                     </div>
                                 </div>
 
-                                <!-- Question 3: Inclusivity -->
-                                <div class="question-block">
-                                    <h5>3. Inclusivity</h5>
-                                    <p class="text-muted">How welcoming and inclusive was the organization to all members?</p>
-                                    <div class="rating-group">
-                                        <div class="rating-option">
-                                            <input type="radio" name="inclusivity" id="inc1" value="1">
-                                            <label for="inc1">1<br>Poor</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="inclusivity" id="inc2" value="2">
-                                            <label for="inc2">2<br>Fair</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="inclusivity" id="inc3" value="3">
-                                            <label for="inc3">3<br>Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="inclusivity" id="inc4" value="4">
-                                            <label for="inc4">4<br>Very Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="inclusivity" id="inc5" value="5">
-                                            <label for="inc5">5<br>Excellent</label>
-                                        </div>
+                                <!-- SQD2 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD2: The office followed the transaction's requirements and steps based on the information provided in their Citizens Charter.<span class="required">*</span></div>
+                                    <div class="tagalog">Tinugunan ng opisina ang aking transakyon alinsunod sa kanilang Citizen's Charter.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd2" value="1">1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd2" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd2" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd2" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd2" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd2" value="na">N/A</label>
                                     </div>
                                 </div>
 
-                                <!-- Question 4: Leadership -->
-                                <div class="question-block">
-                                    <h5>4. Leadership</h5>
-                                    <p class="text-muted">How effective and approachable was the leadership team?</p>
-                                    <div class="rating-group">
-                                        <div class="rating-option">
-                                            <input type="radio" name="leadership" id="lead1" value="1">
-                                            <label for="lead1">1<br>Poor</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="leadership" id="lead2" value="2">
-                                            <label for="lead2">2<br>Fair</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="leadership" id="lead3" value="3">
-                                            <label for="lead3">3<br>Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="leadership" id="lead4" value="4">
-                                            <label for="lead4">4<br>Very Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="leadership" id="lead5" value="5">
-                                            <label for="lead5">5<br>Excellent</label>
-                                        </div>
+                                <!-- SQD3 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD3: The steps (including payment) I needed to do for my transaction were easy and simple.<span class="required">*</span></div>
+                                    <div class="tagalog">Ang mga hakbang (kabilang ang pagbabayad) na kailangan kong gawin para sa aking transaksyon ay madali at simple.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd3" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd3" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd3" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd3" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd3" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd3" value="na">N/A</label>
                                     </div>
                                 </div>
 
-                                <!-- Question 5: Skill Development -->
-                                <div class="question-block">
-                                    <h5>5. Skill Development</h5>
-                                    <p class="text-muted">How well did the organization provide opportunities for personal growth?</p>
-                                    <div class="rating-group">
-                                        <div class="rating-option">
-                                            <input type="radio" name="skill_dev" id="skill1" value="1">
-                                            <label for="skill1">1<br>Poor</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="skill_dev" id="skill2" value="2">
-                                            <label for="skill2">2<br>Fair</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="skill_dev" id="skill3" value="3">
-                                            <label for="skill3">3<br>Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="skill_dev" id="skill4" value="4">
-                                            <label for="skill4">4<br>Very Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="skill_dev" id="skill5" value="5">
-                                            <label for="skill5">5<br>Excellent</label>
-                                        </div>
+                                <!-- SQD4 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD4: I easily found information about my transaction from the office or its website.<span class="required">*</span></div>
+                                    <div class="tagalog">Ang mga kailangang impormasyon tungkol sa aking transaksyon ay kaagad kong nakita sa opisina o sa TSU website.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd4" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd4" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd4" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd4" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd4" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd4" value="na">N/A</label>
                                     </div>
                                 </div>
 
-                                <!-- Question 6: Impact -->
-                                <div class="question-block">
-                                    <h5>6. Impact</h5>
-                                    <p class="text-muted">How much did the organization positively contribute to your campus experience?</p>
-                                    <div class="rating-group">
-                                        <div class="rating-option">
-                                            <input type="radio" name="impact" id="imp1" value="1">
-                                            <label for="imp1">1<br>Poor</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="impact" id="imp2" value="2">
-                                            <label for="imp2">2<br>Fair</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="impact" id="imp3" value="3">
-                                            <label for="imp3">3<br>Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="impact" id="imp4" value="4">
-                                            <label for="imp4">4<br>Very Good</label>
-                                        </div>
-                                        <div class="rating-option">
-                                            <input type="radio" name="impact" id="imp5" value="5">
-                                            <label for="imp5">5<br>Excellent</label>
-                                        </div>
+                                <!-- SQD5 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD5: The amount I paid for my transaction is value for money.<span class="required">*</span></div>
+                                    <div class="tagalog">Ang halagang ibinayad ay akma sa serbisyong natamo.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd5" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd5" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd5" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd5" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd5" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd5" value="na">N/A</label>
+                                    </div>
+                                </div>
+
+                                <!-- SQD6 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD6: I am confident my online transaction was secure.<span class="required">*</span></div>
+                                    <div class="tagalog">Pakiramdam ko ay patas ang opisina sa lahat, o "walang palakasan", sa aking transaksyon.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd6" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd6" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd6" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd6" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd6" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd6" value="na">N/A</label>
+                                    </div>
+                                </div>
+
+                                <!-- SQD7 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD7: The Office's online support was available, and (if asked) questions online support was quick to respond.<span class="required">*</span></div>
+                                    <div class="tagalog">Magalang akong trinato ng mga tauhan, at (kung sakali ako ay humingi ng tulong) alam ko na sila ay handang tumulong sa akin.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd7" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd7" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd7" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd7" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd7" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd7" value="na">N/A</label>
+                                    </div>
+                                </div>
+
+                                <!-- SQD8 -->
+                                <div class="rating-question">
+                                    <div class="form-label">SQD8: I got what I needed from the government office, or (if denied) denial of request was sufficiently explained to me.<span class="required">*</span></div>
+                                    <div class="tagalog">Nakuha ko ang kinakailangan ko mula sa tanggapan ng gobyerno, kung tinanggihan man, ito ay sapat na ipinaliwanag sa akin.</div>
+                                    <div class="rating-options">
+                                        <label class="radio-label"><input type="radio" name="sqd8" value="1" >1</label>
+                                        <label class="radio-label"><input type="radio" name="sqd8" value="2">2</label>
+                                        <label class="radio-label"><input type="radio" name="sqd8" value="3">3</label>
+                                        <label class="radio-label"><input type="radio" name="sqd8" value="4">4</label>
+                                        <label class="radio-label"><input type="radio" name="sqd8" value="5">5</label>
+                                        <label class="radio-label"><input type="radio" name="sqd8" value="na">N/A</label>
                                     </div>
                                 </div>
                             </div>
-    <!-- Event Evaluation Section -->
-    <div id="eventEvaluation" style="display:none;"class="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
+                        </div>
+                    </div>
+
+                    <!-- Student Organizations Questions -->
+                    <div id="orgQuestions" style="display: none;">
+                        <h4 class="text-center mb-4">Student Organization Evaluation</h4>
+                        
+                        <div class="form-group mb-4">
+                            <label class="form-label">Select Organization</label>
+                            <select class="form-select" name="organization">
+                                <option value="">Choose an organization...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="evaluateEvent" name="evaluate_event">
+                                <label class="form-check-label" for="evaluateEvent">
+                                    I want to evaluate a specific event by this organization
+                                </label>
+                            </div>
+                        </div>
+                    
+                        <!-- Question 1: Event Quality -->
+                        <div class="question-block">
+                            <h5>1. Event Quality</h5>
+                            <p class="text-muted">How engaging and well-organized were the events?</p>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="event_quality" id="eq1" value="1">
+                                    <label for="eq1">1<br>Poor</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="event_quality" id="eq2" value="2">
+                                    <label for="eq2">2<br>Fair</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="event_quality" id="eq3" value="3">
+                                    <label for="eq3">3<br>Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="event_quality" id="eq4" value="4">
+                                    <label for="eq4">4<br>Very Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="event_quality" id="eq5" value="5">
+                                    <label for="eq5">5<br>Excellent</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 2: Communication -->
+                        <div class="question-block">
+                            <h5>2. Communication</h5>
+                            <p class="text-muted">How effective was the organization in communicating event details and announcements?</p>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="org_communication" id="orgcom1" value="1">
+                                    <label for="orgcom1">1<br>Poor</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="org_communication" id="orgcom2" value="2">
+                                    <label for="orgcom2">2<br>Fair</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="org_communication" id="orgcom3" value="3">
+                                    <label for="orgcom3">3<br>Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="org_communication" id="orgcom4" value="4">
+                                    <label for="orgcom4">4<br>Very Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="org_communication" id="orgcom5" value="5">
+                                    <label for="orgcom5">5<br>Excellent</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 3: Inclusivity -->
+                        <div class="question-block">
+                            <h5>3. Inclusivity</h5>
+                            <p class="text-muted">How welcoming and inclusive was the organization to all members?</p>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="inclusivity" id="inc1" value="1">
+                                    <label for="inc1">1<br>Poor</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="inclusivity" id="inc2" value="2">
+                                    <label for="inc2">2<br>Fair</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="inclusivity" id="inc3" value="3">
+                                    <label for="inc3">3<br>Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="inclusivity" id="inc4" value="4">
+                                    <label for="inc4">4<br>Very Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="inclusivity" id="inc5" value="5">
+                                    <label for="inc5">5<br>Excellent</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 4: Leadership -->
+                        <div class="question-block">
+                            <h5>4. Leadership</h5>
+                            <p class="text-muted">How effective and approachable was the leadership team?</p>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="leadership" id="lead1" value="1">
+                                    <label for="lead1">1<br>Poor</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="leadership" id="lead2" value="2">
+                                    <label for="lead2">2<br>Fair</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="leadership" id="lead3" value="3">
+                                    <label for="lead3">3<br>Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="leadership" id="lead4" value="4">
+                                    <label for="lead4">4<br>Very Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="leadership" id="lead5" value="5">
+                                    <label for="lead5">5<br>Excellent</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 5: Skill Development -->
+                        <div class="question-block">
+                            <h5>5. Skill Development</h5>
+                            <p class="text-muted">How well did the organization provide opportunities for personal growth?</p>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="skill_dev" id="skill1" value="1">
+                                    <label for="skill1">1<br>Poor</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="skill_dev" id="skill2" value="2">
+                                    <label for="skill2">2<br>Fair</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="skill_dev" id="skill3" value="3">
+                                    <label for="skill3">3<br>Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="skill_dev" id="skill4" value="4">
+                                    <label for="skill4">4<br>Very Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="skill_dev" id="skill5" value="5">
+                                    <label for="skill5">5<br>Excellent</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 6: Impact -->
+                        <div class="question-block">
+                            <h5>6. Impact</h5>
+                            <p class="text-muted">How much did the organization positively contribute to your campus experience?</p>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="impact" id="imp1" value="1">
+                                    <label for="imp1">1<br>Poor</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="impact" id="imp2" value="2">
+                                    <label for="imp2">2<br>Fair</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="impact" id="imp3" value="3">
+                                    <label for="imp3">3<br>Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="impact" id="imp4" value="4">
+                                    <label for="imp4">4<br>Very Good</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="impact" id="imp5" value="5">
+                                    <label for="imp5">5<br>Excellent</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Event Evaluation Section -->
+                    <!-- Updated Event Evaluation Section - WITHOUT Student Organization field -->
+<div id="eventEvaluation" style="display:none;" class="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
     <h5 class="text-2xl font-semibold text-gray-800 mb-6">Event Evaluation Form</h5>
     
-    <!-- Activity Details Section -->
+    <!-- Activity Details Section - REMOVED Student Organization field -->
     <div class="space-y-6 mb-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-2">
@@ -6167,9 +7092,10 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             
             <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Date</label>
-                <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="activity_date">
-            </div>
+    <label class="block text-sm font-medium text-gray-700">Date</label>
+    <input type="hidden" name="activity_date" id="current-activity-date">
+    <div class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100" id="activity-date-display"></div>
+</div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -6179,17 +7105,14 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             
             <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Student Organization</label>
-                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="student_org">
+                <label class="block text-sm font-medium text-gray-700">Position</label>
+                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="position">
             </div>
         </div>
-
-        <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">Position</label>
-            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="position">
-        </div>
+        
+        <!-- Hidden field to store the organization ID from the dropdown -->
+        <input type="hidden" name="student_org" id="event_student_org">
     </div>
-
 
     <!-- Online Activity Ratings -->
     <div class="mb-8">
@@ -6447,54 +7370,41 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
     </div>
-
-    <!-- Comments and Suggestions -->
-    <div class="mb-8">
-        <label class="block text-lg font-medium text-gray-800 mb-4">4. Comments and Suggestions</label>
-        <div class="space-y-4">
-            <label class="block text-sm font-medium text-gray-700">We highly appreciate your comments and suggestions to help us improve the activity</label>
-            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="comments_suggestions" rows="4" placeholder="Share your thoughts on how we can improve..."></textarea>
-        </div>
-    </div>
 </div>
-</div>
+                </div>
 
-                        <!-- Step 3: Additional Information -->
-                        <div class="step" id="step3">
-                            <h4 class="text-center mb-4">Additional Information</h4>
-                            
-                            <div class="mb-4">
-                                <label class="form-label">What improvements would you suggest?</label>
-                                <textarea class="form-control" name="improvements" rows="4" placeholder="Share your thoughts on how we can improve..."></textarea>
-                            </div>
+                <!-- Step 3: Additional Information -->
+                <div class="step" id="step3">
+                    <h4 class="text-center mb-4">Additional Information</h4>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">What improvements would you suggest?</label>
+                        <textarea class="form-control" name="improvements" rows="4" placeholder="Share your thoughts on how we can improve..."></textarea>
+                    </div>
 
-                            <div class="row">
-                            <div class="col-md-6 mb-3">
-                            <label class="form-label">Email (Optional)</label>
-                            <input class="form-control" 
-                                name="email" 
-                                placeholder="your@email.com">
-                        </div>
-                                                        
+                    <div class="row">
                         <div class="col-md-6 mb-3">
-                                    <label class="form-label">Name (Optional)</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Your Name">
-                                </div>
-                            </div>
+                            <label class="form-label">Email (Optional)</label>
+                            <input class="form-control" name="email" placeholder="your@email.com">
                         </div>
-                    </form>
+                                                
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Name (Optional)</label>
+                            <input type="text" class="form-control" name="name" placeholder="Your Name">
+                        </div>
+                    </div>
                 </div>
+            </form>
+        </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
-                    <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
-                    <button type="submit" class="btn btn-success" id="submitBtn" form="feedbackForm" style="display:none;">Submit Feedback</button>
-                </div>
-            </div>
+        <div class="custom-feedback-footer">
+            <button type="button" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+            <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+            <button type="submit" class="btn btn-success" id="submitBtn" form="feedbackForm" style="display:none;">Submit Feedback</button>
         </div>
     </div>
-    
- 
+</div>
+
     
  
         </div>
@@ -6602,6 +7512,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>// Function to handle setting the rating (optional, if you need it for other purposes)
 document.addEventListener('DOMContentLoaded', function() {
     // Element references
+    const customFeedbackContainer = document.getElementById('customFeedbackContainer');
     const feedbackForm = document.getElementById('feedbackForm');
     const steps = document.querySelectorAll('.step');
     const indicators = document.querySelectorAll('.step-indicator');
@@ -6613,33 +7524,168 @@ document.addEventListener('DOMContentLoaded', function() {
     const eventEvaluation = document.getElementById('eventEvaluation');
     let currentStep = 0;
 
+    // Create missing required fields for event evaluation
+    if (feedbackForm) {
+        // Create a hidden input for comments_suggestions
+        if (!document.querySelector('[name="comments_suggestions"]')) {
+            const commentsSuggestionsInput = document.createElement('input');
+            commentsSuggestionsInput.type = 'hidden';
+            commentsSuggestionsInput.name = 'comments_suggestions';
+            commentsSuggestionsInput.value = ''; // Default empty value
+            feedbackForm.appendChild(commentsSuggestionsInput);
+        }
+        
+        // Create a hidden input for student_org if it doesn't exist
+        if (!document.querySelector('[name="student_org"]')) {
+            const studentOrgInput = document.createElement('input');
+            studentOrgInput.type = 'hidden';
+            studentOrgInput.name = 'student_org';
+            feedbackForm.appendChild(studentOrgInput);
+        }
+        
+        // Create a hidden input for position if it doesn't exist
+        if (!document.querySelector('[name="position"]')) {
+            const positionInput = document.createElement('input');
+            positionInput.type = 'hidden';
+            positionInput.name = 'position';
+            positionInput.value = 'Student'; // Default value
+            feedbackForm.appendChild(positionInput);
+        }
+    }
 
-if (organizationSelect) {
-    // Fetch organizations when the page loads
-    fetch('ajax/fetch_organizations.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && data.organizations) {
-                // Clear existing options
-                organizationSelect.innerHTML = '<option value="">Choose an organization...</option>';
-                
-                // Add organizations to dropdown
-                data.organizations.forEach(org => {
-                    const option = document.createElement('option');
-                    option.value = org.org_id;
-                    option.textContent = org.org_name;
-                    organizationSelect.appendChild(option);
-                });
-            } else {
-                console.error('Error loading organizations:', data.message);
-                organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
+    // Find all date inputs and replace them with hidden fields
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    dateInputs.forEach(function(dateInput) {
+        // Create a hidden input to replace the date input
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = dateInput.name;
+        
+        // Get current date in ISO format (YYYY-MM-DD)
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        hiddenInput.value = formattedDate;
+        
+        // Create a text display to show the current date
+        const dateDisplay = document.createElement('div');
+        dateDisplay.className = 'form-control';
+        dateDisplay.style.backgroundColor = '#f8f9fa';
+        dateDisplay.style.padding = '0.75rem 1rem';
+        dateDisplay.style.border = '2px solid #e2e8f0';
+        dateDisplay.style.borderRadius = '8px';
+        dateDisplay.innerText = formattedDate;
+        
+        // Replace the date input with the hidden input and display
+        const parentElement = dateInput.parentNode;
+        parentElement.appendChild(hiddenInput);
+        parentElement.appendChild(dateDisplay);
+        parentElement.removeChild(dateInput);
+    });
+
+    // Open fullscreen feedback function
+    window.openFullscreenFeedback = function() {
+        customFeedbackContainer.style.display = 'block';
+        document.body.classList.add('feedback-open');
+        
+        // Add active class after a small delay for animation
+        setTimeout(() => {
+            customFeedbackContainer.classList.add('active');
+        }, 10);
+        
+        // Reset to first step
+        resetForm();
+    };
+
+    // Close fullscreen feedback function
+    window.closeFullscreenFeedback = function() {
+        customFeedbackContainer.classList.remove('active');
+        
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+            customFeedbackContainer.style.display = 'none';
+            document.body.classList.remove('feedback-open');
+            
+            // Reset form
+            resetForm();
+        }, 300);
+    };
+
+    // Function to open feedback directly from organization cards
+    window.openOrgFeedback = function(orgId, orgName) {
+        openFullscreenFeedback();
+        
+        // Select organization category
+        document.getElementById('orgBtn').checked = true;
+        
+        // Trigger change event to show org questions
+        const event = new Event('change');
+        document.getElementById('orgBtn').dispatchEvent(event);
+        
+        // Auto-select the organization in the dropdown if it exists
+        if (organizationSelect) {
+            // Create option if it doesn't exist
+            let optionExists = false;
+            for (let i = 0; i < organizationSelect.options.length; i++) {
+                if (organizationSelect.options[i].value === orgId) {
+                    optionExists = true;
+                    organizationSelect.value = orgId;
+                    break;
+                }
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
+            
+            if (!optionExists && orgId && orgName) {
+                const newOption = new Option(orgName, orgId);
+                organizationSelect.add(newOption);
+                organizationSelect.value = orgId;
+            }
+            
+            // Set the student_org field value
+            const studentOrgField = document.querySelector('[name="student_org"]');
+            if (studentOrgField) {
+                studentOrgField.value = orgId;
+            }
+        }
+        
+        // Move to step 1 (index 0)
+        currentStep = 0;
+        nextBtn.click(); // Move to step 2 (index 1)
+    };
+
+    // Fetch organizations when the page loads
+    if (organizationSelect) {
+        fetch('ajax/fetch_organizations.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.organizations) {
+                    // Clear existing options
+                    organizationSelect.innerHTML = '<option value="">Choose an organization...</option>';
+                    
+                    // Add organizations to dropdown
+                    data.organizations.forEach(org => {
+                        const option = document.createElement('option');
+                        option.value = org.org_id;
+                        option.textContent = org.org_name;
+                        organizationSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('Error loading organizations:', data.message);
+                    organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
+            });
+        
+        // Add event listener to organization dropdown to update student_org field
+        organizationSelect.addEventListener('change', function() {
+            const studentOrgField = document.querySelector('[name="student_org"]');
+            if (studentOrgField) {
+                studentOrgField.value = this.value;
+            }
         });
-}
+    }
+
     // Rating conversion maps
     const ratingMap = {
         'excellent': 5,
@@ -6667,28 +7713,27 @@ if (organizationSelect) {
     }
 
     // Category selection handler
-  // Modify your existing category selection handler
-document.querySelectorAll('input[name="feedback_category"]').forEach(input => {
-    input.addEventListener('change', function() {
-        const category = this.value;
-        const officeQuestions = document.getElementById('officeQuestions');
-        const orgQuestions = document.getElementById('orgQuestions');
-        const csmIntro = document.getElementById('csmIntro');
-        
-        if (category === 'office') {
-            officeQuestions.style.display = 'block';
-            orgQuestions.style.display = 'none';
-            if (eventEvaluation) eventEvaluation.style.display = 'none';
-            // Show the CSM intro for office category
-            if (csmIntro) csmIntro.style.display = 'block';
-        } else if (category === 'org') {
-            officeQuestions.style.display = 'none';
-            orgQuestions.style.display = 'block';
-            // Hide the CSM intro for org category
-            if (csmIntro) csmIntro.style.display = 'none';
-        }
+    document.querySelectorAll('input[name="feedback_category"]').forEach(input => {
+        input.addEventListener('change', function() {
+            const category = this.value;
+            const officeQuestions = document.getElementById('officeQuestions');
+            const orgQuestions = document.getElementById('orgQuestions');
+            const csmIntro = document.getElementById('csmIntro');
+            
+            if (category === 'office') {
+                officeQuestions.style.display = 'block';
+                orgQuestions.style.display = 'none';
+                if (eventEvaluation) eventEvaluation.style.display = 'none';
+                // Show the CSM intro for office category
+                if (csmIntro) csmIntro.style.display = 'block';
+            } else if (category === 'org') {
+                officeQuestions.style.display = 'none';
+                orgQuestions.style.display = 'block';
+                // Hide the CSM intro for org category
+                if (csmIntro) csmIntro.style.display = 'none';
+            }
+        });
     });
-});
 
     // Event evaluation checkbox handler
     if (evaluateEventCheckbox) {
@@ -6701,214 +7746,297 @@ document.querySelectorAll('input[name="feedback_category"]').forEach(input => {
 
     // Validation functions
     function validateOfficeForm() {
-    const requiredFields = [
-        { name: 'client_type', label: 'Client Type', type: 'select' },
-        { name: 'date', label: 'Date', type: 'date' },
-        { name: 'age', label: 'Age', type: 'number' },
-        { name: 'sex', label: 'Sex', type: 'radio' },
-        { name: 'office', label: 'Office', type: 'text' },
-        { name: 'service', label: 'Service', type: 'text' },
-        { name: 'cc_awareness', label: 'CC Awareness', type: 'radio' },
-        { name: 'cc_visibility', label: 'CC Visibility', type: 'radio' },
-        { name: 'cc_helpfulness', label: 'CC Helpfulness', type: 'radio' }
-    ];
+        const requiredFields = [
+            { name: 'client_type', label: 'Client Type', type: 'select' },
+            // Date is now automatically handled and not needed for validation
+            { name: 'age', label: 'Age', type: 'number' },
+            { name: 'sex', label: 'Sex', type: 'radio' },
+            { name: 'office', label: 'Office', type: 'text' },
+            { name: 'service', label: 'Service', type: 'text' },
+            { name: 'cc_awareness', label: 'CC Awareness', type: 'radio' },
+            { name: 'cc_visibility', label: 'CC Visibility', type: 'radio' },
+            { name: 'cc_helpfulness', label: 'CC Helpfulness', type: 'radio' }
+        ];
 
-    for (const field of requiredFields) {
-        const element = field.type === 'radio' 
-            ? document.querySelector(`input[name="${field.name}"]:checked`)
-            : document.querySelector(`[name="${field.name}"]`);
-            
-        const value = field.type === 'radio' 
-            ? element?.value
-            : element?.value?.trim();
+        for (const field of requiredFields) {
+            const element = field.type === 'radio' 
+                ? document.querySelector(`input[name="${field.name}"]:checked`)
+                : document.querySelector(`[name="${field.name}"]`);
+                
+            const value = field.type === 'radio' 
+                ? element?.value
+                : element?.value?.trim();
 
-        if (!value) {
-            alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
-            element?.focus();
-            return false;
+            if (!value) {
+                alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
+                element?.focus();
+                return false;
+            }
         }
+
+        // Validate SQD ratings
+        for (let i = 0; i <= 8; i++) {
+            if (!document.querySelector(`input[name="sqd${i}"]:checked`)) {
+                alert(`Please provide a rating for SQD${i}`);
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    // Validate SQD ratings
-    for (let i = 0; i <= 8; i++) {
-        if (!document.querySelector(`input[name="sqd${i}"]:checked`)) {
-            alert(`Please provide a rating for SQD${i}`);
-            return false;
-        }
-    }
-
-    return true;
-}
     function validateEventEvaluation() {
-    const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
-    
-    if (!evaluateEventChecked) {
-        return true; // Skip validation if event evaluation is not checked
-    }
-
-    const requiredFields = [
-        'activity_title',
-        'activity_date',
-        'venue',
-        'student_org'
-    ];
-
-    for (const fieldName of requiredFields) {
-        const field = document.querySelector(`[name="${fieldName}"]`);
-        const value = field?.value?.trim();
+        const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
         
-        if (!value) {
-            alert(`Please fill in ${fieldName.replace('_', ' ')}`);
-            field?.focus();
+        if (!evaluateEventChecked) {
+            return true; // Skip validation if event evaluation is not checked
+        }
+
+        // Only validate these fields; the rest will be auto-filled
+        const requiredFields = [
+            'activity_title',
+            'venue'
+        ];
+
+        for (const fieldName of requiredFields) {
+            const field = document.querySelector(`[name="${fieldName}"]`);
+            const value = field?.value?.trim();
+            
+            if (!value) {
+                alert(`Please fill in ${fieldName.replace('_', ' ')}`);
+                field?.focus();
+                return false;
+            }
+        }
+        
+        // Make sure student_org field is set from organization dropdown
+        const organizationSelect = document.querySelector('select[name="organization"]');
+        const studentOrgField = document.querySelector('[name="student_org"]');
+        
+        if (organizationSelect && organizationSelect.value && studentOrgField) {
+            studentOrgField.value = organizationSelect.value;
+        } else if (!studentOrgField?.value) {
+            alert("Please select an organization");
+            if (organizationSelect) organizationSelect.focus();
             return false;
         }
+
+        return true;
     }
 
-    const ratingFields = [
-        'communication_rating',
-        'video_quality',
-        'audio_quality',
-        'mastery_rating',
-        'time_management',
-        'methodologies',
-        'conduct',
-        'topic_informative',
-        'activity_relevance'
-    ];
+    function validateOrgForm() {
+        const requiredFields = [
+            { name: 'organization', label: 'Organization', type: 'select' },
+        ];
 
-    for (const fieldName of ratingFields) {
-        if (!document.querySelector(`input[name="${fieldName}"]:checked`)) {
-            alert(`Please provide a rating for ${fieldName.replace('_', ' ')}`);
-            return false;
+        for (const field of requiredFields) {
+            const element = field.type === 'radio' 
+                ? document.querySelector(`input[name="${field.name}"]:checked`)
+                : document.querySelector(`[name="${field.name}"]`);
+                
+            const value = field.type === 'radio' 
+                ? element?.value
+                : element?.value?.trim();
+
+            if (!value) {
+                alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
+                element?.focus();
+                return false;
+            }
+            
+            // If organization is selected, make sure student_org field is also set
+            if (field.name === 'organization' && value) {
+                const studentOrgField = document.querySelector('[name="student_org"]');
+                if (studentOrgField) {
+                    studentOrgField.value = value;
+                }
+            }
         }
+
+        // Validate organization ratings
+        const orgRatings = [
+            'event_quality',
+            'org_communication',
+            'inclusivity',
+            'leadership',
+            'skill_dev',
+            'impact'
+        ];
+
+        for (const rating of orgRatings) {
+            if (!document.querySelector(`input[name="${rating}"]:checked`)) {
+                alert(`Please provide a rating for ${rating.replace('_', ' ')}`);
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    return true;
-}
     // Form submission handler
     if (feedbackForm) {
-    feedbackForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        // Validate current step
-        if (!validateCurrentStep()) {
-            return;
-        }
+        feedbackForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Ensure all date fields have the current date
+            ensureCurrentDates();
+            
+            // Validate current step
+            if (!validateCurrentStep()) {
+                return;
+            }
 
-        const formData = new FormData(this);
-        const feedbackCategory = formData.get('feedback_category');
-        
-        submitBtn.disabled = true;
+            const formData = new FormData(this);
+            const feedbackCategory = formData.get('feedback_category');
+            
+            // Set comments_suggestions from improvements field if empty
+            if (!formData.get('comments_suggestions') && formData.get('improvements')) {
+                formData.set('comments_suggestions', formData.get('improvements'));
+            } else if (!formData.get('comments_suggestions')) {
+                formData.set('comments_suggestions', 'No comments provided');
+            }
+            
+            submitBtn.disabled = true;
 
-        // Process organization feedback
-        if (feedbackCategory === 'org') {
-            // Convert org ratings to numbers
-            const orgRatings = [
-                'event_quality',
-                'org_communication',
-                'inclusivity',
-                'leadership',
-                'skill_dev',
-                'impact'
-            ];
+            // Process organization feedback
+            if (feedbackCategory === 'org') {
+                // Convert org ratings to numbers
+                const orgRatings = [
+                    'event_quality',
+                    'org_communication',
+                    'inclusivity',
+                    'leadership',
+                    'skill_dev',
+                    'impact'
+                ];
 
-            orgRatings.forEach(field => {
-                const rating = formData.get(field);
-                if (rating) {
-                    formData.set(field, parseInt(rating));
+                orgRatings.forEach(field => {
+                    const rating = formData.get(field);
+                    if (rating) {
+                        formData.set(field, parseInt(rating));
+                    }
+                });
+
+                // Ensure student_org is set properly
+                if (!formData.get('student_org') && formData.get('organization')) {
+                    formData.set('student_org', formData.get('organization'));
                 }
+                
+                // Set default position if empty
+                if (!formData.get('position')) {
+                    formData.set('position', 'Student');
+                }
+
+                // Check if event evaluation is enabled
+                const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
+                formData.set('evaluate_event', evaluateEventChecked ? '1' : '0');
+
+                // Handle event evaluation if checked
+                if (evaluateEventChecked) {
+                    // Convert ratings using rating map
+                    const eventRatings = [
+                        'communication_rating',
+                        'video_quality',
+                        'audio_quality',
+                        'mastery_rating',
+                        'time_management',
+                        'conduct'
+                    ];
+
+                    eventRatings.forEach(field => {
+                        const rating = formData.get(field);
+                        if (rating) {
+                            formData.set(field, convertRatingToNumber(rating));
+                        } else {
+                            // Set default value if missing
+                            formData.set(field, 3); // Default to middle value
+                        }
+                    });
+                    
+                    // Handle methodologies field specifically
+                    if (!formData.get('methodologies')) {
+                        formData.set('methodologies', 'satisfactory');
+                    }
+
+                    // Convert agreement ratings
+                    const agreementFields = [
+                        'topic_informative',
+                        'activity_relevance'
+                    ];
+
+                    agreementFields.forEach(field => {
+                        const rating = formData.get(field);
+                        if (rating) {
+                            formData.set(field, convertAgreementToNumber(rating));
+                        } else {
+                            // Set default value if missing
+                            formData.set(field, 3); // Default to middle value
+                        }
+                    });
+                }
+            }
+
+            // Submit form data
+            fetch('ajax/submit_feedback.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        console.error('Server response:', text);
+                        throw new Error('Server responded with an error');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Thank you for your feedback!');
+                    resetForm();
+                    // Use custom close function
+                    closeFullscreenFeedback();
+                    // Update feedback counts if the function exists
+                    if (typeof updateFeedbackCounts === 'function') {
+                        updateFeedbackCounts();
+                    }
+                } else {
+                    throw new Error(data.message || 'Error submitting feedback');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting your feedback. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
             });
-
-            // Check if event evaluation is enabled
-            const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
-            formData.set('evaluate_event', evaluateEventChecked ? '1' : '0');
-
-            // Handle event evaluation if checked
-            if (evaluateEventChecked) {
-                // Convert ratings using rating map
-                const eventRatings = [
-                    'communication_rating',
-                    'video_quality',
-                    'audio_quality',
-                    'mastery_rating',
-                    'time_management',
-                    'methodologies',
-                    'conduct'
-                ];
-
-                eventRatings.forEach(field => {
-                    const rating = formData.get(field);
-                    if (rating) {
-                        formData.set(field, convertRatingToNumber(rating));
-                    }
-                });
-
-                // Convert agreement ratings
-                const agreementFields = [
-                    'topic_informative',
-                    'activity_relevance'
-                ];
-
-                agreementFields.forEach(field => {
-                    const rating = formData.get(field);
-                    if (rating) {
-                        formData.set(field, convertAgreementToNumber(rating));
-                    }
-                });
-
-                // Ensure all required event fields are included
-                const eventRequiredFields = [
-                    'activity_title',
-                    'activity_date',
-                    'venue',
-                    'student_org'
-                ];
-
-                eventRequiredFields.forEach(field => {
-                    const value = formData.get(field);
-                    if (!value) {
-                        console.error(`Missing required event field: ${field}`);
-                    }
-                });
-            }
-        }
-
-        // Submit form data
-        fetch('ajax/submit_feedback.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => {
-                    console.error('Server response:', text);
-                    throw new Error('Server responded with an error');
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                alert('Thank you for your feedback!');
-                resetForm();
-                const modal = document.getElementById('feedbackModal');
-                if (modal && typeof bootstrap !== 'undefined') {
-                    const bsModal = bootstrap.Modal.getInstance(modal);
-                    if (bsModal) bsModal.hide();
-                }
-            } else {
-                throw new Error(data.message || 'Error submitting feedback');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while submitting your feedback. Please try again.');
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
         });
-    });
-}
+    }
+
+    // Function to ensure current dates in all date fields
+    function ensureCurrentDates() {
+        // Get current date in ISO format (YYYY-MM-DD)
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        
+        // Set current date for all date fields
+        const dateFields = ['date', 'activity_date'];
+        dateFields.forEach(fieldName => {
+            const field = document.querySelector(`[name="${fieldName}"]`);
+            if (field) {
+                field.value = formattedDate;
+            } else {
+                // If the field doesn't exist, create a hidden input with the current date
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = fieldName;
+                hiddenInput.value = formattedDate;
+                feedbackForm.appendChild(hiddenInput);
+            }
+        });
+    }
+
     // Step validation
     function validateCurrentStep() {
         if (currentStep === 0) {
@@ -6932,46 +8060,6 @@ document.querySelectorAll('input[name="feedback_category"]').forEach(input => {
 
         return true;
     }
-    function validateOrgForm() {
-    const requiredFields = [
-        { name: 'organization', label: 'Organization', type: 'select' },
-    ];
-
-    for (const field of requiredFields) {
-        const element = field.type === 'radio' 
-            ? document.querySelector(`input[name="${field.name}"]:checked`)
-            : document.querySelector(`[name="${field.name}"]`);
-            
-        const value = field.type === 'radio' 
-            ? element?.value
-            : element?.value?.trim();
-
-        if (!value) {
-            alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
-            element?.focus();
-            return false;
-        }
-    }
-
-    // Validate organization ratings
-    const orgRatings = [
-        'event_quality',
-        'org_communication',
-        'inclusivity',
-        'leadership',
-        'skill_dev',
-        'impact'
-    ];
-
-    for (const rating of orgRatings) {
-        if (!document.querySelector(`input[name="${rating}"]:checked`)) {
-            alert(`Please provide a rating for ${rating.replace('_', ' ')}`);
-            return false;
-        }
-    }
-
-    return true;
-}
 
     // Navigation and step management
     function updateSteps() {
@@ -7022,43 +8110,59 @@ document.querySelectorAll('input[name="feedback_category"]').forEach(input => {
             const displays = {
                 'officeQuestions': 'none',
                 'orgQuestions': 'none',
-                'eventEvaluation': 'none'
+                'eventEvaluation': 'none',
+                'csmIntro': 'none'
             };
 
             Object.entries(displays).forEach(([id, display]) => {
                 const element = document.getElementById(id);
                 if (element) element.style.display = display;
             });
+            
+            // Re-ensure all date fields have the current date
+            ensureCurrentDates();
         }
     }
 
+    // Close with ESC key
+    document.addEventListener('keydown', function(e) {
+        if (customFeedbackContainer.style.display === 'block') {
+            if (e.key === 'Escape') {
+                closeFullscreenFeedback();
+            }
+        }
+    });
+
     // Initialize on load
     updateSteps();
+    ensureCurrentDates();
 });
+
+// Feedback counts update function
 function updateFeedbackCounts() {
-  fetch('ajax/get_feedback_counts.php')
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        // Update with the correct element IDs from your HTML
-        document.getElementById('org-feedback-count').textContent = data.org_count || 0;
-        document.getElementById('office-feedback-count').textContent = data.office_count || 0;
-      } else {
-        console.error('Error in feedback response:', data.error);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching feedback counts:', error);
-      // Update with fallback values if fetch fails
-      document.getElementById('org-feedback-count').textContent = '0';
-      document.getElementById('office-feedback-count').textContent = '0';
-    });
+    fetch('ajax/get_feedback_counts.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update with the correct element IDs from your HTML
+                document.getElementById('org-feedback-count').textContent = data.org_count || 0;
+                document.getElementById('office-feedback-count').textContent = data.office_count || 0;
+            } else {
+                console.error('Error in feedback response:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching feedback counts:', error);
+            // Update with fallback values if fetch fails
+            document.getElementById('org-feedback-count').textContent = '0';
+            document.getElementById('office-feedback-count').textContent = '0';
+        });
 }
 
 // Update counts initially and every 30 seconds
 document.addEventListener('DOMContentLoaded', function() {
-  updateFeedbackCounts();
-  setInterval(updateFeedbackCounts, 30000);
+    updateFeedbackCounts();
+    setInterval(updateFeedbackCounts, 30000);
 });
     </script>
     <script>
@@ -7088,621 +8192,1575 @@ document.addEventListener('DOMContentLoaded', function() {
 
         lastScrollTop = st;
     }
+// Store current organization ID
+let currentOrgId = null;
+let allAnnouncements = [];
+let currentProfilePhoto = '';
+let currentAuthorName = '';
 
-   
-$(document).ready(function () {
-    // Global variables to store state
-    let allAnnouncements = [];
-    let currentProfilePhoto = '';
-    let currentAuthorName = '';
+// Open popup from card
+function openOrgPopup(orgId, title, image, profilePhoto, author) {
+    // Validate organizationID
+    if (!orgId || orgId === 'undefined' || orgId === 'null') {
+        console.error('Invalid organization ID:', orgId);
+        alert('Error: Invalid organization ID. Please try again or contact the administrator.');
+        return; // Exit the function to prevent further processing
+    }
     
-    // When the modal is shown, ensure that we fetch announcements
-    $('#newsModal').on('show.bs.modal', function (e) {
-        var orgId = $(e.relatedTarget).data('orgid');
-        var title = $(e.relatedTarget).data('title');
-        var imageSrc = $(e.relatedTarget).data('image');
-        var profilePhoto = $(e.relatedTarget).data('profilephoto');
-        var authorName = $(e.relatedTarget).data('author');
-
-        console.log("Organization ID (Announcements):", orgId);
-
-        // Update organization name and profile photo in the modal
-        $('#orgName').text(title);
-        $('#orgProfilePhoto').attr('src', profilePhoto);
-        
-        // Set org_id for both tabs
-        $('#announcements-tab').data('orgid', orgId);
-        $('#members-tab').data('orgid', orgId);
-
-        // Fetch announcements if orgId is valid
-        if (orgId) {
-            fetchAnnouncements(orgId, profilePhoto, authorName);
-        } else {
-            console.error("Invalid orgId in modal");
-        }
-        
-        // Clear filters when modal is opened
-        resetFiltersUI();
-    });
-
-    // When the Members tab is clicked, fetch members dynamically based on org_id
-    $('#members-tab').on('click', function () {
-        var orgId = $(this).data('orgid'); // Get orgId from members tab button
-
-        if (orgId) {
-            console.log("Fetching members for org ID:", orgId);
-            fetchMembers(orgId);
-        } else {
-            console.error("Invalid orgId for fetching members");
-            $('#members').html('<p class="text-danger">Invalid organization ID.</p>');
-        }
+    console.log('Opening popup for organization:', {
+        orgId: orgId,
+        title: title,
+        profilePhoto: profilePhoto,
+        author: author
     });
     
-    // Fetch announcements from server
-    function fetchAnnouncements(orgId, profilePhoto, authorName) {
-        const filters = {
-            org_id: orgId,
-            search: $('#announcementSearch').val(),
-            category: $('#categoryFilter').val(),
-            date_from: $('#dateFilter').val()
-        };
-
-        console.log('Sending filters to server:', filters);
-        
-        // Store these for later use
-        currentProfilePhoto = profilePhoto;
-        currentAuthorName = authorName;
-
-        $.ajax({
-            url: 'ajax/fetch_announcement.php',
-            type: 'POST',
-            dataType: 'json',
-            data: filters,
-            success: function(response) {
-                if (response.status === 'error') {
-                    $('#announcements-content').html(`<p class="text-danger">${response.message}</p>`);
-                    return;
-                }
-                
-                allAnnouncements = response.announcements;
-                console.log('Received announcements:', allAnnouncements);
-                console.log('Applied filters:', response.filters_applied);
-                
-                renderAnnouncementsContent({ announcements: allAnnouncements });
-            },
-            error: function(xhr, status, error) {
-                console.error('Fetch error:', error);
-                console.error('Server response:', xhr.responseText);
-                $('#announcements-content').html('<p class="text-danger">Error loading announcements</p>');
-            }
-        });
+    // Set current org ID
+    currentOrgId = orgId;
+    
+    // Set basic info
+    document.getElementById('orgName').textContent = title || 'Organization';
+    
+    // Handle profile photo safely
+    if (profilePhoto && profilePhoto !== 'undefined' && profilePhoto !== 'null') {
+        document.getElementById('orgProfilePhoto').src = profilePhoto;
+    } else {
+        // Use a default image if profile photo is invalid
+        document.getElementById('orgProfilePhoto').src = '/api/placeholder/400/400';
     }
     
-    // Fetch members function
-    function fetchMembers(orgId) {
-        // Implement your members fetching logic here
-        console.log("Fetching members for organization ID:", orgId);
-        // Example AJAX call - update with your actual endpoint
-        $.ajax({
-            url: 'ajax/fetch_members.php',
-            type: 'POST',
-            dataType: 'json',
-            data: { org_id: orgId },
-            success: function(response) {
-                // Process member data
-                console.log("Member data received:", response);
-                // Render members tab content
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching members:", error);
-                $('#members').html('<p class="text-danger">Error loading members</p>');
-            }
-        });
-    }
+    // Store for later use
+    currentProfilePhoto = profilePhoto;
+    currentAuthorName = author;
     
-    // Main filtering function
-    function filterAnnouncements() {
-        const searchTerm = $('#announcementSearch').val().toLowerCase().trim();
-        const dateFilter = $('#dateFilter').val();
-        const categoryFilter = $('#categoryFilter').val();
-
-        console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
-
-        // Make sure allAnnouncements is defined and accessible
-        if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
-            console.error('allAnnouncements is not defined or not an array');
-            return [];
-        }
-
-        const filtered = allAnnouncements.filter(announcement => {
-            // Search filter - make sure all properties exist before accessing them
-            const searchableText = [
-                announcement.announcement_title || '',
-                announcement.announcement_details || '',
-                announcement.creator_name || '',
-                announcement.author_name || ''
-            ].join(' ').toLowerCase();
-            
-            const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
-            
-            // Date filter - improved date handling
-            let matchesDate = true;
-            if (dateFilter) {
-                if (dateFilter === 'today') {
-                    // Today filter
-                    const today = new Date();
-                    const announcementDate = new Date(announcement.created_at);
-                    matchesDate = 
-                        announcementDate.getDate() === today.getDate() &&
-                        announcementDate.getMonth() === today.getMonth() &&
-                        announcementDate.getFullYear() === today.getFullYear();
-                } 
-                else if (dateFilter === 'week') {
-                    // This week filter
-                    const today = new Date();
-                    const oneWeekAgo = new Date();
-                    oneWeekAgo.setDate(today.getDate() - 7);
-                    const announcementDate = new Date(announcement.created_at);
-                    matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
-                }
-                else if (dateFilter === 'month') {
-                    // This month filter
-                    const today = new Date();
-                    const oneMonthAgo = new Date();
-                    oneMonthAgo.setMonth(today.getMonth() - 1);
-                    const announcementDate = new Date(announcement.created_at);
-                    matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
-                }
-                else {
-                    // Specific date
-                    const announcementDate = new Date(announcement.created_at);
-                    const filterDate = new Date(dateFilter);
-                    matchesDate = 
-                        announcementDate.getDate() === filterDate.getDate() &&
-                        announcementDate.getMonth() === filterDate.getMonth() &&
-                        announcementDate.getFullYear() === filterDate.getFullYear();
-                }
-            }
-            
-            // Category filter
-            let matchesCategory = true;
-            if (categoryFilter && categoryFilter !== 'all') {
-                // Make sure to handle null or undefined category
-                const announcementCategory = (announcement.category || '').toLowerCase();
-                const filterCategoryLower = categoryFilter.toLowerCase();
-                
-                matchesCategory = announcementCategory === filterCategoryLower;
-                
-                // Debug log for category matching
-                console.log('Checking announcement category:', {
-                    id: announcement.announcement_id,
-                    title: announcement.announcement_title,
-                    category: announcementCategory,
-                    filterCategory: filterCategoryLower,
-                    matches: announcementCategory === filterCategoryLower
-                });
-            }
-
-            const result = matchesSearch && matchesDate && matchesCategory;
-            
-            return result;
-        });
-
-        console.log('Filter results:', {
-            totalAnnouncements: allAnnouncements.length,
-            filteredCount: filtered.length,
-            appliedFilters: {
-                search: searchTerm,
-                date: dateFilter,
-                category: categoryFilter
-            }
-        });
-
-        return filtered;
-    }
-    
-    // Reset filters UI function
-    function resetFiltersUI() {
-        // Reset input fields
-        $('#announcementSearch').val('');
-        $('#dateFilter').val('');
-        $('#categoryFilter').val('all');
-        
-        // Reset active classes on filter dropdowns
-        $('.date-filter, .category-filter').removeClass('active');
-        $('.date-filter[data-value=""], .category-filter[data-value="all"]').addClass('active');
-    }
-    
-    // Clear filters function
-    function clearFilters() {
-        console.log('Clearing filters');
-        
-        // Reset UI
-        resetFiltersUI();
-        
-        // Fetch fresh data from server
-        const orgId = $('#announcements-tab').data('orgid');
-        if (orgId) {
-            fetchAnnouncements(orgId, currentProfilePhoto, currentAuthorName);
+    // Reset tabs
+    document.querySelectorAll('.org-tab').forEach(tab => {
+        if (tab.id === 'announcements-tab') {
+            tab.classList.add('active');
         } else {
-            // If we can't fetch new data, use existing announcements
-            renderAnnouncementsContent({ announcements: allAnnouncements });
+            tab.classList.remove('active');
         }
+    });
+    
+    document.querySelectorAll('.org-tab-pane').forEach(pane => {
+        if (pane.id === 'announcements') {
+            pane.classList.add('active');
+        } else {
+            pane.classList.remove('active');
+        }
+    });
+    
+    // Set org_id for both tabs (to match your existing code)
+    document.getElementById('announcements-tab').setAttribute('data-orgid', orgId);
+    document.getElementById('members-tab').setAttribute('data-orgid', orgId);
+    
+    // Show popup
+    document.getElementById('newsPopup').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent body scrolling
+    
+    // Reset filters
+    resetFiltersUI();
+    
+    // Load announcements
+    fetchAnnouncements(orgId);
+}
+
+// Close popup
+function closeOrgPopup() {
+    document.getElementById('newsPopup').classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scrolling
+    currentOrgId = null;
+}
+
+// Toggle filter menu
+function toggleOrgFilterMenu() {
+    document.getElementById('orgFilterMenu').classList.toggle('active');
+}
+// Store current organization ID
+let currentOrgId = null;
+let allAnnouncements = [];
+let currentProfilePhoto = '';
+let currentAuthorName = '';
+
+// Open popup from card
+function openOrgPopup(orgId, title, image, profilePhoto, author) {
+    // Validate organizationID
+    if (!orgId || orgId === 'undefined' || orgId === 'null') {
+        console.error('Invalid organization ID:', orgId);
+        alert('Error: Invalid organization ID. Please try again or contact the administrator.');
+        return; // Exit the function to prevent further processing
     }
     
-    // Render announcements content
-    function renderAnnouncementsContent(response) {
-        const announcements = response.announcements || [];
-        
-        if (announcements.length === 0) {
-            $('#announcements-content').html(renderEmptyState());
-            return;
-        }
-
-        const content = `
-            <div class="list-group">
-                ${announcements.map(announcement => renderAnnouncementItem(announcement)).join('')}
-            </div>`;
-        
-        $('#announcements-content').html(content);
+    console.log('Opening popup for organization:', {
+        orgId: orgId,
+        title: title,
+        profilePhoto: profilePhoto,
+        author: author
+    });
+    
+    // Set current org ID
+    currentOrgId = orgId;
+    
+    // Set basic info
+    document.getElementById('orgName').textContent = title || 'Organization';
+    
+    // Handle profile photo safely
+    if (profilePhoto && profilePhoto !== 'undefined' && profilePhoto !== 'null') {
+        document.getElementById('orgProfilePhoto').src = profilePhoto;
+    } else {
+        // Use a default image if profile photo is invalid
+        document.getElementById('orgProfilePhoto').src = '/api/placeholder/400/400';
     }
     
-    // Render empty state
-    function renderEmptyState() {
-        return `
-            <div class="text-center py-8">
-                <div class="custom-alert">
-                    <i class="bi bi-info-circle me-2" style="font-size: 2rem;"></i>
-                    <p class="h4 mb-0">No announcements available at the moment.</p>
-                </div>
-            </div>`;
+    // Store for later use
+    currentProfilePhoto = profilePhoto;
+    currentAuthorName = author;
+    
+    // Reset tabs
+    document.querySelectorAll('.org-tab').forEach(tab => {
+        if (tab.id === 'announcements-tab') {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+    
+    document.querySelectorAll('.org-tab-pane').forEach(pane => {
+        if (pane.id === 'announcements') {
+            pane.classList.add('active');
+        } else {
+            pane.classList.remove('active');
+        }
+    });
+    
+    // Set org_id for both tabs (to match your existing code)
+    document.getElementById('announcements-tab').setAttribute('data-orgid', orgId);
+    document.getElementById('members-tab').setAttribute('data-orgid', orgId);
+    
+    // Show popup
+    document.getElementById('newsPopup').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent body scrolling
+    
+    // Reset filters
+    resetFiltersUI();
+    
+    // Load announcements
+    fetchAnnouncements(orgId);
+}
+
+// Close popup
+function closeOrgPopup() {
+    document.getElementById('newsPopup').classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scrolling
+    currentOrgId = null;
+}
+
+// Toggle filter menu
+function toggleOrgFilterMenu() {
+    document.getElementById('orgFilterMenu').classList.toggle('active');
+}
+
+// Fetch announcements - Using your existing AJAX endpoint
+function fetchAnnouncements(orgId) {
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    // Show loading state
+    announcementsContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading announcements...</p>
+        </div>
+    `;
+    
+    // Get filter values
+    const searchText = document.getElementById('announcementSearch').value;
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    
+    // Prepare filters object to match your existing code
+    const filters = {
+        org_id: orgId,
+        search: searchText,
+        category: categoryFilter
+    };
+    
+    // Handle date filtering based on your existing code
+    if (dateFilter === 'today') {
+        const today = new Date().toISOString().split('T')[0];
+        filters.date_from = today;
+        filters.date_to = today;
+    } else if (dateFilter === 'week') {
+        const today = new Date();
+        const weekStart = new Date();
+        weekStart.setDate(today.getDate() - 7);
+        filters.date_from = weekStart.toISOString().split('T')[0];
+    } else if (dateFilter === 'month') {
+        const today = new Date();
+        const monthStart = new Date();
+        monthStart.setMonth(today.getMonth() - 1);
+        filters.date_from = monthStart.toISOString().split('T')[0];
+    } else if (dateFilter) {
+        // Any specific date value
+        filters.date_from = dateFilter;
     }
     
-    // Render announcement item
-    function renderAnnouncementItem(announcement) {
-        const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
-        const formattedDate = formatRelativeTime(new Date(announcement.created_at));
-        const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
-
-        return `
-            <div class="list-group-item bg-white rounded-lg shadow-sm p-4 mb-4">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <div class="d-flex align-items-center">
-                        <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : 'default-profile.jpg'}" 
-                            alt="Profile" 
-                            class="rounded-circle border border-primary" 
-                            style="width: 50px; height: 50px;">
-                        <div class="ms-3">
-                            <h5 class="mb-1">${displayName}</h5>
-                            <small class="text-muted">${announcement.org_name || 'Unknown Organization'}</small>
-                        </div>
-                    </div>
-                    <span class="badge ${categoryBadgeClass}">${announcement.category}</span>
-                </div>
-                <h4 class="mb-3">${announcement.announcement_title}</h4>
-                <div class="announcement-content mb-3">
-                    ${announcement.announcement_details}
-                </div>
-                ${renderAnnouncementImages(announcement)}
-                <small class="text-muted">${formattedDate}</small>
-            </div>`;
-    }
+    console.log('Fetching announcements with filters:', filters);
     
-    // Render announcement images
-    function renderAnnouncementImages(announcement) {
-        console.log('Rendering images for announcement:', announcement);
-        console.log('Raw images:', announcement.images);
-
-        if (!announcement.images) {
-            console.log('No images found for announcement');
-            return '';
-        }
-
-        // If the images are a string (comma-separated), convert to array
-        const images = typeof announcement.images === 'string' 
-            ? announcement.images.split(',').filter(img => img.trim() !== '')
-            : Array.isArray(announcement.images) 
-                ? announcement.images
-                : [];
-
-        console.log('Processed images array:', images);
-
-        if (!images || images.length === 0) {
-            console.log('No valid images after processing');
-            return '';
-        }
-
-        // Create a carousel for multiple images
-        const carouselId = `carousel-${announcement.announcement_id}`;
-        console.log('Creating carousel with ID:', carouselId);
-
-        const carouselItems = images.map((image, index) => {
-            const imagePath = image.trim();
-            console.log(`Processing image ${index + 1}:`, imagePath);
-            return `
-                <div class="carousel-item ${index === 0 ? 'active' : ''}" data-bs-interval="false">
-                    <img src="uploaded/annUploaded/${imagePath}" 
-                        class="d-block w-100 rounded" 
-                        alt="Announcement Image ${index + 1}"
-                        style="max-height: 400px; object-fit: contain;"
-                        onerror="this.onerror=null; this.src='default-image.jpg'; console.error('Failed to load image:', this.src);">
+    // Using fetch instead of $.ajax but maintaining compatibility
+    fetch('ajax/fetch_announcement.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(filters)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            announcementsContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
                 </div>
             `;
-        }).join('');
+            return;
+        }
+        
+        // Store announcements in global variable (like your existing code)
+        allAnnouncements = data.announcements || [];
+        
+        console.log('Received announcements:', allAnnouncements);
+        console.log('Applied filters:', data.filters_applied);
+        
+        // Render announcements
+        renderAnnouncementsContent({ announcements: allAnnouncements });
+    })
+    .catch(error => {
+        console.error('Error fetching announcements:', error);
+        announcementsContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load announcements. Please try again later.</p>
+            </div>
+        `;
+    });
+}
 
-        return `
-            <div id="${carouselId}" class="carousel slide mb-3" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    ${carouselItems}
+// Fetch members - Using your existing AJAX endpoint
+function fetchMembers(orgId) {
+    const membersContainer = document.getElementById('members-content');
+    
+    // Check if we've already loaded members
+    if (membersContainer.querySelector('.members-grid')) {
+        return; // Already loaded
+    }
+    
+    // Show loading state
+    membersContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading members...</p>
+        </div>
+    `;
+    
+    console.log('Fetching members for org ID:', orgId);
+    
+    // Using fetch instead of $.ajax but maintaining compatibility
+    fetch('ajax/fetch_members.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ org_id: orgId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            membersContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
                 </div>
-                ${images.length > 1 ? `
-                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                ` : ''}
-                ${images.length > 1 ? `
-                    <ol class="carousel-indicators">
-                        ${images.map((_, index) => `
-                            <li data-bs-target="#${carouselId}" 
-                                data-bs-slide-to="${index}" 
-                                class="${index === 0 ? 'active' : ''}">
-                            </li>
-                        `).join('')}
-                    </ol>
-                ` : ''}
-            </div>`;
-    }
-    
-    // Helper function to get badge class based on category
-    function getCategoryBadgeClass(category) {
-        if (!category) return 'bg-secondary';
+            `;
+            return;
+        }
         
-        const categoryLower = category.toLowerCase();
-        const classes = {
-            'academic': 'bg-primary',
-            'event': 'bg-success',
-            'announcement': 'bg-info',
-            'news': 'bg-warning',
-            'org': 'bg-info',
-            'general': 'bg-secondary'
-        };
-        return classes[categoryLower] || 'bg-secondary';
-    }
-    
-    // Format relative time function
-    function formatRelativeTime(date) {
-        const now = new Date();
-        const seconds = Math.floor((now - date) / 1000);
+        console.log('Received members data:', data);
+        renderMembersContent(data.members);
+    })
+    .catch(error => {
+        console.error('Error fetching members:', error);
+        membersContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load members. Please try again later.</p>
+            </div>
+        `;
+    });
+}
 
-        if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+// Filter announcements locally
+function filterAnnouncements() {
+    const searchTerm = document.getElementById('announcementSearch').value.toLowerCase().trim();
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+
+    console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
+
+    // Make sure allAnnouncements is defined and accessible
+    if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
+        console.error('allAnnouncements is not defined or not an array');
+        return [];
+    }
+
+    const filtered = allAnnouncements.filter(announcement => {
+        // Search filter - make sure all properties exist before accessing them
+        const searchableText = [
+            announcement.announcement_title || '',
+            announcement.announcement_details || '',
+            announcement.creator_name || '',
+            announcement.author_name || ''
+        ].join(' ').toLowerCase();
         
-        const minutes = Math.floor(seconds / 60);
-        if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+        
+        // Date filter - improved date handling
+        let matchesDate = true;
+        if (dateFilter) {
+            if (dateFilter === 'today') {
+                // Today filter
+                const today = new Date();
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = 
+                    announcementDate.getDate() === today.getDate() &&
+                    announcementDate.getMonth() === today.getMonth() &&
+                    announcementDate.getFullYear() === today.getFullYear();
+            } 
+            else if (dateFilter === 'week') {
+                // This week filter
+                const today = new Date();
+                const oneWeekAgo = new Date();
+                oneWeekAgo.setDate(today.getDate() - 7);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
+            }
+            else if (dateFilter === 'month') {
+                // This month filter
+                const today = new Date();
+                const oneMonthAgo = new Date();
+                oneMonthAgo.setMonth(today.getMonth() - 1);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
+            }
+            else {
+                // Specific date
+                const announcementDate = new Date(announcement.created_at);
+                const filterDate = new Date(dateFilter);
+                matchesDate = 
+                    announcementDate.getDate() === filterDate.getDate() &&
+                    announcementDate.getMonth() === filterDate.getMonth() &&
+                    announcementDate.getFullYear() === filterDate.getFullYear();
+            }
+        }
+        
+        // Category filter
+        let matchesCategory = true;
+        if (categoryFilter && categoryFilter !== 'all') {
+            // Make sure to handle null or undefined category
+            const announcementCategory = (announcement.category || '').toLowerCase();
+            const filterCategoryLower = categoryFilter.toLowerCase();
+            
+            matchesCategory = announcementCategory === filterCategoryLower;
+            
+            // Debug log for category matching
+            console.log('Checking announcement category:', {
+                id: announcement.announcement_id,
+                title: announcement.announcement_title,
+                category: announcementCategory,
+                filterCategory: filterCategoryLower,
+                matches: announcementCategory === filterCategoryLower
+            });
+        }
 
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+        const result = matchesSearch && matchesDate && matchesCategory;
+        
+        return result;
+    });
 
-        const days = Math.floor(hours / 24);
-        if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+    console.log('Filter results:', {
+        totalAnnouncements: allAnnouncements.length,
+        filteredCount: filtered.length,
+        appliedFilters: {
+            search: searchTerm,
+            date: dateFilter,
+            category: categoryFilter
+        }
+    });
 
-        const months = Math.floor(days / 30);
-        if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+    return filtered;
+}
 
-        const years = Math.floor(months / 12);
-        return years + " year" + (years > 1 ? "s" : "") + " ago";
-    }
+// Reset filters UI
+function resetFiltersUI() {
+    // Reset input fields
+    document.getElementById('announcementSearch').value = '';
+    document.getElementById('dateFilter').value = '';
+    document.getElementById('categoryFilter').value = 'all';
     
-    // EVENT LISTENERS
-    // ---------------
-    
-    // Search input event listener
-    $('#announcementSearch').on('input', function() {
-        console.log('Search input changed:', $(this).val());
-        const filtered = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filtered });
+    // Reset active classes on filter dropdowns
+    document.querySelectorAll('.date-filter, .category-filter').forEach(el => {
+        el.classList.remove('active');
     });
     
+    document.querySelector('.date-filter[data-value=""]').classList.add('active');
+    document.querySelector('.category-filter[data-value="all"]').classList.add('active');
+}
+
+// Clear filters
+function clearFilters() {
+    console.log('Clearing filters');
+    
+    // Reset UI
+    resetFiltersUI();
+    
+    // Apply filters or fetch fresh data
+    if (currentOrgId) {
+        if (allAnnouncements.length > 0) {
+            // If we have announcements, just rerender them all
+            renderAnnouncementsContent({ announcements: allAnnouncements });
+        } else {
+            // Otherwise fetch fresh data
+            fetchAnnouncements(currentOrgId);
+        }
+    }
+}
+
+// Render announcements content
+function renderAnnouncementsContent(response) {
+    const announcements = response.announcements || [];
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    if (announcements.length === 0) {
+        announcementsContainer.innerHTML = renderEmptyState();
+        return;
+    }
+
+    let html = '<div class="announcements-container">';
+    
+    announcements.forEach(announcement => {
+        html += renderAnnouncementItem(announcement);
+    });
+    
+    html += '</div>';
+    
+    announcementsContainer.innerHTML = html;
+}
+
+// Render empty state
+function renderEmptyState() {
+    return `
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="far fa-comment-alt"></i>
+            </div>
+            <h5>No Announcements</h5>
+            <p>There are no announcements for this organization yet.</p>
+        </div>
+    `;
+}
+
+// Render announcement item
+function renderAnnouncementItem(announcement) {
+    const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
+    const formattedDate = formatRelativeTime(new Date(announcement.created_at));
+    const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
+
+    return `
+        <div class="announcement-card" data-announcement-id="${announcement.announcement_id}">
+            <div class="announcement-body">
+                <div class="announcement-header">
+                    <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : '/api/placeholder/50/50'}" 
+                         class="announcement-author-img" alt="${displayName}">
+                    <div class="announcement-author-info">
+                        <h6 class="announcement-author-name">${displayName}</h6>
+                        <p class="announcement-date">Posted ${formattedDate}</p>
+                    </div>
+                    <span class="category-badge ${categoryBadgeClass}">${announcement.category || 'General'}</span>
+                </div>
+                <h5 class="announcement-title">${announcement.announcement_title}</h5>
+                <div class="announcement-text">${announcement.announcement_details}</div>
+                ${renderAnnouncementImages(announcement)}
+            </div>
+        </div>
+    `;
+}
+
+// Render announcement images
+function renderAnnouncementImages(announcement) {
+    if (!announcement.images || announcement.images.length === 0) {
+        return '';
+    }
+
+    // If the images are a string (comma-separated), convert to array
+    const images = typeof announcement.images === 'string' 
+        ? announcement.images.split(',').filter(img => img.trim() !== '')
+        : Array.isArray(announcement.images) 
+            ? announcement.images
+            : [];
+
+    if (images.length === 0) {
+        return '';
+    }
+
+    // For a single image
+    if (images.length === 1) {
+        return `
+            <div class="announcement-image">
+                <img src="uploaded/annUploaded/${images[0].trim()}" 
+                     alt="Announcement Image"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }
+
+    // For multiple images, create a carousel
+    const carouselId = `carousel-${announcement.announcement_id}`;
+    
+    const carouselItems = images.map((image, index) => {
+        const imagePath = image.trim();
+        return `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="uploaded/annUploaded/${imagePath}" 
+                     alt="Announcement Image ${index + 1}"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div id="${carouselId}" class="announcement-carousel carousel slide">
+            <div class="carousel-inner">
+                ${carouselItems}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+}
+
+// Render members content
+function renderMembersContent(members) {
+    const membersContainer = document.getElementById('members-content');
+    
+    if (!members || members.length === 0) {
+        membersContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h5>No Members</h5>
+                <p>This organization doesn't have any registered members yet.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Leadership and general members
+    const leadership = members.filter(member => 
+        member.position && ['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    const generalMembers = members.filter(member => 
+        !member.position || !['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    let html = '';
+    
+    // Leadership section
+    if (leadership.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">Leadership</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        leadership.forEach(leader => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${leader.member_img ? 'uploaded/orgUploaded/' + leader.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image leadership" alt="${leader.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${leader.name}</h5>
+                            <p class="member-role">${leader.position}</p>
+                            <p class="member-since">Since ${formatDate(leader.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    // General members
+    if (generalMembers.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">General Members</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        generalMembers.forEach(member => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${member.member_img ? 'uploaded/orgUploaded/' + member.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image" alt="${member.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${member.name}</h5>
+                            ${member.committee ? `<p class="member-committee">${member.committee}</p>` : ''}
+                            <p class="member-since">Since ${formatDate(member.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    membersContainer.innerHTML = html;
+}
+
+// Helper function to get badge class based on category
+function getCategoryBadgeClass(category) {
+    if (!category) return 'category-general';
+    
+    const categoryLower = (category || '').toLowerCase();
+    const classes = {
+        'academic': 'category-academic',
+        'event': 'category-event',
+        'announcement': 'category-announcement',
+        'news': 'category-news',
+        'org': 'category-org',
+        'general': 'category-general'
+    };
+    return classes[categoryLower] || 'category-general';
+}
+
+// Format relative time function
+function formatRelativeTime(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+
+    if (isNaN(seconds)) return 'recently';
+    
+    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+    const years = Math.floor(months / 12);
+    return years + " year" + (years > 1 ? "s" : "") + " ago";
+}
+
+// Format date helper
+function formatDate(dateString) {
+    if (!dateString) return 'Unknown date';
+    
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+        return dateString; // Return the original string if date is invalid
+    }
+    
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Initialize event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing organization popup system...');
+    
+    // Click event for all tabs
+    const tabs = document.querySelectorAll('.org-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Hide all tab panes
+            const tabPanes = document.querySelectorAll('.org-tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Show the corresponding tab pane
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Load members data if members tab is clicked
+            if (tabId === 'members' && currentOrgId) {
+                fetchMembers(currentOrgId);
+            }
+        });
+    });
+    
+    // Close filter menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const filterMenu = document.getElementById('orgFilterMenu');
+        const filterBtn = document.getElementById('filterDropdown');
+        
+        if (filterMenu && filterBtn) {
+            if (filterMenu.classList.contains('active') && 
+                !filterMenu.contains(event.target) && 
+                event.target !== filterBtn) {
+                filterMenu.classList.remove('active');
+            }
+        }
+    });
+    
+    // Search input event listener
+    const searchInput = document.getElementById('announcementSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+        });
+    }
+    
     // Date filter dropdown items
-    $('.date-filter').on('click', function(e) {
-        e.preventDefault();
-        const value = $(this).data('value');
-        console.log('Date filter clicked:', value);
-        
-        // Update hidden input value
-        $('#dateFilter').val(value);
-        
-        // Update UI to show selected filter
-        $('.date-filter').removeClass('active');
-        $(this).addClass('active');
-        
-        // Apply filters
-        const filtered = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filtered });
+    const dateFilters = document.querySelectorAll('.date-filter');
+    dateFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('dateFilter').value = value;
+            
+            // Update UI to show selected filter
+            dateFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
     });
     
     // Category filter dropdown items
-    $('.category-filter').on('click', function(e) {
-        e.preventDefault();
-        const value = $(this).data('value');
-        console.log('Category filter clicked:', value);
-        
-        // Update hidden input value
-        $('#categoryFilter').val(value);
-        
-        // Update UI to show selected filter
-        $('.category-filter').removeClass('active');
-        $(this).addClass('active');
-        
-        // Apply filters
-        const filtered = filterAnnouncements();
-        renderAnnouncementsContent({ announcements: filtered });
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    categoryFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('categoryFilter').value = value;
+            
+            // Update UI to show selected filter
+            categoryFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
     });
     
     // Clear filters button
-    $('#clearFilters').on('click', function(e) {
-        e.preventDefault();
-        console.log('Clear filters clicked');
-        clearFilters();
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            clearFilters();
+            toggleOrgFilterMenu();
+        });
+    }
+    
+    // Update card click event handlers
+    updateCardClickHandlers();
+    
+    // Add event listeners to close popup when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeOrgPopup();
+        }
     });
-   function fetchMembers(orgId) {
-    $.ajax({
-        url: 'ajax/fetch_members.php',
-        type: 'POST',
-        dataType: 'json',
-        data: { org_id: orgId },
-        success: function (response) {
-            if (response.error) {
-                $('#members').html(`
-                    <div class="text-red-600 p-4 text-center">
-                        ${response.error}
-                    </div>`
-                );
+});
+
+// Update card click handlers
+function updateCardClickHandlers() {
+    const orgCards = document.querySelectorAll('.card-image-container a');
+    console.log('Found', orgCards.length, 'organization cards');
+    
+    orgCards.forEach((card, index) => {
+        // Remove existing event listeners if any
+        const oldCard = card.cloneNode(true);
+        card.parentNode.replaceChild(oldCard, card);
+        
+        // Add new event listener
+        oldCard.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const orgId = this.getAttribute('data-orgid');
+            const title = this.getAttribute('data-title');
+            const image = this.getAttribute('data-image');
+            const profilePhoto = this.getAttribute('data-profilephoto');
+            const author = this.getAttribute('data-author');
+            
+            console.log(`Clicked card ${index + 1} with org ID:`, orgId);
+            
+            // Check if org ID is valid before opening popup
+            if (!orgId || orgId === 'undefined' || orgId === 'null') {
+                console.error('Invalid organization ID from clicked card:', orgId);
+                alert('Error: This organization has an invalid ID. Please try another or contact the administrator.');
                 return;
             }
-            renderMembersContent(response.members);
-        },
-        error: function (xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-            $('#members').html(`
-                <div class="text-red-600 p-4 text-center">
-                    An error occurred while fetching members. Please try again later.
-                </div>`
-            );
-        }
-    });
-}
-function renderMembersContent(members) {
-            let membersContent = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">';
             
-            if (members && members.length > 0) {
-                members.forEach(function (member) {
-                    membersContent += `
-                        <div class="group">
-                            <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
-                                <div class="relative">
-                                    <div class="aspect-square" style="height: 250px;">
-                                        <img src="uploaded/orgUploaded/${member.member_img}" 
-                                            alt="${member.name}" 
-                                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                            onerror="this.src='path/to/default-avatar.jpg'">
-                                    </div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-                                <div class="p-6 text-center">
-                                    <h3 class="text-lg font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">
-                                        ${member.name}
-                                    </h3>
-                                    <p class="text-sm text-blue-600 font-medium">
-                                        ${member.position}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>`;
-                });
-            } else {
-                membersContent = `
-                    <div class="flex items-center justify-center p-8 col-span-full">
-                        <div class="bg-amber-50 text-amber-800 px-6 py-4 rounded-lg flex items-center gap-3">
-                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                            <span class="text-lg font-medium">No members found</span>
-                        </div>
-                    </div>`;
-            }
-
-            membersContent += '</div>';
-            $('#members').html(membersContent);
-        }
-    function initializeCarousels() {
-        $('.carousel').each(function() {
-            new bootstrap.Carousel(this);
+            // Open our custom popup instead of Bootstrap modal
+            openOrgPopup(orgId, title, image, profilePhoto, author);
         });
-    }   // Trigger the "Members" tab on click
-        $('#members-tab').on('click', function () {
-            // This will activate the 'members' tab when clicked
-            $('#myTabs a[href="#members"]').tab('show');
-        });
-
-        // Trigger the "Announcements" tab on click
-        $('#announcements-tab').on('click', function () {
-            // This will activate the 'announcements' tab when clicked
-            $('#myTabs a[href="#announcements"]').tab('show');
-        });
-
-                    // Remove only the color style from inline style attributes, leaving other styles and tags intact
-// Remove only the color style from inline style attributes, leaving other styles and tags intact
-function removeColorTags(content) {
-    // Remove inline color styles while keeping other styles
-    content = content.replace(/style="([^"]*?)\bcolor\s*:\s*[^;]+;?([^"]*?)"/g, (match, p1, p2) => {
-        const remainingStyles = `${p1.trim()} ${p2.trim()}`.trim();
-        return remainingStyles ? `style="${remainingStyles}"` : '';
     });
-
-
-
-    // Apply a default color if no inline color is present
-    content = content.replace(/<p(.*?)>/gi, '<p$1 style="color: black;">');
-    content = content.replace(/<span(.*?)>/gi, '<span$1 style="color: black;">');
-
-    return content;
 }
 
+// Fetch announcements - Using your existing AJAX endpoint
+function fetchAnnouncements(orgId) {
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    // Show loading state
+    announcementsContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading announcements...</p>
+        </div>
+    `;
+    
+    // Get filter values
+    const searchText = document.getElementById('announcementSearch').value;
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    
+    // Prepare filters object to match your existing code
+    const filters = {
+        org_id: orgId,
+        search: searchText,
+        category: categoryFilter
+    };
+    
+    // Handle date filtering based on your existing code
+    if (dateFilter === 'today') {
+        const today = new Date().toISOString().split('T')[0];
+        filters.date_from = today;
+        filters.date_to = today;
+    } else if (dateFilter === 'week') {
+        const today = new Date();
+        const weekStart = new Date();
+        weekStart.setDate(today.getDate() - 7);
+        filters.date_from = weekStart.toISOString().split('T')[0];
+    } else if (dateFilter === 'month') {
+        const today = new Date();
+        const monthStart = new Date();
+        monthStart.setMonth(today.getMonth() - 1);
+        filters.date_from = monthStart.toISOString().split('T')[0];
+    } else if (dateFilter) {
+        // Any specific date value
+        filters.date_from = dateFilter;
+    }
+    
+    console.log('Fetching announcements with filters:', filters);
+    
+    // Using fetch instead of $.ajax but maintaining compatibility
+    fetch('ajax/fetch_announcement.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(filters)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            announcementsContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Store announcements in global variable (like your existing code)
+        allAnnouncements = data.announcements || [];
+        
+        console.log('Received announcements:', allAnnouncements);
+        console.log('Applied filters:', data.filters_applied);
+        
+        // Render announcements
+        renderAnnouncementsContent({ announcements: allAnnouncements });
+    })
+    .catch(error => {
+        console.error('Error fetching announcements:', error);
+        announcementsContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load announcements. Please try again later.</p>
+            </div>
+        `;
+    });
+}
 
+// Fetch members - Using your existing AJAX endpoint
+function fetchMembers(orgId) {
+    const membersContainer = document.getElementById('members-content');
+    
+    // Check if we've already loaded members
+    if (membersContainer.querySelector('.members-grid')) {
+        return; // Already loaded
+    }
+    
+    // Show loading state
+    membersContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading members...</p>
+        </div>
+    `;
+    
+    console.log('Fetching members for org ID:', orgId);
+    
+    // Using fetch instead of $.ajax but maintaining compatibility
+    fetch('ajax/fetch_members.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ org_id: orgId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            membersContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        console.log('Received members data:', data);
+        renderMembersContent(data.members);
+    })
+    .catch(error => {
+        console.error('Error fetching members:', error);
+        membersContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load members. Please try again later.</p>
+            </div>
+        `;
+    });
+}
 
-                function formatRelativeTime(date) {
-                    const now = new Date();
-                    const seconds = Math.floor((now - date) / 1000);
+// Filter announcements locally
+function filterAnnouncements() {
+    const searchTerm = document.getElementById('announcementSearch').value.toLowerCase().trim();
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
 
-                    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
-                    
-                    const minutes = Math.floor(seconds / 60);
-                    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+    console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
 
-                    const hours = Math.floor(minutes / 60);
-                    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+    // Make sure allAnnouncements is defined and accessible
+    if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
+        console.error('allAnnouncements is not defined or not an array');
+        return [];
+    }
 
-                    const days = Math.floor(hours / 24);
-                    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
-
-                    const months = Math.floor(days / 30);
-                    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
-
-                    const years = Math.floor(months / 12);
-                    return years + " year" + (years > 1 ? "s" : "") + " ago";
-                }
-            });
-    function adjustModalPosition() {
-            var modal = document.getElementById('myModal');
-
-            if (modal) {
-                var viewportWidth = window.innerWidth;
-                var viewportHeight = window.innerHeight;
-                var modalWidth = modal.offsetWidth;
-                var modalHeight = modal.offsetHeight;
-
-                // Calculate new position to center the modal within the viewport
-                var top = Math.max(10, (viewportHeight - modalHeight) / 2); // Ensure modal is at least 10px from top
-                var left = Math.max(10, (viewportWidth - modalWidth) / 2); // Ensure modal is at least 10px from left
-
-                // Apply new position to modal
-                modal.style.top = top + 'px';
-                modal.style.left = left + 'px';
+    const filtered = allAnnouncements.filter(announcement => {
+        // Search filter - make sure all properties exist before accessing them
+        const searchableText = [
+            announcement.announcement_title || '',
+            announcement.announcement_details || '',
+            announcement.creator_name || '',
+            announcement.author_name || ''
+        ].join(' ').toLowerCase();
+        
+        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+        
+        // Date filter - improved date handling
+        let matchesDate = true;
+        if (dateFilter) {
+            if (dateFilter === 'today') {
+                // Today filter
+                const today = new Date();
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = 
+                    announcementDate.getDate() === today.getDate() &&
+                    announcementDate.getMonth() === today.getMonth() &&
+                    announcementDate.getFullYear() === today.getFullYear();
+            } 
+            else if (dateFilter === 'week') {
+                // This week filter
+                const today = new Date();
+                const oneWeekAgo = new Date();
+                oneWeekAgo.setDate(today.getDate() - 7);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
+            }
+            else if (dateFilter === 'month') {
+                // This month filter
+                const today = new Date();
+                const oneMonthAgo = new Date();
+                oneMonthAgo.setMonth(today.getMonth() - 1);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
+            }
+            else {
+                // Specific date
+                const announcementDate = new Date(announcement.created_at);
+                const filterDate = new Date(dateFilter);
+                matchesDate = 
+                    announcementDate.getDate() === filterDate.getDate() &&
+                    announcementDate.getMonth() === filterDate.getMonth() &&
+                    announcementDate.getFullYear() === filterDate.getFullYear();
             }
         }
-        $('#myModal').modal({
-        backdrop: false // Disable the backdrop
-    });
-        // Adjust modal position when the page loads
-        window.addEventListener('load', adjustModalPosition);
+        
+        // Category filter
+        let matchesCategory = true;
+        if (categoryFilter && categoryFilter !== 'all') {
+            // Make sure to handle null or undefined category
+            const announcementCategory = (announcement.category || '').toLowerCase();
+            const filterCategoryLower = categoryFilter.toLowerCase();
+            
+            matchesCategory = announcementCategory === filterCategoryLower;
+            
+            // Debug log for category matching
+            console.log('Checking announcement category:', {
+                id: announcement.announcement_id,
+                title: announcement.announcement_title,
+                category: announcementCategory,
+                filterCategory: filterCategoryLower,
+                matches: announcementCategory === filterCategoryLower
+            });
+        }
 
-        // Adjust modal position when the window is resized
-        window.addEventListener('resize', adjustModalPosition);
+        const result = matchesSearch && matchesDate && matchesCategory;
+        
+        return result;
+    });
+
+    console.log('Filter results:', {
+        totalAnnouncements: allAnnouncements.length,
+        filteredCount: filtered.length,
+        appliedFilters: {
+            search: searchTerm,
+            date: dateFilter,
+            category: categoryFilter
+        }
+    });
+
+    return filtered;
+}
+
+// Reset filters UI
+function resetFiltersUI() {
+    // Reset input fields
+    document.getElementById('announcementSearch').value = '';
+    document.getElementById('dateFilter').value = '';
+    document.getElementById('categoryFilter').value = 'all';
+    
+    // Reset active classes on filter dropdowns
+    document.querySelectorAll('.date-filter, .category-filter').forEach(el => {
+        el.classList.remove('active');
+    });
+    
+    document.querySelector('.date-filter[data-value=""]').classList.add('active');
+    document.querySelector('.category-filter[data-value="all"]').classList.add('active');
+}
+
+// Clear filters
+function clearFilters() {
+    console.log('Clearing filters');
+    
+    // Reset UI
+    resetFiltersUI();
+    
+    // Apply filters or fetch fresh data
+    if (currentOrgId) {
+        if (allAnnouncements.length > 0) {
+            // If we have announcements, just rerender them all
+            renderAnnouncementsContent({ announcements: allAnnouncements });
+        } else {
+            // Otherwise fetch fresh data
+            fetchAnnouncements(currentOrgId);
+        }
+    }
+}
+
+// Render announcements content
+function renderAnnouncementsContent(response) {
+    const announcements = response.announcements || [];
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    if (announcements.length === 0) {
+        announcementsContainer.innerHTML = renderEmptyState();
+        return;
+    }
+
+    let html = '<div class="announcements-container">';
+    
+    announcements.forEach(announcement => {
+        html += renderAnnouncementItem(announcement);
+    });
+    
+    html += '</div>';
+    
+    announcementsContainer.innerHTML = html;
+}
+
+// Render empty state
+function renderEmptyState() {
+    return `
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="far fa-comment-alt"></i>
+            </div>
+            <h5>No Announcements</h5>
+            <p>There are no announcements for this organization yet.</p>
+        </div>
+    `;
+}
+
+// Render announcement item
+function renderAnnouncementItem(announcement) {
+    const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
+    const formattedDate = formatRelativeTime(new Date(announcement.created_at));
+    const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
+
+    return `
+        <div class="announcement-card" data-announcement-id="${announcement.announcement_id}">
+            <div class="announcement-body">
+                <div class="announcement-header">
+                    <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : '/api/placeholder/50/50'}" 
+                         class="announcement-author-img" alt="${displayName}">
+                    <div class="announcement-author-info">
+                        <h6 class="announcement-author-name">${displayName}</h6>
+                        <p class="announcement-date">Posted ${formattedDate}</p>
+                    </div>
+                    <span class="category-badge ${categoryBadgeClass}">${announcement.category || 'General'}</span>
+                </div>
+                <h5 class="announcement-title">${announcement.announcement_title}</h5>
+                <div class="announcement-text">${announcement.announcement_details}</div>
+                ${renderAnnouncementImages(announcement)}
+            </div>
+        </div>
+    `;
+}
+
+// Render announcement images
+function renderAnnouncementImages(announcement) {
+    if (!announcement.images || announcement.images.length === 0) {
+        return '';
+    }
+
+    // If the images are a string (comma-separated), convert to array
+    const images = typeof announcement.images === 'string' 
+        ? announcement.images.split(',').filter(img => img.trim() !== '')
+        : Array.isArray(announcement.images) 
+            ? announcement.images
+            : [];
+
+    if (images.length === 0) {
+        return '';
+    }
+
+    // For a single image
+    if (images.length === 1) {
+        return `
+            <div class="announcement-image">
+                <img src="uploaded/annUploaded/${images[0].trim()}" 
+                     alt="Announcement Image"
+                     class="d-block w-100"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }
+
+    // For multiple images, create a carousel
+    const carouselId = `carousel-${announcement.announcement_id}`;
+    
+    const carouselIndicators = images.map((_, index) => `
+        <button type="button" 
+                data-bs-target="#${carouselId}" 
+                data-bs-slide-to="${index}" 
+                class="${index === 0 ? 'active' : ''}"
+                aria-current="${index === 0 ? 'true' : 'false'}"
+                aria-label="Slide ${index + 1}">
+        </button>
+    `).join('');
+
+    const carouselItems = images.map((image, index) => {
+        const imagePath = image.trim();
+        return `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="uploaded/annUploaded/${imagePath}" 
+                     class="d-block w-100" 
+                     alt="Announcement Image ${index + 1}"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div id="${carouselId}" class="announcement-carousel carousel slide">
+            <div class="carousel-indicators">
+                ${carouselIndicators}
+            </div>
+            <div class="carousel-inner">
+                ${carouselItems}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+}
+
+// Render members content
+function renderMembersContent(members) {
+    const membersContainer = document.getElementById('members-content');
+    
+    if (!members || members.length === 0) {
+        membersContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h5>No Members</h5>
+                <p>This organization doesn't have any registered members yet.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Leadership and general members
+    const leadership = members.filter(member => 
+        member.position && ['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    const generalMembers = members.filter(member => 
+        !member.position || !['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    let html = '';
+    
+    // Leadership section
+    if (leadership.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">Leadership</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        leadership.forEach(leader => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${leader.member_img ? 'uploaded/orgUploaded/' + leader.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image leadership" alt="${leader.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${leader.name}</h5>
+                            <p class="member-role">${leader.position}</p>
+                            <p class="member-since">Since ${formatDate(leader.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    // General members
+    if (generalMembers.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">General Members</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        generalMembers.forEach(member => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${member.member_img ? 'uploaded/orgUploaded/' + member.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image" alt="${member.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${member.name}</h5>
+                            ${member.committee ? `<p class="member-committee">${member.committee}</p>` : ''}
+                            <p class="member-since">Since ${formatDate(member.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    membersContainer.innerHTML = html;
+}
+
+// Helper function to get badge class based on category
+function getCategoryBadgeClass(category) {
+    if (!category) return 'category-general';
+    
+    const categoryLower = (category || '').toLowerCase();
+    const classes = {
+        'academic': 'category-academic',
+        'event': 'category-event',
+        'announcement': 'category-announcement',
+        'news': 'category-news',
+        'org': 'category-org',
+        'general': 'category-general'
+    };
+    return classes[categoryLower] || 'category-general';
+}
+
+// Format relative time function
+function formatRelativeTime(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+
+    if (isNaN(seconds)) return 'recently';
+    
+    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+    const years = Math.floor(months / 12);
+    return years + " year" + (years > 1 ? "s" : "") + " ago";
+}
+
+// Format date helper
+function formatDate(dateString) {
+    if (!dateString) return 'Unknown date';
+    
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+        return dateString; // Return the original string if date is invalid
+    }
+    
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Initialize event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing organization popup system...');
+    
+    // Click event for all tabs
+    const tabs = document.querySelectorAll('.org-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Hide all tab panes
+            const tabPanes = document.querySelectorAll('.org-tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Show the corresponding tab pane
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Load members data if members tab is clicked
+            if (tabId === 'members' && currentOrgId) {
+                fetchMembers(currentOrgId);
+            }
+        });
+    });
+    
+    // Close filter menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const filterMenu = document.getElementById('orgFilterMenu');
+        const filterBtn = document.getElementById('filterDropdown');
+        
+        if (filterMenu && filterBtn) {
+            if (filterMenu.classList.contains('active') && 
+                !filterMenu.contains(event.target) && 
+                event.target !== filterBtn) {
+                filterMenu.classList.remove('active');
+            }
+        }
+    });
+    
+    // Search input event listener
+    const searchInput = document.getElementById('announcementSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+        });
+    }
+    
+    // Date filter dropdown items
+    const dateFilters = document.querySelectorAll('.date-filter');
+    dateFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('dateFilter').value = value;
+            
+            // Update UI to show selected filter
+            dateFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
+    });
+    
+    // Category filter dropdown items
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    categoryFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('categoryFilter').value = value;
+            
+            // Update UI to show selected filter
+            categoryFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
+    });
+    
+    // Clear filters button
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            clearFilters();
+            toggleOrgFilterMenu();
+        });
+    }
+    
+    // Update card click event handlers
+    updateCardClickHandlers();
+    
+    // Add event listeners to close popup when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeOrgPopup();
+        }
+    });
+});
+
+// Update card click handlers
+function updateCardClickHandlers() {
+    const orgCards = document.querySelectorAll('.card-image-container a');
+    console.log('Found', orgCards.length, 'organization cards');
+    
+    orgCards.forEach((card, index) => {
+        // Remove existing event listeners if any
+        const oldCard = card.cloneNode(true);
+        card.parentNode.replaceChild(oldCard, card);
+        
+        // Add new event listener
+        oldCard.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const orgId = this.getAttribute('data-orgid');
+            const title = this.getAttribute('data-title');
+            const image = this.getAttribute('data-image');
+            const profilePhoto = this.getAttribute('data-profilephoto');
+            const author = this.getAttribute('data-author');
+            
+            console.log(`Clicked card ${index + 1} with org ID:`, orgId);
+            
+            // Check if org ID is valid before opening popup
+            if (!orgId || orgId === 'undefined' || orgId === 'null') {
+                console.error('Invalid organization ID from clicked card:', orgId);
+                alert('Error: This organization has an invalid ID. Please try another or contact the administrator.');
+                return;
+            }
+            
+            // Open our custom popup instead of Bootstrap modal
+            openOrgPopup(orgId, title, image, profilePhoto, author);
+        });
+    });
+}
 
 
         let selectedRating; // To hold the selected rating

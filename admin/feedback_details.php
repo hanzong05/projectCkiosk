@@ -98,15 +98,8 @@ try {
         $result['percentage'] = safe_divide($result['total'], $total_count);
     }
     
-    // SQD Query
+    // SQD Query - Modified to remove sqd0_satisfaction
     $sqd_sql = "SELECT 
-        COUNT(CASE WHEN sqd0_satisfaction = 1 THEN 1 END) as sqd0_strongly_disagree,
-        COUNT(CASE WHEN sqd0_satisfaction = 2 THEN 1 END) as sqd0_disagree,
-        COUNT(CASE WHEN sqd0_satisfaction = 3 THEN 1 END) as sqd0_neutral,
-        COUNT(CASE WHEN sqd0_satisfaction = 4 THEN 1 END) as sqd0_agree,
-        COUNT(CASE WHEN sqd0_satisfaction = 5 THEN 1 END) as sqd0_strongly_agree,
-        COUNT(CASE WHEN sqd0_satisfaction IS NULL THEN 1 END) as sqd0_na,
-        
         COUNT(CASE WHEN sqd1_time = 1 THEN 1 END) as sqd1_strongly_disagree,
         COUNT(CASE WHEN sqd1_time = 2 THEN 1 END) as sqd1_disagree,
         COUNT(CASE WHEN sqd1_time = 3 THEN 1 END) as sqd1_neutral,
@@ -172,9 +165,8 @@ try {
     $sqd_stmt->execute();
     $sqd_stats = $sqd_stmt->fetch(PDO::FETCH_ASSOC);
     
-    // Calculate overall statistics
+    // Calculate overall statistics - Modified to remove SQD0
     $sqd_questions = [
-        'SQD0' => 'I am satisfied with the service that I availed.',
         'SQD1' => 'I spent a reasonable amount of time for my transaction.',
         'SQD2' => 'The office followed the transaction\'s requirements and steps.',
         'SQD3' => 'The steps were easy and simple.',
@@ -185,7 +177,7 @@ try {
         'SQD8' => 'I got what I needed from the office.'
     ];
     
-    // Calculate overall rating
+    // Calculate SQD rating
     $total_strongly_disagree = $total_disagree = $total_neutral = 0;
     $total_agree = $total_strongly_agree = $total_na = $grand_total = 0;
 
@@ -199,32 +191,32 @@ try {
         $total_na += $sqd_stats[$prefix.'na'];
     }
     
-    // Calculate overall rating with additional error handling
+    // Calculate SQD rating with additional error handling
     $grand_total = $total_strongly_disagree + $total_disagree + $total_neutral + 
                  $total_agree + $total_strongly_agree + $total_na;
                  
     $responses_excluding_na = $grand_total - $total_na;
 
-    $overall_rating = $responses_excluding_na > 0 ? 
+    $sqd_rating = $responses_excluding_na > 0 ? 
         (($total_agree + $total_strongly_agree) / $responses_excluding_na * 100) : 
         0;
 
-    // Ensure overall_rating is a number
-    $overall_rating = max(0, min(100, $overall_rating));
+    // Ensure sqd_rating is a number
+    $sqd_rating = max(0, min(100, $sqd_rating));
     
     // Determine rating text
     $rating_text = 'No Data';
     if ($responses_excluding_na > 0) {
-        if ($overall_rating >= 95) {
+        if ($sqd_rating >= 95) {
             $rating_text = "Excellent";
             $rating_color = "#28a745";
-        } elseif ($overall_rating >= 90) {
+        } elseif ($sqd_rating >= 90) {
             $rating_text = "Very Satisfactory";
             $rating_color = "#007bff";
-        } elseif ($overall_rating >= 85) {
+        } elseif ($sqd_rating >= 85) {
             $rating_text = "Satisfactory";
             $rating_color = "#17a2b8";
-        } elseif ($overall_rating >= 80) {
+        } elseif ($sqd_rating >= 80) {
             $rating_text = "Fair";
             $rating_color = "#ffc107";
         } else {
@@ -237,12 +229,11 @@ try {
     $feedback_type = isset($_GET['feedback_type']) ? $_GET['feedback_type'] : 'office';
     $account_type = $_SESSION['atype']; 
     
-    // Query to fetch feedback data for the table
+    // Query to fetch feedback data for the table - Modified to remove sqd0_satisfaction
     $feedback_query = "SELECT 
         id,
         name,
         feedback_date,
-        sqd0_satisfaction,
         sqd1_time,
         sqd2_requirements,
         sqd3_steps,
@@ -269,7 +260,8 @@ try {
     
     foreach ($sqd_categories as $category) {
         $total = 0;
-        for ($i = 0; $i <= 8; $i++) {
+        // Start from index 1 to exclude SQD0
+        for ($i = 1; $i <= 8; $i++) {
             $prefix = "sqd{$i}_";
             $total += $sqd_stats[$prefix . $category];
         }
@@ -1082,7 +1074,7 @@ $current_year = date('Y');
             <div class="container-fluid">
                 <!-- Stats Cards -->
                 <div class="row stats-row animate-slide-up">
-                    <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="col-xl-4 col-md-6 mb-4">
                         <div class="stat-card total-feedback-card" style="border-left-color: var(--primary-color);">
                             <div class="stat-card-content">
                                 <div class="stat-icon" style="color: var(--primary-color); background-color: rgba(78, 115, 223, 0.1);">
@@ -1094,19 +1086,19 @@ $current_year = date('Y');
                         </div>
                     </div>
                     
-                    <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="col-xl-4 col-md-6 mb-4">
                         <div class="stat-card satisfaction-card" style="border-left-color: var(--success-color);">
                             <div class="stat-card-content">
                                 <div class="stat-icon" style="color: var(--success-color); background-color: rgba(28, 200, 138, 0.1);">
                                     <i class="fas fa-smile"></i>
                                 </div>
-                                <div class="stat-value"><?php echo number_format($overall_rating, 1); ?>%</div>
-                                <div class="stat-title">Satisfaction Rate</div>
+                                <div class="stat-value"><?php echo number_format($sqd_rating, 1); ?>%</div>
+                                <div class="stat-title">SQD Rating</div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="col-xl-4 col-md-6 mb-4">
                         <div class="stat-card positive-card" style="border-left-color: var(--info-color);">
                             <div class="stat-card-content">
                                 <div class="stat-icon" style="color: var(--info-color); background-color: rgba(54, 185, 204, 0.1);">
@@ -1114,18 +1106,6 @@ $current_year = date('Y');
                                 </div>
                                 <div class="stat-value"><?php echo number_format($total_agree + $total_strongly_agree); ?></div>
                                 <div class="stat-title">Positive Responses</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="stat-card rating-card" style="border-left-color: <?php echo $rating_color; ?>;">
-                            <div class="stat-card-content">
-                                <div class="stat-icon" style="color: <?php echo $rating_color; ?>; background-color: <?php echo $rating_color; ?>10;">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="stat-value" style="color: <?php echo $rating_color; ?>;"><?php echo $rating_text; ?></div>
-                                <div class="stat-title">Overall Rating</div>
                             </div>
                         </div>
                     </div>
@@ -1234,7 +1214,6 @@ $current_year = date('Y');
                                             <tr>
                                                 <th>NAME</th>
                                                 <th>DATE</th>
-                                                <th>SATISFACTION</th>
                                                 <th>TIME</th>
                                                 <th>REQUIREMENTS</th>
                                                 <th>STEPS</th>
@@ -1253,8 +1232,8 @@ $current_year = date('Y');
                                                         <?php echo $feedback['formatted_date']; ?>
                                                     </td>
                                                     <?php 
-                                                    $ratingKeys = ['sqd0_satisfaction', 'sqd1_time', 'sqd2_requirements', 'sqd3_steps', 'sqd4_information'];
-                                                    $ratingLabels = ['SATISFACTION', 'TIME', 'REQUIREMENTS', 'STEPS', 'INFORMATION'];
+                                                    $ratingKeys = ['sqd1_time', 'sqd2_requirements', 'sqd3_steps', 'sqd4_information'];
+                                                    $ratingLabels = ['TIME', 'REQUIREMENTS', 'STEPS', 'INFORMATION'];
                                                     
                                                     foreach ($ratingKeys as $index => $key): ?>
                                                     <td data-label="<?php echo $ratingLabels[$index]; ?>">
@@ -1280,7 +1259,7 @@ $current_year = date('Y');
                                                 <?php endforeach; ?>
                                              <?php else: ?>
                                                 <tr class="no-data-row">
-                                                    <td colspan="8" class="text-center p-4">
+                                                    <td colspan="7" class="text-center p-4">
                                                         <div class="alert alert-info mb-0">
                                                             <i class="fas fa-info-circle me-2"></i>
                                                             No feedback data available for the selected date range.
@@ -1327,15 +1306,15 @@ $current_year = date('Y');
                                 
                                 <!-- Rating Summary -->
                                 <div class="rating-summary mt-4">
-                                    <h6 class="text-uppercase text-muted mb-3 fs-6">OVERALL SATISFACTION RATING</h6>
+                                    <h6 class="text-uppercase text-muted mb-3 fs-6">SQD RATING</h6>
                                     <div class="rating-value" style="color: <?php echo $rating_color; ?>;">
-                                        <?php echo number_format($overall_rating, 1); ?>%
+                                        <?php echo number_format($sqd_rating, 1); ?>%
                                     </div>
                                     <div class="rating-text" style="background-color: <?php echo $rating_color; ?>;">
                                         <?php echo $rating_text; ?>
                                     </div>
                                     <div class="rating-progress mt-4">
-                                        <div class="rating-progress-bar" style="width: <?php echo $overall_rating; ?>%; background-color: <?php echo $rating_color; ?>;"></div>
+                                        <div class="rating-progress-bar" style="width: <?php echo $sqd_rating; ?>%; background-color: <?php echo $rating_color; ?>;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1783,7 +1762,6 @@ $current_year = date('Y');
                     }
                 });
             }
-            
             // Table pagination
             const tableRows = document.querySelectorAll('#feedbackTable tbody tr');
             const rowsPerPage = 10;

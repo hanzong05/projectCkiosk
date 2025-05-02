@@ -36,6 +36,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Tailwind CSS --><link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
 
@@ -8072,6 +8073,7 @@
 
             <!-- Popper.js and Bootstrap JS -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
 
@@ -9225,7 +9227,86 @@ function fetchAnnouncements(orgId) {
         `;
     });
 }
+// Add this function to properly initialize all carousels after they're rendered
+function initializeCarousels() {
+  // Check if Bootstrap is available
+  if (typeof bootstrap === 'undefined') {
+    console.error('Bootstrap JavaScript library is not loaded. Carousels will not function.');
+    return;
+  }
+  
+  // Find all carousel elements on the page
+  const carousels = document.querySelectorAll('.announcement-carousel');
+  console.log('Found', carousels.length, 'carousels to initialize');
+  
+  // Initialize each carousel using Bootstrap's carousel API
+  carousels.forEach((carousel, index) => {
+    try {
+      // Dispose of any existing carousel instance to prevent conflicts
+      const existingCarousel = bootstrap.Carousel.getInstance(carousel);
+      if (existingCarousel) {
+        existingCarousel.dispose();
+      }
+      
+      // Create a new Bootstrap carousel instance with auto-slide enabled
+      const carouselInstance = new bootstrap.Carousel(carousel, {
+        interval: 3000,  // Auto-slide interval (3 seconds)
+        ride: 'carousel', // Enable auto-sliding
+        wrap: true,     // Continuous cycling
+        touch: true     // Enable touch swiping on mobile
+      });
+      
+      console.log(`Carousel #${index} initialized successfully with auto-slide:`, carousel.id);
+      
+      // Add manual event listeners for prev/next buttons to ensure they work
+      const prevButton = carousel.querySelector('.carousel-control-prev');
+      const nextButton = carousel.querySelector('.carousel-control-next');
+      
+      if (prevButton) {
+        prevButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          carouselInstance.prev();
+          console.log(`Manual prev click on carousel #${index}`);
+        });
+      }
+      
+      if (nextButton) {
+        nextButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          carouselInstance.next();
+          console.log(`Manual next click on carousel #${index}`);
+        });
+      }
+    } catch (error) {
+      console.error(`Error initializing carousel #${index}:`, error);
+    }
+  });
+}
 
+
+// Call this function after rendering announcements
+function renderAnnouncementsContent(response) {
+  const announcements = response.announcements || [];
+  const announcementsContainer = document.getElementById('announcements-content');
+  
+  if (announcements.length === 0) {
+    announcementsContainer.innerHTML = renderEmptyState();
+    return;
+  }
+  
+  let html = '<div class="announcements-container">';
+  announcements.forEach(announcement => {
+    html += renderAnnouncementItem(announcement);
+  });
+  html += '</div>';
+  
+  announcementsContainer.innerHTML = html;
+  
+  // Initialize carousels after adding them to the DOM
+  initializeCarousels();
+}
 // Fetch members function
 function fetchMembers(orgId) {
     const membersContainer = document.getElementById('members-content');
@@ -9475,167 +9556,173 @@ function renderAnnouncementItem(announcement) {
     `;
 }
 
-// Render announcement images
+// Add this function to properly initialize all carousels after they're rendered
+function initializeCarousels() {
+  // Check if Bootstrap is available
+  if (typeof bootstrap === 'undefined') {
+    console.error('Bootstrap JavaScript library is not loaded. Carousels will not function.');
+    return;
+  }
+  
+  // Find all carousel elements on the page
+  const carousels = document.querySelectorAll('.announcement-carousel');
+  console.log('Found', carousels.length, 'carousels to initialize');
+  
+  // Initialize each carousel using Bootstrap's carousel API
+  carousels.forEach((carousel, index) => {
+    try {
+      // Dispose of any existing carousel instance to prevent conflicts
+      const existingCarousel = bootstrap.Carousel.getInstance(carousel);
+      if (existingCarousel) {
+        existingCarousel.dispose();
+      }
+      
+      // Create a new Bootstrap carousel instance
+      const carouselInstance = new bootstrap.Carousel(carousel, {
+        interval: 5000, // Auto-slide interval (5 seconds)
+        wrap: true,     // Continuous cycling
+        touch: true     // Enable touch swiping on mobile
+      });
+      
+      console.log(`Carousel #${index} initialized successfully:`, carousel.id);
+      
+      // Add manual event listeners for prev/next buttons to ensure they work
+      const prevButton = carousel.querySelector('.carousel-control-prev');
+      const nextButton = carousel.querySelector('.carousel-control-next');
+      
+      if (prevButton) {
+        prevButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          carouselInstance.prev();
+          console.log(`Manual prev click on carousel #${index}`);
+        });
+      }
+      
+      if (nextButton) {
+        nextButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          carouselInstance.next();
+          console.log(`Manual next click on carousel #${index}`);
+        });
+      }
+    } catch (error) {
+      console.error(`Error initializing carousel #${index}:`, error);
+    }
+  });
+}
+
+// Modify the renderAnnouncementImages function to include auto-slide attributes
 function renderAnnouncementImages(announcement) {
-    if (!announcement.images || announcement.images.length === 0) {
-        return '';
-    }
-
-    // If the images are a string (comma-separated), convert to array
-    const images = typeof announcement.images === 'string' 
-        ? announcement.images.split(',').filter(img => img.trim() !== '')
-        : Array.isArray(announcement.images) 
-            ? announcement.images
-            : [];
-
-    if (images.length === 0) {
-        return '';
-    }
-
-    // For a single image
-    if (images.length === 1) {
-        return `
-            <div class="announcement-image">
-                <img src="uploaded/annUploaded/${images[0].trim()}" 
-                     alt="Announcement Image"
-                     class="d-block w-100"
-                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
-            </div>
-        `;
-    }
-
-    // For multiple images, create a carousel
-    const carouselId = `carousel-${announcement.announcement_id}`;
-    
-    const carouselIndicators = images.map((_, index) => `
-        <button type="button" 
-                data-bs-target="#${carouselId}" 
-                data-bs-slide-to="${index}" 
-                class="${index === 0 ? 'active' : ''}"
-                aria-current="${index === 0 ? 'true' : 'false'}"
-                aria-label="Slide ${index + 1}">
-        </button>
-    `).join('');
-
-    const carouselItems = images.map((image, index) => {
-        const imagePath = image.trim();
-        return `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                <img src="uploaded/annUploaded/${imagePath}" 
-                     class="d-block w-100" 
-                     alt="Announcement Image ${index + 1}"
-                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
-            </div>
-        `;
-    }).join('');
-
+  if (!announcement.images || announcement.images.length === 0) {
+    return '';
+  }
+  
+  // If the images are a string (comma-separated), convert to array
+  const images = typeof announcement.images === 'string' 
+    ? announcement.images.split(',').filter(img => img.trim() !== '') 
+    : Array.isArray(announcement.images) ? announcement.images : [];
+  
+  if (images.length === 0) {
+    return '';
+  }
+  
+  // For a single image
+  if (images.length === 1) {
     return `
-        <div id="${carouselId}" class="announcement-carousel carousel slide">
-            <div class="carousel-indicators">
-                ${carouselIndicators}
-            </div>
-            <div class="carousel-inner">
-                ${carouselItems}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+      <div class="announcement-image">
+        <img src="uploaded/annUploaded/${images[0].trim()}" alt="Announcement Image" class="d-block w-100" onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+      </div>
     `;
+  }
+  
+  // For multiple images, create a carousel with auto-slide
+  const carouselId = `carousel-${announcement.announcement_id}`;
+  
+  const carouselItems = images.map((image, index) => {
+    const imagePath = image.trim();
+    return `
+      <div class="carousel-item ${index === 0 ? 'active' : ''}">
+        <img src="uploaded/annUploaded/${imagePath}" class="d-block w-100" alt="Announcement Image ${index + 1}" onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+      </div>
+    `;
+  }).join('');
+  
+  return `
+    <div id="${carouselId}" class="announcement-carousel carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+      <div class="carousel-inner">
+        ${carouselItems}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  `;
+}
+// Modify the renderAnnouncementsContent function
+function renderAnnouncementsContent(response) {
+  const announcements = response.announcements || [];
+  const announcementsContainer = document.getElementById('announcements-content');
+  
+  if (announcements.length === 0) {
+    announcementsContainer.innerHTML = renderEmptyState();
+    return;
+  }
+  
+  let html = '<div class="announcements-container">';
+  announcements.forEach(announcement => {
+    html += renderAnnouncementItem(announcement);
+  });
+  html += '</div>';
+  
+  announcementsContainer.innerHTML = html;
+  
+  // Initialize carousels after adding them to the DOM
+  // Use setTimeout to ensure the DOM is fully updated
+  setTimeout(() => {
+    initializeCarousels();
+  }, 100);
 }
 
-// Render members content
-function renderMembersContent(members) {
-    const membersContainer = document.getElementById('members-content');
-    
-    if (!members || members.length === 0) {
-        membersContainer.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h5>No Members</h5>
-                <p>This organization doesn't have any registered members yet.</p>
-            </div>
-        `;
+// Add this to your existing document ready function
+document.addEventListener('DOMContentLoaded', function() {
+  // Your existing code...
+  
+  // Add a global click handler for carousel controls using event delegation
+  document.addEventListener('click', function(event) {
+    // Check if the clicked element is a carousel control
+    if (event.target.closest('.carousel-control-prev, .carousel-control-next')) {
+      const button = event.target.closest('.carousel-control-prev, .carousel-control-next');
+      const carouselId = button.getAttribute('data-bs-target');
+      
+      // Find the carousel
+      const carousel = document.querySelector(carouselId);
+      if (!carousel) return;
+      
+      // Get the carousel instance
+      const carouselInstance = bootstrap.Carousel.getInstance(carousel);
+      if (!carouselInstance) {
+        console.warn('No carousel instance found, attempting to create one');
+        // Initialize if it doesn't exist
+        new bootstrap.Carousel(carousel);
         return;
+      }
+      
+      // Move the carousel in the appropriate direction
+      if (button.classList.contains('carousel-control-prev')) {
+        carouselInstance.prev();
+      } else {
+        carouselInstance.next();
+      }
     }
-    
-    // Leadership and general members
-    const leadership = members.filter(member => 
-        member.position && ['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
-    );
-    
-    const generalMembers = members.filter(member => 
-        !member.position || !['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
-    );
-    
-    let html = '';
-    
-    // Leadership section
-    if (leadership.length > 0) {
-        html += `
-            <div class="members-section-header">
-                <h5 class="members-section-title">Leadership</h5>
-            </div>
-            <div class="members-grid">
-        `;
-        
-        leadership.forEach(leader => {
-            html += `
-                <div class="member-card">
-                    <div class="member-info">
-                        <img src="${leader.member_img ? 'uploaded/orgUploaded/' + leader.member_img : '/api/placeholder/80/80'}" 
-                             class="member-image leadership" alt="${leader.name}">
-                        <div class="member-details">
-                            <h5 class="member-name">${leader.name}</h5>
-                            <p class="member-role">${leader.position}</p>
-                            <p class="member-since">Since ${formatDate(leader.joined_date || new Date())}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += '</div>';
-    }
-    
-    // General members
-    if (generalMembers.length > 0) {
-        html += `
-            <div class="members-section-header">
-                <h5 class="members-section-title">General Members</h5>
-            </div>
-            <div class="members-grid">
-        `;
-        
-        generalMembers.forEach(member => {
-            html += `
-                <div class="member-card">
-                    <div class="member-info">
-                        <img src="${member.member_img ? 'uploaded/orgUploaded/' + member.member_img : '/api/placeholder/80/80'}" 
-                             class="member-image" alt="${member.name}">
-                        <div class="member-details">
-                            <h5 class="member-name">${member.name}</h5>
-                            ${member.committee ? `<p class="member-committee">${member.committee}</p>` : ''}
-                            <p class="member-since">Since ${formatDate(member.joined_date || new Date())}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += '</div>';
-    }
-    
-    membersContainer.innerHTML = html;
-}
-
+  });
+});
 // Helper function to get badge class based on category
 function getCategoryBadgeClass(category) {
     if (!category) return 'category-general';

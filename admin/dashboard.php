@@ -544,10 +544,7 @@ if ($account_type == '0' || $account_type == '2' || $account_type == '3' || $acc
 
         <!-- SQD Metrics -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-            <div class="metric-card bg-white rounded-lg p-4 shadow">
-                <h3 class="text-lg font-semibold text-center">Overall Satisfaction</h3>
-                <div id="sqd0_satisfaction" class="metric-value text-2xl text-center mt-2">0.0</div>
-            </div>
+        
             <div class="metric-card bg-white rounded-lg p-4 shadow">
                 <h3 class="text-lg font-semibold text-center">Processing Time</h3>
                 <div id="sqd1_time" class="metric-value text-2xl text-center mt-2">0.0</div>

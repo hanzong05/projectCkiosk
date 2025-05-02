@@ -8036,8 +8036,10 @@ document.addEventListener('DOMContentLoaded', function() {
         parentElement.removeChild(dateInput);
     });
 
-    // Open fullscreen feedback function
-    window.openFullscreenFeedback = function() {
+    // Add this at the top level of your JavaScript, not inside another function
+window.openFullscreenFeedback = function() {
+    const customFeedbackContainer = document.getElementById('customFeedbackContainer');
+    if (customFeedbackContainer) {
         customFeedbackContainer.style.display = 'block';
         document.body.classList.add('feedback-open');
         
@@ -8048,22 +8050,34 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Reset to first step
         resetForm();
-    };
-
+    } else {
+        console.error('Custom feedback container not found in the DOM');
+    }
+};
     // Close fullscreen feedback function
     window.closeFullscreenFeedback = function() {
-        customFeedbackContainer.classList.remove('active');
+    customFeedbackContainer.classList.remove('active');
+    
+    // Ensure event evaluation is properly reset
+    const evaluateEventCheckbox = document.getElementById('evaluateEvent');
+    if (evaluateEventCheckbox) {
+        evaluateEventCheckbox.checked = false;
+    }
+    
+    const eventEvaluation = document.getElementById('eventEvaluation');
+    if (eventEvaluation) {
+        eventEvaluation.style.display = 'none';
+    }
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        customFeedbackContainer.style.display = 'none';
+        document.body.classList.remove('feedback-open');
         
-        // Wait for animation to complete before hiding
-        setTimeout(() => {
-            customFeedbackContainer.style.display = 'none';
-            document.body.classList.remove('feedback-open');
-            
-            // Reset form
-            resetForm();
-        }, 300);
-    };
-
+        // Reset form
+        resetForm();
+    }, 300);
+};
     // Function to open feedback directly from organization cards
     window.openOrgFeedback = function(orgId, orgName) {
         openFullscreenFeedback();
@@ -8430,7 +8444,19 @@ function validateOfficeForm() {
                     });
                 }
             }
-
+            if (feedbackCategory === 'org' && document.getElementById('evaluateEvent').checked) {
+    // Store the state that event evaluation was checked
+    const wasEventEvalChecked = true;
+    
+    // Make sure to reset this checkbox during cleanup
+    document.getElementById('evaluateEvent').checked = false;
+    
+    // Hide the event evaluation form
+    const eventEvaluation = document.getElementById('eventEvaluation');
+    if (eventEvaluation) {
+        eventEvaluation.style.display = 'none';
+    }
+}
             // Submit form data
             fetch('ajax/submit_feedback.php', {
                 method: 'POST',
@@ -8556,43 +8582,34 @@ function validateOfficeForm() {
 
     // Form reset
     function resetForm() {
-        if (feedbackForm) {
-            feedbackForm.reset();
-            currentStep = 0;
-            updateSteps();
+    if (feedbackForm) {
+        feedbackForm.reset();
+        currentStep = 0;
+        updateSteps();
 
-            // Reset display states
-            const displays = {
-                'officeQuestions': 'none',
-                'orgQuestions': 'none',
-                'eventEvaluation': 'none',
-                'csmIntro': 'none'
-            };
+        // Reset display states
+        const displays = {
+            'officeQuestions': 'none',
+            'orgQuestions': 'none',
+            'eventEvaluation': 'none',
+            'csmIntro': 'none'
+        };
 
-            Object.entries(displays).forEach(([id, display]) => {
-                const element = document.getElementById(id);
-                if (element) element.style.display = display;
-            });
-            
-            // Re-ensure all date fields have the current date
-            ensureCurrentDates();
+        Object.entries(displays).forEach(([id, display]) => {
+            const element = document.getElementById(id);
+            if (element) element.style.display = display;
+        });
+        
+        // Specifically uncheck the event evaluation checkbox
+        const evaluateEventCheckbox = document.getElementById('evaluateEvent');
+        if (evaluateEventCheckbox) {
+            evaluateEventCheckbox.checked = false;
         }
+        
+        // Re-ensure all date fields have the current date
+        ensureCurrentDates();
     }
-
-    // Close with ESC key
-    document.addEventListener('keydown', function(e) {
-        if (customFeedbackContainer.style.display === 'block') {
-            if (e.key === 'Escape') {
-                closeFullscreenFeedback();
-            }
-        }
-    });
-
-    // Initialize on load
-    updateSteps();
-    ensureCurrentDates();
-});
-
+}
 // Feedback counts update function
 function updateFeedbackCounts() {
     fetch('ajax/get_feedback_counts.php')

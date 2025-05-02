@@ -1274,7 +1274,7 @@ function updateOfficeDistributionChart(distributions) {
     if (!officeDistChart) return;
 
     const metrics = [
-        'sqd0_satisfaction',
+        'overall_satisfaction',
         'sqd1_time',
         'sqd2_requirements',
         'sqd3_steps',
@@ -1294,6 +1294,7 @@ function updateOfficeDistributionChart(distributions) {
 
     officeDistChart.update();
 }
+
 
 function updateOfficeTrendChart(trend) {
     if (!officeTrendChart) return;
@@ -1494,9 +1495,10 @@ function updateEventEvalCharts(data) {
 }
 
 // Utility functions
+// Update getMetricLabel function to use overall_satisfaction
 function getMetricLabel(metric) {
     const labels = {
-        'sqd0_satisfaction': 'Overall Satisfaction',
+        'overall_satisfaction': 'Overall Satisfaction',
         'sqd1_time': 'Processing Time',
         'sqd2_requirements': 'Requirements',
         'sqd3_steps': 'Process Steps',

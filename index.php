@@ -2283,37 +2283,7 @@ function displayEvents() {
         </div>
         
         <!-- Room Details Modal -->
-        <div class="modal fade" id="roomDetailsModal" tabindex="-1" aria-labelledby="roomDetailsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-md overflow-hidden border-0">
-                    <div class="modal-header bg-red-800 text-white p-4">
-                        <h5 class="modal-title text-lg font-bold" id="roomDetailsModalLabel">Room Details</h5>
-                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">✕</button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div class="space-y-3">
-                            <div>
-                                <label class="text-sm font-medium text-gray-500">Room ID</label>
-                                <p id="viewRoomId" class="text-base font-semibold text-gray-800">CCS-F1-B1</p>
-                            </div>
-                            <div>
-                                <label class="text-sm font-medium text-gray-500">Room Name</label>
-                                <p id="viewRoomName" class="text-base font-semibold text-gray-800">Computer Laboratory</p>
-                            </div>
-                            <div>
-                                <label class="text-sm font-medium text-gray-500">Description</label>
-                                <p id="viewRoomDescription" class="text-gray-700">This is a computer laboratory equipped with desktop computers for student use.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-gray-50 p-3">
-                        <button type="button" class="px-4 py-2 bg-gray-500 text-white font-medium rounded-md" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+      
     <script>
    // Function to show the selected building
 function showBuilding(buildingId) {
@@ -3788,7 +3758,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     </script>
-</section><section id="feed" class="content-section py-4">
+</section>
+<section id="feed" class="content-section py-4">
 <div class="section-heading text-center mb-5">
         <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
             <span class="gradient-text">FEEDBACKS</span>
@@ -6760,19 +6731,7 @@ body.feedback-open {
                             </div>
 
                             <div class="rating-questions">
-                                <!-- SQD0 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD0: I am satisfied with the service that I availed.<span class="required">*</span></div>
-                                    <div class="tagalog">Nasiyahan ako sa serbisyo na aking natanggap sa napuntahan na opisina.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd0" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd0" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd0" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd0" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd0" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd0" value="na">N/A</label>
-                                    </div>
-                                </div>
+                               
 
                                 <!-- SQD1 -->
                                 <div class="rating-question">
@@ -7744,46 +7703,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Validation functions
     function validateOfficeForm() {
-        const requiredFields = [
-            { name: 'client_type', label: 'Client Type', type: 'select' },
-            // Date is now automatically handled and not needed for validation
-            { name: 'age', label: 'Age', type: 'number' },
-            { name: 'sex', label: 'Sex', type: 'radio' },
-            { name: 'office', label: 'Office', type: 'text' },
-            { name: 'service', label: 'Service', type: 'text' },
-            { name: 'cc_awareness', label: 'CC Awareness', type: 'radio' },
-            { name: 'cc_visibility', label: 'CC Visibility', type: 'radio' },
-            { name: 'cc_helpfulness', label: 'CC Helpfulness', type: 'radio' }
-        ];
+    const requiredFields = [
+        { name: 'client_type', label: 'Client Type', type: 'select' },
+        // Date is now automatically handled and not needed for validation
+        { name: 'age', label: 'Age', type: 'number' },
+        { name: 'sex', label: 'Sex', type: 'radio' },
+        { name: 'office', label: 'Office', type: 'text' },
+        { name: 'service', label: 'Service', type: 'text' },
+        { name: 'cc_awareness', label: 'CC Awareness', type: 'radio' },
+        { name: 'cc_visibility', label: 'CC Visibility', type: 'radio' },
+        { name: 'cc_helpfulness', label: 'CC Helpfulness', type: 'radio' }
+    ];
 
-        for (const field of requiredFields) {
-            const element = field.type === 'radio' 
-                ? document.querySelector(`input[name="${field.name}"]:checked`)
-                : document.querySelector(`[name="${field.name}"]`);
-                
-            const value = field.type === 'radio' 
-                ? element?.value
-                : element?.value?.trim();
+    for (const field of requiredFields) {
+        const element = field.type === 'radio' 
+            ? document.querySelector(`input[name="${field.name}"]:checked`)
+            : document.querySelector(`[name="${field.name}"]`);
+            
+        const value = field.type === 'radio' 
+            ? element?.value
+            : element?.value?.trim();
 
-            if (!value) {
-                alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
-                element?.focus();
-                return false;
-            }
+        if (!value) {
+            alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
+            element?.focus();
+            return false;
         }
-
-        // Validate SQD ratings
-        for (let i = 0; i <= 8; i++) {
-            if (!document.querySelector(`input[name="sqd${i}"]:checked`)) {
-                alert(`Please provide a rating for SQD${i}`);
-                return false;
-            }
-        }
-
-        return true;
     }
+
+    // Validate SQD ratings (starting from SQD1 instead of SQD0)
+    for (let i = 1; i <= 8; i++) {
+        if (!document.querySelector(`input[name="sqd${i}"]:checked`)) {
+            alert(`Please provide a rating for SQD${i}`);
+            return false;
+        }
+    }
+
+    return true;
+}
 
     function validateEventEvaluation() {
         const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
@@ -8249,7 +8207,7 @@ function openOrgPopup(orgId, title, image, profilePhoto, author) {
         }
     });
     
-    // Set org_id for both tabs (to match your existing code)
+    // Set org_id for both tabs
     document.getElementById('announcements-tab').setAttribute('data-orgid', orgId);
     document.getElementById('members-tab').setAttribute('data-orgid', orgId);
     
@@ -8275,748 +8233,6 @@ function closeOrgPopup() {
 function toggleOrgFilterMenu() {
     document.getElementById('orgFilterMenu').classList.toggle('active');
 }
-// Store current organization ID
-let currentOrgId = null;
-let allAnnouncements = [];
-let currentProfilePhoto = '';
-let currentAuthorName = '';
-
-// Open popup from card
-function openOrgPopup(orgId, title, image, profilePhoto, author) {
-    // Validate organizationID
-    if (!orgId || orgId === 'undefined' || orgId === 'null') {
-        console.error('Invalid organization ID:', orgId);
-        alert('Error: Invalid organization ID. Please try again or contact the administrator.');
-        return; // Exit the function to prevent further processing
-    }
-    
-    console.log('Opening popup for organization:', {
-        orgId: orgId,
-        title: title,
-        profilePhoto: profilePhoto,
-        author: author
-    });
-    
-    // Set current org ID
-    currentOrgId = orgId;
-    
-    // Set basic info
-    document.getElementById('orgName').textContent = title || 'Organization';
-    
-    // Handle profile photo safely
-    if (profilePhoto && profilePhoto !== 'undefined' && profilePhoto !== 'null') {
-        document.getElementById('orgProfilePhoto').src = profilePhoto;
-    } else {
-        // Use a default image if profile photo is invalid
-        document.getElementById('orgProfilePhoto').src = '/api/placeholder/400/400';
-    }
-    
-    // Store for later use
-    currentProfilePhoto = profilePhoto;
-    currentAuthorName = author;
-    
-    // Reset tabs
-    document.querySelectorAll('.org-tab').forEach(tab => {
-        if (tab.id === 'announcements-tab') {
-            tab.classList.add('active');
-        } else {
-            tab.classList.remove('active');
-        }
-    });
-    
-    document.querySelectorAll('.org-tab-pane').forEach(pane => {
-        if (pane.id === 'announcements') {
-            pane.classList.add('active');
-        } else {
-            pane.classList.remove('active');
-        }
-    });
-    
-    // Set org_id for both tabs (to match your existing code)
-    document.getElementById('announcements-tab').setAttribute('data-orgid', orgId);
-    document.getElementById('members-tab').setAttribute('data-orgid', orgId);
-    
-    // Show popup
-    document.getElementById('newsPopup').classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent body scrolling
-    
-    // Reset filters
-    resetFiltersUI();
-    
-    // Load announcements
-    fetchAnnouncements(orgId);
-}
-
-// Close popup
-function closeOrgPopup() {
-    document.getElementById('newsPopup').classList.remove('active');
-    document.body.style.overflow = ''; // Restore body scrolling
-    currentOrgId = null;
-}
-
-// Toggle filter menu
-function toggleOrgFilterMenu() {
-    document.getElementById('orgFilterMenu').classList.toggle('active');
-}
-
-// Fetch announcements - Using your existing AJAX endpoint
-function fetchAnnouncements(orgId) {
-    const announcementsContainer = document.getElementById('announcements-content');
-    
-    // Show loading state
-    announcementsContainer.innerHTML = `
-        <div class="loading-indicator">
-            <div class="spinner"></div>
-            <p>Loading announcements...</p>
-        </div>
-    `;
-    
-    // Get filter values
-    const searchText = document.getElementById('announcementSearch').value;
-    const dateFilter = document.getElementById('dateFilter').value;
-    const categoryFilter = document.getElementById('categoryFilter').value;
-    
-    // Prepare filters object to match your existing code
-    const filters = {
-        org_id: orgId,
-        search: searchText,
-        category: categoryFilter
-    };
-    
-    // Handle date filtering based on your existing code
-    if (dateFilter === 'today') {
-        const today = new Date().toISOString().split('T')[0];
-        filters.date_from = today;
-        filters.date_to = today;
-    } else if (dateFilter === 'week') {
-        const today = new Date();
-        const weekStart = new Date();
-        weekStart.setDate(today.getDate() - 7);
-        filters.date_from = weekStart.toISOString().split('T')[0];
-    } else if (dateFilter === 'month') {
-        const today = new Date();
-        const monthStart = new Date();
-        monthStart.setMonth(today.getMonth() - 1);
-        filters.date_from = monthStart.toISOString().split('T')[0];
-    } else if (dateFilter) {
-        // Any specific date value
-        filters.date_from = dateFilter;
-    }
-    
-    console.log('Fetching announcements with filters:', filters);
-    
-    // Using fetch instead of $.ajax but maintaining compatibility
-    fetch('ajax/fetch_announcement.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(filters)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            announcementsContainer.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <p>${data.error}</p>
-                </div>
-            `;
-            return;
-        }
-        
-        // Store announcements in global variable (like your existing code)
-        allAnnouncements = data.announcements || [];
-        
-        console.log('Received announcements:', allAnnouncements);
-        console.log('Applied filters:', data.filters_applied);
-        
-        // Render announcements
-        renderAnnouncementsContent({ announcements: allAnnouncements });
-    })
-    .catch(error => {
-        console.error('Error fetching announcements:', error);
-        announcementsContainer.innerHTML = `
-            <div class="error-message">
-                <i class="fas fa-exclamation-circle"></i>
-                <p>Failed to load announcements. Please try again later.</p>
-            </div>
-        `;
-    });
-}
-
-// Fetch members - Using your existing AJAX endpoint
-function fetchMembers(orgId) {
-    const membersContainer = document.getElementById('members-content');
-    
-    // Check if we've already loaded members
-    if (membersContainer.querySelector('.members-grid')) {
-        return; // Already loaded
-    }
-    
-    // Show loading state
-    membersContainer.innerHTML = `
-        <div class="loading-indicator">
-            <div class="spinner"></div>
-            <p>Loading members...</p>
-        </div>
-    `;
-    
-    console.log('Fetching members for org ID:', orgId);
-    
-    // Using fetch instead of $.ajax but maintaining compatibility
-    fetch('ajax/fetch_members.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({ org_id: orgId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            membersContainer.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <p>${data.error}</p>
-                </div>
-            `;
-            return;
-        }
-        
-        console.log('Received members data:', data);
-        renderMembersContent(data.members);
-    })
-    .catch(error => {
-        console.error('Error fetching members:', error);
-        membersContainer.innerHTML = `
-            <div class="error-message">
-                <i class="fas fa-exclamation-circle"></i>
-                <p>Failed to load members. Please try again later.</p>
-            </div>
-        `;
-    });
-}
-
-// Filter announcements locally
-function filterAnnouncements() {
-    const searchTerm = document.getElementById('announcementSearch').value.toLowerCase().trim();
-    const dateFilter = document.getElementById('dateFilter').value;
-    const categoryFilter = document.getElementById('categoryFilter').value;
-
-    console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
-
-    // Make sure allAnnouncements is defined and accessible
-    if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
-        console.error('allAnnouncements is not defined or not an array');
-        return [];
-    }
-
-    const filtered = allAnnouncements.filter(announcement => {
-        // Search filter - make sure all properties exist before accessing them
-        const searchableText = [
-            announcement.announcement_title || '',
-            announcement.announcement_details || '',
-            announcement.creator_name || '',
-            announcement.author_name || ''
-        ].join(' ').toLowerCase();
-        
-        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
-        
-        // Date filter - improved date handling
-        let matchesDate = true;
-        if (dateFilter) {
-            if (dateFilter === 'today') {
-                // Today filter
-                const today = new Date();
-                const announcementDate = new Date(announcement.created_at);
-                matchesDate = 
-                    announcementDate.getDate() === today.getDate() &&
-                    announcementDate.getMonth() === today.getMonth() &&
-                    announcementDate.getFullYear() === today.getFullYear();
-            } 
-            else if (dateFilter === 'week') {
-                // This week filter
-                const today = new Date();
-                const oneWeekAgo = new Date();
-                oneWeekAgo.setDate(today.getDate() - 7);
-                const announcementDate = new Date(announcement.created_at);
-                matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
-            }
-            else if (dateFilter === 'month') {
-                // This month filter
-                const today = new Date();
-                const oneMonthAgo = new Date();
-                oneMonthAgo.setMonth(today.getMonth() - 1);
-                const announcementDate = new Date(announcement.created_at);
-                matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
-            }
-            else {
-                // Specific date
-                const announcementDate = new Date(announcement.created_at);
-                const filterDate = new Date(dateFilter);
-                matchesDate = 
-                    announcementDate.getDate() === filterDate.getDate() &&
-                    announcementDate.getMonth() === filterDate.getMonth() &&
-                    announcementDate.getFullYear() === filterDate.getFullYear();
-            }
-        }
-        
-        // Category filter
-        let matchesCategory = true;
-        if (categoryFilter && categoryFilter !== 'all') {
-            // Make sure to handle null or undefined category
-            const announcementCategory = (announcement.category || '').toLowerCase();
-            const filterCategoryLower = categoryFilter.toLowerCase();
-            
-            matchesCategory = announcementCategory === filterCategoryLower;
-            
-            // Debug log for category matching
-            console.log('Checking announcement category:', {
-                id: announcement.announcement_id,
-                title: announcement.announcement_title,
-                category: announcementCategory,
-                filterCategory: filterCategoryLower,
-                matches: announcementCategory === filterCategoryLower
-            });
-        }
-
-        const result = matchesSearch && matchesDate && matchesCategory;
-        
-        return result;
-    });
-
-    console.log('Filter results:', {
-        totalAnnouncements: allAnnouncements.length,
-        filteredCount: filtered.length,
-        appliedFilters: {
-            search: searchTerm,
-            date: dateFilter,
-            category: categoryFilter
-        }
-    });
-
-    return filtered;
-}
-
-// Reset filters UI
-function resetFiltersUI() {
-    // Reset input fields
-    document.getElementById('announcementSearch').value = '';
-    document.getElementById('dateFilter').value = '';
-    document.getElementById('categoryFilter').value = 'all';
-    
-    // Reset active classes on filter dropdowns
-    document.querySelectorAll('.date-filter, .category-filter').forEach(el => {
-        el.classList.remove('active');
-    });
-    
-    document.querySelector('.date-filter[data-value=""]').classList.add('active');
-    document.querySelector('.category-filter[data-value="all"]').classList.add('active');
-}
-
-// Clear filters
-function clearFilters() {
-    console.log('Clearing filters');
-    
-    // Reset UI
-    resetFiltersUI();
-    
-    // Apply filters or fetch fresh data
-    if (currentOrgId) {
-        if (allAnnouncements.length > 0) {
-            // If we have announcements, just rerender them all
-            renderAnnouncementsContent({ announcements: allAnnouncements });
-        } else {
-            // Otherwise fetch fresh data
-            fetchAnnouncements(currentOrgId);
-        }
-    }
-}
-
-// Render announcements content
-function renderAnnouncementsContent(response) {
-    const announcements = response.announcements || [];
-    const announcementsContainer = document.getElementById('announcements-content');
-    
-    if (announcements.length === 0) {
-        announcementsContainer.innerHTML = renderEmptyState();
-        return;
-    }
-
-    let html = '<div class="announcements-container">';
-    
-    announcements.forEach(announcement => {
-        html += renderAnnouncementItem(announcement);
-    });
-    
-    html += '</div>';
-    
-    announcementsContainer.innerHTML = html;
-}
-
-// Render empty state
-function renderEmptyState() {
-    return `
-        <div class="empty-state">
-            <div class="empty-state-icon">
-                <i class="far fa-comment-alt"></i>
-            </div>
-            <h5>No Announcements</h5>
-            <p>There are no announcements for this organization yet.</p>
-        </div>
-    `;
-}
-
-// Render announcement item
-function renderAnnouncementItem(announcement) {
-    const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
-    const formattedDate = formatRelativeTime(new Date(announcement.created_at));
-    const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
-
-    return `
-        <div class="announcement-card" data-announcement-id="${announcement.announcement_id}">
-            <div class="announcement-body">
-                <div class="announcement-header">
-                    <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : '/api/placeholder/50/50'}" 
-                         class="announcement-author-img" alt="${displayName}">
-                    <div class="announcement-author-info">
-                        <h6 class="announcement-author-name">${displayName}</h6>
-                        <p class="announcement-date">Posted ${formattedDate}</p>
-                    </div>
-                    <span class="category-badge ${categoryBadgeClass}">${announcement.category || 'General'}</span>
-                </div>
-                <h5 class="announcement-title">${announcement.announcement_title}</h5>
-                <div class="announcement-text">${announcement.announcement_details}</div>
-                ${renderAnnouncementImages(announcement)}
-            </div>
-        </div>
-    `;
-}
-
-// Render announcement images
-function renderAnnouncementImages(announcement) {
-    if (!announcement.images || announcement.images.length === 0) {
-        return '';
-    }
-
-    // If the images are a string (comma-separated), convert to array
-    const images = typeof announcement.images === 'string' 
-        ? announcement.images.split(',').filter(img => img.trim() !== '')
-        : Array.isArray(announcement.images) 
-            ? announcement.images
-            : [];
-
-    if (images.length === 0) {
-        return '';
-    }
-
-    // For a single image
-    if (images.length === 1) {
-        return `
-            <div class="announcement-image">
-                <img src="uploaded/annUploaded/${images[0].trim()}" 
-                     alt="Announcement Image"
-                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
-            </div>
-        `;
-    }
-
-    // For multiple images, create a carousel
-    const carouselId = `carousel-${announcement.announcement_id}`;
-    
-    const carouselItems = images.map((image, index) => {
-        const imagePath = image.trim();
-        return `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                <img src="uploaded/annUploaded/${imagePath}" 
-                     alt="Announcement Image ${index + 1}"
-                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
-            </div>
-        `;
-    }).join('');
-
-    return `
-        <div id="${carouselId}" class="announcement-carousel carousel slide">
-            <div class="carousel-inner">
-                ${carouselItems}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    `;
-}
-
-// Render members content
-function renderMembersContent(members) {
-    const membersContainer = document.getElementById('members-content');
-    
-    if (!members || members.length === 0) {
-        membersContainer.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h5>No Members</h5>
-                <p>This organization doesn't have any registered members yet.</p>
-            </div>
-        `;
-        return;
-    }
-    
-    // Leadership and general members
-    const leadership = members.filter(member => 
-        member.position && ['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
-    );
-    
-    const generalMembers = members.filter(member => 
-        !member.position || !['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
-    );
-    
-    let html = '';
-    
-    // Leadership section
-    if (leadership.length > 0) {
-        html += `
-            <div class="members-section-header">
-                <h5 class="members-section-title">Leadership</h5>
-            </div>
-            <div class="members-grid">
-        `;
-        
-        leadership.forEach(leader => {
-            html += `
-                <div class="member-card">
-                    <div class="member-info">
-                        <img src="${leader.member_img ? 'uploaded/orgUploaded/' + leader.member_img : '/api/placeholder/80/80'}" 
-                             class="member-image leadership" alt="${leader.name}">
-                        <div class="member-details">
-                            <h5 class="member-name">${leader.name}</h5>
-                            <p class="member-role">${leader.position}</p>
-                            <p class="member-since">Since ${formatDate(leader.joined_date || new Date())}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += '</div>';
-    }
-    
-    // General members
-    if (generalMembers.length > 0) {
-        html += `
-            <div class="members-section-header">
-                <h5 class="members-section-title">General Members</h5>
-            </div>
-            <div class="members-grid">
-        `;
-        
-        generalMembers.forEach(member => {
-            html += `
-                <div class="member-card">
-                    <div class="member-info">
-                        <img src="${member.member_img ? 'uploaded/orgUploaded/' + member.member_img : '/api/placeholder/80/80'}" 
-                             class="member-image" alt="${member.name}">
-                        <div class="member-details">
-                            <h5 class="member-name">${member.name}</h5>
-                            ${member.committee ? `<p class="member-committee">${member.committee}</p>` : ''}
-                            <p class="member-since">Since ${formatDate(member.joined_date || new Date())}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += '</div>';
-    }
-    
-    membersContainer.innerHTML = html;
-}
-
-// Helper function to get badge class based on category
-function getCategoryBadgeClass(category) {
-    if (!category) return 'category-general';
-    
-    const categoryLower = (category || '').toLowerCase();
-    const classes = {
-        'academic': 'category-academic',
-        'event': 'category-event',
-        'announcement': 'category-announcement',
-        'news': 'category-news',
-        'org': 'category-org',
-        'general': 'category-general'
-    };
-    return classes[categoryLower] || 'category-general';
-}
-
-// Format relative time function
-function formatRelativeTime(date) {
-    const now = new Date();
-    const seconds = Math.floor((now - date) / 1000);
-
-    if (isNaN(seconds)) return 'recently';
-    
-    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
-    
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
-
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
-
-    const days = Math.floor(hours / 24);
-    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
-
-    const months = Math.floor(days / 30);
-    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
-
-    const years = Math.floor(months / 12);
-    return years + " year" + (years > 1 ? "s" : "") + " ago";
-}
-
-// Format date helper
-function formatDate(dateString) {
-    if (!dateString) return 'Unknown date';
-    
-    const date = new Date(dateString);
-    
-    // Check if date is valid
-    if (isNaN(date.getTime())) {
-        return dateString; // Return the original string if date is invalid
-    }
-    
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
-
-// Initialize event listeners
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing organization popup system...');
-    
-    // Click event for all tabs
-    const tabs = document.querySelectorAll('.org-tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Remove active class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            
-            // Add active class to clicked tab
-            this.classList.add('active');
-            
-            // Hide all tab panes
-            const tabPanes = document.querySelectorAll('.org-tab-pane');
-            tabPanes.forEach(pane => pane.classList.remove('active'));
-            
-            // Show the corresponding tab pane
-            const tabId = this.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
-            
-            // Load members data if members tab is clicked
-            if (tabId === 'members' && currentOrgId) {
-                fetchMembers(currentOrgId);
-            }
-        });
-    });
-    
-    // Close filter menu when clicking outside
-    document.addEventListener('click', function(event) {
-        const filterMenu = document.getElementById('orgFilterMenu');
-        const filterBtn = document.getElementById('filterDropdown');
-        
-        if (filterMenu && filterBtn) {
-            if (filterMenu.classList.contains('active') && 
-                !filterMenu.contains(event.target) && 
-                event.target !== filterBtn) {
-                filterMenu.classList.remove('active');
-            }
-        }
-    });
-    
-    // Search input event listener
-    const searchInput = document.getElementById('announcementSearch');
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const filtered = filterAnnouncements();
-            renderAnnouncementsContent({ announcements: filtered });
-        });
-    }
-    
-    // Date filter dropdown items
-    const dateFilters = document.querySelectorAll('.date-filter');
-    dateFilters.forEach(filter => {
-        filter.addEventListener('click', function(e) {
-            e.preventDefault();
-            const value = this.getAttribute('data-value');
-            
-            // Update hidden input value
-            document.getElementById('dateFilter').value = value;
-            
-            // Update UI to show selected filter
-            dateFilters.forEach(f => f.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Apply filters
-            const filtered = filterAnnouncements();
-            renderAnnouncementsContent({ announcements: filtered });
-            
-            // Close the dropdown
-            toggleOrgFilterMenu();
-        });
-    });
-    
-    // Category filter dropdown items
-    const categoryFilters = document.querySelectorAll('.category-filter');
-    categoryFilters.forEach(filter => {
-        filter.addEventListener('click', function(e) {
-            e.preventDefault();
-            const value = this.getAttribute('data-value');
-            
-            // Update hidden input value
-            document.getElementById('categoryFilter').value = value;
-            
-            // Update UI to show selected filter
-            categoryFilters.forEach(f => f.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Apply filters
-            const filtered = filterAnnouncements();
-            renderAnnouncementsContent({ announcements: filtered });
-            
-            // Close the dropdown
-            toggleOrgFilterMenu();
-        });
-    });
-    
-    // Clear filters button
-    const clearFiltersBtn = document.getElementById('clearFilters');
-    if (clearFiltersBtn) {
-        clearFiltersBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            clearFilters();
-            toggleOrgFilterMenu();
-        });
-    }
-    
-    // Update card click event handlers
-    updateCardClickHandlers();
-    
-    // Add event listeners to close popup when pressing Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeOrgPopup();
-        }
-    });
-});
 
 // Update card click handlers
 function updateCardClickHandlers() {
@@ -9024,11 +8240,17 @@ function updateCardClickHandlers() {
     console.log('Found', orgCards.length, 'organization cards');
     
     orgCards.forEach((card, index) => {
-        // Remove existing event listeners if any
+        // Remove existing event listeners and data-bs attributes to prevent Bootstrap modal initialization
         const oldCard = card.cloneNode(true);
+        
+        // Remove Bootstrap modal attributes to prevent it from trying to initialize
+        oldCard.removeAttribute('data-bs-toggle');
+        oldCard.removeAttribute('data-bs-target');
+        
+        // Replace the old element with the modified one
         card.parentNode.replaceChild(oldCard, card);
         
-        // Add new event listener
+        // Add new event listener for our custom popup
         oldCard.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -9053,7 +8275,7 @@ function updateCardClickHandlers() {
     });
 }
 
-// Fetch announcements - Using your existing AJAX endpoint
+// Fetch announcements function
 function fetchAnnouncements(orgId) {
     const announcementsContainer = document.getElementById('announcements-content');
     
@@ -9070,14 +8292,14 @@ function fetchAnnouncements(orgId) {
     const dateFilter = document.getElementById('dateFilter').value;
     const categoryFilter = document.getElementById('categoryFilter').value;
     
-    // Prepare filters object to match your existing code
+    // Prepare filters object
     const filters = {
         org_id: orgId,
         search: searchText,
         category: categoryFilter
     };
     
-    // Handle date filtering based on your existing code
+    // Handle date filtering
     if (dateFilter === 'today') {
         const today = new Date().toISOString().split('T')[0];
         filters.date_from = today;
@@ -9099,7 +8321,7 @@ function fetchAnnouncements(orgId) {
     
     console.log('Fetching announcements with filters:', filters);
     
-    // Using fetch instead of $.ajax but maintaining compatibility
+    // Using fetch
     fetch('ajax/fetch_announcement.php', {
         method: 'POST',
         headers: {
@@ -9119,7 +8341,7 @@ function fetchAnnouncements(orgId) {
             return;
         }
         
-        // Store announcements in global variable (like your existing code)
+        // Store announcements in global variable
         allAnnouncements = data.announcements || [];
         
         console.log('Received announcements:', allAnnouncements);
@@ -9139,7 +8361,7 @@ function fetchAnnouncements(orgId) {
     });
 }
 
-// Fetch members - Using your existing AJAX endpoint
+// Fetch members function
 function fetchMembers(orgId) {
     const membersContainer = document.getElementById('members-content');
     
@@ -9158,7 +8380,7 @@ function fetchMembers(orgId) {
     
     console.log('Fetching members for org ID:', orgId);
     
-    // Using fetch instead of $.ajax but maintaining compatibility
+    // Using fetch
     fetch('ajax/fetch_members.php', {
         method: 'POST',
         headers: {
@@ -9609,8 +8831,8 @@ function formatDate(dateString) {
 }
 
 // Initialize event listeners
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing organization popup system...');
+function initializeOrgPopupEventListeners() {
+    console.log('Initializing organization popup event listeners...');
     
     // Click event for all tabs
     const tabs = document.querySelectorAll('.org-tab');
@@ -9716,413 +8938,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Update card click event handlers
-    updateCardClickHandlers();
-    
     // Add event listeners to close popup when pressing Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeOrgPopup();
         }
     });
-});
-
-// Update card click handlers
-function updateCardClickHandlers() {
-    const orgCards = document.querySelectorAll('.card-image-container a');
-    console.log('Found', orgCards.length, 'organization cards');
-    
-    orgCards.forEach((card, index) => {
-        // Remove existing event listeners if any
-        const oldCard = card.cloneNode(true);
-        card.parentNode.replaceChild(oldCard, card);
-        
-        // Add new event listener
-        oldCard.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const orgId = this.getAttribute('data-orgid');
-            const title = this.getAttribute('data-title');
-            const image = this.getAttribute('data-image');
-            const profilePhoto = this.getAttribute('data-profilephoto');
-            const author = this.getAttribute('data-author');
-            
-            console.log(`Clicked card ${index + 1} with org ID:`, orgId);
-            
-            // Check if org ID is valid before opening popup
-            if (!orgId || orgId === 'undefined' || orgId === 'null') {
-                console.error('Invalid organization ID from clicked card:', orgId);
-                alert('Error: This organization has an invalid ID. Please try another or contact the administrator.');
-                return;
-            }
-            
-            // Open our custom popup instead of Bootstrap modal
-            openOrgPopup(orgId, title, image, profilePhoto, author);
-        });
-    });
 }
 
-
-        let selectedRating; // To hold the selected rating
-        let feedbackCount = 0; // To track the number of feedback submissions
-
-        // Handle emoji selection
-        document.querySelectorAll('.emoji-select').forEach(item => {
-        item.addEventListener('click', function() {
-            // Remove selected class from all emojis
-            document.querySelectorAll('.emoji-select').forEach(emoji => {
-                emoji.classList.remove('selected');
-            });
-            // Add selected class to the clicked emoji
-            this.classList.add('selected');
-            selectedRating = this; // Store the selected rating
-        });
-    });
-
-// Fix modal layout issues
-function adjustModalLayout() {
-  const modal = document.getElementById('feedbackModal');
-  if (modal) {
-    const modalContent = modal.querySelector('.modal-content');
-    const modalBody = modal.querySelector('.modal-body');
-    const modalHeader = modal.querySelector('.modal-header');
-    const modalFooter = modal.querySelector('.modal-footer');
-    const progressSteps = modal.querySelector('.progress-steps');
+// Initialize everything when the DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing organization popup system...');
     
-    if (modalContent && modalBody) {
-      // Reset any inline styles that might be causing issues
-      modalContent.style.height = '';
-      modalBody.style.maxHeight = `calc(90vh - ${modalHeader.offsetHeight + modalFooter.offsetHeight + progressSteps.offsetHeight}px)`;
-    }
-  }
-}
-    function nextStep() {
-        const currentStep = document.querySelector('.step:not([style*="display: none"])');
-
-        // Check required fields in the current step
-        if (currentStep.id === "step1") {
-            // Check if a rating is selected
-            if (!selectedRating) {
-                alert("Please select a rating before proceeding.");
-                return;
-            }
-        } else if (currentStep.id === "step2") {
-            
-            // Get selected college
-            const collegeInput = document.querySelector('input[name="college"]:checked');
-            const collegeValue = collegeInput ? collegeInput.value : '';
-
-            // Get selected year
-            const yearInput = document.querySelector('input[name="year"]:checked');
-            const yearValue = yearInput ? yearInput.value : '';
-
-            if (!emailInput || !collegeValue || !yearValue) {
-                alert("Please fill in all required fields before proceeding.");
-                return;
-            }
-        }
-
-        // Proceed to the next step if all validations pass
-        if (currentStep.nextElementSibling) {
-            currentStep.style.display = 'none';
-            currentStep.nextElementSibling.style.display = 'block';
-        }
-    }
-
-
-        // Function to go to the previous step
-        function prevStep() {
-            const currentStep = document.querySelector('.step:not([style*="display: none"])');
-            if (currentStep.previousElementSibling) {
-                currentStep.style.display = 'none';
-                currentStep.previousElementSibling.style.display = 'block';
-            }
-        }
-
-            // Toast configuration
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-
-            // Load feedback when the page loads
-        
-
+    // Initialize card click handlers
+    updateCardClickHandlers();
     
-        
-   document.addEventListener("DOMContentLoaded", function() {
-    // Tab functionality
-    const tabButtons = document.querySelectorAll(".button-faculty-btn");
-    const tabs = document.querySelectorAll(".tabgroup > div");
-
-    tabButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            const tabId = this.getAttribute("data-tab");
-
-            // Remove active class from all buttons and hide all tabs
-            tabButtons.forEach(btn => btn.classList.remove("active"));
-            tabs.forEach(tab => tab.style.display = "none");
-
-            // Add active class to the clicked button and show the associated tab
-            this.classList.add("active");
-            document.getElementById(tabId).style.display = "block";
-        });
-    });
-
-    // Show the first tab and mark the first button as active by default
-    if (tabButtons.length > 0 && tabs.length > 0) {
-        tabButtons[0].classList.add("active");
-        tabs[0].style.display = "block";
-    }
+    // Initialize all other event listeners
+    initializeOrgPopupEventListeners();
 });
-
-        // Profile display functionality
-    // Profile display functionality
-    function updateProfileDisplay(name, specialization, consultationTime, imageUrl) {
-        document.getElementById('profileName').textContent = name;
-        document.getElementById('profileSpecialization').innerHTML = 'Specialization: <span class="specialization-value">' + specialization + '</span>';
-        document.getElementById('profileConsultationTime').innerHTML = 'Consultation Time: <span class="consultation-value">' + consultationTime + '</span>';
-        document.getElementById('profileImage').src = imageUrl;
-
-        // Show the profile card and backdrop
-        document.getElementById('profileCard').style.display = 'flex'; // Show the profile card
-        document.getElementById('backdrop').style.display = 'block'; // Show the backdrop
-    }
-
-
-        // Function to close the profile card
-        function closeProfileCard() {
-            document.getElementById('profileCard').style.display = 'none'; // Hide the profile card
-            document.getElementById('backdrop').style.display = 'none'; // Hide the backdrop
-        }
-
-        // Add event listener to backdrop to close the profile card on click
-        document.getElementById('backdrop').addEventListener('click', closeProfileCard);
-
-        // Add click event listeners to all member cards
-        const memberCards = document.querySelectorAll('.member');
-        memberCards.forEach(member => {
-            member.addEventListener('click', function() {
-                const name = this.getAttribute('data-name');
-                const specialization = this.getAttribute('data-specialization');
-                const consultationTime = this.getAttribute('data-consultation');
-                const imageUrl = this.getAttribute('data-image');
-
-                updateProfileDisplay(name, specialization, consultationTime, imageUrl);
-            });
-        });
-
-    function openTab(event, tabName) {
-        // Hide all tab contents
-    // Select all .tab-content elements only within the #campusmap section
-    const campusMapTabContents = document.querySelectorAll('#campusmap .tab-content');
-    campusMapTabContents.forEach(content => {
-        content.style.display = 'none';
-    });
-
-        // Remove active class from all buttons
-        const tabButtons = document.querySelectorAll('.tab-button');
-        tabButtons.forEach(button => {
-            button.classList.remove('active');
-        });
-
-        // Show the clicked tab's content and add active class to the button
-        document.getElementById(tabName).style.display = 'block';
-        event.currentTarget.classList.add('active');
-    }
-
-    // Initial setup: show the first tab
-    document.addEventListener('DOMContentLoaded', () => {
-        openTab({ currentTarget: document.querySelector('.tab-button.active') }, 'ccs');
-    });
-
-        function searchElement() {
-        var searchInput = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '-');  // Replace spaces with hyphens
-        var roomSvg = document.getElementById('room-svg');  // Get the SVG
-
-        if (!roomSvg) {
-            console.error('SVG not found!');
-            return;  // Stop if the SVG is not found
-        }
-
-        var elements = roomSvg.querySelectorAll('rect, path, text');  // Get all rect, path, and text elements
-        var found = false;  // Flag to check if a match is found
-
-        // Loop through each element and check for a match
-        for (var i = 0; i < elements.length; i++) {
-            var elementId = elements[i].id.toLowerCase().replace(/-/g, '');  // Remove hyphens from the element ID for comparison
-
-            if (elementId.includes(searchInput.replace(/-/g, ''))) {  // Compare without hyphens
-                found = true;
-                elements[i].classList.add('highlight');  // Highlight the element if it matches
-            } else {
-                elements[i].classList.remove('highlight');  // Remove highlight if not a match
-            }
-        }
-
-        // If no match is found, display a SweetAlert message
-        if (!found) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Room not found',
-                text: 'Please check the room name and try again.',
-            });
-        }
-    } function formatTimeAgo(dateString) {
-        const created = new Date(dateString);
-        const now = new Date();
-        const diffInHours = Math.floor((now - created) / (1000 * 60 * 60));
-        
-        if (diffInHours >= 24) {
-            return created.toLocaleDateString();
-        } else if (diffInHours > 0) {
-            return `${diffInHours} hours ago`;
-        } else {
-            const diffInMinutes = Math.floor((now - created) / (1000 * 60));
-            return diffInMinutes > 0 ? `${diffInMinutes} minutes ago` : 'just now';
-        }
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        const container = document.getElementById('announcements-container');
-
-        // Clear the container before appending new announcements
-        container.innerHTML = '';
-
-        const announcements = <?php echo json_encode($allAnnouncement); ?>;
-
-        console.log("Announcements data:", announcements); // Log the data
-
-        if (Array.isArray(announcements)) {
-            // Sort announcements by created_at date in descending order (latest first)
-            const sortedAnnouncements = announcements.sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at);
-            });
-
-            sortedAnnouncements.forEach((announcement) => {
-                console.log("Creating carousel for announcement:", announcement); // Log each announcement
-                const carousel = createCarousel(announcement.announcement_images);
-                container.appendChild(createAnnouncementDiv(announcement, carousel));
-            });
-        } else {
-            container.innerHTML = `
-                <div class="announcement-card">
-                    <div class="card-content">
-                        <div class="announcement-text">
-                            ${announcements}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-    });function createCarousel(images) {
-        const container = document.createElement('div');
-        container.className = 'carousel slide relative overflow-hidden';
-        container.setAttribute('data-bs-ride', 'carousel');
-        
-        // Set a unique ID for each carousel to enable navigation buttons to work
-        const carouselId = 'carousel-' + Math.floor(Math.random() * 1000); // Unique ID for each carousel
-        container.setAttribute('id', carouselId); // Assign unique ID to the container
-
-        const inner = document.createElement('div');
-        inner.className = 'carousel-inner relative w-full';
-
-        images.forEach((image, index) => {
-            const item = document.createElement('div');
-            item.className = 'carousel-item ' + (index === 0 ? 'active' : '');
-
-            const img = document.createElement('img');
-            img.src = `uploaded/annUploaded/${image}`;
-            img.className = 'd-block w-full object-cover max-h-64 rounded-lg shadow-lg'; // Fixed height with cover for cropping
-            img.style.objectFit = 'contain'; // Ensure the image is fully visible (no cropping)
-            img.style.height = '300px'; // Fixed height, adjust as necessary
-            img.alt = 'Announcement Image';
-
-            item.appendChild(img);
-            inner.appendChild(item);
-        });
-
-        // Previous Button (Black background)
-        const prevButton = document.createElement('button');
-        prevButton.className = 'carousel-control-prev absolute top-1/2 left-0 z-10 bg-black text-white p-2 rounded-full transform -translate-y-1/2';
-        prevButton.setAttribute('type', 'button');
-        prevButton.setAttribute('data-bs-target', `#${carouselId}`); // Use the unique ID
-        prevButton.setAttribute('data-bs-slide', 'prev');
-
-        const prevIcon = document.createElement('span');
-        prevIcon.className = 'carousel-control-prev-icon';
-        prevButton.appendChild(prevIcon);
-
-        // Next Button (Black background)
-        const nextButton = document.createElement('button');
-        nextButton.className = 'carousel-control-next absolute top-1/2 right-0 z-10 bg-black text-white p-2 rounded-full transform -translate-y-1/2';
-        nextButton.setAttribute('type', 'button');
-        nextButton.setAttribute('data-bs-target', `#${carouselId}`); // Use the unique ID
-        nextButton.setAttribute('data-bs-slide', 'next');
-
-        const nextIcon = document.createElement('span');
-        nextIcon.className = 'carousel-control-next-icon';
-        nextButton.appendChild(nextIcon);
-
-        // Append inner carousel and buttons
-        container.appendChild(inner);
-        container.appendChild(prevButton);
-        container.appendChild(nextButton);
-
-        // Initialize the carousel using Bootstrap's JavaScript with automatic sliding every 3 seconds
-        const bootstrapCarousel = new bootstrap.Carousel(container, {
-            interval: 3000 // Set to 2000 milliseconds (2 seconds)
-        });
-
-        return container;
-    }
-
-
-    function createAnnouncementDiv(announcement, carousel) {
-        const div = document.createElement('div');
-        div.className = 'announcement-item bg-white rounded-lg shadow-lg p-6 space-y-4 hover:shadow-xl transition-shadow duration-300';
-
-        const title = document.createElement('h2');
-        title.textContent = `${announcement.org_name} - ${announcement.creator_name}`;
-        title.className = 'text-2xl font-bold text-gray-800';
-        div.appendChild(title);
-
-        const orgImage = document.createElement('img');
-        orgImage.src = `uploaded/orgUploaded/${announcement.org_image}`;
-        orgImage.alt = 'Organization Image';
-        orgImage.className = 'w-16 h-16 rounded-full object-cover';
-        div.appendChild(orgImage);
-
-        const announcementDetails = document.createElement('p');
-        announcementDetails.textContent = announcement.announcement_details;
-        announcementDetails.className = 'text-gray-600 text-sm';
-        div.appendChild(announcementDetails);
-
-        const timeAgo = document.createElement('span');
-        timeAgo.className = 'text-xs text-gray-500';
-        timeAgo.textContent = formatTimeAgo(announcement.created_at);
-        div.appendChild(timeAgo);
-
-        div.appendChild(carousel);
-
-        return div;
-    }
-
-    function toggleDetails(link) {
-        const textElement = link.previousElementSibling;
-        const isExpanded = !textElement.classList.contains('truncated');
-        
-        textElement.classList.toggle('truncated');
-        link.textContent = isExpanded ? 'See more...' : 'See less...';
-    }
-
-
     </script>
 
     <script>

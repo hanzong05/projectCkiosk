@@ -2990,3 +2990,202 @@ Data: Array
 )
 
 --------------------------------------------------
+[2025-05-01 08:31:34] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-05-01 08:31:34] Database error
+Data: Array
+(
+    [message] => SQLSTATE[42S22]: Column not found: 1054 Unknown column 'sqd0_satisfaction' in 'field list'
+)
+
+--------------------------------------------------
+[2025-05-01 08:31:37] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-05-01 08:31:37] Database error
+Data: Array
+(
+    [message] => SQLSTATE[42S22]: Column not found: 1054 Unknown column 'sqd0_satisfaction' in 'field list'
+)
+
+--------------------------------------------------
+[2025-05-01 08:33:21] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-05-01 08:33:21] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_1_time] => 3.4324
+            [avg_2_requirements] => 3.9189
+            [avg_3_steps] => 3.5135
+            [avg_4_information] => 3.6757
+            [total_feedback] => 37
+            [avg_cc_awareness] => 2.6
+            [avg_cc_visibility] => 3
+            [avg_cc_helpfulness] => 3
+        )
+
+    [distributions] => Array
+        (
+            [sqd1_time] => Array
+                (
+                    [1] => 2
+                    [2] => 7
+                    [3] => 12
+                    [4] => 5
+                    [5] => 11
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [2] => 4
+                    [3] => 7
+                    [4] => 14
+                    [5] => 12
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [1] => 1
+                    [2] => 6
+                    [3] => 12
+                    [4] => 9
+                    [5] => 9
+                )
+
+            [sqd4_information] => Array
+                (
+                    [2] => 4
+                    [3] => 16
+                    [4] => 5
+                    [5] => 12
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2024-04-08
+                    [avg_rating] => 5.00
+                )
+
+            [1] => Array
+                (
+                    [date] => 2024-04-15
+                    [avg_rating] => 3.25
+                )
+
+            [2] => Array
+                (
+                    [date] => 2024-04-25
+                    [avg_rating] => 3.75
+                )
+
+            [3] => Array
+                (
+                    [date] => 2024-05-05
+                    [avg_rating] => 5.00
+                )
+
+            [4] => Array
+                (
+                    [date] => 2024-05-15
+                    [avg_rating] => 3.25
+                )
+
+            [5] => Array
+                (
+                    [date] => 2024-05-25
+                    [avg_rating] => 2.75
+                )
+
+            [6] => Array
+                (
+                    [date] => 2024-06-05
+                    [avg_rating] => 4.50
+                )
+
+            [7] => Array
+                (
+                    [date] => 2024-06-12
+                    [avg_rating] => 3.50
+                )
+
+            [8] => Array
+                (
+                    [date] => 2024-06-20
+                    [avg_rating] => 1.75
+                )
+
+            [9] => Array
+                (
+                    [date] => 2024-07-08
+                    [avg_rating] => 3.25
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 2.6
+            [cc_visibility] => 3
+            [cc_helpfulness] => 3
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 13.5
+                    [neutral] => 2.7
+                    [negative] => 2.7
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 23.8
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 19
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------

@@ -1,0 +1,95 @@
+[01-May-2025 08:31:38 Europe/Berlin] TEST: Logging is working
+[01-May-2025 08:31:38 Europe/Berlin] Unexpected account type: 0
+[01-May-2025 08:31:38 Europe/Berlin] Full Session Data: Array
+(
+    [aid] => 3
+    [id] => 3
+    [auname] => qms
+    [atype] => 0
+    [csrf_token] => 69c632e122e4a6e971aedd681580b04529709e33199cddac1ea2373789f0a393
+)
+
+[01-May-2025 08:31:38 Europe/Berlin] CRITICAL: Failed to retrieve organization
+[01-May-2025 08:31:38 Europe/Berlin] Account Type: 0
+[01-May-2025 08:31:38 Europe/Berlin] User ID: 3
+[01-May-2025 08:31:38 Europe/Berlin] Full Session Data: Array
+(
+    [aid] => 3
+    [id] => 3
+    [auname] => qms
+    [atype] => 0
+    [csrf_token] => 69c632e122e4a6e971aedd681580b04529709e33199cddac1ea2373789f0a393
+)
+
+[01-May-2025 08:31:38 Europe/Berlin] Error in feedback report: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'sqd0_satisfaction' in 'field list'
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 33
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 42
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 42
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 50
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 58
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 153
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 153
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 153
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 156
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $overall_rating in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1451
+[01-May-2025 08:31:38 Europe/Berlin] PHP Deprecated:  number_format(): Passing null to parameter #1 ($num) of type float is deprecated in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1451
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $total_agree in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1464
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $total_strongly_agree in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1464
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1475
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1477
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1477
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1480
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $rating_text in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1480
+[01-May-2025 08:31:38 Europe/Berlin] PHP Warning:  Undefined variable $feedbacks in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1671
+[01-May-2025 08:31:38 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php:1671
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1671
+[01-May-2025 08:33:19 Europe/Berlin] TEST: Logging is working
+[01-May-2025 08:33:19 Europe/Berlin] Unexpected account type: 0
+[01-May-2025 08:33:19 Europe/Berlin] Full Session Data: Array
+(
+    [aid] => 3
+    [id] => 3
+    [auname] => qms
+    [atype] => 0
+    [csrf_token] => 69c632e122e4a6e971aedd681580b04529709e33199cddac1ea2373789f0a393
+)
+
+[01-May-2025 08:33:19 Europe/Berlin] CRITICAL: Failed to retrieve organization
+[01-May-2025 08:33:19 Europe/Berlin] Account Type: 0
+[01-May-2025 08:33:19 Europe/Berlin] User ID: 3
+[01-May-2025 08:33:19 Europe/Berlin] Full Session Data: Array
+(
+    [aid] => 3
+    [id] => 3
+    [auname] => qms
+    [atype] => 0
+    [csrf_token] => 69c632e122e4a6e971aedd681580b04529709e33199cddac1ea2373789f0a393
+)
+
+[01-May-2025 08:33:19 Europe/Berlin] Error in feedback report: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'sqd0_satisfaction' in 'field list'
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 33
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 42
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 42
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 50
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 58
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 153
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 153
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 153
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $account_type in C:\xampp\htdocs\projectCkiosk\admin\assets\includes\navbar.php on line 156
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $overall_rating in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1389
+[01-May-2025 08:33:19 Europe/Berlin] PHP Deprecated:  number_format(): Passing null to parameter #1 ($num) of type float is deprecated in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1389
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $total_agree in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1402
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $total_strongly_agree in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1402
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1413
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1415
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1415
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $rating_color in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1418
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $rating_text in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1418
+[01-May-2025 08:33:19 Europe/Berlin] PHP Warning:  Undefined variable $feedbacks in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1540
+[01-May-2025 08:33:19 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php:1540
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\projectCkiosk\admin\feedback_details.php on line 1540
+[01-May-2025 08:52:40 Europe/Berlin] TEST: Logging is working

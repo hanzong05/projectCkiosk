@@ -44,7 +44,6 @@ try {
                 'cc_awareness',
                 'cc_visibility',    // Added new CC field
                 'cc_helpfulness',   // Added new CC field
-                'sqd0',
                 'sqd1',
                 'sqd2',
                 'sqd3',
@@ -63,12 +62,12 @@ try {
             // Insert office feedback
             $query = "INSERT INTO office_feedback (
                 client_type, feedback_date, age, sex, office_name, service_name,
-                cc_awareness, cc_visibility, cc_helpfulness, sqd0_satisfaction, sqd1_time, sqd2_requirements,
+                cc_awareness, cc_visibility, cc_helpfulness, sqd1_time, sqd2_requirements,
                 sqd3_steps, sqd4_information, sqd5_value, sqd6_security,
                 sqd7_support, sqd8_outcome, improvements, email, name
             ) VALUES (
                 :client_type, :feedback_date, :age, :sex, :office_name, :service_name,
-                :cc_awareness, :cc_visibility, :cc_helpfulness, :sqd0, :sqd1, :sqd2, :sqd3, :sqd4, :sqd5, :sqd6,
+                :cc_awareness, :cc_visibility, :cc_helpfulness, :sqd1, :sqd2, :sqd3, :sqd4, :sqd5, :sqd6,
                 :sqd7, :sqd8, :improvements, :email, :name
             )";
             
@@ -82,8 +81,7 @@ try {
                 ':service_name' => htmlspecialchars($_POST['service']),
                 ':cc_awareness' => htmlspecialchars($_POST['cc_awareness']),
                 ':cc_visibility' => htmlspecialchars($_POST['cc_visibility']),    // Added new CC parameter
-                ':cc_helpfulness' => htmlspecialchars($_POST['cc_helpfulness']),  // Added new CC parameter
-                ':sqd0' => filter_var($_POST['sqd0'], FILTER_VALIDATE_INT),
+                ':cc_helpfulness' => htmlspecialchars($_POST['cc_helpfulness']), 
                 ':sqd1' => filter_var($_POST['sqd1'], FILTER_VALIDATE_INT),
                 ':sqd2' => filter_var($_POST['sqd2'], FILTER_VALIDATE_INT),
                 ':sqd3' => filter_var($_POST['sqd3'], FILTER_VALIDATE_INT),

@@ -57,7 +57,6 @@ function getUserOrgId($connect, $userId) {
 
 function getOfficeFeedbackData($connect, $whereConditions, $params) {
     $sqdFields = [
-        'sqd0_satisfaction',
         'sqd1_time',
         'sqd2_requirements',
         'sqd3_steps',
@@ -94,7 +93,7 @@ function getOfficeFeedbackData($connect, $whereConditions, $params) {
     // Get trend data
     $trendSQL = "SELECT 
         DATE(feedback_date) as date,
-        ROUND(AVG((sqd0_satisfaction + sqd1_time + sqd2_requirements + sqd3_steps + sqd4_information) / 5), 2) as avg_rating
+        ROUND(AVG((sqd1_time + sqd2_requirements + sqd3_steps + sqd4_information) / 4), 2) as avg_rating
         FROM office_feedback " .
         (!empty($whereConditions) ? " WHERE " . implode(" AND ", $whereConditions) : "") .
         " GROUP BY DATE(feedback_date)

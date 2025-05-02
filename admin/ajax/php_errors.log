@@ -1,1 +1,9 @@
 [12-Feb-2025 16:45:04 Europe/Berlin] PHP Warning:  Undefined variable $distributions in C:\xampp\htdocs\ckiosk\admin\ajax\get_feedback_data.php on line 188
+[01-May-2025 08:31:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DEBUG_MODE" in C:\xampp\htdocs\projectCkiosk\admin\ajax\get_feedback_data.php:348
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\projectCkiosk\admin\ajax\get_feedback_data.php on line 348
+[01-May-2025 08:31:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DEBUG_MODE" in C:\xampp\htdocs\projectCkiosk\admin\ajax\get_feedback_data.php:348
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\projectCkiosk\admin\ajax\get_feedback_data.php on line 348

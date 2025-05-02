@@ -36,11 +36,10 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <!-- Replace your current Tailwind link with this -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://unpkg.com/tailwindcss@^3/dist/tailwind.min.css" rel="stylesheet">
   <link href="assets/css/css.css" rel="stylesheet" />
   <style>
 /* Enhanced customizations */
-
 :root {
     --maroon-dark: #7A0D0D;
     --maroon: #C33232;
@@ -156,20 +155,25 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
         <div class="content">
         <section id="campusmap" class="content-section py-4">
     <div class="section-heading text-center mb-5">
-        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
-            <span class="gradient-text">CAMPUS BUILDINGS</span>
-        </h1>
+        
         <div class="animated-bar mx-auto mt-2 mb-3"></div>
     </div>
     
     <style>
 /* Isolated styles for campus map section that won't be affected by Bootstrap */
 #campusmap {
-    --primary-color: #3b82f6;
+    --primary-color: #b91c1c;
     --hover-color: #4B5563; /* Dark gray for hover color */
     --light-gray: #f3f4f6;
     --gray-hover: #e5e7eb;
 }
+.room-highlight {
+        fill: #fca5a5 !important; /* Light red highlight */
+        stroke: #b91c1c !important; /* Darker red outline */
+        stroke-width: 2px !important; /* Thicker outline */
+        filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.5));
+        animation: pulse-highlight 1.5s infinite;
+    }
 
 /* Force the building buttons to display correctly */
 #campusmap .building-btn {
@@ -276,73 +280,132 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
 #campusmap .p-6 {
     padding: 1.5rem !important;
 }
+
+#roomDetailsModal {
+  z-index: 1050 !important; /* Ensure modal appears above other content */
+}
+
+/* Center the modal properly */
+#roomDetailsModal .modal-dialog {
+  display: flex !important;
+  align-items: center !important;
+  min-height: calc(100% - 3.5rem) !important;
+  margin: 1.75rem auto !important;
+  max-width: 500px !important;
+}
+
+/* Fix modal content styling */
+#roomDetailsModal .modal-content {
+  width: 100% !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+  position: relative !important;
+}
+
+/* Fix modal header styling */
+#roomDetailsModal .modal-header {
+  background: linear-gradient(135deg, #7D0A0A, #C83E3E) !important;
+  color: white !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  padding: 1rem 1.5rem !important;
+  border-bottom: none !important;
+}
+
+/* Fix close button styling */
+#roomDetailsModal .close {
+  color: white !important;
+  opacity: 0.8 !important;
+  text-shadow: none !important;
+  font-size: 1.5rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#roomDetailsModal .close:hover {
+  opacity: 1 !important;
+}
+
+/* Fix modal body styling */
+#roomDetailsModal .modal-body {
+  padding: 1.5rem !important;
+  max-height: 60vh !important;
+  overflow-y: auto !important;
+}
+
+/* Fix modal footer styling */
+#roomDetailsModal .modal-footer {
+  background: linear-gradient(135deg, #962626, #b03a3a) !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  padding: 1rem !important;
+  justify-content: space-between !important;
+}
+
+#roomDetailsModal .modal-footer .btn {
+  margin-left: 0.5rem !important;
+  border-radius: 0.25rem !important;
+}
+
+/* Fix form controls styling */
+#roomDetailsModal .form-control-plaintext {
+  padding: 0.5rem 0 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1rem !important;
+  border-bottom: 1px solid #e9ecef !important;
+}
+
+#roomDetailsModal .form-group {
+  margin-bottom: 1rem !important;
+}
+
+/* Make sure the modal backdrop works properly */
+.modal-backdrop {
+  z-index: 1040 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5 !important;
+}
+
+/* Fix Bootstrap modal display issue */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out !important;
+  transform: translate(0, -50px) !important;
+}
+
+.modal.show .modal-dialog {
+  transform: none !important;
+}
+
+/* Additional fix for modal display on mobile */
+@media (max-width: 576px) {
+  #roomDetailsModal .modal-dialog {
+    margin: 1rem !important;
+  }
+}
 </style>
 <div class="flex mb-4 gap-2">
             <button onclick="showBuilding('ccs')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="ccs">CCS Building</button>
             <button onclick="showBuilding('cit')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="cit">CIT Building</button>
             <button onclick="showBuilding('cafa')" class="building-btn flex-1 py-3 font-semibold text-center bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" data-building="cafa">CAFA Building</button>
         </div>
-        
-        <!-- Search Bar and Floor Dropdown Side by Side -->
 
-<div class="flex gap-2 mb-6">
-    <!-- Redesigned Search Bar -->
-    <div class="relative flex-grow">
-        <input 
-            id="roomSearch" 
-            type="text" 
-            class="w-full px-3 py-2 pl-8 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-            placeholder="Search for a room..."
-        >
-        <!-- Inline SVG Search Icon -->
-        <svg 
-            class="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24" 
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path 
-                stroke-linecap="round" 
-                stroke-linejoin="round" 
-                stroke-width="2" 
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
-        </svg>
-    </div>
-    
-    <!-- Redesigned Floor Dropdown -->
-    <div class="relative w-40">
-        <select 
-            id="floorSelect" 
-            class="w-full appearance-none px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        >
-            <option value="1">Floor 1</option>
-            <option value="2">Floor 2</option>
-            <option value="3">Floor 3</option>
-            <option value="4">Floor 4</option>
-            <option value="5">Floor 5</option>
-        </select>
-        <!-- Inline SVG Dropdown Icon -->
-        <svg 
-            class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24" 
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path 
-                stroke-linecap="round" 
-                stroke-linejoin="round" 
-                stroke-width="2" 
-                d="M19 9l-7 7-7-7"
-            ></path>
-        </svg>
-    </div>
-</div>
+        <!-- Buildings Container -->
+        <div id="ccs-building" class="building-container block">
+            <!-- Floor Navigation Tabs for CCS -->
+            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
+                <button onclick="showFloor('ccs', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
+                <button onclick="showFloor('ccs', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
+                <button onclick="showFloor('ccs', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
+                <button onclick="showFloor('ccs', 4)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="4">Floor 4</button>
+                <button onclick="showFloor('ccs', 5)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="5">Floor 5</button>
+            </div>
 
             <!-- CCS Floor Plans -->
-           <!-- CCS Floor 1 (Ground Floor) -->
+           <!-- CCS Floor 1 (Ground Floor) --><div id="ccs-building" class="building-container block">
 <div id="ccs-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
     <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
         <!-- Ground Floor Layout -->
@@ -539,89 +602,83 @@ if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $acc
         </div>
 
         <div id="cafa-building" class="building-container hidden">
-            <!-- Floor Navigation Tabs for CAFA -->
-            <div class="flex mb-6 bg-white rounded-lg shadow overflow-hidden">
-                <button onclick="showFloor('cafa', 1)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-blue-600 text-white" data-floor="1">Floor 1</button>
-                <button onclick="showFloor('cafa', 2)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="2">Floor 2</button>
-                <button onclick="showFloor('cafa', 3)" class="tab-btn flex-1 py-3 px-4 font-bold transition-colors bg-gray-100 hover:bg-gray-200" data-floor="3">Floor 3</button>
-            </div>
+    <!-- CAFA Floor 1 Layout from paste-11.txt -->
+    <div id="cafa-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
+        <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+            <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
             
-            <!-- CAFA Floor 1 Layout from paste-11.txt -->
-            <div id="cafa-floor-1" class="floor-plan bg-white p-6 rounded-lg shadow block">
-                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
-                    
-                    <!-- Using the SVG layout from paste-11.txt -->
-                    <rect id="CAFA-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="126" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="95" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B3" class="cursor-pointer hover:fill-blue-200" x="211.5" y="454.5" width="103" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B4" class="cursor-pointer hover:fill-blue-200" x="315.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B5" class="cursor-pointer hover:fill-blue-200" x="417.5" y="454.5" width="97" height="83" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B6" class="cursor-pointer hover:fill-blue-200" x="417.5" y="538.5" width="97" height="68" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B7" class="cursor-pointer hover:fill-blue-200" x="515.5" y="454.5" width="104" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B8" class="cursor-pointer hover:fill-blue-200" x="615.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B9" class="cursor-pointer hover:fill-blue-200" x="715.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B10" class="cursor-pointer hover:fill-blue-200" x="821.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B11" class="cursor-pointer hover:fill-blue-200" x="923.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1026.5" y="454.5" width="102" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1126.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1228.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1334.5" y="454.5" width="145" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F1-B16" class="cursor-pointer hover:fill-blue-200" x="115.5" y="564.5" width="95" height="86" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    
-                    <!-- Floor Label -->
-                </svg>
-            </div>
+            <!-- Using the SVG layout from paste-11.txt -->
+            <rect id="CAFA-F1-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="126" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="95" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B3" class="cursor-pointer hover:fill-blue-200" x="211.5" y="454.5" width="103" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B4" class="cursor-pointer hover:fill-blue-200" x="315.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B5" class="cursor-pointer hover:fill-blue-200" x="417.5" y="454.5" width="97" height="83" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B6" class="cursor-pointer hover:fill-blue-200" x="417.5" y="538.5" width="97" height="68" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B7" class="cursor-pointer hover:fill-blue-200" x="515.5" y="454.5" width="104" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B8" class="cursor-pointer hover:fill-blue-200" x="615.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B9" class="cursor-pointer hover:fill-blue-200" x="715.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B10" class="cursor-pointer hover:fill-blue-200" x="821.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B11" class="cursor-pointer hover:fill-blue-200" x="923.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B12" class="cursor-pointer hover:fill-blue-200" x="1026.5" y="454.5" width="102" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B13" class="cursor-pointer hover:fill-blue-200" x="1126.5" y="454.5" width="101" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B14" class="cursor-pointer hover:fill-blue-200" x="1228.5" y="454.5" width="105" height="152" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B15" class="cursor-pointer hover:fill-blue-200" x="1334.5" y="454.5" width="145" height="109" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F1-B16" class="cursor-pointer hover:fill-blue-200" x="115.5" y="564.5" width="95" height="86" fill="#D9D9D9" stroke="#0A0A0A"/>
+        </svg>
+    </div>
+    
+    <!-- CAFA Floor 2 Layout from paste-12.txt -->
+    <div id="cafa-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+        <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+            <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
             
-            <!-- CAFA Floor 2 Layout from paste-12.txt -->
-            <div id="cafa-floor-2" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
-                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
-                    
-                    <!-- Using the SVG layout from paste-12.txt -->
-                    <rect id="CAFA-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="135" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="200" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="454.5" width="104" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="454.5" width="147" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="454.5" width="105" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="454.5" width="101" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B8" class="cursor-pointer hover:fill-blue-200" x="885.5" y="454.5" width="150" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B9" class="cursor-pointer hover:fill-blue-200" x="1033.5" y="454.5" width="131" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B11" class="cursor-pointer hover:fill-blue-200" x="1272.5" y="454.5" width="102" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F2-B12" class="cursor-pointer hover:fill-blue-200" x="1375.5" y="454.5" width="104" height="95" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    
-                    <!-- Floor Label -->
-                </svg>
-            </div>
+            <!-- Using the SVG layout from paste-12.txt -->
+            <rect id="CAFA-F2-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="454.5" width="74" height="135" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="454.5" width="200" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="454.5" width="104" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="454.5" width="147" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="454.5" width="105" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="454.5" width="101" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B8" class="cursor-pointer hover:fill-blue-200" x="885.5" y="454.5" width="150" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B9" class="cursor-pointer hover:fill-blue-200" x="1033.5" y="454.5" width="131" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="454.5" width="106" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B11" class="cursor-pointer hover:fill-blue-200" x="1272.5" y="454.5" width="102" height="163" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F2-B12" class="cursor-pointer hover:fill-blue-200" x="1375.5" y="454.5" width="104" height="95" fill="#D9D9D9" stroke="#0A0A0A"/>
+        </svg>
+    </div>
+    
+    <!-- CAFA Floor 3 Layout from paste-13.txt -->
+    <div id="cafa-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
+        <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
+            <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
             
-            <!-- CAFA Floor 3 Layout from paste-13.txt -->
-            <div id="cafa-floor-3" class="floor-plan bg-white p-6 rounded-lg shadow hidden">
-                <svg width="1520" height="1104" viewBox="0 0 1520 1104" class="w-full h-auto">
-                    <rect width="1440" height="1024" transform="translate(40 40)" fill="#D9D9D9"/>
-                    
-                    <!-- Using the SVG layout from paste-13.txt -->
-                    <rect id="CAFA-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="455.5" width="74" height="134" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="455.5" width="200" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="455.5" width="147" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="455.5" width="106" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="455.5" width="102" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B8" class="cursor-pointer hover:fill-blue-200" x="886.5" y="455.5" width="149" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B9" class="cursor-pointer hover:fill-blue-200" x="1032.5" y="455.5" width="132" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B11" class="cursor-pointer hover:fill-blue-200" x="1271.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    <rect id="CAFA-F3-B12" class="cursor-pointer hover:fill-blue-200" x="1376.5" y="455.5" width="103" height="94" fill="#D9D9D9" stroke="#0A0A0A"/>
-                    
-                    <!-- Floor Label -->
-                </svg>
-            </div>
-        </div>
+            <!-- Using the SVG layout from paste-13.txt -->
+            <rect id="CAFA-F3-B1" class="cursor-pointer hover:fill-blue-200" x="40.5" y="455.5" width="74" height="134" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B2" class="cursor-pointer hover:fill-blue-200" x="115.5" y="455.5" width="200" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B3" class="cursor-pointer hover:fill-blue-200" x="316.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B4" class="cursor-pointer hover:fill-blue-200" x="421.5" y="455.5" width="147" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B5" class="cursor-pointer hover:fill-blue-200" x="570.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B6" class="cursor-pointer hover:fill-blue-200" x="676.5" y="455.5" width="106" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B7" class="cursor-pointer hover:fill-blue-200" x="783.5" y="455.5" width="102" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B8" class="cursor-pointer hover:fill-blue-200" x="886.5" y="455.5" width="149" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B9" class="cursor-pointer hover:fill-blue-200" x="1032.5" y="455.5" width="132" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B10" class="cursor-pointer hover:fill-blue-200" x="1165.5" y="455.5" width="105" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B11" class="cursor-pointer hover:fill-blue-200" x="1271.5" y="455.5" width="104" height="162" fill="#D9D9D9" stroke="#0A0A0A"/>
+            <rect id="CAFA-F3-B12" class="cursor-pointer hover:fill-blue-200" x="1376.5" y="455.5" width="103" height="94" fill="#D9D9D9" stroke="#0A0A0A"/>
+        </svg>
+    </div>
+</div>
         <script>
 // Room data cache - will store fetched data to avoid multiple API calls
 let roomDataCache = null;
+
+// Function to clear all room highlights
+function clearHighlights() {
+    document.querySelectorAll('.room-highlight').forEach(el => {
+        el.classList.remove('room-highlight');
+    });
+}
 
 // Function to show the selected building
 function showBuilding(buildingId) {
@@ -662,6 +719,21 @@ function showBuilding(buildingId) {
     } else if (buildingId === 'cafa') {
         showFloor('cafa', 1);
     }
+
+    // Reset the floor dropdown to 1
+    const floorSelect = document.getElementById('floorSelect');
+    if (floorSelect) {
+        floorSelect.value = "1";
+    }
+    
+    // Clear any search highlights
+    clearHighlights();
+    
+    // Clear the search input
+    const searchInput = document.getElementById('roomSearch');
+    if (searchInput) {
+        searchInput.value = '';
+    }
 }
 
 // Function to show the selected floor for a specific building
@@ -694,10 +766,112 @@ function showFloor(buildingId, floorNumber) {
         }
     });
     
+    // Update floor dropdown if it's not already on the right value
+    const floorSelect = document.getElementById('floorSelect');
+    if (floorSelect && floorSelect.value !== floorNumber.toString()) {
+        floorSelect.value = floorNumber.toString();
+    }
+    
     // Add room labels to the visible floor
     addRoomLabelsToFloor(buildingId, floorNumber);
+    
+    // Clear any existing search highlighting
+    clearHighlights();
 }
 
+// Function to search for rooms
+// Function to search for rooms
+function searchRooms() {
+    const searchTerm = document.getElementById('roomSearch').value.trim().toLowerCase();
+    
+    // If search term is empty, clear highlights and return
+    if (!searchTerm) {
+        clearHighlights();
+        return;
+    }
+    
+    // Get the active building
+    const activeBuilding = document.querySelector('.building-container:not(.hidden)');
+    if (!activeBuilding) return;
+    
+    // Get the active building ID
+    const buildingId = activeBuilding.id.split('-')[0];
+    
+    // Get the active floor
+    const activeFloor = activeBuilding.querySelector('.floor-plan:not(.hidden)');
+    if (!activeFloor) return;
+    
+    // Get all room elements in the active floor
+    const roomElements = activeFloor.querySelectorAll('.cursor-pointer');
+    
+    // Clear previous highlights
+    clearHighlights();
+    
+    // Flag to track if any matches were found
+    let matchFound = false;
+    
+    // First try to match room elements by their ID or labels
+    roomElements.forEach(room => {
+        const roomId = room.id ? room.id.toLowerCase() : '';
+        
+        // Get the room label associated with this room - safely access textContent
+        const roomLabel = activeFloor.querySelector(`text.room-label[data-room-id="${roomId}"]`);
+        const labelText = roomLabel && roomLabel.textContent ? roomLabel.textContent.toLowerCase() : '';
+        
+        // Check if room data exists in cache - safely access properties
+        const roomInfo = roomDataCache && roomDataCache[roomId] ? roomDataCache[roomId] : null;
+        const roomName = roomInfo && roomInfo.name ? roomInfo.name.toLowerCase() : '';
+        const roomDesc = roomInfo && roomInfo.description ? roomInfo.description.toLowerCase() : '';
+        
+        // Check if the search term is in any of these fields
+        if (roomId.includes(searchTerm) || 
+            labelText.includes(searchTerm) || 
+            roomName.includes(searchTerm) || 
+            roomDesc.includes(searchTerm)) {
+            
+            // Add highlight class
+            room.classList.add('room-highlight');
+            matchFound = true;
+            
+            // Scroll element into view
+            room.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+    
+    // If no results found and room data cache exists, search within cached room data
+    if (!matchFound && roomDataCache) {
+        const floorNumber = document.getElementById('floorSelect').value;
+        const floorPrefix = `${buildingId.toUpperCase()}-F${floorNumber}-`;
+        
+        // Search through all rooms in cache
+        Object.keys(roomDataCache).forEach(roomId => {
+            // Only consider rooms on the current floor
+            if (roomId.startsWith(floorPrefix)) {
+                const roomData = roomDataCache[roomId];
+                // Safely access properties
+                const roomName = roomData && roomData.name ? roomData.name.toLowerCase() : '';
+                const roomDesc = roomData && roomData.description ? roomData.description.toLowerCase() : '';
+                
+                if (roomName.includes(searchTerm) || roomDesc.includes(searchTerm)) {
+                    // Find the room element by ID
+                    const roomElement = activeFloor.querySelector(`#${roomId}`);
+                    if (roomElement) {
+                        roomElement.classList.add('room-highlight');
+                        matchFound = true;
+                        
+                        // Scroll to this element
+                        roomElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            }
+        });
+    }
+    
+    // Show notification if no matches found
+    if (!matchFound && searchTerm) {
+        alert(`No rooms matching "${searchTerm}" found on the current floor.`);
+    }
+}
 // Function to fetch room data from the database - only fetch once
 async function fetchRoomData() {
     // If we already have the data cached, return it immediately
@@ -845,6 +1019,7 @@ async function addRoomLabelsToFloor(buildingId, floorNumber) {
     }
 }
 
+// Function for showing room details in modal
 async function showRoomDetails(roomId) {
     try {
         // Fetch room data
@@ -1010,82 +1185,6 @@ function saveRoomDetails() {
     });
 }
 
-// Modify setupRoomClicks to use new showRoomDetails function
-function setupRoomClicks() {
-    // Get all room elements in all SVGs
-    const roomElements = document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
-    
-    // Add click handler to each room
-    roomElements.forEach(room => {
-        room.addEventListener('click', function() {
-            const roomId = this.id;
-            showRoomDetails(roomId);
-        });
-    });
-}
-// Function to save room details
-async function saveRoomDetails() {
-    const roomId = document.getElementById('editRoomId').value;
-    const roomName = document.getElementById('editRoomName').value;
-    const roomDescription = document.getElementById('editRoomDescription').value;
-
-    try {
-        const response = await fetch('./ajax/update_room.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `room_id=${encodeURIComponent(roomId)}&room_name=${encodeURIComponent(roomName)}&room_description=${encodeURIComponent(roomDescription)}`
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to update room details');
-        }
-
-        const result = await response.json();
-
-        if (result.success) {
-            // Update room labels on the page
-            updateRoomLabel(roomId, roomName);
-            
-            // Update cached room data if exists
-            if (roomDataCache && roomDataCache[roomId]) {
-                roomDataCache[roomId].name = roomName;
-                roomDataCache[roomId].description = roomDescription;
-            }
-            
-            // Hide the modal using Bootstrap's modal method
-            $('#roomEditModal').modal('hide');
-
-            // Show a success notification using Bootstrap's toast or notify
-            $.notify({
-                message: 'Room details updated successfully!'
-            },{
-                type: 'success',
-                placement: {
-                    from: "top",
-                    align: "right"
-                }
-            });
-        } else {
-            throw new Error(result.message || 'Failed to update room details');
-        }
-    } catch (error) {
-        console.error('Error updating room:', error);
-        
-        // Show error notification
-        $.notify({
-            message: 'Failed to update room details. Please try again.'
-        },{
-            type: 'danger',
-            placement: {
-                from: "top",
-                align: "right"
-            }
-        });
-    }
-}
-
 // Function to update room label in the SVG
 function updateRoomLabel(roomId, newName) {
     // Find all SVGs in the document
@@ -1124,103 +1223,168 @@ function updateRoomLabel(roomId, newName) {
     });
 }
 
-// Wait for page to load, then initialize everything
+// Function to set up room click handlers
+function setupRoomClicks() {
+    // Get all room elements in all SVGs
+    const roomElements = document.querySelectorAll('[id^="CCS-"], [id^="CIT-"], [id^="CAFA-"]');
+    
+    // Add click handler to each room
+    roomElements.forEach(room => {
+        // Remove any existing click handlers first to avoid duplicates
+        room.removeEventListener('click', roomClickHandler);
+        
+        // Add the click handler
+        room.addEventListener('click', roomClickHandler);
+    });
+}
+
+// Room click handler function
+function roomClickHandler() {
+    const roomId = this.id;
+    showRoomDetails(roomId);
+}
+
+// Add style for room highlighting
+function addHighlightStyle() {
+    const style = document.createElement('style');
+    style.textContent = `
+    .room-highlight {
+        fill: #93c5fd !important; /* Light blue highlight */
+        stroke: #2563eb !important; /* Darker blue outline */
+        stroke-width: 2px !important;
+        filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.5));
+        animation: pulse-highlight 1.5s infinite;
+    }
+
+    @keyframes pulse-highlight {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; }
+        100% { opacity: 0.7; }
+    }
+
+    .cursor-pointer {
+        transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
+    }
+    `;
+    document.head.appendChild(style);
+}
+
+// Initialize all event handlers
+function initializeEventHandlers() {
+    // Setup search input for Enter key
+    const searchInput = document.getElementById('roomSearch');
+    if (searchInput) {
+        // Remove existing event listeners first
+        const newSearchInput = searchInput.cloneNode(true);
+        searchInput.parentNode.replaceChild(newSearchInput, searchInput);
+        
+        // Add new event listener
+        newSearchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchRooms();
+            }
+        });
+    }
+    
+    // Setup search button
+    const searchButton = document.querySelector('button[onclick="searchRooms()"]');
+    if (searchButton) {
+        // Replace the inline onclick with an event listener
+        searchButton.removeAttribute('onclick');
+        const newSearchButton = searchButton.cloneNode(true);
+        searchButton.parentNode.replaceChild(newSearchButton, searchButton);
+        newSearchButton.addEventListener('click', searchRooms);
+    }
+    
+    // Setup floor select dropdown
+    const floorSelect = document.getElementById('floorSelect');
+    if (floorSelect) {
+        // Remove existing event listeners
+        const newFloorSelect = floorSelect.cloneNode(true);
+        floorSelect.parentNode.replaceChild(newFloorSelect, floorSelect);
+        
+        // Add new event listener
+        newFloorSelect.addEventListener('change', function() {
+            const activeBuilding = document.querySelector('.building-container:not(.hidden)');
+            if (!activeBuilding) return;
+            
+            const buildingId = activeBuilding.id.split('-')[0];
+            const floorNumber = parseInt(this.value);
+            
+            showFloor(buildingId, floorNumber);
+        });
+    }
+    
+    // Setup building buttons
+    document.querySelectorAll('.building-btn').forEach(btn => {
+        // Get the building ID from the data attribute
+        const buildingId = btn.getAttribute('data-building');
+        
+        // Remove the inline onclick attribute
+        btn.removeAttribute('onclick');
+        
+        // Add event listener
+        btn.addEventListener('click', function() {
+            showBuilding(buildingId);
+        });
+    });
+    
+    // Setup floor tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        // Get the building and floor from the button
+        const buildingId = btn.closest('.building-container').id.split('-')[0];
+        const floorNumber = parseInt(btn.getAttribute('data-floor'));
+        
+        // Remove the inline onclick attribute
+        btn.removeAttribute('onclick');
+        
+        // Add event listener
+        btn.addEventListener('click', function() {
+            showFloor(buildingId, floorNumber);
+        });
+    });
+    
+    // Setup modal buttons
+    const switchToEditBtn = document.getElementById('switchToEditBtn');
+    if (switchToEditBtn) {
+        switchToEditBtn.removeAttribute('onclick');
+        switchToEditBtn.addEventListener('click', switchToEditMode);
+    }
+    
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    if (cancelEditBtn) {
+        cancelEditBtn.removeAttribute('onclick');
+        cancelEditBtn.addEventListener('click', switchToViewMode);
+    }
+    
+    const saveRoomBtn = document.getElementById('saveRoomBtn');
+    if (saveRoomBtn) {
+        saveRoomBtn.removeAttribute('onclick');
+        saveRoomBtn.addEventListener('click', saveRoomDetails);
+    }
+}
+
+// Document ready function - everything starts here
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Campus map initializing...");
+    
+    // Add highlight style to the document
+    addHighlightStyle();
+    
+    // Initialize all event handlers
+    initializeEventHandlers();
     
     // Setup room clicks for all rooms
     setupRoomClicks();
     
-    // Setup event listeners for modal using jQuery
-    $('#saveRoomBtn').on('click', saveRoomDetails);
+    // Prefetch room data for faster searching
+    fetchRoomData().then(data => {
+        console.log("Room data prefetched for faster searching");
+    });
     
     // Show CCS building by default
     showBuilding('ccs');
-});// Function to save room details
-function saveRoomDetails() {
-    // Get form values
-    const roomId = document.getElementById('editRoomId').value;
-    const roomName = document.getElementById('editRoomName').value;
-    const roomDescription = document.getElementById('editRoomDescription').value;
-
-    // Show SweetAlert confirmation
-    Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to save these room details?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, save it!",
-        cancelButtonText: "No, cancel!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Create form data
-            const formData = new FormData();
-            formData.append('room_id', roomId);
-            formData.append('room_name', roomName);
-            formData.append('room_description', roomDescription);
-
-            // Send AJAX request
-            fetch('./ajax/update_room.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log("Raw Response Data:", data);
-
-                try {
-                    const result = JSON.parse(data);
-                    console.log("Parsed JSON Data:", result);
-
-                    if (result.success) {
-                        // Successful update
-                        $('#roomEditModal').modal('hide');
-                        
-                        Swal.fire({
-                            title: "Success!",
-                            text: result.message,
-                            icon: "success"
-                        }).then(() => {
-                            // Update room labels and cache
-                            updateRoomLabel(roomId, roomName);
-                            
-                            // Update cached room data if exists
-                            if (roomDataCache && roomDataCache[roomId]) {
-                                roomDataCache[roomId].name = roomName;
-                                roomDataCache[roomId].description = roomDescription;
-                            }
-                        });
-                    } else {
-                        // Show error notification
-                        Swal.fire({
-                            title: "Error!",
-                            text: result.message,
-                            icon: "error"
-                        });
-                    }
-                } catch (error) {
-                    console.error("Error parsing JSON:", error);
-                    Swal.fire({
-                        title: "Error!",
-                        text: "An error occurred while processing the response.",
-                        icon: "error"
-                    });
-                }
-            })
-            .catch(error => {
-                console.error("Fetch Error:", error);
-                Swal.fire({
-                    title: "Error!",
-                    text: "An error occurred while saving room details.",
-                    icon: "error"
-                });
-            });
-        }
-    });
-}
-
+});
 </script>
 </section>
 <!-- Room Edit Modal with Bootstrap Styling -->

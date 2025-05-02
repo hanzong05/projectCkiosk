@@ -6183,1187 +6183,1846 @@ document.addEventListener('DOMContentLoaded', function() {
   border-top: 1px solid #dee2e6;
 }
     </style>
-<style>
-/* Custom Fullscreen Feedback Container */
-.custom-feedback-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    z-index: 10000;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.custom-feedback-container.active {
-    opacity: 1;
-}
-
-.custom-feedback-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-}
-
-.custom-feedback-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #0d6efd;
-    color: white;
-}
-
-.custom-feedback-title {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.custom-close-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0 0.5rem;
-}
-
-.custom-feedback-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-}
-
-.custom-feedback-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-}
-
-/* Progress steps */
-.progress-steps {
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    background-color: rgba(13, 110, 253, 0.1);
-    padding: 0.75rem 0;
-}
-
-.step-indicator {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #e9ecef;
-    color: #6c757d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 1rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.step-indicator.active {
-    background-color: #0d6efd;
-    color: white;
-}
-
-/* Step container */
-.step {
-    display: none;
-    max-width: 1024px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-.step.active {
-    display: block;
-}
-
-/* Category card */
-.feedback-category-card {
-    width: 280px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 1px solid #dee2e6;
-}
-
-.feedback-category-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* Form styling improvements */
-.form-section {
-    background-color: #f8f9fa;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.section-title {
-    font-size: 1.25rem;
-    color: #0d6efd;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.form-group {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 1.5rem;
-}
-
-.tagalog {
-    font-style: italic;
-    font-size: 0.875rem;
-    color: #6c757d;
-    margin-top: 0.25rem;
-}
-
-.required {
-    color: #dc3545;
-    margin-left: 0.25rem;
-}
-
-/* Rating styles */
-.rating-scale {
-    background-color: #e9ecef;
-    padding: 1rem;
-    border-radius: 0.375rem;
-    margin-bottom: 1.5rem;
-}
-
-.rating-scale-title {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.rating-scale-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 0.5rem;
-    font-size: 0.875rem;
-}
-
-.rating-questions {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.rating-question {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.375rem;
-    border: 1px solid #dee2e6;
-}
-
-.rating-options {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.radio-group {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-}
-
-.radio-label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-/* Question block styling */
-.question-block {
-    background-color: #f8f9fa;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.question-block h5 {
-    margin-bottom: 0.5rem;
-    color: #212529;
-}
-
-.question-block .text-muted {
-    margin-bottom: 1rem;
-}
-
-.rating-group {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.rating-option {
-    flex: 1;
-    min-width: 70px;
-    text-align: center;
-}
-
-.rating-option input {
-    display: none;
-}
-
-.rating-option label {
-    cursor: pointer;
-    display: block;
-    padding: 0.5rem;
-    border: 1px solid #dee2e6;
-    border-radius: 0.375rem;
-    transition: all 0.2s;
-}
-
-.rating-option input:checked + label {
-    background-color: #0d6efd;
-    color: white;
-    border-color: #0d6efd;
-}
-
-/* Event evaluation styling */
-#eventEvaluation {
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: white;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-}
-
-/* Body scrolling control */
-body.feedback-open {
-    overflow: hidden;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .d-flex.justify-content-center.gap-4 {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .feedback-category-card {
-        width: 100%;
-        max-width: 280px;
-        margin-bottom: 1rem;
-    }
-    
-    .rating-options {
-        justify-content: flex-start;
-    }
-    
-    .custom-feedback-header {
-        padding: 0.75rem 1rem;
-    }
-    
-    .custom-feedback-footer {
-        padding: 0.75rem 1rem;
-    }
-    
-    .step {
-        padding: 0.5rem;
-    }
-    
-    .custom-feedback-body {
-        padding: 1rem 0.5rem;
-    }
-    
-    .form-section {
-        padding: 1rem;
-    }
-    
-    .rating-question {
-        padding: 0.75rem;
-    }
-}
-</style>
-
-<!-- Custom Fullscreen Feedback Container -->
-<div id="customFeedbackContainer" class="custom-feedback-container">
-    <div class="custom-feedback-content">
-        <div class="custom-feedback-header bg-primary text-white">
-            <h3 class="custom-feedback-title">Share Your Feedback</h3>
-            <button type="button" class="custom-close-btn" onclick="closeFullscreenFeedback()">&times;</button>
-        </div>
-    
-        <div class="progress-steps">
-            <div class="step-indicator active">1</div>
-            <div class="step-indicator">2</div>
-            <div class="step-indicator">3</div>
-        </div> 
-
-        <!-- Feedback Body -->
-        <div class="custom-feedback-body">
-            <form id="feedbackForm">
-                <!-- Step 1: Category Selection -->
-                <div class="step active" id="step1">
-                    <h4 class="text-center mb-4">What would you like to give feedback about?</h4>
-                    <div class="d-flex justify-content-center gap-4">
-                        <div class="card feedback-category-card" data-category="office">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">Office Processes</h5>
-                                <p class="card-text">Administrative and school-related processes</p>
-                                <input type="radio" name="feedback_category" value="office" class="btn-check" id="officeBtn">
-                                <label class="btn btn-outline-primary w-100" for="officeBtn">Select</label>
-                            </div>
-                        </div>
-                        <div class="card feedback-category-card" data-category="org">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">Student Organizations</h5>
-                                <p class="card-text">Feedback for student organizations</p>
-                                <input type="radio" name="feedback_category" value="org" class="btn-check" id="orgBtn">
-                                <label class="btn btn-outline-primary w-100" for="orgBtn">Select</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 2: Category-Specific Questions -->
-                <div class="step" id="step2">
-                    <div class="csm-intro mb-4" id="csmIntro" style="display: none;">
-                        <div class="alert alert-info p-5">
-                            <h4 class="alert-heading mb-3">HELP US SERVE YOU BETTER!</h4>
-                            <p class="mb-3">
-                                This Client Satisfaction Measurement (CSM) Tool aims to track the customer experience of TSU's clients. Your answers will help this office provide a better service. Personal information shared will be kept confidential.
-                            </p>
-                            
-                            <p class="text-muted fst-italic mb-0">
-                                Ang Client Satisfaction Measurement (CSM) Tool na ito ay magsisilbing gabayan at karanasan ng customer ng mga kliyente ng TSU. Ang iyong mga sagot ay makakatulong sa opisina na mapabuti ang serbisyo na magagamit na impormasyon na ibinahagi ay pananatilihing pribado.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Office Processes Questions -->
-                    <div id="officeQuestions" style="display: none;">
-                        <h4 class="text-center mb-4">Campus Office Processes Evaluation</h4>
-                        
-                        <!-- Basic Information -->
-                        <div class="form-section">
-                            <h2 class="section-title">Basic Information</h2>
-                            <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Client Type<span class="required">*</span>
-                                    <div class="tagalog">Uri ng kliyente</div>
-                                </label>
-                                <select class="form-control" name="client_type" >
-                                    <option value="">Select client type...</option>
-                                    <option value="internal">Internal (Empleyado ng TSU)</option>
-                                    <option value="student">Student (Estudyante)</option>
-                                    <option value="business">Business (Negosyo/Negosyante)</option>
-                                    <option value="government">Government Agency (Ahensya ng Pamahalaan)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                    <label class="form-label">Date<span class="required">*</span>
-                                        <div class="tagalog">Petsa</div>
-                                    </label>
-                                    <input type="hidden" name="date" id="current-date">
-                                    <div class="form-control" id="date-display"></div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">Age<span class="required">*</span>
-                                        <div class="tagalog">Edad</div>
-                                    </label>
-                                    <input type="number" class="form-control" name="age" >
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Sex<span class="required">*</span>
-                                        <div class="tagalog">Kasarian</div>
-                                    </label>
-                                    <div class="radio-group">
-                                        <label class="radio-label">
-                                            <input type="radio" name="sex" value="male" >
-                                            Male (Lalake)
-                                        </label>
-                                        <label class="radio-label">
-                                            <input type="radio" name="sex" value="female">
-                                            Female (Babae)
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Office that rendered the service(s)<span class="required">*</span>
-                                    <div class="tagalog">Opisinang nagbigay serbisyo</div>
-                                </label>
-                                <input type="text" class="form-control" name="office" >
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Service Availed<span class="required">*</span>
-                                    <div class="tagalog">Serbisyong naipagkaloob</div>
-                                </label>
-                                <input type="text" class="form-control" name="service" >
-                            </div>
-                        </div>
-
-
-                        <!-- Citizen's Charter Awareness -->
-                        <div class="form-section">
-                            <h2 class="section-title">Citizen's Charter Awareness</h2>
-                            
-                            <!-- CC1 -->
-                            <div class="form-group">
-                                <p class="form-label">CC1: Which of the following best describes your awareness of a CC?<span class="required">*</span></p>
-                                <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_awareness" value="aware_saw" >
-                                        1. I know what a CC is and I saw this office's CC.
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_awareness" value="aware_not_saw">
-                                        2. I know what a CC is but I did NOT see this office's CC.
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_awareness" value="learned">
-                                        3. I learned of the CC only when I saw this office's CC.
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_awareness" value="unaware">
-                                        4. I do not know what a CC is and I did not see one in this office.
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- CC2 -->
-                            <div class="form-group">
-                                <p class="form-label">CC2: If aware of CC, would you say that the CC of this office was...<span class="required">*</span></p>
-                                <div class="tagalog">(Kung may kamalayan ka tungkol sa CC, sasabihin mo ba na ang CC ng opisina na ito ay...)</div>
-                                <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_visibility" value="easy" >
-                                        1. Easy to see (Madaling makita)
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_visibility" value="somewhat_easy">
-                                        2. Somewhat easy to see (Medyo madaling makita)
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_visibility" value="difficult">
-                                        3. Difficult to see (Mahirap hanapin)
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_visibility" value="not_visible">
-                                        4. Not visible at all (Hindi nakikita)
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_visibility" value="na">
-                                        5. N/A (Hindi naaangkop)
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- CC3 -->
-                            <div class="form-group">
-                                <p class="form-label">CC3: If aware of CC (answered codes 1-3 in CC1), how much did the CC help you in your transaction?<span class="required">*</span></p>
-                                <div class="tagalog">(Kung may kamalayan at nakita mo ang CC sa iyong transaksiyon?)</div>
-                                <div class="radio-group" style="flex-direction: column; gap: 0.75rem;">
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_helpfulness" value="helped_very_much">
-                                        1. Helped very much (Nakatulong nang husto)
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_helpfulness" value="somewhat_helped">
-                                        2. Somewhat helped (Medyo nakatulong)
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_helpfulness" value="did_not_help">
-                                        3. Did not help (Walang naitulong)
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="cc_helpfulness" value="na">
-                                        4. N/A (Hindi naaangkop)
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Service Quality Rating Section -->
-                        <div class="form-section">
-                            <h2 class="section-title">Service Quality Rating</h2>
-                            
-                            <div class="rating-scale">
-                                <div class="rating-scale-title">Rating Scale:</div>
-                                <div class="rating-scale-grid">
-                                    <div>1 - Strongly Disagree</div>
-                                    <div>2 - Disagree</div>
-                                    <div>3 - Neither Agree nor Disagree</div>
-                                    <div>4 - Agree</div>
-                                    <div>5 - Strongly Agree</div>
-                                    <div>N/A - Not Applicable</div>
-                                </div>
-                            </div>
-
-                            <div class="rating-questions">
-                               
-
-                                <!-- SQD1 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD1: I spent a reasonable amount of time for my transaction.<span class="required">*</span></div>
-                                    <div class="tagalog">Makatwiran ang oras na aking ginugol para sa aking transaksyon.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd1" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd1" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd1" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd1" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd1" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd1" value="na">N/A</label>
-                                    </div>
-                                </div>
-
-                                <!-- SQD2 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD2: The office followed the transaction's requirements and steps based on the information provided in their Citizens Charter.<span class="required">*</span></div>
-                                    <div class="tagalog">Tinugunan ng opisina ang aking transakyon alinsunod sa kanilang Citizen's Charter.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd2" value="1">1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd2" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd2" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd2" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd2" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd2" value="na">N/A</label>
-                                    </div>
-                                </div>
-
-                                <!-- SQD3 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD3: The steps (including payment) I needed to do for my transaction were easy and simple.<span class="required">*</span></div>
-                                    <div class="tagalog">Ang mga hakbang (kabilang ang pagbabayad) na kailangan kong gawin para sa aking transaksyon ay madali at simple.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd3" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd3" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd3" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd3" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd3" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd3" value="na">N/A</label>
-                                    </div>
-                                </div>
-
-                                <!-- SQD4 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD4: I easily found information about my transaction from the office or its website.<span class="required">*</span></div>
-                                    <div class="tagalog">Ang mga kailangang impormasyon tungkol sa aking transaksyon ay kaagad kong nakita sa opisina o sa TSU website.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd4" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd4" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd4" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd4" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd4" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd4" value="na">N/A</label>
-                                    </div>
-                                </div>
-
-                                <!-- SQD5 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD5: The amount I paid for my transaction is value for money.<span class="required">*</span></div>
-                                    <div class="tagalog">Ang halagang ibinayad ay akma sa serbisyong natamo.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd5" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd5" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd5" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd5" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd5" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd5" value="na">N/A</label>
-                                    </div>
-                                </div>
-
-                                <!-- SQD6 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD6: I am confident my online transaction was secure.<span class="required">*</span></div>
-                                    <div class="tagalog">Pakiramdam ko ay patas ang opisina sa lahat, o "walang palakasan", sa aking transaksyon.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd6" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd6" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd6" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd6" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd6" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd6" value="na">N/A</label>
-                                    </div>
-                                </div>
-
-                                <!-- SQD7 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD7: The Office's online support was available, and (if asked) questions online support was quick to respond.<span class="required">*</span></div>
-                                    <div class="tagalog">Magalang akong trinato ng mga tauhan, at (kung sakali ako ay humingi ng tulong) alam ko na sila ay handang tumulong sa akin.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd7" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd7" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd7" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd7" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd7" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd7" value="na">N/A</label>
-                                    </div>
-                                </div>
-
-                                <!-- SQD8 -->
-                                <div class="rating-question">
-                                    <div class="form-label">SQD8: I got what I needed from the government office, or (if denied) denial of request was sufficiently explained to me.<span class="required">*</span></div>
-                                    <div class="tagalog">Nakuha ko ang kinakailangan ko mula sa tanggapan ng gobyerno, kung tinanggihan man, ito ay sapat na ipinaliwanag sa akin.</div>
-                                    <div class="rating-options">
-                                        <label class="radio-label"><input type="radio" name="sqd8" value="1" >1</label>
-                                        <label class="radio-label"><input type="radio" name="sqd8" value="2">2</label>
-                                        <label class="radio-label"><input type="radio" name="sqd8" value="3">3</label>
-                                        <label class="radio-label"><input type="radio" name="sqd8" value="4">4</label>
-                                        <label class="radio-label"><input type="radio" name="sqd8" value="5">5</label>
-                                        <label class="radio-label"><input type="radio" name="sqd8" value="na">N/A</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Student Organizations Questions -->
-                    <div id="orgQuestions" style="display: none;">
-                        <h4 class="text-center mb-4">Student Organization Evaluation</h4>
-                        
-                        <div class="form-group mb-4">
-                            <label class="form-label">Select Organization</label>
-                            <select class="form-select" name="organization">
-                                <option value="">Choose an organization...</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="evaluateEvent" name="evaluate_event">
-                                <label class="form-check-label" for="evaluateEvent">
-                                    I want to evaluate a specific event by this organization
-                                </label>
-                            </div>
-                        </div>
-                    
-                        <!-- Question 1: Event Quality -->
-                        <div class="question-block">
-                            <h5>1. Event Quality</h5>
-                            <p class="text-muted">How engaging and well-organized were the events?</p>
-                            <div class="rating-group">
-                                <div class="rating-option">
-                                    <input type="radio" name="event_quality" id="eq1" value="1">
-                                    <label for="eq1">1<br>Poor</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="event_quality" id="eq2" value="2">
-                                    <label for="eq2">2<br>Fair</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="event_quality" id="eq3" value="3">
-                                    <label for="eq3">3<br>Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="event_quality" id="eq4" value="4">
-                                    <label for="eq4">4<br>Very Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="event_quality" id="eq5" value="5">
-                                    <label for="eq5">5<br>Excellent</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 2: Communication -->
-                        <div class="question-block">
-                            <h5>2. Communication</h5>
-                            <p class="text-muted">How effective was the organization in communicating event details and announcements?</p>
-                            <div class="rating-group">
-                                <div class="rating-option">
-                                    <input type="radio" name="org_communication" id="orgcom1" value="1">
-                                    <label for="orgcom1">1<br>Poor</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="org_communication" id="orgcom2" value="2">
-                                    <label for="orgcom2">2<br>Fair</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="org_communication" id="orgcom3" value="3">
-                                    <label for="orgcom3">3<br>Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="org_communication" id="orgcom4" value="4">
-                                    <label for="orgcom4">4<br>Very Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="org_communication" id="orgcom5" value="5">
-                                    <label for="orgcom5">5<br>Excellent</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 3: Inclusivity -->
-                        <div class="question-block">
-                            <h5>3. Inclusivity</h5>
-                            <p class="text-muted">How welcoming and inclusive was the organization to all members?</p>
-                            <div class="rating-group">
-                                <div class="rating-option">
-                                    <input type="radio" name="inclusivity" id="inc1" value="1">
-                                    <label for="inc1">1<br>Poor</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="inclusivity" id="inc2" value="2">
-                                    <label for="inc2">2<br>Fair</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="inclusivity" id="inc3" value="3">
-                                    <label for="inc3">3<br>Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="inclusivity" id="inc4" value="4">
-                                    <label for="inc4">4<br>Very Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="inclusivity" id="inc5" value="5">
-                                    <label for="inc5">5<br>Excellent</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 4: Leadership -->
-                        <div class="question-block">
-                            <h5>4. Leadership</h5>
-                            <p class="text-muted">How effective and approachable was the leadership team?</p>
-                            <div class="rating-group">
-                                <div class="rating-option">
-                                    <input type="radio" name="leadership" id="lead1" value="1">
-                                    <label for="lead1">1<br>Poor</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="leadership" id="lead2" value="2">
-                                    <label for="lead2">2<br>Fair</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="leadership" id="lead3" value="3">
-                                    <label for="lead3">3<br>Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="leadership" id="lead4" value="4">
-                                    <label for="lead4">4<br>Very Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="leadership" id="lead5" value="5">
-                                    <label for="lead5">5<br>Excellent</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 5: Skill Development -->
-                        <div class="question-block">
-                            <h5>5. Skill Development</h5>
-                            <p class="text-muted">How well did the organization provide opportunities for personal growth?</p>
-                            <div class="rating-group">
-                                <div class="rating-option">
-                                    <input type="radio" name="skill_dev" id="skill1" value="1">
-                                    <label for="skill1">1<br>Poor</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="skill_dev" id="skill2" value="2">
-                                    <label for="skill2">2<br>Fair</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="skill_dev" id="skill3" value="3">
-                                    <label for="skill3">3<br>Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="skill_dev" id="skill4" value="4">
-                                    <label for="skill4">4<br>Very Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="skill_dev" id="skill5" value="5">
-                                    <label for="skill5">5<br>Excellent</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 6: Impact -->
-                        <div class="question-block">
-                            <h5>6. Impact</h5>
-                            <p class="text-muted">How much did the organization positively contribute to your campus experience?</p>
-                            <div class="rating-group">
-                                <div class="rating-option">
-                                    <input type="radio" name="impact" id="imp1" value="1">
-                                    <label for="imp1">1<br>Poor</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="impact" id="imp2" value="2">
-                                    <label for="imp2">2<br>Fair</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="impact" id="imp3" value="3">
-                                    <label for="imp3">3<br>Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="impact" id="imp4" value="4">
-                                    <label for="imp4">4<br>Very Good</label>
-                                </div>
-                                <div class="rating-option">
-                                    <input type="radio" name="impact" id="imp5" value="5">
-                                    <label for="imp5">5<br>Excellent</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Event Evaluation Section -->
-                    <!-- Updated Event Evaluation Section - WITHOUT Student Organization field -->
-<div id="eventEvaluation" style="display:none;" class="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
-    <h5 class="text-2xl font-semibold text-gray-800 mb-6">Event Evaluation Form</h5>
-    
-    <!-- Activity Details Section - REMOVED Student Organization field -->
-    <div class="space-y-6 mb-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Activity Title</label>
-                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="activity_title">
-            </div>
+
+<!-- Fullscreen Feedback Modal (Similar to Organization Popup) -->
+<div id="feedbackFullscreenModal" class="feedback-fullscreen-modal">
+    <div class="feedback-modal-content">
+        <!-- Add custom CSS for the fullscreen feedback modal -->
+        <style>
+        /* Feedback Modal Styles */
+        .feedback-fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 10000;
+            overflow: hidden;
+        }
+
+        .feedback-fullscreen-modal.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feedback-modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        .feedback-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #7D0A0A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+
+        .feedback-modal-header-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .feedback-modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            margin-right: 1rem;
+            color: #fff;
+            padding: 0 10px;
+            transition: color 0.2s;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback-modal-close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .feedback-modal-title {
+            font-weight: bold;
+            margin: 0;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        /* Body Styles */
+        .feedback-modal-body {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            padding-bottom: 2rem;
+        }
+
+        /* Progress Steps */
+        .feedback-steps-container {
+            padding: 1.5rem;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feedback-steps {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .feedback-steps:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #e9ecef;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .feedback-step {
+            width: 33.33%;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e9ecef;
+            border: 2px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-step.active .feedback-step-number {
+            background: #7D0A0A;
+            border-color: #7D0A0A;
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(125, 10, 10, 0.2);
+        }
+
+        .feedback-step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+
+        .feedback-step.active .feedback-step-label {
+            color: #7D0A0A;
+            font-weight: 600;
+        }
+
+        /* Steps Content */
+        .feedback-steps-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .feedback-step-pane {
+            display: none;
+            padding: 1.5rem 0;
+        }
+
+        .feedback-step-pane.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-step-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Category Cards */
+        .feedback-categories {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .feedback-category-card {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .feedback-category-card:hover {
+            border-color: #dee2e6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .feedback-category-card.selected {
+            border-color: #7D0A0A;
+            background-color: #fff8f8;
+        }
+
+        .feedback-category-card.selected .category-selected-indicator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-style: solid;
+            border-width: 0 30px 30px 0;
+            border-color: transparent #7D0A0A transparent transparent;
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(125, 10, 10, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: #7D0A0A;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-category-card:hover .category-icon {
+            transform: scale(1.1);
+        }
+
+        .category-content {
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .category-desc {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        .category-radio {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Form Containers and Elements */
+        .feedback-form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .feedback-form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feedback-form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .feedback-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: #333;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .feedback-form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .feedback-form-group {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.25rem;
+        }
+
+        .feedback-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .tagalog-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
+        .required-mark {
+            color: #7D0A0A;
+            margin-left: 3px;
+        }
+
+        .feedback-input,
+        .feedback-select,
+        .feedback-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .feedback-input:focus,
+        .feedback-select:focus,
+        .feedback-textarea:focus {
+            border-color: #7D0A0A;
+            box-shadow: 0 0 0 3px rgba(125, 10, 10, 0.1);
+            outline: none;
+        }
+
+        .feedback-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Radio Buttons */
+        .feedback-radio-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .feedback-radio-buttons.column {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .feedback-radio {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.25rem 0;
+        }
+
+        .feedback-radio input[type="radio"] {
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        .radio-label {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        /* Checkbox Groups */
+        .feedback-checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            cursor: pointer;
+        }
+
+        .feedback-checkbox-group input[type="checkbox"] {
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* CSM Introduction Box */
+        .csm-intro {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #7D0A0A;
+        }
+
+        .csm-intro-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 0.75rem;
+        }
+
+        .csm-intro-header i {
+            font-size: 1.5rem;
+            color: #7D0A0A;
+        }
+
+        .csm-intro-header h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .csm-intro p {
+            margin-bottom: 0.75rem;
+            color: #333;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .csm-intro p:last-child {
+            margin-bottom: 0;
+        }
+
+        .csm-tagalog {
+            font-style: italic;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Rating Scale Legend */
+        .rating-scale-legend {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-scale-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .rating-scale-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .rating-scale-option {
+            font-size: 0.85rem;
+            color: #6c757d;
+            background-color: #fff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        /* SQD Questions */
+        .sqd-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .sqd-question {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sqd-question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+        }
+
+        .sqd-question-text {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .sqd-number {
+            font-weight: 600;
+            color: #7D0A0A;
+            margin-right: 0.5rem;
+            min-width: 3.5rem;
+        }
+
+        .sqd-content {
+            flex: 1;
+        }
+
+        .sqd-text {
+            font-size: 0.95rem;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .sqd-tagalog {
+            font-size: 0.85rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .sqd-rating {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sqd-rating-option {
+            flex: 1;
+            min-width: 50px;
+            max-width: 80px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .sqd-rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .sqd-rating-option span {
+            display: block;
+            padding: 0.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+
+        .sqd-rating-option:hover span {
+            background-color: #f8f9fa;
+            border-color: #7D0A0A;
+        }
+
+        .sqd-rating-option input[type="radio"]:checked + span {
+            background-color: #7D0A0A;
+            color: white;
+            border-color: #7D0A0A;
+            box-shadow: 0 2px 4px rgba(125, 10, 10, 0.2);
+        }
+
+        /* Organization Rating Questions */
+        .rating-question {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .rating-question-header {
+            margin-bottom: 1rem;
+        }
+
+        .rating-question-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .rating-question-desc {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .rating-options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .rating-option {
+            flex: 1;
+            min-width: 80px;
+            max-width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .rating-value {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+            color: #495057;
+        }
+
+        .rating-option:hover .rating-value {
+            border-color: #7D0A0A;
+            background-color: #fff8f8;
+        }
+
+        .rating-option input[type="radio"]:checked + .rating-value {
+            background-color: #7D0A0A;
+            border-color: #7D0A0A;
+            color: white;
+            box-shadow: 0 2px 5px rgba(125, 10, 10, 0.3);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: #495057;
+            text-align: center;
+        }
+
+        /* Event Evaluation Section */
+        #eventEvaluationSection {
+            display: none;
+        }
+
+        .event-rating-section {
+            margin-bottom: 2rem;
+        }
+
+        .event-rating-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .event-rating-group {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-rating-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .event-rating-options {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .event-rating-option {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .event-rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .event-rating-option span {
+            display: block;
+            padding: 0.75rem 0.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            color: #495057;
+            background-color: #fff;
+        }
+
+        .event-rating-option:hover span {
+            border-color: #7D0A0A;
+        }
+
+        .event-rating-option input[type="radio"]:checked + span {
+            background-color: #7D0A0A;
+            color: white;
+            border-color: #7D0A0A;
+            box-shadow: 0 2px 5px rgba(125, 10, 10, 0.3);
+        }
+
+        /* Success Message */
+        .feedback-success-message {
+            text-align: center;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
+        .feedback-success-message h4 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-success-message p {
+            color: #6c757d;
+        }
+
+        /* Footer with Navigation Buttons */
+        .feedback-modal-footer {
+            padding: 1rem;
+            background-color: #fff;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .feedback-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .feedback-btn.secondary {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+
+        .feedback-btn.secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .feedback-btn.secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .feedback-btn.primary {
+            background-color: #7D0A0A;
+            color: white;
+        }
+
+        .feedback-btn.primary:hover {
+            background-color: #6a0909;
+        }
+
+        .feedback-btn.success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .feedback-btn.success:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .feedback-form-row {
+                flex-direction: column;
+            }
             
-            <div class="space-y-2">
-    <label class="block text-sm font-medium text-gray-700">Date</label>
-    <input type="hidden" name="activity_date" id="current-activity-date">
-    <div class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100" id="activity-date-display"></div>
-</div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Venue</label>
-                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="venue">
-            </div>
+            .feedback-category-card {
+                max-width: 100%;
+            }
             
-            <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Position</label>
-                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="position">
-            </div>
-        </div>
-        
-        <!-- Hidden field to store the organization ID from the dropdown -->
-        <input type="hidden" name="student_org" id="event_student_org">
-    </div>
+            .sqd-rating-option {
+                min-width: 40px;
+            }
+            
+            .rating-option {
+                min-width: 60px;
+            }
+            
+            .event-rating-option {
+                min-width: 100px;
+            }
+            
+            .feedback-steps {
+                padding: 0 1rem;
+            }
+            
+            .feedback-modal-footer {
+                padding: 0.75rem;
+            }
+            
+            .feedback-btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
 
-    <!-- Online Activity Ratings -->
-    <div class="mb-8">
-        <label class="block text-lg font-medium text-gray-800 mb-4">1. Online Activity Ratings</label>
-        
-        <!-- Pre-event communication -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Pre-event communication</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="communication_rating" value="excellent" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="communication_rating" value="very_satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="communication_rating" value="satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="communication_rating" value="needs_improvement" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="communication_rating" value="poor" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
-                </label>
-            </div>
-        </div>
+        @media (max-width: 576px) {
+            .sqd-question-text {
+                flex-direction: column;
+            }
+            
+            .sqd-number {
+                margin-bottom: 0.5rem;
+            }
+            
+            .rating-option {
+                min-width: 50px;
+            }
+            
+            .feedback-form-container {
+                padding: 1rem;
+            }
+            
+            .event-rating-option {
+                min-width: 100%;
+            }
+        }
+        </style>
 
-        <!-- Video quality -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Video quality of the activity broadcast</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="video_quality" value="excellent" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="video_quality" value="very_satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="video_quality" value="satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="video_quality" value="needs_improvement" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="video_quality" value="poor" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
-                </label>
+      
+        <!-- Header -->
+        <div class="feedback-modal-header">
+            <div class="feedback-modal-header-content">
+                <button type="button" class="feedback-modal-close-btn" onclick="closeFeedbackModal()">&times;</button>
+                <h5 class="feedback-modal-title">Share Your Feedback</h5>
             </div>
         </div>
 
-        <!-- Audio quality -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Audio quality of the activity broadcast</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="audio_quality" value="excellent" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="audio_quality" value="very_satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="audio_quality" value="satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="audio_quality" value="needs_improvement" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="audio_quality" value="poor" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
-                </label>
+        <!-- Body with Steps -->
+        <div class="feedback-modal-body">
+            <!-- Progress Steps -->
+            <div class="feedback-steps-container">
+                <div class="feedback-steps">
+                    <div class="feedback-step active" data-step="1">
+                        <div class="feedback-step-number">1</div>
+                        <div class="feedback-step-label">Category</div>
+                    </div>
+                    <div class="feedback-step" data-step="2">
+                        <div class="feedback-step-number">2</div>
+                        <div class="feedback-step-label">Details</div>
+                    </div>
+                    <div class="feedback-step" data-step="3">
+                        <div class="feedback-step-number">3</div>
+                        <div class="feedback-step-label">Submit</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Steps Content -->
+            <div class="feedback-steps-content">
+                <form id="feedbackFormFullscreen">
+                    <!-- Step 1: Category Selection -->
+                    <div class="feedback-step-pane active" id="step1Pane">
+                        <h4 class="feedback-step-title">What would you like to give feedback about?</h4>
+                        <div class="feedback-categories">
+                            <div class="feedback-category-card" data-category="office">
+                                <div class="category-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Office Processes</h5>
+                                    <p class="category-desc">Administrative and school-related processes</p>
+                                </div>
+                                <input type="radio" name="feedback_category" value="office" id="officeBtnFullscreen" class="category-radio">
+                                <div class="category-selected-indicator"></div>
+                            </div>
+                            <div class="feedback-category-card" data-category="org">
+                                <div class="category-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Student Organizations</h5>
+                                    <p class="category-desc">Feedback for student organizations</p>
+                                </div>
+                                <input type="radio" name="feedback_category" value="org" id="orgBtnFullscreen" class="category-radio">
+                                <div class="category-selected-indicator"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Office Feedback Form -->
+                    <div class="feedback-step-pane" id="officeQuestionsPane">
+                        <div class="feedback-form-container">
+                            <div class="csm-intro">
+                                <div class="csm-intro-header">
+                                    <i class="fas fa-info-circle"></i>
+                                    <h4>HELP US SERVE YOU BETTER!</h4>
+                                </div>
+                                <p>This Client Satisfaction Measurement (CSM) Tool aims to track the customer experience of TSU's clients. Your answers will help this office provide a better service. Personal information shared will be kept confidential.</p>
+                                <p class="csm-tagalog">Ang Client Satisfaction Measurement (CSM) Tool na ito ay magsisilbing gabayan at karanasan ng customer ng mga kliyente ng TSU. Ang iyong mga sagot ay makakatulong sa opisina na mapabuti ang serbisyo na magagamit na impormasyon na ibinahagi ay pananatilihing pribado.</p>
+                            </div>
+
+                            <!-- Basic Information -->
+                            <div class="feedback-form-section">
+                                <h5 class="feedback-section-title">Basic Information</h5>
+                                
+                                <div class="feedback-form-row">
+                                    <div class="feedback-form-group">
+                                        <label>Client Type<span class="required-mark">*</span>
+                                            <div class="tagalog-label">Uri ng kliyente</div>
+                                        </label>
+                                        <select name="client_type" class="feedback-select">
+                                            <option value="">Select client type...</option>
+                                            <option value="internal">Internal (Empleyado ng TSU)</option>
+                                            <option value="student">Student (Estudyante)</option>
+                                            <option value="business">Business (Negosyo/Negosyante)</option>
+                                            <option value="government">Government Agency (Ahensya ng Pamahalaan)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="feedback-form-group">
+                                        <label>Date<span class="required-mark">*</span>
+                                            <div class="tagalog-label">Petsa</div>
+                                        </label>
+                                        <input type="date" name="date" class="feedback-input">
+                                    </div>
+                                </div>
+
+                                <div class="feedback-form-row">
+                                    <div class="feedback-form-group">
+                                        <label>Age<span class="required-mark">*</span>
+                                            <div class="tagalog-label">Edad</div>
+                                        </label>
+                                        <input type="number" name="age" class="feedback-input">
+                                    </div>
+
+                                    <div class="feedback-form-group">
+                                        <label>Sex<span class="required-mark">*</span>
+                                            <div class="tagalog-label">Kasarian</div>
+                                        </label>
+                                        <div class="feedback-radio-buttons">
+                                            <label class="feedback-radio">
+                                                <input type="radio" name="sex" value="male">
+                                                <span class="radio-label">Male (Lalake)</span>
+                                            </label>
+                                            <label class="feedback-radio">
+                                                <input type="radio" name="sex" value="female">
+                                                <span class="radio-label">Female (Babae)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="feedback-form-group">
+                                    <label>Office that rendered the service(s)<span class="required-mark">*</span>
+                                        <div class="tagalog-label">Opisinang nagbigay serbisyo</div>
+                                    </label>
+                                    <input type="text" name="office" class="feedback-input">
+                                </div>
+
+                                <div class="feedback-form-group">
+                                    <label>Service Availed<span class="required-mark">*</span>
+                                        <div class="tagalog-label">Serbisyong naipagkaloob</div>
+                                    </label>
+                                    <input type="text" name="service" class="feedback-input">
+                                </div>
+                            </div>
+
+                            <!-- Citizen's Charter Awareness -->
+                            <div class="feedback-form-section">
+                                <h5 class="feedback-section-title">Citizen's Charter Awareness</h5>
+                                
+                                <div class="feedback-form-group">
+                                    <label>CC1: Which of the following best describes your awareness of a CC?<span class="required-mark">*</span></label>
+                                    <div class="feedback-radio-buttons column">
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_awareness" value="aware_saw">
+                                            <span class="radio-label">1. I know what a CC is and I saw this office's CC.</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_awareness" value="aware_not_saw">
+                                            <span class="radio-label">2. I know what a CC is but I did NOT see this office's CC.</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_awareness" value="learned">
+                                            <span class="radio-label">3. I learned of the CC only when I saw this office's CC.</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_awareness" value="unaware">
+                                            <span class="radio-label">4. I do not know what a CC is and I did not see one in this office.</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="feedback-form-group">
+                                    <label>CC2: If aware of CC, would you say that the CC of this office was...<span class="required-mark">*</span>
+                                        <div class="tagalog-label">(Kung may kamalayan ka tungkol sa CC, sasabihin mo ba na ang CC ng opisina na ito ay...)</div>
+                                    </label>
+                                    <div class="feedback-radio-buttons column">
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_visibility" value="easy">
+                                            <span class="radio-label">1. Easy to see (Madaling makita)</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_visibility" value="somewhat_easy">
+                                            <span class="radio-label">2. Somewhat easy to see (Medyo madaling makita)</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_visibility" value="difficult">
+                                            <span class="radio-label">3. Difficult to see (Mahirap hanapin)</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_visibility" value="not_visible">
+                                            <span class="radio-label">4. Not visible at all (Hindi nakikita)</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_visibility" value="na">
+                                            <span class="radio-label">5. N/A (Hindi naaangkop)</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="feedback-form-group">
+                                    <label>CC3: If aware of CC (answered codes 1-3 in CC1), how much did the CC help you in your transaction?<span class="required-mark">*</span>
+                                        <div class="tagalog-label">(Kung may kamalayan at nakita mo ang CC sa iyong transaksiyon?)</div>
+                                    </label>
+                                    <div class="feedback-radio-buttons column">
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_helpfulness" value="helped_very_much">
+                                            <span class="radio-label">1. Helped very much (Nakatulong nang husto)</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_helpfulness" value="somewhat_helped">
+                                            <span class="radio-label">2. Somewhat helped (Medyo nakatulong)</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_helpfulness" value="did_not_help">
+                                            <span class="radio-label">3. Did not help (Walang naitulong)</span>
+                                        </label>
+                                        <label class="feedback-radio">
+                                            <input type="radio" name="cc_helpfulness" value="na">
+                                            <span class="radio-label">4. N/A (Hindi naaangkop)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Service Quality Rating -->
+                            <div class="feedback-form-section">
+                                <h5 class="feedback-section-title">Service Quality Rating</h5>
+                                
+                                <div class="rating-scale-legend">
+                                    <div class="rating-scale-title">Rating Scale:</div>
+                                    <div class="rating-scale-options">
+                                        <div class="rating-scale-option">1 - Strongly Disagree</div>
+                                        <div class="rating-scale-option">2 - Disagree</div>
+                                        <div class="rating-scale-option">3 - Neither Agree nor Disagree</div>
+                                        <div class="rating-scale-option">4 - Agree</div>
+                                        <div class="rating-scale-option">5 - Strongly Agree</div>
+                                        <div class="rating-scale-option">N/A - Not Applicable</div>
+                                    </div>
+                                </div>
+
+                                <!-- SQD Questions -->
+                                <div class="sqd-questions">
+                                    <!-- SQD0 -->
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD0:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">I am satisfied with the service that I availed.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Nasiyahan ako sa serbisyo na aking natanggap sa napuntahan na opisina.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd0" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd0" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd0" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd0" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd0" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd0" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <!-- SQD1 -->
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD1:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">I spent a reasonable amount of time for my transaction.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Makatwiran ang oras na aking ginugol para sa aking transaksyon.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd1" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd1" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd1" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd1" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd1" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd1" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <!-- SQD2 -->
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD2:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">The office followed the transaction's requirements and steps based on the information provided in their Citizens Charter.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Tinugunan ng opisina ang aking transakyon alinsunod sa kanilang Citizen's Charter.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd2" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd2" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd2" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd2" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd2" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd2" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <!-- SQD3 -->
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD3:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">The steps (including payment) I needed to do for my transaction were easy and simple.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Ang mga hakbang (kabilang ang pagbabayad) na kailangan kong gawin para sa aking transaksyon ay madali at simple.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd3" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd3" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd3" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd3" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd3" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd3" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <!-- SQD4 -->
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD4:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">I easily found information about my transaction from the office or its website.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Ang mga kailangang impormasyon tungkol sa aking transaksyon ay kaagad kong nakita sa opisina o sa TSU website.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd4" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd4" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd4" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd4" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd4" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd4" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <!-- More SQD Questions... -->
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD5:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">The amount I paid for my transaction is value for money.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Ang halagang ibinayad ay akma sa serbisyong natamo.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd5" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd5" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd5" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd5" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd5" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd5" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD6:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">I am confident my online transaction was secure.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Pakiramdam ko ay patas ang opisina sa lahat, o "walang palakasan", sa aking transaksyon.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd6" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd6" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd6" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd6" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd6" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd6" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD7:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">The Office's online support was available, and (if asked) questions online support was quick to respond.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Magalang akong trinato ng mga tauhan, at (kung sakali ako ay humingi ng tulong) alam ko na sila ay handang tumulong sa akin.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd7" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd7" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd7" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd7" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd7" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd7" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="sqd-question">
+                                        <div class="sqd-question-text">
+                                            <div class="sqd-number">SQD8:</div>
+                                            <div class="sqd-content">
+                                                <div class="sqd-text">I got what I needed from the government office, or (if denied) denial of request was sufficiently explained to me.<span class="required-mark">*</span></div>
+                                                <div class="sqd-tagalog">Nakuha ko ang kinakailangan ko mula sa tanggapan ng gobyerno, kung tinanggihan man, ito ay sapat na ipinaliwanag sa akin.</div>
+                                            </div>
+                                        </div>
+                                        <div class="sqd-rating">
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd8" value="1"><span>1</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd8" value="2"><span>2</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd8" value="3"><span>3</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd8" value="4"><span>4</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd8" value="5"><span>5</span></label>
+                                            <label class="sqd-rating-option"><input type="radio" name="sqd8" value="na"><span>N/A</span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Organization Feedback Form -->
+                    <div class="feedback-step-pane" id="orgQuestionsPane">
+                        <div class="feedback-form-container">
+                            <h4 class="feedback-step-title">Student Organization Evaluation</h4>
+                            
+                            <div class="feedback-form-section">
+                                <div class="feedback-form-group">
+                                    <label>Select Organization<span class="required-mark">*</span></label>
+                                    <select name="organization" class="feedback-select" id="orgSelectionDropdown">
+                                        <option value="">Choose an organization...</option>
+                                        <!-- Organizations will be loaded dynamically -->
+                                    </select>
+                                </div>
+
+                                <div class="feedback-checkbox-group">
+                                    <input type="checkbox" id="evaluateEventFullscreen" name="evaluate_event">
+                                    <label for="evaluateEventFullscreen">I want to evaluate a specific event by this organization</label>
+                                </div>
+                            </div>
+
+                            <!-- Organization Rating Questions -->
+                            <div class="feedback-form-section">
+                                <h5 class="feedback-section-title">Organization Rating</h5>
+                                
+                                <!-- Question 1: Event Quality -->
+                                <div class="rating-question">
+                                    <div class="rating-question-header">
+                                        <h6 class="rating-question-title">1. Event Quality</h6>
+                                        <p class="rating-question-desc">How engaging and well-organized were the events?</p>
+                                    </div>
+                                    <div class="rating-options">
+                                        <label class="rating-option">
+                                            <input type="radio" name="event_quality" value="1">
+                                            <span class="rating-value">1</span>
+                                            <span class="rating-label">Poor</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="event_quality" value="2">
+                                            <span class="rating-value">2</span>
+                                            <span class="rating-label">Fair</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="event_quality" value="3">
+                                            <span class="rating-value">3</span>
+                                            <span class="rating-label">Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="event_quality" value="4">
+                                            <span class="rating-value">4</span>
+                                            <span class="rating-label">Very Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="event_quality" value="5">
+                                            <span class="rating-value">5</span>
+                                            <span class="rating-label">Excellent</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Question 2: Communication -->
+                                <div class="rating-question">
+                                    <div class="rating-question-header">
+                                        <h6 class="rating-question-title">2. Communication</h6>
+                                        <p class="rating-question-desc">How effective was the organization in communicating event details and announcements?</p>
+                                    </div>
+                                    <div class="rating-options">
+                                        <label class="rating-option">
+                                            <input type="radio" name="org_communication" value="1">
+                                            <span class="rating-value">1</span>
+                                            <span class="rating-label">Poor</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="org_communication" value="2">
+                                            <span class="rating-value">2</span>
+                                            <span class="rating-label">Fair</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="org_communication" value="3">
+                                            <span class="rating-value">3</span>
+                                            <span class="rating-label">Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="org_communication" value="4">
+                                            <span class="rating-value">4</span>
+                                            <span class="rating-label">Very Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="org_communication" value="5">
+                                            <span class="rating-value">5</span>
+                                            <span class="rating-label">Excellent</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Question 3: Inclusivity -->
+                                <div class="rating-question">
+                                    <div class="rating-question-header">
+                                        <h6 class="rating-question-title">3. Inclusivity</h6>
+                                        <p class="rating-question-desc">How welcoming and inclusive was the organization to all members?</p>
+                                    </div>
+                                    <div class="rating-options">
+                                        <label class="rating-option">
+                                            <input type="radio" name="inclusivity" value="1">
+                                            <span class="rating-value">1</span>
+                                            <span class="rating-label">Poor</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="inclusivity" value="2">
+                                            <span class="rating-value">2</span>
+                                            <span class="rating-label">Fair</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="inclusivity" value="3">
+                                            <span class="rating-value">3</span>
+                                            <span class="rating-label">Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="inclusivity" value="4">
+                                            <span class="rating-value">4</span>
+                                            <span class="rating-label">Very Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="inclusivity" value="5">
+                                            <span class="rating-value">5</span>
+                                            <span class="rating-label">Excellent</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Question 4: Leadership -->
+                                <div class="rating-question">
+                                    <div class="rating-question-header">
+                                        <h6 class="rating-question-title">4. Leadership</h6>
+                                        <p class="rating-question-desc">How effective and approachable was the leadership team?</p>
+                                    </div>
+                                    <div class="rating-options">
+                                        <label class="rating-option">
+                                            <input type="radio" name="leadership" value="1">
+                                            <span class="rating-value">1</span>
+                                            <span class="rating-label">Poor</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="leadership" value="2">
+                                            <span class="rating-value">2</span>
+                                            <span class="rating-label">Fair</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="leadership" value="3">
+                                            <span class="rating-value">3</span>
+                                            <span class="rating-label">Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="leadership" value="4">
+                                            <span class="rating-value">4</span>
+                                            <span class="rating-label">Very Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="leadership" value="5">
+                                            <span class="rating-value">5</span>
+                                            <span class="rating-label">Excellent</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Question 5: Skill Development -->
+                                <div class="rating-question">
+                                    <div class="rating-question-header">
+                                        <h6 class="rating-question-title">5. Skill Development</h6>
+                                        <p class="rating-question-desc">How well did the organization provide opportunities for personal growth?</p>
+                                    </div>
+                                    <div class="rating-options">
+                                        <label class="rating-option">
+                                            <input type="radio" name="skill_dev" value="1">
+                                            <span class="rating-value">1</span>
+                                            <span class="rating-label">Poor</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="skill_dev" value="2">
+                                            <span class="rating-value">2</span>
+                                            <span class="rating-label">Fair</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="skill_dev" value="3">
+                                            <span class="rating-value">3</span>
+                                            <span class="rating-label">Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="skill_dev" value="4">
+                                            <span class="rating-value">4</span>
+                                            <span class="rating-label">Very Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="skill_dev" value="5">
+                                            <span class="rating-value">5</span>
+                                            <span class="rating-label">Excellent</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Question 6: Impact -->
+                                <div class="rating-question">
+                                    <div class="rating-question-header">
+                                        <h6 class="rating-question-title">6. Impact</h6>
+                                        <p class="rating-question-desc">How much did the organization positively contribute to your campus experience?</p>
+                                    </div>
+                                    <div class="rating-options">
+                                        <label class="rating-option">
+                                            <input type="radio" name="impact" value="1">
+                                            <span class="rating-value">1</span>
+                                            <span class="rating-label">Poor</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="impact" value="2">
+                                            <span class="rating-value">2</span>
+                                            <span class="rating-label">Fair</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="impact" value="3">
+                                            <span class="rating-value">3</span>
+                                            <span class="rating-label">Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="impact" value="4">
+                                            <span class="rating-value">4</span>
+                                            <span class="rating-label">Very Good</span>
+                                        </label>
+                                        <label class="rating-option">
+                                            <input type="radio" name="impact" value="5">
+                                            <span class="rating-value">5</span>
+                                            <span class="rating-label">Excellent</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Event Evaluation (shown only when checkbox is checked) -->
+                            <div class="feedback-form-section" id="eventEvaluationSection">
+                                <h5 class="feedback-section-title">Event Evaluation</h5>
+                                
+                                <div class="feedback-form-row">
+                                    <div class="feedback-form-group">
+                                        <label>Activity Title<span class="required-mark">*</span></label>
+                                        <input type="text" name="activity_title" class="feedback-input">
+                                    </div>
+                                    
+                                    <div class="feedback-form-group">
+                                        <label>Date<span class="required-mark">*</span></label>
+                                        <input type="date" name="activity_date" class="feedback-input">
+                                    </div>
+                                </div>
+
+                                <div class="feedback-form-row">
+                                    <div class="feedback-form-group">
+                                        <label>Venue<span class="required-mark">*</span></label>
+                                        <input type="text" name="venue" class="feedback-input">
+                                    </div>
+                                    
+                                    <div class="feedback-form-group">
+                                        <label>Position</label>
+                                        <input type="text" name="position" class="feedback-input">
+                                    </div>
+                                </div>
+
+                                <!-- Event Rating Categories -->
+                                <div class="event-rating-section">
+                                    <h6 class="event-rating-title">1. Online Activity Ratings</h6>
+                                    
+                                    <!-- Pre-event Communication -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">Pre-event communication</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="communication_rating" value="excellent">
+                                                <span>Excellent</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="communication_rating" value="very_satisfactory">
+                                                <span>Very Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="communication_rating" value="satisfactory">
+                                                <span>Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="communication_rating" value="needs_improvement">
+                                                <span>Needs Improvement</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="communication_rating" value="poor">
+                                                <span>Poor</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Video Quality -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">Video quality of the activity broadcast</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="video_quality" value="excellent">
+                                                <span>Excellent</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="video_quality" value="very_satisfactory">
+                                                <span>Very Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="video_quality" value="satisfactory">
+                                                <span>Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="video_quality" value="needs_improvement">
+                                                <span>Needs Improvement</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="video_quality" value="poor">
+                                                <span>Poor</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Audio Quality -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">Audio quality of the activity broadcast</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="audio_quality" value="excellent">
+                                                <span>Excellent</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="audio_quality" value="very_satisfactory">
+                                                <span>Very Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="audio_quality" value="satisfactory">
+                                                <span>Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="audio_quality" value="needs_improvement">
+                                                <span>Needs Improvement</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="audio_quality" value="poor">
+                                                <span>Poor</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="event-rating-section">
+                                    <h6 class="event-rating-title">2. Resource Person Evaluation</h6>
+                                    
+                                    <!-- Mastery -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">Mastery of the subject matter</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="mastery_rating" value="excellent">
+                                                <span>Excellent</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="mastery_rating" value="very_satisfactory">
+                                                <span>Very Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="mastery_rating" value="satisfactory">
+                                                <span>Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="mastery_rating" value="needs_improvement">
+                                                <span>Needs Improvement</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="mastery_rating" value="poor">
+                                                <span>Poor</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Time Management -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">Time management</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="time_management" value="excellent">
+                                                <span>Excellent</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="time_management" value="very_satisfactory">
+                                                <span>Very Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="time_management" value="satisfactory">
+                                                <span>Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="time_management" value="needs_improvement">
+                                                <span>Needs Improvement</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="time_management" value="poor">
+                                                <span>Poor</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Learning Methodologies -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">Appropriateness of learning methodologies</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="methodologies" value="excellent">
+                                                <span>Excellent</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="methodologies" value="very_satisfactory">
+                                                <span>Very Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="methodologies" value="satisfactory">
+                                                <span>Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="methodologies" value="needs_improvement">
+                                                <span>Needs Improvement</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="methodologies" value="poor">
+                                                <span>Poor</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Professional Conduct -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">Professional conduct</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="conduct" value="excellent">
+                                                <span>Excellent</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="conduct" value="very_satisfactory">
+                                                <span>Very Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="conduct" value="satisfactory">
+                                                <span>Satisfactory</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="conduct" value="needs_improvement">
+                                                <span>Needs Improvement</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="conduct" value="poor">
+                                                <span>Poor</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="event-rating-section">
+                                    <h6 class="event-rating-title">3. Activity Relevance</h6>
+                                    
+                                    <!-- Topic Informativeness -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">I find the topic of the activity informative</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="topic_informative" value="strongly_agree">
+                                                <span>Strongly Agree</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="topic_informative" value="agree">
+                                                <span>Agree</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="topic_informative" value="undecided">
+                                                <span>Undecided</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="topic_informative" value="disagree">
+                                                <span>Disagree</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="topic_informative" value="strongly_disagree">
+                                                <span>Strongly Disagree</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Activity Usefulness -->
+                                    <div class="event-rating-group">
+                                        <label class="event-rating-label">The activity is relevant or useful</label>
+                                        <div class="event-rating-options">
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="activity_relevance" value="strongly_agree">
+                                                <span>Strongly Agree</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="activity_relevance" value="agree">
+                                                <span>Agree</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="activity_relevance" value="undecided">
+                                                <span>Undecided</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="activity_relevance" value="disagree">
+                                                <span>Disagree</span>
+                                            </label>
+                                            <label class="event-rating-option">
+                                                <input type="radio" name="activity_relevance" value="strongly_disagree">
+                                                <span>Strongly Disagree</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="feedback-form-group">
+                                    <label>Comments and Suggestions</label>
+                                    <textarea name="comments_suggestions" class="feedback-textarea" rows="4" placeholder="We highly appreciate your comments and suggestions to help us improve the activity..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Additional Information & Submit -->
+                    <div class="feedback-step-pane" id="step3Pane">
+                        <div class="feedback-form-container">
+                            <h4 class="feedback-step-title">Additional Information</h4>
+                            
+                            <div class="feedback-form-section">
+                                <div class="feedback-form-group">
+                                    <label>What improvements would you suggest?</label>
+                                    <textarea name="improvements" class="feedback-textarea" rows="4" placeholder="Share your thoughts on how we can improve..."></textarea>
+                                </div>
+
+                                <div class="feedback-form-row">
+                                    <div class="feedback-form-group">
+                                        <label>Email (Optional)</label>
+                                        <input type="email" name="email" class="feedback-input" placeholder="your@email.com">
+                                    </div>
+                                    
+                                    <div class="feedback-form-group">
+                                        <label>Name (Optional)</label>
+                                        <input type="text" name="name" class="feedback-input" placeholder="Your Name">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-success-message" id="feedbackSuccessMessage" style="display: none;">
+                                <div class="success-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4>Thank You!</h4>
+                                <p>Your feedback has been submitted successfully.</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
 
-    <!-- Resource Person Evaluation -->
-    <div class="mb-8">
-        <label class="block text-lg font-medium text-gray-800 mb-4">2. Resource Person Evaluation</label>
-        
-        <!-- Mastery -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Mastery of the subject matter</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="mastery_rating" value="excellent" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="mastery_rating" value="very_satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="mastery_rating" value="satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="mastery_rating" value="needs_improvement" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="mastery_rating" value="poor" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Time Management -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Time management</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="time_management" value="excellent" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span></label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="time_management" value="very_satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="time_management" value="satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="time_management" value="needs_improvement" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="time_management" value="poor" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Learning Methodologies -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Appropriateness of learning methodologies</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="methodologies" value="excellent" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="methodologies" value="very_satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="methodologies" value="satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="methodologies" value="needs_improvement" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="methodologies" value="poor" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Professional Conduct -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Professional conduct</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="conduct" value="excellent" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Excellent</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="conduct" value="very_satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Very Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="conduct" value="satisfactory" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Satisfactory</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="conduct" value="needs_improvement" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Needs Improvement</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="conduct" value="poor" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Poor</span>
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <!-- Activity Relevance Questions -->
-    <div class="mb-8">
-        <label class="block text-lg font-medium text-gray-800 mb-4">3. Activity Relevance</label>
-        
-        <!-- Topic Informativeness -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">I find the topic of the activity informative</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="topic_informative" value="strongly_agree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Agree</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="topic_informative" value="agree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Agree</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="topic_informative" value="undecided" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Undecided</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="topic_informative" value="disagree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Disagree</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="topic_informative" value="strongly_disagree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Disagree</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Activity Usefulness -->
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">The activity is relevant or useful</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="inline-flex items-center">
-                    <input type="radio" name="activity_relevance" value="strongly_agree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Agree</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="activity_relevance" value="agree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Agree</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="activity_relevance" value="undecided" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Undecided</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="activity_relevance" value="disagree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Disagree</span>
-                </label>
-                <label class="inline-flex items-center">
-                    <input type="radio" name="activity_relevance" value="strongly_disagree" class="sr-only peer">
-                    <span class="px-4 py-2 rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white hover:bg-gray-50">Strongly Disagree</span>
-                </label>
-            </div>
+        <!-- Footer with Navigation Buttons -->
+        <div class="feedback-modal-footer">
+            <button type="button" class="feedback-btn secondary" id="prevStepBtn" disabled>Previous</button>
+            <button type="button" class="feedback-btn primary" id="nextStepBtn">Next</button>
+            <button type="submit" class="feedback-btn success" id="submitFeedbackBtn" form="feedbackFormFullscreen" style="display:none;">Submit Feedback</button>
         </div>
     </div>
 </div>
-                </div>
-
-                <!-- Step 3: Additional Information -->
-                <div class="step" id="step3">
-                    <h4 class="text-center mb-4">Additional Information</h4>
-                    
-                    <div class="mb-4">
-                        <label class="form-label">What improvements would you suggest?</label>
-                        <textarea class="form-control" name="improvements" rows="4" placeholder="Share your thoughts on how we can improve..."></textarea>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Email (Optional)</label>
-                            <input class="form-control" name="email" placeholder="your@email.com">
-                        </div>
-                                                
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Name (Optional)</label>
-                            <input type="text" class="form-control" name="name" placeholder="Your Name">
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="custom-feedback-footer">
-            <button type="button" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
-            <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
-            <button type="submit" class="btn btn-success" id="submitBtn" form="feedbackForm" style="display:none;">Submit Feedback</button>
-        </div>
-    </div>
-</div>
-
+    
+ 
     
  
         </div>
@@ -7399,9 +8058,7 @@ body.feedback-open {
         </script>
 
         <!-- Popper.js and Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
 
 
 
@@ -7468,659 +8125,945 @@ body.feedback-open {
 });
 
 </script>
-<script>// Function to handle setting the rating (optional, if you need it for other purposes)
-document.addEventListener('DOMContentLoaded', function() {
-    // Element references
-    const customFeedbackContainer = document.getElementById('customFeedbackContainer');
-    const feedbackForm = document.getElementById('feedbackForm');
-    const steps = document.querySelectorAll('.step');
-    const indicators = document.querySelectorAll('.step-indicator');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    const organizationSelect = document.querySelector('select[name="organization"]');
-    const evaluateEventCheckbox = document.getElementById('evaluateEvent');
-    const eventEvaluation = document.getElementById('eventEvaluation');
-    let currentStep = 0;
+<script>
+document.addEventListener('DOMContentLoaded', fixFormInteraction);
+window.addEventListener('load', fixFormInteraction);
 
-    // Create missing required fields for event evaluation
-    if (feedbackForm) {
-        // Create a hidden input for comments_suggestions
-        if (!document.querySelector('[name="comments_suggestions"]')) {
-            const commentsSuggestionsInput = document.createElement('input');
-            commentsSuggestionsInput.type = 'hidden';
-            commentsSuggestionsInput.name = 'comments_suggestions';
-            commentsSuggestionsInput.value = ''; // Default empty value
-            feedbackForm.appendChild(commentsSuggestionsInput);
-        }
-        
-        // Create a hidden input for student_org if it doesn't exist
-        if (!document.querySelector('[name="student_org"]')) {
-            const studentOrgInput = document.createElement('input');
-            studentOrgInput.type = 'hidden';
-            studentOrgInput.name = 'student_org';
-            feedbackForm.appendChild(studentOrgInput);
-        }
-        
-        // Create a hidden input for position if it doesn't exist
-        if (!document.querySelector('[name="position"]')) {
-            const positionInput = document.createElement('input');
-            positionInput.type = 'hidden';
-            positionInput.name = 'position';
-            positionInput.value = 'Student'; // Default value
-            feedbackForm.appendChild(positionInput);
-        }
+// Also fix when modal opens
+const originalOpenModal = window.openFeedbackModal || function(){};
+window.openFeedbackModal = function() {
+  originalOpenModal.apply(this, arguments);
+  
+  // Run fixes immediately and after slight delays to catch everything
+  fixFormInteraction();
+  setTimeout(fixFormInteraction, 100);
+  setTimeout(fixFormInteraction, 500);
+  setTimeout(fixFormInteraction, 1000);
+};
+
+function fixFormInteraction() {
+  console.log('⚠️ Running emergency form interaction fix');
+  
+  // Add emergency CSS with !important rules to override anything blocking inputs
+  if (!document.getElementById('emergency-input-fix')) {
+    const style = document.createElement('style');
+    style.id = 'emergency-input-fix';
+    style.textContent = `
+      /* Force all inputs to be interactive */
+      #feedbackFormFullscreen input,
+      #feedbackFormFullscreen textarea,
+      #feedbackFormFullscreen select,
+      input[type="text"],
+      input[type="checkbox"],
+      input[type="radio"],
+      textarea,
+      select {
+        pointer-events: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        z-index: 100 !important;
+        position: relative !important;
+        display: inline-block !important;
+      }
+      
+      /* Fix labels to be clickable */
+      label {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+      
+      /* Fix form fields */
+      .form-control {
+        background-color: #fff !important;
+        color: #000 !important;
+        border: 1px solid #ced4da !important;
+      }
+      
+      /* Fix checkbox/radio containers */
+      .form-check {
+        position: relative !important;
+        display: block !important;
+        padding-left: 1.25rem !important;
+      }
+      
+      /* Additional fixes for radio buttons */
+      input[type="radio"],
+      input[type="checkbox"] {
+        cursor: pointer !important;
+        width: auto !important;
+        height: auto !important;
+        -webkit-appearance: auto !important;
+        -moz-appearance: auto !important;
+        appearance: auto !important;
+      }
+      
+      /* Fix disabled z-index that might be covering inputs */
+      .modal-backdrop,
+      .overlay,
+      .modal-overlay,
+      .feedback-overlay {
+        z-index: 50 !important;
+      }
+      
+      /* Ensure containers have relative positioning for z-index to work */
+      .form-group,
+      .feedback-form-group,
+      .input-container {
+        position: relative !important;
+        z-index: 60 !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix all form elements
+  const inputs = document.querySelectorAll('input, textarea, select, button');
+  inputs.forEach(input => {
+    // Remove any inline styles that might be blocking interaction
+    input.style.pointerEvents = 'auto';
+    input.style.opacity = '1';
+    input.style.visibility = 'visible';
+    input.style.position = 'relative';
+    input.style.zIndex = '100';
+    
+    // Remove disabled attributes
+    input.disabled = false;
+    input.readOnly = false;
+    
+    // Enable actual clicking/typing
+    input.addEventListener('click', function(e) {
+      e.stopPropagation();
+    }, true);
+  });
+
+  // Fix labels to properly associate with inputs
+  const labels = document.querySelectorAll('label');
+  labels.forEach(label => {
+    label.style.pointerEvents = 'auto';
+    label.style.cursor = 'pointer';
+    
+    // Try to find the associated input and fix the relationship
+    const forAttribute = label.getAttribute('for');
+    if (forAttribute) {
+      const associatedInput = document.getElementById(forAttribute);
+      if (associatedInput) {
+        // Ensure clicking the label focuses the input
+        label.addEventListener('click', function(e) {
+          associatedInput.focus();
+          if (associatedInput.type === 'checkbox' || associatedInput.type === 'radio') {
+            associatedInput.checked = !associatedInput.checked;
+          }
+        });
+      }
     }
-
-    // Find all date inputs and replace them with hidden fields
-    const dateInputs = document.querySelectorAll('input[type="date"]');
-    dateInputs.forEach(function(dateInput) {
-        // Create a hidden input to replace the date input
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = dateInput.name;
-        
-        // Get current date in ISO format (YYYY-MM-DD)
-        const today = new Date();
-        const formattedDate = today.toISOString().split('T')[0];
-        hiddenInput.value = formattedDate;
-        
-        // Create a text display to show the current date
-        const dateDisplay = document.createElement('div');
-        dateDisplay.className = 'form-control';
-        dateDisplay.style.backgroundColor = '#f8f9fa';
-        dateDisplay.style.padding = '0.75rem 1rem';
-        dateDisplay.style.border = '2px solid #e2e8f0';
-        dateDisplay.style.borderRadius = '8px';
-        dateDisplay.innerText = formattedDate;
-        
-        // Replace the date input with the hidden input and display
-        const parentElement = dateInput.parentNode;
-        parentElement.appendChild(hiddenInput);
-        parentElement.appendChild(dateDisplay);
-        parentElement.removeChild(dateInput);
+  });
+  
+  // Fix checkbox and radio buttons specifically
+  const checkboxes = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+  checkboxes.forEach(checkbox => {
+    // Force standard appearance
+    checkbox.style.webkitAppearance = 'auto';
+    checkbox.style.mozAppearance = 'auto';
+    checkbox.style.appearance = 'auto';
+    
+    // Add click handler that ensures visual update
+    checkbox.addEventListener('click', function() {
+      // If this is part of a radio group, update all radios in the group
+      if (this.type === 'radio' && this.name) {
+        document.querySelectorAll(`input[type="radio"][name="${this.name}"]`).forEach(radio => {
+          if (radio !== this) {
+            radio.checked = false;
+          }
+        });
+      }
+      
+      // Log change for debugging
+      console.log(`${this.type} changed:`, this.name || this.id, 'checked:', this.checked);
     });
+  });
 
-    // Open fullscreen feedback function
-    window.openFullscreenFeedback = function() {
-        customFeedbackContainer.style.display = 'block';
-        document.body.classList.add('feedback-open');
+  // Fix form container elements that might be blocking
+  const formContainers = document.querySelectorAll('.form-group, .input-group, .feedback-form-group');
+  formContainers.forEach(container => {
+    container.style.position = 'relative';
+    container.style.zIndex = '60';
+    container.style.pointerEvents = 'auto';
+  });
+  
+  // Fix clicks on card selectors (if any)
+  const cards = document.querySelectorAll('.card, .feedback-card, .category-card, .option-card');
+  cards.forEach(card => {
+    card.style.cursor = 'pointer';
+    card.style.pointerEvents = 'auto';
+    
+    // Find any radio/checkbox inside the card
+    const radioOrCheckbox = card.querySelector('input[type="radio"], input[type="checkbox"]');
+    if (radioOrCheckbox) {
+      // Make the whole card clickable to select the input
+      card.addEventListener('click', function() {
+        radioOrCheckbox.checked = true;
         
-        // Add active class after a small delay for animation
-        setTimeout(() => {
-            customFeedbackContainer.classList.add('active');
-        }, 10);
+        // Trigger change event
+        const event = new Event('change', { bubbles: true });
+        radioOrCheckbox.dispatchEvent(event);
         
-        // Reset to first step
-        resetForm();
-    };
-
-    // Close fullscreen feedback function
-    window.closeFullscreenFeedback = function() {
-        customFeedbackContainer.classList.remove('active');
-        
-        // Wait for animation to complete before hiding
-        setTimeout(() => {
-            customFeedbackContainer.style.display = 'none';
-            document.body.classList.remove('feedback-open');
-            
-            // Reset form
-            resetForm();
-        }, 300);
-    };
-
-    // Function to open feedback directly from organization cards
-    window.openOrgFeedback = function(orgId, orgName) {
-        openFullscreenFeedback();
-        
-        // Select organization category
-        document.getElementById('orgBtn').checked = true;
-        
-        // Trigger change event to show org questions
-        const event = new Event('change');
-        document.getElementById('orgBtn').dispatchEvent(event);
-        
-        // Auto-select the organization in the dropdown if it exists
-        if (organizationSelect) {
-            // Create option if it doesn't exist
-            let optionExists = false;
-            for (let i = 0; i < organizationSelect.options.length; i++) {
-                if (organizationSelect.options[i].value === orgId) {
-                    optionExists = true;
-                    organizationSelect.value = orgId;
-                    break;
-                }
-            }
-            
-            if (!optionExists && orgId && orgName) {
-                const newOption = new Option(orgName, orgId);
-                organizationSelect.add(newOption);
-                organizationSelect.value = orgId;
-            }
-            
-            // Set the student_org field value
-            const studentOrgField = document.querySelector('[name="student_org"]');
-            if (studentOrgField) {
-                studentOrgField.value = orgId;
-            }
-        }
-        
-        // Move to step 1 (index 0)
-        currentStep = 0;
-        nextBtn.click(); // Move to step 2 (index 1)
-    };
-
-    // Fetch organizations when the page loads
-    if (organizationSelect) {
-        fetch('ajax/fetch_organizations.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.organizations) {
-                    // Clear existing options
-                    organizationSelect.innerHTML = '<option value="">Choose an organization...</option>';
-                    
-                    // Add organizations to dropdown
-                    data.organizations.forEach(org => {
-                        const option = document.createElement('option');
-                        option.value = org.org_id;
-                        option.textContent = org.org_name;
-                        organizationSelect.appendChild(option);
-                    });
-                } else {
-                    console.error('Error loading organizations:', data.message);
-                    organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                organizationSelect.innerHTML = '<option value="">Error loading organizations</option>';
-            });
-        
-        // Add event listener to organization dropdown to update student_org field
-        organizationSelect.addEventListener('change', function() {
-            const studentOrgField = document.querySelector('[name="student_org"]');
-            if (studentOrgField) {
-                studentOrgField.value = this.value;
-            }
-        });
+        // Add visual selection
+        cards.forEach(c => c.classList.remove('selected', 'active'));
+        card.classList.add('selected', 'active');
+      });
     }
-
-    // Rating conversion maps
-    const ratingMap = {
-        'excellent': 5,
-        'very_satisfactory': 4,
-        'satisfactory': 3,
-        'needs_improvement': 2,
-        'poor': 1
-    };
-
-    const agreementMap = {
-        'strongly_agree': 5,
-        'agree': 4,
-        'undecided': 3,
-        'disagree': 2,
-        'strongly_disagree': 1
-    };
-
-    // Helper functions
-    function convertRatingToNumber(rating) {
-        return ratingMap[rating] || null;
-    }
-
-    function convertAgreementToNumber(rating) {
-        return agreementMap[rating] || null;
-    }
-
-    // Category selection handler
-    document.querySelectorAll('input[name="feedback_category"]').forEach(input => {
-        input.addEventListener('change', function() {
-            const category = this.value;
-            const officeQuestions = document.getElementById('officeQuestions');
-            const orgQuestions = document.getElementById('orgQuestions');
-            const csmIntro = document.getElementById('csmIntro');
-            
-            if (category === 'office') {
-                officeQuestions.style.display = 'block';
-                orgQuestions.style.display = 'none';
-                if (eventEvaluation) eventEvaluation.style.display = 'none';
-                // Show the CSM intro for office category
-                if (csmIntro) csmIntro.style.display = 'block';
-            } else if (category === 'org') {
-                officeQuestions.style.display = 'none';
-                orgQuestions.style.display = 'block';
-                // Hide the CSM intro for org category
-                if (csmIntro) csmIntro.style.display = 'none';
-            }
-        });
-    });
-
-    // Event evaluation checkbox handler
-    if (evaluateEventCheckbox) {
-        evaluateEventCheckbox.addEventListener('change', function() {
-            if (eventEvaluation) {
-                eventEvaluation.style.display = this.checked ? 'block' : 'none';
-            }
-        });
-    }
-
-    function validateOfficeForm() {
-    const requiredFields = [
-        { name: 'client_type', label: 'Client Type', type: 'select' },
-        // Date is now automatically handled and not needed for validation
-        { name: 'age', label: 'Age', type: 'number' },
-        { name: 'sex', label: 'Sex', type: 'radio' },
-        { name: 'office', label: 'Office', type: 'text' },
-        { name: 'service', label: 'Service', type: 'text' },
-        { name: 'cc_awareness', label: 'CC Awareness', type: 'radio' },
-        { name: 'cc_visibility', label: 'CC Visibility', type: 'radio' },
-        { name: 'cc_helpfulness', label: 'CC Helpfulness', type: 'radio' }
-    ];
-
-    for (const field of requiredFields) {
-        const element = field.type === 'radio' 
-            ? document.querySelector(`input[name="${field.name}"]:checked`)
-            : document.querySelector(`[name="${field.name}"]`);
-            
-        const value = field.type === 'radio' 
-            ? element?.value
-            : element?.value?.trim();
-
-        if (!value) {
-            alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
-            element?.focus();
-            return false;
-        }
-    }
-
-    // Validate SQD ratings (starting from SQD1 instead of SQD0)
-    for (let i = 1; i <= 8; i++) {
-        if (!document.querySelector(`input[name="sqd${i}"]:checked`)) {
-            alert(`Please provide a rating for SQD${i}`);
-            return false;
-        }
-    }
-
-    return true;
+  });
+  
+  console.log('✅ Form interaction fix applied to', inputs.length, 'form elements');
 }
 
-    function validateEventEvaluation() {
-        const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
-        
-        if (!evaluateEventChecked) {
-            return true; // Skip validation if event evaluation is not checked
-        }
+// Apply fixes immediately if page is already loaded
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  fixFormInteraction();
+}// Function to handle setting the rating (optional, if you need it for other purposes)
+// KEEP YOUR EXISTING CODE AND ADD THESE FIXES
 
-        // Only validate these fields; the rest will be auto-filled
-        const requiredFields = [
-            'activity_title',
-            'venue'
-        ];
+// Fix for feedback modal showing
+document.addEventListener('DOMContentLoaded', function() {
+  // First, let's create the modal if it doesn't exist
+  if (!document.getElementById('feedbackModal')) {
+    console.log('Creating missing feedback modal');
+    createFeedbackModal();
+  }
 
-        for (const fieldName of requiredFields) {
-            const field = document.querySelector(`[name="${fieldName}"]`);
-            const value = field?.value?.trim();
-            
-            if (!value) {
-                alert(`Please fill in ${fieldName.replace('_', ' ')}`);
-                field?.focus();
-                return false;
-            }
-        }
-        
-        // Make sure student_org field is set from organization dropdown
-        const organizationSelect = document.querySelector('select[name="organization"]');
-        const studentOrgField = document.querySelector('[name="student_org"]');
-        
-        if (organizationSelect && organizationSelect.value && studentOrgField) {
-            studentOrgField.value = organizationSelect.value;
-        } else if (!studentOrgField?.value) {
-            alert("Please select an organization");
-            if (organizationSelect) organizationSelect.focus();
-            return false;
-        }
-
-        return true;
-    }
-
-    function validateOrgForm() {
-        const requiredFields = [
-            { name: 'organization', label: 'Organization', type: 'select' },
-        ];
-
-        for (const field of requiredFields) {
-            const element = field.type === 'radio' 
-                ? document.querySelector(`input[name="${field.name}"]:checked`)
-                : document.querySelector(`[name="${field.name}"]`);
-                
-            const value = field.type === 'radio' 
-                ? element?.value
-                : element?.value?.trim();
-
-            if (!value) {
-                alert(`Please ${field.type === 'select' ? 'select' : 'enter'} ${field.label}`);
-                element?.focus();
-                return false;
-            }
-            
-            // If organization is selected, make sure student_org field is also set
-            if (field.name === 'organization' && value) {
-                const studentOrgField = document.querySelector('[name="student_org"]');
-                if (studentOrgField) {
-                    studentOrgField.value = value;
-                }
-            }
-        }
-
-        // Validate organization ratings
-        const orgRatings = [
-            'event_quality',
-            'org_communication',
-            'inclusivity',
-            'leadership',
-            'skill_dev',
-            'impact'
-        ];
-
-        for (const rating of orgRatings) {
-            if (!document.querySelector(`input[name="${rating}"]:checked`)) {
-                alert(`Please provide a rating for ${rating.replace('_', ' ')}`);
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    // Form submission handler
-    if (feedbackForm) {
-        feedbackForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Ensure all date fields have the current date
-            ensureCurrentDates();
-            
-            // Validate current step
-            if (!validateCurrentStep()) {
-                return;
-            }
-
-            const formData = new FormData(this);
-            const feedbackCategory = formData.get('feedback_category');
-            
-            // Set comments_suggestions from improvements field if empty
-            if (!formData.get('comments_suggestions') && formData.get('improvements')) {
-                formData.set('comments_suggestions', formData.get('improvements'));
-            } else if (!formData.get('comments_suggestions')) {
-                formData.set('comments_suggestions', 'No comments provided');
-            }
-            
-            submitBtn.disabled = true;
-
-            // Process organization feedback
-            if (feedbackCategory === 'org') {
-                // Convert org ratings to numbers
-                const orgRatings = [
-                    'event_quality',
-                    'org_communication',
-                    'inclusivity',
-                    'leadership',
-                    'skill_dev',
-                    'impact'
-                ];
-
-                orgRatings.forEach(field => {
-                    const rating = formData.get(field);
-                    if (rating) {
-                        formData.set(field, parseInt(rating));
-                    }
-                });
-
-                // Ensure student_org is set properly
-                if (!formData.get('student_org') && formData.get('organization')) {
-                    formData.set('student_org', formData.get('organization'));
-                }
-                
-                // Set default position if empty
-                if (!formData.get('position')) {
-                    formData.set('position', 'Student');
-                }
-
-                // Check if event evaluation is enabled
-                const evaluateEventChecked = document.getElementById('evaluateEvent').checked;
-                formData.set('evaluate_event', evaluateEventChecked ? '1' : '0');
-
-                // Handle event evaluation if checked
-                if (evaluateEventChecked) {
-                    // Convert ratings using rating map
-                    const eventRatings = [
-                        'communication_rating',
-                        'video_quality',
-                        'audio_quality',
-                        'mastery_rating',
-                        'time_management',
-                        'conduct'
-                    ];
-
-                    eventRatings.forEach(field => {
-                        const rating = formData.get(field);
-                        if (rating) {
-                            formData.set(field, convertRatingToNumber(rating));
-                        } else {
-                            // Set default value if missing
-                            formData.set(field, 3); // Default to middle value
-                        }
-                    });
-                    
-                    // Handle methodologies field specifically
-                    if (!formData.get('methodologies')) {
-                        formData.set('methodologies', 'satisfactory');
-                    }
-
-                    // Convert agreement ratings
-                    const agreementFields = [
-                        'topic_informative',
-                        'activity_relevance'
-                    ];
-
-                    agreementFields.forEach(field => {
-                        const rating = formData.get(field);
-                        if (rating) {
-                            formData.set(field, convertAgreementToNumber(rating));
-                        } else {
-                            // Set default value if missing
-                            formData.set(field, 3); // Default to middle value
-                        }
-                    });
-                }
-            }
-
-            // Submit form data
-            fetch('ajax/submit_feedback.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        console.error('Server response:', text);
-                        throw new Error('Server responded with an error');
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Thank you for your feedback!');
-                    resetForm();
-                    // Use custom close function
-                    closeFullscreenFeedback();
-                    // Update feedback counts if the function exists
-                    if (typeof updateFeedbackCounts === 'function') {
-                        updateFeedbackCounts();
-                    }
-                } else {
-                    throw new Error(data.message || 'Error submitting feedback');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while submitting your feedback. Please try again.');
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-            });
-        });
-    }
-
-    // Function to ensure current dates in all date fields
-    function ensureCurrentDates() {
-        // Get current date in ISO format (YYYY-MM-DD)
-        const today = new Date();
-        const formattedDate = today.toISOString().split('T')[0];
-        
-        // Set current date for all date fields
-        const dateFields = ['date', 'activity_date'];
-        dateFields.forEach(fieldName => {
-            const field = document.querySelector(`[name="${fieldName}"]`);
-            if (field) {
-                field.value = formattedDate;
-            } else {
-                // If the field doesn't exist, create a hidden input with the current date
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = fieldName;
-                hiddenInput.value = formattedDate;
-                feedbackForm.appendChild(hiddenInput);
-            }
-        });
-    }
-
-    // Step validation
-    function validateCurrentStep() {
-        if (currentStep === 0) {
-            const categorySelected = document.querySelector('input[name="feedback_category"]:checked');
-            if (!categorySelected) {
-                alert('Please select a feedback category');
-                return false;
-            }
-            return true;
-        }
-        
-        if (currentStep === 1) {
-            const category = document.querySelector('input[name="feedback_category"]:checked').value;
-            
-            if (category === 'office') {
-                return validateOfficeForm();
-            } else if (category === 'org') {
-                return validateOrgForm() && validateEventEvaluation();
-            }
-        }
-
-        return true;
-    }
-
-    // Navigation and step management
-    function updateSteps() {
-        steps.forEach((step, index) => {
-            step.classList.toggle('active', index === currentStep);
-            step.style.display = index === currentStep ? 'block' : 'none';
-        });
-        
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index <= currentStep);
-        });
-        
-        prevBtn.disabled = currentStep === 0;
-        nextBtn.style.display = currentStep === steps.length - 1 ? 'none' : 'block';
-        submitBtn.style.display = currentStep === steps.length - 1 ? 'block' : 'none';
-    }
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-            if (!validateCurrentStep()) {
-                return;
-            }
-            
-            if (currentStep < steps.length - 1) {
-                currentStep++;
-                updateSteps();
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-            if (currentStep > 0) {
-                currentStep--;
-                updateSteps();
-            }
-        });
-    }
-
-    // Form reset
-    function resetForm() {
-        if (feedbackForm) {
-            feedbackForm.reset();
-            currentStep = 0;
-            updateSteps();
-
-            // Reset display states
-            const displays = {
-                'officeQuestions': 'none',
-                'orgQuestions': 'none',
-                'eventEvaluation': 'none',
-                'csmIntro': 'none'
-            };
-
-            Object.entries(displays).forEach(([id, display]) => {
-                const element = document.getElementById(id);
-                if (element) element.style.display = display;
-            });
-            
-            // Re-ensure all date fields have the current date
-            ensureCurrentDates();
-        }
-    }
-
-    // Close with ESC key
-    document.addEventListener('keydown', function(e) {
-        if (customFeedbackContainer.style.display === 'block') {
-            if (e.key === 'Escape') {
-                closeFullscreenFeedback();
-            }
-        }
+  // Find all buttons that should open the feedback modal
+  const feedbackButtons = document.querySelectorAll('.submit-feedback-btn');
+  
+  feedbackButtons.forEach(button => {
+    // Remove existing event listeners
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
+    
+    // Add new click handler that uses our fullscreen modal
+    newButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      openFeedbackModal();
     });
-
-    // Initialize on load
-    updateSteps();
-    ensureCurrentDates();
+  });
+  
+  // NEW CODE - Run our fixes
+  console.log('Adding feedback form fixes');
+  
+  // Fix 1: Add emergency CSS
+  addEmergencyStyles();
+  
+  // Fix 2: Make navigation buttons work
+  fixNavigationButtons();
+  
+  // Fix 3: Make form inputs work
+  setTimeout(fixFormInputs, 500);
+  setTimeout(fixFormInputs, 1000);
 });
 
-// Feedback counts update function
-function updateFeedbackCounts() {
-    fetch('ajax/get_feedback_counts.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Update with the correct element IDs from your HTML
-                document.getElementById('org-feedback-count').textContent = data.org_count || 0;
-                document.getElementById('office-feedback-count').textContent = data.office_count || 0;
-            } else {
-                console.error('Error in feedback response:', data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching feedback counts:', error);
-            // Update with fallback values if fetch fails
-            document.getElementById('org-feedback-count').textContent = '0';
-            document.getElementById('office-feedback-count').textContent = '0';
-        });
+// Function to create a feedback modal if it doesn't exist
+function createFeedbackModal() {
+  const modalHTML = `
+  <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-maroon text-white">
+          <h5 class="modal-title" id="feedbackModalLabel">Share Your Feedback</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Please use our fullscreen feedback form to share your thoughts.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="openFeedbackModal()">Open Feedback Form</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
+
+// Function to open the fullscreen feedback modal directly
+function openFeedbackModal() {
+  const fullscreenFeedbackModal = document.getElementById('feedbackFullscreenModal');
+  
+  if (fullscreenFeedbackModal) {
+    // Use the existing fullscreen modal
+    fullscreenFeedbackModal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent body scrolling
+    
+    // Reset the form when opening
+    const feedbackForm = document.getElementById('feedbackFormFullscreen');
+    if (feedbackForm) {
+      feedbackForm.reset();
+    }
+    
+    // Reset step indicators
+    const feedbackSteps = document.querySelectorAll('.feedback-step');
+    if (feedbackSteps.length > 0) {
+      // Reset to first step
+      feedbackSteps.forEach((step, index) => {
+        if (index === 0) {
+          step.classList.add('active');
+        } else {
+          step.classList.remove('active');
+        }
+      });
+    }
+    
+    // Reset step panes
+    const stepPanes = document.querySelectorAll('.feedback-step-pane');
+    if (stepPanes.length > 0) {
+      stepPanes.forEach((pane, index) => {
+        if (index === 0) {
+          pane.classList.add('active');
+        } else {
+          pane.classList.remove('active');
+        }
+      });
+    }
+    
+    // NEW CODE - Fix forms every time modal is opened
+    setTimeout(fixFormInputs, 300);
+    
+    console.log('Opened fullscreen feedback modal');
+  } else {
+    console.error('Fullscreen feedback modal not found');
+    // As a fallback, try to open the regular Bootstrap modal
+    const regularModal = document.getElementById('feedbackModal');
+    if (regularModal && typeof bootstrap !== 'undefined') {
+      try {
+        const modal = new bootstrap.Modal(regularModal);
+        modal.show();
+        console.log('Opened regular feedback modal as fallback');
+      } catch (error) {
+        console.error('Error opening regular modal:', error);
+        // Final fallback - alert
+        alert('The feedback form could not be opened. Please try again later or contact support.');
+      }
+    } else {
+      alert('The feedback form could not be opened. Please try again later or contact support.');
+    }
+  }
+}
+
+// Function to close the fullscreen feedback modal
+function closeFeedbackModal() {
+  const fullscreenFeedbackModal = document.getElementById('feedbackFullscreenModal');
+  if (fullscreenFeedbackModal) {
+    fullscreenFeedbackModal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scrolling
+    console.log('Closed fullscreen feedback modal');
+  }
+}
+
+// Initialize the load feedback counts function
+function updateFeedbackCounts() {
+  // Option 1: Try a fetch request to your endpoint
+  fetch('ajax/get_feedback_counts.php')
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('org-feedback-count').textContent = data.org_count || 0;
+        document.getElementById('office-feedback-count').textContent = data.office_count || 0;
+      } else {
+        console.error('Error in feedback response:', data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching feedback counts:', error);
+      
+      // Option 2: Fallback to static numbers if fetch fails
+      const orgCounter = document.getElementById('org-feedback-count');
+      const officeCounter = document.getElementById('office-feedback-count');
+      
+      if (orgCounter && orgCounter.innerText.trim() === '') {
+        orgCounter.innerText = '15';
+      }
+      
+      if (officeCounter && officeCounter.innerText.trim() === '') {
+        officeCounter.innerText = '23';
+      }
+    });
+}
+
+// Run feedback count update on page load
+updateFeedbackCounts();
+
+// Make sure Bootstrap is properly initialized for all modals
+function initializeBootstrapComponents() {
+  if (typeof bootstrap !== 'undefined') {
+    // Initialize all tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    // Initialize all modals
+    const modalTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'));
+    modalTriggerList.map(function (modalTriggerEl) {
+      modalTriggerEl.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-bs-target');
+        const modalElement = document.querySelector(targetId);
+        if (modalElement) {
+          try {
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+          } catch (error) {
+            console.error(`Error initializing modal ${targetId}:`, error);
+          }
+        }
+      });
+    });
+    
+    console.log('Bootstrap components initialized');
+  } else {
+    console.warn('Bootstrap not loaded!');
+  }
+}
+
+// Initialize after page loads
+document.addEventListener('DOMContentLoaded', initializeBootstrapComponents);
 
 // Update counts initially and every 30 seconds
 document.addEventListener('DOMContentLoaded', function() {
-    updateFeedbackCounts();
-    setInterval(updateFeedbackCounts, 30000);
+  updateFeedbackCounts();
+  setInterval(updateFeedbackCounts, 30000);
+});
+
+///////////////////////////////////////////////////////////////
+// NEW FUNCTIONS TO FIX FEEDBACK FORM - ADD THESE TO YOUR CODE
+///////////////////////////////////////////////////////////////
+
+// Fix 1: Add emergency CSS to make inputs work
+function addEmergencyStyles() {
+  if (!document.getElementById('emergency-form-fixes')) {
+    const style = document.createElement('style');
+    style.id = 'emergency-form-fixes';
+    style.textContent = `
+      /* Enable all form inputs */
+      #feedbackFormFullscreen input,
+      #feedbackFormFullscreen select,
+      #feedbackFormFullscreen textarea,
+      .feedback-input,
+      .feedback-select,
+      .feedback-textarea {
+        pointer-events: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        position: relative !important;
+        z-index: 10 !important;
+        background-color: white !important;
+        color: black !important;
+        cursor: text !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        display: block !important;
+        width: 100% !important;
+        padding: 0.5rem !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 0.25rem !important;
+      }
+
+      /* Fix checkboxes and radio buttons */
+      #feedbackFormFullscreen input[type="checkbox"],
+      #feedbackFormFullscreen input[type="radio"] {
+        width: auto !important;
+        display: inline-block !important;
+        cursor: pointer !important;
+      }
+
+      /* Fix container elements */
+      .feedback-step-pane,
+      .feedback-form-container,
+      .feedback-form-section,
+      .feedback-form-group {
+        position: relative !important;
+        z-index: 5 !important;
+        pointer-events: auto !important;
+      }
+
+      /* Fix labels */
+      #feedbackFormFullscreen label,
+      .feedback-form-group label {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+      
+      /* Fix step buttons */
+      #nextStepBtn, 
+      #prevStepBtn, 
+      #submitFeedbackBtn {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      
+      /* Fix radio options */
+      .sqd-rating-option,
+      .rating-option,
+      .event-rating-option {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+    `;
+    document.head.appendChild(style);
+    console.log("Added emergency CSS fixes");
+  }
+}
+
+// Fix 2: Make navigation buttons work
+function fixNavigationButtons() {
+  // Fix next button
+  const nextBtn = document.getElementById('nextStepBtn');
+  if (nextBtn) {
+    // Replace the button to remove old event listeners
+    const newNextBtn = nextBtn.cloneNode(true);
+    nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+    
+    // Add direct click handler
+    newNextBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      goToNextStep();
+      return false;
+    });
+    console.log('Fixed next button');
+  } else {
+    console.warn('Next button not found');
+  }
+  
+  // Fix previous button
+  const prevBtn = document.getElementById('prevStepBtn');
+  if (prevBtn) {
+    // Replace the button to remove old event listeners
+    const newPrevBtn = prevBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+    
+    // Add direct click handler
+    newPrevBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      goToPrevStep();
+      return false;
+    });
+    console.log('Fixed previous button');
+  } else {
+    console.warn('Previous button not found');
+  }
+  
+  // Fix submit button
+  const submitBtn = document.getElementById('submitFeedbackBtn');
+  if (submitBtn) {
+    // Replace the button to remove old event listeners
+    const newSubmitBtn = submitBtn.cloneNode(true);
+    submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+    
+    // Add direct click handler
+    newSubmitBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      submitFeedback();
+      return false;
+    });
+    console.log('Fixed submit button');
+  } else {
+    console.warn('Submit button not found');
+  }
+}
+
+// Fix 3: Make form inputs work
+function fixFormInputs() {
+  // Find all inputs
+  const inputs = document.querySelectorAll('#feedbackFormFullscreen input, #feedbackFormFullscreen select, #feedbackFormFullscreen textarea');
+  
+  // Fix each input
+  inputs.forEach(input => {
+    // Make sure input is enabled
+    input.disabled = false;
+    input.readOnly = false;
+    
+    // Apply inline styles to ensure inputs are clickable
+    input.style.pointerEvents = 'auto';
+    input.style.opacity = '1';
+    input.style.visibility = 'visible';
+    input.style.zIndex = '10';
+    input.style.position = 'relative';
+    
+    // Add click event to focus input
+    input.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.focus();
+    });
+    
+    // Make sure parent containers don't block clicks
+    let parent = input.parentElement;
+    while (parent && parent !== document.body) {
+      parent.style.pointerEvents = 'auto';
+      parent = parent.parentElement;
+    }
+  });
+  
+  // Fix organization dropdown specifically
+  const orgDropdown = document.getElementById('orgSelectionDropdown');
+  if (orgDropdown) {
+    orgDropdown.style.opacity = '1';
+    orgDropdown.style.pointerEvents = 'auto';
+    orgDropdown.style.visibility = 'visible';
+  }
+  
+  // Fix category cards
+  const categoryCards = document.querySelectorAll('.feedback-category-card');
+  categoryCards.forEach(card => {
+    card.style.pointerEvents = 'auto';
+    card.style.cursor = 'pointer';
+    
+    // Ensure radio buttons work
+    const radio = card.querySelector('input[type="radio"]');
+    if (radio) {
+      radio.style.opacity = '1';
+      
+      // Add click handler
+      card.addEventListener('click', function() {
+        if (radio) {
+          radio.checked = true;
+          
+          // Remove selected class from all cards
+          categoryCards.forEach(c => c.classList.remove('selected'));
+          
+          // Add selected class to clicked card
+          this.classList.add('selected');
+        }
+      });
+    }
+  });
+  
+  console.log("Fixed", inputs.length, "form inputs");
+}
+
+// Function to go to next step
+function goToNextStep() {
+  console.log("Going to next step");
+  
+  // Get current active step
+  const activeStep = document.querySelector('.feedback-step-pane.active');
+  if (!activeStep) {
+    console.error("No active step found");
+    return;
+  }
+  
+  // Get next step
+  const nextStep = activeStep.nextElementSibling;
+  if (!nextStep || !nextStep.classList.contains('feedback-step-pane')) {
+    console.error("No next step found");
+    return;
+  }
+  
+  // Hide current step
+  activeStep.classList.remove('active');
+  
+  // Show next step
+  nextStep.classList.add('active');
+  
+  // Update step indicators
+  updateStepIndicators();
+  
+  // Enable previous button since we're now past step 1
+  const prevBtn = document.getElementById('prevStepBtn');
+  if (prevBtn) {
+    prevBtn.disabled = false;
+  }
+  
+  // Handle last step (show submit button, hide next button)
+  const allSteps = document.querySelectorAll('.feedback-step-pane');
+  const currentStepIndex = Array.from(allSteps).indexOf(nextStep);
+  const isLastStep = currentStepIndex === allSteps.length - 1;
+  
+  const nextBtn = document.getElementById('nextStepBtn');
+  const submitBtn = document.getElementById('submitFeedbackBtn');
+  
+  if (isLastStep) {
+    if (nextBtn) nextBtn.style.display = 'none';
+    if (submitBtn) submitBtn.style.display = 'block';
+  } else {
+    if (nextBtn) nextBtn.style.display = 'block';
+    if (submitBtn) submitBtn.style.display = 'none';
+  }
+  
+  // Fix form inputs in the new step
+  setTimeout(fixFormInputs, 100);
+  
+  console.log("Moved to next step");
+}
+
+// Function to go to previous step
+function goToPrevStep() {
+  console.log("Going to previous step");
+  
+  // Get current active step
+  const activeStep = document.querySelector('.feedback-step-pane.active');
+  if (!activeStep) {
+    console.error("No active step found");
+    return;
+  }
+  
+  // Get previous step
+  const prevStep = activeStep.previousElementSibling;
+  if (!prevStep || !prevStep.classList.contains('feedback-step-pane')) {
+    console.error("No previous step found");
+    return;
+  }
+  
+  // Hide current step
+  activeStep.classList.remove('active');
+  
+  // Show previous step
+  prevStep.classList.add('active');
+  
+  // Update step indicators
+  updateStepIndicators();
+  
+  // Check if we're back at first step
+  const allSteps = document.querySelectorAll('.feedback-step-pane');
+  const currentStepIndex = Array.from(allSteps).indexOf(prevStep);
+  const isFirstStep = currentStepIndex === 0;
+  
+  // Disable previous button if we're back at first step
+  const prevBtn = document.getElementById('prevStepBtn');
+  if (prevBtn && isFirstStep) {
+    prevBtn.disabled = true;
+  }
+  
+  // Always show next button when going back
+  const nextBtn = document.getElementById('nextStepBtn');
+  const submitBtn = document.getElementById('submitFeedbackBtn');
+  
+  if (nextBtn) nextBtn.style.display = 'block';
+  if (submitBtn) submitBtn.style.display = 'none';
+  
+  // Fix form inputs in the new step
+  setTimeout(fixFormInputs, 100);
+  
+  console.log("Moved to previous step");
+}
+
+// Update step indicators based on current active step
+function updateStepIndicators() {
+  const steps = document.querySelectorAll('.feedback-step-pane');
+  const indicators = document.querySelectorAll('.feedback-step');
+  
+  // Find which step is active
+  let activeIndex = -1;
+  steps.forEach((step, index) => {
+    if (step.classList.contains('active')) {
+      activeIndex = index;
+    }
+  });
+  
+  if (activeIndex === -1) {
+    console.error("No active step found when updating indicators");
+    return;
+  }
+  
+  // Update indicators
+  indicators.forEach((indicator, index) => {
+    if (index <= activeIndex) {
+      indicator.classList.add('active');
+    } else {
+      indicator.classList.remove('active');
+    }
+  });
+  
+  console.log("Updated step indicators to step", activeIndex + 1);
+}
+
+// Function to submit feedback
+function submitFeedback() {
+  console.log("Submitting feedback");
+  
+  // Get the form
+  const form = document.getElementById('feedbackFormFullscreen');
+  if (!form) {
+    console.error("Form not found");
+    alert("Error: Form not found. Please refresh the page and try again.");
+    return;
+  }
+  
+  // Disable submit button to prevent multiple submissions
+  const submitBtn = document.getElementById('submitFeedbackBtn');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+  }
+  
+  // Prepare form data
+  const formData = new FormData(form);
+  
+  // Submit form using fetch
+  fetch('ajax/submit_feedback.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      console.log("Feedback submitted successfully");
+      
+      // Show success message
+      const successMessage = document.getElementById('feedbackSuccessMessage');
+      if (successMessage) {
+        successMessage.style.display = 'block';
+      }
+      
+      // Hide form content and show success screen
+      const stepPanes = document.querySelectorAll('.feedback-step-pane');
+      stepPanes.forEach(pane => {
+        pane.classList.remove('active');
+      });
+      
+      // If there's a 3rd step, show it
+      if (stepPanes.length >= 3) {
+        stepPanes[2].classList.add('active');
+      }
+      
+      // Make all step indicators active
+      const stepIndicators = document.querySelectorAll('.feedback-step');
+      stepIndicators.forEach(indicator => {
+        indicator.classList.add('active');
+      });
+      
+      // Hide navigation buttons
+      const prevBtn = document.getElementById('prevStepBtn');
+      const nextBtn = document.getElementById('nextStepBtn');
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (submitBtn) submitBtn.style.display = 'none';
+      
+      // Add close button
+      const footer = document.querySelector('.feedback-modal-footer');
+      if (footer && !document.getElementById('closeModalBtn')) {
+        const closeBtn = document.createElement('button');
+        closeBtn.id = 'closeModalBtn';
+        closeBtn.className = 'feedback-btn secondary';
+        closeBtn.textContent = 'Close';
+        closeBtn.onclick = closeFeedbackModal;
+        footer.appendChild(closeBtn);
+      }
+      
+      // Reset form after delay
+      setTimeout(() => {
+        form.reset();
+      }, 1000);
+    } else {
+      console.error("Error submitting feedback:", data.message);
+      alert("Error submitting feedback: " + (data.message || "Unknown error"));
+    }
+  })
+  .catch(error => {
+    console.error("Error submitting feedback:", error);
+    alert("Error submitting feedback. Please try again later.");
+  })
+  .finally(() => {
+    // Re-enable submit button
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Submit Feedback';
+    }
+  });
+}
+
+// Export functions to global scope for use in HTML if needed
+window.openFeedbackModal = openFeedbackModal;
+window.closeFeedbackModal = closeFeedbackModal;
+window.goToNextStep = goToNextStep;
+window.goToPrevStep = goToPrevStep;
+window.submitFeedback = submitFeedback;
+window.fixFormInputs = fixFormInputs;
+
+// Run the form fixes again after a short delay to catch everything
+setTimeout(fixFormInputs, 2000);
+// Simple Console Logger for Form Answers
+// Add this code to your existing JavaScript to log form answers to the console
+
+// Function to initialize form input logging
+function initFormLogging() {
+  console.log('Initializing form answer logging to console');
+  
+  // Find all inputs in the feedback form
+  const inputs = document.querySelectorAll('#feedbackFormFullscreen input, #feedbackFormFullscreen select, #feedbackFormFullscreen textarea');
+  
+  // Add event listeners to each input
+  inputs.forEach(input => {
+    const inputName = input.name || input.id || 'unnamed_input';
+    
+    // Handle different input types
+    if (input.type === 'radio' || input.type === 'checkbox') {
+      input.addEventListener('change', function() {
+        if (this.checked) {
+          console.log(`Form input: ${inputName} = ${this.value || 'checked'}`);
+        }
+      });
+    } else {
+      // For text inputs, selects, etc.
+      input.addEventListener('blur', function() {
+        console.log(`Form input: ${inputName} = ${this.value}`);
+      });
+    }
+  });
+  
+  console.log('Form logging initialized for', inputs.length, 'inputs');
+}
+
+// Log all form data before submission
+function logAllFormData() {
+  console.log('===== COMPLETE FORM DATA =====');
+  
+  const form = document.getElementById('feedbackFormFullscreen');
+  if (!form) {
+    console.log('Form not found');
+    return;
+  }
+  
+  const formData = new FormData(form);
+  const formObject = {};
+  
+  formData.forEach((value, key) => {
+    formObject[key] = value;
+  });
+  
+  console.log(formObject);
+  console.log('===============================');
+  
+  return formObject; // Return the data in case you want to use it elsewhere
+}
+
+// Override the submit function to log all data before submission
+const originalSubmitFunction = window.submitFeedback || function(){};
+window.submitFeedback = function() {
+  // Log all form data before submission
+  const formData = logAllFormData();
+  
+  // Call the original submit function
+  originalSubmitFunction.apply(this, arguments);
+};
+
+// Initialize logging when the page has loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize form logging
+  initFormLogging();
+  
+  // Also run when the feedback modal is opened
+  const originalOpenModal = window.openFeedbackModal || function(){};
+  window.openFeedbackModal = function() {
+    originalOpenModal.apply(this, arguments);
+    
+    // Add a small delay to ensure form is fully rendered
+    setTimeout(initFormLogging, 500);
+  };
+  
+  console.log('Form logging setup complete');
 });
     </script>
     <script>
@@ -8150,13 +9093,90 @@ document.addEventListener('DOMContentLoaded', function() {
 
         lastScrollTop = st;
     }
+    // Global carousel controller
+const CarouselController = {
+  initialized: false,
+  
+  // This keeps track of all carousels we've initialized to avoid duplicates
+  initializedCarousels: new Set(),
+  
+  // Initialize all carousels on the page
+  initializeAll: function() {
+    // Only run if Bootstrap is available
+    if (typeof bootstrap === 'undefined') {
+      console.warn('Bootstrap is not loaded yet. Carousel initialization delayed.');
+      return false;
+    }
+    
+    // Find all carousel elements
+    const carousels = document.querySelectorAll('.announcement-carousel');
+    let count = 0;
+    
+    carousels.forEach(carousel => {
+      if (this.initializedCarousels.has(carousel.id)) {
+        // Skip already initialized carousels
+        return;
+      }
+      
+      try {
+        // Create a new Bootstrap carousel
+        new bootstrap.Carousel(carousel, {
+          interval: 5000,  // Optional: Set auto-slide interval
+          wrap: true,      // Optional: Allow wrapping around
+          keyboard: true   // Optional: Allow keyboard navigation
+        });
+        
+        // Mark as initialized
+        this.initializedCarousels.add(carousel.id);
+        carousel.classList.add('carousel-initialized');
+        count++;
+        
+        console.log(`Carousel initialized: ${carousel.id}`);
+      } catch (error) {
+        console.error('Error initializing carousel:', error, carousel.id);
+      }
+    });
+    
+    console.log(`${count} new carousels initialized.`);
+    this.initialized = true;
+    return count > 0;
+  },
+  
+  // Initialize a specific carousel
+  initializeOne: function(carouselElement) {
+    if (typeof bootstrap === 'undefined') {
+      console.warn('Bootstrap is not loaded yet. Carousel initialization delayed.');
+      return false;
+    }
+    
+    if (!carouselElement || this.initializedCarousels.has(carouselElement.id)) {
+      return false;
+    }
+    
+    try {
+      new bootstrap.Carousel(carouselElement);
+      this.initializedCarousels.add(carouselElement.id);
+      carouselElement.classList.add('carousel-initialized');
+      console.log(`Single carousel initialized: ${carouselElement.id}`);
+      return true;
+    } catch (error) {
+      console.error('Error initializing specific carousel:', error);
+      return false;
+    }
+  },
+  
+  // Reset for testing/debugging
+  reset: function() {
+    this.initializedCarousels.clear();
+    this.initialized = false;
+  }
+};
 // Store current organization ID
 let currentOrgId = null;
 let allAnnouncements = [];
 let currentProfilePhoto = '';
 let currentAuthorName = '';
 
-// Open popup from card
 function openOrgPopup(orgId, title, image, profilePhoto, author) {
     // Validate organizationID
     if (!orgId || orgId === 'undefined' || orgId === 'null') {
@@ -8220,8 +9240,46 @@ function openOrgPopup(orgId, title, image, profilePhoto, author) {
     
     // Load announcements
     fetchAnnouncements(orgId);
+    
+    // Make sure the popup is completely visible before initializing carousels
+    setTimeout(() => {
+        // Initialize any carousels within the popup
+        CarouselController.initializeAll();
+    }, 500);
 }
+// Add the MutationObserver to detect new carousels added to the DOM
+const carouselObserver = new MutationObserver(function(mutations) {
+    let shouldInitialize = false;
+    
+    mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            // Check if any added nodes contain carousels
+            mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1 && (
+                    node.classList?.contains('announcement-carousel') ||
+                    node.querySelector?.('.announcement-carousel')
+                )) {
+                    shouldInitialize = true;
+                }
+            });
+        }
+    });
+    
+    if (shouldInitialize && typeof bootstrap !== 'undefined') {
+        // Wait a moment for the DOM to stabilize
+        setTimeout(() => {
+            CarouselController.initializeAll();
+        }, 200);
+    }
+});
 
+// Start observing once the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    carouselObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+});
 // Close popup
 function closeOrgPopup() {
     document.getElementById('newsPopup').classList.remove('active');
@@ -8550,27 +9608,381 @@ function clearFilters() {
     }
 }
 
-// Render announcements content
-function renderAnnouncementsContent(response) {
-    const announcements = response.announcements || [];
-    const announcementsContainer = document.getElementById('announcements-content');
-    
-    if (announcements.length === 0) {
-        announcementsContainer.innerHTML = renderEmptyState();
-        return;
+// Add this function to initialize Bootstrap carousels
+function initializeCarousels() {
+  document.querySelectorAll('.announcement-carousel').forEach(carousel => {
+    // Check if carousel is already initialized to avoid duplicates
+    if (!carousel.classList.contains('carousel-initialized')) {
+      try {
+        // Create new Bootstrap carousel instance
+        new bootstrap.Carousel(carousel);
+        // Mark as initialized
+        carousel.classList.add('carousel-initialized');
+        console.log('Carousel initialized:', carousel.id);
+      } catch (error) {
+        console.error('Error initializing carousel:', error, carousel.id);
+      }
     }
+  });
+}
+// COMPLETE CAROUSEL FIX - REPLACE ALL EXISTING CAROUSEL CODE WITH THIS
+// FULL REPLACEMENT FOR CAROUSEL FUNCTIONALITY
 
-    let html = '<div class="announcements-container">';
+// Function to initialize all carousels with explicit manual activation
+function initializeAllCarousels() {
+  // First, check if Bootstrap is available
+  if (typeof bootstrap === 'undefined') {
+    console.error('Bootstrap is not available. Carousels cannot be initialized.');
+    return;
+  }
+  
+  // Get all carousel elements
+  const carousels = document.querySelectorAll('.carousel');
+  console.log('Found ' + carousels.length + ' carousels to initialize');
+  
+  // Track whether we've already initialized each carousel
+  const initializedCarousels = new Set();
+  
+  carousels.forEach(carousel => {
+    // Skip if this carousel is already initialized
+    if (carousel.classList.contains('initialized-carousel')) {
+      return;
+    }
     
-    announcements.forEach(announcement => {
-        html += renderAnnouncementItem(announcement);
-    });
-    
-    html += '</div>';
-    
-    announcementsContainer.innerHTML = html;
+    try {
+      // First, make sure the carousel has proper structure
+      ensureCarouselStructure(carousel);
+      
+      // Create new carousel instance with explicit options to ensure sliding works
+      const carouselInstance = new bootstrap.Carousel(carousel, {
+        interval: 5000,
+        ride: 'carousel',
+        wrap: true
+      });
+      
+      // Explicitly cycle the carousel to ensure it's working
+      carouselInstance.cycle();
+      
+      // Mark as initialized in the DOM to prevent re-initialization
+      carousel.classList.add('initialized-carousel');
+      
+      console.log('Successfully initialized carousel:', carousel.id);
+      
+      // Track that we've initialized this carousel
+      initializedCarousels.add(carousel.id);
+      
+      // Add event listeners to ensure the controls work
+      const prevBtn = carousel.querySelector('.carousel-control-prev');
+      const nextBtn = carousel.querySelector('.carousel-control-next');
+      
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          carouselInstance.prev();
+          console.log('Manual prev slide for', carousel.id);
+        });
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          carouselInstance.next();
+          console.log('Manual next slide for', carousel.id);
+        });
+      }
+      
+      // Schedule a test slide transition to verify it works
+      setTimeout(() => {
+        carouselInstance.next();
+        console.log('Scheduled test slide transition for', carousel.id);
+      }, 1000);
+      
+    } catch (error) {
+      console.error('Error initializing carousel:', carousel.id, error);
+    }
+  });
+  
+  return initializedCarousels.size;
 }
 
+// Ensure carousel has the correct structure Bootstrap expects
+function ensureCarouselStructure(carousel) {
+  // Make sure it has the necessary Bootstrap classes
+  carousel.classList.add('slide');
+  
+  // Make sure it has data-bs-ride attribute
+  if (!carousel.hasAttribute('data-bs-ride')) {
+    carousel.setAttribute('data-bs-ride', 'carousel');
+  }
+  
+  // Make sure the inner container has the carousel-inner class
+  const inner = carousel.querySelector('.carousel-inner');
+  if (inner) {
+    // Make sure all items have carousel-item class
+    inner.querySelectorAll('.carousel-item').forEach(item => {
+      item.classList.add('carousel-item');
+      
+      // Make sure images have d-block and w-100 classes
+      const img = item.querySelector('img');
+      if (img) {
+        img.classList.add('d-block', 'w-100');
+      }
+    });
+  }
+}
+
+// Completely rewrite the renderAnnouncementImages function
+function renderAnnouncementImages(announcement) {
+  if (!announcement.images || announcement.images.length === 0) {
+    return '';
+  }
+
+  // Ensure images is an array
+  const images = Array.isArray(announcement.images) 
+    ? announcement.images 
+    : (typeof announcement.images === 'string' 
+       ? announcement.images.split(',').filter(img => img.trim() !== '')
+       : []);
+
+  if (images.length === 0) {
+    return '';
+  }
+
+  // For a single image
+  if (images.length === 1) {
+    return `
+      <div class="announcement-image">
+        <img src="uploaded/annUploaded/${images[0].trim()}" 
+             alt="Announcement Image"
+             onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+      </div>
+    `;
+  }
+
+  // For multiple images, create a fully spec-compliant Bootstrap 5 carousel
+  const carouselId = `carousel-${announcement.announcement_id}`;
+  
+  return `
+    <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+      <!-- Carousel items -->
+      <div class="carousel-inner">
+        ${images.map((image, index) => `
+          <div class="carousel-item ${index === 0 ? 'active' : ''}">
+            <img src="uploaded/annUploaded/${image.trim()}" 
+                 class="d-block w-100"
+                 alt="Announcement Image ${index + 1}"
+                 onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+          </div>
+        `).join('')}
+      </div>
+      
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  `;
+}
+
+// Modified renderAnnouncementsContent with proper carousel initialization
+function renderAnnouncementsContent(response) {
+  const announcements = response.announcements || [];
+  const announcementsContainer = document.getElementById('announcements-content');
+  
+  if (announcements.length === 0) {
+    announcementsContainer.innerHTML = renderEmptyState();
+    return;
+  }
+
+  let html = '<div class="announcements-container">';
+  
+  announcements.forEach(announcement => {
+    html += renderAnnouncementItem(announcement);
+  });
+  
+  html += '</div>';
+  
+  announcementsContainer.innerHTML = html;
+  
+  // Wait for DOM to update then initialize carousels
+  setTimeout(() => {
+    const count = initializeAllCarousels();
+    console.log(`Initialized ${count} carousel(s) after rendering announcements`);
+  }, 500);
+}
+
+// Add this to ensure carousels work after the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // First initialization attempt after page loads
+  setTimeout(() => {
+    const count = initializeAllCarousels();
+    console.log(`Initially initialized ${count} carousel(s)`);
+  }, 1000);
+  
+  // Also initialize carousels when tabs are switched
+  document.querySelectorAll('.org-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      setTimeout(() => {
+        const count = initializeAllCarousels();
+        console.log(`Initialized ${count} carousel(s) after tab switch`);
+      }, 500);
+    });
+  });
+});
+
+// Modify openOrgPopup to ensure carousels work
+function openOrgPopup(orgId, title, image, profilePhoto, author) {
+  // Your existing code...
+  
+  // After fetchAnnouncements call
+  
+  // Initialize carousels multiple times to ensure they work
+  // First initialization after content is loaded
+  setTimeout(() => {
+    const count = initializeAllCarousels();
+    console.log(`Initialized ${count} carousel(s) after opening popup (first attempt)`);
+  }, 1000);
+  
+  // Second attempt as a backup
+  setTimeout(() => {
+    const count = initializeAllCarousels();
+    console.log(`Initialized ${count} carousel(s) after opening popup (second attempt)`);
+  }, 2000);
+}
+
+// Modified renderAnnouncementImages function to use correct Bootstrap 5.3 markup
+function renderAnnouncementImages(announcement) {
+  if (!announcement.images || announcement.images.length === 0) {
+    return '';
+  }
+
+  // Ensure images is an array
+  const images = Array.isArray(announcement.images) 
+    ? announcement.images 
+    : announcement.images.split(',').filter(img => img.trim() !== '');
+
+  if (images.length === 0) {
+    return '';
+  }
+
+  // For a single image
+  if (images.length === 1) {
+    return `
+      <div class="announcement-image">
+        <img src="uploaded/annUploaded/${images[0].trim()}" 
+             alt="Announcement Image"
+             onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+      </div>
+    `;
+  }
+
+  // For multiple images, create a Bootstrap 5.3 carousel
+  const carouselId = `carousel-${announcement.announcement_id}`;
+  const carouselItems = images.map((image, index) => {
+    return `
+      <div class="carousel-item ${index === 0 ? 'active' : ''}">
+        <img src="uploaded/annUploaded/${image.trim()}" 
+             class="d-block w-100"
+             alt="Announcement Image ${index + 1}"
+             onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+      <!-- Carousel indicators -->
+      <div class="carousel-indicators">
+        ${images.map((_, index) => 
+          `<button type="button" 
+                  data-bs-target="#${carouselId}" 
+                  data-bs-slide-to="${index}" 
+                  ${index === 0 ? 'class="active" aria-current="true"' : ''} 
+                  aria-label="Slide ${index + 1}"></button>`
+        ).join('')}
+      </div>
+      
+      <!-- Carousel items -->
+      <div class="carousel-inner">
+        ${carouselItems}
+      </div>
+      
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  `;
+}
+
+// Modified renderAnnouncementsContent with initialization
+function renderAnnouncementsContent(response) {
+  const announcements = response.announcements || [];
+  const announcementsContainer = document.getElementById('announcements-content');
+  
+  if (announcements.length === 0) {
+    announcementsContainer.innerHTML = renderEmptyState();
+    return;
+  }
+
+  let html = '<div class="announcements-container">';
+  
+  announcements.forEach(announcement => {
+    html += renderAnnouncementItem(announcement);
+  });
+  
+  html += '</div>';
+  
+  announcementsContainer.innerHTML = html;
+  
+  // Wait for DOM to update then initialize carousels
+  setTimeout(() => {
+    initializeAllCarousels();
+  }, 100);
+}
+
+// Add this to your document ready event or window load event
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize any existing carousels when page loads
+  setTimeout(initializeAllCarousels, 500);
+  
+  // Also initialize carousels when tabs are switched
+  document.querySelectorAll('.org-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      setTimeout(initializeAllCarousels, 100);
+    });
+  });
+});
+
+// Make sure this runs when opening the organization popup
+function openOrgPopup(orgId, title, image, profilePhoto, author) {
+  // Existing code...
+  
+  // Show popup
+  document.getElementById('newsPopup').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Reset filters
+  resetFiltersUI();
+  
+  // Load announcements
+  fetchAnnouncements(orgId);
+  
+  // Initialize carousels after popup is shown and content is loaded
+  setTimeout(initializeAllCarousels, 700);
+}
 // Render empty state
 function renderEmptyState() {
     return `

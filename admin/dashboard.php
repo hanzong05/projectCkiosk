@@ -544,7 +544,7 @@ if ($account_type == '0' || $account_type == '2' || $account_type == '3' || $acc
 
         <!-- SQD Metrics -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-        
+           
             <div class="metric-card bg-white rounded-lg p-4 shadow">
                 <h3 class="text-lg font-semibold text-center">Processing Time</h3>
                 <div id="sqd1_time" class="metric-value text-2xl text-center mt-2">0.0</div>
@@ -777,10 +777,7 @@ if ($account_type == '0' || $account_type == '2' || $account_type == '3' || $acc
         <h3 class="text-lg font-semibold text-center">Audio Quality</h3>
         <div id="audio-quality-rating" class="metric-value text-2xl text-center mt-2">0.0</div>
     </div>
-    <div class="metric-card bg-white rounded-lg p-4 shadow">
-        <h3 class="text-lg font-semibold text-center">Overall Impact</h3>
-        <div id="overall-impact-rating" class="metric-value text-2xl text-center mt-2">0.0</div>
-    </div>
+   
 </div>
 
                         <!-- Performance Metrics -->
@@ -866,14 +863,12 @@ const chartConfig = {
     }
 };
 
-// Metric definitions
 const sqdMetrics = {
-    'avg_0_satisfaction': 'Overall Satisfaction',
     'avg_1_time': 'Processing Time',
     'avg_2_requirements': 'Requirements',
     'avg_3_steps': 'Process Steps',
     'avg_4_information': 'Information'
-};
+};  
 
 const orgMetrics = {
     'event_quality': 'Event Quality',
@@ -1267,11 +1262,11 @@ function updateOfficeData(data) {
     }
 }
 
+// Modified function to update office distribution chart
 function updateOfficeDistributionChart(distributions) {
     if (!officeDistChart) return;
 
     const metrics = [
-        'overall_satisfaction',
         'sqd1_time',
         'sqd2_requirements',
         'sqd3_steps',
@@ -1491,11 +1486,9 @@ function updateEventEvalCharts(data) {
     }
 }
 
-// Utility functions
-// Update getMetricLabel function to use overall_satisfaction
+// Modified getMetricLabel function to remove overall_satisfaction
 function getMetricLabel(metric) {
     const labels = {
-        'overall_satisfaction': 'Overall Satisfaction',
         'sqd1_time': 'Processing Time',
         'sqd2_requirements': 'Requirements',
         'sqd3_steps': 'Process Steps',

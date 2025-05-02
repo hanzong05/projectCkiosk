@@ -3239,75 +3239,86 @@
         </script>
     </section>
 
-        <section id="campusorgs" class="content-section py-4">
-        <div class="section-heading text-center mb-5">
-            <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
-                <span class="gradient-text">STUDENT ORGANIZATIONS</span>
-            </h1>
-            <div class="animated-bar mx-auto mt-2 mb-3"></div>
-        </div>
-        <div class="container-fluid px-4">
-            <!-- Row of cards with grid layout -->
-            <div class="row-container">
-                <?php foreach ($allOrg as $row): ?>
-                    <div class="org-card-wrapper">
-                        <div class="org-card">
-                            <!-- Card Header -->
-                            <div class="card-image-container">
-                                <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#newsModal" 
-                                data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
-                                data-title="<?= htmlspecialchars($row['org_name']) ?>" 
-                                data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
-                                data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
-                                data-author="<?= htmlspecialchars($row['creator_name'] ?? $row['created_by_name'] ?? $row['org_member_name'] ?? 'Unknown Author') ?>">
-                                    <!-- Normal state (circle) -->
-                                    <div class="circle-image">
-                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
-                                    </div>
-                                    
-                                    <!-- Hover state (box) -->
-                                    <div class="box-image">
-                                        <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
-                                        <div class="overlay"></div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- Card Body -->
-                            <div class="org-card-body">
-                                <h5 class="org-card-title">
-                                    <?php 
-                                        // Split the title into words
-                                        $words = explode(' ', $row['org_name']);
-                                        $formattedName = '';
-                                        $lineLength = 0;
-
-                                        // Loop through words, adding line breaks to avoid long lines
-                                        foreach ($words as $word) {
-                                            $formattedName .= htmlspecialchars($word) . ' ';
-                                            $lineLength += strlen($word) + 1; // Account for the space
-
-                                            // Add a line break if line exceeds a set character limit (e.g., 20 chars)
-                                            if ($lineLength >= 20) { 
-                                                $formattedName .= "\n";
-                                                $lineLength = 0;
-                                            }
-                                        }
-
-                                        echo nl2br($formattedName); // Display the formatted name with line breaks
-                                    ?>
-                                </h5>
-                                <div class="org-indicator d-flex align-items-center">
-                                    <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
-                                    <small class="text-muted text-xs">Student Organization</small>
+    <section id="campusorgs" class="content-section py-4">
+    <div class="section-heading text-center mb-5">
+        <h1 class="display-5 fw-bold position-relative d-inline-block mb-0">
+            <span class="gradient-text">STUDENT ORGANIZATIONS</span>
+        </h1>
+        <div class="animated-bar mx-auto mt-2 mb-3"></div>
+    </div>
+    <div class="container-fluid px-4">
+        <!-- Row of cards with grid layout -->
+        <div class="row-container">
+            <?php foreach ($allOrg as $row): ?>
+                <div class="org-card-wrapper">
+                    <div class="org-card">
+                        <!-- Card Header -->
+                        <div class="card-image-container">
+                            <!-- Removed data-bs-toggle and data-bs-target to prevent Bootstrap modal -->
+                            <a href="#" class="d-block"
+                            data-orgid="<?= htmlspecialchars($row['org_id']) ?>" 
+                            data-title="<?= htmlspecialchars($row['org_name']) ?>" 
+                            data-image="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                            data-profilephoto="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" 
+                            data-author="<?= htmlspecialchars($row['creator_name'] ?? $row['created_by_name'] ?? $row['org_member_name'] ?? 'Unknown Author') ?>">
+                                <!-- Normal state (circle) -->
+                                <div class="circle-image">
+                                    <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
                                 </div>
+                                
+                                <!-- Hover state (box) -->
+                                <div class="box-image">
+                                    <img src="uploaded/orgUploaded/<?= htmlspecialchars($row['org_image']) ?>" alt="<?= htmlspecialchars($row['org_name']) ?>" class="org-image">
+                                    <div class="overlay"></div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="org-card-body">
+                            <h5 class="org-card-title">
+                                <?php 
+                                    // Split the title into words
+                                    $words = explode(' ', $row['org_name']);
+                                    $formattedName = '';
+                                    $lineLength = 0;
+
+                                    // Loop through words, adding line breaks to avoid long lines
+                                    foreach ($words as $word) {
+                                        $formattedName .= htmlspecialchars($word) . ' ';
+                                        $lineLength += strlen($word) + 1; // Account for the space
+
+                                        // Add a line break if line exceeds a set character limit (e.g., 20 chars)
+                                        if ($lineLength >= 20) { 
+                                            $formattedName .= "\n";
+                                            $lineLength = 0;
+                                        }
+                                    }
+
+                                    echo nl2br($formattedName); // Display the formatted name with line breaks
+                                ?>
+                            </h5>
+                            <div class="org-indicator d-flex align-items-center">
+                                <div class="indicator bg-warning rounded me-2" style="width: 3px; height: 20px;"></div>
+                                <small class="text-muted text-xs">Student Organization</small>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    </section>
+    </div>
+
+    <!-- Add a script tag to initialize the card handlers -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // If updateCardClickHandlers function is defined, call it
+            if (typeof updateCardClickHandlers === 'function') {
+                updateCardClickHandlers();
+            }
+        });
+    </script>
+</section>
 
     <style>
     /* Grid Layout */
@@ -4851,723 +4862,722 @@
                 </div>
             </div>
         </div>
-    <!-- Organization Fullscreen Popup -->
-    <div id="newsPopup" class="org-fullscreen-popup">
-        <div class="org-popup-content">
-            <!-- Header -->
-            <div class="org-popup-header">
-                <div class="org-popup-header-content">
-                    <button type="button" class="org-popup-close-btn" onclick="closeOrgPopup()">&times;</button>
-                    <h5 class="org-popup-title" id="newsPopupLabel">Organization Feed</h5>
+   <!-- Organization Fullscreen Popup -->
+<div id="newsPopup" class="org-fullscreen-popup">
+    <div class="org-popup-content">
+        <!-- Header -->
+        <div class="org-popup-header">
+            <div class="org-popup-header-content">
+                <button type="button" class="org-popup-close-btn" onclick="closeOrgPopup()">&times;</button>
+                <h5 class="org-popup-title" id="newsPopupLabel">Organization Feed</h5>
+            </div>
+            <div class="org-popup-search"> 
+                <div class="org-search-container"> 
+                    <input type="text" class="org-search-input" id="announcementSearch" placeholder="Search in this organization..."> 
+                    <button class="org-filter-btn" id="filterDropdown" onclick="toggleOrgFilterMenu()"> 
+                        <i class="fas fa-filter"></i> 
+                    </button> 
+                    <div class="org-filter-menu" id="orgFilterMenu">
+                        <h6 class="org-filter-header">Date</h6>
+                        <a class="org-filter-item date-filter" href="#" data-value="">Any Date</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="today">Today</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="week">This Week</a>
+                        <a class="org-filter-item date-filter" href="#" data-value="month">This Month</a>
+                        <hr class="org-filter-divider">
+                        <h6 class="org-filter-header">Category</h6>
+                        <a class="org-filter-item category-filter" href="#" data-value="all">All Categories</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="announcement">Announcements</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="event">Events</a>
+                        <a class="org-filter-item category-filter" href="#" data-value="news">News</a>
+                        <hr class="org-filter-divider">
+                        <a class="org-filter-item" href="#" id="clearFilters"> 
+                            <i class="fas fa-times"></i> Clear All Filters 
+                        </a>
+                    </div>
+                </div> 
+                <input type="hidden" id="dateFilter" value=""> 
+                <input type="hidden" id="categoryFilter" value="all"> 
+            </div>
+        </div>
+
+        <!-- Body with Scrollable Content -->
+        <div class="org-popup-body">
+            <!-- Organization Cover & Profile -->
+            <div class="org-profile-header">
+                <div class="org-cover-photo">
+                    <img src="img/C2SVTseUoAEJp42.jpg" id="orgCoverPhoto" class="org-cover-img" alt="Organization Cover">
                 </div>
-                <div class="org-popup-search"> 
-                    <div class="org-search-container"> 
-                        <input type="text" class="org-search-input" id="announcementSearch" placeholder="Search in this organization..."> 
-                        <button class="org-filter-btn" id="filterDropdown" onclick="toggleOrgFilterMenu()"> 
-                            <i class="fas fa-filter"></i> 
-                        </button> 
-                        <div class="org-filter-menu" id="orgFilterMenu">
-                            <h6 class="org-filter-header">Date</h6>
-                            <a class="org-filter-item date-filter" href="#" data-value="">Any Date</a>
-                            <a class="org-filter-item date-filter" href="#" data-value="today">Today</a>
-                            <a class="org-filter-item date-filter" href="#" data-value="week">This Week</a>
-                            <a class="org-filter-item date-filter" href="#" data-value="month">This Month</a>
-                            <hr class="org-filter-divider">
-                            <h6 class="org-filter-header">Category</h6>
-                            <a class="org-filter-item category-filter" href="#" data-value="all">All Categories</a>
-                            <a class="org-filter-item category-filter" href="#" data-value="announcement">Announcements</a>
-                            <a class="org-filter-item category-filter" href="#" data-value="event">Events</a>
-                            <a class="org-filter-item category-filter" href="#" data-value="news">News</a>
-                            <hr class="org-filter-divider">
-                            <a class="org-filter-item" href="#" id="clearFilters"> 
-                                <i class="fas fa-times"></i> Clear All Filters 
-                            </a>
+                
+                <!-- Profile layout with profile pic on far left -->
+                <div class="org-profile-container">
+                    <!-- Profile section with picture on far left -->
+                    <div class="org-profile-section">
+                        <!-- Profile Picture on far left -->
+                        <div class="org-profile-picture" id="orgProfilePicContainer">
+                            <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="org-profile-img" alt="Organization Profile">
                         </div>
-                    </div> 
-                    <input type="hidden" id="dateFilter" value=""> 
-                    <input type="hidden" id="categoryFilter" value="all"> 
+                        
+                        <!-- Organization Info positioned to the right of profile pic -->
+                        <div class="org-info">
+                            <h3 class="org-name" id="orgName">The Browser</h3>
+                            <div class="org-badges">
+                                <span class="org-badge org-verified">Verified</span>
+                                <span class="org-type">Student Organization</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Body with Scrollable Content -->
-            <div class="org-popup-body">
-                <!-- Organization Cover & Profile -->
-                <div class="org-profile-header">
-                    <div class="org-cover-photo">
-                        <img src="img/C2SVTseUoAEJp42.jpg" id="orgCoverPhoto" class="org-cover-img" alt="Organization Cover">
-                    </div>
-                    
-                    <!-- Profile layout with profile pic on far left -->
-                    <div class="org-profile-container">
-                        <!-- Profile section with picture on far left -->
-                        <div class="org-profile-section">
-                            <!-- Profile Picture on far left -->
-                            <div class="org-profile-picture" id="orgProfilePicContainer">
-                                <img src="/api/placeholder/400/400" id="orgProfilePhoto" class="org-profile-img" alt="Organization Profile">
-                            </div>
-                            
-                            <!-- Organization Info positioned to the right of profile pic -->
-                            <div class="org-info">
-                                <h3 class="org-name" id="orgName">The Browser</h3>
-                                <div class="org-badges">
-                                    <span class="org-badge org-verified">Verified</span>
-                                    <span class="org-type">Student Organization</span>
-                                </div>
-                            </div>
+            <!-- Navigation Tabs -->
+            <div class="org-tabs-container">
+                <ul class="org-tabs">
+                    <li class="org-tab-item">
+                        <button class="org-tab active" id="announcements-tab" data-tab="announcements">
+                            Announcements
+                            <span class="org-tab-indicator"></span>
+                        </button>
+                    </li>
+                    <li class="org-tab-item">
+                        <button class="org-tab" id="members-tab" data-tab="members">
+                            Members
+                            <span class="org-tab-indicator"></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="org-tab-content">
+                <!-- Announcements Tab -->
+                <div class="org-tab-pane active" id="announcements">
+                    <div id="announcements-content" class="announcements-container">
+                        <!-- Announcements will be loaded here via AJAX -->
+                        <div class="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>Loading announcements...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Navigation Tabs -->
-                <div class="org-tabs-container">
-                    <ul class="org-tabs">
-                        <li class="org-tab-item">
-                            <button class="org-tab active" id="announcements-tab" data-tab="announcements">
-                                Announcements
-                                <span class="org-tab-indicator"></span>
-                            </button>
-                        </li>
-                        <li class="org-tab-item">
-                            <button class="org-tab" id="members-tab" data-tab="members">
-                                Members
-                                <span class="org-tab-indicator"></span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Tab Content -->
-                <div class="org-tab-content">
-                    <!-- Announcements Tab -->
-                    <div class="org-tab-pane active" id="announcements">
-                        <div id="announcements-content" class="announcements-container">
-                            <!-- Announcements will be loaded here via AJAX -->
-                            <div class="loading-indicator">
-                                <div class="spinner"></div>
-                                <p>Loading announcements...</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Members Tab -->
-                    <div class="org-tab-pane" id="members">
-                        <div id="members-content" class="members-container">
-                            <!-- Members will be loaded here via AJAX -->
-                            <div class="loading-indicator">
-                                <div class="spinner"></div>
-                                <p>Loading members...</p>
-                            </div>
+                <!-- Members Tab -->
+                <div class="org-tab-pane" id="members">
+                    <div id="members-content" class="members-container">
+                        <!-- Members will be loaded here via AJAX -->
+                        <div class="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>Loading members...</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <style>
-    /* Organization Popup Styles */
-    .org-fullscreen-popup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #fff;
-        z-index: 10000;
-        overflow: hidden;
-    }
-
-    .org-fullscreen-popup.active {
-        display: block;
-    }
-
-    .org-popup-content {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-    }
-
-    /* Header Styles */
-    .org-popup-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem;
-        background-color: #fff;
-        border-bottom: 1px solid #eee;
-        position: sticky;
-        top: 0;
-        z-index: 101;
-    }
-
-    .org-popup-header-content {
-        display: flex;
-        align-items: center;
-    }
-
-    .org-popup-close-btn {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        margin-right: 1rem;
-        color: #555;
-        padding: 0 10px;
-        transition: color 0.2s;
-    }
-
-    .org-popup-close-btn:hover {
-        color: #f00;
-    }
-
-    .org-popup-title {
-        font-weight: bold;
-        margin: 0;
-        font-size: 1.2rem;
-    }
-
-    /* Search and Filter */
-    .org-popup-search {
-        flex: 1 1 auto;
-        display: flex;
-        justify-content: flex-end;
-        max-width: 400px;
-    }
-
-    .org-search-container {
-        position: relative;
-        width: 100%;
-        display: flex;
-        align-items: center;
-    }
-
-    .org-search-input {
-        width: 100%;
-        padding: 0.5rem 1rem;
-        border-radius: 50px;
-        border: 1px solid #eee;
-        background-color: #f8f9fa;
-        font-size: 0.9rem;
-    }
-
-    .org-filter-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        margin-left: 0.5rem;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s;
-    }
-
-    .org-filter-btn:hover {
-        background-color: #f0f0f0;
-    }
-
-    .org-filter-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 200px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        z-index: 10;
-        margin-top: 5px;
-        padding: 0.5rem 0;
-    }
-
-    .org-filter-menu.active {
-        display: block;
-    }
-
-    .org-filter-header {
-        font-size: 0.8rem;
-        color: #666;
-        padding: 0.5rem 1rem;
-        margin: 0;
-    }
-
-    .org-filter-item {
-        display: block;
-        padding: 0.5rem 1rem;
-        color: #333;
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: background-color 0.2s;
-    }
-
-    .org-filter-item:hover {
-        background-color: #f8f9fa;
-    }
-
-    .org-filter-divider {
-        margin: 0.5rem 0;
-        border-top: 1px solid #eee;
-    }
-
-    /* Body Styles */
-    .org-popup-body {
-        flex: 1;
-        overflow-y: auto;
-        background-color: #f8f9fa;
-    }
-
-    /* Organization Header */
-    .org-profile-header {
-        position: relative;
-    }
-
-    .org-cover-photo {
-        position: relative;
-        width: 100%;
-        height: 200px;
-        overflow: hidden;
-    }
-
-    .org-cover-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .org-profile-container {
-        position: relative;
-        margin-top: 20px;
-        padding: 0 20px;
-    }
-
-    .org-profile-section {
-        display: flex;
-        align-items: center;
-    }
-
-    .org-profile-picture {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        border: 4px solid #fff;
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        overflow: hidden;
-        margin-top: -30px;
-        margin-right: 15px;
-    }
-
-    .org-profile-img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .org-info {
-        margin-left: 10px;
-    }
-
-    .org-name {
-        font-weight: bold;
-        margin-bottom: 5px;
-        font-size: 1.8rem;
-        color: #333;
-    }
-
-    .org-badges {
-        display: flex;
-        align-items: center;
-    }
-
-    .org-badge {
-        display: inline-block;
-        padding: 5px 12px;
-        font-size: 0.8rem;
-        border-radius: 50px;
-        margin-right: 10px;
-    }
-
-    .org-verified {
-        background-color: #f8f9fa;
-        color: #dc3545;
-    }
-
-    .org-type {
-        font-size: 0.9rem;
-        color: #6c757d;
-    }
-
-    /* Tabs Navigation */
-    .org-tabs-container {
-        padding: 0 20px;
-        background-color: #fff;
-        border-bottom: 1px solid #eee;
-        margin-top: 15px;
-    }
-
-    .org-tabs {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    .org-tab-item {
-        margin-right: 10px;
-    }
-
-    .org-tab {
-        background: none;
-        border: none;
-        padding: 15px 20px;
-        position: relative;
-        font-weight: 600;
-        color: #6c757d;
-        transition: color 0.2s;
-        cursor: pointer;
-    }
-
-    .org-tab.active {
-        color: #dc3545;
-    }
-
-    .org-tab-indicator {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        border-radius: 3px 3px 0 0;
-        background-color: transparent;
-        transition: background-color 0.2s;
-    }
-
-    .org-tab.active .org-tab-indicator {
-        background-color: #dc3545;
-    }
-
-    /* Tab Content */
-    .org-tab-content {
-        background-color: #f8f9fa;
-        min-height: 500px;
-    }
-
-    .org-tab-pane {
-        display: none;
-        padding: 20px;
-    }
-
-    .org-tab-pane.active {
-        display: block;
-    }
-
-    /* Loading Indicator */
-    .loading-indicator {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-        color: #6c757d;
-    }
-
-    .spinner {
-        width: 40px;
-        height: 40px;
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-radius: 50%;
-        border-top-color: #dc3545;
-        animation: spin 1s ease-in-out infinite;
-        margin-bottom: 15px;
-    }
-
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-
-    /* Announcements */
-    .announcements-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .announcement-card {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-        transition: box-shadow 0.3s ease;
-    }
-
-    .announcement-card:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    }
-
-    .announcement-body {
-        padding: 20px;
-    }
-
-    .announcement-header {
-        display: flex;
-        margin-bottom: 15px;
-    }
-
-    .announcement-author-img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 15px;
-        object-fit: cover;
-    }
-
-    .announcement-author-name {
-        font-weight: bold;
-        margin-bottom: 3px;
-        font-size: 1rem;
-    }
-
-    .announcement-date {
-        color: #6c757d;
-        margin: 0;
-        font-size: 0.8rem;
-    }
-
-    .announcement-title {
-        font-weight: bold;
-        color: #0d6efd;
-        margin-bottom: 10px;
-        font-size: 1.2rem;
-    }
-
-    .announcement-text {
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-    .announcement-actions {
-        padding-top: 15px;
-        border-top: 1px solid #eee;
-        display: flex;
-    }
-
-    .announcement-btn {
-        display: inline-flex;
-        align-items: center;
-        padding: 8px 15px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-size: 0.85rem;
-        margin-right: 10px;
-        transition: background-color 0.2s;
-    }
-
-    .announcement-primary-btn {
-        border: 1px solid #0d6efd;
-        color: #0d6efd;
-    }
-
-    .announcement-primary-btn:hover {
-        background-color: #f0f7ff;
-    }
-
-    .announcement-secondary-btn {
-        color: #6c757d;
-        background-color: #f8f9fa;
-    }
-
-    .announcement-secondary-btn:hover {
-        background-color: #e9ecef;
-    }
-
-    .announcement-btn i {
-        margin-right: 5px;
-    }
-
-    /* Members */
-    .members-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .members-section-header {
-        margin-bottom: 15px;
-        margin-top: 15px;
-    }
-
-    .members-section-title {
-        color: #0d6efd;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
+</div>
+
+<style>
+/* Organization Popup Styles */
+.org-fullscreen-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.org-fullscreen-popup.active {
+    display: block;
+}
+
+.org-popup-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+/* Header Styles */
+.org-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 101;
+}
+
+.org-popup-header-content {
+    display: flex;
+    align-items: center;
+}
+
+.org-popup-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1rem;
+    color: #555;
+    padding: 0 10px;
+    transition: color 0.2s;
+}
+
+.org-popup-close-btn:hover {
+    color: #f00;
+}
+
+.org-popup-title {
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+/* Search and Filter */
+.org-popup-search {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 400px;
+}
+
+.org-search-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.org-search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: 1px solid #eee;
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.org-filter-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.org-filter-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.org-filter-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    margin-top: 5px;
+    padding: 0.5rem 0;
+}
+
+.org-filter-menu.active {
+    display: block;
+}
+
+.org-filter-header {
+    font-size: 0.8rem;
+    color: #666;
+    padding: 0.5rem 1rem;
+    margin: 0;
+}
+
+.org-filter-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.org-filter-item:hover {
+    background-color: #f8f9fa;
+}
+
+.org-filter-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid #eee;
+}
+
+/* Body Styles */
+.org-popup-body {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+/* Organization Header */
+.org-profile-header {
+    position: relative;
+}
+
+.org-cover-photo {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.org-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.org-profile-container {
+    position: relative;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.org-profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.org-profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: -30px;
+    margin-right: 15px;
+}
+
+.org-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.org-info {
+    margin-left: 10px;
+}
+
+.org-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.org-badges {
+    display: flex;
+    align-items: center;
+}
+
+.org-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.org-verified {
+    background-color: #f8f9fa;
+    color: #dc3545;
+}
+
+.org-type {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Tabs Navigation */
+.org-tabs-container {
+    padding: 0 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.org-tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.org-tab-item {
+    margin-right: 10px;
+}
+
+.org-tab {
+    background: none;
+    border: none;
+    padding: 15px 20px;
+    position: relative;
+    font-weight: 600;
+    color: #6c757d;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.org-tab.active {
+    color: #dc3545;
+}
+
+.org-tab-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+.org-tab.active .org-tab-indicator {
+    background-color: #dc3545;
+}
+
+/* Tab Content */
+.org-tab-content {
+    background-color: #f8f9fa;
+    min-height: 500px;
+}
+
+.org-tab-pane {
+    display: none;
+    padding: 20px;
+}
+
+.org-tab-pane.active {
+    display: block;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #dc3545;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Announcements */
+.announcements-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.announcement-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.announcement-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.announcement-body {
+    padding: 20px;
+}
+
+.announcement-header {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.announcement-author-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.announcement-author-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+    font-size: 1rem;
+}
+
+.announcement-date {
+    color: #6c757d;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.announcement-title {
+    font-weight: bold;
+    color: #0d6efd;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.announcement-text {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.announcement-actions {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+}
+
+.announcement-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+.announcement-primary-btn {
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+}
+
+.announcement-primary-btn:hover {
+    background-color: #f0f7ff;
+}
+
+.announcement-secondary-btn {
+    color: #6c757d;
+    background-color: #f8f9fa;
+}
+
+.announcement-secondary-btn:hover {
+    background-color: #e9ecef;
+}
+
+.announcement-btn i {
+    margin-right: 5px;
+}
+
+/* Members */
+.members-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.members-section-header {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.members-section-title {
+    color: #0d6efd;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.member-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.member-info {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.member-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.member-image.leadership {
+    border: 3px solid #0d6efd;
+    padding: 3px;
+}
+
+.member-details {
+    flex: 1;
+}
+
+.member-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.member-role {
+    color: #0d6efd;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.member-committee {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.member-since {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.member-social {
+    display: flex;
+}
+
+.member-social-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    text-decoration: none;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+}
+
+.member-social-btn:hover {
+    background-color: #e9ecef;
+}
+
+/* Error state */
+.error-message {
+    text-align: center;
+    padding: 30px;
+    color: #dc3545;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #dee2e6;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
     .members-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
-
-    .member-card {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height: 100%;
+    
+    .org-profile-picture {
+        width: 100px;
+        height: 100px;
     }
-
-    .member-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    
+    .org-name {
+        font-size: 1.5rem;
     }
+}
 
-    .member-info {
-        padding: 20px;
-        display: flex;
+@media (max-width: 576px) {
+    .members-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .org-profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .org-profile-picture {
+        margin: -50px auto 15px;
+    }
+    
+    .org-info {
+        margin-left: 0;
+    }
+    
+    .org-badges {
+        justify-content: center;
+    }
+    
+    .announcement-header {
+        flex-direction: column;
         align-items: center;
+        text-align: center;
     }
-
-    .member-image {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 15px;
-    }
-
-    .member-image.leadership {
-        border: 3px solid #0d6efd;
-        padding: 3px;
-    }
-
-    .member-details {
-        flex: 1;
-    }
-
-    .member-name {
-        font-weight: bold;
-        margin-bottom: 5px;
-        font-size: 1.1rem;
-    }
-
-    .member-role {
-        color: #0d6efd;
-        font-weight: 600;
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-    }
-
-    .member-committee {
-        color: #6c757d;
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-    }
-
-    .member-since {
-        color: #6c757d;
-        font-size: 0.8rem;
+    
+    .announcement-author-img {
+        margin-right: 0;
         margin-bottom: 10px;
     }
-
-    .member-social {
-        display: flex;
-    }
-
-    .member-social-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background-color: #f8f9fa;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #6c757d;
-        text-decoration: none;
-        margin-right: 8px;
-        transition: background-color 0.2s;
-    }
-
-    .member-social-btn:hover {
-        background-color: #e9ecef;
-    }
-
-    /* Error state */
-    .error-message {
-        text-align: center;
-        padding: 30px;
-        color: #dc3545;
-    }
-
-    /* Empty state */
-    .empty-state {
-        text-align: center;
-        padding: 40px;
-        color: #6c757d;
-    }
-
-    .empty-state-icon {
-        font-size: 3rem;
-        margin-bottom: 15px;
-        color: #dee2e6;
-    }
-
-    /* Responsive styles */
-    @media (max-width: 768px) {
-        .members-grid {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        }
-        
-        .org-profile-picture {
-            width: 100px;
-            height: 100px;
-        }
-        
-        .org-name {
-            font-size: 1.5rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .members-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .org-profile-section {
-            flex-direction: column;
-            text-align: center;
-        }
-        
-        .org-profile-picture {
-            margin: -50px auto 15px;
-        }
-        
-        .org-info {
-            margin-left: 0;
-        }
-        
-        .org-badges {
-            justify-content: center;
-        }
-        
-        .announcement-header {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .announcement-author-img {
-            margin-right: 0;
-            margin-bottom: 10px;
-        }
-    }
-    </style>
-
+}
+</style>
 
     <style>
     /* Enhanced customizations */
@@ -9005,8 +9015,812 @@ fetch('ajax/submit_feedback.php', {
         this.initialized = false;
     }
     };
-    // Store current organization ID
+   // Store current organization ID
+let currentOrgId = null;
+let allAnnouncements = [];
+let currentProfilePhoto = '';
+let currentAuthorName = '';
+
+// Open popup from card
+function openOrgPopup(orgId, title, image, profilePhoto, author) {
+    // Validate organizationID
+    if (!orgId || orgId === 'undefined' || orgId === 'null') {
+        console.error('Invalid organization ID:', orgId);
+        alert('Error: Invalid organization ID. Please try again or contact the administrator.');
+        return; // Exit the function to prevent further processing
+    }
     
+    console.log('Opening popup for organization:', {
+        orgId: orgId,
+        title: title,
+        profilePhoto: profilePhoto,
+        author: author
+    });
+    
+    // Set current org ID
+    currentOrgId = orgId;
+    
+    // Set basic info
+    document.getElementById('orgName').textContent = title || 'Organization';
+    
+    // Handle profile photo safely
+    if (profilePhoto && profilePhoto !== 'undefined' && profilePhoto !== 'null') {
+        document.getElementById('orgProfilePhoto').src = profilePhoto;
+    } else {
+        // Use a default image if profile photo is invalid
+        document.getElementById('orgProfilePhoto').src = '/api/placeholder/400/400';
+    }
+    
+    // Store for later use
+    currentProfilePhoto = profilePhoto;
+    currentAuthorName = author;
+    
+    // Reset tabs
+    document.querySelectorAll('.org-tab').forEach(tab => {
+        if (tab.id === 'announcements-tab') {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+    
+    document.querySelectorAll('.org-tab-pane').forEach(pane => {
+        if (pane.id === 'announcements') {
+            pane.classList.add('active');
+        } else {
+            pane.classList.remove('active');
+        }
+    });
+    
+    // Set org_id for both tabs
+    document.getElementById('announcements-tab').setAttribute('data-orgid', orgId);
+    document.getElementById('members-tab').setAttribute('data-orgid', orgId);
+    
+    // Show popup
+    document.getElementById('newsPopup').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent body scrolling
+    
+    // Reset filters
+    resetFiltersUI();
+    
+    // Load announcements
+    fetchAnnouncements(orgId);
+}
+
+// Close popup
+function closeOrgPopup() {
+    document.getElementById('newsPopup').classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scrolling
+    currentOrgId = null;
+}
+
+// Toggle filter menu
+function toggleOrgFilterMenu() {
+    document.getElementById('orgFilterMenu').classList.toggle('active');
+}
+
+// Update card click handlers
+function updateCardClickHandlers() {
+    const orgCards = document.querySelectorAll('.card-image-container a');
+    console.log('Found', orgCards.length, 'organization cards');
+    
+    orgCards.forEach((card, index) => {
+        // Remove existing event listeners and data-bs attributes to prevent Bootstrap modal initialization
+        const oldCard = card.cloneNode(true);
+        
+        // Remove Bootstrap modal attributes to prevent it from trying to initialize
+        oldCard.removeAttribute('data-bs-toggle');
+        oldCard.removeAttribute('data-bs-target');
+        
+        // Replace the old element with the modified one
+        card.parentNode.replaceChild(oldCard, card);
+        
+        // Add new event listener for our custom popup
+        oldCard.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const orgId = this.getAttribute('data-orgid');
+            const title = this.getAttribute('data-title');
+            const image = this.getAttribute('data-image');
+            const profilePhoto = this.getAttribute('data-profilephoto');
+            const author = this.getAttribute('data-author');
+            
+            console.log(`Clicked card ${index + 1} with org ID:`, orgId);
+            
+            // Check if org ID is valid before opening popup
+            if (!orgId || orgId === 'undefined' || orgId === 'null') {
+                console.error('Invalid organization ID from clicked card:', orgId);
+                alert('Error: This organization has an invalid ID. Please try another or contact the administrator.');
+                return;
+            }
+            
+            // Open our custom popup instead of Bootstrap modal
+            openOrgPopup(orgId, title, image, profilePhoto, author);
+        });
+    });
+}
+
+// Fetch announcements function
+function fetchAnnouncements(orgId) {
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    // Show loading state
+    announcementsContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading announcements...</p>
+        </div>
+    `;
+    
+    // Get filter values
+    const searchText = document.getElementById('announcementSearch').value;
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    
+    // Prepare filters object
+    const filters = {
+        org_id: orgId,
+        search: searchText,
+        category: categoryFilter
+    };
+    
+    // Handle date filtering
+    if (dateFilter === 'today') {
+        const today = new Date().toISOString().split('T')[0];
+        filters.date_from = today;
+        filters.date_to = today;
+    } else if (dateFilter === 'week') {
+        const today = new Date();
+        const weekStart = new Date();
+        weekStart.setDate(today.getDate() - 7);
+        filters.date_from = weekStart.toISOString().split('T')[0];
+    } else if (dateFilter === 'month') {
+        const today = new Date();
+        const monthStart = new Date();
+        monthStart.setMonth(today.getMonth() - 1);
+        filters.date_from = monthStart.toISOString().split('T')[0];
+    } else if (dateFilter) {
+        // Any specific date value
+        filters.date_from = dateFilter;
+    }
+    
+    console.log('Fetching announcements with filters:', filters);
+    
+    // Using fetch
+    fetch('ajax/fetch_announcement.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(filters)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            announcementsContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Store announcements in global variable
+        allAnnouncements = data.announcements || [];
+        
+        console.log('Received announcements:', allAnnouncements);
+        console.log('Applied filters:', data.filters_applied);
+        
+        // Render announcements
+        renderAnnouncementsContent({ announcements: allAnnouncements });
+    })
+    .catch(error => {
+        console.error('Error fetching announcements:', error);
+        announcementsContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load announcements. Please try again later.</p>
+            </div>
+        `;
+    });
+}
+
+// Fetch members function
+function fetchMembers(orgId) {
+    const membersContainer = document.getElementById('members-content');
+    
+    // Check if we've already loaded members
+    if (membersContainer.querySelector('.members-grid')) {
+        return; // Already loaded
+    }
+    
+    // Show loading state
+    membersContainer.innerHTML = `
+        <div class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading members...</p>
+        </div>
+    `;
+    
+    console.log('Fetching members for org ID:', orgId);
+    
+    // Using fetch
+    fetch('ajax/fetch_members.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ org_id: orgId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            membersContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${data.error}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        console.log('Received members data:', data);
+        renderMembersContent(data.members);
+    })
+    .catch(error => {
+        console.error('Error fetching members:', error);
+        membersContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load members. Please try again later.</p>
+            </div>
+        `;
+    });
+}
+
+// Filter announcements locally
+function filterAnnouncements() {
+    const searchTerm = document.getElementById('announcementSearch').value.toLowerCase().trim();
+    const dateFilter = document.getElementById('dateFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+
+    console.log('Starting filter with:', { searchTerm, dateFilter, categoryFilter });
+
+    // Make sure allAnnouncements is defined and accessible
+    if (!allAnnouncements || !Array.isArray(allAnnouncements)) {
+        console.error('allAnnouncements is not defined or not an array');
+        return [];
+    }
+
+    const filtered = allAnnouncements.filter(announcement => {
+        // Search filter - make sure all properties exist before accessing them
+        const searchableText = [
+            announcement.announcement_title || '',
+            announcement.announcement_details || '',
+            announcement.creator_name || '',
+            announcement.author_name || ''
+        ].join(' ').toLowerCase();
+        
+        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+        
+        // Date filter - improved date handling
+        let matchesDate = true;
+        if (dateFilter) {
+            if (dateFilter === 'today') {
+                // Today filter
+                const today = new Date();
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = 
+                    announcementDate.getDate() === today.getDate() &&
+                    announcementDate.getMonth() === today.getMonth() &&
+                    announcementDate.getFullYear() === today.getFullYear();
+            } 
+            else if (dateFilter === 'week') {
+                // This week filter
+                const today = new Date();
+                const oneWeekAgo = new Date();
+                oneWeekAgo.setDate(today.getDate() - 7);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneWeekAgo && announcementDate <= today;
+            }
+            else if (dateFilter === 'month') {
+                // This month filter
+                const today = new Date();
+                const oneMonthAgo = new Date();
+                oneMonthAgo.setMonth(today.getMonth() - 1);
+                const announcementDate = new Date(announcement.created_at);
+                matchesDate = announcementDate >= oneMonthAgo && announcementDate <= today;
+            }
+            else {
+                // Specific date
+                const announcementDate = new Date(announcement.created_at);
+                const filterDate = new Date(dateFilter);
+                matchesDate = 
+                    announcementDate.getDate() === filterDate.getDate() &&
+                    announcementDate.getMonth() === filterDate.getMonth() &&
+                    announcementDate.getFullYear() === filterDate.getFullYear();
+            }
+        }
+        
+        // Category filter
+        let matchesCategory = true;
+        if (categoryFilter && categoryFilter !== 'all') {
+            // Make sure to handle null or undefined category
+            const announcementCategory = (announcement.category || '').toLowerCase();
+            const filterCategoryLower = categoryFilter.toLowerCase();
+            
+            matchesCategory = announcementCategory === filterCategoryLower;
+            
+            // Debug log for category matching
+            console.log('Checking announcement category:', {
+                id: announcement.announcement_id,
+                title: announcement.announcement_title,
+                category: announcementCategory,
+                filterCategory: filterCategoryLower,
+                matches: announcementCategory === filterCategoryLower
+            });
+        }
+
+        const result = matchesSearch && matchesDate && matchesCategory;
+        
+        return result;
+    });
+
+    console.log('Filter results:', {
+        totalAnnouncements: allAnnouncements.length,
+        filteredCount: filtered.length,
+        appliedFilters: {
+            search: searchTerm,
+            date: dateFilter,
+            category: categoryFilter
+        }
+    });
+
+    return filtered;
+}
+
+// Reset filters UI
+function resetFiltersUI() {
+    // Reset input fields
+    document.getElementById('announcementSearch').value = '';
+    document.getElementById('dateFilter').value = '';
+    document.getElementById('categoryFilter').value = 'all';
+    
+    // Reset active classes on filter dropdowns
+    document.querySelectorAll('.date-filter, .category-filter').forEach(el => {
+        el.classList.remove('active');
+    });
+    
+    document.querySelector('.date-filter[data-value=""]').classList.add('active');
+    document.querySelector('.category-filter[data-value="all"]').classList.add('active');
+}
+
+// Clear filters
+function clearFilters() {
+    console.log('Clearing filters');
+    
+    // Reset UI
+    resetFiltersUI();
+    
+    // Apply filters or fetch fresh data
+    if (currentOrgId) {
+        if (allAnnouncements.length > 0) {
+            // If we have announcements, just rerender them all
+            renderAnnouncementsContent({ announcements: allAnnouncements });
+        } else {
+            // Otherwise fetch fresh data
+            fetchAnnouncements(currentOrgId);
+        }
+    }
+}
+
+// Render announcements content
+function renderAnnouncementsContent(response) {
+    const announcements = response.announcements || [];
+    const announcementsContainer = document.getElementById('announcements-content');
+    
+    if (announcements.length === 0) {
+        announcementsContainer.innerHTML = renderEmptyState();
+        return;
+    }
+
+    let html = '<div class="announcements-container">';
+    
+    announcements.forEach(announcement => {
+        html += renderAnnouncementItem(announcement);
+    });
+    
+    html += '</div>';
+    
+    announcementsContainer.innerHTML = html;
+}
+
+// Render empty state
+function renderEmptyState() {
+    return `
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="far fa-comment-alt"></i>
+            </div>
+            <h5>No Announcements</h5>
+            <p>There are no announcements for this organization yet.</p>
+        </div>
+    `;
+}
+
+// Render announcement item
+function renderAnnouncementItem(announcement) {
+    const categoryBadgeClass = getCategoryBadgeClass(announcement.category);
+    const formattedDate = formatRelativeTime(new Date(announcement.created_at));
+    const displayName = announcement.author_name || announcement.creator_name || 'Unknown Author';
+
+    return `
+        <div class="announcement-card" data-announcement-id="${announcement.announcement_id}">
+            <div class="announcement-body">
+                <div class="announcement-header">
+                    <img src="${announcement.org_image ? 'uploaded/orgUploaded/' + announcement.org_image : '/api/placeholder/50/50'}" 
+                         class="announcement-author-img" alt="${displayName}">
+                    <div class="announcement-author-info">
+                        <h6 class="announcement-author-name">${displayName}</h6>
+                        <p class="announcement-date">Posted ${formattedDate}</p>
+                    </div>
+                    <span class="category-badge ${categoryBadgeClass}">${announcement.category || 'General'}</span>
+                </div>
+                <h5 class="announcement-title">${announcement.announcement_title}</h5>
+                <div class="announcement-text">${announcement.announcement_details}</div>
+                ${renderAnnouncementImages(announcement)}
+            </div>
+        </div>
+    `;
+}
+
+// Render announcement images
+function renderAnnouncementImages(announcement) {
+    if (!announcement.images || announcement.images.length === 0) {
+        return '';
+    }
+
+    // If the images are a string (comma-separated), convert to array
+    const images = typeof announcement.images === 'string' 
+        ? announcement.images.split(',').filter(img => img.trim() !== '')
+        : Array.isArray(announcement.images) 
+            ? announcement.images
+            : [];
+
+    if (images.length === 0) {
+        return '';
+    }
+
+    // For a single image
+    if (images.length === 1) {
+        return `
+            <div class="announcement-image">
+                <img src="uploaded/annUploaded/${images[0].trim()}" 
+                     alt="Announcement Image"
+                     class="d-block w-100"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }
+
+    // For multiple images, create a carousel
+    const carouselId = `carousel-${announcement.announcement_id}`;
+    
+    const carouselIndicators = images.map((_, index) => `
+        <button type="button" 
+                data-bs-target="#${carouselId}" 
+                data-bs-slide-to="${index}" 
+                class="${index === 0 ? 'active' : ''}"
+                aria-current="${index === 0 ? 'true' : 'false'}"
+                aria-label="Slide ${index + 1}">
+        </button>
+    `).join('');
+
+    const carouselItems = images.map((image, index) => {
+        const imagePath = image.trim();
+        return `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="uploaded/annUploaded/${imagePath}" 
+                     class="d-block w-100" 
+                     alt="Announcement Image ${index + 1}"
+                     onerror="this.onerror=null; this.src='/api/placeholder/400/300';">
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div id="${carouselId}" class="announcement-carousel carousel slide">
+            <div class="carousel-indicators">
+                ${carouselIndicators}
+            </div>
+            <div class="carousel-inner">
+                ${carouselItems}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+}
+
+// Render members content
+function renderMembersContent(members) {
+    const membersContainer = document.getElementById('members-content');
+    
+    if (!members || members.length === 0) {
+        membersContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h5>No Members</h5>
+                <p>This organization doesn't have any registered members yet.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Leadership and general members
+    const leadership = members.filter(member => 
+        member.position && ['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    const generalMembers = members.filter(member => 
+        !member.position || !['president', 'vice president', 'secretary', 'treasurer'].includes(member.position.toLowerCase())
+    );
+    
+    let html = '';
+    
+    // Leadership section
+    if (leadership.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">Leadership</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        leadership.forEach(leader => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${leader.member_img ? 'uploaded/orgUploaded/' + leader.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image leadership" alt="${leader.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${leader.name}</h5>
+                            <p class="member-role">${leader.position}</p>
+                            <p class="member-since">Since ${formatDate(leader.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    // General members
+    if (generalMembers.length > 0) {
+        html += `
+            <div class="members-section-header">
+                <h5 class="members-section-title">General Members</h5>
+            </div>
+            <div class="members-grid">
+        `;
+        
+        generalMembers.forEach(member => {
+            html += `
+                <div class="member-card">
+                    <div class="member-info">
+                        <img src="${member.member_img ? 'uploaded/orgUploaded/' + member.member_img : '/api/placeholder/80/80'}" 
+                             class="member-image" alt="${member.name}">
+                        <div class="member-details">
+                            <h5 class="member-name">${member.name}</h5>
+                            ${member.committee ? `<p class="member-committee">${member.committee}</p>` : ''}
+                            <p class="member-since">Since ${formatDate(member.joined_date || new Date())}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    }
+    
+    membersContainer.innerHTML = html;
+}
+
+// Helper function to get badge class based on category
+function getCategoryBadgeClass(category) {
+    if (!category) return 'category-general';
+    
+    const categoryLower = (category || '').toLowerCase();
+    const classes = {
+        'academic': 'category-academic',
+        'event': 'category-event',
+        'announcement': 'category-announcement',
+        'news': 'category-news',
+        'org': 'category-org',
+        'general': 'category-general'
+    };
+    return classes[categoryLower] || 'category-general';
+}
+
+// Format relative time function
+function formatRelativeTime(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+
+    if (isNaN(seconds)) return 'recently';
+    
+    if (seconds < 60) return seconds < 30 ? "just now" : seconds + " seconds ago";
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago";
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+    const years = Math.floor(months / 12);
+    return years + " year" + (years > 1 ? "s" : "") + " ago";
+}
+
+// Format date helper
+function formatDate(dateString) {
+    if (!dateString) return 'Unknown date';
+    
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+        return dateString; // Return the original string if date is invalid
+    }
+    
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Initialize event listeners
+function initializeOrgPopupEventListeners() {
+    console.log('Initializing organization popup event listeners...');
+    
+    // Click event for all tabs
+    const tabs = document.querySelectorAll('.org-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Hide all tab panes
+            const tabPanes = document.querySelectorAll('.org-tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Show the corresponding tab pane
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Load members data if members tab is clicked
+            if (tabId === 'members' && currentOrgId) {
+                fetchMembers(currentOrgId);
+            }
+        });
+    });
+    
+    // Close filter menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const filterMenu = document.getElementById('orgFilterMenu');
+        const filterBtn = document.getElementById('filterDropdown');
+        
+        if (filterMenu && filterBtn) {
+            if (filterMenu.classList.contains('active') && 
+                !filterMenu.contains(event.target) && 
+                event.target !== filterBtn) {
+                filterMenu.classList.remove('active');
+            }
+        }
+    });
+    
+    // Search input event listener
+    const searchInput = document.getElementById('announcementSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+        });
+    }
+    
+    // Date filter dropdown items
+    const dateFilters = document.querySelectorAll('.date-filter');
+    dateFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('dateFilter').value = value;
+            
+            // Update UI to show selected filter
+            dateFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
+    });
+    
+    // Category filter dropdown items
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    categoryFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.getAttribute('data-value');
+            
+            // Update hidden input value
+            document.getElementById('categoryFilter').value = value;
+            
+            // Update UI to show selected filter
+            categoryFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filters
+            const filtered = filterAnnouncements();
+            renderAnnouncementsContent({ announcements: filtered });
+            
+            // Close the dropdown
+            toggleOrgFilterMenu();
+        });
+    });
+    
+    // Clear filters button
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            clearFilters();
+            toggleOrgFilterMenu();
+        });
+    }
+    
+    // Add event listeners to close popup when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeOrgPopup();
+        }
+    });
+}
+
+// Initialize everything when the DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing organization popup system...');
+    
+    // Initialize card click handlers
+    updateCardClickHandlers();
+    
+    // Initialize all other event listeners
+    initializeOrgPopupEventListeners();
+});
         </script>
         <script>
         let currentImageSet = [];

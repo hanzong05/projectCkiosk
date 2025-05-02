@@ -7875,7 +7875,172 @@ body.feedback-open {
 </div>
 
 <!-- Script to handle page loader -->
-<script>
+<script>// Define the openFullscreenFeedback function in the global scope
+window.openFullscreenFeedback = function() {
+    const customFeedbackContainer = document.getElementById('customFeedbackContainer');
+    if (customFeedbackContainer) {
+        customFeedbackContainer.style.display = 'block';
+        document.body.classList.add('feedback-open');
+        
+        // Add active class after a small delay for animation
+        setTimeout(() => {
+            customFeedbackContainer.classList.add('active');
+        }, 10);
+        
+        // Reset to first step
+        resetForm();
+    } else {
+        console.error('Custom feedback container not found in the DOM');
+    }
+};
+
+// Define closeFullscreenFeedback in the global scope
+window.closeFullscreenFeedback = function() {
+    const customFeedbackContainer = document.getElementById('customFeedbackContainer');
+    if (!customFeedbackContainer) return;
+    
+    customFeedbackContainer.classList.remove('active');
+    
+    // Ensure event evaluation is properly reset
+    const evaluateEventCheckbox = document.getElementById('evaluateEvent');
+    if (evaluateEventCheckbox) {
+        evaluateEventCheckbox.checked = false;
+    }
+    
+    const eventEvaluation = document.getElementById('eventEvaluation');
+    if (eventEvaluation) {
+        eventEvaluation.style.display = 'none';
+    }
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        customFeedbackContainer.style.display = 'none';
+        document.body.classList.remove('feedback-open');
+        
+        // Reset form
+        resetForm();
+    }, 300);
+};
+
+// Make sure necessary modal functions are defined
+window.openFeedbackModal = function() {
+    window.openFullscreenFeedback();
+};
+
+window.closeFeedbackModal = function() {
+    window.closeFullscreenFeedback();
+};
+
+window.goToNextStep = function() {
+    const nextBtn = document.getElementById('nextBtn');
+    if (nextBtn) nextBtn.click();
+};
+
+window.goToPrevStep = function() {
+    const prevBtn = document.getElementById('prevBtn');
+    if (prevBtn) prevBtn.click();
+};
+
+window.submitFeedback = function() {
+    const submitBtn = document.getElementById('submitBtn');
+    if (submitBtn) submitBtn.click();
+};
+
+// Define fixFormInputs function
+window.fixFormInputs = function() {
+    // Find all date inputs and replace them with hidden fields
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    dateInputs.forEach(function(dateInput) {
+        // Skip if already processed
+        if (dateInput.dataset.processed) return;
+        dateInput.dataset.processed = true;
+        
+        // Create a hidden input to replace the date input
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = dateInput.name;
+        
+        // Get current date in ISO format (YYYY-MM-DD)
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        hiddenInput.value = formattedDate;
+        
+        // Create a text display to show the current date
+        const dateDisplay = document.createElement('div');
+        dateDisplay.className = 'form-control';
+        dateDisplay.style.backgroundColor = '#f8f9fa';
+        dateDisplay.style.padding = '0.75rem 1rem';
+        dateDisplay.style.border = '2px solid #e2e8f0';
+        dateDisplay.style.borderRadius = '8px';
+        dateDisplay.innerText = formattedDate;
+        
+        // Replace the date input with the hidden input and display
+        const parentElement = dateInput.parentNode;
+        if (parentElement) {
+            parentElement.appendChild(hiddenInput);
+            parentElement.appendChild(dateDisplay);
+            parentElement.removeChild(dateInput);
+        }
+    });
+    
+    // Create missing required fields for event evaluation
+    const feedbackForm = document.getElementById('feedbackForm');
+    if (feedbackForm) {
+        // Create a hidden input for comments_suggestions
+        if (!document.querySelector('[name="comments_suggestions"]')) {
+            const commentsSuggestionsInput = document.createElement('input');
+            commentsSuggestionsInput.type = 'hidden';
+            commentsSuggestionsInput.name = 'comments_suggestions';
+            commentsSuggestionsInput.value = ''; // Default empty value
+            feedbackForm.appendChild(commentsSuggestionsInput);
+        }
+        
+        // Create a hidden input for student_org if it doesn't exist
+        if (!document.querySelector('[name="student_org"]')) {
+            const studentOrgInput = document.createElement('input');
+            studentOrgInput.type = 'hidden';
+            studentOrgInput.name = 'student_org';
+            feedbackForm.appendChild(studentOrgInput);
+        }
+        
+        // Create a hidden input for position if it doesn't exist
+        if (!document.querySelector('[name="position"]')) {
+            const positionInput = document.createElement('input');
+            positionInput.type = 'hidden';
+            positionInput.name = 'position';
+            positionInput.value = 'Student'; // Default value
+            feedbackForm.appendChild(positionInput);
+        }
+    }
+};
+
+// Add click handlers to feedback buttons when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing feedback form functionality');
+    
+    // Fix form inputs first
+    fixFormInputs();
+    
+    // Attach click handler to feedback buttons
+    const feedbackButtons = document.querySelectorAll('.submit-feedback-btn');
+    feedbackButtons.forEach(button => {
+        // Remove existing onclick attributes to prevent double calls
+        if (button.hasAttribute('onclick')) {
+            const oldButton = button.cloneNode(true);
+            oldButton.removeAttribute('onclick');
+            button.parentNode.replaceChild(oldButton, button);
+            button = oldButton;
+        }
+        
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.openFullscreenFeedback();
+            return false;
+        });
+    });
+    
+    console.log('Feedback form functionality initialized successfully');
+});
   window.addEventListener('load', function() {
     // When the page is fully loaded, wait a bit and then fade out the loader
     setTimeout(function() {
@@ -8036,10 +8201,8 @@ document.addEventListener('DOMContentLoaded', function() {
         parentElement.removeChild(dateInput);
     });
 
-    // Add this at the top level of your JavaScript, not inside another function
-window.openFullscreenFeedback = function() {
-    const customFeedbackContainer = document.getElementById('customFeedbackContainer');
-    if (customFeedbackContainer) {
+    // Open fullscreen feedback function
+    window.openFullscreenFeedback = function() {
         customFeedbackContainer.style.display = 'block';
         document.body.classList.add('feedback-open');
         
@@ -8050,10 +8213,8 @@ window.openFullscreenFeedback = function() {
         
         // Reset to first step
         resetForm();
-    } else {
-        console.error('Custom feedback container not found in the DOM');
-    }
-};
+    };
+
     // Close fullscreen feedback function
     window.closeFullscreenFeedback = function() {
     customFeedbackContainer.classList.remove('active');
@@ -8444,19 +8605,7 @@ function validateOfficeForm() {
                     });
                 }
             }
-            if (feedbackCategory === 'org' && document.getElementById('evaluateEvent').checked) {
-    // Store the state that event evaluation was checked
-    const wasEventEvalChecked = true;
-    
-    // Make sure to reset this checkbox during cleanup
-    document.getElementById('evaluateEvent').checked = false;
-    
-    // Hide the event evaluation form
-    const eventEvaluation = document.getElementById('eventEvaluation');
-    if (eventEvaluation) {
-        eventEvaluation.style.display = 'none';
-    }
-}
+
             // Submit form data
             fetch('ajax/submit_feedback.php', {
                 method: 'POST',
@@ -8582,34 +8731,43 @@ function validateOfficeForm() {
 
     // Form reset
     function resetForm() {
-    if (feedbackForm) {
-        feedbackForm.reset();
-        currentStep = 0;
-        updateSteps();
+        if (feedbackForm) {
+            feedbackForm.reset();
+            currentStep = 0;
+            updateSteps();
 
-        // Reset display states
-        const displays = {
-            'officeQuestions': 'none',
-            'orgQuestions': 'none',
-            'eventEvaluation': 'none',
-            'csmIntro': 'none'
-        };
+            // Reset display states
+            const displays = {
+                'officeQuestions': 'none',
+                'orgQuestions': 'none',
+                'eventEvaluation': 'none',
+                'csmIntro': 'none'
+            };
 
-        Object.entries(displays).forEach(([id, display]) => {
-            const element = document.getElementById(id);
-            if (element) element.style.display = display;
-        });
-        
-        // Specifically uncheck the event evaluation checkbox
-        const evaluateEventCheckbox = document.getElementById('evaluateEvent');
-        if (evaluateEventCheckbox) {
-            evaluateEventCheckbox.checked = false;
+            Object.entries(displays).forEach(([id, display]) => {
+                const element = document.getElementById(id);
+                if (element) element.style.display = display;
+            });
+            
+            // Re-ensure all date fields have the current date
+            ensureCurrentDates();
         }
-        
-        // Re-ensure all date fields have the current date
-        ensureCurrentDates();
     }
-}
+
+    // Close with ESC key
+    document.addEventListener('keydown', function(e) {
+        if (customFeedbackContainer.style.display === 'block') {
+            if (e.key === 'Escape') {
+                closeFullscreenFeedback();
+            }
+        }
+    });
+
+    // Initialize on load
+    updateSteps();
+    ensureCurrentDates();
+});
+
 // Feedback counts update function
 function updateFeedbackCounts() {
     fetch('ajax/get_feedback_counts.php')

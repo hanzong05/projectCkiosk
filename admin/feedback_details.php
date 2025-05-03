@@ -30,7 +30,9 @@ $end_date_full = date('Y-m-t', strtotime($end_date_formatted));
 function safe_divide($numerator, $denominator, $default = 0) {
     return ($denominator > 0) ? (($numerator / $denominator) * 100) : $default;
 }
-unction calculate_weighted_summary($data, $field_prefix) {
+
+// Add the weighted summary calculation function
+function calculate_weighted_summary($data, $field_prefix) {
     // Define weight for each rating value
     $weights = [
         'strongly_disagree' => 0, // 0%
@@ -1591,58 +1593,206 @@ $current_year = date('Y');
                             </div>
                         </div>
                     </div>
-                </div>
-                // Add this in the dashboard-card-body section where the SQD table is displayed
-echo '<div class="mt-4 mb-4">';
-echo '<h5 class="fw-bold">SQD Summary Computation:</h5>';
-echo '<table class="table table-bordered">';
-echo '<thead class="table-light">';
-echo '<tr>';
-echo '<th>SQD Dimension</th>';
-echo '<th>Strongly Disagree = 0%</th>';
-echo '<th>Disagree = 25%</th>';
-echo '<th>Neutral = 50%</th>';
-echo '<th>Agree = 75%</th>';
-echo '<th>Strongly Agree = 100%</th>';
-echo '<th>Weighted Average</th>';
-echo '</tr>';
-echo '</thead>';
-echo '<tbody>';
-
-foreach($sqd_questions as $key => $question) {
-    $prefix = strtolower($key) . '_';
-    $weighted_avg = calculate_weighted_summary($sqd_stats, $prefix);
+                    <!-- SQD Summary Computation -->
+<div class="mt-5 mb-4">
+    <div class="section-header d-flex align-items-center mb-3" style="background-color: rgba(28, 200, 138, 0.08); padding: 1rem 1.5rem; border-left: 5px solid var(--success-color); border-radius: 0.5rem;">
+        <i class="fas fa-calculator text-success me-3 fs-4"></i>
+        <h5 class="mb-0 fw-bold">SQD Summary Computation</h5>
+    </div>
     
-    echo '<tr>';
-    echo '<td class="fw-bold">' . $key . '</td>';
-    echo '<td>' . $sqd_stats[$prefix.'strongly_disagree'] . '</td>';
-    echo '<td>' . $sqd_stats[$prefix.'disagree'] . '</td>';
-    echo '<td>' . $sqd_stats[$prefix.'neutral'] . '</td>';
-    echo '<td>' . $sqd_stats[$prefix.'agree'] . '</td>';
-    echo '<td>' . $sqd_stats[$prefix.'strongly_agree'] . '</td>';
-    echo '<td><span class="badge bg-primary">' . number_format($weighted_avg, 2) . '%</span></td>';
-    echo '</tr>';
-}
-
-// Calculate overall average across all SQD questions
-$overall_sum = 0;
-$count = 0;
-foreach($sqd_questions as $key => $question) {
-    $prefix = strtolower($key) . '_';
-    $weighted_avg = calculate_weighted_summary($sqd_stats, $prefix);
-    $overall_sum += $weighted_avg;
-    $count++;
-}
-$overall_avg = $count > 0 ? $overall_sum / $count : 0;
-
-echo '<tr class="table-light">';
-echo '<td colspan="6" class="text-end fw-bold">Overall SQD Rating:</td>';
-echo '<td><span class="badge bg-success fs-6">' . number_format($overall_avg, 2) . '%</span></td>';
-echo '</tr>';
-
-echo '</tbody>';
-echo '</table>';
-echo '</div>';
+    <div class="card shadow-sm border-0 rounded-lg overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="text-center align-middle" style="background-color: #EBF5FF;">SQD Dimension</th>
+                            <th class="text-center" style="background-color: #FFEBEB;">
+                                <span class="d-block mb-1"><i class="fas fa-thumbs-down text-danger me-1"></i> Strongly Disagree</span>
+                                <span class="badge bg-danger rounded-pill">0%</span>
+                            </th>
+                            <th class="text-center" style="background-color: #FFF5EB;">
+                                <span class="d-block mb-1"><i class="fas fa-thumbs-down text-warning me-1"></i> Disagree</span>
+                                <span class="badge bg-warning rounded-pill">25%</span>
+                            </th>
+                            <th class="text-center" style="background-color: #F8F9FC;">
+                                <span class="d-block mb-1"><i class="fas fa-minus text-secondary me-1"></i> Neutral</span>
+                                <span class="badge bg-secondary rounded-pill">50%</span>
+                            </th>
+                            <th class="text-center" style="background-color: #EBFFEF;">
+                                <span class="d-block mb-1"><i class="fas fa-thumbs-up text-primary me-1"></i> Agree</span>
+                                <span class="badge bg-primary rounded-pill">75%</span>
+                            </th>
+                            <th class="text-center" style="background-color: #EBFFE7;">
+                                <span class="d-block mb-1"><i class="fas fa-thumbs-up text-success me-1"></i> Strongly Agree</span>
+                                <span class="badge bg-success rounded-pill">100%</span>
+                            </th>
+                            <th class="text-center align-middle" style="background-color: #F0F7FF; width: 150px;">
+                                <span class="fw-bold">Weighted Average</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach($sqd_questions as $key => $question) {
+                            $prefix = strtolower($key) . '_';
+                            $weighted_avg = calculate_weighted_summary($sqd_stats, $prefix);
+                            
+                            // Determine color based on weighted average
+                            if ($weighted_avg >= 90) {
+                                $avg_class = "bg-success";
+                                $row_class = "table-success bg-opacity-10";
+                            } elseif ($weighted_avg >= 80) {
+                                $avg_class = "bg-primary";
+                                $row_class = "table-primary bg-opacity-10";
+                            } elseif ($weighted_avg >= 70) {
+                                $avg_class = "bg-info";
+                                $row_class = "table-info bg-opacity-10";
+                            } elseif ($weighted_avg >= 60) {
+                                $avg_class = "bg-warning";
+                                $row_class = "table-warning bg-opacity-10";
+                            } else {
+                                $avg_class = "bg-danger";
+                                $row_class = "table-danger bg-opacity-10";
+                            }
+                            
+                            echo '<tr class="' . $row_class . '">';
+                            echo '<td class="fw-bold text-center">' . $key . '</td>';
+                            
+                            // Strongly Disagree column
+                            echo '<td class="text-center">';
+                            if ($sqd_stats[$prefix.'strongly_disagree'] > 0) {
+                                echo '<span class="badge rounded-pill bg-danger bg-opacity-75">' . $sqd_stats[$prefix.'strongly_disagree'] . '</span>';
+                            } else {
+                                echo '<span class="text-muted">-</span>';
+                            }
+                            echo '</td>';
+                            
+                            // Disagree column
+                            echo '<td class="text-center">';
+                            if ($sqd_stats[$prefix.'disagree'] > 0) {
+                                echo '<span class="badge rounded-pill bg-warning bg-opacity-75">' . $sqd_stats[$prefix.'disagree'] . '</span>';
+                            } else {
+                                echo '<span class="text-muted">-</span>';
+                            }
+                            echo '</td>';
+                            
+                            // Neutral column
+                            echo '<td class="text-center">';
+                            if ($sqd_stats[$prefix.'neutral'] > 0) {
+                                echo '<span class="badge rounded-pill bg-secondary bg-opacity-75">' . $sqd_stats[$prefix.'neutral'] . '</span>';
+                            } else {
+                                echo '<span class="text-muted">-</span>';
+                            }
+                            echo '</td>';
+                            
+                            // Agree column
+                            echo '<td class="text-center">';
+                            if ($sqd_stats[$prefix.'agree'] > 0) {
+                                echo '<span class="badge rounded-pill bg-primary bg-opacity-75">' . $sqd_stats[$prefix.'agree'] . '</span>';
+                            } else {
+                                echo '<span class="text-muted">-</span>';
+                            }
+                            echo '</td>';
+                            
+                            // Strongly Agree column
+                            echo '<td class="text-center">';
+                            if ($sqd_stats[$prefix.'strongly_agree'] > 0) {
+                                echo '<span class="badge rounded-pill bg-success bg-opacity-75">' . $sqd_stats[$prefix.'strongly_agree'] . '</span>';
+                            } else {
+                                echo '<span class="text-muted">-</span>';
+                            }
+                            echo '</td>';
+                            
+                            // Weighted Average column with progress bar
+                            echo '<td class="text-center">';
+                            echo '<div class="d-flex align-items-center justify-content-center">';
+                            echo '<div class="progress me-2" style="width: 80px; height: 8px;">';
+                            echo '<div class="progress-bar ' . $avg_class . '" role="progressbar" style="width: ' . $weighted_avg . '%"></div>';
+                            echo '</div>';
+                            echo '<span class="badge ' . $avg_class . ' rounded-pill">' . number_format($weighted_avg, 2) . '%</span>';
+                            echo '</div>';
+                            echo '</td>';
+                            
+                            echo '</tr>';
+                        }
+                        
+                        // Calculate overall average across all SQD questions
+                        $overall_sum = 0;
+                        $count = 0;
+                        foreach($sqd_questions as $key => $question) {
+                            $prefix = strtolower($key) . '_';
+                            $weighted_avg = calculate_weighted_summary($sqd_stats, $prefix);
+                            $overall_sum += $weighted_avg;
+                            $count++;
+                        }
+                        $overall_avg = $count > 0 ? $overall_sum / $count : 0;
+                        
+                        // Determine overall color
+                        if ($overall_avg >= 90) {
+                            $overall_class = "bg-success";
+                        } elseif ($overall_avg >= 80) {
+                            $overall_class = "bg-primary";
+                        } elseif ($overall_avg >= 70) {
+                            $overall_class = "bg-info";
+                        } elseif ($overall_avg >= 60) {
+                            $overall_class = "bg-warning";
+                        } else {
+                            $overall_class = "bg-danger";
+                        }
+                        ?>
+                        
+                        <tr class="table-active">
+                            <td colspan="6" class="text-end fw-bold bg-light">
+                                <div class="d-flex justify-content-end align-items-center">
+                                    <i class="fas fa-chart-line text-primary me-2"></i>
+                                    <span>Overall SQD Rating:</span>
+                                </div>
+                            </td>
+                            <td class="text-center bg-light">
+                                <div class="px-3 py-2 bg-white rounded-3 shadow-sm">
+                                    <div class="progress mb-1" style="height: 10px;">
+                                        <div class="progress-bar <?php echo $overall_class; ?>" role="progressbar" 
+                                             style="width: <?php echo $overall_avg; ?>%"></div>
+                                    </div>
+                                    <span class="badge <?php echo $overall_class; ?> rounded-pill fs-6 px-3 py-2">
+                                        <?php echo number_format($overall_avg, 2); ?>%
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Legend -->
+    <div class="d-flex flex-wrap justify-content-center mt-3 gap-3">
+        <div class="d-flex align-items-center">
+            <span class="badge bg-danger rounded-pill me-1">0%</span>
+            <small>Strongly Disagree</small>
+        </div>
+        <div class="d-flex align-items-center">
+            <span class="badge bg-warning rounded-pill me-1">25%</span>
+            <small>Disagree</small>
+        </div>
+        <div class="d-flex align-items-center">
+            <span class="badge bg-secondary rounded-pill me-1">50%</span>
+            <small>Neutral</small>
+        </div>
+        <div class="d-flex align-items-center">
+            <span class="badge bg-primary rounded-pill me-1">75%</span>
+            <small>Agree</small>
+        </div>
+        <div class="d-flex align-items-center">
+            <span class="badge bg-success rounded-pill me-1">100%</span>
+            <small>Strongly Agree</small>
+        </div>
+    </div>
+</div>
+                </div>
+               
                 <?php endif; ?>
             </div>
         </div>

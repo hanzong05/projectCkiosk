@@ -3163,6 +3163,96 @@ public function add_faq($question, $answer) {
         return false;
     }
 }
+// Function to show all offices
+public function show_offices() {
+    try {
+        $query = "SELECT * FROM offices ORDER BY office_name ASC";
+        $statement = $this->connection->prepare($query);
 
+        if ($statement->execute()) {
+            $offices = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Check if there are any offices found
+            if (!empty($offices)) {
+                return $offices;
+            } else {
+                return [];
+            }
+        } else {
+            return [];
+        }
+    } catch (PDOException $e) {
+        error_log("Error fetching offices: " . $e->getMessage());
+        return [];
+    }
+}
+
+// Function to add a new office
+public function add_office($data) {
+    try {
+        $stmt = $this->db->prepare("INSERT INTO offices (office_name, office_location, office_contact, office_email, office_hours, office_services, office_description, created_by) VALUES (:office_name, :office_location, :office_contact, :office_email, :office_hours, :office_services, :office_description, :created_by)");
+        
+        $stmt->bindParam(':office_name', $data['office_name']);
+        $stmt->bindParam(':office_location', $data['office_location']);
+        $stmt->bindParam(':office_contact', $data['office_contact']);
+        $stmt->bindParam(':office_email', $data['office_email']);
+        $stmt->bindParam(':office_hours', $data['office_hours']);
+        $stmt->bindParam(':office_services', $data['office_services']);
+        $stmt->bindParam(':office_description', $data['office_description']);
+        $stmt->bindParam(':created_by', $data['uid']);
+        
+        $stmt->execute();
+        return "Office added successfully!";
+    } catch (PDOException $e) {
+        error_log("Error adding office: " . $e->getMessage());
+        return "Error: " . $e->getMessage();
+    }
+}
+
+// Function to save/update an office
+public function save_office($data) {
+    try {
+        $stmt = $this->db->prepare("UPDATE offices SET 
+            office_name = :office_name, 
+            office_location = :office_location, 
+            office_contact = :office_contact, 
+            office_email = :office_email, 
+            office_hours = :office_hours, 
+            office_services = :office_services, 
+            office_description = :office_description, 
+            updated_by = :updated_by, 
+            updated_at = NOW() 
+            WHERE office_id = :office_id");
+        
+        $stmt->bindParam(':office_name', $data['office_name']);
+        $stmt->bindParam(':office_location', $data['office_location']);
+        $stmt->bindParam(':office_contact', $data['office_contact']);
+        $stmt->bindParam(':office_email', $data['office_email']);
+        $stmt->bindParam(':office_hours', $data['office_hours']);
+        $stmt->bindParam(':office_services', $data['office_services']);
+        $stmt->bindParam(':office_description', $data['office_description']);
+        $stmt->bindParam(':updated_by', $data['editor_id']);
+        $stmt->bindParam(':office_id', $data['office_id']);
+        
+        $stmt->execute();
+        return "Office updated successfully!";
+    } catch (PDOException $e) {
+        error_log("Error updating office: " . $e->getMessage());
+        return "Error: " . $e->getMessage();
+    }
+}
+
+// Function to delete an office
+public function delete_office($office_id) {
+    try {
+        $stmt = $this->db->prepare("DELETE FROM offices WHERE office_id = :office_id");
+        $stmt->bindParam(':office_id', $office_id);
+        $stmt->execute();
+        return "Office deleted successfully!";
+    } catch (PDOException $e) {
+        error_log("Error deleting office: " . $e->getMessage());
+        return "Error: " . $e->getMessage();
+    }
+}
 }
 ?>

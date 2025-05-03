@@ -30,7 +30,32 @@ $end_date_full = date('Y-m-t', strtotime($end_date_formatted));
 function safe_divide($numerator, $denominator, $default = 0) {
     return ($denominator > 0) ? (($numerator / $denominator) * 100) : $default;
 }
-
+unction calculate_weighted_summary($data, $field_prefix) {
+    // Define weight for each rating value
+    $weights = [
+        'strongly_disagree' => 0, // 0%
+        'disagree' => 25,         // 25%
+        'neutral' => 50,          // 50%
+        'agree' => 75,            // 75%
+        'strongly_agree' => 100   // 100%
+    ];
+    
+    $total_responses = 0;
+    $weighted_sum = 0;
+    
+    foreach ($weights as $rating => $weight) {
+        $count = $data[$field_prefix . $rating];
+        $weighted_sum += $count * $weight;
+        $total_responses += $count;
+    }
+    
+    // Avoid division by zero
+    if ($total_responses > 0) {
+        return $weighted_sum / $total_responses;
+    } else {
+        return 0;
+    }
+}
 try {
     // Initialize data arrays
     $cc1_results = $cc2_results = $cc3_results = [];
@@ -1445,6 +1470,7 @@ $current_year = date('Y');
                         
                         <!-- Service Quality Dimensions (SQD) Section -->
                         <div class="section-container">
+                            
                             <div class="section-header d-flex align-items-center">
                                 <i class="fas fa-chart-pie text-success me-2 fs-4"></i>
                                 <h5 class="mb-0 fw-bold">Service Quality Dimensions (SQD)</h5>
@@ -1566,6 +1592,57 @@ $current_year = date('Y');
                         </div>
                     </div>
                 </div>
+                // Add this in the dashboard-card-body section where the SQD table is displayed
+echo '<div class="mt-4 mb-4">';
+echo '<h5 class="fw-bold">SQD Summary Computation:</h5>';
+echo '<table class="table table-bordered">';
+echo '<thead class="table-light">';
+echo '<tr>';
+echo '<th>SQD Dimension</th>';
+echo '<th>Strongly Disagree = 0%</th>';
+echo '<th>Disagree = 25%</th>';
+echo '<th>Neutral = 50%</th>';
+echo '<th>Agree = 75%</th>';
+echo '<th>Strongly Agree = 100%</th>';
+echo '<th>Weighted Average</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
+
+foreach($sqd_questions as $key => $question) {
+    $prefix = strtolower($key) . '_';
+    $weighted_avg = calculate_weighted_summary($sqd_stats, $prefix);
+    
+    echo '<tr>';
+    echo '<td class="fw-bold">' . $key . '</td>';
+    echo '<td>' . $sqd_stats[$prefix.'strongly_disagree'] . '</td>';
+    echo '<td>' . $sqd_stats[$prefix.'disagree'] . '</td>';
+    echo '<td>' . $sqd_stats[$prefix.'neutral'] . '</td>';
+    echo '<td>' . $sqd_stats[$prefix.'agree'] . '</td>';
+    echo '<td>' . $sqd_stats[$prefix.'strongly_agree'] . '</td>';
+    echo '<td><span class="badge bg-primary">' . number_format($weighted_avg, 2) . '%</span></td>';
+    echo '</tr>';
+}
+
+// Calculate overall average across all SQD questions
+$overall_sum = 0;
+$count = 0;
+foreach($sqd_questions as $key => $question) {
+    $prefix = strtolower($key) . '_';
+    $weighted_avg = calculate_weighted_summary($sqd_stats, $prefix);
+    $overall_sum += $weighted_avg;
+    $count++;
+}
+$overall_avg = $count > 0 ? $overall_sum / $count : 0;
+
+echo '<tr class="table-light">';
+echo '<td colspan="6" class="text-end fw-bold">Overall SQD Rating:</td>';
+echo '<td><span class="badge bg-success fs-6">' . number_format($overall_avg, 2) . '%</span></td>';
+echo '</tr>';
+
+echo '</tbody>';
+echo '</table>';
+echo '</div>';
                 <?php endif; ?>
             </div>
         </div>

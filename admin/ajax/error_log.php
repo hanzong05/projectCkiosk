@@ -2235,3 +2235,83 @@
 [21-Mar-2025 02:32:33 Europe/Berlin] Error uploading image index 2: 4
 [21-Mar-2025 02:32:33 Europe/Berlin] Error uploading image index 3: 4
 [21-Mar-2025 02:32:33 Europe/Berlin] No images to remove.
+[04-May-2025 02:13:33 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office123213
+    [office_description] => Administrative office for the College of Computer Studies, handling faculty and student concerns.
+    [type] => office
+)
+
+[04-May-2025 02:13:33 Europe/Berlin] Received type: office
+[04-May-2025 02:14:39 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office213213
+    [office_description] => Administrative office for the College of Computer Studies, handling faculty and student concerns.
+    [type] => office
+)
+
+[04-May-2025 02:14:39 Europe/Berlin] Received type: office
+[04-May-2025 02:14:50 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office213213
+    [office_description] => Administrative office for the College of Computer Studies, handling facdawdulty and student concerns.
+    [type] => office
+)
+
+[04-May-2025 02:14:50 Europe/Berlin] Received type: office
+[04-May-2025 02:19:42 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office213213
+    [office_description] => Administrative office for the College of Computer Studies, handling facdawdulty and student concerns.dawdaw
+    [type] => office
+)
+
+[04-May-2025 02:19:42 Europe/Berlin] Received type: office
+[04-May-2025 02:21:01 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office213213dawdaw
+    [office_description] => Administrative office for the College of Computer Studies, handling facdawdulty and student concerns.
+    [type] => office
+)
+
+[04-May-2025 02:21:01 Europe/Berlin] Received type: office
+[04-May-2025 02:21:09 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office213213awdawdawdaw
+    [office_description] => Administrative office for the College of Computer Studies, handling facdawdulty and student concerns.
+    [type] => office
+)
+
+[04-May-2025 02:21:09 Europe/Berlin] Received type: office
+[04-May-2025 02:21:20 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office213213
+    [office_description] => Administrative office for the College of Computer Studies, handling facdawdulty and student concerns.awdawdawdwadaw
+    [type] => office
+)
+
+[04-May-2025 02:21:20 Europe/Berlin] Received type: office
+[04-May-2025 02:22:22 Europe/Berlin] POST data: Array
+(
+    [editor_id] => 1
+    [office_id] => 4
+    [office_name] => College of Computer Studies Office213213dawdwad
+    [office_description] => Administrative office for the College of Computer Studies, handling facdawdulty and student concerns.
+    [type] => office
+)
+
+[04-May-2025 02:22:22 Europe/Berlin] Received type: office

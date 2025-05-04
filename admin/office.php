@@ -2,20 +2,17 @@
 include_once ('assets/header.php');
 
 if (!isset($_SESSION['atype'])) {
-    // If the session is not set, redirect to the login page
     header("Location: index.php");
     exit;
 }
 
 $account_type = $_SESSION['atype'];
 if ($account_type != '0' && $account_type != '1' && $account_type != '2' && $account_type != '3') {
-    // Destroy the session if the account type is invalid
     session_destroy();
-    // Redirect to the login page
     header("Location: index.php");
     exit;
 }
-$uid = $_SESSION['aid'] ?? null; // Ensure this is set to avoid undefined index warnings
+$uid = $_SESSION['aid'] ?? null;
 $cid = $_SESSION['id'] ?? null; 
 
 ini_set('error_log', 'ajax/error_log.txt');
@@ -58,7 +55,6 @@ $allOffices = $obj->show_offices();
   <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <link href="assets/css/css.css" rel="stylesheet" />
 </head>
 
@@ -88,10 +84,7 @@ $allOffices = $obj->show_offices();
                   <tr>
                     <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">No.</th>
                     <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Office Name</th>
-                    <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Location</th>
-                    <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Contact Number</th>
-                    <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Email</th>
-                    <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Services</th>
+                    <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Description</th>
                     <th class="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider text-center">Actions</th>
                   </tr>
                 </thead>
@@ -103,10 +96,7 @@ $allOffices = $obj->show_offices();
                   <tr class="hover:bg-gray-50 transition duration-150">
                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600"><?php echo $count; ?></td>
                     <td class="px-6 py-4 text-sm text-gray-800 font-medium"><?php echo $row["office_name"]; ?></td>
-                    <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["office_location"]; ?></td>
-                    <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["office_contact"]; ?></td>
-                    <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["office_email"]; ?></td>
-                    <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["office_services"]; ?></td>
+                    <td class="px-6 py-4 text-sm text-gray-800"><?php echo $row["office_description"]; ?></td>
                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
                       <div class="flex justify-center gap-2">
                         <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition duration-200 officeModalEdit" 
@@ -155,22 +145,9 @@ $allOffices = $obj->show_offices();
               <input type="text" id="office_name" class="form-control" name="office_name" required>
             </div>
             <div class="mb-3">
-              <label for="office_location" class="form-label fw-bold">Location</label>
-              <input type="text" id="office_location" class="form-control" name="office_location" required>
+              <label for="office_description" class="form-label fw-bold">Description</label>
+              <textarea id="office_description" class="form-control" name="office_description" rows="5" required></textarea>
             </div>
-            <div class="mb-3">
-              <label for="office_contact" class="form-label fw-bold">Contact Number</label>
-              <input type="text" id="office_contact" class="form-control" name="office_contact" required>
-            </div>
-            <div class="mb-3">
-              <label for="office_email" class="form-label fw-bold">Email Address</label>
-              <input type="email" id="office_email" class="form-control" name="office_email" required>
-            </div>
-            <div class="mb-3">
-              <label for="office_hours" class="form-label fw-bold">Office Hours</label>
-              <input type="text" id="office_hours" class="form-control" name="office_hours" placeholder="e.g. Monday-Friday: 8:00 AM - 5:00 PM" required>
-            </div>
-            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -214,8 +191,6 @@ $allOffices = $obj->show_offices();
   <!--  Notifications Plugin    -->
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.0/dist/perfect-scrollbar.min.js"></script>
   <script src="assets/js/paper-dashboard.min.js?v=2.0.1"></script>
   
   <script>
@@ -242,18 +217,6 @@ $allOffices = $obj->show_offices();
     }
 
     $(document).ready(function() {
-      // Initialize rich text editors
-      $('#office_services, #office_description').summernote({
-        height: 180,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']]
-        ]
-      });
-
       // Handle edit button click
       $('.officeModalEdit').on('click', function() {
         var officeID = $(this).data('id');
@@ -272,18 +235,6 @@ $allOffices = $obj->show_offices();
           success: function(response) {
             // Add response in Modal body
             $('#officeData').html(response);
-            
-            // Initialize Summernote for the loaded content
-            $('#edit_office_services, #edit_office_description').summernote({
-              height: 180,
-              toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']]
-              ]
-            });
           },
           error: function(xhr, status, error) {
             console.error('AJAX Error:', status, error);
@@ -311,51 +262,78 @@ $allOffices = $obj->show_offices();
         });
       });
 
-      // Handle form submission for adding offices
       $('#officeForm').on('submit', function(e) {
-        e.preventDefault(); // Prevent the default form submission
+  e.preventDefault();
 
-        Swal.fire({
-          title: "Are you sure?",
-          text: "Do you want to add this office?",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonColor: "#28a745",
-          cancelButtonColor: "#dc3545",
-          confirmButtonText: "Yes, add it!",
-          cancelButtonText: "Cancel"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const formData = new FormData(this);
-            formData.append('type', 'office'); // Ensure type parameter is included
-
-            fetch('../admin/ajax/createData.php', {
-              method: 'POST',
-              body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-              if (result.success) {
-                Swal.fire({
-                  title: "Success!",
-                  text: result.message,
-                  icon: "success",
-                  timer: 2000,
-                  showConfirmButton: false
-                }).then(() => {
-                  window.location.href = "offices.php"; // Redirect to the offices page
-                });
-              } else {
-                Swal.fire("Error!", result.message, "error");
-              }
-            })
-            .catch(error => {
-              console.error('Error:', error);
-              Swal.fire("Error!", "There was an error adding the office.", "error");
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to add this office?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#28a745",
+    cancelButtonColor: "#dc3545",
+    confirmButtonText: "Yes, add it!",
+    cancelButtonText: "Cancel"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var formData = new FormData(this);
+      formData.append('type', 'office');
+      
+      // Debugging helper to see what's being sent
+      console.log("Submitting office with name:", formData.get('office_name'));
+      
+      $.ajax({
+        url: 'ajax/createData.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function(result) {
+          console.log("Success response:", result);
+          if (result.success) {
+            Swal.fire({
+              title: "Success!",
+              text: result.message,
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false
+            }).then(() => {
+              window.location.href = "office.php";
             });
+          } else {
+            Swal.fire("Error!", result.message || "Unknown error occurred", "error");
           }
-        });
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX Error Details:");
+          console.error("Status:", status);
+          console.error("Error:", error);
+          console.error("Response Text:", xhr.responseText);
+          
+          // Try to parse response as JSON if possible, otherwise show raw response
+          let errorMessage = "There was an error adding the office.";
+          try {
+            if (xhr.responseText) {
+              const errorData = JSON.parse(xhr.responseText);
+              if (errorData.message) {
+                errorMessage = errorData.message;
+              }
+            }
+          } catch (e) {
+            errorMessage += " Server response was not valid JSON.";
+            // If response is not empty and not valid JSON, it might be a PHP error
+            if (xhr.responseText) {
+              console.error("Raw Response:", xhr.responseText);
+            }
+          }
+          
+          Swal.fire("Error!", errorMessage, "error");
+        }
       });
+    }
+  });
+});
 
       // Handle form submission for editing offices
       $('#editOfficeForm').on('submit', function(e) {
@@ -375,29 +353,34 @@ $allOffices = $obj->show_offices();
             var formData = new FormData(this); // Create FormData from the form element
             formData.append('type', 'office');  // Add type to FormData
 
-            fetch("../admin/ajax/editData.php", {
-              method: "POST",
-              body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-              if (result.success) {
-                Swal.fire({
-                  title: "Success!",
-                  text: result.message,
-                  icon: "success",
-                  timer: 2000,
-                  showConfirmButton: false
-                }).then(() => {
-                  location.reload(); // Reload the page
-                });
-              } else {
-                Swal.fire("Error!", result.message, "error");
+            $.ajax({
+              url: 'ajax/editData.php',
+              type: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false,
+              dataType: 'json',
+              success: function(result) {
+                if (result.success) {
+                  Swal.fire({
+                    title: "Success!",
+                    text: result.message,
+                    icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                  }).then(() => {
+                    location.reload(); // Reload the page
+                  });
+                } else {
+                  Swal.fire("Error!", result.message, "error");
+                }
+              },
+              error: function(xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+                console.error("Response:", xhr.responseText);
+                
+                Swal.fire("Error!", "There was an error saving the changes.", "error");
               }
-            })
-            .catch(error => {
-              Swal.fire("Error!", "There was an error saving the changes.", "error");
-              console.error("Error:", error); // Keep error logging for debugging
             });
           }
         });

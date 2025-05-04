@@ -19,7 +19,7 @@
         $allDean = $obj->show_dean(5);
         $all2 = $obj->all_assist(6);
         $all3 = $obj->all_mem([7, 8, 9]); // Fetch faculty data for departments 7, 8, and 9
-
+        $allOffices = $obj->show_offices();
         $allEvent = $obj->show_eventsByMonth();
 
 
@@ -6303,11 +6303,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="form-label">Office that rendered the service(s)<span class="required">*</span>
-                                        <div class="tagalog">Opisinang nagbigay serbisyo</div>
-                                    </label>
-                                    <input type="text" class="form-control" name="office" >
-                                </div>
+    <label class="form-label">Office that rendered the service(s)<span class="required">*</span>
+        <div class="tagalog">Opisinang nagbigay serbisyo</div>
+    </label>
+    <select class="form-control" name="office" required>
+        <option value="">Select an office...</option>
+        <?php if (!empty($allOffices)): ?>
+            <?php foreach ($allOffices as $office): ?>
+                <option value="<?= htmlspecialchars($office['office_id']) ?>"><?= htmlspecialchars($office['office_name']) ?></option>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <option value="" disabled>No offices available</option>
+        <?php endif; ?>
+    </select>
+    <!-- Add a hidden input to store the office name for compatibility with existing backend -->
+    <input type="hidden" id="office_name" name="office_name">
+</div>
+
 
                                 <div class="form-group">
                                     <label class="form-label">Service Availed<span class="required">*</span>
@@ -7048,7 +7060,30 @@
         </div>
     </div>
 
+    <script>
+// Add this JavaScript to update the hidden office_name field when the dropdown changes
+document.addEventListener('DOMContentLoaded', function() {
+    const officeSelect = document.querySelector('select[name="office"]');
+    const officeNameInput = document.getElementById('office_name');
+    
+    if (officeSelect && officeNameInput) {
+        // Initial update
+        updateOfficeName();
         
+        // Update when selection changes
+        officeSelect.addEventListener('change', updateOfficeName);
+        
+        function updateOfficeName() {
+            if (officeSelect.selectedIndex > 0) {
+                const selectedOption = officeSelect.options[officeSelect.selectedIndex];
+                officeNameInput.value = selectedOption.textContent;
+            } else {
+                officeNameInput.value = '';
+            }
+        }
+    }
+});
+</script>   
     <style>
             /* Progress Steps */
             .progress-steps {

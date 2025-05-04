@@ -679,6 +679,96 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Always return the response
             echo json_encode($response);
         }
+        elseif ($type === 'office') {
+            // Get office details from POST data
+            $office_name = $_POST['office_name'] ?? null;
+            $office_description = $_POST['office_description'] ?? null;
+            $uid = $_POST['uid'] ?? null; // User ID from session
+            $cid = $_POST['cid'] ?? null; // Creator ID from session
+        
+            // Validate required fields
+            if (empty($office_name)) {
+                $response = ['success' => false, 'message' => 'Office name is required.'];
+                echo json_encode($response);
+                exit;
+            }
+        
+            // Check for duplicate office name
+            $duplicateCheckSql = "SELECT COUNT(*) FROM `offices` WHERE office_name = :office_name";
+            $duplicateCheckStmt = $connect->prepare($duplicateCheckSql);
+            $duplicateCheckStmt->execute([':office_name' => $office_name]);
+            $duplicateCount = $duplicateCheckStmt->fetchColumn();
+        
+            if ($duplicateCount > 0) {
+                $response = ['success' => false, 'message' => 'An office with this name already exists.'];
+                echo json_encode($response);
+                exit;
+            }
+        
+            try {
+                // Fetch the creator's name from users_tbl
+                $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
+                $creator_stmt = $connect->prepare($creator_name_sql);
+                $creator_stmt->execute([':cid' => $cid]);
+                $creators_name = $creator_stmt->fetchColumn();
+        
+                // If not found, check orgmembers_tbl
+                if (!$creators_name) {
+                    $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
+                    $org_member_stmt = $connect->prepare($org_member_sql);
+                    $org_member_stmt->execute([':cid' => $cid]);
+                    $creators_name = $org_member_stmt->fetchColumn();
+                }
+        
+                // If no name found, default to 'Unknown User'
+                $creators_name = $creators_name ?: 'Unknown User';
+        
+                // Insert office into database - using only the columns that exist in your table
+                $sql = "INSERT INTO `offices` (
+                    office_name, 
+                    office_description, 
+                    created_at
+                ) VALUES (
+                    :office_name, 
+                    :office_description, 
+                    NOW()
+                )";
+        
+                $stmt = $connect->prepare($sql);
+                $result = $stmt->execute([
+                    ':office_name' => $office_name,
+                    ':office_description' => $office_description ?? null
+                ]);
+                
+                if (!$result) {
+                    throw new Exception("Failed to insert office record.");
+                }
+        
+                // Add to audit trail
+                $audit_message = "{$creators_name} added a new office: {$office_name}";
+                $audit_action = 'add';
+                
+                $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
+                $audit_stmt = $connect->prepare($audit_sql);
+                $audit_result = $audit_stmt->execute([
+                    ':message' => $audit_message,
+                    ':actions' => $audit_action
+                ]);
+                
+                if (!$audit_result) {
+                    error_log("Failed to insert audit trail record for office.");
+                }
+        
+                $response = ['success' => true, 'message' => 'Office added successfully.'];
+            } catch (Exception $e) {
+                error_log("Error creating office: " . $e->getMessage());
+                $response = ['success' => false, 'message' => 'An error occurred while adding the office.'];
+            }
+            
+            // Always return a JSON response
+            echo json_encode($response);
+            exit;
+        }
         elseif ($type === 'membersaccount') {
             // Gather form inputs
             $username = $_POST['username'] ?? null;
@@ -856,113 +946,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log('Error: ' . $e->getMessage());
         $response['message'] = 'An error occurred while processing your request.';
     }
-}elseif ($type === 'office') {
-    // Get office details from POST data
-    $office_name = $_POST['office_name'] ?? null;
-    $office_location = $_POST['office_location'] ?? null;
-    $office_contact = $_POST['office_contact'] ?? null;
-    $office_email = $_POST['office_email'] ?? null;
-    $office_hours = $_POST['office_hours'] ?? null;
-    $office_services = $_POST['office_services'] ?? null;
-    $office_description = $_POST['office_description'] ?? null;
-    $uid = $_POST['uid'] ?? null; // User ID from session
-    $cid = $_POST['cid'] ?? null; // Creator ID from session
-
-    // Initialize response
-    $response = ['success' => false, 'message' => ''];
-
-    // Validate required fields
-    if (empty($office_name)) {
-        $response['message'] = 'Office name is required.';
-        echo json_encode($response);
-        exit;
-    }
-
-    try {
-        // Check for duplicate office name
-        $duplicateCheckSql = "SELECT COUNT(*) FROM `offices` WHERE office_name = :office_name";
-        $duplicateCheckStmt = $connect->prepare($duplicateCheckSql);
-        $duplicateCheckStmt->execute([':office_name' => $office_name]);
-        $duplicateCount = $duplicateCheckStmt->fetchColumn();
-
-        if ($duplicateCount > 0) {
-            $response['message'] = 'An office with this name already exists.';
-            echo json_encode($response);
-            exit;
-        }
-
-        // Fetch the creator's name from users_tbl
-        $creator_name_sql = "SELECT users_username FROM users_tbl WHERE users_id = :cid";
-        $creator_stmt = $connect->prepare($creator_name_sql);
-        $creator_stmt->execute([':cid' => $cid]);
-        $creators_name = $creator_stmt->fetchColumn();
-
-        // If not found, check orgmembers_tbl
-        if (!$creators_name) {
-            $org_member_sql = "SELECT name FROM orgmembers_tbl WHERE id = :cid";
-            $org_member_stmt = $connect->prepare($org_member_sql);
-            $org_member_stmt->execute([':cid' => $cid]);
-            $creators_name = $org_member_stmt->fetchColumn();
-        }
-
-        // If no name found, default to 'Unknown User'
-        $creators_name = $creators_name ?: 'Unknown User';
-
-        // Insert office into database
-        $sql = "INSERT INTO `offices` (
-            office_name, 
-            office_location, 
-            office_contact, 
-            office_email, 
-            office_hours, 
-            office_services, 
-            office_description, 
-            created_by,
-            created_at
-        ) VALUES (
-            :office_name, 
-            :office_location, 
-            :office_contact, 
-            :office_email, 
-            :office_hours, 
-            :office_services, 
-            :office_description, 
-            :created_by,
-            NOW()
-        )";
-
-        $stmt = $connect->prepare($sql);
-        $stmt->execute([
-            ':office_name' => $office_name,
-            ':office_location' => $office_location,
-            ':office_contact' => $office_contact,
-            ':office_email' => $office_email,
-            ':office_hours' => $office_hours,
-            ':office_services' => $office_services,
-            ':office_description' => $office_description,
-            ':created_by' => $uid
-        ]);
-
-        // Add to audit trail
-        $audit_message = "{$creators_name} added a new office: {$office_name}";
-        $audit_action = 'add';  // Action to be recorded
-        
-        $audit_sql = "INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)";
-        $audit_stmt = $connect->prepare($audit_sql);
-        $audit_stmt->execute([
-            ':message' => $audit_message,
-            ':actions' => $audit_action
-        ]);
-
-        $response['success'] = true;
-        $response['message'] = 'Office added successfully.';
-    } catch (Exception $e) {
-        error_log('Error adding office: ' . $e->getMessage());
-        $response['message'] = 'An error occurred while adding the office: ' . $e->getMessage();
-    }
-
-    echo json_encode($response);
-    exit;
 }if ($type === 'excel_import') {
     // Check if the file is uploaded without errors
     if (isset($_FILES['faculty_excel']) && $_FILES['faculty_excel']['error'] === UPLOAD_ERR_OK) {

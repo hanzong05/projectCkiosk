@@ -1,5 +1,3 @@
-[02-May-2025 02:23:02 Europe/Berlin] Type parameter: announcement
-[02-May-2025 08:23:02 Asia/Manila] Image uploaded and saved: try_img1.png
-[02-May-2025 08:23:02 Asia/Manila] Image uploaded and saved: try_img2.png
-[02-May-2025 08:23:02 Asia/Manila] Image uploaded and saved: try_img3.png
-[02-May-2025 08:23:02 Asia/Manila] Image uploaded and saved: try_img4.png
+[04-May-2025 02:29:19 Europe/Berlin] Type parameter: office
+[04-May-2025 02:30:52 Europe/Berlin] Type parameter: office
+[04-May-2025 02:31:05 Europe/Berlin] Type parameter: office

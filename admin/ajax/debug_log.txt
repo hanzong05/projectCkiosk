@@ -3189,3 +3189,427 @@ Data: Array
 )
 
 --------------------------------------------------
+[2025-05-04 02:57:09] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-05-04 02:57:09] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_1_time] => 2.0000
+            [avg_2_requirements] => 3.0000
+            [avg_3_steps] => 3.0000
+            [avg_4_information] => 3.0000
+            [total_feedback] => 1
+            [avg_cc_awareness] => 3
+            [avg_cc_visibility] => 0
+            [avg_cc_helpfulness] => 0
+        )
+
+    [distributions] => Array
+        (
+            [sqd1_time] => Array
+                (
+                    [2] => 1
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [3] => 1
+                )
+
+            [sqd4_information] => Array
+                (
+                    [3] => 1
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-05-04
+                    [avg_rating] => 2.75
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 3
+            [cc_visibility] => 0
+            [cc_helpfulness] => 0
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 0
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 0
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-05-04 02:57:40] Request parameters
+Data: Array
+(
+    [accountType] => 0
+    [userId] => 3
+    [type] => office
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-05-04 02:57:40] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_1_time] => 2.0000
+            [avg_2_requirements] => 3.0000
+            [avg_3_steps] => 3.0000
+            [avg_4_information] => 3.0000
+            [total_feedback] => 1
+            [avg_cc_awareness] => 3
+            [avg_cc_visibility] => 0
+            [avg_cc_helpfulness] => 0
+        )
+
+    [distributions] => Array
+        (
+            [sqd1_time] => Array
+                (
+                    [2] => 1
+                )
+
+            [sqd2_requirements] => Array
+                (
+                    [3] => 1
+                )
+
+            [sqd3_steps] => Array
+                (
+                    [3] => 1
+                )
+
+            [sqd4_information] => Array
+                (
+                    [3] => 1
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-05-04
+                    [avg_rating] => 2.75
+                )
+
+        )
+
+    [cc_metrics] => Array
+        (
+            [cc_awareness] => 3
+            [cc_visibility] => 0
+            [cc_helpfulness] => 0
+        )
+
+    [cc_distribution] => Array
+        (
+            [awareness] => Array
+                (
+                    [positive] => 100
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [visibility] => Array
+                (
+                    [positive] => 0
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+            [helpfulness] => Array
+                (
+                    [positive] => 0
+                    [neutral] => 0
+                    [negative] => 0
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-05-04 02:58:47] Request parameters
+Data: Array
+(
+    [accountType] => 4
+    [userId] => 218
+    [type] => org
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-05-04 02:58:47] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback
+    [params] => Array
+        (
+        )
+
+)
+
+--------------------------------------------------
+[2025-05-04 02:58:47] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 4.2222
+            [avg_communication] => 4.4444
+            [avg_inclusivity] => 4.3333
+            [avg_leadership] => 4.7778
+            [avg_skill_dev] => 4.6667
+            [avg_impact] => 4.5556
+            [total_feedback] => 9
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [1] => 1
+                    [2] => 1
+                    [5] => 7
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 1
+                    [5] => 7
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 2
+                    [5] => 7
+                )
+
+            [leadership_rating] => Array
+                (
+                    [4] => 2
+                    [5] => 7
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [3] => 1
+                    [4] => 1
+                    [5] => 7
+                )
+
+            [impact_rating] => Array
+                (
+                    [3] => 2
+                    [5] => 7
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-05-01
+                    [avg_rating] => 2.67
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-04-18
+                    [avg_rating] => 5.00
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-04-10
+                    [avg_rating] => 5.00
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-04-09
+                    [avg_rating] => 5.00
+                )
+
+            [4] => Array
+                (
+                    [date] => 2025-03-18
+                    [avg_rating] => 2.83
+                )
+
+        )
+
+)
+
+--------------------------------------------------
+[2025-05-04 02:58:59] Request parameters
+Data: Array
+(
+    [accountType] => 4
+    [userId] => 218
+    [type] => org
+    [timeFilter] => all
+    [orgId] => all
+)
+
+--------------------------------------------------
+[2025-05-04 02:58:59] Organization Metrics Query
+Data: Array
+(
+    [sql] => SELECT COALESCE(AVG(event_quality_rating), 0) as avg_event_quality, COALESCE(AVG(communication_rating), 0) as avg_communication, COALESCE(AVG(inclusivity_rating), 0) as avg_inclusivity, COALESCE(AVG(leadership_rating), 0) as avg_leadership, COALESCE(AVG(skill_dev_rating), 0) as avg_skill_dev, COALESCE(AVG(impact_rating), 0) as avg_impact, COUNT(*) as total_feedback
+        FROM org_feedback
+    [params] => Array
+        (
+        )
+
+)
+
+--------------------------------------------------
+[2025-05-04 02:58:59] Response data
+Data: Array
+(
+    [metrics] => Array
+        (
+            [avg_event_quality] => 4.2222
+            [avg_communication] => 4.4444
+            [avg_inclusivity] => 4.3333
+            [avg_leadership] => 4.7778
+            [avg_skill_dev] => 4.6667
+            [avg_impact] => 4.5556
+            [total_feedback] => 9
+        )
+
+    [distributions] => Array
+        (
+            [event_quality_rating] => Array
+                (
+                    [1] => 1
+                    [2] => 1
+                    [5] => 7
+                )
+
+            [communication_rating] => Array
+                (
+                    [2] => 1
+                    [3] => 1
+                    [5] => 7
+                )
+
+            [inclusivity_rating] => Array
+                (
+                    [2] => 2
+                    [5] => 7
+                )
+
+            [leadership_rating] => Array
+                (
+                    [4] => 2
+                    [5] => 7
+                )
+
+            [skill_dev_rating] => Array
+                (
+                    [3] => 1
+                    [4] => 1
+                    [5] => 7
+                )
+
+            [impact_rating] => Array
+                (
+                    [3] => 2
+                    [5] => 7
+                )
+
+        )
+
+    [trend] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2025-05-01
+                    [avg_rating] => 2.67
+                )
+
+            [1] => Array
+                (
+                    [date] => 2025-04-18
+                    [avg_rating] => 5.00
+                )
+
+            [2] => Array
+                (
+                    [date] => 2025-04-10
+                    [avg_rating] => 5.00
+                )
+
+            [3] => Array
+                (
+                    [date] => 2025-04-09
+                    [avg_rating] => 5.00
+                )
+
+            [4] => Array
+                (
+                    [date] => 2025-03-18
+                    [avg_rating] => 2.83
+                )
+
+        )
+
+)
+
+--------------------------------------------------

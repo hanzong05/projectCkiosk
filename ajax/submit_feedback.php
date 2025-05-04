@@ -77,6 +77,7 @@ try {
                 ':feedback_date' => date('Y-m-d', strtotime($_POST['date'])),
                 ':age' => filter_var($_POST['age'], FILTER_VALIDATE_INT),
                 ':sex' => htmlspecialchars($_POST['sex']),
+                ':office_name' => htmlspecialchars($_POST['office_name']),
                 ':office_name' => htmlspecialchars($_POST['office']),
                 ':service_name' => htmlspecialchars($_POST['service']),
                 ':cc_awareness' => htmlspecialchars($_POST['cc_awareness']),

@@ -437,6 +437,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($response);
     exit;
         }
+        elseif ($type === 'office') {
+            try {
+                // Get required parameters
+                $office_name = $_POST['office_name'] ?? null;
+                $office_description = $_POST['office_description'] ?? null;
+                $creator_id = $_POST['uid'] ?? $_SESSION['aid'] ?? null;
+                
+                // Validate required fields
+                if (!$office_name) {
+                    $response['success'] = false;
+                    $response['message'] = 'Office name is required';
+                    echo json_encode($response);
+                    exit;
+                }
+                
+                // Insert the new office into the database
+                $sql = "INSERT INTO offices (office_name, office_description, created_at) 
+                        VALUES (:office_name, :office_description, NOW())";
+                
+                $stmt = $connect->prepare($sql);
+                $stmt->execute([
+                    ':office_name' => $office_name,
+                    ':office_description' => $office_description
+                ]);
+                
+                // Get the newly inserted office ID
+                $officeId = $connect->lastInsertId();
+                
+                // Fetch creator's name for audit trail
+                $creator_stmt = $connect->prepare("SELECT users_username FROM users_tbl WHERE users_id = :creator_id");
+                $creator_stmt->execute([':creator_id' => $creator_id]);
+                $creator_name = $creator_stmt->fetchColumn();
+                
+                if (!$creator_name) {
+                    // If not found in users_tbl, search in orgmembers_tbl
+                    $creator_stmt = $connect->prepare("SELECT name FROM orgmembers_tbl WHERE id = :creator_id");
+                    $creator_stmt->execute([':creator_id' => $creator_id]);
+                    $creator_name = $creator_stmt->fetchColumn() ?: 'Unknown User';
+                }
+                
+                // Add audit trail
+                $audit_message = "{$creator_name} added a new office: {$office_name}";
+                $audit_action = 'added';
+                
+                // Insert audit log entry with both message and action
+                $audit_stmt = $connect->prepare("INSERT INTO audit_trail (message, actions) VALUES (:message, :actions)");
+                $audit_stmt->execute([
+                    ':message' => $audit_message,
+                    ':actions' => $audit_action
+                ]);
+                
+                // Success response
+                $response['success'] = true;
+                $response['message'] = 'Office added successfully';
+                
+            } catch (Exception $e) {
+                // Log the error
+                error_log('Error adding office: ' . $e->getMessage());
+                
+                // Error response
+                $response['success'] = false;
+                $response['message'] = 'Error: ' . $e->getMessage();
+            }
+        }
         elseif ($type === 'organization') {
             $orgId = $_POST['org_id'] ?? '';
             $orgName = $_POST['org_name'] ?? '';
@@ -519,7 +583,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
             $response['success'] = true;
             $response['message'] = 'Organization updated successfully.';
-            echo json_encode($response);
         }
         
         elseif ($type === 'faq') {

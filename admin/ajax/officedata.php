@@ -19,28 +19,8 @@ if (isset($_POST['officeID'])) {
             <input type="text" id="edit_office_name" class="form-control" name="office_name" value="<?php echo htmlspecialchars($result['office_name']); ?>" required>
         </div>
         <div class="mb-3">
-            <label for="edit_office_location" class="form-label fw-bold">Location</label>
-            <input type="text" id="edit_office_location" class="form-control" name="office_location" value="<?php echo htmlspecialchars($result['office_location']); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label for="edit_office_contact" class="form-label fw-bold">Contact Number</label>
-            <input type="text" id="edit_office_contact" class="form-control" name="office_contact" value="<?php echo htmlspecialchars($result['office_contact']); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label for="edit_office_email" class="form-label fw-bold">Email Address</label>
-            <input type="email" id="edit_office_email" class="form-control" name="office_email" value="<?php echo htmlspecialchars($result['office_email']); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label for="edit_office_hours" class="form-label fw-bold">Office Hours</label>
-            <input type="text" id="edit_office_hours" class="form-control" name="office_hours" value="<?php echo htmlspecialchars($result['office_hours']); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label for="edit_office_services" class="form-label fw-bold">Services Offered</label>
-            <textarea id="edit_office_services" class="form-control" name="office_services" rows="4" required><?php echo htmlspecialchars($result['office_services']); ?></textarea>
-        </div>
-        <div class="mb-3">
             <label for="edit_office_description" class="form-label fw-bold">Description</label>
-            <textarea id="edit_office_description" class="form-control" name="office_description" rows="4"><?php echo htmlspecialchars($result['office_description']); ?></textarea>
+            <textarea id="edit_office_description" class="form-control" name="office_description" rows="5"><?php echo htmlspecialchars($result['office_description']); ?></textarea>
         </div>
         <?php
     } else {

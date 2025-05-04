@@ -3186,11 +3186,10 @@ public function show_offices() {
         return [];
     }
 }
-
 // Function to add a new office
 public function add_office($data) {
     try {
-        $stmt = $this->db->prepare("INSERT INTO offices (office_name, office_location, office_contact, office_email, office_hours, office_services, office_description, created_by) VALUES (:office_name, :office_location, :office_contact, :office_email, :office_hours, :office_services, :office_description, :created_by)");
+        $stmt = $this->connection->prepare("INSERT INTO offices (office_name, office_location, office_contact, office_email, office_hours, office_services, office_description, created_by) VALUES (:office_name, :office_location, :office_contact, :office_email, :office_hours, :office_services, :office_description, :created_by)");
         
         $stmt->bindParam(':office_name', $data['office_name']);
         $stmt->bindParam(':office_location', $data['office_location']);
@@ -3212,7 +3211,7 @@ public function add_office($data) {
 // Function to save/update an office
 public function save_office($data) {
     try {
-        $stmt = $this->db->prepare("UPDATE offices SET 
+        $stmt = $this->connection->prepare("UPDATE offices SET 
             office_name = :office_name, 
             office_location = :office_location, 
             office_contact = :office_contact, 
@@ -3245,7 +3244,7 @@ public function save_office($data) {
 // Function to delete an office
 public function delete_office($office_id) {
     try {
-        $stmt = $this->db->prepare("DELETE FROM offices WHERE office_id = :office_id");
+        $stmt = $this->connection->prepare("DELETE FROM offices WHERE office_id = :office_id");
         $stmt->bindParam(':office_id', $office_id);
         $stmt->execute();
         return "Office deleted successfully!";

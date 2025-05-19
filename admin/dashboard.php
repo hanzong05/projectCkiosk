@@ -153,6 +153,12 @@ try {
     echo 'Query failed: ' . $e->getMessage();
     exit;
 }
+
+// Get office data
+$sql_offices = "SELECT * FROM offices";
+$stmt_offices = $connect->prepare($sql_offices);
+$stmt_offices->execute();
+$offices = $stmt_offices->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -533,15 +539,37 @@ if ($account_type == '0' || $account_type == '2' || $account_type == '3' || $acc
         <?php if ($account_type == '0') { ?>
     <!-- Admin only sees Office Feedback -->
     <div id="office-dashboard" class="dashboard-tab active">
-        <!-- Time Filter -->
+        <!-- Time and Office Filter -->
         <div class="mb-6">
-            <select id="timeFilter" onchange="refreshData()" class="border rounded-lg px-4 py-2">
-                <option value="all">All Time</option>
-                <option value="month">Last Month</option>
-                <option value="week">Last Week</option>
-            </select>
+            <div class="flex gap-4">
+                <select id="timeFilter" onchange="refreshData()" class="border rounded-lg px-4 py-2">
+                    <option value="all">All Time</option>
+                    <option value="month">Last Month</option>
+                    <option value="week">Last Week</option>
+                </select>
+                
+                <!-- Office Filter Dropdown -->
+                <select id="officeFilter" onchange="refreshData()" class="border rounded-lg px-4 py-2">
+                    <option value="all">All Offices</option>
+                    <?php
+                    try {
+                        $sql_offices = "SELECT * FROM offices";
+                        $stmt_offices = $connect->prepare($sql_offices);
+                        $stmt_offices->execute();
+                        $offices = $stmt_offices->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        foreach($offices as $office) {
+                            echo '<option value="' . htmlspecialchars($office['office_id']) . '">' . 
+                                 htmlspecialchars($office['office_name']) . '</option>';
+                        }
+                    } catch (PDOException $e) {
+                        error_log('Error fetching offices: ' . $e->getMessage());
+                        echo '<div class="text-red-500 mb-4">Error loading offices list.</div>';
+                    }
+                    ?>
+                </select>
+            </div>
         </div>
-
         <!-- SQD Metrics -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
            
@@ -1164,18 +1192,22 @@ function initializeOrgTrendChart() {
     });
 }
 
-// Data refresh functions
 function refreshData(type = 'office') {
     const timeFilter = document.getElementById('timeFilter')?.value || 'all';
-    const orgFilter = document.getElementById('orgFilter')?.value || 'all';  
+    const orgFilter = document.getElementById('orgFilter')?.value || 'all';
+    const officeFilter = document.getElementById('officeFilter')?.value || 'all';
     
-    // Add orgFilter parameter if it exists
+    // Add officeFilter parameter if it exists and we're looking at office data
     let url = `ajax/get_feedback_data.php?type=${type}&time=${timeFilter}`;
-    if (type === 'org' && orgFilter) {
+    if (type === 'org' && orgFilter !== 'all') {
         url += `&org=${orgFilter}`;
+    }
+    if (type === 'office' && officeFilter !== 'all') {
+        url += `&office=${officeFilter}`;
     }
     url += `&_=${new Date().getTime()}`;  // Prevent caching
     
+    // Rest of your existing refreshData function
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -1204,7 +1236,6 @@ function refreshData(type = 'office') {
             showErrorMessage('Failed to load data. Please try again later.');
         });
 }
-
 // Function to refresh event evaluation data
 function refreshEventEvalData() {
     const timeFilter = document.getElementById('evalTimeFilter')?.value || 'all';

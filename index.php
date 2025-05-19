@@ -3804,7 +3804,7 @@
                                 echo $orgCount;
                             ?>
                         </span>
-                        <span class="counter-suffix">+</span>
+                        <span class="counter-suffix"></span>
                     </div>
                     <p class="stat-description">Insights collected from our community</p>
                 </div>
@@ -3834,7 +3834,6 @@
                                 echo $officeCount;
                             ?>
                         </span>
-                        <span class="counter-suffix">+</span>
                     </div>
                     <p class="stat-description">Campus service evaluations submitted</p>
                 </div>
@@ -9394,7 +9393,79 @@ function fetchMembers(orgId) {
         `;
     });
 }
-
+function renderMemberCard(member, isLeadership) {
+    const imageClass = isLeadership ? 'member-image leadership' : 'member-image';
+    const memberSince = member.created_at ? formatDate(member.created_at) : 'Unknown';
+    
+    // Get the member name
+    const memberName = member.username || member.name || 'Unknown';
+    
+    // Specifically use the member_img field
+    let imageSrc;
+    
+    if (member.member_img && member.member_img !== 'null' && member.member_img !== 'undefined') {
+        imageSrc = `uploaded/orgUploaded/${member.member_img}`;
+        console.log(`Using member_img field: ${imageSrc}`);
+    } else {
+        imageSrc = 'img/C.png';
+        console.log(`Using fallback image for ${memberName} (missing member_img field)`);
+    }
+    
+    return `
+        <div class="member-card">
+            <div class="member-info">
+                <img src="${imageSrc}" 
+                     alt="${memberName}" 
+                     class="${imageClass}"
+                     onerror="this.onerror=null; this.src='img/C.png';">
+                <div class="member-details">
+                    <h5 class="member-name">${memberName}</h5>
+                    ${member.position ? `<p class="member-role">${member.position}</p>` : ''}
+                    <p class="member-since">Member since: ${memberSince}</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+function renderMembersContent(members) {
+    const membersContainer = document.getElementById('members-content');
+    
+    if (!members || members.length === 0) {
+        membersContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users-slash"></i>
+                </div>
+                <h5>No Members</h5>
+                <p>There are no registered members for this organization yet.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Log the full members data for debugging
+    console.log('All members data:', members);
+    
+    // Simple rendering of all members in a grid
+    let html = `
+        <div class="members-section-header">
+            <h4 class="members-section-title">Organization Members</h4>
+        </div>
+        <div class="members-grid">
+    `;
+    
+    // Add all member cards
+    members.forEach(member => {
+        html += renderMemberCard(member, false);
+    });
+    
+    html += `</div>`;
+    
+    membersContainer.innerHTML = html;
+    
+    // Log for debugging
+    console.log('Rendered members:', members.length);
+}
 // Filter announcements locally
 function filterAnnouncements() {
     const searchTerm = document.getElementById('announcementSearch').value.toLowerCase().trim();

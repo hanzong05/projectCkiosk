@@ -13,10 +13,12 @@ if (!isset($_SESSION['atype']) || !in_array($_SESSION['atype'], ['0', '2', '3', 
     exit;
 }
 
-
 // Get date filter parameters
 $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : date('Y-m', strtotime('-6 months'));
 $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : date('Y-m');
+
+// Get office filter parameter - CHANGED from office_id to office_name
+$office_name = isset($_GET['office_name']) ? $_GET['office_name'] : '';
 
 // Ensure dates are in proper format (YYYY-MM)
 $start_date_formatted = date('Y-m', strtotime($start_date));
@@ -33,14 +35,14 @@ function safe_divide($numerator, $denominator, $default = 0) {
 
 // Add the weighted summary calculation function
 function calculate_weighted_summary($data, $field_prefix) {
-    // Define weight for each rating value
-    $weights = [
-        'strongly_disagree' => 0, // 0%
-        'disagree' => 25,         // 25%
-        'neutral' => 50,          // 50%
-        'agree' => 75,            // 75%
-        'strongly_agree' => 100   // 100%
-    ];
+   // Define weight for each rating value
+$weights = [
+    'strongly_disagree' => 0,  // 0%
+    'disagree' => 25,          // 25%
+    'neutral' => 50,           // 50%
+    'agree' => 75,             // 75%
+    'strongly_agree' => 100    // 100%
+];
     
     $total_responses = 0;
     $weighted_sum = 0;
@@ -58,29 +60,42 @@ function calculate_weighted_summary($data, $field_prefix) {
         return 0;
     }
 }
+
 try {
     // Initialize data arrays
     $cc1_results = $cc2_results = $cc3_results = [];
     $sqd_stats = [];
     
-    // Get total count of feedback for the date range
+    // Get total count of feedback for the date range with office filter - UPDATED to use office_name
     $total_sql = "SELECT COUNT(*) FROM office_feedback WHERE feedback_date BETWEEN :start_date AND :end_date";
+    if (!empty($office_name)) {
+        $total_sql .= " AND office_name = :office_name";
+    }
     $total_stmt = $connect->prepare($total_sql);
     $total_stmt->bindParam(':start_date', $start_date_full);
     $total_stmt->bindParam(':end_date', $end_date_full);
+    if (!empty($office_name)) {
+        $total_stmt->bindParam(':office_name', $office_name);
+    }
     $total_stmt->execute();
     $total_count = $total_stmt->fetchColumn();
     
-    // CC1 - Awareness Query with safe calculation
+    // CC1 - Awareness Query with safe calculation and office filter - UPDATED to use office_name
     $cc1_sql = "SELECT 
         cc_awareness,
         COUNT(*) as total
     FROM office_feedback 
-    WHERE feedback_date BETWEEN :start_date AND :end_date
-    GROUP BY cc_awareness";
+    WHERE feedback_date BETWEEN :start_date AND :end_date";
+    if (!empty($office_name)) {
+        $cc1_sql .= " AND office_name = :office_name";
+    }
+    $cc1_sql .= " GROUP BY cc_awareness";
     $cc1_stmt = $connect->prepare($cc1_sql);
     $cc1_stmt->bindParam(':start_date', $start_date_full);
     $cc1_stmt->bindParam(':end_date', $end_date_full);
+    if (!empty($office_name)) {
+        $cc1_stmt->bindParam(':office_name', $office_name);
+    }
     $cc1_stmt->execute();
     $cc1_results = $cc1_stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -89,16 +104,22 @@ try {
         $result['percentage'] = safe_divide($result['total'], $total_count);
     }
     
-    // CC2 - Visibility Query with safe calculation
+    // CC2 - Visibility Query with safe calculation and office filter - UPDATED to use office_name
     $cc2_sql = "SELECT 
         cc_visibility,
         COUNT(*) as total
     FROM office_feedback 
-    WHERE feedback_date BETWEEN :start_date AND :end_date
-    GROUP BY cc_visibility";
+    WHERE feedback_date BETWEEN :start_date AND :end_date";
+    if (!empty($office_name)) {
+        $cc2_sql .= " AND office_name = :office_name";
+    }
+    $cc2_sql .= " GROUP BY cc_visibility";
     $cc2_stmt = $connect->prepare($cc2_sql);
     $cc2_stmt->bindParam(':start_date', $start_date_full);
     $cc2_stmt->bindParam(':end_date', $end_date_full);
+    if (!empty($office_name)) {
+        $cc2_stmt->bindParam(':office_name', $office_name);
+    }
     $cc2_stmt->execute();
     $cc2_results = $cc2_stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -107,16 +128,22 @@ try {
         $result['percentage'] = safe_divide($result['total'], $total_count);
     }
     
-    // CC3 - Helpfulness Query with safe calculation
+    // CC3 - Helpfulness Query with safe calculation and office filter - UPDATED to use office_name
     $cc3_sql = "SELECT 
         cc_helpfulness,
         COUNT(*) as total
     FROM office_feedback 
-    WHERE feedback_date BETWEEN :start_date AND :end_date
-    GROUP BY cc_helpfulness";
+    WHERE feedback_date BETWEEN :start_date AND :end_date";
+    if (!empty($office_name)) {
+        $cc3_sql .= " AND office_name = :office_name";
+    }
+    $cc3_sql .= " GROUP BY cc_helpfulness";
     $cc3_stmt = $connect->prepare($cc3_sql);
     $cc3_stmt->bindParam(':start_date', $start_date_full);
     $cc3_stmt->bindParam(':end_date', $end_date_full);
+    if (!empty($office_name)) {
+        $cc3_stmt->bindParam(':office_name', $office_name);
+    }
     $cc3_stmt->execute();
     $cc3_results = $cc3_stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -125,7 +152,7 @@ try {
         $result['percentage'] = safe_divide($result['total'], $total_count);
     }
     
-    // SQD Query - Modified to remove sqd0_satisfaction
+    // SQD Query - Modified to remove sqd0_satisfaction and include office filter - UPDATED to use office_name
     $sqd_sql = "SELECT 
         COUNT(CASE WHEN sqd1_time = 1 THEN 1 END) as sqd1_strongly_disagree,
         COUNT(CASE WHEN sqd1_time = 2 THEN 1 END) as sqd1_disagree,
@@ -186,9 +213,15 @@ try {
         COUNT(*) as total_responses
     FROM office_feedback 
     WHERE feedback_date BETWEEN :start_date AND :end_date";
+    if (!empty($office_name)) {
+        $sqd_sql .= " AND office_name = :office_name";
+    }
     $sqd_stmt = $connect->prepare($sqd_sql);
     $sqd_stmt->bindParam(':start_date', $start_date_full);
     $sqd_stmt->bindParam(':end_date', $end_date_full);
+    if (!empty($office_name)) {
+        $sqd_stmt->bindParam(':office_name', $office_name);
+    }
     $sqd_stmt->execute();
     $sqd_stats = $sqd_stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -218,61 +251,79 @@ try {
         $total_na += $sqd_stats[$prefix.'na'];
     }
     
-    // Calculate SQD rating with additional error handling
-    $grand_total = $total_strongly_disagree + $total_disagree + $total_neutral + 
-                 $total_agree + $total_strongly_agree + $total_na;
-                 
-    $responses_excluding_na = $grand_total - $total_na;
+// Calculate SQD rating with the updated formula
+$total_respondents = $total_count * count($sqd_questions); // Total possible responses across all questions
+$total_valid_responses = $total_respondents - $total_na; // Excluding N/A answers
+$total_positive_responses = $total_agree + $total_strongly_agree; // Agree + Strongly Agree
 
-    $sqd_rating = $responses_excluding_na > 0 ? 
-        (($total_agree + $total_strongly_agree) / $responses_excluding_na * 100) : 
-        0;
+// Apply the formula: (Strongly Agree + Agree) / (Total Respondents - N/A) * 100
+$sqd_rating = $total_valid_responses > 0 ? 
+    (($total_positive_responses / $total_valid_responses) * 100) : 
+    0;
 
+// Ensure sqd_rating is a number between 0 and 100
+$sqd_rating = max(0, min(100, $sqd_rating));
     // Ensure sqd_rating is a number
     $sqd_rating = max(0, min(100, $sqd_rating));
     
     // Determine rating text
-    $rating_text = 'No Data';
-    if ($responses_excluding_na > 0) {
-        if ($sqd_rating >= 95) {
-            $rating_text = "Excellent";
-            $rating_color = "#28a745";
-        } elseif ($sqd_rating >= 90) {
-            $rating_text = "Very Satisfactory";
-            $rating_color = "#007bff";
-        } elseif ($sqd_rating >= 85) {
-            $rating_text = "Satisfactory";
-            $rating_color = "#17a2b8";
-        } elseif ($sqd_rating >= 80) {
-            $rating_text = "Fair";
-            $rating_color = "#ffc107";
-        } else {
-            $rating_text = "Poor";
-            $rating_color = "#dc3545";
-        }
+  
+// Determine rating text based on the updated scale from the image
+$rating_text = 'No Data';
+if ($total_valid_responses > 0) {
+    if ($sqd_rating >= 95.0) {
+        $rating_text = "Outstanding";
+        $rating_color = "#28a745"; // Green
+    } elseif ($sqd_rating >= 90.0) {
+        $rating_text = "Very Satisfactory";
+        $rating_color = "#007bff"; // Blue
+    } elseif ($sqd_rating >= 85.0) {
+        $rating_text = "Satisfactory";
+        $rating_color = "#17a2b8"; // Light blue/teal
+    } elseif ($sqd_rating >= 80.0) {
+        $rating_text = "Fair";
+        $rating_color = "#ffc107"; // Yellow/amber
+    } else {
+        $rating_text = "Poor";
+        $rating_color = "#dc3545"; // Red
     }
-    
-    // Fetch feedback data for the table
+}
+    // Fetch feedback data for the table with office filter
     $feedback_type = isset($_GET['feedback_type']) ? $_GET['feedback_type'] : 'office';
     $account_type = $_SESSION['atype']; 
     
-    // Query to fetch feedback data for the table - Modified to remove sqd0_satisfaction
+    // Get selected office name - SIMPLIFIED since we're now using office_name directly
+    $selected_office_name = '';
+    if (!empty($office_name)) {
+        $selected_office_name = $office_name;
+    }
+    
+    // Query to fetch feedback data for the table - UPDATED to use office_name
     $feedback_query = "SELECT 
-        id,
-        name,
-        feedback_date,
-        sqd1_time,
-        sqd2_requirements,
-        sqd3_steps,
-        sqd4_information,
-        improvements
-    FROM office_feedback 
-    WHERE feedback_date BETWEEN :start_date AND :end_date
-    ORDER BY feedback_date DESC";
+        f.id,
+        f.name,
+        f.feedback_date,
+        f.sqd1_time,
+        f.sqd2_requirements,
+        f.sqd3_steps,
+        f.sqd4_information,
+        f.improvements,
+        f.office_name
+    FROM office_feedback f
+    WHERE f.feedback_date BETWEEN :start_date AND :end_date";
+    
+    if (!empty($office_name)) {
+        $feedback_query .= " AND f.office_name = :office_name";
+    }
+    
+    $feedback_query .= " ORDER BY f.feedback_date DESC";
     
     $feedback_stmt = $connect->prepare($feedback_query);
     $feedback_stmt->bindParam(':start_date', $start_date_full);
     $feedback_stmt->bindParam(':end_date', $end_date_full);
+    if (!empty($office_name)) {
+        $feedback_stmt->bindParam(':office_name', $office_name);
+    }
     $feedback_stmt->execute();
     $feedbacks = $feedback_stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -294,6 +345,12 @@ try {
         }
         $sqd_totals[$category] = $total;
     }
+    
+    // Fetch all offices regardless of whether they have feedback
+$offices_sql = "SELECT office_name FROM offices ORDER BY office_name";
+$offices_stmt = $connect->prepare($offices_sql);
+$offices_stmt->execute();
+$offices = $offices_stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
     // Log error
@@ -1084,6 +1141,41 @@ $current_year = date('Y');
             border-radius: 0.5rem;
             box-shadow: var(--card-shadow);
         }
+
+        /* Office filter styling */
+        .badge-office {
+            background-color: rgba(78, 115, 223, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+        
+        .badge-office i {
+            font-size: 1rem;
+        }
+        
+        /* Office column in table */
+        .office-badge {
+            background-color: rgba(78, 115, 223, 0.1);
+            color: var(--primary-color);
+            border-radius: 2rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .office-badge i {
+            font-size: 0.75rem;
+        }
     </style>
 </head>
 
@@ -1095,7 +1187,14 @@ $current_year = date('Y');
             <!-- Welcome Banner -->
             <div class="dashboard-welcome animate-fade-in">
                 <h1 class="welcome-title">Feedback Dashboard</h1>
-                <p class="welcome-subtitle">Monitor and analyze campus feedback metrics for <?php echo $current_month . ' ' . $current_year; ?></p>
+                <p class="welcome-subtitle">
+                    Monitor and analyze campus feedback metrics for <?php echo $current_month . ' ' . $current_year; ?>
+                    <?php if (!empty($selected_office_name)): ?>
+                    <span class="badge bg-primary rounded-pill px-3 py-2 ms-2">
+                        <i class="fas fa-building me-1"></i> <?php echo htmlspecialchars($selected_office_name); ?>
+                    </span>
+                    <?php endif; ?>
+                </p>
             </div>
             
             <div class="container-fluid">
@@ -1142,8 +1241,8 @@ $current_year = date('Y');
                 <div class="dashboard-card mb-4 animate-slide-up" style="animation-delay: 0.1s;">
                     <div class="dashboard-card-header">
                         <h5 class="dashboard-card-title">
-                            <i class="fas fa-calendar"></i>
-                            Date Range Filter
+                            <i class="fas fa-filter"></i>
+                            Filter Options
                         </h5>
                     </div>
                     <div class="dashboard-card-body">
@@ -1162,6 +1261,19 @@ $current_year = date('Y');
                                         value="<?php echo $end_date_formatted; ?>">
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="custom-form-group">
+                                    <label class="custom-form-label" for="office_name">Office</label>
+                                    <select class="custom-form-control" id="office_name" name="office_name">
+                                        <option value="">All Offices</option>
+                                        <?php foreach ($offices as $office): ?>
+                                        <option value="<?php echo htmlspecialchars($office['office_name']); ?>" <?php echo ($office_name == $office['office_name']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($office['office_name']); ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-3 d-flex align-items-end">
                                 <button type="submit" class="btn btn-custom btn-custom-primary me-2">
                                     <i class="fas fa-filter"></i> Apply Filter
@@ -1175,20 +1287,20 @@ $current_year = date('Y');
                                 </button>
                                 <?php endif; ?>
                             </div>
-                            <div class="col-md-3 d-flex align-items-end justify-content-end">
+                            <div class="col-md-12 d-flex align-items-end justify-content-end mt-4">
                                 <div class="download-dropdown">
                                     <button type="button" class="download-btn">
                                         <i class="fas fa-download"></i> Download Data
                                         <i class="fas fa-caret-down ms-1"></i>
                                     </button>
                                     <div class="download-dropdown-content">
-                                        <a href="ajax/exprtfeedback.php?format=csv&start_date=<?php echo $start_date_formatted; ?>&end_date=<?php echo $end_date_formatted; ?>">
+                                        <a href="ajax/exprtfeedback.php?format=csv&start_date=<?php echo $start_date_formatted; ?>&end_date=<?php echo $end_date_formatted; ?><?php echo !empty($office_name) ? '&office_name='.urlencode($office_name) : ''; ?>">
                                             <i class="fas fa-file-csv"></i> CSV Format
                                         </a>
-                                        <a href="ajax/exprtfeedback.php?format=excel&start_date=<?php echo $start_date_formatted; ?>&end_date=<?php echo $end_date_formatted; ?>">
+                                        <a href="ajax/exprtfeedback.php?format=excel&start_date=<?php echo $start_date_formatted; ?>&end_date=<?php echo $end_date_formatted; ?><?php echo !empty($office_name) ? '&office_name='.urlencode($office_name) : ''; ?>">
                                             <i class="fas fa-file-excel"></i> Excel Format
                                         </a>
-                                        <a href="ajax/exprtfeedback.php?format=pdf&start_date=<?php echo $start_date_formatted; ?>&end_date=<?php echo $end_date_formatted; ?>">
+                                        <a href="ajax/exprtfeedback.php?format=pdf&start_date=<?php echo $start_date_formatted; ?>&end_date=<?php echo $end_date_formatted; ?><?php echo !empty($office_name) ? '&office_name='.urlencode($office_name) : ''; ?>">
                                             <i class="fas fa-file-pdf"></i> PDF Format
                                         </a>
                                         <a href="javascript:void(0)" id="printReport">
@@ -1241,6 +1353,7 @@ $current_year = date('Y');
                                             <tr>
                                                 <th>NAME</th>
                                                 <th>DATE</th>
+                                                <th>OFFICE</th>
                                                 <th>TIME</th>
                                                 <th>REQUIREMENTS</th>
                                                 <th>STEPS</th>
@@ -1257,6 +1370,12 @@ $current_year = date('Y');
                                                     </td>
                                                     <td data-label="DATE">
                                                         <?php echo $feedback['formatted_date']; ?>
+                                                    </td>
+                                                    <td data-label="OFFICE">
+                                                        <span class="office-badge">
+                                                            <i class="fas fa-building"></i>
+                                                            <?php echo htmlspecialchars($feedback['office_name'] ?? 'Unknown'); ?>
+                                                        </span>
                                                     </td>
                                                     <?php 
                                                     $ratingKeys = ['sqd1_time', 'sqd2_requirements', 'sqd3_steps', 'sqd4_information'];
@@ -1286,10 +1405,10 @@ $current_year = date('Y');
                                                 <?php endforeach; ?>
                                              <?php else: ?>
                                                 <tr class="no-data-row">
-                                                    <td colspan="7" class="text-center p-4">
+                                                    <td colspan="8" class="text-center p-4">
                                                         <div class="alert alert-info mb-0">
                                                             <i class="fas fa-info-circle me-2"></i>
-                                                            No feedback data available for the selected date range.
+                                                            No feedback data available for the selected filters.
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1325,12 +1444,11 @@ $current_year = date('Y');
                                     <i class="fas fa-chart-pie"></i>
                                     Rating Distribution
                                 </h5>
-                            </div>
+                                </div>
                             <div class="dashboard-card-body">
                                 <div class="chart-wrapper">
                                     <canvas id="ratingDistributionChart"></canvas>
                                 </div>
-                                
                                 <!-- Rating Summary -->
                                 <div class="rating-summary mt-4">
                                     <h6 class="text-uppercase text-muted mb-3 fs-6">SQD RATING</h6>
@@ -1371,6 +1489,11 @@ $current_year = date('Y');
                         <h5 class="mb-0 fw-bold">
                             <i class="fas fa-file-alt me-2"></i>
                             Client Satisfaction Measurement (CSM) Summary Report
+                            <?php if (!empty($selected_office_name)): ?>
+                            <span class="badge bg-light text-primary rounded-pill px-3 py-2 ms-2">
+                                <i class="fas fa-building me-1"></i> <?php echo htmlspecialchars($selected_office_name); ?>
+                            </span>
+                            <?php endif; ?>
                         </h5>
                         <span class="badge bg-white text-primary rounded-pill px-3 py-2">
                             <?php echo date('F Y', strtotime($start_date)); ?> - <?php echo date('F Y', strtotime($end_date)); ?>
@@ -1905,8 +2028,7 @@ $current_year = date('Y');
             if (ccAwareness) {
                 const labels = [];
                 const data = [];
-                const backgroundColors = [
-                    'rgba(78, 115, 223, 0.8)',
+                const backgroundColors = ['rgba(78, 115, 223, 0.8)',
                     'rgba(28, 200, 138, 0.8)',
                     'rgba(54, 185, 204, 0.8)',
                     'rgba(246, 194, 62, 0.8)',
@@ -1989,6 +2111,7 @@ $current_year = date('Y');
                     }
                 });
             }
+            
             // Table pagination
             const tableRows = document.querySelectorAll('#feedbackTable tbody tr');
             const rowsPerPage = 10;
@@ -2099,6 +2222,7 @@ $current_year = date('Y');
             document.getElementById('resetFilter').addEventListener('click', function() {
                 document.getElementById('start_date').value = '<?php echo date('Y-m', strtotime('-6 months')); ?>';
                 document.getElementById('end_date').value = '<?php echo date('Y-m'); ?>';
+                document.getElementById('office_name').value = ''; // Reset office filter (updated to use office_name)
                 document.getElementById('dateFilterForm').submit();
             });
             
@@ -2132,12 +2256,21 @@ $current_year = date('Y');
                 deleteButton.addEventListener('click', function() {
                     const startDate = document.getElementById('start_date').value;
                     const endDate = document.getElementById('end_date').value;
+                    const officeName = document.getElementById('office_name').value;
                     
                     // Format dates for display
                     const startDateObj = new Date(startDate);
                     const endDateObj = new Date(endDate);
                     const startDateFormatted = startDateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
                     const endDateFormatted = endDateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+                    
+                    // Get office name if selected
+                    let officeInfo = '';
+                    if (officeName) {
+                        officeInfo = `<br><b>Office:</b> ${officeName}`;
+                    } else {
+                        officeInfo = '<br><b>All Offices</b>';
+                    }
                     
                     Swal.fire({
                         title: 'Confirm Deletion',
@@ -2146,7 +2279,7 @@ $current_year = date('Y');
                             <div class="text-start">
                                 <p>You are about to <b>permanently delete</b> all feedback records for the period:</p>
                                 <div class="alert alert-warning text-center p-3 my-3">
-                                    <b>${startDateFormatted}</b> to <b>${endDateFormatted}</b>
+                                    <b>${startDateFormatted}</b> to <b>${endDateFormatted}</b>${officeInfo}
                                 </div>
                                 <p>This action <b>cannot be undone</b>. Are you sure you want to proceed?</p>
                                 <p class="text-danger"><small>Please type <b>DELETE</b> to confirm.</small></p>
@@ -2185,6 +2318,11 @@ $current_year = date('Y');
                                     formData.append('start_date', startDate);
                                     formData.append('end_date', endDate);
                                     formData.append('token', '<?php echo $_SESSION['csrf_token']; ?>');
+                                    
+                                    // Add office_name if selected (updated to use office_name)
+                                    if (officeName) {
+                                        formData.append('office_name', officeName);
+                                    }
                                     
                                     // Make AJAX request
                                     fetch('ajax/delete_feedback.php', {

@@ -13,6 +13,7 @@ ini_set('error_log', __DIR__ . '/php_errors.log');
 
 // Debug log file
 define('DEBUG_LOG_FILE', __DIR__ . '/debug_log.txt');
+define('DEBUG_MODE', false); // Define the missing constant
 
 // Utility Functions
 function debugLog($message, $data = null) {
@@ -71,6 +72,8 @@ function getOfficeFeedbackData($connect, $whereConditions, $params) {
         ", COUNT(*) as total_feedback
         FROM office_feedback" .
         (!empty($whereConditions) ? " WHERE " . implode(" AND ", $whereConditions) : "");
+
+    debugLog('SQD Metrics Query', ['sql' => $sqdMetricsSQL, 'params' => $params]);
 
     $stmt = $connect->prepare($sqdMetricsSQL);
     $stmt->execute($params);
@@ -280,13 +283,15 @@ try {
     $type = isset($_GET['type']) ? sanitizeInput($_GET['type']) : 'office';
     $timeFilter = validateDateRange($_GET['time'] ?? 'all');
     $orgId = isset($_GET['org']) ? sanitizeInput($_GET['org']) : 'all';
+    $officeId = isset($_GET['office']) ? sanitizeInput($_GET['office']) : 'all';
 
     debugLog('Request parameters', [
         'accountType' => $accountType,
         'userId' => $userId,
         'type' => $type,
         'timeFilter' => $timeFilter,
-        'orgId' => $orgId
+        'orgId' => $orgId,
+        'officeId' => $officeId
     ]);
 
     // Build base query conditions
@@ -322,6 +327,27 @@ try {
         }
     }
 
+    // Add office-specific conditions (using office_name field)
+    if ($type === 'office' && $officeId !== 'all') {
+        // First, get the office name using the office ID
+        try {
+            $officeNameQuery = "SELECT office_name FROM offices WHERE office_id = :office_id";
+            $officeNameStmt = $connect->prepare($officeNameQuery);
+            $officeNameStmt->execute([':office_id' => $officeId]);
+            $officeName = $officeNameStmt->fetchColumn();
+            
+            if ($officeName) {
+                $whereConditions[] = "office_name = :office_name";
+                $params[':office_name'] = $officeId; // Store office ID in office_name column
+                debugLog('Added office filter', ['office_id' => $officeId, 'office_name_field_value' => $officeId]);
+            } else {
+                debugLog('Office not found for ID', ['office_id' => $officeId]);
+            }
+        } catch (PDOException $e) {
+            debugLog('Error finding office name', ['error' => $e->getMessage()]);
+        }
+    }
+
     // Get feedback data based on type
     $data = ($type === 'office') 
         ? getOfficeFeedbackData($connect, $whereConditions, $params)
@@ -335,6 +361,17 @@ try {
         $data['organizations'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Add offices list
+    try {
+        $officeQuery = "SELECT office_id, office_name FROM offices ORDER BY office_name";
+        $stmt = $connect->prepare($officeQuery);
+        $stmt->execute();
+        $data['offices'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        debugLog('Error fetching offices', ['error' => $e->getMessage()]);
+        // Don't fail the whole request if office list can't be fetched
+    }
+
     debugLog('Response data', $data);
     echo json_encode($data);
 
@@ -343,7 +380,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'error' => true,
-        'message' => 'Database error occurred',
+        'message' => 'Database error occurred: ' . $e->getMessage(),
         'debug' => DEBUG_MODE ? $e->getMessage() : null
     ]);
 } catch (Exception $e) {

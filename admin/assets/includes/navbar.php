@@ -94,6 +94,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         </a>
                     </li>
                 <?php } ?>
+                <!-- Office Nav - Visible ONLY to account type 0 -->
+<?php if ($account_type == '0') { ?>
+    <li class="<?= ($current_page == 'office.php') ? 'active' : '' ?>">
+        <a href="./office.php">
+            <i class="fas fa-building"></i>
+            <p>Office</p>
+        </a>
+    </li>
+<?php } ?>
+
             </ul>
         </div>
     </div>
